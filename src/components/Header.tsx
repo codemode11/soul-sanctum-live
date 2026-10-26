@@ -250,7 +250,7 @@ export const Header: React.FC<HeaderProps> = ({
                       className="text-[11px] font-serif text-amber-300/90 mt-1.5 text-right leading-snug"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      Sacred Work:{' '}
+                      Image credits:{' '}
                       {activeImg.attributionUrl ? (
                         <a
                           href={activeImg.attributionUrl}
