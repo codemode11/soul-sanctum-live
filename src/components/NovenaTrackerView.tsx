@@ -352,7 +352,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                             e.stopPropagation();
                             handleCheckDay(novena.id, d);
                           }}
-                          className="h-7 rounded-lg flex items-center justify-center text-xs font-bold font-cinzel bg-sky-700 hover:bg-sky-600 text-white border border-sky-300/40 shadow-2xs transition-all cursor-pointer"
+                          className="h-7 rounded-lg flex items-center justify-center text-xs font-bold font-cinzel bg-white hover:bg-amber-50 text-amber-950 border border-amber-300/80 shadow-2xs transition-all cursor-pointer"
                           title={`Day ${d} Completed (Click to toggle)`}
                         >
                           <Check className="w-3.5 h-3.5 stroke-[3]" />
@@ -633,7 +633,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
               onClick={() => handleCheckDay(currentNovenaData.id, currentDayInfo.dayNumber)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                 currentUserProgress?.completedDays.includes(currentDayInfo.dayNumber)
-                  ? 'bg-sky-700 hover:bg-sky-600 text-white shadow-xs'
+                  ? 'bg-white hover:bg-amber-50 text-amber-950 border border-amber-300 shadow-xs'
                   : 'bg-amber-900 text-amber-100 hover:bg-amber-800 shadow-md'
               }`}
             >
@@ -793,7 +793,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                   ) : isUserCompleted ? (
                     <button
                       onClick={() => handleRestartNovena(novena.id)}
-                      className="px-4 py-2 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-900 border border-sky-300 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0"
+                      className="px-4 py-2 rounded-lg bg-white hover:bg-amber-50 text-amber-950 border border-amber-300 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0 shadow-2xs"
                     >
                       Completed ✓ (Pray Again)
                     </button>
