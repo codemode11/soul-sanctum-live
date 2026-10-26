@@ -586,8 +586,8 @@ export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h
 );
 
 /**
- * 8. Novena Tracker icon: Hands joined in prayer but from left to right;
- * the number 9 is below the hands but not joined to the hands.
+ * 8. Novena Tracker icon: Three connected candles in the manner of a candelabra,
+ * and its base is the number 9.
  */
 export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -599,23 +599,25 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
     strokeLinejoin="round" 
     className={className}
   >
-    {/* Hands joined in prayer heavenward from left to right, forming a "V" above the number 9 */}
-    {/* Left hand rising heavenward to the upper-left from the joined base at (12, 11.2) */}
-    <path d="M12 11.2L6.8 3.6c-.4-.6-.2-1.3.4-1.5.5-.2 1.1.1 1.5.7L12 8.2" strokeWidth="1.7" />
-    {/* Right hand rising heavenward to the upper-right from the joined base at (12, 11.2) */}
-    <path d="M12 11.2l5.2-7.6c.4-.6.2-1.3-.4-1.5-.5-.2-1.1.1-1.5.7L12 8.2" strokeWidth="1.7" />
+    {/* Three candle flames (center slightly elevated, left and right symmetric) */}
+    <path d="M12 1.1c.85 1.05.85 2.0 0 2.65-.85-.65-.85-1.6 0-2.65Z" fill="currentColor" strokeWidth="1.1" />
+    <path d="M5.5 2.0c.8 1.0.8 1.9 0 2.5-.8-.6-.8-1.5 0-2.5Z" fill="currentColor" strokeWidth="1.1" />
+    <path d="M18.5 2.0c.8 1.0.8 1.9 0 2.5-.8-.6-.8-1.5 0-2.5Z" fill="currentColor" strokeWidth="1.1" />
 
-    {/* Inner finger contour lines along the left and right wings of the "V" */}
-    <path d="M10.4 8.8L7.9 5.0" strokeWidth="1.2" opacity="0.75" />
-    <path d="M13.6 8.8l2.5-3.8" strokeWidth="1.2" opacity="0.75" />
+    {/* Candle drip pans (bobèches) */}
+    <path d="M10.6 5.1h2.8" strokeWidth="1.5" />
+    <path d="M4.1 5.8h2.8" strokeWidth="1.5" />
+    <path d="M17.1 5.8h2.8" strokeWidth="1.5" />
 
-    {/* Number 9 clearly placed BELOW the hands, separated with negative space and NOT joined to the hands */}
-    <g transform="translate(12, 18.8)">
-      {/* Upper loop of 9 */}
-      <circle cx="0" cy="-2.4" r="2.2" strokeWidth="1.8" />
-      {/* Downward stem of 9 curving at bottom */}
-      <path d="M2.2 -2.4v3.4c0 1.2-.9 2-2 2a2.2 2.2 0 0 1-1.8-.9" strokeWidth="1.8" />
-    </g>
+    {/* Three connected candles forming a candelabra */}
+    {/* Center candle & vertical shaft down to the number 9 base */}
+    <path d="M12 4.4v8.0" strokeWidth="1.8" />
+    {/* Left and right candles descending and curving inward as connected candelabra arms */}
+    <path d="M5.5 5.0v3.2c0 2.3 2.8 3.6 6.5 3.6s6.5-1.3 6.5-3.6V5.0" strokeWidth="1.8" />
+
+    {/* Base of the candelabra formed by the number 9 */}
+    <circle cx="12" cy="15.0" r="2.6" strokeWidth="1.8" />
+    <path d="M14.6 15.0v4.4c0 1.85-1.35 3.1-3.1 3.1-1.25 0-2.25-.55-2.75-1.45" strokeWidth="1.8" />
   </svg>
 );
 

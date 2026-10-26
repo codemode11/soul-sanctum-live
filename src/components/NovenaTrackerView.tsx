@@ -21,6 +21,7 @@ import {
   getNovenaScheduleInfo 
 } from '../data/novenas';
 import { bellSynth } from '../utils/audioSynth';
+import { NovenaHands9Icon } from './SanctumIcons';
 
 interface NovenaTrackerViewProps {
   currentDateStr?: string;
@@ -247,7 +248,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
       <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/30 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
-            <Flame className="w-5 h-5 text-amber-400" />
+            <NovenaHands9Icon className="w-5 h-5 text-amber-400" />
             <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
               Sacred Nine-Day Devotions • Updated Daily ({effectiveDateStr})
             </span>
