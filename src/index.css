@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-cinzel: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    --font-cinzel: 'Cinzel', serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  /* Make all heading elements (h1-h6) use traditional, dignified serif fonts */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem; /* generous readable baseline */
+    line-height: 1.6;
+  }
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-serif-heading {
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.font-serif-sacred {
+  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-size: 1.25rem; /* ~20px generous baseline for sacred missal reading */
+  line-height: 1.7;
+}
+
+/* Custom drop-cap for sacred readings */
+.sacred-drop-cap::first-letter {
+  font-family: 'Cormorant Garamond', 'Cinzel', Georgia, serif;
+  float: left;
+  font-size: 3.75rem;
+  line-height: 0.8;
+  padding-right: 0.5rem;
+  padding-top: 0.2rem;
+  color: #991b1b;
+  font-weight: 700;
+}
+
+/* Illuminated border subtle pattern */
+.parchment-texture {
+  background-color: #FAF8F5;
+  background-image: radial-gradient(#d6cebe 0.65px, transparent 0.65px), radial-gradient(#d6cebe 0.65px, #FAF8F5 0.65px);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px;
+}
+
+.gold-glow {
+  box-shadow: 0 0 20px -3px rgba(217, 119, 6, 0.25);
+}
+
+/* Hide native scrollbar line completely so no scroll line appears when scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.no-scrollbar *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+

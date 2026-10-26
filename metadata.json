@@ -1,0 +1,8 @@
+{
+  "name": "Soul Sanctum",
+  "description": "Daily Mass readings, Catechism of the Catholic Church, Saint of the day, Catholic news, interactive novena tracker, liturgical calendar, sayings of the Church Fathers and Doctors, historic Catholic Bible commentary, and Catholic terminology.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
