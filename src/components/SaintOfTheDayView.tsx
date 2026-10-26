@@ -713,44 +713,44 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-      <div className="bg-[#FAF8F5]/75 dark:bg-stone-950/75 backdrop-blur-md rounded-3xl border border-amber-200/70 dark:border-stone-800/80 shadow-2xl p-6 sm:p-10 space-y-10">
+      <div className="bg-white/45 dark:bg-stone-950/50 backdrop-blur-xl backdrop-saturate-150 rounded-3xl border border-white/60 dark:border-stone-700/60 ring-1 ring-inset ring-white/40 dark:ring-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.28)] p-6 sm:p-10 space-y-10">
         {/* Editorial Masthead & Daily Navigation Bar */}
-        <header className="border-b border-stone-300/70 dark:border-stone-800 pb-6">
+        <header className="border-b border-stone-900/15 dark:border-stone-700/60 pb-6">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-900 dark:text-amber-400 mb-2">
-                <SaintWithHaloIcon className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-950 dark:text-amber-300 mb-2">
+                <SaintWithHaloIcon className="w-4 h-4 text-amber-800 dark:text-amber-400" />
                 <span>Alban Butler&apos;s Lives of the Saints</span>
                 <span aria-hidden="true">·</span>
                 <span>Daily Roman Martyrology</span>
                 <span aria-hidden="true">·</span>
                 <span>{selectedSaint.feastDate}</span>
               </div>
-              <h1 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">
+              <h1 className="font-serif text-3xl sm:text-5xl font-bold text-stone-950 dark:text-stone-100 tracking-tight drop-shadow-2xs">
                 Saint of the Day
               </h1>
             </div>
 
             {/* Interactive Date Switcher & Directory Toggle */}
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center bg-white/75 dark:bg-stone-900/75 backdrop-blur-xs border border-stone-300/80 dark:border-stone-800 rounded-xl p-1 shadow-xs">
+              <div className="inline-flex items-center bg-white/50 dark:bg-stone-900/55 backdrop-blur-md border border-white/70 dark:border-stone-700/70 rounded-xl p-1 shadow-xs">
                 <button
                   onClick={() => handleShiftDay(-1)}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-800 dark:text-stone-300 hover:bg-white/80 dark:hover:bg-stone-800 transition-colors"
+                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors"
                   title="Previous Day"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span className="hidden sm:inline">Previous</span>
                 </button>
 
-                <div className="flex items-center gap-2 px-3.5 py-2 text-stone-900 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-300/70 dark:border-stone-800">
-                  <Calendar className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                <div className="flex items-center gap-2 px-3.5 py-2 text-stone-950 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-900/15 dark:border-stone-700/60">
+                  <Calendar className="w-3.5 h-3.5 text-amber-800 dark:text-amber-400" />
                   <span>{selectedSaint.feastDate}</span>
                 </div>
 
                 <button
                   onClick={() => handleShiftDay(1)}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-800 dark:text-stone-300 hover:bg-white/80 dark:hover:bg-stone-800 transition-colors"
+                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors"
                   title="Next Day"
                 >
                   <span className="hidden sm:inline">Next</span>
@@ -760,17 +760,17 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
               <button
                 onClick={handleResetToToday}
-                className="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-stone-900/90 hover:bg-stone-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white transition-colors"
+                className="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-stone-900/85 hover:bg-stone-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white backdrop-blur-md transition-colors shadow-xs"
               >
                 Today
               </button>
 
               <button
                 onClick={() => setIsDirectoryOpen(prev => !prev)}
-                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold border transition-colors ${
+                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold border backdrop-blur-md transition-colors ${
                   isDirectoryOpen
-                    ? 'bg-amber-800 text-white border-amber-800'
-                    : 'bg-white/75 dark:bg-stone-900/75 text-stone-800 dark:text-stone-300 border-stone-300/80 dark:border-stone-800 hover:bg-white dark:hover:bg-stone-800'
+                    ? 'bg-amber-800 text-white border-amber-700 shadow-xs'
+                    : 'bg-white/50 dark:bg-stone-900/55 text-stone-900 dark:text-stone-200 border-white/70 dark:border-stone-700/70 hover:bg-white/75 dark:hover:bg-stone-800/75'
                 }`}
               >
                 <Search className="w-3.5 h-3.5" />
@@ -781,19 +781,19 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
           {/* Collapsible Search & Calendar Directory Panel */}
           {isDirectoryOpen && (
-            <div className="mt-6 pt-6 border-t border-stone-300/70 dark:border-stone-800 animate-in fade-in duration-200">
+            <div className="mt-6 pt-6 border-t border-stone-900/15 dark:border-stone-700/60 animate-in fade-in duration-200">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <div className="relative flex-1 max-w-md">
-                  <Search className="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Search className="w-4 h-4 text-stone-600 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search saint name, patronage, symbol, or date..."
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/80 dark:bg-stone-900/80 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-700 text-stone-900 dark:text-stone-200"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/65 dark:bg-stone-900/65 backdrop-blur-md border border-white/75 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-700 text-stone-950 dark:text-stone-100 placeholder:text-stone-600"
                   />
                 </div>
-                <span className="text-xs text-stone-700 dark:text-stone-400">
+                <span className="text-xs font-medium text-stone-800 dark:text-stone-300">
                   Showing {filteredSaints.length} feast days in Butler&apos;s Directory
                 </span>
               </div>
@@ -816,22 +816,22 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                         setImgError(false);
                         setIsDirectoryOpen(false);
                       }}
-                      className={`text-left p-3 rounded-xl border transition-all flex items-start justify-between gap-3 ${
+                      className={`text-left p-3 rounded-xl border backdrop-blur-md transition-all flex items-start justify-between gap-3 ${
                         isSelected
-                          ? 'bg-amber-800 text-white border-amber-800 shadow-xs'
-                          : 'bg-white/70 dark:bg-stone-900/70 hover:bg-white/90 dark:hover:bg-stone-800/80 text-stone-900 dark:text-stone-200 border-stone-300/70 dark:border-stone-800'
+                          ? 'bg-amber-800/90 text-white border-amber-700 shadow-xs'
+                          : 'bg-white/50 dark:bg-stone-900/55 hover:bg-white/75 dark:hover:bg-stone-800/75 text-stone-950 dark:text-stone-100 border-white/65 dark:border-stone-700/60'
                       }`}
                     >
                       <div className="min-w-0">
                         <div className="font-serif font-bold text-base leading-snug truncate">
                           {saint.name}
                         </div>
-                        <div className={`text-xs mt-0.5 truncate ${isSelected ? 'text-amber-100' : 'text-stone-600 dark:text-stone-400'}`}>
+                        <div className={`text-xs mt-0.5 truncate ${isSelected ? 'text-amber-100' : 'text-stone-700 dark:text-stone-400'}`}>
                           {saint.title}
                         </div>
                       </div>
-                      <span className={`text-xs font-medium shrink-0 ${
-                        isSelected ? 'text-amber-200' : 'text-amber-900 dark:text-amber-400'
+                      <span className={`text-xs font-semibold shrink-0 ${
+                        isSelected ? 'text-amber-200' : 'text-amber-950 dark:text-amber-400'
                       }`}>
                         {saint.feastDate}
                       </span>
@@ -843,14 +843,14 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
           )}
         </header>
 
-        {/* Principal Saint of the Day — Illuminated Missal Spread */}
-        <article className="bg-white/65 dark:bg-stone-900/65 rounded-2xl border border-stone-300/80 dark:border-stone-800 shadow-sm overflow-hidden">
+        {/* Principal Saint of the Day — Frosted Glass Missal Spread */}
+        <article className="bg-white/35 dark:bg-stone-900/40 backdrop-blur-md rounded-2xl border border-white/60 dark:border-stone-700/60 shadow-lg overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* Left Column (4 cols): Sacred Portrait & Liturgical Dossier */}
-            <div className="lg:col-span-4 bg-[#F7F4EE]/60 dark:bg-stone-950/50 border-b lg:border-b-0 lg:border-r border-stone-300/70 dark:border-stone-800 p-6 sm:p-8 flex flex-col justify-between">
+            <div className="lg:col-span-4 bg-white/25 dark:bg-stone-950/35 border-b lg:border-b-0 lg:border-r border-white/50 dark:border-stone-700/60 p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 {/* Sacred Portrait Frame */}
-                <div className="relative mx-auto max-w-[280px] lg:max-w-none aspect-[4/5] rounded-xl overflow-hidden bg-stone-900 border border-amber-700/30 shadow-md mb-6">
+                <div className="relative mx-auto max-w-[280px] lg:max-w-none aspect-[4/5] rounded-xl overflow-hidden bg-stone-900 border border-amber-700/35 shadow-md mb-6">
                   {resolvedSaintImageUrl && !imgError ? (
                     <img
                       src={resolvedSaintImageUrl}
@@ -870,52 +870,52 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                       </span>
                     </div>
                   )}
-                  <div className="absolute inset-0 ring-1 ring-inset ring-white/15 rounded-xl pointer-events-none" />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-white/20 rounded-xl pointer-events-none" />
                 </div>
 
                 {/* Clean Unboxed Liturgical Dossier */}
-                <dl className="divide-y divide-stone-300/70 dark:divide-stone-800 text-sm">
+                <dl className="divide-y divide-stone-900/15 dark:divide-stone-700/60 text-sm">
                   <div className="py-3 flex items-baseline justify-between gap-4">
-                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold">
+                    <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold">
                       Feast Day
                     </dt>
-                    <dd className="font-serif font-bold text-base text-stone-900 dark:text-stone-100 text-right">
+                    <dd className="font-serif font-bold text-base text-stone-950 dark:text-stone-100 text-right">
                       {selectedSaint.feastDate}
                     </dd>
                   </div>
 
                   <div className="py-3 flex items-baseline justify-between gap-4">
-                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold">
+                    <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold">
                       Liturgical Vestments
                     </dt>
-                    <dd className="font-medium text-stone-900 dark:text-stone-200 text-right capitalize">
+                    <dd className="font-semibold text-stone-950 dark:text-stone-100 text-right capitalize">
                       {colorInfo.name}
                     </dd>
                   </div>
 
                   <div className="py-3">
-                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold mb-1">
+                    <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold mb-1">
                       Patronage
                     </dt>
-                    <dd className="font-serif text-base text-stone-900 dark:text-stone-200 leading-snug">
+                    <dd className="font-serif text-base text-stone-950 dark:text-stone-100 leading-snug">
                       {selectedSaint.patronage.join(' · ')}
                     </dd>
                   </div>
 
                   <div className="py-3">
-                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold mb-1">
+                    <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold mb-1">
                       Sacred Attributes
                     </dt>
-                    <dd className="font-serif text-base text-stone-900 dark:text-stone-200 leading-snug">
+                    <dd className="font-serif text-base text-stone-950 dark:text-stone-100 leading-snug">
                       {selectedSaint.symbols.join(' · ')}
                     </dd>
                   </div>
 
                   <div className="py-3">
-                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold mb-1">
+                    <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold mb-1">
                       Historical Source
                     </dt>
-                    <dd className="text-xs text-stone-700 dark:text-stone-400 leading-relaxed">
+                    <dd className="text-xs font-medium text-stone-800 dark:text-stone-300 leading-relaxed">
                       {selectedSaint.butlerVolume || "Alban Butler's Lives of the Saints"}
                     </dd>
                   </div>
@@ -923,13 +923,13 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               </div>
 
               {/* Audio & Copy Utility Bar */}
-              <div className="pt-6 mt-6 border-t border-stone-300/70 dark:border-stone-800 flex items-center gap-2.5">
+              <div className="pt-6 mt-6 border-t border-stone-900/15 dark:border-stone-700/60 flex items-center gap-2.5">
                 <button
                   onClick={handleReadAloud}
                   className={`flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                     isReadingAloud
                       ? 'bg-amber-700 text-white'
-                      : 'bg-stone-900 hover:bg-stone-800 dark:bg-stone-800 dark:hover:bg-stone-700 text-white'
+                      : 'bg-stone-900/90 hover:bg-stone-900 dark:bg-stone-800 dark:hover:bg-stone-700 text-white'
                   }`}
                 >
                   {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -938,7 +938,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
                 <button
                   onClick={handleCopy}
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white/80 dark:bg-stone-900/80 hover:bg-white dark:hover:bg-stone-800 text-stone-800 dark:text-stone-300 text-xs font-semibold transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-white/70 dark:border-stone-700 bg-white/55 dark:bg-stone-900/60 hover:bg-white/80 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-200 text-xs font-semibold backdrop-blur-md transition-colors"
                   title="Copy Saint Biography & Martyrology"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
@@ -951,22 +951,22 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
             <div className="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between space-y-8">
               <div className="space-y-8">
                 {/* Saint Title Block */}
-                <div className="border-b border-stone-300/70 dark:border-stone-800 pb-6">
-                  <div className="text-xs font-semibold uppercase tracking-widest text-red-900 dark:text-amber-400 mb-2">
+                <div className="border-b border-stone-900/15 dark:border-stone-700/60 pb-6">
+                  <div className="text-xs font-semibold uppercase tracking-widest text-red-950 dark:text-amber-300 mb-2">
                     I · Principal Feast of {selectedSaint.feastDate}
                   </div>
-                  <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight mb-2">
+                  <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-950 dark:text-stone-100 leading-tight mb-2">
                     {selectedSaint.name}
                   </h2>
-                  <p className="font-serif italic text-lg sm:text-xl text-stone-700 dark:text-stone-400">
+                  <p className="font-serif italic text-lg sm:text-xl text-stone-800 dark:text-stone-300">
                     {selectedSaint.title}
                   </p>
                 </div>
 
-                {/* Epigraph Quote (Clean Top/Bottom Hairline Frame, No Left Bar) */}
+                {/* Epigraph Quote (Frosted Glass Hairline Frame) */}
                 {quoteText && (
-                  <blockquote className="py-5 px-6 bg-[#FAF8F5]/60 dark:bg-stone-950/40 border-y border-amber-800/25 dark:border-amber-500/20 text-center">
-                    <p className="font-serif italic text-lg sm:text-2xl text-stone-900 dark:text-stone-200 leading-relaxed max-w-2xl mx-auto">
+                  <blockquote className="py-5 px-6 bg-white/30 dark:bg-stone-950/35 backdrop-blur-xs border-y border-amber-900/25 dark:border-amber-500/25 text-center rounded-xl">
+                    <p className="font-serif italic text-lg sm:text-2xl text-stone-950 dark:text-stone-100 leading-relaxed max-w-2xl mx-auto">
                       &ldquo;{quoteText}&rdquo;
                     </p>
                   </blockquote>
@@ -974,10 +974,10 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
                 {/* Biography with Illuminated Missal Drop-Cap */}
                 <div className="space-y-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-stone-600 dark:text-stone-400">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-stone-700 dark:text-stone-300">
                     Life &amp; Apostolic Witness
                   </h3>
-                  <div className="space-y-5 font-serif text-stone-900 dark:text-stone-200 text-lg sm:text-[1.2rem] leading-[1.8]">
+                  <div className="space-y-5 font-serif text-stone-950 dark:text-stone-100 text-lg sm:text-[1.2rem] leading-[1.8]">
                     {biographyParagraphs.map((paragraph, index) => (
                       <p
                         key={index}
@@ -991,16 +991,16 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               </div>
 
               {/* Traditional Missal Collect Prayer */}
-              <div className="pt-8 border-t border-stone-300/70 dark:border-stone-800">
+              <div className="pt-8 border-t border-stone-900/15 dark:border-stone-700/60">
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-red-900 dark:text-amber-400">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-red-950 dark:text-amber-300">
                     Collect Prayer of the Feast
                   </span>
-                  <span className="font-serif italic text-sm text-red-900/80 dark:text-amber-400/80">
+                  <span className="font-serif italic text-sm text-red-950/85 dark:text-amber-300/85">
                     Oremus · Let us pray
                   </span>
                 </div>
-                <p className="font-serif italic text-stone-900 dark:text-stone-200 text-lg sm:text-xl leading-relaxed">
+                <p className="font-serif italic text-stone-950 dark:text-stone-100 text-lg sm:text-xl leading-relaxed">
                   {selectedSaint.prayer}
                 </p>
               </div>
@@ -1008,15 +1008,15 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
           </div>
         </article>
 
-        {/* Companion Saints of the Day — 3-Column Roman Martyrology Grid */}
+        {/* Companion Saints of the Day — 3-Column Frosted Glass Roman Martyrology Grid */}
         {companionSaints.length > 0 && (
           <section className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-stone-300/70 dark:border-stone-800 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-stone-900/15 dark:border-stone-700/60 pb-4">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-widest text-amber-900 dark:text-amber-400 mb-1">
+                <div className="text-xs font-semibold uppercase tracking-widest text-amber-950 dark:text-amber-300 mb-1">
                   Also Commemorated on {selectedSaint.feastDate}
                 </div>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-950 dark:text-stone-100">
                   Companion Saints of the Day
                 </h3>
               </div>
@@ -1028,11 +1028,11 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 return (
                   <article
                     key={`${companion.name}-${idx}`}
-                    className="bg-white/65 dark:bg-stone-900/65 rounded-2xl border border-stone-300/80 dark:border-stone-800 p-6 flex flex-col justify-between shadow-xs hover:border-amber-700/50 transition-colors"
+                    className="bg-white/35 dark:bg-stone-900/40 backdrop-blur-md rounded-2xl border border-white/60 dark:border-stone-700/60 p-6 flex flex-col justify-between shadow-md hover:bg-white/45 dark:hover:bg-stone-900/55 transition-colors"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className="font-serif font-bold text-sm tracking-widest text-red-900 dark:text-amber-400">
+                        <span className="font-serif font-bold text-sm tracking-widest text-red-950 dark:text-amber-300">
                           {romanNumerals[idx] || idx + 2} · Martyrology
                         </span>
 
@@ -1041,7 +1041,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
                             isSpeakingThis
                               ? 'bg-amber-700 text-white'
-                              : 'bg-stone-200/70 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-300'
+                              : 'bg-white/55 dark:bg-stone-800/70 hover:bg-white/80 dark:hover:bg-stone-700 text-stone-900 dark:text-stone-200 border border-white/60 dark:border-stone-700'
                           }`}
                           title={`Listen to ${companion.name}`}
                         >
@@ -1050,11 +1050,11 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                         </button>
                       </div>
 
-                      <h4 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 dark:text-stone-100 leading-snug mb-1">
+                      <h4 className="font-serif text-xl sm:text-2xl font-bold text-stone-950 dark:text-stone-100 leading-snug mb-1">
                         {companion.name}
                       </h4>
 
-                      <div className="text-xs text-stone-600 dark:text-stone-400 mb-4 pb-3 border-b border-stone-300/60 dark:border-stone-800">
+                      <div className="text-xs font-medium text-stone-700 dark:text-stone-300 mb-4 pb-3 border-b border-stone-900/15 dark:border-stone-700/60">
                         <span>{companion.title}</span>
                         {companion.dates && (
                           <>
@@ -1064,7 +1064,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                         )}
                       </div>
 
-                      <p className="font-serif text-base text-stone-800 dark:text-stone-300 leading-relaxed">
+                      <p className="font-serif text-base text-stone-950 dark:text-stone-200 leading-relaxed">
                         {cleanCompanionDescription(companion.shortDescription)}
                       </p>
                     </div>
