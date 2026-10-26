@@ -178,7 +178,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-3xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
       {/* Switcher Buttons: Treasury of Prayers precedes Community Prayer Wall per user request */}
       <div className="flex rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
@@ -240,7 +240,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           </div>
 
           {/* Category Filter Pills and Search */}
-          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
+          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
                 {categories.map(cat => (
@@ -276,7 +276,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             {filteredRequests.map(req => (
               <div
                 key={req.id}
-                className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-6 rounded-2xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/55 transition-all space-y-4"
+                className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-6 rounded-xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/55 transition-all space-y-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-1">
@@ -348,7 +348,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
         <div className="space-y-6">
           
           {/* Prayers Selector List */}
-          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
+          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-500">
                 Treasury of Sacred Catholic Prayers ({CATHOLIC_PRAYERS_DATABASE.length})
@@ -477,7 +477,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             <div className={`grid ${selectedPrayer.latinText ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-6`}>
               
               {/* English */}
-              <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200/80 space-y-3">
+              <div className="p-6 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-3">
                 <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-950 block">
                   English Translation
                 </span>
@@ -488,7 +488,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
               {/* Latin */}
               {selectedPrayer.latinText && (
-                <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200/80 space-y-3">
+                <div className="p-6 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-3">
                   <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800 block">
                     Textus Latinus (Lingua Sacra)
                   </span>

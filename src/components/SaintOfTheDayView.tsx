@@ -713,7 +713,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-      <div className="bg-white/45 dark:bg-stone-950/50 backdrop-blur-xl backdrop-saturate-150 rounded-3xl border border-white/60 dark:border-stone-700/60 ring-1 ring-inset ring-white/40 dark:ring-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.28)] p-6 sm:p-10 space-y-10">
+      <div className="bg-white/45 dark:bg-stone-950/50 backdrop-blur-xl backdrop-saturate-150 rounded-xl border border-white/60 dark:border-stone-700/60 ring-1 ring-inset ring-white/40 dark:ring-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.28)] p-6 sm:p-10 space-y-10">
         {/* Editorial Masthead & Daily Navigation Bar */}
         <header className="border-b border-stone-900/15 dark:border-stone-700/60 pb-6">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
@@ -844,7 +844,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
         </header>
 
         {/* Principal Saint of the Day — Frosted Glass Missal Spread */}
-        <article className="bg-white/35 dark:bg-stone-900/40 backdrop-blur-md rounded-2xl border border-white/60 dark:border-stone-700/60 shadow-lg overflow-hidden">
+        <article className="bg-white/35 dark:bg-stone-900/40 backdrop-blur-md rounded-xl border border-white/60 dark:border-stone-700/60 shadow-lg overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* Left Column (4 cols): Sacred Portrait & Liturgical Dossier */}
             <div className="lg:col-span-4 bg-white/25 dark:bg-stone-950/35 border-b lg:border-b-0 lg:border-r border-white/50 dark:border-stone-700/60 p-6 sm:p-8 flex flex-col justify-between">
@@ -1028,7 +1028,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 return (
                   <article
                     key={`${companion.name}-${idx}`}
-                    className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/90 dark:border-stone-700/60 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all"
+                    className="bg-white dark:bg-stone-900 rounded-xl border border-stone-200/90 dark:border-stone-700/60 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">

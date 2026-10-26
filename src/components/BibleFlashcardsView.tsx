@@ -371,7 +371,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
       </div>
 
       {/* Control Bar: Mode Switcher, Categories, Search */}
-      <div className="bg-white rounded-2xl p-5 shadow-xs border border-stone-200 space-y-4">
+      <div className="bg-white rounded-xl p-5 shadow-xs border border-stone-200 space-y-4">
         
         {/* Row 1: Study Mode Switcher and Tools */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-stone-100">
@@ -568,7 +568,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
           </div>
 
           {/* Flashcard Presentation Card */}
-          <div className="bg-white rounded-3xl shadow-lg border border-stone-200/90 overflow-hidden relative min-h-[380px] flex flex-col justify-between transition-all">
+          <div className="bg-white rounded-xl shadow-lg border border-stone-200/90 overflow-hidden relative min-h-[380px] flex flex-col justify-between transition-all">
             
             {/* Card Content Area */}
             <div className="p-6 sm:p-10 flex-1 flex flex-col justify-center">
@@ -770,7 +770,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
                     {showFullFirstLetter ? (
                       <p className="animate-fadeIn">“{currentVerse.text}”</p>
                     ) : (
-                      <div className="p-5 rounded-2xl bg-[#FAF8F5] border-l-4 border-amber-800 space-y-2 animate-fadeIn">
+                      <div className="p-5 rounded-xl bg-[#FAF8F5] border-l-4 border-amber-800 space-y-2 animate-fadeIn">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-amber-900 font-cinzel block">
                           Acrostic Memory Matrix
                         </span>
@@ -807,7 +807,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
                   </div>
 
                   {/* Reconstructed Sentence Box */}
-                  <div className="min-h-[90px] p-4 rounded-2xl bg-amber-50/50 border-2 border-dashed border-amber-300 flex flex-wrap gap-2 items-center">
+                  <div className="min-h-[90px] p-4 rounded-xl bg-amber-50/50 border-2 border-dashed border-amber-300 flex flex-wrap gap-2 items-center">
                     {scrambleSelectedWords.length === 0 ? (
                       <span className="text-stone-400 font-serif italic text-sm">
                         Tap words from the bank below in their sacred sequence...
@@ -962,7 +962,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
           </div>
 
           {/* Quick Deck Browser: Thumbnails of all verses */}
-          <div className="bg-white rounded-2xl p-5 shadow-xs border border-stone-200 space-y-3">
+          <div className="bg-white rounded-xl p-5 shadow-xs border border-stone-200 space-y-3">
             <div className="flex items-center justify-between">
               <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-600">
                 Deck Browser ({filteredVerses.length} Verses Available)
@@ -1019,7 +1019,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
         </div>
       ) : (
         /* Empty Filter State */
-        <div className="bg-white rounded-2xl p-12 text-center space-y-4 border border-stone-200">
+        <div className="bg-white rounded-xl p-12 text-center space-y-4 border border-stone-200">
           <BookOpen className="w-12 h-12 text-amber-700/60 mx-auto" />
           <h3 className="font-cinzel text-xl font-bold text-stone-800">No Passages Found</h3>
           <p className="text-sm text-stone-500 font-serif max-w-md mx-auto">
