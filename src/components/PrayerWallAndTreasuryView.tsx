@@ -181,10 +181,10 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-3xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
       {/* Switcher Buttons: Treasury of Prayers precedes Community Prayer Wall per user request */}
-      <div className="flex rounded-2xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
+      <div className="flex rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
         <button
           onClick={() => setActiveSection('treasury')}
-          className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+          className={`flex-1 py-2.5 px-4 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 ${
             activeSection === 'treasury'
               ? 'bg-amber-900 text-amber-50 shadow-md'
               : 'text-stone-700 hover:text-stone-900'
@@ -196,7 +196,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
         <button
           onClick={() => setActiveSection('wall')}
-          className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 ${
+          className={`flex-1 py-2.5 px-4 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 ${
             activeSection === 'wall'
               ? 'bg-amber-900 text-amber-50 shadow-md'
               : 'text-stone-700 hover:text-stone-900'
@@ -232,7 +232,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
             <button
               onClick={() => setNewRequestModalOpen(true)}
-              className="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start sm:self-auto"
+              className="px-5 py-3 rounded-lg bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start sm:self-auto"
             >
               <Plus className="w-4 h-4" />
               <span>Submit Intention</span>
@@ -297,7 +297,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                   {/* Candle Button */}
                   <button
                     onClick={() => handleToggleCandle(req.id)}
-                    className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 text-xs font-medium ${
+                    className={`p-2 rounded-lg border transition-all cursor-pointer flex items-center gap-1.5 text-xs font-medium ${
                       req.candleLit 
                         ? 'bg-amber-50 border-amber-400 text-amber-900 shadow-xs' 
                         : 'bg-stone-50 border-stone-200 text-stone-500 hover:bg-stone-100'
@@ -324,7 +324,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
                   <button
                     onClick={() => handlePrayForRequest(req.id)}
-                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                       req.hasPrayed
                         ? 'bg-sky-700 hover:bg-sky-600 text-white shadow-xs'
                         : 'bg-stone-100 hover:bg-amber-100 text-stone-800 hover:text-amber-950 border border-stone-300'
@@ -369,7 +369,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               <button
                 type="button"
                 onClick={() => handleScrollTreasuryStrip('left')}
-                className="p-2 rounded-xl bg-white/90 hover:bg-amber-900 text-stone-800 hover:text-amber-50 border border-stone-300 hover:border-amber-800 shadow-xs transition-all cursor-pointer shrink-0 flex items-center justify-center"
+                className="p-2 rounded-lg bg-white/90 hover:bg-amber-900 text-stone-800 hover:text-amber-50 border border-stone-300 hover:border-amber-800 shadow-xs transition-all cursor-pointer shrink-0 flex items-center justify-center"
                 title="Scroll prayers left"
                 aria-label="Scroll prayers left"
               >
@@ -402,7 +402,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               <button
                 type="button"
                 onClick={() => handleScrollTreasuryStrip('right')}
-                className="p-2 rounded-xl bg-white/90 hover:bg-amber-900 text-stone-800 hover:text-amber-50 border border-stone-300 hover:border-amber-800 shadow-xs transition-all cursor-pointer shrink-0 flex items-center justify-center"
+                className="p-2 rounded-lg bg-white/90 hover:bg-amber-900 text-stone-800 hover:text-amber-50 border border-stone-300 hover:border-amber-800 shadow-xs transition-all cursor-pointer shrink-0 flex items-center justify-center"
                 title="Scroll prayers right to see more prayers"
                 aria-label="Scroll prayers right"
               >
@@ -433,7 +433,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 <button
                   type="button"
                   onClick={() => handleStepPrayer(-1)}
-                  className="p-2 rounded-xl bg-stone-100 hover:bg-amber-900 text-stone-700 hover:text-amber-50 border border-stone-300 hover:border-amber-800 transition-colors cursor-pointer"
+                  className="p-2 rounded-lg bg-stone-100 hover:bg-amber-900 text-stone-700 hover:text-amber-50 border border-stone-300 hover:border-amber-800 transition-colors cursor-pointer"
                   title="Previous Prayer"
                   aria-label="Previous Prayer"
                 >
@@ -443,7 +443,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 <button
                   type="button"
                   onClick={() => handleStepPrayer(1)}
-                  className="p-2 rounded-xl bg-stone-100 hover:bg-amber-900 text-stone-700 hover:text-amber-50 border border-stone-300 hover:border-amber-800 transition-colors cursor-pointer"
+                  className="p-2 rounded-lg bg-stone-100 hover:bg-amber-900 text-stone-700 hover:text-amber-50 border border-stone-300 hover:border-amber-800 transition-colors cursor-pointer"
                   title="Next Prayer"
                   aria-label="Next Prayer"
                 >
@@ -452,7 +452,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
                 <button
                   onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
-                  className={`p-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                  className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     speakingPrayerId === selectedPrayer.id
                       ? 'bg-amber-600 text-white'
                       : 'bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300'
@@ -465,7 +465,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
                 <button
                   onClick={() => handleCopyPrayer(selectedPrayer)}
-                  className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 transition-colors cursor-pointer"
+                  className="p-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 transition-colors cursor-pointer"
                   title="Copy prayer"
                 >
                   {copiedPrayerId === selectedPrayer.id ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
@@ -589,13 +589,13 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 onClick={() => setNewRequestModalOpen(false)}
-                className="px-4 py-2 rounded-xl text-xs font-medium text-stone-600 hover:bg-stone-100 cursor-pointer"
+                className="px-4 py-2 rounded-lg text-xs font-medium text-stone-600 hover:bg-stone-100 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmitNewRequest}
-                className="px-5 py-2.5 rounded-xl bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs transition-colors cursor-pointer"
               >
                 Post Intention to Wall
               </button>

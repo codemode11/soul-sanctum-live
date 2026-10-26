@@ -91,7 +91,7 @@ KEY QUOTE:
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+            className="p-2 rounded-lg text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
             title="Close"
           >
             <X className="w-5 h-5" />
@@ -102,7 +102,7 @@ KEY QUOTE:
         <div className="px-5 py-3 bg-amber-50/60 border-b border-amber-200/60 flex items-center justify-between gap-3 shrink-0">
           <button
             onClick={onTogglePlay}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs sm:text-sm font-cinzel font-bold shadow-md hover:scale-102 transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs sm:text-sm font-cinzel font-bold shadow-md hover:scale-102 transition-all cursor-pointer"
           >
             {isPlaying ? (
               <>
@@ -260,7 +260,7 @@ KEY QUOTE:
         <div className="p-4 bg-stone-100 border-t border-stone-200 text-center shrink-0">
           <button
             onClick={onClose}
-            className="px-6 py-2 rounded-xl bg-stone-900 text-stone-100 hover:bg-stone-800 text-xs font-cinzel font-semibold transition-colors cursor-pointer"
+            className="px-6 py-2 rounded-lg bg-stone-900 text-stone-100 hover:bg-stone-800 text-xs font-cinzel font-semibold transition-colors cursor-pointer"
           >
             Close Study Guide
           </button>

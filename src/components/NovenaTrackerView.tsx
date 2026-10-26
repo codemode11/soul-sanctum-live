@@ -264,7 +264,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
         <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={() => setCustomModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-800/80 hover:bg-amber-700 text-amber-100 font-semibold text-xs border border-amber-600 transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-800/80 hover:bg-amber-700 text-amber-100 font-semibold text-xs border border-amber-600 transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Custom Novena</span>
@@ -507,14 +507,14 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => handleRestartNovena(currentNovenaData.id)}
-                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/20 text-xs font-cinzel font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-amber-200 border border-white/20 text-xs font-cinzel font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Pray Novena Again (Day 1)</span>
               </button>
               <button
                 onClick={() => setShowCompletedDayReview(prev => !prev)}
-                className="px-4 py-2 rounded-xl bg-amber-900/60 hover:bg-amber-800 text-amber-100 border border-amber-500/40 text-xs font-cinzel font-bold transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-amber-900/60 hover:bg-amber-800 text-amber-100 border border-amber-500/40 text-xs font-cinzel font-bold transition-colors cursor-pointer"
               >
                 {showCompletedDayReview ? 'Hide Daily Prayers' : 'Review 9-Day Prayers'}
               </button>
@@ -631,7 +631,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
 
             <button
               onClick={() => handleCheckDay(currentNovenaData.id, currentDayInfo.dayNumber)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                 currentUserProgress?.completedDays.includes(currentDayInfo.dayNumber)
                   ? 'bg-white hover:bg-amber-50 text-amber-950 border border-amber-300 shadow-xs'
                   : 'bg-amber-900 text-amber-100 hover:bg-amber-800 shadow-md'
@@ -706,7 +706,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
               <button
                 key={tab}
                 onClick={() => setFeastMonthFilter(tab)}
-                className={`px-4 py-2 rounded-xl text-xs font-cinzel font-bold tracking-wide transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-lg text-xs font-cinzel font-bold tracking-wide transition-all cursor-pointer ${
                   feastMonthFilter === tab
                     ? 'bg-amber-900 text-amber-50 shadow-xs'
                     : 'bg-white text-stone-700 border border-stone-200/90 hover:border-amber-800/40 hover:bg-amber-50/40'
@@ -852,13 +852,13 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
             <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 onClick={() => setSelectedNovenaForModal(null)}
-                className="px-4 py-2 rounded-xl text-xs font-medium text-stone-600 hover:bg-stone-100 cursor-pointer"
+                className="px-4 py-2 rounded-lg text-xs font-medium text-stone-600 hover:bg-stone-100 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleStartNovena(selectedNovenaForModal)}
-                className="px-5 py-2.5 rounded-xl bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs transition-colors cursor-pointer"
+                className="px-5 py-2.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs transition-colors cursor-pointer"
               >
                 Start 9-Day Journey
               </button>
@@ -925,7 +925,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
             <div className="flex items-center justify-end gap-2 pt-2">
               <button
                 onClick={() => setCustomModalOpen(false)}
-                className="px-4 py-2 rounded-xl text-xs font-medium text-stone-600 hover:bg-stone-100 cursor-pointer"
+                className="px-4 py-2 rounded-lg text-xs font-medium text-stone-600 hover:bg-stone-100 cursor-pointer"
               >
                 Cancel
               </button>
@@ -955,7 +955,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                   handleStartNovena(newCustomNovena);
                   setCustomModalOpen(false);
                 }}
-                className="px-5 py-2.5 rounded-xl bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs cursor-pointer"
+                className="px-5 py-2.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs cursor-pointer"
               >
                 Save and Track
               </button>

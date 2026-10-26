@@ -218,7 +218,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveSection(tab.id as MainSection)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
                     isActive
                       ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-400/60 shadow-lg scale-102'
                       : 'bg-black/40 hover:bg-black/60 text-stone-300 border-amber-500/20 hover:border-amber-400/40'
@@ -253,7 +253,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               {/* Ecumenical Councils Button */}
               <button
                 onClick={() => setShowCouncilsDrawer(prev => !prev)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-cinzel font-bold transition-colors cursor-pointer self-start md:self-auto"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-cinzel font-bold transition-colors cursor-pointer self-start md:self-auto"
                 title="View Major Ecumenical Councils of the Church"
               >
                 <Scroll className="w-4 h-4 text-amber-700" />
@@ -265,7 +265,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
               <button
                 onClick={() => setSelectedEra('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-cinzel whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-cinzel whitespace-nowrap transition-all cursor-pointer ${
                   selectedEra === 'all'
                     ? 'bg-amber-900 text-white font-bold shadow-xs'
                     : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
@@ -280,7 +280,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   <button
                     key={eraKey}
                     onClick={() => setSelectedEra(eraKey)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-serif whitespace-nowrap transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-serif whitespace-nowrap transition-all cursor-pointer ${
                       isSelected
                         ? 'bg-amber-900 text-white font-bold shadow-xs'
                         : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
@@ -372,7 +372,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={() => handleSpeakText(event.id, `${event.title}. Year: ${event.year}. ${event.description} Theological Significance: ${event.theologicalSignificance}`)}
-                          className={`p-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                          className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                             isEventSpeaking
                               ? 'bg-amber-600 text-white animate-pulse'
                               : 'bg-stone-100 hover:bg-amber-100 text-amber-900'
@@ -619,7 +619,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   <button
                     key={cont}
                     onClick={() => setSelectedContinent(cont)}
-                    className={`px-3.5 py-2 rounded-xl text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer ${
+                    className={`px-3.5 py-2 rounded-lg text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer ${
                       selectedContinent === cont
                         ? 'bg-amber-900 text-white font-bold shadow-xs'
                         : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
@@ -731,7 +731,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setFactCategory(cat)}
-                  className={`px-3.5 py-2 rounded-xl text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-3.5 py-2 rounded-lg text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer ${
                     factCategory === cat
                       ? 'bg-amber-900 text-white font-bold shadow-xs'
                       : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
@@ -797,7 +797,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   <div className="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
                     <button
                       onClick={() => handleSpeakText(fact.id, `${fact.title}. ${fact.detailedText}`)}
-                      className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                      className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
                         isFactSpeaking
                           ? 'bg-amber-600 text-white animate-pulse'
                           : 'bg-stone-100 hover:bg-amber-50 text-amber-900 border border-stone-200'
@@ -810,7 +810,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
 
                     <button
                       onClick={() => handleCopyFact(fact)}
-                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-serif transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-serif transition-colors cursor-pointer"
                       title="Copy fact to clipboard"
                     >
                       {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}

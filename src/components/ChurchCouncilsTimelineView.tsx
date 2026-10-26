@@ -1179,7 +1179,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
               <button
                 key={era.id}
                 onClick={() => setSelectedEra(era.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer flex items-center gap-2 ${
                   selectedEra === era.id
                     ? 'bg-amber-600 text-white shadow-md'
                     : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
@@ -1204,7 +1204,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
               <button
                 key={t.id}
                 onClick={() => setSelectedTheme(t.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-serif transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-serif transition-all cursor-pointer ${
                   selectedTheme === t.id
                     ? 'bg-stone-900 text-amber-300 font-bold shadow-xs'
                     : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
@@ -1279,7 +1279,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={(e) => handleShareCouncil(council, e)}
-                      className="p-2.5 rounded-xl text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
+                      className="p-2.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
                       title="Copy summary and achievements"
                     >
                       {copiedId === council.id ? (
@@ -1290,7 +1290,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                     </button>
                     <button
                       onClick={(e) => handleToggleNarration(council, e)}
-                      className="p-2.5 rounded-xl text-stone-500 hover:text-amber-700 hover:bg-amber-50 transition-colors"
+                      className="p-2.5 rounded-lg text-stone-500 hover:text-amber-700 hover:bg-amber-50 transition-colors"
                       title="Listen with voice narration"
                     >
                       <Volume2 className="w-5 h-5" />
@@ -1421,7 +1421,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
 
               <button
                 onClick={() => setSelectedCouncil(null)}
-                className="p-2.5 rounded-2xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+                className="p-2.5 rounded-lg text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
                 title="Close"
               >
                 <X className="w-6 h-6" />
@@ -1438,7 +1438,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleToggleNarration(selectedCouncil)}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer ${
                     isNarrating
                       ? 'bg-amber-600 text-white'
                       : 'bg-white border border-stone-300 text-stone-800 hover:bg-amber-100'
@@ -1450,7 +1450,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
 
                 <button
                   onClick={() => handleShareCouncil(selectedCouncil)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white border border-stone-300 text-stone-800 hover:bg-amber-100 text-xs sm:text-sm font-cinzel font-bold cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white border border-stone-300 text-stone-800 hover:bg-amber-100 text-xs sm:text-sm font-cinzel font-bold cursor-pointer"
                 >
                   {copiedId === selectedCouncil.id ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
                   <span>{copiedId === selectedCouncil.id ? 'Copied' : 'Share'}</span>
@@ -1603,7 +1603,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
             <div className="p-5 bg-stone-100 border-t border-stone-200 text-right shrink-0">
               <button
                 onClick={() => setSelectedCouncil(null)}
-                className="px-6 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs sm:text-sm font-cinzel font-bold cursor-pointer transition-colors"
+                className="px-6 py-2.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-white text-xs sm:text-sm font-cinzel font-bold cursor-pointer transition-colors"
               >
                 Close Council Record
               </button>

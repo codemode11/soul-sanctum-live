@@ -211,7 +211,7 @@ export const CatholicLinksView: React.FC = () => {
           <div className="shrink-0">
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#C89F72]/50 text-white text-xs font-sans font-semibold shadow-md transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#C89F72]/50 text-white text-xs font-sans font-semibold shadow-md transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>{showAddForm ? 'Close Form' : 'Add Catholic Website'}</span>

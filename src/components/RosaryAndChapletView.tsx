@@ -385,7 +385,7 @@ export const RosaryAndChapletView: React.FC = () => {
                     setSpokenAudioEnabled(true);
                     setIsAutoAdvancing(true);
                   }}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-amber-400/60"
+                  className="flex items-center gap-2 px-5 py-3 rounded-lg bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-amber-400/60"
                 >
                   <Play className="w-4 h-4 fill-current" />
                   <span>START AUTOPLAY</span>
@@ -396,7 +396,7 @@ export const RosaryAndChapletView: React.FC = () => {
                     setIsAutoAdvancing(false);
                     SacredReader.stop();
                   }}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-amber-400/60 animate-pulse"
+                  className="flex items-center gap-2 px-5 py-3 rounded-lg bg-amber-700 hover:bg-amber-800 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-amber-400/60 animate-pulse"
                 >
                   <Pause className="w-4 h-4 fill-current" />
                   <span>Pause Continuous Prayer</span>
@@ -422,7 +422,7 @@ export const RosaryAndChapletView: React.FC = () => {
                     setCountdown(autoAdvanceSeconds);
                     SacredReader.stop();
                   }}
-                  className={`p-3 rounded-xl text-left border transition-all cursor-pointer ${
+                  className={`p-3 rounded-lg text-left border transition-all cursor-pointer ${
                     isSelected
                       ? 'bg-amber-900 text-amber-50 border-amber-800 shadow-md ring-2 ring-amber-700/50'
                       : 'bg-white hover:bg-stone-50 border-stone-200 text-stone-800'
@@ -630,7 +630,7 @@ export const RosaryAndChapletView: React.FC = () => {
                       setIsAutoAdvancing(next);
                       if (!next) SacredReader.stop();
                     }}
-                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       isAutoAdvancing
                         ? 'bg-amber-600 text-white animate-pulse'
                         : 'bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300'
@@ -643,7 +643,7 @@ export const RosaryAndChapletView: React.FC = () => {
                   <select
                     value={prayerVoiceRate}
                     onChange={(e) => setPrayerVoiceRate(Number(e.target.value))}
-                    className="text-xs py-2 px-2.5 rounded-xl bg-stone-100 border border-stone-300 font-medium text-stone-700"
+                    className="text-xs py-2 px-2.5 rounded-lg bg-stone-100 border border-stone-300 font-medium text-stone-700"
                     title="Prayer voice speed"
                   >
                     <option value={0.68}>Slow and Solemn</option>
@@ -658,7 +658,7 @@ export const RosaryAndChapletView: React.FC = () => {
                       if (!next) SacredReader.stop();
                       else if (hasStartedRosary && !isAutoAdvancing) triggerAudioForStep(currentRosaryStep.prayerText);
                     }}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-medium transition-colors cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium transition-colors cursor-pointer ${
                       spokenAudioEnabled ? 'bg-amber-700 text-white border-amber-800 shadow-xs' : 'bg-stone-100 text-stone-600 border-stone-300'
                     }`}
                     title={spokenAudioEnabled ? 'Human voice praying aloud (Click to mute)' : 'Voice muted (Click to enable human voice)'}
@@ -672,7 +672,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 <div className="flex items-center gap-2 self-end sm:self-auto">
                   <button
                     onClick={handleReset}
-                    className="p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
+                    className="p-2.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
                     title="Restart Rosary from Beginning"
                   >
                     <RotateCcw className="w-4 h-4" />
@@ -681,7 +681,7 @@ export const RosaryAndChapletView: React.FC = () => {
                   <button
                     onClick={handlePrevBead}
                     disabled={rosaryStepIndex === 0}
-                    className="flex items-center gap-1 px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 disabled:opacity-40 text-xs font-semibold transition-colors cursor-pointer"
+                    className="flex items-center gap-1 px-4 py-2.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 disabled:opacity-40 text-xs font-semibold transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Previous</span>
@@ -689,7 +689,7 @@ export const RosaryAndChapletView: React.FC = () => {
 
                   <button
                     onClick={handleNextBead}
-                    className="flex items-center gap-1 px-6 py-2.5 rounded-xl bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs shadow-md transition-all cursor-pointer"
+                    className="flex items-center gap-1 px-6 py-2.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs shadow-md transition-all cursor-pointer"
                   >
                     <span>Next Bead</span>
                     <ChevronRight className="w-4 h-4" />
@@ -753,7 +753,7 @@ export const RosaryAndChapletView: React.FC = () => {
                         setSpokenAudioEnabled(true);
                         setIsAutoAdvancing(true);
                       }}
-                      className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-red-700 via-red-800 to-red-900 hover:from-red-600 hover:to-red-800 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-red-400/60"
+                      className="flex items-center gap-2 px-5 py-3 rounded-lg bg-gradient-to-r from-red-700 via-red-800 to-red-900 hover:from-red-600 hover:to-red-800 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-red-400/60"
                     >
                       <Play className="w-4 h-4 fill-current" />
                       <span>START AUTOPLAY</span>
@@ -764,7 +764,7 @@ export const RosaryAndChapletView: React.FC = () => {
                         setIsAutoAdvancing(false);
                         SacredReader.stop();
                       }}
-                      className="flex items-center gap-2 px-5 py-3 rounded-xl bg-red-800 hover:bg-red-900 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-red-400/60 animate-pulse"
+                      className="flex items-center gap-2 px-5 py-3 rounded-lg bg-red-800 hover:bg-red-900 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-red-400/60 animate-pulse"
                     >
                       <Pause className="w-4 h-4 fill-current" />
                       <span>Pause Continuous Prayer</span>
@@ -781,7 +781,7 @@ export const RosaryAndChapletView: React.FC = () => {
                         SacredReader.stop();
                       }
                     }}
-                    className={`flex items-center gap-2 px-5 py-3 rounded-xl font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border ${
+                    className={`flex items-center gap-2 px-5 py-3 rounded-lg font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border ${
                       isPlayingTrishShortSong
                         ? 'bg-amber-400 text-stone-950 border-amber-200 ring-2 ring-amber-300/60'
                         : 'bg-stone-900/90 hover:bg-stone-800 text-amber-200 border-amber-400/50'
@@ -1018,7 +1018,7 @@ export const RosaryAndChapletView: React.FC = () => {
                       setIsAutoAdvancing(next);
                       if (!next) SacredReader.stop();
                     }}
-                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       isAutoAdvancing
                         ? 'bg-red-700 text-white animate-pulse'
                         : 'bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300'
@@ -1031,7 +1031,7 @@ export const RosaryAndChapletView: React.FC = () => {
                   <select
                     value={prayerVoiceRate}
                     onChange={(e) => setPrayerVoiceRate(Number(e.target.value))}
-                    className="text-xs py-2 px-2.5 rounded-xl bg-stone-100 border border-stone-300 font-medium text-stone-700"
+                    className="text-xs py-2 px-2.5 rounded-lg bg-stone-100 border border-stone-300 font-medium text-stone-700"
                     title="Prayer voice speed"
                   >
                     <option value={0.68}>Slow and Solemn</option>
@@ -1046,7 +1046,7 @@ export const RosaryAndChapletView: React.FC = () => {
                       if (!next) SacredReader.stop();
                       else if (hasStartedMercy && !isAutoAdvancing) triggerAudioForStep(currentMercyStep.prayerText);
                     }}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-medium transition-colors cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium transition-colors cursor-pointer ${
                       spokenAudioEnabled ? 'bg-red-800 text-white border-red-900 shadow-xs' : 'bg-stone-100 text-stone-600 border-stone-300'
                     }`}
                     title={spokenAudioEnabled ? 'Human voice praying aloud (Click to mute)' : 'Voice muted (Click to enable human voice)'}
@@ -1059,7 +1059,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handleReset}
-                    className="p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
+                    className="p-2.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
                     title="Restart Chaplet"
                   >
                     <RotateCcw className="w-4 h-4" />
@@ -1068,7 +1068,7 @@ export const RosaryAndChapletView: React.FC = () => {
                   <button
                     onClick={handlePrevBead}
                     disabled={mercyStepIndex === 0}
-                    className="flex items-center gap-1 px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 disabled:opacity-40 text-xs font-semibold cursor-pointer"
+                    className="flex items-center gap-1 px-4 py-2.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 disabled:opacity-40 text-xs font-semibold cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Back</span>
@@ -1076,7 +1076,7 @@ export const RosaryAndChapletView: React.FC = () => {
 
                   <button
                     onClick={handleNextBead}
-                    className="flex items-center gap-1 px-6 py-2.5 rounded-xl bg-red-900 hover:bg-red-800 text-white font-semibold text-xs shadow-md transition-all cursor-pointer"
+                    className="flex items-center gap-1 px-6 py-2.5 rounded-lg bg-red-900 hover:bg-red-800 text-white font-semibold text-xs shadow-md transition-all cursor-pointer"
                   >
                     <span>Next Bead</span>
                     <ChevronRight className="w-4 h-4" />
@@ -1221,7 +1221,7 @@ export const RosaryAndChapletView: React.FC = () => {
                           setCopiedPromiseNum(item.number);
                           setTimeout(() => setCopiedPromiseNum(null), 2000);
                         }}
-                        className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white text-xs sm:text-sm font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white text-xs sm:text-sm font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
                         title="Copy promise"
                       >
                         {isCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -1232,7 +1232,7 @@ export const RosaryAndChapletView: React.FC = () => {
                         onClick={() => {
                           SacredReader.speak(`${item.title}. Jesus says: ${item.promise}`);
                         }}
-                        className="p-2 rounded-xl bg-amber-500/25 hover:bg-amber-500/40 text-amber-200 transition-colors cursor-pointer"
+                        className="p-2 rounded-lg bg-amber-500/25 hover:bg-amber-500/40 text-amber-200 transition-colors cursor-pointer"
                         title="Listen with human voice"
                         aria-label="Listen with human voice"
                       >
@@ -1301,7 +1301,7 @@ export const RosaryAndChapletView: React.FC = () => {
                           setCopiedExcerptId(excerpt.id);
                           setTimeout(() => setCopiedExcerptId(null), 2000);
                         }}
-                        className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white text-xs font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white text-xs font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
                         title="Copy excerpt"
                       >
                         {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -1321,7 +1321,7 @@ export const RosaryAndChapletView: React.FC = () => {
                             );
                           }
                         }}
-                        className={`p-2 rounded-xl text-xs font-serif flex items-center transition-colors cursor-pointer ${
+                        className={`p-2 rounded-lg text-xs font-serif flex items-center transition-colors cursor-pointer ${
                           isReading
                             ? 'bg-purple-700 text-white animate-pulse'
                             : 'bg-purple-500/20 hover:bg-purple-500/35 text-purple-200 border border-purple-400/30'

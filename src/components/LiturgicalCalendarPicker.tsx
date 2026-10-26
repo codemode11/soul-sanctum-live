@@ -172,7 +172,7 @@ export const LiturgicalCalendarPicker: React.FC<LiturgicalCalendarPickerProps> =
       <div className="px-3 py-1.5 bg-[#CBB5A0]/85 border-b border-[#BFA287]/80 flex flex-wrap items-center justify-between gap-1 text-[11px]">
         <button
           onClick={handleJumpToToday}
-          className="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-serif font-bold bg-[#EFE4D7] text-[#341D10] hover:bg-[#FAF4ED] border border-[#A78262]/60 transition-all cursor-pointer shadow-2xs"
+          className="flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[10px] font-serif font-bold bg-[#EFE4D7] text-[#341D10] hover:bg-[#FAF4ED] border border-[#A78262]/60 transition-all cursor-pointer shadow-2xs"
           title={`Select ${todayLabel}`}
         >
           <Clock className="w-2.5 h-2.5 text-[#5D371F]" />

@@ -212,7 +212,7 @@ export const Header: React.FC<HeaderProps> = ({
               {onToggleMobileMenu && (
                 <button
                   onClick={onToggleMobileMenu}
-                  className="lg:hidden flex items-center p-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 transition-all cursor-pointer backdrop-blur-md"
+                  className="lg:hidden flex items-center p-2 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 transition-all cursor-pointer backdrop-blur-md"
                   title="Navigation"
                   aria-label="Navigation"
                 >

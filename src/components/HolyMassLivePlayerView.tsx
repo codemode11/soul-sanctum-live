@@ -149,7 +149,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
           <div className="flex flex-wrap md:flex-col items-start md:items-end gap-2 shrink-0">
             <button
               onClick={() => setIsTheaterMode(!isTheaterMode)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#6B4423]/40 hover:bg-[#6B4423]/65 border border-[#8B5A2B]/70 text-[#F5D7B2] text-xs font-sans font-semibold transition-all cursor-pointer backdrop-blur-md"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#6B4423]/40 hover:bg-[#6B4423]/65 border border-[#8B5A2B]/70 text-[#F5D7B2] text-xs font-sans font-semibold transition-all cursor-pointer backdrop-blur-md"
             >
               <Maximize2 className="w-3.5 h-3.5" />
               <span>{isTheaterMode ? 'Standard View' : 'Theater Mode'}</span>
@@ -157,7 +157,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
             <button
               onClick={handleShareStream}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-300 text-xs font-sans font-medium transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-300 text-xs font-sans font-medium transition-all cursor-pointer"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
               <span>{copied ? 'Link Copied' : 'Share Livestream'}</span>
@@ -203,7 +203,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                     href={selectedStream.youtubeLiveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-red-600/80 hover:bg-red-600 text-white text-[10px] font-sans font-semibold backdrop-blur-md shadow-md transition-all"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-600/80 hover:bg-red-600 text-white text-[10px] font-sans font-semibold backdrop-blur-md shadow-md transition-all"
                     title="Open on YouTube Live"
                   >
                     <span>Open YouTube Live</span>
@@ -212,7 +212,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                 )}
                 <button
                   onClick={() => setStreamKey(Date.now())}
-                  className="p-1.5 rounded-full bg-black/70 text-stone-300 hover:text-white border border-white/20 hover:border-amber-400 transition-colors cursor-pointer"
+                  className="p-1.5 rounded-lg bg-black/70 text-stone-300 hover:text-white border border-white/20 hover:border-amber-400 transition-colors cursor-pointer"
                   title="Reload video stream"
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
@@ -364,7 +364,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
                 <button
                   onClick={handleToggleSpiritualCommunionAudio}
-                  className={`p-2 rounded-full border transition-all cursor-pointer ${
+                  className={`p-2 rounded-lg border transition-all cursor-pointer ${
                     isPrayingSpiritualCommunion
                       ? 'bg-[#6B4423] border-[#5A381C] text-white shadow-xs'
                       : 'bg-white border-stone-300 text-stone-600 hover:text-[#6B4423]'
@@ -462,7 +462,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                 <button
                   type="submit"
                   disabled={!candleIntention.trim()}
-                  className="w-full py-2 rounded-xl bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#8B5A2B]/60 disabled:opacity-40 text-amber-50 font-cinzel text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md"
+                  className="w-full py-2 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#8B5A2B]/60 disabled:opacity-40 text-amber-50 font-cinzel text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md"
                 >
                   <Flame className="w-3.5 h-3.5 fill-current" />
                   <span>Light Candle and Offer Petitions</span>
@@ -520,7 +520,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             <button
               key={r.id}
               onClick={() => setSelectedRegion(r.id)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-cinzel transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer ${
                 selectedRegion === r.id
                   ? 'bg-stone-900 text-amber-300 font-bold shadow-xs border border-amber-500/40'
                   : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'

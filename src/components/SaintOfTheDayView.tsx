@@ -760,14 +760,14 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
               <button
                 onClick={handleResetToToday}
-                className="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-stone-900/85 hover:bg-stone-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white backdrop-blur-md transition-colors shadow-xs"
+                className="px-3.5 py-2.5 rounded-lg text-xs font-semibold bg-stone-900/85 hover:bg-stone-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white backdrop-blur-md transition-colors shadow-xs"
               >
                 Today
               </button>
 
               <button
                 onClick={() => setIsDirectoryOpen(prev => !prev)}
-                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold border backdrop-blur-md transition-colors ${
+                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold border backdrop-blur-md transition-colors ${
                   isDirectoryOpen
                     ? 'bg-amber-800 text-white border-amber-700 shadow-xs'
                     : 'bg-white/50 dark:bg-stone-900/55 text-stone-900 dark:text-stone-200 border-white/70 dark:border-stone-700/70 hover:bg-white/75 dark:hover:bg-stone-800/75'
@@ -816,7 +816,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                         setImgError(false);
                         setIsDirectoryOpen(false);
                       }}
-                      className={`text-left p-3 rounded-xl border backdrop-blur-md transition-all flex items-start justify-between gap-3 ${
+                      className={`text-left p-3 rounded-lg border backdrop-blur-md transition-all flex items-start justify-between gap-3 ${
                         isSelected
                           ? 'bg-amber-800/90 text-white border-amber-700 shadow-xs'
                           : 'bg-white/50 dark:bg-stone-900/55 hover:bg-white/75 dark:hover:bg-stone-800/75 text-stone-950 dark:text-stone-100 border-white/65 dark:border-stone-700/60'
@@ -926,7 +926,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               <div className="pt-6 mt-6 border-t border-stone-900/15 dark:border-stone-700/60 flex items-center gap-2.5">
                 <button
                   onClick={handleReadAloud}
-                  className={`flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
+                  className={`flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
                     isReadingAloud
                       ? 'bg-amber-700 text-white'
                       : 'bg-stone-900/90 hover:bg-stone-900 dark:bg-stone-800 dark:hover:bg-stone-700 text-white'
@@ -938,7 +938,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
                 <button
                   onClick={handleCopy}
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-white/70 dark:border-stone-700 bg-white/55 dark:bg-stone-900/60 hover:bg-white/80 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-200 text-xs font-semibold backdrop-blur-md transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-lg border border-white/70 dark:border-stone-700 bg-white/55 dark:bg-stone-900/60 hover:bg-white/80 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-200 text-xs font-semibold backdrop-blur-md transition-colors"
                   title="Copy Saint Biography & Martyrology"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}

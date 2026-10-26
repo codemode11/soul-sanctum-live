@@ -411,28 +411,28 @@ export const Navigation: React.FC<NavigationProps> = ({
                 onSelectTab(item.id);
                 if (onCloseMobile) onCloseMobile();
               }}
-              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg cursor-pointer select-none group text-left transform-gpu origin-left will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] antialiased [text-rendering:geometricPrecision] transition-[transform,background-color,border-color,box-shadow,color] duration-200 ease-out ${
+              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg cursor-pointer select-none group text-left transform-gpu origin-left will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] antialiased [text-rendering:geometricPrecision] transition-[transform,background-color,border-color,box-shadow,color] duration-700 ease-in-out ${
                 isActive
-                  ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] font-semibold backdrop-blur-md scale-[1.025]'
-                  : 'text-stone-300 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border border-transparent hover:scale-[1.025]'
+                  ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] backdrop-blur-md scale-[1.025]'
+                  : 'text-stone-300 scale-100 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border border-transparent hover:scale-[1.025]'
               }`}
             >
               <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className={`p-2 rounded-lg transition-all duration-200 ease-out shrink-0 transform-gpu origin-center will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] ${
+                <div className={`p-2 rounded-lg transition-all duration-700 ease-in-out shrink-0 transform-gpu origin-center will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] ${
                   isActive 
                     ? 'bg-[#FFD700]/25 text-[#FFD700] scale-110 shadow-[0_0_10px_rgba(255,215,0,0.3)]' 
-                    : 'bg-white/5 text-stone-400 group-hover:text-[#FFD700] group-hover:bg-[#FFD700]/20 group-hover:scale-110 group-hover:shadow-[0_0_10px_rgba(255,215,0,0.25)]'
+                    : 'bg-white/5 text-stone-400 scale-100 group-hover:text-[#FFD700] group-hover:bg-[#FFD700]/20 group-hover:scale-110 group-hover:shadow-[0_0_10px_rgba(255,215,0,0.25)]'
                 }`}>
-                  <Icon className={`w-5 h-5 shrink-0 transition-colors duration-200 ${
+                  <Icon className={`w-5 h-5 shrink-0 transition-colors duration-700 ease-in-out ${
                     isActive ? 'text-[#FFD700]' : 'text-stone-400 group-hover:text-[#FFD700]'
                   }`} />
                 </div>
                 <div className="min-w-0 flex-1 overflow-visible">
-                  {/* Text increases noticeably in size on hover and active states without layout reflow or text wobbling */}
-                  <span className={`inline-block origin-left transition-[transform,color] duration-200 ease-out transform-gpu will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] antialiased [text-rendering:geometricPrecision] text-base leading-tight font-serif whitespace-nowrap ${
+                  {/* Text slowly and smoothly increases in size on hover and active states without abrupt jumping */}
+                  <span className={`inline-block origin-left transition-[transform,color] duration-700 ease-in-out transform-gpu will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] antialiased [text-rendering:geometricPrecision] text-base leading-tight font-serif font-medium whitespace-nowrap ${
                     isActive
-                      ? 'font-semibold text-[#FFD700] drop-shadow-xs scale-[1.15]'
-                      : 'font-medium text-stone-200 group-hover:text-[#FFD700] group-hover:scale-[1.15]'
+                      ? 'text-[#FFD700] drop-shadow-xs scale-[1.14]'
+                      : 'text-stone-200 scale-100 group-hover:text-[#FFD700] group-hover:scale-[1.14]'
                   }`}>
                     {item.label}
                   </span>
@@ -519,7 +519,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       <div className="lg:hidden w-full sticky top-0 z-30 bg-stone-950/90 backdrop-blur-xl border-b border-amber-500/25 px-4 py-2.5 flex items-center justify-between text-stone-100 shadow-lg">
         <button
           onClick={() => onCloseMobile && onCloseMobile()}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-semibold cursor-pointer"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-semibold cursor-pointer"
         >
           <Layers className="w-4 h-4 text-amber-300" />
           <span>Index</span>
@@ -561,7 +561,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               </div>
               <button
                 onClick={onCloseMobile}
-                className="p-2 rounded-xl text-stone-400 hover:text-white bg-white/5 cursor-pointer"
+                className="p-2 rounded-lg text-stone-400 hover:text-white bg-white/5 cursor-pointer"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />

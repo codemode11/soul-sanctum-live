@@ -234,7 +234,7 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
                   setActiveArticle(null);
                   if (onClearInitialArticle) onClearInitialArticle();
                 }}
-                className="px-4 py-2 rounded-xl bg-stone-900 text-white text-xs font-semibold cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-stone-900 text-white text-xs font-semibold cursor-pointer"
               >
                 Close Article
               </button>

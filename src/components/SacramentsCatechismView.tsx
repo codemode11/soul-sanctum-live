@@ -200,7 +200,7 @@ export const SacramentsCatechismView: React.FC = () => {
             <button
               key={s.id}
               onClick={() => setSelectedSacrament(s)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 isSelected
                   ? 'bg-amber-900 text-amber-50 shadow-xs'
                   : 'bg-stone-100 hover:bg-stone-200 text-stone-700'

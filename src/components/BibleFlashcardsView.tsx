@@ -468,7 +468,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
             {/* Shuffle Button */}
             <button
               onClick={handleShuffle}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition-colors cursor-pointer border border-stone-200"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition-colors cursor-pointer border border-stone-200"
               title="Randomize flashcard deck"
             >
               <Shuffle className="w-3.5 h-3.5 text-stone-500" />
@@ -603,7 +603,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
                       )}
 
                       <div className="pt-6">
-                        <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-stone-100 hover:bg-amber-100 text-stone-600 hover:text-amber-900 text-xs font-semibold transition-colors">
+                        <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-stone-100 hover:bg-amber-100 text-stone-600 hover:text-amber-900 text-xs font-semibold transition-colors">
                           <RotateCw className="w-3.5 h-3.5 text-amber-600" />
                           <span>Tap card to reveal full Scripture passage</span>
                         </span>
@@ -759,7 +759,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
 
                     <button
                       onClick={() => setShowFullFirstLetter(prev => !prev)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-semibold text-xs transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-semibold text-xs transition-colors cursor-pointer"
                     >
                       {showFullFirstLetter ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                       <span>{showFullFirstLetter ? 'Show First Letters' : 'Peek Full Text'}</span>
@@ -876,7 +876,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={handleToggleSpeak}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs ${
                     isSpeaking
                       ? 'bg-[#6B4423] text-white animate-pulse'
                       : 'bg-white hover:bg-[#FAF4EE] text-[#5A381C] border border-stone-200'
@@ -917,7 +917,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
 
                 <button
                   onClick={handleCopy}
-                  className="p-2 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors cursor-pointer"
+                  className="p-2 rounded-lg bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors cursor-pointer"
                   title="Copy verse and citation"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
@@ -928,7 +928,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
               {studyMode === 'flip' && (
                 <button
                   onClick={() => setIsFlipped(prev => !prev)}
-                  className="px-4 py-2 rounded-xl bg-amber-100/80 hover:bg-amber-200 text-amber-900 text-xs font-semibold font-cinzel transition-colors cursor-pointer border border-amber-300/60 flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-lg bg-amber-100/80 hover:bg-amber-200 text-amber-900 text-xs font-semibold font-cinzel transition-colors cursor-pointer border border-amber-300/60 flex items-center gap-1.5"
                 >
                   <RotateCw className="w-3.5 h-3.5 text-amber-800" />
                   <span>{isFlipped ? 'Show Front' : 'Show Verse'}</span>
@@ -939,7 +939,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={handlePrev}
-                  className="p-2 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors cursor-pointer"
+                  className="p-2 rounded-lg bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors cursor-pointer"
                   title="Previous verse (Left Arrow)"
                   aria-label="Previous verse"
                 >
@@ -948,7 +948,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
 
                 <button
                   onClick={handleNext}
-                  className="px-4 py-2 rounded-xl bg-amber-900 hover:bg-amber-800 text-amber-50 text-xs font-cinzel font-bold flex items-center gap-1 transition-all cursor-pointer shadow-xs hover:scale-102"
+                  className="px-4 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-50 text-xs font-cinzel font-bold flex items-center gap-1 transition-all cursor-pointer shadow-xs hover:scale-102"
                   title="Next verse (Right Arrow)"
                   aria-label="Next verse"
                 >

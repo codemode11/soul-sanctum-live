@@ -137,13 +137,13 @@ export const MedjugorjeMessagesView: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowFiveStones(!showFiveStones)}
-              className="px-3 py-1 rounded-full bg-blue-500/20 hover:bg-blue-500/35 border border-blue-400/40 text-blue-200 text-xs font-serif transition-colors cursor-pointer"
+              className="px-3 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/35 border border-blue-400/40 text-blue-200 text-xs font-serif transition-colors cursor-pointer"
             >
               5 Spiritual Stones
             </button>
             <button
               onClick={() => setShowVaticanNote(!showVaticanNote)}
-              className="px-3 py-1 rounded-full bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-xs font-serif transition-colors cursor-pointer"
+              className="px-3 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-xs font-serif transition-colors cursor-pointer"
             >
               Vatican Nihil Obstat
             </button>
@@ -238,7 +238,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleToggleSpeak(latestMessage)}
-              className={`p-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 playingMessageId === latestMessage.id
                   ? 'bg-amber-600 text-white animate-pulse'
                   : 'bg-amber-900/60 hover:bg-amber-800 text-amber-100 border border-amber-700/60'
@@ -255,7 +255,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
 
             <button
               onClick={() => handleCopy(latestMessage)}
-              className="p-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-amber-200 border border-amber-800/40 transition-colors cursor-pointer"
+              className="p-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-amber-200 border border-amber-800/40 transition-colors cursor-pointer"
               title="Copy message to clipboard"
               aria-label="Copy message"
             >
@@ -441,7 +441,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleToggleSpeak(msg)}
-                    className={`p-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       isPlaying
                         ? 'bg-amber-600 text-white animate-pulse'
                         : 'bg-white/5 hover:bg-white/10 text-stone-300 border border-white/10'
@@ -454,7 +454,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
 
                   <button
                     onClick={() => handleCopy(msg)}
-                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-stone-300 border border-white/10 transition-colors cursor-pointer"
+                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-stone-300 border border-white/10 transition-colors cursor-pointer"
                     title="Copy message"
                     aria-label="Copy message"
                   >

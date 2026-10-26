@@ -184,7 +184,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
                 <button
                   key={artist}
                   onClick={() => setFilterArtist(artist)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-serif font-semibold whitespace-nowrap transition-colors cursor-pointer border ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-serif font-semibold whitespace-nowrap transition-colors cursor-pointer border ${
                     isActive
                       ? 'bg-stone-900 dark:bg-amber-700 text-white border-stone-900 dark:border-amber-600 shadow-xs'
                       : 'bg-white/75 dark:bg-stone-900/75 text-stone-800 dark:text-stone-300 border-stone-300/80 dark:border-stone-800 hover:bg-white dark:hover:bg-stone-800'
@@ -255,7 +255,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               {/* Left Horizontal Gallery Arrow */}
               <button
                 onClick={() => handleStepMasterpiece(-1)}
-                className="absolute z-20 left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                className="absolute z-20 left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
                 title="Previous Masterpiece (Left Arrow)"
                 aria-label="Previous Masterpiece"
               >
@@ -265,7 +265,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               {/* Right Horizontal Gallery Arrow */}
               <button
                 onClick={() => handleStepMasterpiece(1)}
-                className="absolute z-20 right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                className="absolute z-20 right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
                 title="Next Masterpiece (Right Arrow)"
                 aria-label="Next Masterpiece"
               >
@@ -276,7 +276,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               <div className="absolute z-20 top-3.5 right-3.5 flex items-center gap-2">
                 <button
                   onClick={handleToggleAudio}
-                  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-serif font-semibold backdrop-blur-md border transition-colors cursor-pointer shadow-md ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-serif font-semibold backdrop-blur-md border transition-colors cursor-pointer shadow-md ${
                     isReadingAloud
                       ? 'bg-amber-700 text-white border-amber-400'
                       : 'bg-stone-950/75 hover:bg-stone-900 text-stone-100 border-stone-700/80'
@@ -289,7 +289,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
 
                 <button
                   onClick={() => setIsFullscreenModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-stone-950/75 hover:bg-amber-800 text-stone-100 text-xs font-serif font-semibold backdrop-blur-md border border-amber-500/30 transition-colors cursor-pointer shadow-md"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-950/75 hover:bg-amber-800 text-stone-100 text-xs font-serif font-semibold backdrop-blur-md border border-amber-500/30 transition-colors cursor-pointer shadow-md"
                   title="Full-Screen Visio Divina View"
                 >
                   <Maximize2 className="w-4 h-4 text-amber-400" />
@@ -364,7 +364,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
 
                   <button
                     onClick={() => setIsFullscreenModalOpen(true)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 dark:bg-amber-700 dark:hover:bg-amber-600 text-white text-xs font-serif font-semibold transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-stone-900 hover:bg-stone-800 dark:bg-amber-700 dark:hover:bg-amber-600 text-white text-xs font-serif font-semibold transition-colors cursor-pointer"
                   >
                     <Eye className="w-4 h-4" />
                     <span>Enter Full-Screen Contemplation</span>
@@ -391,7 +391,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleScrollFilmstrip('left')}
-                className="p-2 rounded-xl bg-white/80 dark:bg-stone-900/80 hover:bg-white dark:hover:bg-stone-800 border border-stone-300/80 dark:border-stone-700 text-stone-800 dark:text-stone-200 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-white/80 dark:bg-stone-900/80 hover:bg-white dark:hover:bg-stone-800 border border-stone-300/80 dark:border-stone-700 text-stone-800 dark:text-stone-200 transition-colors cursor-pointer"
                 title="Scroll Gallery Left"
                 aria-label="Scroll Gallery Left"
               >
@@ -399,7 +399,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               </button>
               <button
                 onClick={() => handleScrollFilmstrip('right')}
-                className="p-2 rounded-xl bg-white/80 dark:bg-stone-900/80 hover:bg-white dark:hover:bg-stone-800 border border-stone-300/80 dark:border-stone-700 text-stone-800 dark:text-stone-200 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-white/80 dark:bg-stone-900/80 hover:bg-white dark:hover:bg-stone-800 border border-stone-300/80 dark:border-stone-700 text-stone-800 dark:text-stone-200 transition-colors cursor-pointer"
                 title="Scroll Gallery Right"
                 aria-label="Scroll Gallery Right"
               >
@@ -420,7 +420,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
                 <button
                   key={art.id}
                   onClick={() => handleSelectArt(art)}
-                  className={`group text-left shrink-0 w-64 sm:w-72 rounded-2xl overflow-hidden border transition-all cursor-pointer flex flex-col justify-between ${
+                  className={`group text-left shrink-0 w-64 sm:w-72 rounded-lg overflow-hidden border transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
                       ? 'bg-stone-900 text-white border-amber-600 ring-2 ring-amber-500/50 shadow-lg'
                       : 'bg-white/70 dark:bg-stone-900/70 hover:bg-white dark:hover:bg-stone-800/90 text-stone-900 dark:text-stone-100 border-stone-300/80 dark:border-stone-800'
@@ -476,21 +476,21 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleStepMasterpiece(-1)}
-                className="p-2 rounded-full bg-stone-800 text-stone-300 hover:text-white cursor-pointer"
+                className="p-2 rounded-lg bg-stone-800 text-stone-300 hover:text-white cursor-pointer"
                 title="Previous Masterpiece"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => handleStepMasterpiece(1)}
-                className="p-2 rounded-full bg-stone-800 text-stone-300 hover:text-white cursor-pointer"
+                className="p-2 rounded-lg bg-stone-800 text-stone-300 hover:text-white cursor-pointer"
                 title="Next Masterpiece"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setIsFullscreenModalOpen(false)}
-                className="p-2 rounded-full bg-stone-800 text-stone-300 hover:text-white cursor-pointer"
+                className="p-2 rounded-lg bg-stone-800 text-stone-300 hover:text-white cursor-pointer"
                 title="Close Fullscreen"
               >
                 <X className="w-5 h-5" />

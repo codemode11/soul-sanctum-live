@@ -83,7 +83,7 @@ export const EmblemSelectorModal: React.FC<EmblemSelectorModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full bg-stone-200/70 hover:bg-stone-300 text-stone-600 hover:text-stone-900 transition-colors cursor-pointer shrink-0 ml-2"
+            className="p-2 rounded-lg bg-stone-200/70 hover:bg-stone-300 text-stone-600 hover:text-stone-900 transition-colors cursor-pointer shrink-0 ml-2"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -161,7 +161,7 @@ export const EmblemSelectorModal: React.FC<EmblemSelectorModalProps> = ({
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                  className={`px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
                     activeCategory === cat.id
                       ? 'bg-amber-900 text-amber-50 font-semibold shadow-xs'
                       : 'bg-stone-200/80 hover:bg-stone-300 text-stone-700'
@@ -327,7 +327,7 @@ export const EmblemSelectorModal: React.FC<EmblemSelectorModalProps> = ({
           </p>
           <button
             onClick={onClose}
-            className="w-full sm:w-auto px-6 py-2 rounded-xl bg-amber-900 hover:bg-amber-950 text-amber-100 font-cinzel text-xs font-bold tracking-wider transition-colors cursor-pointer shadow-sm"
+            className="w-full sm:w-auto px-6 py-2 rounded-lg bg-amber-900 hover:bg-amber-950 text-amber-100 font-cinzel text-xs font-bold tracking-wider transition-colors cursor-pointer shadow-sm"
           >
             Apply and Close
           </button>

@@ -172,7 +172,7 @@ export const PodcastPlayerBar: React.FC<PodcastPlayerBarProps> = ({
             {/* Rewind 15s */}
             <button
               onClick={() => onSeek(Math.max(0, currentTime - 15))}
-              className="p-1.5 sm:p-2 rounded-full text-stone-300 hover:text-amber-200 hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-lg text-stone-300 hover:text-amber-200 hover:bg-white/10 transition-colors cursor-pointer"
               title="Rewind 15 seconds"
               aria-label="Rewind 15 seconds"
             >
@@ -182,7 +182,7 @@ export const PodcastPlayerBar: React.FC<PodcastPlayerBarProps> = ({
             {/* Play/Pause Button */}
             <button
               onClick={onTogglePlay}
-              className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 flex items-center justify-center shadow-[0_0_18px_rgba(251,191,36,0.5)] hover:scale-105 transition-all cursor-pointer shrink-0"
+              className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 flex items-center justify-center shadow-[0_0_18px_rgba(251,191,36,0.5)] hover:scale-105 transition-all cursor-pointer shrink-0"
               title={isPlaying ? 'Pause' : 'Play Catholic Podcast'}
               aria-label={isPlaying ? 'Pause' : 'Play Catholic Podcast'}
             >
@@ -196,7 +196,7 @@ export const PodcastPlayerBar: React.FC<PodcastPlayerBarProps> = ({
             {/* Forward 30s */}
             <button
               onClick={() => onSeek(Math.min(duration, currentTime + 30))}
-              className="p-1.5 sm:p-2 rounded-full text-stone-300 hover:text-amber-200 hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-lg text-stone-300 hover:text-amber-200 hover:bg-white/10 transition-colors cursor-pointer"
               title="Fast forward 30 seconds"
               aria-label="Fast forward 30 seconds"
             >
@@ -206,7 +206,7 @@ export const PodcastPlayerBar: React.FC<PodcastPlayerBarProps> = ({
             {/* Audio Mode Switcher (Stream vs Clear Reflection Lector) */}
             <button
               onClick={onToggleAudioMode}
-              className={`hidden sm:inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full border transition-all cursor-pointer font-serif ${
+              className={`hidden sm:inline-flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-lg border transition-all cursor-pointer font-serif ${
                 audioMode === 'narration'
                   ? 'bg-amber-500/25 border-amber-400 text-amber-200 shadow-xs'
                   : 'bg-stone-900 border-stone-700 text-stone-400 hover:text-stone-200'

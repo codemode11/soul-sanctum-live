@@ -543,7 +543,7 @@ ${reading.reflection.content}`;
                 onClick={() => onOpenArtViewer && onOpenArtViewer(pairedArt.id)}
                 className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
               >
-                <div className="px-3 py-1.5 rounded-full bg-stone-950/80 text-amber-200 border border-amber-400/40 text-xs font-serif flex items-center gap-1.5">
+                <div className="px-3 py-1.5 rounded-lg bg-stone-950/80 text-amber-200 border border-amber-400/40 text-xs font-serif flex items-center gap-1.5">
                   <Maximize2 className="w-3.5 h-3.5" />
                   <span>Enlarge Masterpiece</span>
                 </div>

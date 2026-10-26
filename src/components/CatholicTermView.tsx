@@ -78,7 +78,7 @@ Catechism: ${term.catechismRef || 'N/A'}`;
               </h2>
               <button
                 onClick={() => handlePronounce(selectedTerm)}
-                className="p-2 rounded-full bg-stone-800 hover:bg-amber-800 text-amber-300 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-stone-800 hover:bg-amber-800 text-amber-300 transition-colors cursor-pointer"
                 title="Hear pronunciation"
               >
                 <Volume2 className="w-4 h-4" />
@@ -207,7 +207,7 @@ Catechism: ${term.catechismRef || 'N/A'}`;
                   setSelectedTerm(term);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`p-4 rounded-xl text-left border transition-all cursor-pointer ${
+                className={`p-4 rounded-lg text-left border transition-all cursor-pointer ${
                   isSelected
                     ? 'bg-amber-50/80 border-amber-600 ring-1 ring-amber-600 shadow-xs'
                     : 'bg-stone-50 hover:bg-stone-100 border-stone-200'

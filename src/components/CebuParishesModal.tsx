@@ -157,7 +157,7 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
                   <button
                     key={parish.id}
                     onClick={() => setSelectedParish(parish)}
-                    className={`w-full text-left p-3.5 rounded-xl transition-all cursor-pointer group flex items-start justify-between gap-3 ${
+                    className={`w-full text-left p-3.5 rounded-lg transition-all cursor-pointer group flex items-start justify-between gap-3 ${
                       isSelected
                         ? 'bg-[#3A2213] text-white border-2 border-amber-500/80 shadow-md'
                         : 'bg-[#ECE2D5] hover:bg-[#F3EBE1] text-[#3A2213] border border-[#8B5A2B]/20'

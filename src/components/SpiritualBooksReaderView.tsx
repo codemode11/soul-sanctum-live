@@ -290,7 +290,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                 setIsAudioPlaying(false);
                 setActiveBookId(null);
               }}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl hover:bg-black/10 transition-colors text-xs font-cinzel font-bold shrink-0 cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-black/10 transition-colors text-xs font-cinzel font-bold shrink-0 cursor-pointer"
               title="Return to Spiritual Library"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -314,7 +314,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
             {/* Table of Contents Trigger */}
             <button
               onClick={() => setIsTocOpen(!isTocOpen)}
-              className="p-2 rounded-xl hover:bg-black/10 transition-colors cursor-pointer relative"
+              className="p-2 rounded-lg hover:bg-black/10 transition-colors cursor-pointer relative"
               title="Table of Contents"
             >
               <ListOrdered className="w-4 h-4" />
@@ -323,7 +323,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
             {/* In-Book Search Trigger */}
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2 rounded-xl hover:bg-black/10 transition-colors cursor-pointer"
+              className="p-2 rounded-lg hover:bg-black/10 transition-colors cursor-pointer"
               title="Search within chapter"
             >
               <Search className="w-4 h-4" />
@@ -332,7 +332,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
             {/* Audio Read-Aloud Button */}
             <button
               onClick={handleToggleAudio}
-              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium transition-all cursor-pointer ${
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                 isAudioPlaying 
                   ? 'bg-amber-700 text-white shadow-md animate-pulse' 
                   : 'hover:bg-black/10'
@@ -355,7 +355,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
             {/* Bookmark Trigger */}
             <button
               onClick={toggleBookmark}
-              className={`p-2 rounded-xl transition-colors cursor-pointer ${
+              className={`p-2 rounded-lg transition-colors cursor-pointer ${
                 isCurrentChapterBookmarked 
                   ? 'text-amber-600 bg-amber-500/15' 
                   : 'hover:bg-black/10'
@@ -372,7 +372,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
             {/* Reading Settings Trigger */}
             <button
               onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className="p-2 rounded-xl hover:bg-black/10 transition-colors cursor-pointer"
+              className="p-2 rounded-lg hover:bg-black/10 transition-colors cursor-pointer"
               title="Typography and Reading Appearance"
             >
               <Settings2 className="w-4 h-4" />
@@ -433,7 +433,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                         setActiveChapterIndex(idx);
                         setIsTocOpen(false);
                       }}
-                      className={`w-full text-left p-3 rounded-xl transition-all cursor-pointer flex items-start justify-between gap-3 ${
+                      className={`w-full text-left p-3 rounded-lg transition-all cursor-pointer flex items-start justify-between gap-3 ${
                         isCurrent 
                           ? `${themeStyles.activeButton} shadow-sm font-bold` 
                           : 'hover:bg-black/5'
@@ -525,7 +525,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                     <button
                       key={s.id}
                       onClick={() => setFontSize(s.id as FontSize)}
-                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
+                      className={`p-2 rounded-lg border text-center transition-all cursor-pointer ${
                         fontSize === s.id 
                           ? `${themeStyles.activeButton} shadow-sm font-bold` 
                           : 'bg-black/5 hover:bg-black/10'
@@ -552,7 +552,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                     <button
                       key={f.id}
                       onClick={() => setFontFamily(f.id as FontFamily)}
-                      className={`p-2.5 rounded-xl border text-xs transition-all cursor-pointer ${
+                      className={`p-2.5 rounded-lg border text-xs transition-all cursor-pointer ${
                         fontFamily === f.id 
                           ? `${themeStyles.activeButton} shadow-sm font-bold` 
                           : 'bg-black/5 hover:bg-black/10'
@@ -576,7 +576,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                       setAudioGender('female');
                       if (isAudioPlaying) handleToggleAudio();
                     }}
-                    className={`w-full p-2.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+                    className={`w-full p-2.5 rounded-lg border text-xs font-medium transition-all cursor-pointer ${
                       audioGender === 'female' 
                         ? `${themeStyles.activeButton} shadow-sm font-bold` 
                         : 'bg-black/5 hover:bg-black/10'
@@ -705,7 +705,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                   setIsAudioPlaying(false);
                   setActiveChapterIndex(activeChapterIndex - 1);
                 }}
-                className={`p-4 rounded-xl border text-left transition-all hover:scale-[1.01] cursor-pointer flex items-center gap-3 ${themeStyles.card}`}
+                className={`p-4 rounded-lg border text-left transition-all hover:scale-[1.01] cursor-pointer flex items-center gap-3 ${themeStyles.card}`}
               >
                 <ChevronLeft className="w-5 h-5 text-amber-700 shrink-0" />
                 <div className="min-w-0">
@@ -728,7 +728,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                   setIsAudioPlaying(false);
                   setActiveChapterIndex(activeChapterIndex + 1);
                 }}
-                className={`p-4 rounded-xl border text-right transition-all hover:scale-[1.01] cursor-pointer flex items-center justify-end gap-3 ${themeStyles.card}`}
+                className={`p-4 rounded-lg border text-right transition-all hover:scale-[1.01] cursor-pointer flex items-center justify-end gap-3 ${themeStyles.card}`}
               >
                 <div className="min-w-0">
                   <div className="text-[10px] uppercase font-cinzel font-semibold opacity-70">
@@ -747,7 +747,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                   setIsAudioPlaying(false);
                   setActiveBookId(null);
                 }}
-                className={`p-4 rounded-xl border text-center transition-all cursor-pointer ${themeStyles.card} font-cinzel font-bold text-sm text-amber-700`}
+                className={`p-4 rounded-lg border text-center transition-all cursor-pointer ${themeStyles.card} font-cinzel font-bold text-sm text-amber-700`}
               >
                 Finished Book • Return to Library
               </button>
@@ -918,7 +918,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                         setActiveBookId(book.id);
                         setActiveChapterIndex(bookmarkedChapter.chapterIndex);
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-[#5C3A21] hover:bg-[#6B4423] text-[#F5D7B2] border border-[#C89F72]/50 text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-lg bg-[#5C3A21] hover:bg-[#6B4423] text-[#F5D7B2] border border-[#C89F72]/50 text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1"
                       title="Jump to saved bookmark"
                     >
                       <BookmarkCheck className="w-3.5 h-3.5" />
@@ -931,7 +931,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                       setActiveBookId(book.id);
                       setActiveChapterIndex(0);
                     }}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#9C6B3B] to-[#7A4E2D] hover:from-[#B07C49] hover:to-[#8B5A2B] border border-[#DFB991]/40 text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#9C6B3B] to-[#7A4E2D] hover:from-[#B07C49] hover:to-[#8B5A2B] border border-[#DFB991]/40 text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer flex items-center gap-1.5"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Open Reader</span>
@@ -956,7 +956,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsLectioGuideOpen(false)}
-                className="p-1.5 rounded-xl hover:bg-white/10 text-stone-400 hover:text-white cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-white/10 text-stone-400 hover:text-white cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1005,7 +1005,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
             <div className="text-center pt-2">
               <button
                 onClick={() => setIsLectioGuideOpen(false)}
-                className="px-6 py-2.5 rounded-xl bg-[#8B5A2B] hover:bg-[#A47148] text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer"
+                className="px-6 py-2.5 rounded-lg bg-[#8B5A2B] hover:bg-[#A47148] text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer"
               >
                 Enter the Library and Read
               </button>

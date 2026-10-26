@@ -128,12 +128,12 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
                 {/* Switch checkbox */}
                 <button
                   onClick={() => handleToggle(pref.id)}
-                  className={`w-11 h-6 rounded-full transition-colors cursor-pointer relative p-0.5 ${
+                  className={`w-11 h-6 rounded-lg transition-colors cursor-pointer relative p-0.5 ${
                     pref.enabled ? 'bg-amber-800' : 'bg-stone-300'
                   }`}
                   title={pref.enabled ? 'Enabled' : 'Disabled'}
                 >
-                  <div className={`w-5 h-5 rounded-full bg-white shadow-xs transition-transform ${
+                  <div className={`w-5 h-5 rounded-md bg-white shadow-xs transition-transform ${
                     pref.enabled ? 'translate-x-5' : 'translate-x-0'
                   }`} />
                 </button>
