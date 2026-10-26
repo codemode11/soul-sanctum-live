@@ -947,11 +947,11 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               </div>
             </div>
 
-            {/* Right Column (8 cols): Title, Epigraph, Biography & Collect Prayer */}
-            <div className="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between space-y-8">
+            {/* Right Column (8 cols): Title, Epigraph, Biography & Collect Prayer — Solid White Background for Lengthy Reading */}
+            <div className="lg:col-span-8 bg-white dark:bg-stone-900 p-6 sm:p-10 lg:p-12 flex flex-col justify-between space-y-8">
               <div className="space-y-8">
                 {/* Saint Title Block */}
-                <div className="border-b border-stone-900/15 dark:border-stone-700/60 pb-6">
+                <div className="border-b border-stone-200 dark:border-stone-700/60 pb-6">
                   <div className="text-xs font-semibold uppercase tracking-widest text-red-950 dark:text-amber-300 mb-2">
                     I · Principal Feast of {selectedSaint.feastDate}
                   </div>
@@ -963,9 +963,9 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                   </p>
                 </div>
 
-                {/* Epigraph Quote (Frosted Glass Hairline Frame) */}
+                {/* Epigraph Quote */}
                 {quoteText && (
-                  <blockquote className="py-5 px-6 bg-white/30 dark:bg-stone-950/35 backdrop-blur-xs border-y border-amber-900/25 dark:border-amber-500/25 text-center rounded-xl">
+                  <blockquote className="py-5 px-6 bg-[#FAF8F5] dark:bg-stone-950/50 border-y border-amber-900/20 dark:border-amber-500/25 text-center rounded-xl">
                     <p className="font-serif italic text-lg sm:text-2xl text-stone-950 dark:text-stone-100 leading-relaxed max-w-2xl mx-auto">
                       &ldquo;{quoteText}&rdquo;
                     </p>
@@ -991,7 +991,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               </div>
 
               {/* Traditional Missal Collect Prayer */}
-              <div className="pt-8 border-t border-stone-900/15 dark:border-stone-700/60">
+              <div className="pt-8 border-t border-stone-200 dark:border-stone-700/60">
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <span className="text-xs font-semibold uppercase tracking-widest text-red-950 dark:text-amber-300">
                     Collect Prayer of the Feast
@@ -1008,7 +1008,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
           </div>
         </article>
 
-        {/* Companion Saints of the Day — 3-Column Frosted Glass Roman Martyrology Grid */}
+        {/* Companion Saints of the Day — 3-Column Roman Martyrology Grid with White Reading Surface */}
         {companionSaints.length > 0 && (
           <section className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-stone-900/15 dark:border-stone-700/60 pb-4">
@@ -1028,7 +1028,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 return (
                   <article
                     key={`${companion.name}-${idx}`}
-                    className="bg-white/35 dark:bg-stone-900/40 backdrop-blur-md rounded-2xl border border-white/60 dark:border-stone-700/60 p-6 flex flex-col justify-between shadow-md hover:bg-white/45 dark:hover:bg-stone-900/55 transition-colors"
+                    className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/90 dark:border-stone-700/60 p-6 flex flex-col justify-between shadow-sm hover:shadow-md transition-all"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">

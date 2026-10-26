@@ -152,7 +152,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
   );
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-3xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
       {/* Switcher Buttons: Treasury of Prayers precedes Community Prayer Wall per user request */}
       <div className="flex rounded-2xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
@@ -359,8 +359,8 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             </div>
           </div>
 
-          {/* Main Selected Prayer Display Card */}
-          <article className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-6">
+          {/* Main Selected Prayer Display Card — Solid White Background for Prayer Text */}
+          <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-6">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
               <div>
@@ -405,7 +405,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             <div className={`grid ${selectedPrayer.latinText ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-6`}>
               
               {/* English */}
-              <div className="p-6 rounded-2xl bg-white/35 backdrop-blur-md border border-white/60 space-y-3">
+              <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200/80 space-y-3">
                 <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-950 block">
                   English Translation
                 </span>
@@ -416,7 +416,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
               {/* Latin */}
               {selectedPrayer.latinText && (
-                <div className="p-6 rounded-2xl bg-white/35 backdrop-blur-md border border-white/60 space-y-3">
+                <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200/80 space-y-3">
                   <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800 block">
                     Textus Latinus (Lingua Sacra)
                   </span>
@@ -430,7 +430,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
             {/* Historical Origin and Liturgical Context */}
             {selectedPrayer.scripturalOrTraditionOrigin && (
-              <div className="p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-sm sm:text-base font-serif-sacred text-stone-800 space-y-1">
+              <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200 text-sm sm:text-base font-serif-sacred text-stone-800 space-y-1">
                 <span className="font-cinzel font-bold text-amber-950 uppercase text-xs block">
                   Apostolic and Spiritual Origin:
                 </span>

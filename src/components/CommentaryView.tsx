@@ -200,7 +200,7 @@ ${selectedCommentary.practicalApplication}`;
   );
 
   return (
-    <div className="max-w-4xl mx-auto space-y-3.5 pb-10">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-3xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 mb-10">
       
       {/* Compact Banner (Cut in half) */}
       <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl px-4 py-3 text-amber-50 shadow-sm border border-amber-900/40">
@@ -401,11 +401,11 @@ ${selectedCommentary.practicalApplication}`;
         </div>
       </div>
 
-      {/* Main Commentary Display Card (Compact, Cut in Half) */}
-      <article className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 sm:p-5 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3.5">
+      {/* Main Commentary Display Card — Solid White Background for Lengthy Exegesis */}
+      <article className="bg-white rounded-xl p-5 sm:p-7 shadow-sm border border-stone-200/90 space-y-4">
         
         {/* Header and Source Details */}
-        <div className="border-b border-stone-300/60 pb-2.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+        <div className="border-b border-stone-200 pb-2.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
           <div>
             <h3 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
               {selectedCommentary.sourceName}
@@ -420,7 +420,7 @@ ${selectedCommentary.practicalApplication}`;
         </div>
 
         {/* The Scripture Text */}
-        <div className="p-3 rounded-md bg-white/35 backdrop-blur-md border border-white/60 border-l-3 border-l-amber-800 space-y-0.5">
+        <div className="p-3.5 rounded-md bg-[#FAF8F5] border border-stone-200/80 border-l-3 border-l-amber-800 space-y-0.5">
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel">
             Sacred Scripture ({selectedCommentary.scriptureReference})
           </span>
@@ -434,7 +434,7 @@ ${selectedCommentary.practicalApplication}`;
 
         {/* Patristic Commentary Sections */}
         <div className="space-y-2.5">
-          <div className="flex items-center justify-between border-b border-stone-300/50 pb-1.5">
+          <div className="flex items-center justify-between border-b border-stone-200 pb-1.5">
             <div className="flex items-center gap-1.5 text-stone-900 font-cinzel font-bold text-xs uppercase tracking-wider">
               <BookOpen className="w-3.5 h-3.5 text-amber-800" />
               <span>Patristic Exposition and Church Fathers</span>
@@ -450,14 +450,14 @@ ${selectedCommentary.practicalApplication}`;
                 return (
                   <div
                     key={sec.id || idx}
-                    className={`rounded-md p-3.5 border backdrop-blur-md transition-all duration-300 ${
+                    className={`rounded-md p-4 border transition-all duration-300 ${
                       isThisSpeaking
-                        ? 'bg-amber-50/60 border-[#8B5A2B] shadow-xs ring-1 ring-[#8B5A2B]/40'
-                        : 'bg-white/35 hover:bg-white/50 border-white/60'
+                        ? 'bg-amber-50/90 border-[#8B5A2B] shadow-xs ring-1 ring-[#8B5A2B]/40'
+                        : 'bg-white hover:bg-stone-50/60 border-stone-200/90 shadow-2xs'
                     }`}
                   >
                     {/* Saint Header */}
-                    <div className="flex items-center justify-between gap-2 pb-1.5 mb-2 border-b border-stone-200/60">
+                    <div className="flex items-center justify-between gap-2 pb-1.5 mb-2 border-b border-stone-200/80">
                       <div className="flex flex-wrap items-baseline gap-2">
                         <span className="font-cinzel font-bold text-amber-950 text-xs sm:text-sm tracking-wide">
                           {sec.saintName}
@@ -508,7 +508,7 @@ ${selectedCommentary.practicalApplication}`;
         </div>
 
         {/* Practical Spiritual Application */}
-        <div className="rounded-md p-3 bg-amber-50/45 backdrop-blur-md border border-white/60 space-y-1">
+        <div className="rounded-md p-3.5 bg-amber-50/80 border border-amber-200/80 space-y-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-amber-950 font-cinzel font-bold text-[11px] uppercase tracking-wider">
               <Compass className="w-3.5 h-3.5 text-amber-800" />
