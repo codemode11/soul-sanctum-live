@@ -400,20 +400,20 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                     </p>
 
                     {/* Theological Significance Box */}
-                    <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/80 text-xs text-stone-800 font-serif space-y-1">
-                      <span className="font-bold text-amber-950 font-cinzel text-[11px] block uppercase tracking-wider">
+                    <div className="p-4 sm:p-5 rounded-xl bg-amber-50/75 border border-amber-200/90 text-sm sm:text-base text-stone-800 font-serif space-y-1.5">
+                      <span className="font-bold text-amber-950 font-cinzel text-xs sm:text-sm block uppercase tracking-wider">
                         Theological and Historical Impact:
                       </span>
-                      <p className="leading-relaxed">{event.theologicalSignificance}</p>
+                      <p className="leading-relaxed text-sm sm:text-base">{event.theologicalSignificance}</p>
                     </div>
 
                     {/* Footer Meta: Key Figures and Document Reference */}
-                    <div className="pt-1 flex flex-wrap items-center justify-between gap-2 text-xs text-stone-500 font-serif">
+                    <div className="pt-1.5 flex flex-wrap items-center justify-between gap-2 text-sm sm:text-base text-stone-700 font-serif">
                       <div>
-                        <strong className="text-stone-700">Key Figures:</strong> {event.keyFigures.join(', ')}
+                        <strong className="text-stone-900 font-bold">Key Figures:</strong> {event.keyFigures.join(', ')}
                       </div>
                       {event.scriptureOrDocumentRef && (
-                        <span className="italic text-amber-900 font-medium">
+                        <span className="italic text-amber-900 font-medium text-xs sm:text-sm">
                           Ref: {event.scriptureOrDocumentRef}
                         </span>
                       )}
@@ -2069,28 +2069,28 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                 </p>
 
                 <div className="space-y-2.5 pt-3 border-t border-stone-100">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-stone-700">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-cinzel font-bold text-stone-800">
                     <Users className="w-4 h-4 text-amber-600" />
                     <span>Major Figures, Saints & Rulers</span>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
                     {council.majorPlayers.saintsAndDoctors.map(s => (
-                      <span key={s} className="px-3 py-1 rounded-lg bg-amber-50 text-stone-900 border border-amber-300/70 text-xs sm:text-sm font-serif font-semibold">
+                      <span key={s} className="px-3.5 py-1.5 rounded-lg bg-amber-50 text-stone-900 border border-amber-300/70 text-sm sm:text-base font-serif font-semibold">
                         {s}
                       </span>
                     ))}
                     {council.majorPlayers.emperorsAndRulers.map(r => (
-                      <span key={r} className="px-3 py-1 rounded-lg bg-stone-100 text-stone-700 border border-stone-300 text-xs sm:text-sm font-serif">
+                      <span key={r} className="px-3.5 py-1.5 rounded-lg bg-stone-100 text-stone-700 border border-stone-300 text-sm sm:text-base font-serif">
                         {r}
                       </span>
                     ))}
                     {council.majorPlayers.theologiansAndLeaders.map(t => (
-                      <span key={t} className="px-3 py-1 rounded-lg bg-stone-50 text-stone-800 border border-stone-200 text-xs sm:text-sm font-serif">
+                      <span key={t} className="px-3.5 py-1.5 rounded-lg bg-stone-50 text-stone-800 border border-stone-200 text-sm sm:text-base font-serif">
                         {t}
                       </span>
                     ))}
                     {council.majorPlayers.adversariesOrHeresies.map(h => (
-                      <span key={h} className="px-3 py-1 rounded-lg bg-stone-200 text-stone-800 border border-stone-300 text-xs sm:text-sm font-serif font-medium">
+                      <span key={h} className="px-3.5 py-1.5 rounded-lg bg-stone-200 text-stone-800 border border-stone-300 text-sm sm:text-base font-serif font-medium">
                         Refuted: {h}
                       </span>
                     ))}

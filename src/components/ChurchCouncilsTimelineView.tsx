@@ -1325,28 +1325,28 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
 
                 {/* Major Players Chips: Clean Parchment & Charcoal styling (NO maroon or rose) */}
                 <div className="space-y-2.5 pt-3 border-t border-stone-100">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-stone-700">
+                  <div className="flex items-center gap-2 text-sm sm:text-base font-cinzel font-bold text-stone-800">
                     <Users className="w-4 h-4 text-amber-600" />
                     <span>Major Figures, Saints & Rulers</span>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
                     {council.majorPlayers.saintsAndDoctors.map(s => (
-                      <span key={s} className="px-3 py-1 rounded-lg bg-amber-50 text-stone-900 border border-amber-300/70 text-xs sm:text-sm font-serif font-semibold">
+                      <span key={s} className="px-3.5 py-1.5 rounded-lg bg-amber-50 text-stone-900 border border-amber-300/70 text-sm sm:text-base font-serif font-semibold">
                         {s}
                       </span>
                     ))}
                     {council.majorPlayers.emperorsAndRulers.map(r => (
-                      <span key={r} className="px-3 py-1 rounded-lg bg-stone-100 text-stone-700 border border-stone-300 text-xs sm:text-sm font-serif">
+                      <span key={r} className="px-3.5 py-1.5 rounded-lg bg-stone-100 text-stone-700 border border-stone-300 text-sm sm:text-base font-serif">
                         {r}
                       </span>
                     ))}
                     {council.majorPlayers.theologiansAndLeaders.map(t => (
-                      <span key={t} className="px-3 py-1 rounded-lg bg-stone-50 text-stone-800 border border-stone-200 text-xs sm:text-sm font-serif">
+                      <span key={t} className="px-3.5 py-1.5 rounded-lg bg-stone-50 text-stone-800 border border-stone-200 text-sm sm:text-base font-serif">
                         {t}
                       </span>
                     ))}
                     {council.majorPlayers.adversariesOrHeresies.map(h => (
-                      <span key={h} className="px-3 py-1 rounded-lg bg-stone-200 text-stone-800 border border-stone-300 text-xs sm:text-sm font-serif font-medium">
+                      <span key={h} className="px-3.5 py-1.5 rounded-lg bg-stone-200 text-stone-800 border border-stone-300 text-sm sm:text-base font-serif font-medium">
                         Refuted: {h}
                       </span>
                     ))}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   HeartHandshake, 
   Flame, 
@@ -13,7 +13,9 @@ import {
   VolumeX, 
   Copy, 
   X,
-  Cross
+  Cross,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { CatholicPrayer, PrayerRequest, PrayerCategory } from '../types';
 import { CATHOLIC_PRAYERS_DATABASE } from '../data/prayers';
@@ -53,6 +55,13 @@ export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps>
   const [prayerSearch, setPrayerSearch] = useState('');
   const [copiedPrayerId, setCopiedPrayerId] = useState<string | null>(null);
   const [speakingPrayerId, setSpeakingPrayerId] = useState<string | null>(null);
+  const treasuryStripRef = useRef<HTMLDivElement>(null);
+
+  const handleScrollTreasuryStrip = (direction: 'left' | 'right') => {
+    if (!treasuryStripRef.current) return;
+    const scrollAmount = direction === 'left' ? -300 : 300;
+    treasuryStripRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  };
 
   const categories: (PrayerCategory | 'All')[] = [
     'All',
@@ -150,6 +159,23 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
     (p.latinTitle && p.latinTitle.toLowerCase().includes(prayerSearch.toLowerCase())) ||
     p.englishText.toLowerCase().includes(prayerSearch.toLowerCase())
   );
+
+  const handleStepPrayer = (delta: number) => {
+    if (filteredTreasuryPrayers.length === 0) return;
+    const currentIdx = Math.max(
+      0,
+      filteredTreasuryPrayers.findIndex(p => p.id === selectedPrayer.id)
+    );
+    const nextIdx = (currentIdx + delta + filteredTreasuryPrayers.length) % filteredTreasuryPrayers.length;
+    const nextPrayer = filteredTreasuryPrayers[nextIdx];
+    setSelectedPrayer(nextPrayer);
+    if (treasuryStripRef.current) {
+      const btn = treasuryStripRef.current.querySelector(`[data-prayer-id="${nextPrayer.id}"]`) as HTMLElement | null;
+      if (btn) {
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-3xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
@@ -339,23 +365,49 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               </div>
             </div>
 
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-              {filteredTreasuryPrayers.map(p => {
-                const isSelected = p.id === selectedPrayer.id;
-                return (
-                  <button
-                    key={p.id}
-                    onClick={() => setSelectedPrayer(p)}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                      isSelected
-                        ? 'bg-amber-900 text-amber-50 shadow-xs'
-                        : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-                    }`}
-                  >
-                    {p.title}
-                  </button>
-                );
-              })}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => handleScrollTreasuryStrip('left')}
+                className="p-2 rounded-xl bg-white/90 hover:bg-amber-900 text-stone-800 hover:text-amber-50 border border-stone-300 hover:border-amber-800 shadow-xs transition-all cursor-pointer shrink-0 flex items-center justify-center"
+                title="Scroll prayers left"
+                aria-label="Scroll prayers left"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              <div
+                ref={treasuryStripRef}
+                className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth flex-1"
+              >
+                {filteredTreasuryPrayers.map(p => {
+                  const isSelected = p.id === selectedPrayer.id;
+                  return (
+                    <button
+                      key={p.id}
+                      data-prayer-id={p.id}
+                      onClick={() => setSelectedPrayer(p)}
+                      className={`px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                        isSelected
+                          ? 'bg-amber-900 text-amber-50 shadow-xs'
+                          : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                      }`}
+                    >
+                      {p.title}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handleScrollTreasuryStrip('right')}
+                className="p-2 rounded-xl bg-white/90 hover:bg-amber-900 text-stone-800 hover:text-amber-50 border border-stone-300 hover:border-amber-800 shadow-xs transition-all cursor-pointer shrink-0 flex items-center justify-center"
+                title="Scroll prayers right to see more prayers"
+                aria-label="Scroll prayers right"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
 
@@ -378,6 +430,26 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               </div>
 
               <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleStepPrayer(-1)}
+                  className="p-2 rounded-xl bg-stone-100 hover:bg-amber-900 text-stone-700 hover:text-amber-50 border border-stone-300 hover:border-amber-800 transition-colors cursor-pointer"
+                  title="Previous Prayer"
+                  aria-label="Previous Prayer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleStepPrayer(1)}
+                  className="p-2 rounded-xl bg-stone-100 hover:bg-amber-900 text-stone-700 hover:text-amber-50 border border-stone-300 hover:border-amber-800 transition-colors cursor-pointer"
+                  title="Next Prayer"
+                  aria-label="Next Prayer"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+
                 <button
                   onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
                   className={`p-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${

@@ -34,6 +34,10 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
   const [filterArtist, setFilterArtist] = useState<string>('All');
   const [imgErrors, setImgErrors] = useState<Record<string, boolean>>({});
   const [isReadingAloud, setIsReadingAloud] = useState(false);
+  const [previousArt, setPreviousArt] = useState<SacredMasterpiece | null>(null);
+  const [transitionDir, setTransitionDir] = useState<'next' | 'prev'>('next');
+  const [enterActive, setEnterActive] = useState<boolean>(true);
+  const transitionTimerRef = useRef<number | null>(null);
   const filmstripRef = useRef<HTMLDivElement>(null);
 
   const artists = [
@@ -53,10 +57,39 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
     return art.artist.toLowerCase().includes(filterArtist.toLowerCase());
   });
 
+  const triggerSloMoTransition = (nextArt: SacredMasterpiece, dir: 'next' | 'prev') => {
+    if (nextArt.id === selectedArt.id) return;
+    if (transitionTimerRef.current) {
+      window.clearTimeout(transitionTimerRef.current);
+    }
+    setPreviousArt(selectedArt);
+    setTransitionDir(dir);
+    setEnterActive(false);
+    setSelectedArt(nextArt);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setEnterActive(true);
+      });
+    });
+
+    transitionTimerRef.current = window.setTimeout(() => {
+      setPreviousArt(null);
+    }, 1600);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) {
+        window.clearTimeout(transitionTimerRef.current);
+      }
+    };
+  }, []);
+
   // Ensure selectedArt stays within filteredArt when switching artist filter
   useEffect(() => {
     if (filteredArt.length > 0 && !filteredArt.some(a => a.id === selectedArt.id)) {
-      setSelectedArt(filteredArt[0]);
+      triggerSloMoTransition(filteredArt[0], 'next');
       SacredReader.stop();
       setIsReadingAloud(false);
     }
@@ -67,16 +100,18 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
     filteredArt.findIndex(a => a.id === selectedArt.id)
   );
 
-  const handleSelectArt = (art: SacredMasterpiece) => {
+  const handleSelectArt = (art: SacredMasterpiece, explicitDir?: 'next' | 'prev') => {
     SacredReader.stop();
     setIsReadingAloud(false);
-    setSelectedArt(art);
+    const targetIdx = filteredArt.findIndex(a => a.id === art.id);
+    const dir = explicitDir || (targetIdx >= currentIndex ? 'next' : 'prev');
+    triggerSloMoTransition(art, dir);
   };
 
   const handleStepMasterpiece = (delta: number) => {
     if (filteredArt.length === 0) return;
     const nextIndex = (currentIndex + delta + filteredArt.length) % filteredArt.length;
-    handleSelectArt(filteredArt[nextIndex]);
+    handleSelectArt(filteredArt[nextIndex], delta >= 0 ? 'next' : 'prev');
   };
 
   const handleScrollFilmstrip = (direction: 'left' | 'right') => {
@@ -168,8 +203,28 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
             {/* Subtle warm museum spotlight vignette */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,119,6,0.10)_0%,transparent_75%)] pointer-events-none" />
 
-            {/* Main Wide Horizontal Canvas Viewport */}
-            <div className="relative w-full h-[380px] sm:h-[500px] lg:h-[600px] flex items-center justify-center px-4 sm:px-14 py-4 sm:py-6">
+            {/* Main Wide Horizontal Canvas Viewport with Slow-Motion Crossfade & Glide */}
+            <div className="relative w-full h-[380px] sm:h-[500px] lg:h-[600px] flex items-center justify-center px-4 sm:px-14 py-4 sm:py-6 overflow-hidden">
+              {/* Outgoing Painting Layer (Slow-Motion Dissolve Out) */}
+              {previousArt && !imgErrors[previousArt.id] && (
+                <div
+                  key={`prev-${previousArt.id}`}
+                  className={`absolute inset-0 flex items-center justify-center px-4 sm:px-14 py-4 sm:py-6 pointer-events-none transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[transform,opacity,filter] ${
+                    enterActive
+                      ? `opacity-0 scale-[1.06] blur-[4px] ${transitionDir === 'next' ? '-translate-x-12' : 'translate-x-12'}`
+                      : 'opacity-100 scale-100 blur-0 translate-x-0'
+                  }`}
+                >
+                  <img
+                    src={previousArt.imageUrl}
+                    alt={previousArt.title}
+                    referrerPolicy="no-referrer"
+                    className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.85)] ring-1 ring-amber-500/25"
+                  />
+                </div>
+              )}
+
+              {/* Active / Incoming Painting Layer (Slow-Motion Glide & Dissolve In) */}
               {imgErrors[selectedArt.id] ? (
                 <div className="flex flex-col items-center justify-center p-8 text-center text-stone-300 space-y-2">
                   <ImageIcon className="w-12 h-12 text-amber-500/70" />
@@ -177,22 +232,30 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
                   <p className="text-sm text-stone-400">{selectedArt.artist} ({selectedArt.year})</p>
                 </div>
               ) : (
-                <img
-                  key={selectedArt.id}
-                  src={selectedArt.imageUrl}
-                  alt={selectedArt.title}
-                  loading="eager"
-                  referrerPolicy="no-referrer"
-                  onError={(e) => handleImageError(selectedArt.id, e)}
-                  onClick={() => setIsFullscreenModalOpen(true)}
-                  className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.85)] ring-1 ring-amber-500/25 cursor-zoom-in transition-transform duration-500"
-                />
+                <div
+                  key={`curr-${selectedArt.id}`}
+                  className={`relative z-10 w-full h-full flex items-center justify-center transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[transform,opacity,filter] ${
+                    enterActive
+                      ? 'opacity-100 scale-100 blur-0 translate-x-0'
+                      : `opacity-0 scale-[0.92] blur-[4px] ${transitionDir === 'next' ? 'translate-x-12' : '-translate-x-12'}`
+                  }`}
+                >
+                  <img
+                    src={selectedArt.imageUrl}
+                    alt={selectedArt.title}
+                    loading="eager"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => handleImageError(selectedArt.id, e)}
+                    onClick={() => setIsFullscreenModalOpen(true)}
+                    className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.85)] ring-1 ring-amber-500/25 cursor-zoom-in transition-transform duration-700"
+                  />
+                </div>
               )}
 
               {/* Left Horizontal Gallery Arrow */}
               <button
                 onClick={() => handleStepMasterpiece(-1)}
-                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                className="absolute z-20 left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
                 title="Previous Masterpiece (Left Arrow)"
                 aria-label="Previous Masterpiece"
               >
@@ -202,7 +265,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               {/* Right Horizontal Gallery Arrow */}
               <button
                 onClick={() => handleStepMasterpiece(1)}
-                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                className="absolute z-20 right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-stone-950/75 hover:bg-amber-800 text-stone-100 border border-amber-500/30 backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-lg"
                 title="Next Masterpiece (Right Arrow)"
                 aria-label="Next Masterpiece"
               >
@@ -210,7 +273,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               </button>
 
               {/* Top-Right Fullscreen & Audio Controls on Canvas */}
-              <div className="absolute top-3.5 right-3.5 flex items-center gap-2">
+              <div className="absolute z-20 top-3.5 right-3.5 flex items-center gap-2">
                 <button
                   onClick={handleToggleAudio}
                   className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-serif font-semibold backdrop-blur-md border transition-colors cursor-pointer shadow-md ${
@@ -236,7 +299,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
             </div>
 
             {/* Bottom Museum Frame Caption Bar */}
-            <div className="bg-stone-950/90 border-t border-stone-800/90 px-5 sm:px-8 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-stone-200">
+            <div className={`bg-stone-950/90 border-t border-stone-800/90 px-5 sm:px-8 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-stone-200 transition-opacity duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${enterActive ? 'opacity-100' : 'opacity-30'}`}>
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h2 className="font-serif text-lg sm:text-2xl font-bold text-white">
                   {selectedArt.title}
@@ -253,7 +316,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
           </div>
 
           {/* Horizontal Museum Plaque: 3-Column Wide Panorama Details */}
-          <div className="bg-white/65 dark:bg-stone-900/65 rounded-2xl border border-stone-300/80 dark:border-stone-800 p-5 sm:p-7 shadow-sm">
+          <div className={`bg-white/65 dark:bg-stone-900/65 rounded-2xl border border-stone-300/80 dark:border-stone-800 p-5 sm:p-7 shadow-sm transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${enterActive ? 'opacity-100 translate-y-0' : 'opacity-35 translate-y-1'}`}>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
               
               {/* Left Column (4 cols): Title, Mystery & Scripture */}
@@ -436,15 +499,41 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
           </div>
 
           <div className="flex-1 max-w-7xl w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-8 py-6">
-            <div className="w-full lg:w-3/4 flex items-center justify-center">
-              <img
-                key={selectedArt.id}
-                src={selectedArt.imageUrl}
-                alt={selectedArt.title}
-                referrerPolicy="no-referrer"
-                onError={(e) => handleImageError(selectedArt.id, e)}
-                className="max-h-[76vh] w-auto object-contain rounded-xl shadow-2xl border border-stone-800"
-              />
+            <div className="relative w-full lg:w-3/4 min-h-[55vh] flex items-center justify-center overflow-hidden">
+              {previousArt && !imgErrors[previousArt.id] && (
+                <div
+                  key={`fs-prev-${previousArt.id}`}
+                  className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    enterActive
+                      ? `opacity-0 scale-[1.06] blur-[4px] ${transitionDir === 'next' ? '-translate-x-12' : 'translate-x-12'}`
+                      : 'opacity-100 scale-100 blur-0 translate-x-0'
+                  }`}
+                >
+                  <img
+                    src={previousArt.imageUrl}
+                    alt={previousArt.title}
+                    referrerPolicy="no-referrer"
+                    className="max-h-[76vh] w-auto object-contain rounded-xl shadow-2xl border border-stone-800"
+                  />
+                </div>
+              )}
+
+              <div
+                key={`fs-curr-${selectedArt.id}`}
+                className={`relative z-10 flex items-center justify-center transition-all duration-[1500ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  enterActive
+                    ? 'opacity-100 scale-100 blur-0 translate-x-0'
+                    : `opacity-0 scale-[0.92] blur-[4px] ${transitionDir === 'next' ? 'translate-x-12' : '-translate-x-12'}`
+                }`}
+              >
+                <img
+                  src={selectedArt.imageUrl}
+                  alt={selectedArt.title}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => handleImageError(selectedArt.id, e)}
+                  className="max-h-[76vh] w-auto object-contain rounded-xl shadow-2xl border border-stone-800"
+                />
+              </div>
             </div>
 
             <div className="w-full lg:w-1/4 bg-stone-900/80 p-6 rounded-2xl border border-stone-800 space-y-4 text-stone-200 text-xs sm:text-sm font-serif leading-relaxed">

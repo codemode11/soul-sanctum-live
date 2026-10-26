@@ -305,20 +305,20 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                 <div
                   key={progress.novenaId}
                   onClick={() => setViewingNovenaId(novena.id)}
-                  className={`p-5 rounded-xl border transition-all cursor-pointer relative overflow-hidden ${
+                  className={`p-5 rounded-xl border transition-all cursor-pointer relative overflow-hidden bg-[#0c0a09] bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] ${
                     isViewing
-                      ? 'bg-gradient-to-br from-sky-950 via-[#152C44] to-[#2B1B10] text-amber-50 border-amber-400 shadow-lg ring-2 ring-amber-500/40'
-                      : 'bg-gradient-to-br from-[#102338] via-sky-950/95 to-[#1E2E3E] text-amber-50 border-sky-500/50 hover:border-amber-400/60 shadow-sm'
+                      ? 'border-[#FFD700] shadow-[0_0_22px_rgba(212,175,55,0.38)] ring-2 ring-[#FFD700]/50'
+                      : 'border-[#FFD700]/60 hover:border-[#FFD700] shadow-[0_0_18px_rgba(212,175,55,0.28)]'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="px-2.5 py-0.5 rounded-full bg-sky-500/25 border border-sky-400/50 text-sky-200 text-[10px] font-bold uppercase tracking-wider font-cinzel flex items-center gap-1">
-                          <Award className="w-3 h-3 text-amber-300" />
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#FFD700]/20 border border-[#FFD700]/50 text-[#FFD700] text-[10px] font-bold uppercase tracking-wider font-cinzel flex items-center gap-1">
+                          <Award className="w-3 h-3 text-[#FFD700]" />
                           Deo Gratias • Novena Completed
                         </span>
-                        <span className="text-[10px] text-amber-300/80 font-cinzel">
+                        <span className="text-[10px] text-amber-200/90 font-cinzel">
                           9/9 Days Fulfilled
                         </span>
                       </div>
@@ -484,12 +484,12 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           SECTION 2: PRAYER READER DECK (SWITCHES TEMPLATE WHEN NOVENA IS COMPLETED)
          ========================================================================= */}
       {isCurrentNovenaCompleted ? (
-        <div className="bg-gradient-to-br from-[#0F2439] via-[#162F48] to-[#24170B] text-amber-50 rounded-xl p-6 sm:p-8 shadow-xl border border-sky-400/40 space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/15 pb-5">
+        <div className="bg-[#0c0a09] bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] rounded-xl p-6 sm:p-8 shadow-[0_0_22px_rgba(212,175,55,0.28)] border border-[#FFD700]/60 space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#FFD700]/25 pb-5">
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-sky-500/25 border border-sky-400/50 text-sky-200 text-xs font-bold uppercase tracking-wider font-cinzel flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-amber-300" />
+                <span className="px-3 py-1 rounded-full bg-[#FFD700]/20 border border-[#FFD700]/50 text-[#FFD700] text-xs font-bold uppercase tracking-wider font-cinzel flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-[#FFD700]" />
                   Deo Gratias • Nine-Day Novena Completed
                 </span>
                 <span className="text-xs text-amber-200/80 font-serif-sacred">
