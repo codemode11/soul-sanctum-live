@@ -41,6 +41,9 @@ const PODCAST_ORIGINAL_COVERS: Record<string, string> = {
   'catechism-in-a-year': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/c9/9f/6f/c99f6f42-987e-2c81-bd25-c6c87d2a0db7/mza_9362465263115833762.jpg/600x600bb.jpg',
   'fr-mike-schmitz-podcast': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts115/v4/84/45/3d/84453d79-4244-3bba-8ae5-d2bddfbac119/mza_8515607687576084455.jpg/600x600bb.jpg',
   'word-on-fire-show': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts126/v4/8a/68/72/8a687278-ecba-0471-0f5d-8e831d0aac8a/mza_11737134873248527109.jpg/600x600bb.jpg',
+  'road-to-emmaus-scott-hahn': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/02/9b/64/029b6465-1b39-dd7a-5cf3-6a40ccb5398f/mza_5211134972495949462.png/600x600bb.jpg',
+  'jimmy-akins-mysterious-world': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d0/69/e2/d069e27f-c261-dae5-5937-8610835c3ef2/mza_11584862792026713335.png/600x600bb.jpg',
+  'jeff-cavins-show': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts126/v4/ff/3f/97/ff3f972a-efb9-97f3-fda8-d9995c41e412/mza_15484353654759145761.jpg/600x600bb.jpg',
   'pints-with-aquinas': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/54/61/f1/5461f16d-2adb-b501-c9b7-0ef5e6d72eba/mza_7503559985443598183.jpeg/600x600bb.jpg',
   'abiding-together': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/9b/f7/10/9bf7101e-e370-e36e-634b-01424e707a64/mza_735760324844123567.png/600x600bb.jpg',
   'catholic-answers-live': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/7f/73/62/7f736228-cb24-a09b-2345-de20e26efc7a/mza_17932019903878545154.jpg/600x600bb.jpg',
@@ -176,7 +179,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
           </h2>
 
           <p className="text-sm sm:text-base text-stone-300 font-serif leading-relaxed">
-            Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Bishop Robert Barron, Matt Fradd, and the Holy See.
+            Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Bishop Robert Barron, Dr. Scott Hahn, Jimmy Akin, Jeff Cavins, Matt Fradd, and the Holy See.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3 text-xs text-amber-200/90 font-serif">
