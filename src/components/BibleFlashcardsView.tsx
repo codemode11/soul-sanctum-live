@@ -556,8 +556,8 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
                 onClick={() => saveMastery(currentVerse.id, 'mastered')}
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer flex items-center gap-1 ${
                   currentMastery === 'mastered'
-                    ? 'bg-emerald-600 text-white font-bold shadow-xs'
-                    : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200'
+                    ? 'bg-sky-700 text-white font-bold shadow-xs'
+                    : 'bg-sky-50 hover:bg-sky-100 text-sky-900 border border-sky-200'
                 }`}
                 title="Mark as memorized and mastered"
               >
@@ -828,14 +828,14 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
 
                   {/* Success celebration if completed correctly */}
                   {scrambleIsCorrect && (
-                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-semibold flex items-center justify-between animate-fadeIn">
+                    <div className="p-3 rounded-xl bg-sky-50 border border-sky-300 text-sky-900 text-xs font-semibold flex items-center justify-between animate-fadeIn">
                       <span className="flex items-center gap-1.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <CheckCircle2 className="w-4 h-4 text-sky-700" />
                         Splendid! You have reconstructed this sacred passage correctly!
                       </span>
                       <button
                         onClick={() => saveMastery(currentVerse.id, 'mastered')}
-                        className="px-3 py-1 rounded-md bg-emerald-600 text-white font-cinzel font-bold text-xs cursor-pointer hover:bg-emerald-700"
+                        className="px-3 py-1 rounded-md bg-sky-700 text-white font-cinzel font-bold text-xs cursor-pointer hover:bg-sky-600"
                       >
                         Mark Mastered
                       </button>

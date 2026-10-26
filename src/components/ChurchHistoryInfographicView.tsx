@@ -52,7 +52,7 @@ import { SacredReader } from '../utils/speech';
 type MainSection = 'timeline' | 'councils' | 'demographics' | 'facts';
 
 export const ChurchHistoryInfographicView: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<MainSection>('councils');
+  const [activeSection, setActiveSection] = useState<MainSection>('timeline');
   const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakingItemId, setSpeakingItemId] = useState<string | null>(null);
@@ -204,13 +204,13 @@ export const ChurchHistoryInfographicView: React.FC = () => {
             </p>
           </div>
 
-          {/* 4 Main View Tabs */}
+          {/* 4 Main View Tabs: 1. History of the Church, 2. The Councils, 3. Astonishing Facts, 4. Infographics */}
           <div className="pt-2 flex flex-wrap gap-2">
             {[
-              { id: 'councils', label: '21 Ecumenical Councils Timeline', icon: Scroll, count: '325–1965 AD' },
-              { id: 'timeline', label: '2,000-Year Church Events', icon: History, count: '6 Epochs' },
-              { id: 'demographics', label: 'Global Infographics and Countries', icon: Globe2, count: '1.39 Billion' },
-              { id: 'facts', label: 'Astonishing Facts and Science', icon: Sparkles, count: '10 Discoveries' }
+              { id: 'timeline', label: 'History of the Church', icon: History, count: '6 Epochs' },
+              { id: 'councils', label: 'The Councils', icon: Scroll, count: '325–1965 AD' },
+              { id: 'facts', label: 'Astonishing Facts', icon: Sparkles, count: '10 Discoveries' },
+              { id: 'demographics', label: 'Infographics', icon: Globe2, count: '1.39 Billion' }
             ].map(tab => {
               const Icon = tab.icon;
               const isActive = activeSection === tab.id;

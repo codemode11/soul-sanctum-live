@@ -155,7 +155,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Switcher Buttons: Treasury of Prayers precedes Community Prayer Wall per user request */}
-      <div className="flex rounded-2xl bg-stone-200/80 p-1.5 max-w-md mx-auto shadow-inner">
+      <div className="flex rounded-2xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
         <button
           onClick={() => setActiveSection('treasury')}
           className={`flex-1 py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 ${
@@ -214,7 +214,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           </div>
 
           {/* Category Filter Pills and Search */}
-          <div className="bg-white rounded-2xl p-4 shadow-xs border border-stone-200 space-y-3">
+          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
                 {categories.map(cat => (
@@ -250,7 +250,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             {filteredRequests.map(req => (
               <div
                 key={req.id}
-                className="bg-white p-6 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-xs transition-all space-y-4"
+                className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-6 rounded-2xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/55 transition-all space-y-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-1">
@@ -300,7 +300,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                     onClick={() => handlePrayForRequest(req.id)}
                     className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                       req.hasPrayed
-                        ? 'bg-emerald-700 text-white shadow-xs'
+                        ? 'bg-sky-700 hover:bg-sky-600 text-white shadow-xs'
                         : 'bg-stone-100 hover:bg-amber-100 text-stone-800 hover:text-amber-950 border border-stone-300'
                     }`}
                   >
@@ -322,7 +322,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
         <div className="space-y-6">
           
           {/* Prayers Selector List */}
-          <div className="bg-white rounded-2xl p-4 shadow-xs border border-stone-200 space-y-3">
+          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-500">
                 Treasury of Sacred Catholic Prayers ({CATHOLIC_PRAYERS_DATABASE.length})
@@ -360,7 +360,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           </div>
 
           {/* Main Selected Prayer Display Card */}
-          <article className="bg-white rounded-xl p-6 sm:p-8 shadow-xs border border-stone-200 space-y-6">
+          <article className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-6">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
               <div>
@@ -405,7 +405,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             <div className={`grid ${selectedPrayer.latinText ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-6`}>
               
               {/* English */}
-              <div className="p-6 rounded-2xl bg-[#FCFAF7] border border-amber-900/15 space-y-3">
+              <div className="p-6 rounded-2xl bg-white/35 backdrop-blur-md border border-white/60 space-y-3">
                 <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-950 block">
                   English Translation
                 </span>
@@ -416,7 +416,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
               {/* Latin */}
               {selectedPrayer.latinText && (
-                <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-stone-200 space-y-3">
+                <div className="p-6 rounded-2xl bg-white/35 backdrop-blur-md border border-white/60 space-y-3">
                   <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800 block">
                     Textus Latinus (Lingua Sacra)
                   </span>

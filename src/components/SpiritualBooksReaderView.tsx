@@ -192,49 +192,49 @@ export const SpiritualBooksReaderView: React.FC = () => {
     return matchesCategory && matchesSearch;
   });
 
-  // Theme styling helpers
+  // Theme styling helpers with gradients
   const getThemeClasses = () => {
     switch (readingTheme) {
       case 'sepia':
         return {
-          wrapper: 'bg-[#F4ECE1] text-[#332218] border-[#8B5A2B]/30',
-          card: 'bg-[#EDE2D4] border-[#8B5A2B]/40 text-[#2B1B12]',
-          header: 'bg-[#EDE2D4]/90 border-[#8B5A2B]/30 text-[#332218]',
+          wrapper: 'bg-gradient-to-br from-[#F7F0E6] via-[#EFE5D7] to-[#E6D7C3] text-[#332218] border-[#8B5A2B]/35',
+          card: 'bg-gradient-to-br from-[#F2E9DC] to-[#E6D7C3] border-[#8B5A2B]/40 text-[#2B1B12]',
+          header: 'bg-gradient-to-r from-[#EFE5D7]/95 via-[#E8DBCA]/95 to-[#EFE5D7]/95 border-[#8B5A2B]/30 text-[#332218]',
           subtext: 'text-[#634835]',
           accent: 'text-[#8B5A2B]',
-          activeButton: 'bg-[#8B5A2B] text-white',
-          quoteBox: 'bg-[#E5D7C5] border-l-4 border-[#8B5A2B] text-[#2B1B12]'
+          activeButton: 'bg-gradient-to-r from-[#8B5A2B] to-[#6B4423] text-white',
+          quoteBox: 'bg-gradient-to-r from-[#EBE0CF] to-[#E2D2BC] border-l-4 border-[#8B5A2B] text-[#2B1B12]'
         };
       case 'dark':
         return {
-          wrapper: 'bg-[#120A05] text-[#F5EAE1] border-[#8B5A2B]/40',
-          card: 'bg-[#1A0F08] border-[#8B5A2B]/50 text-[#F5EAE1]',
-          header: 'bg-[#160D07]/95 border-[#8B5A2B]/40 text-[#F5EAE1]',
+          wrapper: 'bg-gradient-to-br from-[#1C110A] via-[#130B06] to-[#0D0704] text-[#F5EAE1] border-[#8B5A2B]/45',
+          card: 'bg-gradient-to-br from-[#24150C] to-[#160D07] border-[#8B5A2B]/50 text-[#F5EAE1]',
+          header: 'bg-gradient-to-r from-[#1D1109]/95 via-[#26170D]/95 to-[#160D07]/95 border-[#8B5A2B]/40 text-[#F5EAE1]',
           subtext: 'text-[#D4A373]',
           accent: 'text-[#D4A373]',
-          activeButton: 'bg-[#8B5A2B] text-white',
-          quoteBox: 'bg-[#1D1109] border-l-4 border-[#D4A373] text-[#F5EAE1]'
+          activeButton: 'bg-gradient-to-r from-[#8B5A2B] to-[#6B4423] text-white',
+          quoteBox: 'bg-gradient-to-r from-[#24150C] to-[#1A0F08] border-l-4 border-[#D4A373] text-[#F5EAE1]'
         };
       case 'white':
         return {
-          wrapper: 'bg-white text-stone-900 border-stone-200',
-          card: 'bg-stone-50 border-stone-200 text-stone-900',
-          header: 'bg-white/95 border-stone-200 text-stone-900',
+          wrapper: 'bg-gradient-to-br from-white via-[#FCFBF9] to-[#F5EFE6] text-stone-900 border-stone-200',
+          card: 'bg-gradient-to-br from-white to-[#F7F3EC] border-stone-200 text-stone-900',
+          header: 'bg-gradient-to-r from-white/95 via-[#FAF7F2]/95 to-white/95 border-stone-200 text-stone-900',
           subtext: 'text-stone-500',
           accent: 'text-amber-800',
-          activeButton: 'bg-amber-800 text-white',
-          quoteBox: 'bg-stone-100 border-l-4 border-amber-800 text-stone-900'
+          activeButton: 'bg-gradient-to-r from-amber-800 to-amber-950 text-white',
+          quoteBox: 'bg-gradient-to-r from-[#FAF6F0] to-[#F3ECE1] border-l-4 border-amber-800 text-stone-900'
         };
       case 'parchment':
       default:
         return {
-          wrapper: 'bg-[#FAF6EE] text-[#2A1B12] border-[#8B5A2B]/30',
-          card: 'bg-[#F2ECE0] border-[#8B5A2B]/30 text-[#2A1B12]',
-          header: 'bg-[#F4EFE5]/95 border-[#8B5A2B]/30 text-[#2A1B12]',
+          wrapper: 'bg-gradient-to-br from-[#FCF9F2] via-[#F6EFE2] to-[#EDE2CE] text-[#2A1B12] border-[#8B5A2B]/35',
+          card: 'bg-gradient-to-br from-[#F7F1E5] to-[#EBE0CC] border-[#8B5A2B]/35 text-[#2A1B12]',
+          header: 'bg-gradient-to-r from-[#F7F1E5]/95 via-[#F0E6D5]/95 to-[#F7F1E5]/95 border-[#8B5A2B]/30 text-[#2A1B12]',
           subtext: 'text-[#5C3D28]',
           accent: 'text-[#8B5A2B]',
-          activeButton: 'bg-[#8B5A2B] text-white',
-          quoteBox: 'bg-[#ECE3D2] border-l-4 border-[#8B5A2B] text-[#2A1B12]'
+          activeButton: 'bg-gradient-to-r from-[#8B5A2B] to-[#6B4423] text-white',
+          quoteBox: 'bg-gradient-to-r from-[#F0E6D6] to-[#E6D8C3] border-l-4 border-[#8B5A2B] text-[#2A1B12]'
         };
     }
   };
@@ -765,7 +765,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
     <div className="max-w-5xl mx-auto space-y-8 pb-16">
       
       {/* Sacred Masthead Banner */}
-      <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#1C120C] via-[#25170F] to-[#120A05] border border-[#8B5A2B]/40 shadow-2xl text-stone-100 space-y-4">
+      <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#2B1B10] via-[#4A2E1B] to-[#1A0F08] border border-[#C89F72]/50 shadow-2xl text-stone-100 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
@@ -784,7 +784,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           {/* Quick Lectio Divina Guide Button */}
           <button
             onClick={() => setIsLectioGuideOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#8B5A2B]/25 hover:bg-[#8B5A2B]/40 border border-[#8B5A2B]/50 text-amber-100 text-xs font-cinzel font-bold transition-all shadow-md shrink-0 cursor-pointer self-start sm:self-center"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#8B5A2B]/60 to-[#5C3A21]/70 hover:from-[#9C6B3B] hover:to-[#6B4423] border border-[#D4A373]/60 text-amber-100 text-xs font-cinzel font-bold transition-all shadow-md shrink-0 cursor-pointer self-start sm:self-center"
           >
             <Compass className="w-4 h-4 text-[#D4A373]" />
             <span>How to Pray with Spiritual Reading</span>
@@ -813,7 +813,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           </div>
 
           {bookmarks.length > 0 && (
-            <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#24160E] border border-[#8B5A2B]/40 text-xs text-[#D4A373] font-cinzel shrink-0">
+            <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-gradient-to-r from-[#3A2313] to-[#24160E] border border-[#C89F72]/50 text-xs text-[#F5D7B2] font-cinzel shrink-0">
               <BookmarkCheck className="w-4 h-4 text-amber-400 fill-amber-400" />
               <span>{bookmarks.length} Active {bookmarks.length === 1 ? 'Bookmark' : 'Bookmarks'}</span>
             </div>
@@ -836,8 +836,8 @@ export const SpiritualBooksReaderView: React.FC = () => {
             onClick={() => setSelectedCategory(cat.id as BookCategory)}
             className={`px-4 py-2 rounded-lg text-xs font-cinzel font-bold whitespace-nowrap transition-all cursor-pointer ${
               selectedCategory === cat.id
-                ? 'bg-[#8B5A2B] text-white shadow-md border border-[#D4A373]/50'
-                : 'bg-stone-900/60 hover:bg-stone-800/80 text-stone-300 border border-stone-800'
+                ? 'bg-gradient-to-r from-[#8B5A2B] via-[#6B4423] to-[#4A2E1B] text-white shadow-md border border-[#D4A373]/60'
+                : 'bg-gradient-to-b from-[#3A2415]/90 to-[#24160C]/90 hover:from-[#4A2E1B] hover:to-[#2E1C10] text-stone-200 border border-[#8B5A2B]/40'
             }`}
           >
             {cat.label}
@@ -853,7 +853,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           return (
             <div
               key={book.id}
-              className="rounded-xl overflow-hidden border border-[#C89F72]/60 bg-gradient-to-b from-[#7A5536] via-[#6B482B] to-[#593A22] text-stone-100 shadow-xl hover:border-[#E6C29F] transition-all duration-300 flex flex-col justify-between"
+              className="rounded-xl overflow-hidden border border-[#C89F72]/60 bg-gradient-to-br from-[#855D3B] via-[#684528] to-[#3D2514] text-stone-100 shadow-xl hover:border-[#E6C29F] transition-all duration-300 flex flex-col justify-between"
             >
               <div className="p-6 sm:p-7 space-y-4">
                 
@@ -898,7 +898,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
               </div>
 
               {/* Card Footer with Chapter Counts and Action Buttons */}
-              <div className="px-6 py-4 bg-[#3E2716]/75 border-t border-[#C89F72]/40 flex items-center justify-between gap-4">
+              <div className="px-6 py-4 bg-gradient-to-r from-[#362011]/90 via-[#472B17]/85 to-[#2D1A0E]/90 border-t border-[#C89F72]/40 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4 text-xs text-stone-200 font-serif-sacred">
                   <span className="flex flex-col items-center justify-center gap-1 text-center">
                     <BookOpen className="w-4 h-4 text-[#F5D7B2]" />

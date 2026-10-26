@@ -20,18 +20,18 @@ export interface CatholicWebsiteLink {
 
 export const INITIAL_CATHOLIC_LINKS: CatholicWebsiteLink[] = [
   {
-    id: 'verbum',
-    name: 'Verbum Catholic Software',
-    url: 'https://verbum.com',
-    displayDomain: 'verbum.com',
-    category: 'Scripture and Liturgy',
-    tagline: 'Premier Digital Catholic Library, Lectionary and Scriptural Exegesis Platform',
+    id: 'catholic-com',
+    name: 'Catholic.com (Catholic Answers)',
+    url: 'https://www.catholic.com',
+    displayDomain: 'catholic.com',
+    category: 'Apologetics and Catechesis',
+    tagline: 'The World’s Largest Ministry of Catholic Apologetics and Evangelization',
     whyItsGood:
-      'Verbum Catholic Software is the gold standard for serious Catholic Scripture study and theological research. Built specifically around the mind of the Church, it links every verse of the Catholic Bible directly to the Catechism of the Catholic Church, the Early Church Fathers, St. Thomas Aquinas, papal encyclicals, council documents, and original Greek, Hebrew, and Latin texts (including the Nova Vulgata). Even its free web app and mobile tools provide extraordinary daily lectionary and patristic cross-referencing.',
+      'Catholic.com is the single best online resource for answering objections and explaining why Catholics believe what we believe. Whether you are discussing the Real Presence in the Eucharist, the Papacy, Marian dogmas, Purgatory, or Sacred Tradition, Catholic Answers provides thousands of clear, charitable, Scripture-saturated tracts, encyclopedic articles, and daily Catholic Answers Live radio Q and A broadcasts.',
     keyHighlights: [
-      'Instantly cross-references any Bible verse with the Catechism, Church Fathers, and Papal Magisterium',
-      'Includes original Hebrew, Greek, and Latin interlinears alongside approved Catholic translations (RSV-2CE, NABRE, Douay-Rheims)',
-      'Used by seminaries, priests, homilists, and lay scholars worldwide for Lectio Divina and catechesis'
+      'Thousands of searchable apologetics tracts, articles, and video answers by trusted apologists',
+      'Home of Catholic Answers Live — daily call-in Q and A on doctrine, Scripture, and moral theology',
+      'Essential resource for OCIA/RCIA candidates, converts, and Catholics sharing the faith with family and friends'
     ],
     featured: true
   },
@@ -52,22 +52,6 @@ export const INITIAL_CATHOLIC_LINKS: CatholicWebsiteLink[] = [
     featured: true
   },
   {
-    id: 'catholic-com',
-    name: 'Catholic.com (Catholic Answers)',
-    url: 'https://www.catholic.com',
-    displayDomain: 'catholic.com',
-    category: 'Apologetics and Catechesis',
-    tagline: 'The World’s Largest Ministry of Catholic Apologetics and Evangelization',
-    whyItsGood:
-      'Catholic.com is the single best online resource for answering objections and explaining why Catholics believe what we believe. Whether you are discussing the Real Presence in the Eucharist, the Papacy, Marian dogmas, Purgatory, or Sacred Tradition, Catholic Answers provides thousands of clear, charitable, Scripture-saturated tracts, encyclopedic articles, and daily Catholic Answers Live radio Q and A broadcasts.',
-    keyHighlights: [
-      'Thousands of searchable apologetics tracts, articles, and video answers by trusted apologists',
-      'Home of Catholic Answers Live — daily call-in Q and A on doctrine, Scripture, and moral theology',
-      'Essential resource for OCIA/RCIA candidates, converts, and Catholics sharing the faith with family and friends'
-    ],
-    featured: true
-  },
-  {
     id: 'christendom-app',
     name: 'Christendom (Christendom.app)',
     url: 'https://christendom.app',
@@ -84,18 +68,18 @@ export const INITIAL_CATHOLIC_LINKS: CatholicWebsiteLink[] = [
     featured: true
   },
   {
-    id: 'first-things',
-    name: 'First Things',
-    url: 'https://www.firstthings.com',
-    displayDomain: 'firstthings.com',
-    category: 'Patristics and Theology',
-    tagline: 'America’s Most Influential Journal of Religion, Theology, and Public Life',
+    id: 'st-paul-center',
+    name: 'St. Paul Center for Biblical Theology',
+    url: 'https://stpaulcenter.com',
+    displayDomain: 'stpaulcenter.com',
+    category: 'Scripture and Liturgy',
+    tagline: 'Dr. Scott Hahn’s Institute Reading the Bible from the Heart of the Church',
     whyItsGood:
-      'Founded in 1990 by Fr. Richard John Neuhaus, First Things brings the full weight of Catholic intellectual tradition, natural law, and biblical wisdom to bear on modern culture, politics, bioethics, philosophy, and literature. It is where the most serious theological, philosophical, and cultural essays of our era are published for readers who want to think deeply with the mind of the Church in the public square.',
+      'Founded by renowned Catholic theologian and convert Dr. Scott Hahn, the St. Paul Center for Biblical Theology promotes life-transforming Scripture study based on the Church’s living tradition and covenant theology. It shows how the Old Testament is fulfilled in the New Testament and how the entire Bible comes alive in the Catholic Mass and the Sacraments.',
     keyHighlights: [
-      'Rigorous long-form essays by leading Catholic theologians, philosophers, bishops, and cultural critics',
-      'Uncompromising defense of the sanctity of human life, religious liberty, marriage, and natural law',
-      'Thoughtful book reviews, poetry, and theological commentary on contemporary society'
+      'Weekly “Sunday Bible Reflections” by Dr. Scott Hahn unpacking the Mass readings through covenant theology',
+      'Journey Through Scripture video Bible studies (Genesis to Jesus, The Bible and the Virgin Mary, The Lamb’s Supper)',
+      'Deep theological articles and courses by Dr. Scott Hahn, Dr. John Bergsma, and Dr. Brant Pitre'
     ],
     featured: true
   },
@@ -116,54 +100,18 @@ export const INITIAL_CATHOLIC_LINKS: CatholicWebsiteLink[] = [
     featured: true
   },
   {
-    id: 'cbcp-news',
-    name: 'CBCPnews.net (Catholic Bishops’ Conference of the Philippines)',
-    url: 'https://cbcpnews.net',
-    secondaryUrl: 'https://cbcponline.net',
-    secondaryLabel: 'CBCP Official Portal (cbcponline.net)',
-    displayDomain: 'cbcpnews.net',
-    category: 'News and Catholic Culture',
-    tagline: 'Official News Service of the Catholic Bishops’ Conference of the Philippines',
+    id: 'first-things',
+    name: 'First Things',
+    url: 'https://www.firstthings.com',
+    displayDomain: 'firstthings.com',
+    category: 'Patristics and Theology',
+    tagline: 'America’s Most Influential Journal of Religion, Theology, and Public Life',
     whyItsGood:
-      'CBCPnews.net is the official news agency of the Catholic Bishops’ Conference of the Philippines, serving one of the largest and most devout Catholic nations in the world. It provides authoritative, daily coverage of the Philippine Church, official CBCP pastoral letters and liturgical directives, reports on national shrines and parishes, Asian Church developments, and dispatches directly from the Vatican.',
+      'Founded in 1990 by Fr. Richard John Neuhaus, First Things brings the full weight of Catholic intellectual tradition, natural law, and biblical wisdom to bear on modern culture, politics, bioethics, philosophy, and literature. It is where the most serious theological, philosophical, and cultural essays of our era are published for readers who want to think deeply with the mind of the Church in the public square.',
     keyHighlights: [
-      'Official pastoral statements, liturgical guidelines, and decrees from the Philippine Bishops',
-      'Daily news coverage of archdioceses, parishes, Marian shrines, and major liturgical celebrations',
-      'Direct Vatican and Asian Church reporting faithful to the Magisterium'
-    ],
-    featured: true
-  },
-  {
-    id: 'usccb',
-    name: 'USCCB (United States Conference of Catholic Bishops)',
-    url: 'https://www.usccb.org',
-    secondaryUrl: 'https://bible.usccb.org',
-    secondaryLabel: 'Daily Readings (bible.usccb.org)',
-    displayDomain: 'usccb.org',
-    category: 'Holy See and Magisterium',
-    tagline: 'Official Lectionary Readings, NABRE Catholic Bible and Episcopal Teachings',
-    whyItsGood:
-      'The official website of the U.S. Catholic Bishops is an indispensable daily companion for every Catholic. It hosts the official Daily Mass Readings (Lectionary) with daily audio recordings and video reflections, the complete text of the New American Bible Revised Edition (NABRE) with full theological footnotes, the searchable Catechism of the Catholic Church, liturgical calendar guides, and Catholic social teaching documents.',
-    keyHighlights: [
-      'Official Daily Mass Lectionary readings synchronized with the liturgical calendar and audio proclamations',
-      'Complete online Catholic Bible (NABRE) and Catechism of the Catholic Church',
-      'Authoritative guides on the Sacraments, National Eucharistic Revival, pro-life ministry, and Catholic prayers'
-    ],
-    featured: true
-  },
-  {
-    id: 'st-paul-center',
-    name: 'St. Paul Center for Biblical Theology',
-    url: 'https://stpaulcenter.com',
-    displayDomain: 'stpaulcenter.com',
-    category: 'Scripture and Liturgy',
-    tagline: 'Dr. Scott Hahn’s Institute Reading the Bible from the Heart of the Church',
-    whyItsGood:
-      'Founded by renowned Catholic theologian and convert Dr. Scott Hahn, the St. Paul Center for Biblical Theology promotes life-transforming Scripture study based on the Church’s living tradition and covenant theology. It shows how the Old Testament is fulfilled in the New Testament and how the entire Bible comes alive in the Catholic Mass and the Sacraments.',
-    keyHighlights: [
-      'Weekly “Sunday Bible Reflections” by Dr. Scott Hahn unpacking the Mass readings through covenant theology',
-      'Journey Through Scripture video Bible studies (Genesis to Jesus, The Bible and the Virgin Mary, The Lamb’s Supper)',
-      'Deep theological articles and courses by Dr. Scott Hahn, Dr. John Bergsma, and Dr. Brant Pitre'
+      'Rigorous long-form essays by leading Catholic theologians, philosophers, bishops, and cultural critics',
+      'Uncompromising defense of the sanctity of human life, religious liberty, marriage, and natural law',
+      'Thoughtful book reviews, poetry, and theological commentary on contemporary society'
     ],
     featured: true
   },
@@ -214,6 +162,24 @@ export const INITIAL_CATHOLIC_LINKS: CatholicWebsiteLink[] = [
     ]
   },
   {
+    id: 'fio-fm',
+    name: 'Fio (Fio.fm)',
+    url: 'https://fio.fm',
+    secondaryUrl: 'https://play.fio.fm',
+    secondaryLabel: 'Web Player (play.fio.fm)',
+    displayDomain: 'fio.fm',
+    category: 'Prayer and Devotion',
+    tagline: 'All-in-One Catholic Audio Streaming Platform for Podcasts, Sacred Music and Audiobooks',
+    whyItsGood:
+      'Fio.fm is the Catholic answer to Spotify and Audible — a unified, 100% faith-aligned streaming platform where every creator is vetted for fidelity to Catholic teaching. It brings together over 60 categories of Catholic podcasts, sacred chant and contemporary worship music, curated Eucharistic Adoration playlists, and classic Catholic audiobooks from publishers like TAN Books, Sophia Institute Press, and Pauline Books and Media.',
+    keyHighlights: [
+      'Thousands of trusted Catholic podcasts, homilies, and audio prayers in one distraction-free app and web player',
+      'Curated sacred music playlists for Eucharistic Adoration, Lectio Divina, and quiet contemplation',
+      'Audiobooks of the Saints and spiritual classics while directly supporting Catholic creators and musicians'
+    ],
+    featured: true
+  },
+  {
     id: 'adoremus',
     name: 'Adoremus (Adoremus.org)',
     url: 'https://adoremus.org',
@@ -230,20 +196,38 @@ export const INITIAL_CATHOLIC_LINKS: CatholicWebsiteLink[] = [
     featured: true
   },
   {
-    id: 'fio-fm',
-    name: 'Fio (Fio.fm)',
-    url: 'https://fio.fm',
-    secondaryUrl: 'https://play.fio.fm',
-    secondaryLabel: 'Web Player (play.fio.fm)',
-    displayDomain: 'fio.fm',
-    category: 'Prayer and Devotion',
-    tagline: 'All-in-One Catholic Audio Streaming Platform for Podcasts, Sacred Music and Audiobooks',
+    id: 'cbcp-news',
+    name: 'CBCPnews.net (Catholic Bishops’ Conference of the Philippines)',
+    url: 'https://cbcpnews.net',
+    secondaryUrl: 'https://cbcponline.net',
+    secondaryLabel: 'CBCP Official Portal (cbcponline.net)',
+    displayDomain: 'cbcpnews.net',
+    category: 'News and Catholic Culture',
+    tagline: 'Official News Service of the Catholic Bishops’ Conference of the Philippines',
     whyItsGood:
-      'Fio.fm is the Catholic answer to Spotify and Audible — a unified, 100% faith-aligned streaming platform where every creator is vetted for fidelity to Catholic teaching. It brings together over 60 categories of Catholic podcasts, sacred chant and contemporary worship music, curated Eucharistic Adoration playlists, and classic Catholic audiobooks from publishers like TAN Books, Sophia Institute Press, and Pauline Books and Media.',
+      'CBCPnews.net is the official news agency of the Catholic Bishops’ Conference of the Philippines, serving one of the largest and most devout Catholic nations in the world. It provides authoritative, daily coverage of the Philippine Church, official CBCP pastoral letters and liturgical directives, reports on national shrines and parishes, Asian Church developments, and dispatches directly from the Vatican.',
     keyHighlights: [
-      'Thousands of trusted Catholic podcasts, homilies, and audio prayers in one distraction-free app and web player',
-      'Curated sacred music playlists for Eucharistic Adoration, Lectio Divina, and quiet contemplation',
-      'Audiobooks of the Saints and spiritual classics while directly supporting Catholic creators and musicians'
+      'Official pastoral statements, liturgical guidelines, and decrees from the Philippine Bishops',
+      'Daily news coverage of archdioceses, parishes, Marian shrines, and major liturgical celebrations',
+      'Direct Vatican and Asian Church reporting faithful to the Magisterium'
+    ],
+    featured: true
+  },
+  {
+    id: 'usccb',
+    name: 'USCCB (United States Conference of Catholic Bishops)',
+    url: 'https://www.usccb.org',
+    secondaryUrl: 'https://bible.usccb.org',
+    secondaryLabel: 'Daily Readings (bible.usccb.org)',
+    displayDomain: 'usccb.org',
+    category: 'Holy See and Magisterium',
+    tagline: 'Official Lectionary Readings, NABRE Catholic Bible and Episcopal Teachings',
+    whyItsGood:
+      'The official website of the U.S. Catholic Bishops is an indispensable daily companion for every Catholic. It hosts the official Daily Mass Readings (Lectionary) with daily audio recordings and video reflections, the complete text of the New American Bible Revised Edition (NABRE) with full theological footnotes, the searchable Catechism of the Catholic Church, liturgical calendar guides, and Catholic social teaching documents.',
+    keyHighlights: [
+      'Official Daily Mass Lectionary readings synchronized with the liturgical calendar and audio proclamations',
+      'Complete online Catholic Bible (NABRE) and Catechism of the Catholic Church',
+      'Authoritative guides on the Sacraments, National Eucharistic Revival, pro-life ministry, and Catholic prayers'
     ],
     featured: true
   }

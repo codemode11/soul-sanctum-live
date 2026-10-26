@@ -105,7 +105,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
           ) : isPaused ? (
             <button
               onClick={onResume || SacredReader.resume}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white font-serif font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-sky-700 hover:bg-sky-600 text-white font-serif font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
               title="Resume Reading"
             >
               <Play className="w-4 h-4 fill-current" />

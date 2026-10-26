@@ -198,7 +198,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
         <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
           {/* Leading empty cells */}
           {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-            <div key={`empty-${i}`} className="min-h-24 sm:min-h-28 bg-[#D7C4B2]/30 rounded-xl" />
+            <div key={`empty-${i}`} className="min-h-24 sm:min-h-28 bg-white/70 rounded-xl border border-[#D5C2B0]/50" />
           ))}
 
           {/* Actual days */}
@@ -231,19 +231,19 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   setInspectedDay(dayInfo);
                   onSelectDate(dayInfo.date);
                 }}
-                className={`min-h-24 sm:min-h-28 p-2 sm:p-2.5 rounded-xl border transition-all duration-150 cursor-pointer flex flex-col justify-between relative group ${
+                className={`min-h-24 sm:min-h-28 p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-white hover:bg-stone-50 text-[#3B2213] ${
                   isSelected
-                    ? 'bg-gradient-to-br from-[#5D371F] via-[#4A2A17] to-[#341D10] text-[#FFFDF8] border-[#25130A] ring-2 ring-[#8B5A2B]/60 shadow-md scale-[1.01] z-10'
+                    ? 'border-2 border-[#341D10] ring-2 ring-[#8B5A2B]/60 shadow-md scale-[1.01] z-10'
                     : isToday
-                      ? 'bg-[#EBDDCF] text-[#341D10] border-2 border-[#8B5A2B] shadow-xs hover:bg-[#F2E8DC]'
-                      : 'bg-[#F6EFE7]/95 hover:bg-[#EAE0D3] text-[#3B2213] border border-[#D5C2B0]/80 hover:border-[#A78262] shadow-2xs'
+                      ? 'border-2 border-[#8B5A2B] shadow-xs'
+                      : 'border border-[#D5C2B0]/90 hover:border-[#8B5A2B] shadow-2xs'
                 }`}
               >
                 {/* Date number and color indicator */}
                 <div className="flex items-center justify-between leading-none">
                   <span className={`text-sm sm:text-base font-bold font-cinzel leading-none ${
                     isSelected 
-                      ? 'text-[#FFFDF8]' 
+                      ? 'w-6 h-6 rounded-full bg-[#341D10] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
                       : isToday 
                         ? 'w-6 h-6 rounded-full bg-[#5D371F] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
                         : isSunday 
@@ -264,13 +264,9 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 <div className="mt-1 flex-1">
                   <p 
                     className={`text-[13px] sm:text-[14px] font-serif line-clamp-2 leading-[1.18] tracking-tight ${
-                      isSelected 
-                        ? hasCelebratedSaintOrFeast 
-                          ? 'font-bold text-[#FFFDF8]' 
-                          : 'font-normal text-[#F4ECE1]'
-                        : hasCelebratedSaintOrFeast 
-                          ? 'font-bold text-[#2A1409]' 
-                          : 'font-normal text-[#5D371F]'
+                      hasCelebratedSaintOrFeast 
+                        ? 'font-bold text-[#2A1409]' 
+                        : 'font-normal text-[#5D371F]'
                     }`}
                   >
                     {displayTitle}
@@ -281,11 +277,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 <div className="flex flex-wrap items-center gap-1 mt-1">
                   {dayInfo.isHolyDay && (
                     <span 
-                      className={`text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs font-bold leading-none ${
-                        isSelected 
-                          ? 'bg-red-400/30 text-white border border-red-300/40' 
-                          : 'bg-red-100/90 text-red-900 border border-red-300/50'
-                      }`} 
+                      className="text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs font-bold leading-none bg-red-100/90 text-red-900 border border-red-300/50" 
                       title="Holy Day of Obligation"
                     >
                       Obligation
@@ -293,11 +285,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   )}
                   {dayInfo.isFastingDay && (
                     <span 
-                      className={`text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs leading-none ${
-                        isSelected 
-                          ? 'bg-purple-300/30 text-white border border-purple-300/40' 
-                          : 'bg-purple-100/90 text-purple-900 border border-purple-300/50'
-                      }`} 
+                      className="text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs leading-none bg-purple-100/90 text-purple-900 border border-purple-300/50" 
                       title="Day of Penance / Abstinence"
                     >
                       Penance
@@ -305,11 +293,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   )}
                   {dayInfo.historicalEvent && (
                     <span 
-                      className={`text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs font-medium leading-none ${
-                        isSelected 
-                          ? 'bg-white/20 text-white border border-white/25' 
-                          : 'bg-[#D7C4B2]/70 text-[#341D10] border border-[#BFA287]/60'
-                      }`} 
+                      className="text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs font-medium leading-none bg-[#EFE6DC] text-[#341D10] border border-[#BFA287]/60" 
                       title={dayInfo.historicalEvent.title}
                     >
                       {dayInfo.historicalEvent.year}

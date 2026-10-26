@@ -307,14 +307,14 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                   onClick={() => setViewingNovenaId(novena.id)}
                   className={`p-5 rounded-xl border transition-all cursor-pointer relative overflow-hidden ${
                     isViewing
-                      ? 'bg-gradient-to-br from-emerald-950 via-stone-900 to-amber-950 text-amber-50 border-amber-400 shadow-lg ring-2 ring-amber-500/40'
-                      : 'bg-gradient-to-br from-stone-900 via-emerald-950/90 to-stone-900 text-amber-50 border-emerald-700/50 hover:border-amber-400/60 shadow-sm'
+                      ? 'bg-gradient-to-br from-sky-950 via-[#152C44] to-[#2B1B10] text-amber-50 border-amber-400 shadow-lg ring-2 ring-amber-500/40'
+                      : 'bg-gradient-to-br from-[#102338] via-sky-950/95 to-[#1E2E3E] text-amber-50 border-sky-500/50 hover:border-amber-400/60 shadow-sm'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-[10px] font-bold uppercase tracking-wider font-cinzel flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-full bg-sky-500/25 border border-sky-400/50 text-sky-200 text-[10px] font-bold uppercase tracking-wider font-cinzel flex items-center gap-1">
                           <Award className="w-3 h-3 text-amber-300" />
                           Deo Gratias • Novena Completed
                         </span>
@@ -352,7 +352,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                             e.stopPropagation();
                             handleCheckDay(novena.id, d);
                           }}
-                          className="h-7 rounded-lg flex items-center justify-center text-xs font-bold font-cinzel bg-emerald-600/90 hover:bg-emerald-500 text-white border border-amber-300/40 shadow-2xs transition-all cursor-pointer"
+                          className="h-7 rounded-lg flex items-center justify-center text-xs font-bold font-cinzel bg-sky-700 hover:bg-sky-600 text-white border border-sky-300/40 shadow-2xs transition-all cursor-pointer"
                           title={`Day ${d} Completed (Click to toggle)`}
                         >
                           <Check className="w-3.5 h-3.5 stroke-[3]" />
@@ -484,11 +484,11 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           SECTION 2: PRAYER READER DECK (SWITCHES TEMPLATE WHEN NOVENA IS COMPLETED)
          ========================================================================= */}
       {isCurrentNovenaCompleted ? (
-        <div className="bg-gradient-to-br from-[#13221B] via-stone-900 to-[#24170B] text-amber-50 rounded-xl p-6 sm:p-8 shadow-xl border border-amber-500/40 space-y-6">
+        <div className="bg-gradient-to-br from-[#0F2439] via-[#162F48] to-[#24170B] text-amber-50 rounded-xl p-6 sm:p-8 shadow-xl border border-sky-400/40 space-y-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/15 pb-5">
             <div className="space-y-1.5">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold uppercase tracking-wider font-cinzel flex items-center gap-1.5">
+                <span className="px-3 py-1 rounded-full bg-sky-500/25 border border-sky-400/50 text-sky-200 text-xs font-bold uppercase tracking-wider font-cinzel flex items-center gap-1.5">
                   <Award className="w-4 h-4 text-amber-300" />
                   Deo Gratias • Nine-Day Novena Completed
                 </span>
@@ -633,7 +633,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
               onClick={() => handleCheckDay(currentNovenaData.id, currentDayInfo.dayNumber)}
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                 currentUserProgress?.completedDays.includes(currentDayInfo.dayNumber)
-                  ? 'bg-emerald-700 text-white shadow-xs'
+                  ? 'bg-sky-700 hover:bg-sky-600 text-white shadow-xs'
                   : 'bg-amber-900 text-amber-100 hover:bg-amber-800 shadow-md'
               }`}
             >
@@ -742,7 +742,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                     </span>
 
                     {scheduleInfo.status === 'in-progress' ? (
-                      <span className="px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-900 border border-emerald-300 text-[11px] font-bold font-cinzel">
+                      <span className="px-2.5 py-1 rounded-md bg-sky-100 text-sky-900 border border-sky-300 text-[11px] font-bold font-cinzel">
                         Active Now • Day {scheduleInfo.activeDay} of 9
                       </span>
                     ) : scheduleInfo.status === 'starting-soon' ? (
@@ -793,7 +793,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                   ) : isUserCompleted ? (
                     <button
                       onClick={() => handleRestartNovena(novena.id)}
-                      className="px-4 py-2 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0"
+                      className="px-4 py-2 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-900 border border-sky-300 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0"
                     >
                       Completed ✓ (Pray Again)
                     </button>

@@ -67,7 +67,7 @@ ${reading.reflection.content}`;
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12 animate-fadeIn">
       {/* Liturgical Day Banner */}
-      <div className="bg-white/92 backdrop-blur-md rounded-xl shadow-xl border border-stone-200/90 overflow-hidden">
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 overflow-hidden">
         <div className="p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -118,7 +118,7 @@ ${reading.reflection.content}`;
         </div>
 
         {/* Toolbar */}
-        <div className="px-4 py-2.5 bg-[#FAF7F2]/90 backdrop-blur-sm border-t border-stone-200/80 flex items-center justify-between text-xs text-stone-700">
+        <div className="px-4 py-2.5 bg-white/35 backdrop-blur-md border-t border-white/50 flex items-center justify-between text-xs text-stone-800">
           <span className="font-serif italic text-stone-500">
             Source: {reading.reflection.author}
           </span>
@@ -162,8 +162,8 @@ ${reading.reflection.content}`;
       </div>
 
       {/* Main Reflection Card */}
-      <article className="bg-[#FAF8F5]/92 backdrop-blur-md rounded-xl p-6 sm:p-10 shadow-xl border border-amber-900/15 space-y-6">
-        <div className="border-b border-stone-200/90 pb-4">
+      <article className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-10 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-6">
+        <div className="border-b border-stone-300/60 pb-4">
           <div className="flex items-center text-amber-900 mb-1">
             <span className="text-xs font-cinzel font-bold text-amber-800 uppercase tracking-wider">
               Patristic and Liturgical Reflection
@@ -180,7 +180,7 @@ ${reading.reflection.content}`;
         </div>
 
         {/* Liturgical Anchor and Scripture Hook */}
-        <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200/80 flex items-start gap-3 text-xs sm:text-sm font-serif text-amber-950">
+        <div className="p-4 rounded-xl bg-amber-50/45 backdrop-blur-md border border-white/60 flex items-start gap-3 text-xs sm:text-sm font-serif text-amber-950">
           <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <div>
             <span className="font-bold block">Gospel Tie-in:</span>

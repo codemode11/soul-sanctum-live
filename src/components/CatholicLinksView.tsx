@@ -341,7 +341,7 @@ export const CatholicLinksView: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-sm border border-stone-200/90 space-y-3">
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
             {categories.map(cat => (
@@ -382,7 +382,7 @@ export const CatholicLinksView: React.FC = () => {
           return (
             <article
               key={site.id}
-              className="bg-white/95 backdrop-blur-md rounded-xl p-5 sm:p-6 shadow-md border border-stone-200/90 hover:border-[#8B5A2B]/60 transition-all space-y-4"
+              className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-5 sm:p-6 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 hover:bg-white/55 hover:border-[#8B5A2B]/60 transition-all space-y-4"
             >
               {/* Top Row: Title, Category Badge, and Direct Link Button */}
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-stone-200/80 pb-3.5">
@@ -497,7 +497,7 @@ export const CatholicLinksView: React.FC = () => {
               </div>
 
               {/* Why It's Good Box */}
-              <div className="p-4 sm:p-5 rounded-xl bg-[#FAF8F5] border-l-4 border-[#6B4423] space-y-2">
+              <div className="p-4 sm:p-5 rounded-xl bg-white/35 backdrop-blur-md border border-white/60 border-l-4 border-l-[#6B4423] space-y-2">
                 <div className="flex items-center gap-2 text-sm sm:text-base font-cinzel font-bold uppercase tracking-wider text-[#5A381C]">
                   <Sparkles className="w-4 h-4 text-[#8B5A2B]" />
                   <span>Why This Website Is Good and Worth Visiting</span>
@@ -517,7 +517,7 @@ export const CatholicLinksView: React.FC = () => {
                     {site.keyHighlights.map((item, idx) => (
                       <li
                         key={idx}
-                        className="flex items-start gap-2.5 p-3.5 sm:p-4 rounded-lg bg-stone-50 border border-stone-200/90 text-base sm:text-lg font-serif text-stone-800 leading-relaxed"
+                        className="flex items-start gap-2.5 p-3.5 sm:p-4 rounded-lg bg-white/35 backdrop-blur-md border border-white/60 text-base sm:text-lg font-serif text-stone-800 leading-relaxed"
                       >
                         <CheckCircle2 className="w-5 h-5 text-[#6B4423] shrink-0 mt-1" />
                         <span>{item}</span>

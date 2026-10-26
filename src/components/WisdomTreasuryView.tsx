@@ -119,7 +119,7 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
       </div>
 
       {/* Filter and Category Controls */}
-      <div className="bg-white rounded-xl p-4 sm:p-5 shadow-xs border border-stone-200 space-y-4">
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 sm:p-5 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-4">
         
         {/* Tradition Category Tabs */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
@@ -181,7 +181,7 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
             <div
               key={wisdom.id}
               onClick={() => setSpotlightQuote(wisdom)}
-              className="bg-white p-6 rounded-xl border border-stone-200 shadow-2xs hover:shadow-md transition-all space-y-4 flex flex-col justify-between cursor-pointer group"
+              className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-6 rounded-xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/55 transition-all space-y-4 flex flex-col justify-between cursor-pointer group"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">

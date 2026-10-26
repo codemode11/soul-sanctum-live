@@ -218,7 +218,7 @@ ${reading.reflection.content}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Liturgical Day Banner and Date Bar */}
-      <div className="bg-white/92 backdrop-blur-md rounded-xl shadow-xl border border-stone-200/90 overflow-hidden">
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 overflow-hidden">
         <div className="p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -300,7 +300,7 @@ ${reading.reflection.content}`;
         </div>
 
         {/* Lector Audio Controls + Secondary Controls: Font Size and Copy */}
-        <div className="p-4 bg-[#FAF7F2]/90 backdrop-blur-sm border-t border-stone-200/80 space-y-3">
+        <div className="p-4 bg-white/35 backdrop-blur-md border-t border-white/50 space-y-3">
           <LectorControlsBar
             onPlay={handleToggleReadAloud}
             onStop={() => {
@@ -392,12 +392,12 @@ ${reading.reflection.content}`;
       </div>
 
       {/* FIRST READING */}
-      <article className={`bg-white/92 backdrop-blur-md rounded-xl p-6 sm:p-8 border space-y-4 transition-all duration-300 ${
+      <article className={`bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-8 border space-y-4 transition-all duration-300 ${
         playingPartId === 'first-reading' 
-          ? 'border-amber-500 ring-2 ring-amber-400/50 shadow-xl bg-amber-50/30' 
-          : 'border-stone-200/90 shadow-lg'
+          ? 'border-amber-500 ring-2 ring-amber-400/50 shadow-xl bg-amber-50/45' 
+          : 'border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]'
       }`}>
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-stone-200/90 pb-3 gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-stone-300/60 pb-3 gap-2">
           <div>
             <div className="flex items-center gap-2.5">
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
@@ -431,8 +431,8 @@ ${reading.reflection.content}`;
       </article>
 
       {/* RESPONSORIAL PSALM */}
-      <article className="bg-[#FCFAF7] rounded-xl p-6 sm:p-8 shadow-xs border border-amber-900/10 space-y-5">
-        <div className="border-b border-amber-900/15 pb-3">
+      <article className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-5">
+        <div className="border-b border-stone-300/60 pb-3">
           <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
             Responsorial Psalm
           </h3>
@@ -442,7 +442,7 @@ ${reading.reflection.content}`;
         </div>
 
         {/* Antiphon response: Increased font size so it is highly readable and dynamically scalable */}
-        <div className="p-4 sm:p-5 rounded-md bg-amber-50/90 border border-amber-200/90 font-serif text-amber-950 font-bold italic flex items-start gap-3 shadow-sm" style={antiphonStyle}>
+        <div className="p-4 sm:p-5 rounded-md bg-amber-50/55 backdrop-blur-md border border-white/60 font-serif text-amber-950 font-bold italic flex items-start gap-3 shadow-sm" style={antiphonStyle}>
           <span className="text-amber-800 font-serif font-black text-2xl sm:text-3xl leading-none not-italic">R.</span>
           <span className="leading-snug">{reading.responsorialPsalm.antiphon}</span>
         </div>
@@ -451,7 +451,7 @@ ${reading.reflection.content}`;
         <div className="space-y-4 font-serif-sacred text-stone-800" style={stanzaStyle}>
           {reading.responsorialPsalm.verses.map((verse, idx) => (
             <div key={idx} className="space-y-1.5">
-              <p className="whitespace-pre-line pl-3 border-l-2 border-amber-400/50">
+              <p className="whitespace-pre-line pl-3 border-l-2 border-amber-500/60">
                 {verse}
               </p>
               <p className="font-serif font-semibold text-amber-900 italic" style={{ fontSize: '1.05em' }}>
@@ -463,7 +463,7 @@ ${reading.reflection.content}`;
       </article>
 
       {/* ALLELUIA ACCLAMATION: Increased font size for readability */}
-      <div className="bg-amber-100/70 border border-amber-300/80 rounded-xl p-6 sm:p-8 text-center space-y-3 font-serif">
+      <div className="bg-amber-100/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] rounded-xl p-6 sm:p-8 text-center space-y-3 font-serif">
         <h3 className="font-serif text-lg sm:text-xl font-bold text-amber-950 tracking-normal">
           Alleluia Acclamation
         </h3>
@@ -482,10 +482,10 @@ ${reading.reflection.content}`;
       </div>
 
       {/* HOLY GOSPEL */}
-      <article className={`bg-white rounded-xl p-6 sm:p-8 shadow-md border-2 space-y-5 relative overflow-hidden transition-all duration-300 ${
+      <article className={`bg-white/50 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_0_rgba(120,90,50,0.14)] border-2 space-y-5 relative overflow-hidden transition-all duration-300 ${
         playingPartId === 'gospel'
-          ? 'border-red-700 ring-4 ring-red-500/30 shadow-xl bg-amber-50/20'
-          : 'border-amber-800/30'
+          ? 'border-red-700 ring-4 ring-red-500/30 shadow-xl bg-amber-50/40'
+          : 'border-white/70 ring-1 ring-inset ring-white/40'
       }`}>
         <div className="absolute top-0 right-0 w-24 h-24 bg-amber-600/5 rounded-bl-full pointer-events-none" />
         
@@ -629,7 +629,7 @@ ${reading.reflection.content}`;
       )}
 
       {/* DAILY PATRISTIC and LITURGICAL REFLECTION */}
-      <article className="bg-[#FAF8F5]/92 backdrop-blur-md rounded-xl p-6 sm:p-8 shadow-lg border border-amber-900/15 space-y-3">
+      <article className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
         <div className="flex items-center gap-2 text-amber-900">
           <BookOpen className="w-4 h-4" />
           <h3 className="font-serif text-lg sm:text-xl font-bold text-amber-950 tracking-normal">

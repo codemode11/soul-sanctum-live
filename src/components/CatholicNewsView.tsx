@@ -94,7 +94,7 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white rounded-2xl p-4 shadow-xs border border-stone-200 flex items-center justify-between gap-3">
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 flex items-center justify-between gap-3">
         <span className="font-cinzel text-xs font-bold text-stone-600 hidden sm:inline">
           Latest Reports ({filteredNews.length})
         </span>
@@ -117,7 +117,7 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
           <article
             key={item.id}
             onClick={() => setActiveArticle(item)}
-            className="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-2xs hover:shadow-md transition-all cursor-pointer space-y-3 group flex flex-col sm:flex-row gap-5 items-start"
+            className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-5 sm:p-6 rounded-2xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/55 transition-all cursor-pointer space-y-3 group flex flex-col sm:flex-row gap-5 items-start"
           >
             {item.imageUrl && (
               <div className="relative aspect-video sm:aspect-square w-full sm:w-44 rounded-xl overflow-hidden shrink-0 shadow-xs border border-stone-200">

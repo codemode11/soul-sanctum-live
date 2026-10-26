@@ -76,7 +76,7 @@ ${reading.meditationQuestion}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Sub-view Navigation Bar: Daily CCC Plan first, no icons */}
-      <div className="bg-[#FAF7F2] p-2 rounded-xl border border-stone-200/90 shadow-2xs overflow-x-auto no-scrollbar">
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-2 rounded-xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] overflow-x-auto no-scrollbar">
         <div className="flex items-center gap-1.5 min-w-max">
           {/* 1. Daily CCC Plan */}
           <button
@@ -204,9 +204,9 @@ ${reading.meditationQuestion}`;
           </div>
 
       {/* Reading Selector and Quick Browser */}
-      <div className="bg-white rounded-xl p-4 shadow-xs border border-stone-200 space-y-3">
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 font-cinzel">
+          <div className="text-xs font-semibold uppercase tracking-wider text-stone-700 font-cinzel">
             Daily Reading Plan and Topics
           </div>
           <div className="relative">
@@ -215,7 +215,7 @@ ${reading.meditationQuestion}`;
               placeholder="Search paragraphs or topics..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-xs px-3 py-1.5 rounded-lg bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-700 w-full sm:w-64"
+              className="text-xs px-3 py-1.5 rounded-lg bg-white/60 backdrop-blur-sm border border-white/70 focus:outline-none focus:border-amber-700 w-full sm:w-64"
             />
           </div>
         </div>
@@ -230,7 +230,7 @@ ${reading.meditationQuestion}`;
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
                   isSelected
                     ? 'bg-amber-900 text-amber-50 shadow-xs'
-                    : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                    : 'bg-white/55 hover:bg-white/80 text-stone-800 border border-white/60'
                 }`}
               >
                 <span className="font-bold mr-1">{r.paragraphs}:</span> {r.title}
@@ -241,10 +241,10 @@ ${reading.meditationQuestion}`;
       </div>
 
       {/* Main CCC Reading Display */}
-      <article className="bg-white rounded-xl p-6 sm:p-8 shadow-xs border border-stone-200 space-y-6">
+      <article className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-6 sm:p-8 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-6">
         
         {/* Breadcrumb Hierarchy */}
-        <div className="space-y-1 border-b border-stone-200 pb-4">
+        <div className="space-y-1 border-b border-stone-300/60 pb-4">
           <div className="flex flex-wrap items-center gap-1.5 text-xs text-amber-900/80 font-medium font-cinzel">
             <span>{reading.part}</span>
             <span className="text-stone-400">•</span>
@@ -281,7 +281,7 @@ ${reading.meditationQuestion}`;
         )}
 
         {/* "IN BRIEF" SUMMARY BOX */}
-        <div className="rounded-xl p-5 bg-amber-50/80 border border-amber-200 space-y-3">
+        <div className="rounded-xl p-5 bg-amber-50/45 backdrop-blur-md border border-white/60 space-y-3">
           <div className="flex items-center gap-2 text-amber-950 font-serif font-bold text-base sm:text-lg">
             <span>In Brief — Church Teaching Summary</span>
           </div>
@@ -296,7 +296,7 @@ ${reading.meditationQuestion}`;
         </div>
 
         {/* DAILY MEDITATION QUESTION and PERSONAL REFLECTION */}
-        <div className="rounded-xl p-5 bg-stone-50 border border-stone-200 space-y-4">
+        <div className="rounded-xl p-5 bg-white/35 backdrop-blur-md border border-white/60 space-y-4">
           <div className="flex items-center gap-2 text-stone-900 font-serif font-bold text-base sm:text-lg">
             <span>Personal Meditation and Spiritual Application</span>
           </div>
@@ -310,7 +310,7 @@ ${reading.meditationQuestion}`;
               value={personalReflection}
               onChange={(e) => setPersonalReflection(e.target.value)}
               placeholder="Record your prayer response or reflection on today's Catechism teaching..."
-              className="w-full h-24 p-3 rounded-lg bg-white border border-stone-300 text-xs sm:text-sm font-serif-sacred focus:outline-none focus:border-amber-800 resize-none"
+              className="w-full h-24 p-3 rounded-lg bg-white/60 backdrop-blur-sm border border-white/70 text-xs sm:text-sm font-serif-sacred focus:outline-none focus:border-amber-800 resize-none"
             />
             <div className="flex items-center justify-between">
               <span className="text-[11px] text-stone-500">
