@@ -54,6 +54,32 @@ const PODCAST_ORIGINAL_COVERS: Record<string, string> = {
   'vatican-radio-podcast': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/53/59/ae/5359aec5-b049-5dce-e3df-be0985fc9f03/mza_14565055678223969088.jpeg/600x600bb.jpg',
 };
 
+const ORDERED_PODCAST_IDS: string[] = [
+  // First row
+  'road-to-emmaus-scott-hahn',
+  'bible-in-a-year',
+  'word-on-fire-show',
+  'catechism-in-a-year',
+  'jeff-cavins-show',
+  // Second row
+  'counsel-of-trent',
+  'thomistic-institute',
+  'catholic-answers-live',
+  'vatican-radio-podcast',
+  'fr-mike-schmitz-podcast',
+  // Third row
+  'jimmy-akins-mysterious-world',
+  'abiding-together',
+  'pints-with-aquinas',
+  'catholic-talk-show',
+  'discerning-hearts',
+];
+
+const getPodcastOrderRank = (id: string): number => {
+  const idx = ORDERED_PODCAST_IDS.indexOf(id);
+  return idx === -1 ? 999 : idx;
+};
+
 const getPodcastArtwork = (id?: string, fallbackUrl?: string): string => {
   if (id && PODCAST_ORIGINAL_COVERS[id]) {
     return PODCAST_ORIGINAL_COVERS[id];
@@ -80,6 +106,10 @@ export const CatholicPodcastsView: React.FC<CatholicPodcastsViewProps> = ({
     }
   });
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const orderedPodcastShows = [...CATHOLIC_PODCASTS_DATABASE].sort(
+    (a, b) => getPodcastOrderRank(a.id) - getPodcastOrderRank(b.id)
+  );
 
   const rawFeatured = getFeaturedPodcastEpisode();
   const featuredEpisode = rawFeatured
@@ -119,7 +149,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
     setTimeout(() => setCopiedId(null), 2200);
   };
 
-  const allEpisodes = getAllPodcastEpisodes().map(ep => ({
+  const allEpisodes = orderedPodcastShows.flatMap(show => show.episodes).map(ep => ({
     ...ep,
     podcastCoverUrl: getPodcastArtwork(ep.podcastId, ep.podcastCoverUrl)
   }));
@@ -290,7 +320,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
-          {CATHOLIC_PODCASTS_DATABASE.map(show => {
+          {orderedPodcastShows.map(show => {
             const isSelected = selectedShowId === show.id;
             return (
               <div
