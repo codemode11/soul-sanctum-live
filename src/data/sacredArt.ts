@@ -33,8 +33,8 @@ export const NIEPOKALANOW_HIGH_RES_IMAGES: NiepokalanowHighResImage[] = [
     resolution: '1471 × 981 High-Res',
     imageUrl: 'https://images.unsplash.com/photo-1599752766954-57c001ba82cc?q=80&w=1471&auto=format&fit=crop',
     description: 'The Most Blessed Sacrament is solemnly exposed by a priest.',
-    attributionText: 'Jacob Bentzinger ; Unsplash',
-    creditShort: 'Jacob Bentzinger ; Unsplash',
+    attributionText: 'Jacob Bentzinger; Unsplash.',
+    creditShort: 'Jacob Bentzinger; Unsplash.',
     attributionUrl: 'https://images.unsplash.com/photo-1599752766954-57c001ba82cc?q=80&w=1471&auto=format&fit=crop',
     objectPosition: '50% 85%'
   },

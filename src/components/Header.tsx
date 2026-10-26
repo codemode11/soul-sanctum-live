@@ -232,7 +232,7 @@ export const Header: React.FC<HeaderProps> = ({
               const activeImg =
                 NIEPOKALANOW_HIGH_RES_IMAGES.find((img) => img.id === activeEstablishingImageId) ||
                 NIEPOKALANOW_HIGH_RES_IMAGES[0];
-              const creditLabel = activeImg.creditShort || 'Jacob Bentzinger; Unsplash';
+              const creditLabel = activeImg.creditShort || 'Jacob Bentzinger; Unsplash.';
               return (
                 <div className="flex flex-col items-end mt-16 sm:mt-20 md:mt-24 lg:mt-28 max-w-[195px] sm:max-w-[210px] md:max-w-[220px]">
                   <div
