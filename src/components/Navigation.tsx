@@ -411,28 +411,30 @@ export const Navigation: React.FC<NavigationProps> = ({
                 onSelectTab(item.id);
                 if (onCloseMobile) onCloseMobile();
               }}
-              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg cursor-pointer select-none group text-left transform-gpu origin-left will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] antialiased [text-rendering:geometricPrecision] transition-all duration-700 ease-in-out ${
+              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg cursor-pointer select-none group text-left border transition-colors duration-500 ease-out ${
                 isActive
-                  ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] backdrop-blur-md scale-[1.025]'
-                  : 'text-stone-300 scale-100 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border border-transparent hover:scale-[1.025]'
+                  ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] backdrop-blur-md'
+                  : 'text-stone-300 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border-transparent'
               }`}
             >
-              <div className="flex items-center gap-3 min-w-0 flex-1">
-                <div className={`p-2 rounded-lg transition-all duration-700 ease-in-out shrink-0 transform-gpu origin-center will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] ${
+              {/* Unified Content Wrapper: Icon and Text grow TOGETHER in 1:1 synchronization */}
+              <div className={`flex items-center gap-3 min-w-0 flex-1 origin-left transition-transform duration-500 ease-out transform-gpu will-change-transform ${
+                isActive ? 'scale-[1.08]' : 'scale-100 group-hover:scale-[1.08]'
+              }`}>
+                <div className={`p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 ${
                   isActive 
-                    ? 'bg-[#FFD700]/25 text-[#FFD700] scale-110 shadow-[0_0_10px_rgba(255,215,0,0.3)]' 
-                    : 'bg-white/5 text-stone-400 scale-100 group-hover:text-[#FFD700] group-hover:bg-[#FFD700]/20 group-hover:scale-110 group-hover:shadow-[0_0_10px_rgba(255,215,0,0.25)]'
+                    ? 'bg-[#FFD700]/25 text-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.3)]' 
+                    : 'bg-white/5 text-stone-400 group-hover:text-[#FFD700] group-hover:bg-[#FFD700]/20 group-hover:shadow-[0_0_10px_rgba(255,215,0,0.25)]'
                 }`}>
-                  <Icon className={`w-5 h-5 shrink-0 transition-colors duration-700 ease-in-out ${
+                  <Icon className={`w-5 h-5 shrink-0 transition-colors duration-500 ease-out ${
                     isActive ? 'text-[#FFD700]' : 'text-stone-400 group-hover:text-[#FFD700]'
                   }`} />
                 </div>
                 <div className="min-w-0 flex-1 overflow-visible">
-                  {/* Text slowly and smoothly increases in size on hover and active states without abrupt jumping */}
-                  <span className={`inline-block origin-left transition-all duration-700 ease-in-out transform-gpu will-change-transform [backface-visibility:hidden] [-webkit-backface-visibility:hidden] antialiased [text-rendering:geometricPrecision] text-base leading-tight font-serif font-medium whitespace-nowrap ${
+                  <span className={`block font-serif text-base font-medium leading-tight whitespace-nowrap transition-colors duration-500 ease-out ${
                     isActive
-                      ? 'text-[#FFD700] drop-shadow-xs scale-[1.08]'
-                      : 'text-stone-200 scale-100 group-hover:text-[#FFD700] group-hover:scale-[1.08]'
+                      ? 'text-[#FFD700] drop-shadow-xs'
+                      : 'text-stone-200 group-hover:text-[#FFD700]'
                   }`}>
                     {item.label}
                   </span>
