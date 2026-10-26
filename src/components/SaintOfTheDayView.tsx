@@ -700,79 +700,97 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
   };
 
   const companionSaints = (selectedSaint.companionSaints || []).slice(0, 3);
+  const [isDirectoryOpen, setIsDirectoryOpen] = useState(false);
+
+  const romanNumerals = ['II', 'III', 'IV'];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      {/* Top Header & Daily Date Switcher */}
-      <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/80 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 text-xs font-bold uppercase tracking-widest mb-3 border border-amber-200/60 dark:border-amber-700/50">
-          <SaintWithHaloIcon className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-          <span>Alban Butler&apos;s Lives of the Saints • Updated Daily</span>
-        </div>
-        <h1 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-          Saint of the Day &amp; Daily Martyrology
-        </h1>
-        <p className="text-stone-600 dark:text-stone-400 max-w-2xl mx-auto text-sm sm:text-base mb-5">
-          From Alban Butler&apos;s classic <em>Lives of the Fathers, Martyrs, and Other Principal Saints</em>: featuring the principal Saint of the Day with sacred portrait and full biography, followed by the next three saints commemorated on the same calendar day.
-        </p>
-
-        {/* Daily Navigation Bar */}
-        <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 rounded-xl p-1.5 shadow-sm">
-          <button
-            onClick={() => handleShiftDay(-1)}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-            title="Previous Day"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            <span>Previous Day</span>
-          </button>
-
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/50 text-amber-900 dark:text-amber-200 text-xs font-bold">
-            <Calendar className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-            <span>{selectedSaint.feastDate}</span>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
+      {/* Editorial Masthead & Daily Navigation Bar */}
+      <header className="border-b border-stone-200/90 dark:border-stone-800 pb-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+          <div>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-medium tracking-wider uppercase text-amber-800 dark:text-amber-400 mb-2">
+              <SaintWithHaloIcon className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+              <span>Alban Butler&apos;s Lives of the Saints</span>
+              <span aria-hidden="true">·</span>
+              <span>Daily Roman Martyrology</span>
+              <span aria-hidden="true">·</span>
+              <span>{selectedSaint.feastDate}</span>
+            </div>
+            <h1 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">
+              Saint of the Day
+            </h1>
           </div>
 
-          <button
-            onClick={() => handleShiftDay(1)}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-            title="Next Day"
-          >
-            <span>Next Day</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
+          {/* Interactive Date Switcher & Directory Toggle */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 rounded-xl p-1 shadow-xs">
+              <button
+                onClick={() => handleShiftDay(-1)}
+                className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                title="Previous Day"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">Previous</span>
+              </button>
 
-          <button
-            onClick={handleResetToToday}
-            className="px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider bg-amber-700 hover:bg-amber-800 text-white transition-colors"
-          >
-            Today
-          </button>
+              <div className="flex items-center gap-2 px-3.5 py-2 text-stone-900 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-200/70 dark:border-stone-800">
+                <Calendar className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
+                <span>{selectedSaint.feastDate}</span>
+              </div>
+
+              <button
+                onClick={() => handleShiftDay(1)}
+                className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                title="Next Day"
+              >
+                <span className="hidden sm:inline">Next</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            <button
+              onClick={handleResetToToday}
+              className="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-stone-900 hover:bg-stone-800 dark:bg-amber-700 dark:hover:bg-amber-600 text-white transition-colors"
+            >
+              Today
+            </button>
+
+            <button
+              onClick={() => setIsDirectoryOpen(prev => !prev)}
+              className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold border transition-colors ${
+                isDirectoryOpen
+                  ? 'bg-amber-800 text-white border-amber-800'
+                  : 'bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 border-stone-200/90 dark:border-stone-800 hover:bg-stone-100 dark:hover:bg-stone-800'
+              }`}
+            >
+              <Search className="w-3.5 h-3.5" />
+              <span>{isDirectoryOpen ? 'Close Directory' : 'Search All Saints'}</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Sidebar: Saints Calendar & Search */}
-        <div className="lg:col-span-4 space-y-4">
-          <div className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/80 dark:border-stone-800 p-4 shadow-sm">
-            <div className="relative mb-4">
-              <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search Butler's Lives, patronage, date..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-600 text-stone-800 dark:text-stone-200"
-              />
-            </div>
-
-            <div className="flex items-center justify-between px-2 mb-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-stone-400">
-                Butler&apos;s Calendar Directory
+        {/* Collapsible Search & Calendar Directory Panel */}
+        {isDirectoryOpen && (
+          <div className="mt-6 pt-6 border-t border-stone-200/80 dark:border-stone-800 animate-in fade-in duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+              <div className="relative flex-1 max-w-md">
+                <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search saint name, patronage, symbol, or date..."
+                  className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-700 text-stone-800 dark:text-stone-200"
+                />
+              </div>
+              <span className="text-xs text-stone-500 dark:text-stone-400">
+                Showing {filteredSaints.length} feast days in Butler&apos;s Directory
               </span>
-              <span className="text-xs text-stone-400">{filteredSaints.length} feast days</span>
             </div>
 
-            <div className="space-y-1.5 max-h-[560px] overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 max-h-72 overflow-y-auto pr-1">
               {filteredSaints.map((saint) => {
                 const isSelected = saint.id === selectedSaint.id && saint.feastDate === selectedSaint.feastDate;
                 return (
@@ -788,30 +806,24 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                       setSelectedSaint(resolved);
                       setResolvedSaintImageUrl(resolved.imageUrl);
                       setImgError(false);
+                      setIsDirectoryOpen(false);
                     }}
-                    className={`w-full text-left p-3 rounded-xl transition-all flex items-start justify-between gap-2 ${
+                    className={`text-left p-3 rounded-xl border transition-all flex items-start justify-between gap-3 ${
                       isSelected
-                        ? 'bg-amber-700 text-white shadow-sm'
-                        : 'hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300'
+                        ? 'bg-amber-800 text-white border-amber-800 shadow-xs'
+                        : 'bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800/80 text-stone-800 dark:text-stone-200 border-stone-200/80 dark:border-stone-800'
                     }`}
                   >
-                    <div>
-                      <div className="font-serif font-bold text-sm leading-snug">
+                    <div className="min-w-0">
+                      <div className="font-serif font-bold text-base leading-snug truncate">
                         {saint.name}
                       </div>
-                      <div className={`text-xs mt-0.5 line-clamp-1 ${isSelected ? 'text-amber-100' : 'text-stone-500 dark:text-stone-400'}`}>
+                      <div className={`text-xs mt-0.5 truncate ${isSelected ? 'text-amber-100' : 'text-stone-500 dark:text-stone-400'}`}>
                         {saint.title}
                       </div>
-                      {saint.companionSaints && saint.companionSaints.length > 0 && (
-                        <div className={`text-[11px] mt-1 line-clamp-1 ${isSelected ? 'text-amber-200/90' : 'text-amber-700/80 dark:text-amber-400/80'}`}>
-                          + {saint.companionSaints.slice(0, 3).map(c => c.name).join(', ')}
-                        </div>
-                      )}
                     </div>
-                    <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md shrink-0 ${
-                      isSelected
-                        ? 'bg-amber-800 text-amber-100'
-                        : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400'
+                    <span className={`text-xs font-medium shrink-0 ${
+                      isSelected ? 'text-amber-200' : 'text-amber-800 dark:text-amber-400'
                     }`}>
                       {saint.feastDate}
                     </span>
@@ -820,239 +832,243 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               })}
             </div>
           </div>
-        </div>
+        )}
+      </header>
 
-        {/* Right Detail Panel: 1st Saint (Saint of the Day with Portrait) + Next 3 Companion Saints */}
-        <div className="lg:col-span-8 space-y-6">
-          <div className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/80 dark:border-stone-800 shadow-sm overflow-hidden">
-            {/* Hero Banner */}
-            <div className="bg-gradient-to-br from-stone-900 via-stone-800 to-amber-950 text-white p-6 sm:p-8 relative overflow-hidden">
-              <div className="relative z-10">
-                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                      1st Saint • Saint of the Day • {selectedSaint.feastDate}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-stone-200 text-xs font-medium">
-                      <BookOpen className="w-3.5 h-3.5 text-amber-300" />
-                      {selectedSaint.butlerVolume || "Butler's Lives of the Saints"}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-stone-200 text-xs font-medium capitalize">
-                      <span
-                        className={`w-2 h-2 rounded-full ${
-                          normalizedColorKey === 'red'
-                            ? 'bg-red-500'
-                            : normalizedColorKey === 'green'
-                            ? 'bg-emerald-500'
-                            : normalizedColorKey === 'violet'
-                            ? 'bg-purple-400'
-                            : 'bg-amber-300'
-                        }`}
-                      />
-                      {colorInfo.name} Vestments
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={handleReadAloud}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                        isReadingAloud
-                          ? 'bg-amber-500 text-stone-950 shadow-sm animate-pulse'
-                          : 'bg-white/10 hover:bg-white/20 text-white'
-                      }`}
-                    >
-                      {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                      <span>{isReadingAloud ? 'Stop Audio' : 'Listen'}</span>
-                    </button>
-                    <button
-                      onClick={handleCopy}
-                      className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors"
-                      title="Copy Saint Biography & Martyrology"
-                    >
-                      {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Main Content Header with Portrait for the Saint of the Day ONLY */}
-                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-                  {resolvedSaintImageUrl && !imgError ? (
-                    <div className="w-36 h-44 sm:w-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-amber-400/40 shadow-xl shrink-0 bg-stone-800 relative group">
-                      <img 
-                        src={resolvedSaintImageUrl} 
-                        alt={selectedSaint.name}
-                        onError={() => setImgError(true)}
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
-                    </div>
-                  ) : (
-                    <div className="w-32 h-40 sm:w-36 sm:h-44 rounded-2xl border-2 border-amber-400/30 bg-stone-800/90 flex flex-col items-center justify-center p-4 text-center shrink-0">
-                      <SaintWithHaloIcon className="w-12 h-12 text-amber-400 mb-2" />
-                      <span className="text-[10px] uppercase tracking-widest text-amber-200/80 font-semibold">
-                        Saint of the Day
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="flex-1 text-center sm:text-left">
-                    <h2 className="font-serif text-3xl sm:text-4xl font-bold mb-1 text-white">
+      {/* Principal Saint of the Day — Illuminated Missal Spread */}
+      <article className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/90 dark:border-stone-800 shadow-xs overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12">
+          {/* Left Column (4 cols): Sacred Portrait & Liturgical Dossier */}
+          <div className="lg:col-span-4 bg-[#F7F4EE] dark:bg-stone-950/60 border-b lg:border-b-0 lg:border-r border-stone-200/80 dark:border-stone-800 p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              {/* Sacred Portrait Frame */}
+              <div className="relative mx-auto max-w-[280px] lg:max-w-none aspect-[4/5] rounded-xl overflow-hidden bg-stone-900 border border-amber-700/30 shadow-md mb-6">
+                {resolvedSaintImageUrl && !imgError ? (
+                  <img
+                    src={resolvedSaintImageUrl}
+                    alt={selectedSaint.name}
+                    onError={() => setImgError(true)}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-103"
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-stone-800 to-stone-950">
+                    <SaintWithHaloIcon className="w-16 h-16 text-amber-400/90 mb-3" />
+                    <span className="font-serif italic text-base text-amber-100">
                       {selectedSaint.name}
-                    </h2>
-                    <p className="text-amber-200/90 text-sm sm:text-base font-medium mb-4">
-                      {selectedSaint.title}
-                    </p>
-
-                    <blockquote className="border-l-2 border-amber-400 pl-4 py-1 italic text-stone-200 font-serif text-base sm:text-lg">
-                      &ldquo;{quoteText}&rdquo;
-                    </blockquote>
+                    </span>
+                    <span className="text-xs text-stone-400 mt-1">
+                      {selectedSaint.feastDate}
+                    </span>
                   </div>
-                </div>
+                )}
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/15 rounded-xl pointer-events-none" />
               </div>
+
+              {/* Clean Unboxed Liturgical Dossier */}
+              <dl className="divide-y divide-stone-200/80 dark:divide-stone-800 text-sm">
+                <div className="py-3 flex items-baseline justify-between gap-4">
+                  <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium">
+                    Feast Day
+                  </dt>
+                  <dd className="font-serif font-bold text-base text-stone-900 dark:text-stone-100 text-right">
+                    {selectedSaint.feastDate}
+                  </dd>
+                </div>
+
+                <div className="py-3 flex items-baseline justify-between gap-4">
+                  <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium">
+                    Liturgical Vestments
+                  </dt>
+                  <dd className="font-medium text-stone-800 dark:text-stone-200 text-right capitalize">
+                    {colorInfo.name}
+                  </dd>
+                </div>
+
+                <div className="py-3">
+                  <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium mb-1">
+                    Patronage
+                  </dt>
+                  <dd className="font-serif text-base text-stone-800 dark:text-stone-200 leading-snug">
+                    {selectedSaint.patronage.join(' · ')}
+                  </dd>
+                </div>
+
+                <div className="py-3">
+                  <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium mb-1">
+                    Sacred Attributes
+                  </dt>
+                  <dd className="font-serif text-base text-stone-800 dark:text-stone-200 leading-snug">
+                    {selectedSaint.symbols.join(' · ')}
+                  </dd>
+                </div>
+
+                <div className="py-3">
+                  <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium mb-1">
+                    Historical Source
+                  </dt>
+                  <dd className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                    {selectedSaint.butlerVolume || "Alban Butler's Lives of the Saints"}
+                  </dd>
+                </div>
+              </dl>
             </div>
 
-            <div className="p-6 sm:p-8 space-y-6">
-              {/* Patronage & Symbols */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200/60 dark:border-stone-700/60">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-2">
-                    <SaintWithHaloIcon className="w-4 h-4" />
-                    <span>Patronage</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedSaint.patronage.map((item, i) => (
-                      <span
-                        key={i}
-                        className="px-2.5 py-1 rounded-lg bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-xs font-medium text-stone-700 dark:text-stone-300"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+            {/* Audio & Copy Utility Bar */}
+            <div className="pt-6 mt-6 border-t border-stone-200/80 dark:border-stone-800 flex items-center gap-2.5">
+              <button
+                onClick={handleReadAloud}
+                className={`flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
+                  isReadingAloud
+                    ? 'bg-amber-700 text-white'
+                    : 'bg-stone-900 hover:bg-stone-800 dark:bg-stone-800 dark:hover:bg-stone-700 text-white'
+                }`}
+              >
+                {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                <span>{isReadingAloud ? 'Stop Reading' : 'Listen to Life & Prayer'}</span>
+              </button>
 
-                <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200/60 dark:border-stone-700/60">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-2">
-                    <SaintWithHaloIcon className="w-4 h-4" />
-                    <span>Sacred Symbols &amp; Attributes</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedSaint.symbols.map((item, i) => (
-                      <span
-                        key={i}
-                        className="px-2.5 py-1 rounded-lg bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-xs font-medium text-stone-700 dark:text-stone-300"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Biography from Butler's Lives of the Saints */}
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <h3 className="text-xs font-bold uppercase tracking-widest text-stone-400">
-                    Life &amp; Witness — From Alban Butler&apos;s Lives of the Saints
-                  </h3>
-                  <span className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">
-                    Principal Feast • {selectedSaint.feastDate}
-                  </span>
-                </div>
-                <div className="space-y-4 font-serif text-stone-700 dark:text-stone-300 text-base sm:text-lg leading-relaxed">
-                  {biographyParagraphs.map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-
-              {/* Collect Prayer */}
-              <div className="p-6 rounded-2xl bg-amber-50/70 dark:bg-amber-950/20 border border-amber-200/70 dark:border-amber-800/40">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-amber-800 dark:text-amber-400 mb-2">
-                  <SaintWithHaloIcon className="w-4 h-4" />
-                  <span>Collect Prayer of the Feast</span>
-                </div>
-                <p className="font-serif italic text-stone-800 dark:text-stone-200 text-base sm:text-lg leading-relaxed">
-                  {selectedSaint.prayer}
-                </p>
-              </div>
+              <button
+                onClick={handleCopy}
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-semibold transition-colors"
+                title="Copy Saint Biography & Martyrology"
+              >
+                {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                <span>{copied ? 'Copied' : 'Copy'}</span>
+              </button>
             </div>
           </div>
 
-          {/* Next Three Saints of the Day (Shorter Descriptions from Butler's Lives, No Images) */}
-          {companionSaints.length > 0 && (
-            <div className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/80 dark:border-stone-800 p-6 sm:p-8 shadow-sm">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-6 border-b border-stone-200/80 dark:border-stone-800">
-                <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-amber-700 dark:text-amber-400 mb-1">
-                    <BookOpen className="w-3.5 h-3.5" />
-                    <span>Also Commemorated on {selectedSaint.feastDate}</span>
-                  </div>
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 dark:text-stone-100">
-                    Next Three Saints in Butler&apos;s Lives of the Saints
-                  </h3>
+          {/* Right Column (8 cols): Title, Epigraph, Biography & Collect Prayer */}
+          <div className="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between space-y-8">
+            <div className="space-y-8">
+              {/* Saint Title Block */}
+              <div className="border-b border-stone-200/80 dark:border-stone-800 pb-6">
+                <div className="text-xs font-semibold uppercase tracking-widest text-red-900 dark:text-amber-400 mb-2">
+                  I · Principal Feast of {selectedSaint.feastDate}
                 </div>
-                <span className="text-xs font-semibold px-3 py-1 rounded-full bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 self-start sm:self-center">
-                  Saints 2 – {companionSaints.length + 1} of the Day
-                </span>
+                <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight mb-2">
+                  {selectedSaint.name}
+                </h2>
+                <p className="font-serif italic text-lg sm:text-xl text-stone-600 dark:text-stone-400">
+                  {selectedSaint.title}
+                </p>
               </div>
 
-              <div className="grid grid-cols-1 gap-4">
-                {companionSaints.map((companion, idx) => {
-                  const isSpeakingThis = readingCompanionIndex === idx;
-                  return (
-                    <div
-                      key={`${companion.name}-${idx}`}
-                      className="p-5 rounded-xl bg-stone-50/80 dark:bg-stone-800/50 border border-stone-200/70 dark:border-stone-700/60 transition-all hover:border-amber-300 dark:hover:border-amber-700/60"
+              {/* Epigraph Quote (Clean Top/Bottom Hairline Frame, No Left Bar) */}
+              {quoteText && (
+                <blockquote className="py-5 px-6 bg-[#FAF8F5] dark:bg-stone-950/50 border-y border-amber-800/20 dark:border-amber-500/20 text-center">
+                  <p className="font-serif italic text-lg sm:text-2xl text-stone-800 dark:text-stone-200 leading-relaxed max-w-2xl mx-auto">
+                    &ldquo;{quoteText}&rdquo;
+                  </p>
+                </blockquote>
+              )}
+
+              {/* Biography with Illuminated Missal Drop-Cap */}
+              <div className="space-y-5">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-stone-500 dark:text-stone-400">
+                  Life &amp; Apostolic Witness
+                </h3>
+                <div className="space-y-5 font-serif text-stone-800 dark:text-stone-200 text-lg sm:text-[1.2rem] leading-[1.8]">
+                  {biographyParagraphs.map((paragraph, index) => (
+                    <p
+                      key={index}
+                      className={index === 0 ? 'sacred-drop-cap' : ''}
                     >
-                      <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-6 h-6 rounded-full bg-amber-700 text-white text-xs font-bold flex items-center justify-center shrink-0">
-                            {idx + 2}
-                          </span>
-                          <div>
-                            <h4 className="font-serif text-lg font-bold text-stone-900 dark:text-stone-100 leading-snug">
-                              {companion.name}
-                            </h4>
-                            <div className="flex flex-wrap items-center gap-2 text-xs text-amber-800 dark:text-amber-400 font-medium">
-                              <span>{companion.title}</span>
-                              {companion.dates && (
-                                <>
-                                  <span>•</span>
-                                  <span className="text-stone-500 dark:text-stone-400">{companion.dates}</span>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        <button
-                          onClick={() => handleReadCompanion(companion, idx)}
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
-                            isSpeakingThis
-                              ? 'bg-amber-600 text-white animate-pulse'
-                              : 'bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700'
-                          }`}
-                          title={`Listen to ${companion.name}`}
-                        >
-                          {isSpeakingThis ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                          <span>{isSpeakingThis ? 'Stop' : 'Listen'}</span>
-                        </button>
-                      </div>
-
-                      <p className="font-serif text-sm sm:text-base text-stone-700 dark:text-stone-300 leading-relaxed pl-8">
-                        {companion.shortDescription}
-                      </p>
-                    </div>
-                  );
-                })}
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </div>
             </div>
-          )}
+
+            {/* Traditional Missal Collect Prayer */}
+            <div className="pt-8 border-t border-stone-200/90 dark:border-stone-800">
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="text-xs font-semibold uppercase tracking-widest text-red-900 dark:text-amber-400">
+                  Collect Prayer of the Feast
+                </span>
+                <span className="font-serif italic text-sm text-red-900/80 dark:text-amber-400/80">
+                  Oremus · Let us pray
+                </span>
+              </div>
+              <p className="font-serif italic text-stone-800 dark:text-stone-200 text-lg sm:text-xl leading-relaxed">
+                {selectedSaint.prayer}
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
+      </article>
+
+      {/* Companion Saints of the Day — 3-Column Roman Martyrology Grid */}
+      {companionSaints.length > 0 && (
+        <section className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-stone-200/90 dark:border-stone-800 pb-4">
+            <div>
+              <div className="text-xs font-medium uppercase tracking-widest text-amber-800 dark:text-amber-400 mb-1">
+                Also Commemorated on {selectedSaint.feastDate}
+              </div>
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">
+                Companion Saints in Butler&apos;s Martyrology
+              </h3>
+            </div>
+            <p className="text-xs text-stone-500 dark:text-stone-400">
+              From Alban Butler&apos;s <em>Lives of the Saints</em> for {selectedSaint.feastDate}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {companionSaints.map((companion, idx) => {
+              const isSpeakingThis = readingCompanionIndex === idx;
+              return (
+                <article
+                  key={`${companion.name}-${idx}`}
+                  className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/90 dark:border-stone-800 p-6 flex flex-col justify-between shadow-xs hover:border-amber-700/40 transition-colors"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="font-serif font-bold text-sm tracking-widest text-red-900 dark:text-amber-400">
+                        {romanNumerals[idx] || idx + 2} · Martyrology
+                      </span>
+
+                      <button
+                        onClick={() => handleReadCompanion(companion, idx)}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
+                          isSpeakingThis
+                            ? 'bg-amber-700 text-white'
+                            : 'bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300'
+                        }`}
+                        title={`Listen to ${companion.name}`}
+                      >
+                        {isSpeakingThis ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                        <span>{isSpeakingThis ? 'Stop' : 'Listen'}</span>
+                      </button>
+                    </div>
+
+                    <h4 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 dark:text-stone-100 leading-snug mb-1">
+                      {companion.name}
+                    </h4>
+
+                    <div className="text-xs text-stone-500 dark:text-stone-400 mb-4 pb-3 border-b border-stone-200/70 dark:border-stone-800">
+                      <span>{companion.title}</span>
+                      {companion.dates && (
+                        <>
+                          <span aria-hidden="true"> · </span>
+                          <span>{companion.dates}</span>
+                        </>
+                      )}
+                    </div>
+
+                    <p className="font-serif text-base text-stone-700 dark:text-stone-300 leading-relaxed">
+                      {companion.shortDescription}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )}
     </div>
   );
 };
