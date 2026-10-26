@@ -34,13 +34,13 @@ export const ICON_FRAME_STYLES: { id: IconFrameStyle; name: string; description:
     id: 'monstrance',
     name: 'Monstrance Halo',
     description: 'Radiant gold outer aura echoing the rays of Eucharistic adoration',
-    previewClass: 'rounded-full ring-2 ring-[#D4A373]/60 ring-offset-2 ring-offset-[#120A05] shadow-xl'
+    previewClass: 'rounded-xl ring-2 ring-[#D4A373]/60 ring-offset-2 ring-offset-[#120A05] shadow-xl'
   },
   {
     id: 'medallion',
     name: 'Vatican Medallion',
     description: 'Double-rim circular seal reminiscent of papacy and jubilee medals',
-    previewClass: 'rounded-full border-2 border-[#D4A373]/80 ring-2 ring-[#5C3A21] shadow-md'
+    previewClass: 'rounded-xl border-2 border-[#D4A373]/80 ring-2 ring-[#5C3A21] shadow-md'
   },
   {
     id: 'stone',

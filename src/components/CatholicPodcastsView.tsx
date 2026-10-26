@@ -225,7 +225,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
 
         {/* Featured Spotlight Card */}
         {featuredEpisode && (
-          <div className="relative z-10 mt-6 sm:mt-8 p-4 sm:p-5 rounded-2xl bg-black/40 border border-amber-500/30 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="relative z-10 mt-6 sm:mt-8 p-4 sm:p-5 rounded-xl bg-black/40 border border-amber-500/30 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4 min-w-0">
               <img 
                 src={featuredEpisode.podcastCoverUrl} 
@@ -273,7 +273,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
         )}
 
         {/* Fio Catholic Audio and Music Integration Card */}
-        <div className="relative z-10 mt-4 p-4 rounded-2xl bg-gradient-to-r from-amber-950/60 via-stone-900/80 to-amber-950/60 border border-amber-500/40 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+        <div className="relative z-10 mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-950/60 via-stone-900/80 to-amber-950/60 border border-amber-500/40 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-3">
             <span className="p-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-400/30 shrink-0">
               <Headphones className="w-4 h-4 text-amber-300" />
@@ -326,7 +326,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
               <div
                 key={show.id}
                 onClick={() => setSelectedShowId(isSelected ? null : show.id)}
-                className={`group p-3 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${
+                className={`group p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                   isSelected
                     ? 'bg-amber-50 border-amber-600 shadow-md ring-2 ring-amber-500/20'
                     : 'bg-white hover:bg-stone-50 border-stone-200/90 shadow-2xs hover:shadow-sm'
@@ -367,7 +367,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
       </div>
 
       {/* Category Tabs and Search Bar */}
-      <div className="space-y-3 bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-xs">
+      <div className="space-y-3 bg-white p-4 sm:p-5 rounded-xl border border-stone-200 shadow-xs">
         
         {/* Search Bar */}
         <div className="relative w-full">
@@ -430,7 +430,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
       {/* Episodes List */}
       <div className="space-y-4">
         {filteredEpisodes.length === 0 ? (
-          <div className="p-12 text-center bg-white rounded-2xl border border-stone-200 space-y-3">
+          <div className="p-12 text-center bg-white rounded-xl border border-stone-200 space-y-3">
             <Radio className="w-10 h-10 text-stone-300 mx-auto" />
             <h4 className="font-cinzel text-base font-bold text-stone-700">No episodes found</h4>
             <p className="text-xs text-stone-500 font-serif max-w-md mx-auto">
@@ -445,7 +445,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
             return (
               <div
                 key={episode.id}
-                className={`bg-white rounded-2xl p-5 sm:p-6 border transition-all duration-200 shadow-2xs hover:shadow-md space-y-4 group ${
+                className={`bg-white rounded-xl p-5 sm:p-6 border transition-all duration-200 shadow-2xs hover:shadow-md space-y-4 group ${
                   currentPlayingEpisode?.id === episode.id
                     ? 'border-amber-500/80 ring-2 ring-amber-500/20 bg-amber-50/20'
                     : 'border-stone-200/90 hover:border-amber-300'
@@ -456,7 +456,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
                   
                   <div className="flex items-start gap-3 sm:gap-4 min-w-0">
                     {/* Artwork + Play Overlay */}
-                    <div className="relative group/cover shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl overflow-hidden shadow-sm border border-stone-200">
+                    <div className="relative group/cover shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden shadow-sm border border-stone-200">
                       <img 
                         src={episode.podcastCoverUrl} 
                         alt={episode.podcastTitle}

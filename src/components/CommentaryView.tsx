@@ -200,7 +200,7 @@ ${selectedCommentary.practicalApplication}`;
   );
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-3xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 mb-10">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 mb-10">
       
       {/* Compact Banner (Cut in half) */}
       <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl px-4 py-3 text-amber-50 shadow-sm border border-amber-900/40">
