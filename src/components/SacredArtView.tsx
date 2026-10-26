@@ -159,7 +159,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 pb-16">
-      <div className="bg-[#FAF8F5]/75 dark:bg-stone-950/75 backdrop-blur-md rounded-3xl border border-amber-200/70 dark:border-stone-800/80 shadow-2xl p-5 sm:p-8 space-y-6">
+      <div className="bg-[#FAF8F5]/75 dark:bg-stone-950/75 backdrop-blur-md rounded-xl border border-amber-200/70 dark:border-stone-800/80 shadow-2xl p-5 sm:p-8 space-y-6">
         
         {/* Horizontal Gallery Masthead & Artist Filter Bar */}
         <header className="flex flex-col xl:flex-row xl:items-end justify-between gap-4 border-b border-stone-300/70 dark:border-stone-800 pb-5">
@@ -199,7 +199,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
 
         {/* Horizontal Panoramic Masterpiece Vantage Stage */}
         <section className="space-y-5">
-          <div className="relative rounded-2xl overflow-hidden bg-[#0E0B09] border border-amber-800/40 shadow-2xl group">
+          <div className="relative rounded-xl overflow-hidden bg-[#0E0B09] border border-amber-800/40 shadow-2xl group">
             {/* Subtle warm museum spotlight vignette */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,119,6,0.10)_0%,transparent_75%)] pointer-events-none" />
 
@@ -316,7 +316,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
           </div>
 
           {/* Horizontal Museum Plaque: 3-Column Wide Panorama Details */}
-          <div className={`bg-white/65 dark:bg-stone-900/65 rounded-2xl border border-stone-300/80 dark:border-stone-800 p-5 sm:p-7 shadow-sm transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${enterActive ? 'opacity-100 translate-y-0' : 'opacity-35 translate-y-1'}`}>
+          <div className={`bg-white/65 dark:bg-stone-900/65 rounded-xl border border-stone-300/80 dark:border-stone-800 p-5 sm:p-7 shadow-sm transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${enterActive ? 'opacity-100 translate-y-0' : 'opacity-35 translate-y-1'}`}>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
               
               {/* Left Column (4 cols): Title, Mystery & Scripture */}
@@ -536,7 +536,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               </div>
             </div>
 
-            <div className="w-full lg:w-1/4 bg-stone-900/80 p-6 rounded-2xl border border-stone-800 space-y-4 text-stone-200 text-xs sm:text-sm font-serif leading-relaxed">
+            <div className="w-full lg:w-1/4 bg-stone-900/80 p-6 rounded-xl border border-stone-800 space-y-4 text-stone-200 text-xs sm:text-sm font-serif leading-relaxed">
               <div className="font-serif font-bold text-amber-300 uppercase tracking-widest text-xs">
                 How to Pray with Visio Divina
               </div>

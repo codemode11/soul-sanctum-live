@@ -305,7 +305,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-16 animate-fadeIn">
       
       {/* Banner */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-2xl p-6 sm:p-8 text-amber-50 shadow-xl border border-amber-800/40 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-xl border border-amber-800/40 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-radial-gradient from-amber-500/10 to-transparent pointer-events-none rounded-full blur-2xl" />
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">

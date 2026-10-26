@@ -1105,26 +1105,26 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
 
           {/* Milestone Epoch Cards: Clear Gold on Charcoal */}
           <div className="relative z-10 mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
+            <div className="p-3.5 rounded-xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
               <span className="font-cinzel text-lg sm:text-xl font-bold text-amber-400 block">325 AD</span>
               <span className="text-xs text-stone-300 font-serif mt-0.5 block">Nicaea I (Homoousios)</span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
+            <div className="p-3.5 rounded-xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
               <span className="font-cinzel text-lg sm:text-xl font-bold text-amber-400 block">1215 AD</span>
               <span className="text-xs text-stone-300 font-serif mt-0.5 block">Lateran IV (Transubstantiation)</span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
+            <div className="p-3.5 rounded-xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
               <span className="font-cinzel text-lg sm:text-xl font-bold text-amber-400 block">1545 AD</span>
               <span className="text-xs text-stone-300 font-serif mt-0.5 block">Trent (Counter-Reformation)</span>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
+            <div className="p-3.5 rounded-xl bg-white/5 border border-amber-500/30 backdrop-blur-xs">
               <span className="font-cinzel text-lg sm:text-xl font-bold text-amber-400 block">1962 AD</span>
               <span className="text-xs text-stone-300 font-serif mt-0.5 block">Vatican II (Universal Call)</span>
             </div>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-white border border-stone-200 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-xl bg-white border border-stone-200 shadow-xs">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-amber-600 text-white shrink-0 shadow-xs">
               <ScrollText className="w-5 h-5 text-white" />
@@ -1156,7 +1156,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
             placeholder="Search councils, popes, saints, dogmas (e.g. Nicaea, Trent, Leo the Great, Transubstantiation, Arianism)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full text-sm sm:text-base pl-11 pr-10 py-3.5 rounded-2xl bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-600 focus:bg-white font-serif transition-all"
+            className="w-full text-sm sm:text-base pl-11 pr-10 py-3.5 rounded-xl bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-600 focus:bg-white font-serif transition-all"
           />
           <Search className="w-5 h-5 text-stone-400 absolute left-3.5 top-4" />
           {searchQuery && (
@@ -1299,7 +1299,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                 </div>
 
                 {/* Pope Box: Dignified Charcoal & Gold (NO maroon) */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#F9F7F2] border border-amber-200/80 flex items-start gap-3.5">
+                <div className="p-4 sm:p-5 rounded-xl bg-[#F9F7F2] border border-amber-200/80 flex items-start gap-3.5">
                   <div className="p-2.5 rounded-xl bg-stone-900 text-amber-300 shrink-0 mt-0.5 shadow-xs">
                     <Crown className="w-5 h-5 text-amber-300" />
                   </div>
@@ -1398,7 +1398,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
           onClick={() => setSelectedCouncil(null)}
         >
           <div 
-            className="relative w-full max-w-3xl bg-[#FCFAF6] text-stone-900 rounded-3xl shadow-2xl border border-amber-500/50 overflow-hidden my-auto max-h-[92vh] flex flex-col"
+            className="relative w-full max-w-3xl bg-[#FCFAF6] text-stone-900 rounded-xl shadow-2xl border border-amber-500/50 overflow-hidden my-auto max-h-[92vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header: Dark Charcoal with Gold Accents */}
@@ -1462,7 +1462,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
             <div className="p-6 sm:p-8 overflow-y-auto space-y-7 text-stone-900">
               
               {/* Pontiff & Convener Card */}
-              <div className="p-5 rounded-2xl bg-[#F5F2EB] border border-amber-300/80 space-y-3">
+              <div className="p-5 rounded-xl bg-[#F5F2EB] border border-amber-300/80 space-y-3">
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-amber-800 uppercase tracking-wider">
                   <Crown className="w-4 h-4 text-amber-600" />
                   <span>Petrine Leadership & Convocation</span>
@@ -1489,7 +1489,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                   <ScrollText className="w-4 h-4 text-amber-600" />
                   <span>Historical Crisis & Context</span>
                 </h4>
-                <p className="text-sm sm:text-base md:text-lg text-stone-800 font-serif leading-relaxed bg-white p-5 rounded-2xl border border-stone-200">
+                <p className="text-sm sm:text-base md:text-lg text-stone-800 font-serif leading-relaxed bg-white p-5 rounded-xl border border-stone-200">
                   {selectedCouncil.historicalContext}
                 </p>
               </div>
@@ -1501,7 +1501,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                   <span>Major Figures & Protagonists</span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-sm">
-                  <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2">
+                  <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
                     <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Saints & Doctors:</span>
                     <ul className="space-y-1.5">
                       {selectedCouncil.majorPlayers.saintsAndDoctors.map(s => (
@@ -1513,7 +1513,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                     </ul>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2">
+                  <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
                     <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Theologians & Leaders:</span>
                     <ul className="space-y-1.5">
                       {selectedCouncil.majorPlayers.theologiansAndLeaders.map(t => (
@@ -1526,7 +1526,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                   </div>
 
                   {selectedCouncil.majorPlayers.emperorsAndRulers.length > 0 && (
-                    <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2">
+                    <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
                       <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Emperors & Rulers:</span>
                       <ul className="space-y-1.5">
                         {selectedCouncil.majorPlayers.emperorsAndRulers.map(r => (
@@ -1540,7 +1540,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                   )}
 
                   {selectedCouncil.majorPlayers.adversariesOrHeresies.length > 0 && (
-                    <div className="p-4 rounded-2xl bg-stone-100 border border-stone-300 space-y-2">
+                    <div className="p-4 rounded-xl bg-stone-100 border border-stone-300 space-y-2">
                       <span className="font-cinzel font-bold text-stone-800 text-xs uppercase tracking-wider block">Heresies & Opponents Refuted:</span>
                       <ul className="space-y-1.5">
                         {selectedCouncil.majorPlayers.adversariesOrHeresies.map(h => (
@@ -1561,7 +1561,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                   <Award className="w-4 h-4 text-emerald-600" />
                   <span>Key Dogmatic & Canonical Achievements</span>
                 </h4>
-                <div className="p-5 rounded-2xl bg-white border border-stone-200 space-y-3">
+                <div className="p-5 rounded-xl bg-white border border-stone-200 space-y-3">
                   {selectedCouncil.achievements.map((ach, idx) => (
                     <div key={idx} className="flex items-start gap-3 text-sm sm:text-base text-stone-800 font-serif leading-relaxed">
                       <span className="p-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mt-0.5 shrink-0">
@@ -1580,14 +1580,14 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                     <ScrollText className="w-4 h-4 text-amber-600" />
                     <span>Historic Conciliar Text</span>
                   </h4>
-                  <div className="p-5 rounded-2xl bg-[#F7F4EC] border-l-4 border-amber-600 text-stone-900 font-serif italic text-sm sm:text-base md:text-lg leading-relaxed shadow-2xs">
+                  <div className="p-5 rounded-xl bg-[#F7F4EC] border-l-4 border-amber-600 text-stone-900 font-serif italic text-sm sm:text-base md:text-lg leading-relaxed shadow-2xs">
                     {selectedCouncil.famousQuotesOrCreed[0]}
                   </div>
                 </div>
               )}
 
               {/* Lasting Impact: Clean Charcoal & Gold */}
-              <div className="p-6 rounded-2xl bg-stone-900 text-white space-y-2">
+              <div className="p-6 rounded-xl bg-stone-900 text-white space-y-2">
                 <div className="font-cinzel text-xs sm:text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-amber-400" />
                   <span>Lasting Impact on the Church Today</span>

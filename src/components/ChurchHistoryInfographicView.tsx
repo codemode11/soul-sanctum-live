@@ -151,7 +151,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
     <div className="space-y-8 animate-fadeIn text-stone-900">
       
       {/* 1. Header Banner and Section Navigation (Clean Charcoal and Gold - No Maroon) */}
-      <div className="rounded-3xl bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 border border-amber-500/30 p-6 sm:p-8 text-amber-100 shadow-2xl relative overflow-hidden">
+      <div className="rounded-xl bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 border border-amber-500/30 p-6 sm:p-8 text-amber-100 shadow-2xl relative overflow-hidden">
         {/* Decorative background glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
 
@@ -241,7 +241,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
         <div className="space-y-6">
           
           {/* Timeline Toolbar: Era filter and Search */}
-          <div className="bg-white rounded-2xl p-4 sm:p-5 border border-stone-200/90 shadow-md space-y-4">
+          <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200/90 shadow-md space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <History className="w-5 h-5 text-amber-700" />
@@ -308,7 +308,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
 
           {/* Optional Councils Reference Drawer */}
           {showCouncilsDrawer && (
-            <div className="bg-[#FAF7F2] rounded-2xl p-5 border border-amber-300 shadow-md space-y-4 animate-fadeIn">
+            <div className="bg-[#FAF7F2] rounded-xl p-5 border border-amber-300 shadow-md space-y-4 animate-fadeIn">
               <div className="flex items-center justify-between border-b border-amber-200/80 pb-3">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-amber-800" />
@@ -355,7 +355,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   </div>
 
                   {/* Card Content */}
-                  <div className="bg-white rounded-2xl border border-stone-200/90 shadow-md hover:shadow-lg transition-all p-5 sm:p-6 space-y-3">
+                  <div className="bg-white rounded-xl border border-stone-200/90 shadow-md hover:shadow-lg transition-all p-5 sm:p-6 space-y-3">
                     
                     {/* Header: Year, Era, Actions */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3">
@@ -440,7 +440,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           {/* Key Metric Headline KPI Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
+            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
               <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
                 Total Baptized Catholics
               </span>
@@ -452,7 +452,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               </span>
             </div>
 
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
+            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
               <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
                 Daily Holy Masses
               </span>
@@ -464,7 +464,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               </span>
             </div>
 
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
+            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
               <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
                 Catholic Schools
               </span>
@@ -476,7 +476,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               </span>
             </div>
 
-            <div className="bg-white rounded-2xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
+            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
               <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
                 Hospitals and Clinics
               </span>
@@ -491,7 +491,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
 
           {/* Continental Distribution Chart Card */}
-          <div className="bg-white rounded-2xl p-6 border border-stone-200/90 shadow-md space-y-5">
+          <div className="bg-white rounded-xl p-6 border border-stone-200/90 shadow-md space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-100 pb-3">
               <div>
                 <h3 className="font-cinzel text-lg font-bold text-stone-900">
@@ -541,7 +541,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
 
           {/* Worldwide Clergy and Vocations Breakdown */}
-          <div className="bg-[#FAF7F2] rounded-2xl p-5 border border-amber-200 shadow-sm space-y-3">
+          <div className="bg-[#FAF7F2] rounded-xl p-5 border border-amber-200 shadow-sm space-y-3">
             <h4 className="font-cinzel text-sm font-bold text-amber-950 uppercase tracking-wider">
               Catholic Clergy and Consecrated Vocations Worldwide
             </h4>
@@ -574,7 +574,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
 
           {/* Interactive Country-by-Country Catholic Data Table */}
-          <div className="bg-white rounded-2xl border border-stone-200/90 shadow-md p-6 sm:p-7 space-y-5">
+          <div className="bg-white rounded-xl border border-stone-200/90 shadow-md p-6 sm:p-7 space-y-5">
             
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-100 pb-4">
               <div className="space-y-1">
@@ -707,7 +707,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
         <div className="space-y-6">
           
           {/* Category Filter */}
-          <div className="bg-white rounded-2xl p-5 sm:p-6 border border-stone-200 shadow-md space-y-4">
+          <div className="bg-white rounded-xl p-5 sm:p-6 border border-stone-200 shadow-md space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-700" />
@@ -752,7 +752,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               return (
                 <div
                   key={fact.id}
-                  className="bg-white rounded-2xl p-6 sm:p-7 border border-stone-200/90 shadow-md hover:shadow-lg transition-all space-y-4 flex flex-col justify-between"
+                  className="bg-white rounded-xl p-6 sm:p-7 border border-stone-200/90 shadow-md hover:shadow-lg transition-all space-y-4 flex flex-col justify-between"
                 >
                   <div className="space-y-3.5">
                     
@@ -1879,7 +1879,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-24 text-stone-900">
       {showHeroBanner ? null : (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-white border border-stone-200 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-xl bg-white border border-stone-200 shadow-xs">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-amber-600 text-white shrink-0 shadow-xs">
               <ScrollText className="w-5 h-5 text-white" />
@@ -1909,7 +1909,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
             placeholder="Search councils, popes, saints, dogmas (e.g. Nicaea, Trent, Leo the Great, Transubstantiation, Arianism)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full text-sm sm:text-base pl-11 pr-10 py-3.5 rounded-2xl bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-600 focus:bg-white font-serif transition-all"
+            className="w-full text-sm sm:text-base pl-11 pr-10 py-3.5 rounded-xl bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-600 focus:bg-white font-serif transition-all"
           />
           <Search className="w-5 h-5 text-stone-400 absolute left-3.5 top-4" />
           {searchQuery && (
@@ -2045,7 +2045,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   </div>
                 </div>
 
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#F9F7F2] border border-amber-200/80 flex items-start gap-3.5">
+                <div className="p-4 sm:p-5 rounded-xl bg-[#F9F7F2] border border-amber-200/80 flex items-start gap-3.5">
                   <div className="p-2.5 rounded-xl bg-stone-900 text-amber-300 shrink-0 mt-0.5 shadow-xs">
                     <Crown className="w-5 h-5 text-amber-300" />
                   </div>
@@ -2161,7 +2161,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
 
               <button
                 onClick={() => setSelectedCouncil(null)}
-                className="p-2.5 rounded-2xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+                className="p-2.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
                 title="Close"
               >
                 <X className="w-6 h-6" />
@@ -2198,7 +2198,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
             </div>
 
             <div className="p-6 sm:p-8 overflow-y-auto space-y-7 text-stone-900">
-              <div className="p-5 rounded-2xl bg-[#F5F2EB] border border-amber-300/80 space-y-3">
+              <div className="p-5 rounded-xl bg-[#F5F2EB] border border-amber-300/80 space-y-3">
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-amber-800 uppercase tracking-wider">
                   <Crown className="w-4 h-4 text-amber-600" />
                   <span>Petrine Leadership & Convocation</span>
@@ -2224,7 +2224,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   <ScrollText className="w-4 h-4 text-amber-600" />
                   <span>Historical Crisis & Context</span>
                 </h4>
-                <p className="text-sm sm:text-base md:text-lg text-stone-800 font-serif leading-relaxed bg-white p-5 rounded-2xl border border-stone-200">
+                <p className="text-sm sm:text-base md:text-lg text-stone-800 font-serif leading-relaxed bg-white p-5 rounded-xl border border-stone-200">
                   {selectedCouncil.historicalContext}
                 </p>
               </div>
@@ -2235,7 +2235,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   <span>Major Figures & Protagonists</span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-sm">
-                  <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2">
+                  <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
                     <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Saints & Doctors:</span>
                     <ul className="space-y-1.5">
                       {selectedCouncil.majorPlayers.saintsAndDoctors.map(s => (
@@ -2247,7 +2247,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                     </ul>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2">
+                  <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
                     <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Theologians & Leaders:</span>
                     <ul className="space-y-1.5">
                       {selectedCouncil.majorPlayers.theologiansAndLeaders.map(t => (
@@ -2260,7 +2260,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   </div>
 
                   {selectedCouncil.majorPlayers.emperorsAndRulers.length > 0 && (
-                    <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2">
+                    <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
                       <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Emperors & Rulers:</span>
                       <ul className="space-y-1.5">
                         {selectedCouncil.majorPlayers.emperorsAndRulers.map(r => (
@@ -2274,7 +2274,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   )}
 
                   {selectedCouncil.majorPlayers.adversariesOrHeresies.length > 0 && (
-                    <div className="p-4 rounded-2xl bg-stone-100 border border-stone-300 space-y-2">
+                    <div className="p-4 rounded-xl bg-stone-100 border border-stone-300 space-y-2">
                       <span className="font-cinzel font-bold text-stone-800 text-xs uppercase tracking-wider block">Heresies & Opponents Refuted:</span>
                       <ul className="space-y-1.5">
                         {selectedCouncil.majorPlayers.adversariesOrHeresies.map(h => (
@@ -2294,7 +2294,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   <Award className="w-4 h-4 text-emerald-600" />
                   <span>Key Dogmatic & Canonical Achievements</span>
                 </h4>
-                <div className="p-5 rounded-2xl bg-white border border-stone-200 space-y-3">
+                <div className="p-5 rounded-xl bg-white border border-stone-200 space-y-3">
                   {selectedCouncil.achievements.map((ach, idx) => (
                     <div key={idx} className="flex items-start gap-3 text-sm sm:text-base text-stone-800 font-serif leading-relaxed">
                       <span className="p-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mt-0.5 shrink-0">
@@ -2312,13 +2312,13 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                     <ScrollText className="w-4 h-4 text-amber-600" />
                     <span>Historic Conciliar Text</span>
                   </h4>
-                  <div className="p-5 rounded-2xl bg-[#F7F4EC] border-l-4 border-amber-600 text-stone-900 font-serif italic text-sm sm:text-base md:text-lg leading-relaxed shadow-2xs">
+                  <div className="p-5 rounded-xl bg-[#F7F4EC] border-l-4 border-amber-600 text-stone-900 font-serif italic text-sm sm:text-base md:text-lg leading-relaxed shadow-2xs">
                     {selectedCouncil.famousQuotesOrCreed[0]}
                   </div>
                 </div>
               )}
 
-              <div className="p-6 rounded-2xl bg-stone-900 text-white space-y-2">
+              <div className="p-6 rounded-xl bg-stone-900 text-white space-y-2">
                 <div className="font-cinzel text-xs sm:text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-amber-400" />
                   <span>Lasting Impact on the Church Today</span>
