@@ -48,6 +48,12 @@ function getQuoteText(quote: string | { text: string; source?: string }): string
   return quote?.text || '';
 }
 
+function cleanCompanionDescription(desc: string): string {
+  return String(desc || '')
+    .replace(/^(In|From|Recorded in)\s+(Alban\s+)?Butler's\s+Lives\s+of\s+the\s+Saints(\s*&\s*Roman\s+Martyrology)?(\s+for\s+[A-Za-z]+\s+\d+)?:\s*/i, '')
+    .trim();
+}
+
 function normalizeLiturgicalColor(color: string | undefined): LiturgicalColor {
   const lower = (color || 'white').toLowerCase();
   if (lower === 'red' || lower === 'green' || lower === 'violet' || lower === 'rose' || lower === 'black') {
@@ -88,19 +94,19 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'St. Felix of Thibiuca and Companions',
         title: 'Bishop and Martyrs in North Africa',
         dates: 'd. 303',
-        shortDescription: "In Butler's Lives of the Saints for October 24: Bishop of Thibiuca near Carthage during the persecution of Emperor Diocletian. When ordered by the magistrates to surrender the Sacred Scriptures to be burned, Felix answered, 'It is better that I myself should be burned than the Divine Scriptures,' and was beheaded at Carthage."
+        shortDescription: "Bishop of Thibiuca near Carthage during the persecution of Emperor Diocletian. When ordered by the magistrates to surrender the Sacred Scriptures to be burned, Felix answered, 'It is better that I myself should be burned than the Divine Scriptures,' and was beheaded at Carthage."
       },
       {
         name: 'St. Proclus of Constantinople',
         title: 'Archbishop and Doctor of the Incarnation',
         dates: 'd. 446',
-        shortDescription: "In Butler's Lives of the Saints for October 24: Disciple and secretary of St. John Chrysostom who later became Patriarch of Constantinople. Famous for his eloquent homily defending the Virgin Mary's title as Theotokos (Mother of God) against Nestorius and for introducing the Trisagion hymn ('Holy God, Holy Mighty, Holy Immortal') into the liturgy."
+        shortDescription: "Disciple and secretary of St. John Chrysostom who later became Patriarch of Constantinople. Famous for his eloquent homily defending the Virgin Mary's title as Theotokos (Mother of God) against Nestorius and for introducing the Trisagion hymn ('Holy God, Holy Mighty, Holy Immortal') into the liturgy."
       },
       {
         name: 'St. Magloire of Dol',
         title: 'Missionary Bishop and Abbot in Brittany',
         dates: 'c. 495–575',
-        shortDescription: "In Butler's Lives of the Saints for October 24: Welsh-born cousin and disciple of St. Samson of Dol. He succeeded Samson as Abbot-Bishop of Dol in Brittany before retiring to the island of Sark to live a life of strict monastic penance, fasting, and evangelization of the Channel Islands."
+        shortDescription: "Welsh-born cousin and disciple of St. Samson of Dol. He succeeded Samson as Abbot-Bishop of Dol in Brittany before retiring to the island of Sark to live a life of strict monastic penance, fasting, and evangelization of the Channel Islands."
       }
     ]
   },
@@ -129,19 +135,19 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'Sts. Crispin and Crispinian',
         title: 'Martyrs of Soissons and Patrons of Shoemakers',
         dates: 'd. c. 286',
-        shortDescription: "In Butler's Lives of the Saints for October 25: Two noble Roman brothers who traveled to Soissons in Gaul to preach the Gospel while supporting themselves and the poor by making shoes at night. Arrested under Maximian Herculeus and the cruel prefect Rictiovarus, they endured severe tortures with unshakeable constancy before being beheaded."
+        shortDescription: "Two noble Roman brothers who traveled to Soissons in Gaul to preach the Gospel while supporting themselves and the poor by making shoes at night. Arrested under Maximian Herculeus and the cruel prefect Rictiovarus, they endured severe tortures with unshakeable constancy before being beheaded."
       },
       {
         name: 'St. Gaudentius of Brescia',
         title: 'Bishop and Ecclesiastical Writer',
         dates: 'd. c. 410',
-        shortDescription: "In Butler's Lives of the Saints for October 25: Disciple and successor of St. Philastrius as Bishop of Brescia. Consecrated by St. Ambrose of Milan after returning from a pilgrimage to Jerusalem, he left twenty-one Paschal sermons on the Eucharist and traveled to Constantinople in 405 on behalf of Pope Innocent I to defend the exiled St. John Chrysostom."
+        shortDescription: "Disciple and successor of St. Philastrius as Bishop of Brescia. Consecrated by St. Ambrose of Milan after returning from a pilgrimage to Jerusalem, he left twenty-one Paschal sermons on the Eucharist and traveled to Constantinople in 405 on behalf of Pope Innocent I to defend the exiled St. John Chrysostom."
       },
       {
         name: 'Pope St. Boniface I',
         title: 'Pope and Confessor',
         dates: 'd. 422',
-        shortDescription: "In Butler's Lives of the Saints for October 25: Elected Bishop of Rome in 418, he restored peace to the Roman Church after the schism of Eulalius, strongly supported St. Augustine of Hippo in his defense of divine grace against the Pelagians, and governed his flock with fatherly mildness and fidelity to canonical discipline."
+        shortDescription: "Elected Bishop of Rome in 418, he restored peace to the Roman Church after the schism of Eulalius, strongly supported St. Augustine of Hippo in his defense of divine grace against the Pelagians, and governed his flock with fatherly mildness and fidelity to canonical discipline."
       }
     ]
   },
@@ -170,19 +176,19 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'Sts. Lucian and Marcian',
         title: 'Martyrs of Nicomedia',
         dates: 'd. 250',
-        shortDescription: "In Butler's Lives of the Saints for October 26: Former pagan magicians in Nicomedia who were converted when their spells proved powerless against a humble Christian virgin praying with the Sign of the Cross. They publicly burned their books of magic, received baptism, distributed their goods to the poor, and were burned alive during the persecution of Decius."
+        shortDescription: "Former pagan magicians in Nicomedia who were converted when their spells proved powerless against a humble Christian virgin praying with the Sign of the Cross. They publicly burned their books of magic, received baptism, distributed their goods to the poor, and were burned alive during the persecution of Decius."
       },
       {
         name: 'St. Cedd',
         title: 'Missionary Bishop of the East Saxons',
         dates: 'd. 664',
-        shortDescription: "In Butler's Lives of the Saints for October 26: Northumbrian monk trained at Lindisfarne under St. Aidan and brother of St. Chad. Consecrated Bishop of the East Saxons, he evangelized Essex, built churches at Bradwell-on-Sea and Tilbury, founded the monastery of Lastingham in Yorkshire, and served as interpreter at the Synod of Whitby."
+        shortDescription: "Northumbrian monk trained at Lindisfarne under St. Aidan and brother of St. Chad. Consecrated Bishop of the East Saxons, he evangelized Essex, built churches at Bradwell-on-Sea and Tilbury, founded the monastery of Lastingham in Yorkshire, and served as interpreter at the Synod of Whitby."
       },
       {
         name: 'St. Bean of Mortlach',
         title: 'First Bishop of Mortlach (Aberdeen), Scotland',
         dates: 'd. c. 1032',
-        shortDescription: "In Butler's Lives of the Saints for October 26: Scottish missionary bishop appointed at the request of King Malcolm II to the newly established see of Mortlach in Banffshire, where he labored for thirty years preaching the Gospel and establishing Christian discipline in northern Scotland."
+        shortDescription: "Scottish missionary bishop appointed at the request of King Malcolm II to the newly established see of Mortlach in Banffshire, where he labored for thirty years preaching the Gospel and establishing Christian discipline in northern Scotland."
       }
     ]
   },
@@ -211,19 +217,19 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'St. Capitolinus and St. Erotheis',
         title: 'Martyrs of Cappadocia',
         dates: 'd. 304',
-        shortDescription: "In Butler's Lives of the Saints for October 27: St. Capitolinus was a Christian bishop in Cappadocia who, together with his pious servant Erotheis, boldly confessed Jesus Christ before the imperial governor during the persecution of Diocletian and suffered martyrdom by the sword."
+        shortDescription: "St. Capitolinus was a Christian bishop in Cappadocia who, together with his pious servant Erotheis, boldly confessed Jesus Christ before the imperial governor during the persecution of Diocletian and suffered martyrdom by the sword."
       },
       {
         name: 'St. Odran (Otteran) of Iona',
         title: 'Monk and Companion of St. Columba',
         dates: 'd. 563',
-        shortDescription: "In Butler's Lives of the Saints for October 27: Irish abbot from Latteragh in County Tipperary who accompanied his kinsman St. Columba with eleven other disciples to establish the great missionary abbey on the island of Iona. He was the first of the community to die on the island, and St. Columba saw his soul carried by angels into heaven."
+        shortDescription: "Irish abbot from Latteragh in County Tipperary who accompanied his kinsman St. Columba with eleven other disciples to establish the great missionary abbey on the island of Iona. He was the first of the community to die on the island, and St. Columba saw his soul carried by angels into heaven."
       },
       {
         name: 'St. Abban of Magheranoidhe',
         title: 'Abbot and Founder of Monasteries in Ireland',
         dates: '6th Century',
-        shortDescription: "In Butler's Lives of the Saints for October 27: Nephew of St. Ibar of Beggerin who founded numerous monasteries across Leinster and Munster in Ireland, most notably Magheranoidhe (near New Ross, County Wexford) and Kill-Abban, renowned for his gift of peacemaking and hospitality."
+        shortDescription: "Nephew of St. Ibar of Beggerin who founded numerous monasteries across Leinster and Munster in Ireland, most notably Magheranoidhe (near New Ross, County Wexford) and Kill-Abban, renowned for his gift of peacemaking and hospitality."
       }
     ]
   },
@@ -252,19 +258,19 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'St. Faro of Meaux',
         title: 'Bishop and Confessor',
         dates: 'c. 592–672',
-        shortDescription: "In Butler's Lives of the Saints for October 28: Brother of St. Fara and St. Cagnoald, who left high office at the Frankish court of King Dagobert I with the mutual consent of his wife Blidechild (who became a nun) to enter the clergy. As Bishop of Meaux for nearly fifty years, he founded monasteries, welcomed St. Fiacre from Ireland, and cared tirelessly for the blind and poor."
+        shortDescription: "Brother of St. Fara and St. Cagnoald, who left high office at the Frankish court of King Dagobert I with the mutual consent of his wife Blidechild (who became a nun) to enter the clergy. As Bishop of Meaux for nearly fifty years, he founded monasteries, welcomed St. Fiacre from Ireland, and cared tirelessly for the blind and poor."
       },
       {
         name: 'St. Salvius (Saire) of Normandy',
         title: 'Hermit in Normandy',
         dates: '6th Century',
-        shortDescription: "In Butler's Lives of the Saints for October 28: A sixth-century contemplative hermit in the Bray region of Normandy whose cell became a center of prayer, spiritual counsel, and miraculous healings, giving his name to the town of Saint-Saire."
+        shortDescription: "A sixth-century contemplative hermit in the Bray region of Normandy whose cell became a center of prayer, spiritual counsel, and miraculous healings, giving his name to the town of Saint-Saire."
       },
       {
         name: 'St. Fidelis of Como',
         title: 'Soldier and Martyr',
         dates: 'd. c. 304',
-        shortDescription: "In Butler's Lives of the Saints for October 28: A Christian Roman soldier of the era of Maximian who escaped persecution in Milan after freeing fellow Christian prisoners, preached the faith around Lake Como, and was overtaken and beheaded at Samolaco for refusing to offer sacrifice to the gods."
+        shortDescription: "A Christian Roman soldier of the era of Maximian who escaped persecution in Milan after freeing fellow Christian prisoners, preached the faith around Lake Como, and was overtaken and beheaded at Samolaco for refusing to offer sacrifice to the gods."
       }
     ]
   },
@@ -293,19 +299,19 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'St. Chef (Theuderius) of Vienne',
         title: 'Abbot and Confessor',
         dates: 'd. c. 575',
-        shortDescription: "In Butler's Lives of the Saints for October 29: Disciple of St. Caesarius of Arles who was ordained priest by St. Avitus of Vienne. He founded several monasteries around Vienne in Dauphiné and spent his final twelve years enclosed in a penitential cell near the Church of St. Lawrence, counseling the faithful through a small window."
+        shortDescription: "Disciple of St. Caesarius of Arles who was ordained priest by St. Avitus of Vienne. He founded several monasteries around Vienne in Dauphiné and spent his final twelve years enclosed in a penitential cell near the Church of St. Lawrence, counseling the faithful through a small window."
       },
       {
         name: 'St. Colman of Kilmacduagh',
         title: 'Bishop and Abbot in Ireland',
         dates: 'd. c. 632',
-        shortDescription: "In Butler's Lives of the Saints for October 29: Born of royal Connacht lineage, he lived for seven years as a solitary hermit in a limestone cave in the Burren (County Clare) before founding the monastery and diocese of Kilmacduagh with the patronage of his cousin, King Guaire Aidne."
+        shortDescription: "Born of royal Connacht lineage, he lived for seven years as a solitary hermit in a limestone cave in the Burren (County Clare) before founding the monastery and diocese of Kilmacduagh with the patronage of his cousin, King Guaire Aidne."
       },
       {
         name: 'St. Ermelinda of Meldert',
         title: 'Virgin and Recluse in Brabant',
         dates: 'd. c. 595',
-        shortDescription: "In Butler's Lives of the Saints for October 29: Born of wealthy Frankish parents near Louvain in Belgium, she refused marriage, cut off her hair, distributed her inheritance to the poor, and lived as a consecrated anchorite in the forest of Meldert in unceasing nightly prayer and manual labor."
+        shortDescription: "Born of wealthy Frankish parents near Louvain in Belgium, she refused marriage, cut off her hair, distributed her inheritance to the poor, and lived as a consecrated anchorite in the forest of Meldert in unceasing nightly prayer and manual labor."
       }
     ]
   },
@@ -334,19 +340,19 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'St. Germanus of Capua',
         title: 'Bishop and Papal Legate',
         dates: 'd. c. 540',
-        shortDescription: "In Butler's Lives of the Saints for October 30: Revered Bishop of Capua and close friend of St. Benedict of Nursia. In 519 Pope St. Hormisdas sent him as head of the papal legation to Constantinople to heal the thirty-five-year Acacian Schism. At the hour of his death, St. Benedict saw angels carrying the soul of Germanus to heaven in a sphere of fire."
+        shortDescription: "Revered Bishop of Capua and close friend of St. Benedict of Nursia. In 519 Pope St. Hormisdas sent him as head of the papal legation to Constantinople to heal the thirty-five-year Acacian Schism. At the hour of his death, St. Benedict saw angels carrying the soul of Germanus to heaven in a sphere of fire."
       },
       {
         name: 'St. Serapion of Antioch',
         title: 'Patriarch of Antioch and Ecclesiastical Writer',
         dates: 'd. 211',
-        shortDescription: "In Butler's Lives of the Saints for October 30: Eighth Bishop of Antioch (191–211) and one of the most learned theologians of his age. Praised by Eusebius and St. Jerome for his letters defending apostolic doctrine against Montanism, Docetism, and the spurious apocryphal Gospel of Peter."
+        shortDescription: "Eighth Bishop of Antioch (191–211) and one of the most learned theologians of his age. Praised by Eusebius and St. Jerome for his letters defending apostolic doctrine against Montanism, Docetism, and the spurious apocryphal Gospel of Peter."
       },
       {
         name: 'St. Asterius of Amasea',
         title: 'Metropolitan Bishop in Pontus',
         dates: 'c. 350–c. 410',
-        shortDescription: "In Butler's Lives of the Saints for October 30: Trained in rhetoric and law before becoming Metropolitan Bishop of Amasea in Asia Minor. Twenty-one of his vivid homilies survive, famed for defending Christian marriage, exhorting the wealthy to mercy toward the poor, and describing the early veneration of the martyrs."
+        shortDescription: "Trained in rhetoric and law before becoming Metropolitan Bishop of Amasea in Asia Minor. Twenty-one of his vivid homilies survive, famed for defending Christian marriage, exhorting the wealthy to mercy toward the poor, and describing the early veneration of the martyrs."
       }
     ]
   },
@@ -375,44 +381,44 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         name: 'St. Quentin (Quintinus)',
         title: 'Roman Missionary and Martyr in Gaul',
         dates: 'd. c. 287',
-        shortDescription: "In Butler's Lives of the Saints for October 31: Son of a Roman senator who traveled to Gaul with St. Lucian of Beauvais and preached the Gospel at Amiens. Arrested by the prefect Rictiovarus, he endured prolonged imprisonment and torture before being beheaded at Augusta Viromanduorum (now Saint-Quentin in Picardy)."
+        shortDescription: "Son of a Roman senator who traveled to Gaul with St. Lucian of Beauvais and preached the Gospel at Amiens. Arrested by the prefect Rictiovarus, he endured prolonged imprisonment and torture before being beheaded at Augusta Viromanduorum (now Saint-Quentin in Picardy)."
       },
       {
         name: 'St. Foillan of Fosses',
         title: 'Irish Missionary Abbot and Martyr',
         dates: 'd. c. 655',
-        shortDescription: "In Butler's Lives of the Saints for October 31: Brother of St. Fursey and St. Ultan. After founding Cnobheresburg monastery in East Anglia, he traveled to Brabant in Belgium where St. Gertrude of Nivelles gave him land to found the monastery of Fosses. He and three companions were murdered by outlaws in the Forest of Soignies while returning from celebrating Mass."
+        shortDescription: "Brother of St. Fursey and St. Ultan. After founding Cnobheresburg monastery in East Anglia, he traveled to Brabant in Belgium where St. Gertrude of Nivelles gave him land to found the monastery of Fosses. He and three companions were murdered by outlaws in the Forest of Soignies while returning from celebrating Mass."
       },
       {
         name: 'St. Alphonsus Rodriguez',
         title: 'Jesuit Lay Brother and Mystic of Majorca',
         dates: '1532–1617',
-        shortDescription: "In Butler's Lives of the Saints for October 31: After losing his wife, children, and wool business in Segovia, he entered the Society of Jesus at age thirty-eight as a humble lay brother. For forty-six years he served as porter (doorkeeper) at the College of Montesión in Palma de Majorca, greeting every visitor with 'I come, Lord!' and guiding St. Peter Claver to the missions of South America."
+        shortDescription: "After losing his wife, children, and wool business in Segovia, he entered the Society of Jesus at age thirty-eight as a humble lay brother. For forty-six years he served as porter (doorkeeper) at the College of Montesión in Palma de Majorca, greeting every visitor with 'I come, Lord!' and guiding St. Peter Claver to the missions of South America."
       }
     ]
   }
 };
 
-// Companion saints backup rotation from Butler's Lives of the Saints for any calendar date without custom companions
+// Companion saints backup rotation for any calendar date without custom companions
 const BUTLER_COMPANION_ROTATION: CompanionSaint[][] = [
   [
     {
       name: 'Sts. Crispin and Crispinian',
       title: 'Martyrs of Soissons',
       dates: 'd. c. 286',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Two Roman brothers who preached the Gospel in Gaul while supporting themselves and the poor as shoemakers by night until their martyrdom under Maximian."
+      shortDescription: "Two Roman brothers who preached the Gospel in Gaul while supporting themselves and the poor as shoemakers by night until their martyrdom under Maximian."
     },
     {
       name: 'St. Gaudentius of Brescia',
       title: 'Bishop and Confessor',
       dates: 'd. c. 410',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Consecrated Bishop of Brescia by St. Ambrose of Milan, renowned for his Paschal sermons on the Holy Eucharist and his defense of St. John Chrysostom."
+      shortDescription: "Consecrated Bishop of Brescia by St. Ambrose of Milan, renowned for his Paschal sermons on the Holy Eucharist and his defense of St. John Chrysostom."
     },
     {
       name: 'Pope St. Boniface I',
       title: 'Bishop of Rome',
       dates: 'd. 422',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Wise shepherd of the Roman Church who supported St. Augustine of Hippo in defending the doctrine of divine grace."
+      shortDescription: "Wise shepherd of the Roman Church who supported St. Augustine of Hippo in defending the doctrine of divine grace."
     }
   ],
   [
@@ -420,19 +426,19 @@ const BUTLER_COMPANION_ROTATION: CompanionSaint[][] = [
       name: 'St. Germanus of Capua',
       title: 'Bishop and Papal Legate',
       dates: 'd. c. 540',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Friend of St. Benedict of Nursia and papal legate to Constantinople who helped heal the Acacian Schism between East and West."
+      shortDescription: "Friend of St. Benedict of Nursia and papal legate to Constantinople who helped heal the Acacian Schism between East and West."
     },
     {
       name: 'St. Serapion of Antioch',
       title: 'Patriarch of Antioch',
       dates: 'd. 211',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Eighth Bishop of Antioch, celebrated by Eusebius and St. Jerome for his theological writings defending the four canonical Gospels."
+      shortDescription: "Eighth Bishop of Antioch, celebrated by Eusebius and St. Jerome for his theological writings defending the four canonical Gospels."
     },
     {
       name: 'St. Alphonsus Rodriguez',
       title: 'Jesuit Lay Brother',
       dates: '1532–1617',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Humble Jesuit porter at Majorca for forty-six years who formed St. Peter Claver and answered every knock at the door as if welcoming Christ Himself."
+      shortDescription: "Humble Jesuit porter at Majorca for forty-six years who formed St. Peter Claver and answered every knock at the door as if welcoming Christ Himself."
     }
   ],
   [
@@ -440,19 +446,19 @@ const BUTLER_COMPANION_ROTATION: CompanionSaint[][] = [
       name: 'St. Proclus of Constantinople',
       title: 'Patriarch and Doctor',
       dates: 'd. 446',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Disciple of St. John Chrysostom and Patriarch of Constantinople who defended the Virgin Mary's title as Mother of God (Theotokos)."
+      shortDescription: "Disciple of St. John Chrysostom and Patriarch of Constantinople who defended the Virgin Mary's title as Mother of God (Theotokos)."
     },
     {
       name: 'St. Faro of Meaux',
       title: 'Bishop and Confessor',
       dates: 'c. 592–672',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Bishop of Meaux for nearly half a century who founded monasteries, welcomed Irish missionary monks, and sheltered the poor and blind."
+      shortDescription: "Bishop of Meaux for nearly half a century who founded monasteries, welcomed Irish missionary monks, and sheltered the poor and blind."
     },
     {
       name: 'St. Cedd of Lastingham',
       title: 'Missionary Bishop of the East Saxons',
       dates: 'd. 664',
-      shortDescription: "Recorded in Butler's Lives of the Saints: Monk of Lindisfarne and brother of St. Chad who evangelized Essex and founded the monastery of Lastingham."
+      shortDescription: "Monk of Lindisfarne and brother of St. Chad who evangelized Essex and founded the monastery of Lastingham."
     }
   ]
 ];
@@ -485,7 +491,8 @@ function resolveDailySaintEntry(month: number, day: number): DailySaintEntry {
       base.companionSaints && base.companionSaints.length > 0
         ? base.companionSaints.map(c => ({
             ...c,
-            dates: c.dates || c.lifespan
+            dates: c.dates || c.lifespan,
+            shortDescription: cleanCompanionDescription(c.shortDescription)
           }))
         : BUTLER_COMPANION_ROTATION[fallbackIdx]
   };
@@ -681,15 +688,15 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
     SacredReader.stop();
     setIsReadingAloud(false);
     setReadingCompanionIndex(idx);
-    const text = `${companion.name}. ${companion.title}. ${companion.shortDescription}`;
+    const text = `${companion.name}. ${companion.title}. ${cleanCompanionDescription(companion.shortDescription)}`;
     SacredReader.speak(text, () => setReadingCompanionIndex(null));
   };
 
   const handleCopy = () => {
     const companionsText = selectedSaint.companionSaints?.length
-      ? `\n\nOther Saints Commemorated Today (Butler's Lives of the Saints):\n` +
+      ? `\n\nOther Saints Commemorated Today:\n` +
         selectedSaint.companionSaints
-          .map((c, i) => `${i + 2}. ${c.name} (${c.title}): ${c.shortDescription}`)
+          .map((c, i) => `${i + 2}. ${c.name} (${c.title}): ${cleanCompanionDescription(c.shortDescription)}`)
           .join('\n')
       : '';
 
@@ -706,12 +713,12 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-      <div className="bg-[#FAF8F5]/92 dark:bg-stone-950/92 backdrop-blur-md rounded-3xl border border-amber-200/70 dark:border-stone-800 shadow-2xl p-6 sm:p-10 space-y-10">
+      <div className="bg-[#FAF8F5]/75 dark:bg-stone-950/75 backdrop-blur-md rounded-3xl border border-amber-200/70 dark:border-stone-800/80 shadow-2xl p-6 sm:p-10 space-y-10">
         {/* Editorial Masthead & Daily Navigation Bar */}
-        <header className="border-b border-stone-200/90 dark:border-stone-800 pb-6">
+        <header className="border-b border-stone-300/70 dark:border-stone-800 pb-6">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-800 dark:text-amber-400 mb-2">
+              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-900 dark:text-amber-400 mb-2">
                 <SaintWithHaloIcon className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                 <span>Alban Butler&apos;s Lives of the Saints</span>
                 <span aria-hidden="true">·</span>
@@ -726,24 +733,24 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
             {/* Interactive Date Switcher & Directory Toggle */}
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center bg-white dark:bg-stone-900 border border-stone-200/90 dark:border-stone-800 rounded-xl p-1 shadow-xs">
+              <div className="inline-flex items-center bg-white/75 dark:bg-stone-900/75 backdrop-blur-xs border border-stone-300/80 dark:border-stone-800 rounded-xl p-1 shadow-xs">
                 <button
                   onClick={() => handleShiftDay(-1)}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-800 dark:text-stone-300 hover:bg-white/80 dark:hover:bg-stone-800 transition-colors"
                   title="Previous Day"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span className="hidden sm:inline">Previous</span>
                 </button>
 
-                <div className="flex items-center gap-2 px-3.5 py-2 text-stone-900 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-200/70 dark:border-stone-800">
+                <div className="flex items-center gap-2 px-3.5 py-2 text-stone-900 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-300/70 dark:border-stone-800">
                   <Calendar className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
                   <span>{selectedSaint.feastDate}</span>
                 </div>
 
                 <button
                   onClick={() => handleShiftDay(1)}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-800 dark:text-stone-300 hover:bg-white/80 dark:hover:bg-stone-800 transition-colors"
                   title="Next Day"
                 >
                   <span className="hidden sm:inline">Next</span>
@@ -753,7 +760,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
               <button
                 onClick={handleResetToToday}
-                className="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-stone-900 hover:bg-stone-800 dark:bg-amber-700 dark:hover:bg-amber-600 text-white transition-colors"
+                className="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-stone-900/90 hover:bg-stone-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white transition-colors"
               >
                 Today
               </button>
@@ -763,7 +770,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-semibold border transition-colors ${
                   isDirectoryOpen
                     ? 'bg-amber-800 text-white border-amber-800'
-                    : 'bg-white dark:bg-stone-900 text-stone-700 dark:text-stone-300 border-stone-200/90 dark:border-stone-800 hover:bg-stone-100 dark:hover:bg-stone-800'
+                    : 'bg-white/75 dark:bg-stone-900/75 text-stone-800 dark:text-stone-300 border-stone-300/80 dark:border-stone-800 hover:bg-white dark:hover:bg-stone-800'
                 }`}
               >
                 <Search className="w-3.5 h-3.5" />
@@ -774,19 +781,19 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
           {/* Collapsible Search & Calendar Directory Panel */}
           {isDirectoryOpen && (
-            <div className="mt-6 pt-6 border-t border-stone-200/80 dark:border-stone-800 animate-in fade-in duration-200">
+            <div className="mt-6 pt-6 border-t border-stone-300/70 dark:border-stone-800 animate-in fade-in duration-200">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <div className="relative flex-1 max-w-md">
-                  <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <Search className="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search saint name, patronage, symbol, or date..."
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-700 text-stone-800 dark:text-stone-200"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/80 dark:bg-stone-900/80 border border-stone-300 dark:border-stone-700 text-sm focus:outline-none focus:ring-2 focus:ring-amber-700 text-stone-900 dark:text-stone-200"
                   />
                 </div>
-                <span className="text-xs text-stone-600 dark:text-stone-400">
+                <span className="text-xs text-stone-700 dark:text-stone-400">
                   Showing {filteredSaints.length} feast days in Butler&apos;s Directory
                 </span>
               </div>
@@ -812,19 +819,19 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                       className={`text-left p-3 rounded-xl border transition-all flex items-start justify-between gap-3 ${
                         isSelected
                           ? 'bg-amber-800 text-white border-amber-800 shadow-xs'
-                          : 'bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800/80 text-stone-800 dark:text-stone-200 border-stone-200/80 dark:border-stone-800'
+                          : 'bg-white/70 dark:bg-stone-900/70 hover:bg-white/90 dark:hover:bg-stone-800/80 text-stone-900 dark:text-stone-200 border-stone-300/70 dark:border-stone-800'
                       }`}
                     >
                       <div className="min-w-0">
                         <div className="font-serif font-bold text-base leading-snug truncate">
                           {saint.name}
                         </div>
-                        <div className={`text-xs mt-0.5 truncate ${isSelected ? 'text-amber-100' : 'text-stone-500 dark:text-stone-400'}`}>
+                        <div className={`text-xs mt-0.5 truncate ${isSelected ? 'text-amber-100' : 'text-stone-600 dark:text-stone-400'}`}>
                           {saint.title}
                         </div>
                       </div>
                       <span className={`text-xs font-medium shrink-0 ${
-                        isSelected ? 'text-amber-200' : 'text-amber-800 dark:text-amber-400'
+                        isSelected ? 'text-amber-200' : 'text-amber-900 dark:text-amber-400'
                       }`}>
                         {saint.feastDate}
                       </span>
@@ -837,10 +844,10 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
         </header>
 
         {/* Principal Saint of the Day — Illuminated Missal Spread */}
-        <article className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/90 dark:border-stone-800 shadow-sm overflow-hidden">
+        <article className="bg-white/65 dark:bg-stone-900/65 rounded-2xl border border-stone-300/80 dark:border-stone-800 shadow-sm overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12">
             {/* Left Column (4 cols): Sacred Portrait & Liturgical Dossier */}
-            <div className="lg:col-span-4 bg-[#F7F4EE] dark:bg-stone-950/60 border-b lg:border-b-0 lg:border-r border-stone-200/80 dark:border-stone-800 p-6 sm:p-8 flex flex-col justify-between">
+            <div className="lg:col-span-4 bg-[#F7F4EE]/60 dark:bg-stone-950/50 border-b lg:border-b-0 lg:border-r border-stone-300/70 dark:border-stone-800 p-6 sm:p-8 flex flex-col justify-between">
               <div>
                 {/* Sacred Portrait Frame */}
                 <div className="relative mx-auto max-w-[280px] lg:max-w-none aspect-[4/5] rounded-xl overflow-hidden bg-stone-900 border border-amber-700/30 shadow-md mb-6">
@@ -867,9 +874,9 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 </div>
 
                 {/* Clean Unboxed Liturgical Dossier */}
-                <dl className="divide-y divide-stone-200/80 dark:divide-stone-800 text-sm">
+                <dl className="divide-y divide-stone-300/70 dark:divide-stone-800 text-sm">
                   <div className="py-3 flex items-baseline justify-between gap-4">
-                    <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium">
+                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold">
                       Feast Day
                     </dt>
                     <dd className="font-serif font-bold text-base text-stone-900 dark:text-stone-100 text-right">
@@ -878,37 +885,37 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                   </div>
 
                   <div className="py-3 flex items-baseline justify-between gap-4">
-                    <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium">
+                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold">
                       Liturgical Vestments
                     </dt>
-                    <dd className="font-medium text-stone-800 dark:text-stone-200 text-right capitalize">
+                    <dd className="font-medium text-stone-900 dark:text-stone-200 text-right capitalize">
                       {colorInfo.name}
                     </dd>
                   </div>
 
                   <div className="py-3">
-                    <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium mb-1">
+                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold mb-1">
                       Patronage
                     </dt>
-                    <dd className="font-serif text-base text-stone-800 dark:text-stone-200 leading-snug">
+                    <dd className="font-serif text-base text-stone-900 dark:text-stone-200 leading-snug">
                       {selectedSaint.patronage.join(' · ')}
                     </dd>
                   </div>
 
                   <div className="py-3">
-                    <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium mb-1">
+                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold mb-1">
                       Sacred Attributes
                     </dt>
-                    <dd className="font-serif text-base text-stone-800 dark:text-stone-200 leading-snug">
+                    <dd className="font-serif text-base text-stone-900 dark:text-stone-200 leading-snug">
                       {selectedSaint.symbols.join(' · ')}
                     </dd>
                   </div>
 
                   <div className="py-3">
-                    <dt className="text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 font-medium mb-1">
+                    <dt className="text-xs uppercase tracking-wider text-stone-600 dark:text-stone-400 font-semibold mb-1">
                       Historical Source
                     </dt>
-                    <dd className="text-xs text-stone-600 dark:text-stone-400 leading-relaxed">
+                    <dd className="text-xs text-stone-700 dark:text-stone-400 leading-relaxed">
                       {selectedSaint.butlerVolume || "Alban Butler's Lives of the Saints"}
                     </dd>
                   </div>
@@ -916,7 +923,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               </div>
 
               {/* Audio & Copy Utility Bar */}
-              <div className="pt-6 mt-6 border-t border-stone-200/80 dark:border-stone-800 flex items-center gap-2.5">
+              <div className="pt-6 mt-6 border-t border-stone-300/70 dark:border-stone-800 flex items-center gap-2.5">
                 <button
                   onClick={handleReadAloud}
                   className={`flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
@@ -931,7 +938,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
                 <button
                   onClick={handleCopy}
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-semibold transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-white/80 dark:bg-stone-900/80 hover:bg-white dark:hover:bg-stone-800 text-stone-800 dark:text-stone-300 text-xs font-semibold transition-colors"
                   title="Copy Saint Biography & Martyrology"
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
@@ -944,22 +951,22 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
             <div className="lg:col-span-8 p-6 sm:p-10 lg:p-12 flex flex-col justify-between space-y-8">
               <div className="space-y-8">
                 {/* Saint Title Block */}
-                <div className="border-b border-stone-200/80 dark:border-stone-800 pb-6">
+                <div className="border-b border-stone-300/70 dark:border-stone-800 pb-6">
                   <div className="text-xs font-semibold uppercase tracking-widest text-red-900 dark:text-amber-400 mb-2">
                     I · Principal Feast of {selectedSaint.feastDate}
                   </div>
                   <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight mb-2">
                     {selectedSaint.name}
                   </h2>
-                  <p className="font-serif italic text-lg sm:text-xl text-stone-600 dark:text-stone-400">
+                  <p className="font-serif italic text-lg sm:text-xl text-stone-700 dark:text-stone-400">
                     {selectedSaint.title}
                   </p>
                 </div>
 
                 {/* Epigraph Quote (Clean Top/Bottom Hairline Frame, No Left Bar) */}
                 {quoteText && (
-                  <blockquote className="py-5 px-6 bg-[#FAF8F5] dark:bg-stone-950/50 border-y border-amber-800/20 dark:border-amber-500/20 text-center">
-                    <p className="font-serif italic text-lg sm:text-2xl text-stone-800 dark:text-stone-200 leading-relaxed max-w-2xl mx-auto">
+                  <blockquote className="py-5 px-6 bg-[#FAF8F5]/60 dark:bg-stone-950/40 border-y border-amber-800/25 dark:border-amber-500/20 text-center">
+                    <p className="font-serif italic text-lg sm:text-2xl text-stone-900 dark:text-stone-200 leading-relaxed max-w-2xl mx-auto">
                       &ldquo;{quoteText}&rdquo;
                     </p>
                   </blockquote>
@@ -967,10 +974,10 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
                 {/* Biography with Illuminated Missal Drop-Cap */}
                 <div className="space-y-5">
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-stone-500 dark:text-stone-400">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-stone-600 dark:text-stone-400">
                     Life &amp; Apostolic Witness
                   </h3>
-                  <div className="space-y-5 font-serif text-stone-800 dark:text-stone-200 text-lg sm:text-[1.2rem] leading-[1.8]">
+                  <div className="space-y-5 font-serif text-stone-900 dark:text-stone-200 text-lg sm:text-[1.2rem] leading-[1.8]">
                     {biographyParagraphs.map((paragraph, index) => (
                       <p
                         key={index}
@@ -984,7 +991,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               </div>
 
               {/* Traditional Missal Collect Prayer */}
-              <div className="pt-8 border-t border-stone-200/90 dark:border-stone-800">
+              <div className="pt-8 border-t border-stone-300/70 dark:border-stone-800">
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <span className="text-xs font-semibold uppercase tracking-widest text-red-900 dark:text-amber-400">
                     Collect Prayer of the Feast
@@ -993,7 +1000,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                     Oremus · Let us pray
                   </span>
                 </div>
-                <p className="font-serif italic text-stone-800 dark:text-stone-200 text-lg sm:text-xl leading-relaxed">
+                <p className="font-serif italic text-stone-900 dark:text-stone-200 text-lg sm:text-xl leading-relaxed">
                   {selectedSaint.prayer}
                 </p>
               </div>
@@ -1004,18 +1011,15 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
         {/* Companion Saints of the Day — 3-Column Roman Martyrology Grid */}
         {companionSaints.length > 0 && (
           <section className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-stone-200/90 dark:border-stone-800 pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-stone-300/70 dark:border-stone-800 pb-4">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-widest text-amber-800 dark:text-amber-400 mb-1">
+                <div className="text-xs font-semibold uppercase tracking-widest text-amber-900 dark:text-amber-400 mb-1">
                   Also Commemorated on {selectedSaint.feastDate}
                 </div>
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">
-                  Companion Saints in Butler&apos;s Martyrology
+                  Companion Saints of the Day
                 </h3>
               </div>
-              <p className="text-xs text-stone-600 dark:text-stone-400">
-                From Alban Butler&apos;s <em>Lives of the Saints</em> for {selectedSaint.feastDate}
-              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1024,7 +1028,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 return (
                   <article
                     key={`${companion.name}-${idx}`}
-                    className="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200/90 dark:border-stone-800 p-6 flex flex-col justify-between shadow-xs hover:border-amber-700/40 transition-colors"
+                    className="bg-white/65 dark:bg-stone-900/65 rounded-2xl border border-stone-300/80 dark:border-stone-800 p-6 flex flex-col justify-between shadow-xs hover:border-amber-700/50 transition-colors"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
@@ -1037,7 +1041,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
                             isSpeakingThis
                               ? 'bg-amber-700 text-white'
-                              : 'bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300'
+                              : 'bg-stone-200/70 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-300'
                           }`}
                           title={`Listen to ${companion.name}`}
                         >
@@ -1050,7 +1054,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                         {companion.name}
                       </h4>
 
-                      <div className="text-xs text-stone-500 dark:text-stone-400 mb-4 pb-3 border-b border-stone-200/70 dark:border-stone-800">
+                      <div className="text-xs text-stone-600 dark:text-stone-400 mb-4 pb-3 border-b border-stone-300/60 dark:border-stone-800">
                         <span>{companion.title}</span>
                         {companion.dates && (
                           <>
@@ -1060,8 +1064,8 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                         )}
                       </div>
 
-                      <p className="font-serif text-base text-stone-700 dark:text-stone-300 leading-relaxed">
-                        {companion.shortDescription}
+                      <p className="font-serif text-base text-stone-800 dark:text-stone-300 leading-relaxed">
+                        {cleanCompanionDescription(companion.shortDescription)}
                       </p>
                     </div>
                   </article>
