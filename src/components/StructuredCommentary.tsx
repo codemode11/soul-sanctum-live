@@ -176,7 +176,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           {/* Homily Title */}
           {data.homilyTitle && (
             <div>
-              <h3 className="font-cinzel text-base sm:text-lg font-bold text-[#2A1B0E] leading-snug tracking-wide">
+              <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2A1B0E] leading-snug">
                 {data.homilyTitle}
               </h3>
               {/* Separate the homily title from the first paragraph with one line */}

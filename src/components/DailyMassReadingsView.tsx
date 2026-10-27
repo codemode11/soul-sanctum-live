@@ -554,7 +554,7 @@ ${reading.gospel.text}`;
               <>
                 <div className="pt-2 space-y-3">
                   <div>
-                    <h3 className="font-cinzel text-base sm:text-lg font-bold text-[#2A1B0E] leading-snug tracking-wide">
+                    <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2A1B0E] leading-snug">
                       {dailyHomily.homilyHeading}
                     </h3>
                     <div className="h-px bg-[#DBCBB5] my-3" />

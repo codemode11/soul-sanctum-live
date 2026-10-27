@@ -21,7 +21,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Homiliae Evangelii, Book II',
     yearDelivered: 'c. 725 AD',
-    homilyHeading: 'ST. BEDE THE VENERABLE, DOCTOR OF THE CHURCH (HOMILIAE EVANGELII, DELIVERED AT JARROW ABBEY, c. 725 AD) — ON THE MUSTARD SEED AND THE THREE MEASURES OF LEAVEN',
+    homilyHeading: 'St. Bede the Venerable, Doctor of the Church (Homiliae Evangelii, delivered at Jarrow Abbey, c. 725 AD) — On the mustard seed and the three measures of leaven',
     paragraphs: [
       'Our Lord and Redeemer compares the Kingdom of God to a grain of mustard seed which a man took and cast into his garden; and it grew and became a great tree, and the birds of the air rested in its branches. The man who sows this blessed seed is Christ our Savior Himself, or every faithful preacher who plants the Word of life in the garden of the Catholic Church. Considered in its outward appearance, a grain of mustard seed is tiny, simple, and despised by the proud eye of the world; yet within its small shell lies a fiery warmth and medicinal vigor capable ofhealing serpents’ bites and awakening the senses. Even so, the preaching of the Cross appeared lowly and foolish to the philosophers of this world, yet when bruised through the Passion of the Redeemer and buried in the sepulcher of Joseph’s garden, it sprang forth in the glory of the Resurrection!',
       'Notice that the mustard seed does not remain a mere herb of the field, but grows into a mighty tree whose branches shelter the birds of heaven. By the branches of this tree are signified the diverse teachings and apostolic churches spreading from Jerusalem to the utmost bounds of the earth; and by the "birds of the sky" are meant contemplative and heavenly-minded souls who, raising their affections above earthly dust on the wings of prayer, find safe refuge and eternal rest in the doctrine of the Apostles and Doctors.',
@@ -38,7 +38,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church (Doctor of Eucharistic Eloquence)',
     workTitle: 'Homilies on the Gospel Readings',
     yearDelivered: 'c. 392 AD',
-    homilyHeading: 'ST. JOHN CHRYSOSTOM, DOCTOR OF THE CHURCH (DELIVERED AT ANTIOCH, c. 392 AD) — ON CHRIST’S NIGHT VIGIL OF PRAYER AND THE CALLING OF THE TWELVE APOSTLES',
+    homilyHeading: 'St. John Chrysostom, Doctor of the Church (delivered at Antioch, c. 392 AD) — On Christ’s night vigil of prayer and the calling of the Twelve Apostles',
     paragraphs: [
       'In those days Jesus went out to the mountain to pray, and He spent the whole night in prayer to God. And when day came, He called His disciples to Himself, and from them He chose Twelve, whom He also named Apostles. Pause and marvel, my beloved brethren, at the humility of the Only-Begotten Son of God! He who with the Father and the Holy Spirit hears the prayers of angels and men ascends a solitary mountain and continues all night in prayer before choosing His Twelve Apostles.',
       'Did the Lord of Glory stand in need of prayer? By no means! Rather, He became our pattern and teacher by His own sacred actions. Because He was about to send twelve unlearned fishermen into the jaws of wolves, to overthrow pagan idols, to silence the pride of philosophers, and to plant the standard of the Cross across the inhabited earth, He consecrated their election in the silence of nocturnal vigil. He teaches every bishop, every priest, and every Christian soul that before we undertake any grave duty or spiritual enterprise, we must first ascend the mountain of recollection and converse with God in secret.',
@@ -55,7 +55,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of Grace',
     workTitle: 'Sermons on the Liturgical Gospels (Tractates & Sermons, Sermo 105)',
     yearDelivered: 'c. 412 AD',
-    homilyHeading: 'ST. AUGUSTINE OF HIPPO, DOCTOR OF THE CHURCH (SERMON 105, DELIVERED AT HIPPO REGIUS, c. 412 AD) — ON THE MATERNAL WINGS OF CHRIST OVER JERUSALEM',
+    homilyHeading: 'St. Augustine of Hippo, Doctor of the Church (Sermon 105, delivered at Hippo Regius, c. 412 AD) — On the maternal wings of Christ over Jerusalem',
     paragraphs: [
       'When certain Pharisees warned the Lord, "Go away and leave this place, because Herod wants to kill You," our fearless Redeemer answered: "Go and tell that fox, Behold, I cast out demons and perform healings today and tomorrow, and on the third day I accomplish My purpose." What is the cunning of an earthly ruler before the sovereign providence of the King of Ages? No human malice could hasten or delay the hour of His sacrifice; He walked toward Jerusalem not as a captive dragged to punishment, but as the Victorious High Priest ascending His altar.',
       'Yet listen to the tender lamentation that bursts from the Sacred Heart of Wisdom: "Jerusalem, Jerusalem, you who kill the prophets and stone those sent to you, how many times I yearned to gather your children together as a hen gathers her brood under her wings, and you were unwilling!" Consider, dearly beloved, the maternal affection of the hen among all other birds. Other birds, even when we see them building nests, show no outward change of body when their young are hatched; but the hen weakens herself out of love for her chicks! Her voice grows hoarse, her feathers droop, she lowers her wings to the dust, and she fiercely interposes her own body against the kite and the hawk.',
@@ -72,7 +72,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Homiliae in Evangelia',
     yearDelivered: 'c. 592 AD',
-    homilyHeading: 'POPE ST. GREGORY THE GREAT, DOCTOR OF THE CHURCH (DELIVERED AT ROME, c. 592 AD) — ON THE HEALING OF DROPSY AND THE TRUE SABBATH REST',
+    homilyHeading: 'Pope St. Gregory the Great, Doctor of the Church (delivered at Rome, c. 592 AD) — On the healing of dropsy and the true Sabbath rest',
     paragraphs: [
       'When Our Lord entered the house of a leading Pharisee on the Sabbath to take bread, His enemies watched Him with malicious eyes, while a man afflicted with dropsy stood directly before Him. Why did Divine Wisdom permit this sufferer to stand in the midst of the banquet hall? So that the bodily malady of the sick man might expose and heal the deeper spiritual malady of the onlookers! For the Pharisees were swollen with the pride of self-righteousness, while the sick man was swollen with the water of dropsy.',
       'Now dropsy is a disease in which the body is bloated with watery humor, and yet the sufferer is consumed by an unquenchable thirst: the more abundantly he drinks, the more fiercely he thirsts and the more dangerously he swells. By this bodily infirmity is mystically represented the vice of avarice and worldly ambition. For the covetous man, the more gold, honors, or carnal pleasures he swallows, the more insatiably he burns with desire to acquire still more! Earthly possessions never quench the thirst of an immortal soul; they only inflate it with anxiety and pride.',
@@ -89,7 +89,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor Mellifluus (Doctor of the Church)',
     workTitle: 'Sermons on the Gospel of St. Luke & Degrees of Humility',
     yearDelivered: 'c. 1138 AD',
-    homilyHeading: 'ST. BERNARD OF CLAIRVAUX, DOCTOR OF THE CHURCH (DELIVERED AT CLAIRVAUX ABBEY, c. 1138 AD) — ON CHOOSING THE LOWEST SEAT AT THE WEDDING BANQUET',
+    homilyHeading: 'St. Bernard of Clairvaux, Doctor of the Church (delivered at Clairvaux Abbey, c. 1138 AD) — On choosing the lowest seat at the wedding banquet',
     paragraphs: [
       'Observing how the guests at the Pharisee’s banquet eagerly scrambled for the first places at table, Our Lord Jesus Christ delivered a lesson that is the very foundation of all Christian perfection: "When you are invited, go and take the lowest place, so that when the host comes to you he may say: My friend, move up to a higher position... For everyone who exalts himself will be humbled, and the one who humbles himself will be exalted."',
       'O foolishness of human pride! Why does dust and ashes strain after the highest seat, when the Majesty of Heaven descended to the lowest? Look upon the Son of God: in Bethlehem He chose a stable and a manger; in Nazareth He lived in hidden obedience at a carpenter’s bench; in the Upper Room He knelt at the feet of fishermen with a towel and basin; and on Calvary He hung naked between two thieves! He chose the lowest place on earth because He knew that from the valley of humility alone rises the mountain of eternal glory.',
@@ -106,7 +106,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Homiliae in Evangelia, Book II, Homily 31',
     yearDelivered: '591 AD',
-    homilyHeading: 'POPE ST. GREGORY THE GREAT, DOCTOR OF THE CHURCH (DELIVERED AT THE BASILICA OF ST. JOHN LATERAN, ROME, 591 AD) — ON THE WOMAN BENT DOUBLE FOR EIGHTEEN YEARS',
+    homilyHeading: 'Pope St. Gregory the Great, Doctor of the Church (delivered at the Basilica of St. John Lateran, Rome, 591 AD) — On the woman bent double for eighteen years',
     paragraphs: [
       'When Our Lord Jesus Christ taught in the synagogue on the Sabbath, behold, there was a woman who had a spirit of infirmity for eighteen years; she was bowed together and could in no wise look upward. In the creation of the world, Almighty God formed all other animals bowed downward toward the earth to seek their pasture in the soil; but man alone He created with an upright stature, so that his bodily posture might remind him that his soul was made to gaze upward toward heaven and contemplate his Creator.',
       'Whenever a Christian forgets his heavenly homeland and buries all his thoughts in earthly avarice, carnal pleasures, and temporal anxieties, he becomes like this crippled woman: bowed double by an evil spirit, incapable of lifting the eyes of his mind to the light of eternity. Yet observe two consoling truths in today’s Gospel: first, though she was bent double, she still came faithfully into the synagogue on the Sabbath to hear God’s Word; second, Jesus saw her before she even asked, called her forward by His prevenient grace, and laid His sacred hands upon her.',
@@ -123,7 +123,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Sermons on the Mysteries of Christ',
     yearDelivered: 'c. 450 AD',
-    homilyHeading: 'POPE ST. LEO THE GREAT, DOCTOR OF THE CHURCH (DELIVERED AT ST. PETER’S BASILICA, ROME, c. 450 AD) — ON BLIND BARTIMAEUS CRYING OUT BY THE ROADSIDE',
+    homilyHeading: 'Pope St. Leo the Great, Doctor of the Church (delivered at St. Peter’s Basilica, Rome, c. 450 AD) — On blind Bartimaeus crying out by the roadside',
     paragraphs: [
       'As Our Savior departed from Jericho with His disciples on His royal march toward Jerusalem to consummate the sacrifice of our redemption, blind Bartimaeus, the son of Timaeus, sat begging beside the road. In the mystical language of Holy Scripture, Jericho signifies the moon—the symbol of our waxing and waning mortal state. The human race, cast out of the paradise of light through the transgression of our first parents, sat blind and impoverished beside the highway of this fleeting world, knowing not the way to eternal life.',
       'Yet although Bartimaeus lacked bodily eyes, the ears of his heart were wide awake! Hearing that Jesus of Nazareth was passing by, he feared lest the hour of visitation slip away, and he raised his voice in a cry of living faith: "Jesus, Son of David, have pity on me!" Notice what happened immediately: the crowd rebuked him and commanded him to keep silent. Whenever a soul resolves to break with sin and cry out to God in earnest prayer, a noisy crowd of old habits, worldly distractions, and demonic discouragements rises up to silence that prayer. What did the blind beggar do? He did not argue with the crowd; he cried out all the more loudly: "Son of David, have pity on me!"',
@@ -140,7 +140,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of Grace',
     workTitle: 'Sermons on the New Testament (Sermo 110)',
     yearDelivered: 'c. 416 AD',
-    homilyHeading: 'ST. AUGUSTINE OF HIPPO, DOCTOR OF THE CHURCH (SERMON 110, DELIVERED AT HIPPO REGIUS, c. 416 AD) — ON THE BARREN FIG TREE AND THE MERCIFUL VINEDRESSER',
+    homilyHeading: 'St. Augustine of Hippo, Doctor of the Church (Sermon 110, delivered at Hippo Regius, c. 416 AD) — On the barren fig tree and the merciful Vinedresser',
     paragraphs: [
       'When Our Lord warned the crowds, "Unless you repent, you will all likewise perish," He immediately set before their eyes the parable of the fig tree planted in the vineyard. For three years the Lord of the vineyard came seeking fruit upon it and found none, and He said to the vinedresser: "Cut it down! Why should it exhaust the soil?" Every tree that occupies a place in the vineyard of the Church, casting shade with the green leaves of an outward Christian profession while producing no sweet fruit of charity, is in danger of the axe of Divine Justice.',
       'What are these "three years" during which the Almighty Father has come seeking fruit from the human race? The first year was the age of the Patriarchs under the natural law written on the human conscience; the second year was the age of Moses and the Prophets under the written Law; and the third year is this sacred age of the Gospel, in which the Son of God Himself has come down from heaven to water the earth with His own Precious Blood.',
@@ -157,7 +157,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church (The Theologian)',
     workTitle: 'Orations on the Seasons of Grace',
     yearDelivered: 'c. 380 AD',
-    homilyHeading: 'ST. GREGORY NAZIANZEN, DOCTOR OF THE CHURCH (DELIVERED AT CONSTANTINOPLE, c. 380 AD) — ON DISCERNING THE PRESENT TIME OF SALVATION',
+    homilyHeading: 'St. Gregory Nazianzen, Doctor of the Church (delivered at Constantinople, c. 380 AD) — On discerning the present time of salvation',
     paragraphs: [
       'When you look toward the western horizon and behold a cloud rising, you say at once that rain is coming, and so it happens; and when the south wind blows, you foretell scorching heat, and it comes to pass. Why then, asks the Savior, are men so sharp-sighted in reading the face of the sky for their earthly harvests, and yet so blind in discerning "the present time" for their immortal souls?',
       'What is this "present time" of which the Lord speaks? It is the acceptable hour of Messianic mercy, the brief span of our earthly pilgrimage in which the Sun of Justice shines upon us and the rain of baptismal and sacramental grace falls gently upon the field of the Church. Soon the season of mercy will give way to the tribunal of exact judgment.',
@@ -174,7 +174,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church (Harp of the Holy Spirit)',
     workTitle: 'Homilies on Our Lord',
     yearDelivered: 'c. 363 AD',
-    homilyHeading: 'ST. EPHREM THE SYRIAN, DOCTOR OF THE CHURCH (DELIVERED AT EDESSA, c. 363 AD) — ON THE DIVINE FIRE CAST UPON THE EARTH',
+    homilyHeading: 'St. Ephrem the Syrian, Doctor of the Church (delivered at Edessa, c. 363 AD) — On the divine fire cast upon the earth',
     paragraphs: [
       'Our Lord and Savior cried aloud with burning desire: "I have come to set the earth on fire, and how I wish it were already blazing!" What is this heavenly fire which the Son of God brought down from the bosom of the Father? It is not a fire that destroys creation, but the sanctifying flame of the Holy Spirit and of supernatural charity, which consumes the briars of sin, melts the ice of human selfishness, and refines the human heart like pure gold in the furnace!',
       'Before this divine fire could blaze across the world, Christ declared: "There is a baptism with which I must be baptized, and how great is My anguish until it is accomplished!" He speaks of the baptism of His own Precious Blood upon the wood of the Cross. Out of infinite love for mankind, He longed for the hour of Calvary, knowing that when the soldier’s lance opened His Sacred Heart, the fire of the Spirit and the living waters of the Sacraments would flow forth to renew the face of the earth.',
@@ -191,7 +191,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Homilies on the Gospel',
     yearDelivered: 'c. 390 AD',
-    homilyHeading: 'ST. JOHN CHRYSOSTOM, DOCTOR OF THE CHURCH (DELIVERED AT ANTIOCH, c. 390 AD) — ON THE FAITHFUL AND PRUDENT STEWARD',
+    homilyHeading: 'St. John Chrysostom, Doctor of the Church (delivered at Antioch, c. 390 AD) — On the faithful and prudent steward',
     paragraphs: [
       'Our Master commands us to remain ever watchful, because at an hour we do not expect, the Son of Man will come. If a householder knew at what watch of the night the thief would come, he would stay awake; because God has mercifully concealed from us the day of our death, He wills that we keep watch over our conscience every single day of our lives.',
       'When Saint Peter asked whether this parable was spoken to the Apostles alone or to all, Our Lord answered by describing the faithful and prudent steward placed over His household to distribute the portion of wheat in due season. Every bishop and priest is a steward of the sacred Mysteries, and every baptized Christian is likewise a steward of the gifts God has entrusted to him—whether time, wealth, intellect, family, or spiritual grace. None of these gifts are ours to squander in pride or luxury; they belong to the Master and are given for the service of our brethren.',
@@ -208,7 +208,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of Grace',
     workTitle: 'Sermons on the New Testament (Sermo 108)',
     yearDelivered: 'c. 420 AD',
-    homilyHeading: 'ST. AUGUSTINE OF HIPPO, DOCTOR OF THE CHURCH (SERMON 108, DELIVERED AT HIPPO REGIUS, c. 420 AD) — ON LOINS GIRDED AND BURNING LAMPS',
+    homilyHeading: 'St. Augustine of Hippo, Doctor of the Church (Sermon 108, delivered at Hippo Regius, c. 420 AD) — On loins girded and burning lamps',
     paragraphs: [
       '"Let your loins be girded and your lamps burning, and be like men who are waiting for their master to return from the marriage feast, so that they may open to him at once when he comes and knocks." In these two brief commands, Our Savior summarizes the entire Christian life: we must both abstain from evil and do good! To gird our loins is to restrain carnal concupiscence and worldly entanglements through holy purity and temperance; to hold burning lamps in our hands is to shine with true faith and active works of charity.',
       'Why must we do both? Because a man who keeps continence but lacks charity toward his neighbor has girded loins, yet carries a cold, extinguished lamp; while a man who performs outward alms to be praised by men while indulging secret vices carries a smoking lamp with ungirded loins. Only when purity of heart is united with the oil of unfeigned love for God and neighbor do we stand ready to open the door the instant the Bridegroom knocks.',
@@ -225,7 +225,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Homilia VI, In Illud Lucae: Destruam Horrea Mea',
     yearDelivered: 'c. 368 AD',
-    homilyHeading: 'ST. BASIL THE GREAT, DOCTOR OF THE CHURCH (DELIVERED AT CAESAREA, c. 368 AD) — ON THE PARABLE OF THE RICH FOOL ("I WILL TEAR DOWN MY BARNS")',
+    homilyHeading: 'St. Basil the Great, Doctor of the Church (delivered at Caesarea, c. 368 AD) — On the parable of the rich fool ("I will tear down my barns")',
     paragraphs: [
       'Twofold is the trial with which God tests the human soul: poverty tests our patience, while abundance tests our justice and charity. Today Our Lord sets before us a man whose fertile fields brought forth an overflowing harvest. Yet instead of lifting his hands in thanksgiving to the Giver of all good things and opening his granaries to the hungry, he fell into an agony of greed, crying within himself: "What shall I do, for I have nowhere to store my crops? I will tear down my barns and build larger ones!"',
       'Why do you say you have nowhere to store your grain, O foolish man? Have you no granaries? You have the stomachs of the hungry, the roofs of widows, the hands of orphans, the prisons of the afflicted! Those are the everlasting barns that never rot, that no thief can break into, and that carry your harvest directly into the Kingdom of Heaven! Listen to how the miser speaks to his own immortal soul as though it were a beast of the stall: "Soul, you have many good things laid up for many years; rest, eat, drink, be merry!"',
@@ -242,7 +242,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Expositio Evangelii secundum Lucam, Book VII',
     yearDelivered: 'c. 388 AD',
-    homilyHeading: 'ST. AMBROSE OF MILAN, DOCTOR OF THE CHURCH (DELIVERED AT MILAN, c. 388 AD) — ON DIVINE PROVIDENCE AND FEARLESS CONFIDENCE IN GOD',
+    homilyHeading: 'St. Ambrose of Milan, Doctor of the Church (delivered at Milan, c. 388 AD) — On divine providence and fearless confidence in God',
     paragraphs: [
       'Our Lord begins by warning His disciples: "Beware of the leaven of the Pharisees, which is hypocrisy. For there is nothing concealed that will not be revealed, nor secret that will not be known." Hypocrisy is a counterfeit virtue that seeks the applause of men while hiding a corrupt heart; yet before the all-seeing eye of the Eternal Judge, every mask shall fall away and every hidden intention shall be manifested in the light of truth.',
       'To strengthen His witnesses against the threats of persecutors and the anxieties of this world, the Savior immediately lifts our gaze to the tender Providence of our Heavenly Father: "Are not five sparrows sold for two small coins? Yet not one of them has escaped the notice of God. Even the hairs of your head have all been counted. Do not be afraid; you are worth more than many sparrows."',
@@ -259,7 +259,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Homily on the Feast of All Saints',
     yearDelivered: 'c. 730 AD',
-    homilyHeading: 'ST. BEDE THE VENERABLE, DOCTOR OF THE CHURCH (DELIVERED AT JARROW ABBEY, c. 730 AD) — ON THE SOLEMNITY OF ALL SAINTS AND THE EIGHT BEATITUDES',
+    homilyHeading: 'St. Bede the Venerable, Doctor of the Church (delivered at Jarrow Abbey, c. 730 AD) — On the Solemnity of All Saints and the Eight Beatitudes',
     paragraphs: [
       'Today, dearly beloved brethren, we celebrate in one joyful solemnity the triumph of all the Saints of God—the glorious company of Apostles, the purple-robed army of Martyrs, the radiant choir of Confessors and Doctors, and the lilies of holy Virgins—who now reign forever with Christ in the heavenly Jerusalem. And to show us the royal highway by which these our brethren ascended from earthly exile to eternal glory, Mother Church proclaims today the Sermon on the Mount.',
       'Notice how the Divine Lawgiver opens His mouth upon the mountain: "Blessed are the poor in spirit, for theirs is the Kingdom of Heaven." Pride was the first step by which man fell from paradise; therefore humility and poverty of spirit is the first step by which man ascends back to God! The poor in spirit are those who, whether rich or poor in outward estate, attribute nothing to their own merits, tremble at God’s word, and place all their treasure in heaven.',
@@ -276,7 +276,7 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of Grace',
     workTitle: 'Tractates on the Gospel of John (Tractate 25) & De Cura pro Mortuis Gerenda',
     yearDelivered: 'c. 414 AD',
-    homilyHeading: 'ST. AUGUSTINE OF HIPPO, DOCTOR OF THE CHURCH (DELIVERED AT HIPPO REGIUS, c. 414 AD) — ON THE RESURRECTION OF THE DEAD AND SUFFRAGES FOR THE FAITHFUL DEPARTED',
+    homilyHeading: 'St. Augustine of Hippo, Doctor of the Church (delivered at Hippo Regius, c. 414 AD) — On the resurrection of the dead and suffrages for the faithful departed',
     paragraphs: [
       'Listen to the unfailing promise of the Incarnate Word, which is the anchor of our hope in the face of death: "Everything that the Father gives Me will come to Me, and I will not reject anyone who comes to Me... And this is the will of the One who sent Me, that I should not lose anything of what He gave Me, but that I should raise it on the last day." Death is not the annihilation of the Christian; it is a temporary sleep in the hands of the Redeemer until the trumpet of the final Resurrection!',
       'Because the Body of Christ is one, the bond of charity between the pilgrim Church on earth and the suffering souls in Purgatory is never severed by bodily death. As Holy Mother Church has received from the Apostles themselves, the Eucharistic Sacrifice of the Altar, together with our fervent prayers and almsgiving, brings immense refreshment, light, and speedy release to the faithful departed who died in the grace and friendship of God, yet still undergo purification.',
@@ -403,7 +403,7 @@ export function getDailySaintHomily(reading: MassReading): DailySaintHomily {
     doctorTitle: chosen.doctorTitle,
     workTitle: chosen.workTitle,
     yearDelivered: chosen.yearDelivered,
-    homilyHeading: `${chosen.saintName.toUpperCase()}, ${chosen.doctorTitle.toUpperCase()} (${chosen.workTitle.toUpperCase()}, DELIVERED AT ${chosen.city.toUpperCase()}, ${chosen.yearDelivered}) — ON THE HOLY GOSPEL (${gospelCitation.toUpperCase()})`,
+    homilyHeading: `${chosen.saintName}, ${chosen.doctorTitle} (${chosen.workTitle}, delivered at ${chosen.city}, ${chosen.yearDelivered}) — On the Holy Gospel (${gospelCitation})`,
     paragraphs: [
       `Whenever the Holy Gospel (${gospelCitation}) is proclaimed in the liturgical assembly on ${reading.liturgicalDay}, our Lord and Savior Jesus Christ Himself stands in the midst of His faithful people, speaking words of spirit and eternal life. Let us incline the ear of our heart with reverent attention, my beloved brethren, for just as we take care that not a single particle of the Eucharistic Bread falls to the ground, so we must treasure every syllable that falls from the lips of the Incarnate Word.`,
       `${reading.reflection?.content || 'In this sacred passage, the Divine Physician reveals both the greatness of His mercy and the holiness to which every baptized soul is summoned. He draws our minds away from fleeting earthly cares toward the imperishable treasures of the Kingdom of Heaven.'} Notice how the harmony of today’s liturgy—uniting the First Reading (${reading.firstReading.citation}) and the Responsorial Psalm ("${reading.responsorialPsalm.antiphon}") with the Gospel proclamation—prepares the soul to pass from the shadow of the old Adam into the radiant light of the Risen Christ.`,
