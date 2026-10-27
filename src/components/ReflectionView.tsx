@@ -196,30 +196,30 @@ ${reading.reflection.content}`;
         const topComm = comms[0];
         if (!topComm) return null;
         return (
-          <article className="bg-gradient-to-br from-amber-950 via-stone-900 to-amber-950 text-amber-50 rounded-xl p-6 sm:p-10 shadow-lg border border-amber-600/40 space-y-6">
-            <div className="border-b border-amber-700/60 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <article className="bg-[#F8F4ED] text-[#2C1C0E] rounded-xl p-6 sm:p-10 shadow-sm border border-[#DDD0BE] space-y-6">
+            <div className="border-b border-[#E3D6C5] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <span className="inline-block px-3 py-1 rounded-full bg-amber-600 text-stone-950 text-xs font-bold uppercase tracking-widest font-serif mb-2">
+                <span className="inline-block px-3 py-1 rounded-full bg-[#8C6239] text-white text-xs font-bold uppercase tracking-widest font-serif mb-2">
                   Patristic Homily of a Saint
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-normal">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2A1B0E] tracking-normal">
                   Homily, Commentary, and Notes from the Magisterium
                 </h3>
-                <p className="text-xs sm:text-sm text-amber-200/90 font-serif italic mt-1">
+                <p className="text-xs sm:text-sm text-[#6B523B] font-serif italic mt-1">
                   Gospel Passage: {topComm.scriptureReference} — {topComm.author}
                 </p>
               </div>
             </div>
 
             {/* Unabridged Homily Text */}
-            <div className="font-serif-sacred text-amber-100 text-lg sm:text-xl leading-relaxed whitespace-pre-line space-y-4 border-l-2 border-amber-500/80 pl-4 sm:pl-6 bg-black/20 p-4 rounded-r-xl">
+            <div className="font-serif-sacred text-[#2C1C0E] text-lg sm:text-xl leading-relaxed whitespace-pre-line space-y-4 border-l-4 border-l-[#8C6239] pl-4 sm:pl-6 bg-[#FAF7F2] p-4 rounded-r-xl border border-[#E8DEC8]">
               {topComm.commentaryText}
             </div>
 
             {/* Practical Application */}
             {topComm.practicalApplication && (
-              <div className="p-4 rounded-xl bg-amber-900/40 border border-amber-700/50 text-amber-200 text-xs sm:text-sm font-serif italic">
-                <span className="font-bold not-italic text-amber-300 block mb-1">Practical Spiritual Fruit:</span>
+              <div className="p-4 rounded-xl bg-[#FAF4EA] border border-[#E5D7C3] text-[#4A3623] text-xs sm:text-sm font-serif italic">
+                <span className="font-bold not-italic text-[#8C6239] block mb-1">Practical Spiritual Fruit:</span>
                 "{topComm.practicalApplication}"
               </div>
             )}

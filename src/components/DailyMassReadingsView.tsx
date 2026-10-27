@@ -528,21 +528,21 @@ ${reading.reflection.content}`;
         const topComm = comms[0];
         if (!topComm) return null;
         return (
-          <article className="bg-gradient-to-br from-stone-900 via-amber-950 to-stone-950 text-amber-50 rounded-xl p-6 sm:p-8 shadow-md border border-amber-600/50 space-y-5">
-            <div className="border-b border-amber-700/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <article className="bg-[#F8F4ED] text-[#2C1C0E] rounded-xl p-6 sm:p-8 shadow-sm border border-[#DDD0BE] space-y-5">
+            <div className="border-b border-[#E3D6C5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-600 text-stone-950 text-[11px] font-bold uppercase tracking-wider font-serif">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#8C6239] text-white text-[11px] font-bold uppercase tracking-wider font-serif">
                     Patristic Homily of a Saint
                   </span>
-                  <span className="text-xs text-amber-300 font-serif">
+                  <span className="text-xs text-[#6B523B] font-serif font-semibold">
                     {reading.gospel.citation}
                   </span>
                 </div>
-                <h4 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                <h4 className="font-serif text-xl sm:text-2xl font-bold text-[#2A1B0E]">
                   Homily, Commentary, and Notes from the Magisterium
                 </h4>
-                <p className="text-xs text-amber-200/90 font-serif italic">
+                <p className="text-xs text-[#6B523B] font-serif italic">
                   {topComm.author}
                 </p>
               </div>
@@ -550,14 +550,14 @@ ${reading.reflection.content}`;
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={() => setShowInlineHomily(!showInlineHomily)}
-                  className="px-3.5 py-2 rounded-xl bg-amber-900/80 hover:bg-amber-800 text-amber-100 text-xs font-serif font-bold border border-amber-700/60 transition-all cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-[#EDE4D6] hover:bg-[#E3D7C5] text-[#3B2818] text-xs font-serif font-bold border border-[#D5C6B1] transition-all cursor-pointer"
                 >
                   {showInlineHomily ? 'Collapse Homily' : 'Expand Full Homily'}
                 </button>
                 {onSelectTab && (
                   <button
                     onClick={() => onSelectTab('bible-study')}
-                    className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 font-serif font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-xl bg-[#8C6239] hover:bg-[#734F2D] text-white font-serif font-bold text-xs shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>View All Commentaries</span>
@@ -569,13 +569,13 @@ ${reading.reflection.content}`;
 
             {showInlineHomily && (
               <>
-                <div className="font-serif-sacred text-amber-100 text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-3 border-l-2 border-amber-500/80 pl-4 bg-black/30 p-4 rounded-r-xl">
+                <div className="font-serif-sacred text-[#2C1C0E] text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-3 border-l-4 border-l-[#8C6239] pl-4 bg-[#FAF7F2] p-4 rounded-r-xl border border-[#E8DEC8]">
                   {topComm.commentaryText}
                 </div>
 
                 {topComm.practicalApplication && (
-                  <div className="p-3.5 rounded-xl bg-amber-900/30 border border-amber-700/40 text-amber-200 text-xs sm:text-sm font-serif italic">
-                    <span className="font-bold not-italic text-amber-300 block mb-1">Spiritual Application:</span>
+                  <div className="p-3.5 rounded-xl bg-[#FAF4EA] border border-[#E5D7C3] text-[#4A3623] text-xs sm:text-sm font-serif italic">
+                    <span className="font-bold not-italic text-[#8C6239] block mb-1">Spiritual Application:</span>
                     "{topComm.practicalApplication}"
                   </div>
                 )}

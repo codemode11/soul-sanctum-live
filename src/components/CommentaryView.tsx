@@ -576,7 +576,7 @@ ${selectedCommentary.practicalApplication}`;
                       isThisSpeaking
                         ? 'bg-amber-50/90 border-[#8B5A2B] shadow-xs ring-1 ring-[#8B5A2B]/40'
                         : sec.saintName.toLowerCase().includes('homily')
-                        ? 'bg-amber-50/40 hover:bg-amber-50/70 border-amber-300/80 shadow-2xs'
+                        ? 'bg-[#F8F4ED] hover:bg-[#F3ECE0] border-[#E2D4C0] shadow-2xs'
                         : 'bg-white hover:bg-stone-50/60 border-stone-200/90 shadow-2xs'
                     }`}
                   >
@@ -584,7 +584,7 @@ ${selectedCommentary.practicalApplication}`;
                     <div className="flex items-center justify-between gap-2 pb-1.5 mb-2 border-b border-stone-200/80">
                       <div className="flex flex-wrap items-baseline gap-2">
                         {sec.saintName.toLowerCase().includes('homily') ? (
-                          <span className="px-2 py-0.5 rounded-full bg-amber-900 text-amber-100 text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
+                          <span className="px-2 py-0.5 rounded-full bg-[#8C6239] text-white text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
                             Patristic Homily
                           </span>
                         ) : sec.saintName.toLowerCase().includes('vatican') || sec.saintName.toLowerCase().includes('catechism') || sec.saintName.toLowerCase().includes('magisterium') ? (
