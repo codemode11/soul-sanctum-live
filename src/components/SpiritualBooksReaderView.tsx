@@ -824,10 +824,12 @@ export const SpiritualBooksReaderView: React.FC = () => {
       {/* Category Filter Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
         {[
-          { id: 'all', label: 'All Spiritual Classics' },
+          { id: 'all', label: `All Spiritual Classics (${SPIRITUAL_BOOKS.length})` },
           { id: 'devotion', label: 'Devotio and Daily Life' },
-          { id: 'mysticism', label: 'Carmelite Mysticism' },
-          { id: 'marian', label: 'Marian Consecration' },
+          { id: 'mysticism', label: 'Carmelite & Dominican Mysticism' },
+          { id: 'marian', label: 'Marian Consecration & Glories' },
+          { id: 'doctors', label: 'Doctors of the Church' },
+          { id: 'prayer', label: 'Prayer & Interior Life' },
           { id: 'saints', label: 'Autobiographies of Saints' },
           { id: 'confessions', label: 'Patristic Confessions' }
         ].map(cat => (

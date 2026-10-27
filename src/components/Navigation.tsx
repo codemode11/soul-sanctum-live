@@ -65,7 +65,8 @@ export type ActiveTab =
   | 'bible-flashcards'
   | 'sacred-art'
   | 'prayer-requests'
-  | 'catholic-links';
+  | 'catholic-links'
+  | 'piety-dashboard';
 
 interface NavigationProps {
   activeTab: ActiveTab;

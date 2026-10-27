@@ -12,6 +12,12 @@ import { SPIRITUAL_COMBAT } from './spiritualBooks/spiritualCombat';
 import { DIALOGUE_OF_ST_CATHERINE } from './spiritualBooks/dialogueOfStCatherine';
 import { ABANDONMENT_TO_DIVINE_PROVIDENCE } from './spiritualBooks/abandonmentToDivineProvidence';
 import { VISITS_TO_BLESSED_SACRAMENT } from './spiritualBooks/visitsToBlessedSacrament';
+import { GLORIES_OF_MARY } from './spiritualBooks/gloriesOfMary';
+import { TREATISE_ON_LOVE_OF_GOD } from './spiritualBooks/treatiseOnLoveOfGod';
+import { WAY_OF_PERFECTION } from './spiritualBooks/wayOfPerfection';
+import { ASCENT_OF_MOUNT_CARMEL } from './spiritualBooks/ascentOfMountCarmel';
+import { SOUL_OF_THE_APOSTOLATE } from './spiritualBooks/soulOfTheApostolate';
+import { SPIRITUAL_EXERCISES } from './spiritualBooks/spiritualExercises';
 
 export interface SpiritualChapter {
   id: string;
@@ -60,14 +66,20 @@ export const SPIRITUAL_BOOKS: SpiritualBook[] = [
   DEVOUT_LIFE,
   TRUE_DEVOTION,
   SECRET_OF_THE_ROSARY,
+  GLORIES_OF_MARY,
   INTERIOR_CASTLE,
+  WAY_OF_PERFECTION,
   DARK_NIGHT,
+  ASCENT_OF_MOUNT_CARMEL,
+  TREATISE_ON_LOVE_OF_GOD,
   STORY_OF_A_SOUL,
   CONFESSIONS,
   PRACTICE_OF_THE_PRESENCE,
   UNIFORMITY_WITH_GODS_WILL,
   SPIRITUAL_COMBAT,
+  SPIRITUAL_EXERCISES,
   DIALOGUE_OF_ST_CATHERINE,
   ABANDONMENT_TO_DIVINE_PROVIDENCE,
-  VISITS_TO_BLESSED_SACRAMENT
+  VISITS_TO_BLESSED_SACRAMENT,
+  SOUL_OF_THE_APOSTOLATE
 ];

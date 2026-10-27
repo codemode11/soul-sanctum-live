@@ -32,6 +32,7 @@ import { HolyMassLivePlayerView } from './components/HolyMassLivePlayerView';
 import { BibleFlashcardsView } from './components/BibleFlashcardsView';
 import { ChurchHistoryInfographicView } from './components/ChurchHistoryInfographicView';
 import { CatholicLinksView } from './components/CatholicLinksView';
+import { PersonalPietyDashboard } from './components/PersonalPietyDashboard';
 import { PodcastEpisode } from './types';
 import { getTopVaticanHeadline } from './data/news';
 import { SacredReader } from './utils/speech';
@@ -674,6 +675,16 @@ export default function App() {
 
             {/* 16. Catholic Links */}
             {activeTab === 'catholic-links' && <CatholicLinksView />}
+
+            {/* 17. Personal Piety & Indulgence Collective Dashboard (Bottom of Index) */}
+            {activeTab === 'piety-dashboard' && (
+              <PersonalPietyDashboard
+                currentDateStr={currentDateStr}
+                onOpenCebuParishes={() => setIsCebuParishesOpen(true)}
+                onOpenAngelus={() => setIsAngelusOpen(true)}
+                onOpenAdoration={() => setIsAdorationOpen(true)}
+              />
+            )}
           </main>
         </div>
       </div>
