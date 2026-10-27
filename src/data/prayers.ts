@@ -468,7 +468,20 @@ in his Angels and in his Saints.`,
     englishText: `St. Joseph, terror of demons, cast your solemn gaze upon the devil and all his minions and protect us with your mighty staff. You fled through the night to avoid the devil’s wicked designs; now with the power of God, smite the demons as they flee from you! Grant special protection, we pray, for children, fathers, families, and the dying. By God’s grace, no demon dares approach while you are near, so we beg of you, always be near to us! Amen.`,
     scripturalOrTraditionOrigin: 'Devotional invocation honoring Saint Joseph under his traditional litany title "Terror of Demons" (Terror Daemonum), protector of the Holy Family and universal Church.',
     usageTime: 'Wednesdays, March, and daily for protection of families, fathers, children, and the dying'
+  },
+  {
+    id: 'prayer-three-oclock',
+    title: 'Three o\' Clock Prayer',
+    latinTitle: 'Oratio Horae Tertiae Misericordiae Divinae',
+    category: 'Daily and Traditional',
+    englishText: `You died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us.
+O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!
+Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. (three times)
+Jesus, King of Mercy, We trust in you!`,
+    scripturalOrTraditionOrigin: 'Prayed daily at the 3:00 PM Hour of Great Mercy, commemorating Our Lord\'s Passion and death on the Cross.',
+    usageTime: '3:00 PM daily (The Hour of Great Mercy)'
   }
 ];
+
 
 

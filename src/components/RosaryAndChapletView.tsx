@@ -300,10 +300,10 @@ export const RosaryAndChapletView: React.FC = () => {
           </div>
           <div>
             <span className="text-[11px] font-cinzel font-bold tracking-widest text-amber-300 uppercase block">
-              Hour of Great Mercy • Diary of St. Faustina #1320
+              Hour of Great Mercy • 3:00 PM Devotion
             </span>
             <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-amber-100">
-              The Three O' Clock Prayer of Divine Mercy
+              Three o' Clock Prayer
             </h3>
           </div>
         </div>
@@ -316,7 +316,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 setIsReadingThreeOClock(false);
               } else {
                 setIsReadingThreeOClock(true);
-                const fullText = `The Three O'Clock Prayer of Divine Mercy. You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us. ... O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You. O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You. O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You. ... Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen.`;
+                const fullText = `Three o' Clock Prayer. You died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us. ... O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you! ... Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. ... Jesus, King of Mercy, We trust in you!`;
                 SacredReader.speak(fullText, () => setIsReadingThreeOClock(false), 'female', 0.85);
               }
             }}
@@ -332,44 +332,35 @@ export const RosaryAndChapletView: React.FC = () => {
 
           <button
             onClick={() => {
-              const text = `THE THREE O'CLOCK PRAYER OF DIVINE MERCY\n(Diary of St. Faustina, 1320)\n\n"You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us."\n\n"O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You!" (3 times)\n\n"Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen."`;
+              const text = `THREE O' CLOCK PRAYER\n\nYou died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us.\n\nO Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!\n\nHoly God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. (three times)\n\nJesus, King of Mercy, We trust in you!`;
               navigator.clipboard.writeText(text);
               setCopiedThreeOClock(true);
               setTimeout(() => setCopiedThreeOClock(false), 2000);
             }}
             className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white transition-colors cursor-pointer"
-            title="Copy 3 O'Clock Prayer"
+            title="Copy Three o' Clock Prayer"
           >
             {copiedThreeOClock ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
-      <p className="text-xs sm:text-sm font-serif italic text-amber-200/90 leading-relaxed bg-black/30 p-3.5 rounded-xl border border-red-500/20">
-        "At three o'clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion, particularly in My abandonment at the moment of agony... This is the hour of great mercy for the whole world." — Our Lord to St. Faustina (Diary 1320)
-      </p>
+      <div className="space-y-4 bg-black/40 p-5 sm:p-6 rounded-xl border border-red-500/20 text-white font-serif text-base sm:text-lg md:text-xl leading-relaxed">
+        <p className="text-amber-50">
+          You died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us.
+        </p>
 
-      <div className="space-y-4 bg-black/40 p-5 rounded-xl border border-red-500/20 text-white font-serif">
-        <div className="space-y-1">
-          <span className="text-[10px] font-cinzel font-bold text-amber-400 uppercase tracking-widest block">Opening Offering</span>
-          <p className="text-sm sm:text-base md:text-lg italic text-amber-50 leading-relaxed">
-            "You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us."
-          </p>
-        </div>
+        <p className="text-amber-50 pt-3 border-t border-white/10">
+          O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!
+        </p>
 
-        <div className="space-y-1 pt-3 border-t border-white/10">
-          <span className="text-[10px] font-cinzel font-bold text-amber-400 uppercase tracking-widest block">Triple Invocation of Blood & Water</span>
-          <p className="text-sm sm:text-base md:text-lg font-bold text-red-200 leading-relaxed">
-            "O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You!" <span className="font-normal text-xs text-amber-300/80">(Repeat 3 times)</span>
-          </p>
-        </div>
+        <p className="text-amber-50 pt-3 border-t border-white/10">
+          Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. <span className="italic text-amber-300/90">(three times)</span>
+        </p>
 
-        <div className="space-y-1 pt-3 border-t border-white/10">
-          <span className="text-[10px] font-cinzel font-bold text-amber-400 uppercase tracking-widest block">Concluding Prayer</span>
-          <p className="text-xs sm:text-sm md:text-base text-stone-200 leading-relaxed">
-            "Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen."
-          </p>
-        </div>
+        <p className="font-bold text-amber-200 pt-3 border-t border-white/10">
+          Jesus, King of Mercy, We trust in you!
+        </p>
       </div>
     </div>
   );
