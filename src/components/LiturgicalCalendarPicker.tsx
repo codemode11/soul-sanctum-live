@@ -132,7 +132,7 @@ export const LiturgicalCalendarPicker: React.FC<LiturgicalCalendarPickerProps> =
   return (
     <div 
       ref={containerRef}
-      className={`absolute top-full mt-2 z-50 ${align === 'left' ? 'left-0 right-auto' : 'right-0 left-auto'} w-[285px] sm:w-[305px] max-w-[calc(100vw-1.5rem)] rounded-xl overflow-hidden border border-[#A78262] shadow-[0_18px_40px_rgba(40,22,12,0.35)] bg-gradient-to-b from-[#E4D5C6] via-[#DBC9B7] to-[#E4D5C6] backdrop-blur-2xl text-[#3A2213] animate-fadeIn`}
+      className={`absolute top-full mt-2 z-50 ${align === 'left' ? 'left-0 right-auto' : 'right-0 sm:right-0 left-0 sm:left-auto'} w-[290px] sm:w-[320px] max-w-[calc(100vw-2rem)] rounded-xl overflow-hidden border border-[#A78262] shadow-[0_22px_48px_rgba(30,15,5,0.45)] bg-gradient-to-b from-[#E4D5C6] via-[#DBC9B7] to-[#E4D5C6] backdrop-blur-2xl text-[#3A2213] animate-fadeIn`}
     >
       {/* Header: Month / Year Navigation */}
       <div className="px-3.5 py-2.5 border-b border-[#BFA287] bg-[#D2BEAA]/90 backdrop-blur-md flex items-center justify-between">

@@ -218,8 +218,8 @@ ${reading.reflection.content}`;
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
       {/* Liturgical Day Banner and Date Bar */}
-      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 overflow-hidden">
-        <div className="p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        <div className="p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-t-xl">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span 
@@ -286,7 +286,7 @@ ${reading.reflection.content}`;
                 onSelectDate={onSelectDate}
                 isOpen={isCalendarPickerOpen}
                 onClose={() => setIsCalendarPickerOpen(false)}
-                align="left"
+                align="right"
               />
             </div>
             <button
@@ -300,7 +300,7 @@ ${reading.reflection.content}`;
         </div>
 
         {/* Lector Audio Controls + Secondary Controls: Font Size and Copy */}
-        <div className="p-4 bg-white/55 backdrop-blur-md border-t border-white/60 space-y-3">
+        <div className="p-4 bg-white/55 backdrop-blur-md border-t border-white/60 space-y-3 rounded-b-xl">
           <LectorControlsBar
             onPlay={handleToggleReadAloud}
             onStop={() => {
