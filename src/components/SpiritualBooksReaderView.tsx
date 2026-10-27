@@ -898,15 +898,15 @@ export const SpiritualBooksReaderView: React.FC = () => {
               </div>
 
               {/* Card Footer with Chapter Counts and Action Buttons */}
-              <div className="px-6 py-4 bg-[#FAF6F0] border-t border-[#8B5A2B]/25 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4 text-xs text-[#4A2E1B] font-serif-sacred">
+              <div className="px-6 py-4 bg-gradient-to-r from-[#362011] via-[#472B17] to-[#2D1A0E] border-t border-[#8B5A2B]/50 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4 text-xs text-stone-200 font-serif-sacred">
                   <span className="flex flex-col items-center justify-center gap-1 text-center">
-                    <BookOpen className="w-4 h-4 text-[#8B5A2B]" />
+                    <BookOpen className="w-4 h-4 text-[#F5D7B2]" />
                     <span>{book.chapters.length} Chapters</span>
                   </span>
-                  <span className="text-[#8B5A2B]/60">•</span>
+                  <span className="text-[#C89F72]">•</span>
                   <span className="flex flex-col items-center justify-center gap-1 text-center">
-                    <Clock className="w-4 h-4 text-[#8B5A2B]" />
+                    <Clock className="w-4 h-4 text-[#F5D7B2]" />
                     <span>~{book.estimatedMinutesPerChapter}m / ch</span>
                   </span>
                 </div>
@@ -918,10 +918,10 @@ export const SpiritualBooksReaderView: React.FC = () => {
                         setActiveBookId(book.id);
                         setActiveChapterIndex(bookmarkedChapter.chapterIndex);
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-[#F3E9DC] hover:bg-[#E8D7C3] text-[#4A2E1B] border border-[#8B5A2B]/40 text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-lg bg-[#5C3A21] hover:bg-[#6B4423] text-[#F5D7B2] border border-[#C89F72]/50 text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1"
                       title="Jump to saved bookmark"
                     >
-                      <BookmarkCheck className="w-3.5 h-3.5 text-[#8B5A2B]" />
+                      <BookmarkCheck className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Ch. {bookmarkedChapter.chapterIndex + 1}</span>
                     </button>
                   )}
@@ -931,7 +931,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                       setActiveBookId(book.id);
                       setActiveChapterIndex(0);
                     }}
-                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#684528] to-[#4A2E1B] hover:from-[#855D3B] hover:to-[#5C3A21] border border-[#8B5A2B]/50 text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#9C6B3B] to-[#7A4E2D] hover:from-[#B07C49] hover:to-[#8B5A2B] border border-[#DFB991]/40 text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer flex items-center gap-1.5"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Open Reader</span>
