@@ -549,7 +549,7 @@ ${reading.gospel.text}`;
 
             {showInlineHomily && (
               <>
-                <div className="pt-2 space-y-3">
+                <div className="pt-2 space-y-4">
                   <div>
                     <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2A1B0E] leading-snug">
                       <span className="block">{dailyHomily.homilyTitle}</span>
@@ -557,9 +557,9 @@ ${reading.gospel.text}`;
                         {dailyHomily.homilyAttribution}
                       </span>
                     </h3>
-                    <div className="h-px bg-[#DBCBB5] my-3" />
+                    <div className="h-px bg-[#DBCBB5] mt-3 mb-5" />
                   </div>
-                  <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={scriptureStyle}>
+                  <div className="pt-2 space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={scriptureStyle}>
                     {dailyHomily.paragraphs.map((para, idx) => (
                       <p key={idx} className="whitespace-pre-line">
                         {para}
