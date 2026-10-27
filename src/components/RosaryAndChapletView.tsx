@@ -374,75 +374,70 @@ export const RosaryAndChapletView: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Devotion Switcher Tabs:
-          Divine Mercy Trio (progressive lightness):
-            1. Chaplet (Darkest deep burgundy-crimson)
-            2. The Diary & 14 Promises (Medium ruby-crimson: lighter than Chaplet, darker than 3 O'Clock Prayer)
-            3. 3 O'Clock Prayer (Lightest rose-coral: lighter than The Diary & 14 Promises)
-          Marian Pair:
-            4. The Holy Rosary (Lighter Marian sky-cerulean blue)
-            5. Promises of Mary (Darker Marian royal midnight blue) */}
+          Divine Mercy Trio (Chaplet, The Diary & 14 Promises, 3 O'Clock Prayer): Same dark red
+          Marian Pair (The Holy Rosary, Promises of Mary): Same dark blue */}
       <div className="flex flex-wrap rounded-xl bg-[#F4ECE1]/90 p-1.5 max-w-3xl mx-auto shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1.5">
-        {/* 1. Chaplet (Darkest of the Divine Mercy buttons) */}
+        {/* 1. Chaplet (Dark Red) */}
         <button
           onClick={() => {
             setActiveDevotion('divine-mercy');
             handleReset();
           }}
-          className={`flex-1 min-w-[110px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#54080B] via-[#3D0507] to-[#260204] text-amber-50 border ${
+          className={`flex-1 min-w-[110px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#6B1114] via-[#520B0E] to-[#3A0608] text-amber-50 border ${
             activeDevotion === 'divine-mercy'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#6B1114]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              : 'border-[#7E1D20]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
           }`}
         >
           <span>Chaplet</span>
         </button>
 
-        {/* 2. The Diary and the 14 Promises (Lighter than Chaplet, Darker than 3 O'Clock Prayer) */}
+        {/* 2. The Diary and the 14 Promises (Same Dark Red) */}
         <button
           onClick={() => {
             setActiveDevotion('faustina');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#A82830] via-[#8F1E25] to-[#73151B] text-amber-50 border ${
+          className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#6B1114] via-[#520B0E] to-[#3A0608] text-amber-50 border ${
             activeDevotion === 'faustina'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#BC3B43]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              : 'border-[#7E1D20]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
           }`}
         >
           <span>The Diary & 14 Promises</span>
         </button>
 
-        {/* 3. Three O'Clock Prayer (Lighter than The Diary & 14 Promises) */}
+        {/* 3. Three O'Clock Prayer (Same Dark Red) */}
         <button
           onClick={() => {
             setActiveDevotion('three-oclock');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#F08A86] via-[#E06D68] to-[#CC544F] text-white border ${
+          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#6B1114] via-[#520B0E] to-[#3A0608] text-amber-50 border ${
             activeDevotion === 'three-oclock'
-              ? 'border-amber-200 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#F59E9B]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
+              : 'border-[#7E1D20]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
           }`}
         >
           <span>3 O'Clock Prayer</span>
         </button>
 
-        {/* 4. The Holy Rosary (Lighter than Promises of Mary) */}
+        {/* 4. The Holy Rosary (Dark Blue) */}
         <button
           onClick={() => {
             setActiveDevotion('rosary');
             handleReset();
           }}
-          className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#5FA4F0] via-[#438CE0] to-[#2B70C4] text-white border ${
+          className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#162C58] via-[#0E1E3F] to-[#071126] text-amber-100 border ${
             activeDevotion === 'rosary'
-              ? 'border-amber-200 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#7BB8F7]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
+              : 'border-[#25447D]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
           }`}
         >
           <span>The Holy Rosary</span>
         </button>
 
-        {/* 5. Promises of Mary (Darker than The Holy Rosary) */}
+        {/* 5. Promises of Mary (Same Dark Blue) */}
         <button
           onClick={() => {
             setActiveDevotion('marian-promises');
