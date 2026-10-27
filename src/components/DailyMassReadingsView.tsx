@@ -506,20 +506,15 @@ ${reading.reflection.content}`;
               {reading.gospel.citation}
             </p>
           </div>
-
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="text-xs sm:text-sm font-serif italic text-stone-700 bg-stone-100 px-3 py-1.5 rounded-lg border border-stone-200 hidden sm:inline-block">
-              The Gospel of the Lord
-            </span>
-          </div>
         </div>
 
         <div className="font-serif-sacred text-stone-900 whitespace-pre-line sacred-drop-cap" style={scriptureStyle}>
           {reading.gospel.text}
         </div>
 
-        <div className="pt-3 text-sm sm:text-base text-stone-700 italic border-t border-stone-200">
-          The Gospel of the Lord. <span className="font-semibold text-stone-900 not-italic">R. Praise to you, Lord Jesus Christ.</span>
+        <div className="pt-3 border-t border-stone-200 space-y-2 text-sm sm:text-base font-serif text-stone-800">
+          <p className="not-italic">The Gospel of the Lord.</p>
+          <p className="font-semibold text-stone-900 not-italic">Praise to you, Lord Jesus Christ.</p>
         </div>
       </article>
 
