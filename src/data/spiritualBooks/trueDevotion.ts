@@ -2,96 +2,128 @@ import { SpiritualBook } from "../spiritualBooks";
 
 export const TRUE_DEVOTION: SpiritualBook = {
   "id": "true-devotion",
-  "title": "True Devotion to the Blessed Virgin",
-  "latinTitle": "De Cultu Sanctissimae Virginis Mariae",
-  "author": "St. Louis-Marie Grignion de Montfort",
-  "authorTitle": "Apostolic Missionary and Founder of the Montfortians",
+  "title": "True Devotion to the Blessed Virgin Mary",
+  "latinTitle": "Tractatus de Vera Devotione erga Beatam Mariam Virginem",
+  "author": "St. Louis Marie Grignion de Montfort",
+  "authorTitle": "Apostolic Missionary and Preacher of the Cross",
   "era": "1712 A.D.",
   "category": "marian",
-  "categoryLabel": "Marian Theology and Total Consecration",
-  "description": "The complete, unabridged treatise on Marian consecration (all §§ 1–273 and the Solemn Consecration Formula) praised by popes from Pius IX to St. John Paul II. It unfolds the theological truth that the quickest, safest, and most perfect path to Jesus Christ is through Holy Mary.",
-  "theologicalFocus": "Total Consecration, Spiritual Slavery of Love, Queen of Apostles, Eschatological Role of Mary",
+  "categoryLabel": "Marian Theology & Total Consecration",
+  "description": "The monumental spiritual classic of St. Louis de Montfort on the Total Consecration to Jesus through Mary as a Loving Slave of Jesus in Mary. Hidden in an iron chest for over a century, this prophetic work presents the quickest, easiest, most secure, and most perfect path to holiness and union with Jesus Christ.",
+  "theologicalFocus": "Total Consecration, Holy Slavery of Love, Mediations of Grace, Reign of Christ through Mary, Marian Apostles of the Latter Times",
   "nihilObstat": "Arthur J. Scanlan, S.T.D., Censor Librorum",
-  "imprimatur": "Patritius Cardinalis Hayes, Archiepiscopus Neo-Eboracensis",
-  "coverGradient": "from-[#0B1528] via-[#0E1E38] to-[#120A05]",
-  "accentColor": "#60A5FA",
+  "imprimatur": "Patrick Cardinal Hayes, Archbishop of New York",
+  "coverGradient": "from-[#1B3564] via-[#122344] to-[#0A1428]",
+  "accentColor": "#3B82F6",
   "emblemSymbol": "👑",
   "estimatedMinutesPerChapter": 10,
   "chapters": [
     {
-      "id": "td-ch1",
+      "id": "tdm-ch1",
       "chapterNumber": 1,
-      "title": "Introduction: Mary's Hidden Life and the Sanctuary of the Trinity",
-      "latinTitle": "Introductio: De vita abscondita Mariae (§§ 1–13)",
-      "subtitle": "Why God Chose Mary as His Secret Sanctuary and Treasury of All Graces",
+      "title": "Part 1: The Necessity of Devotion to the Blessed Virgin Mary",
+      "latinTitle": "De necessitate devotionis erga Beatissimam Virginem",
+      "subtitle": "It was through the Blessed Virgin that Jesus Christ came into the world, and it is also through her that He must reign.",
       "paragraphs": [
-        "1. It was through the Blessed Virgin Mary that Jesus came into the world, and it is also through her that he must reign in the world.",
-        "2. Because Mary remained hidden during her life she is called by the Holy Spirit and the Church \"Alma Mater\", Mother hidden and unknown. So great was her humility that she desired nothing more upon earth than to remain unknown to herself and to others, and to be known only to God.",
-        "3. In answer to her prayers to remain hidden, poor and lowly, God was pleased to conceal her from nearly every other human creature in her conception, her birth, her life, her mysteries, her resurrection and assumption. Her own parents did not really know her; and the angels would often ask one another, \"Who can she possibly be?\", for God had hidden her from them, or if he did reveal anything to them, it was nothing compared with what he withheld."
+        "It was through the Blessed Virgin Mary that Jesus Christ came into the world, and it is also through her that He must reign in the world. Mary has been very little known in the first coming of Jesus Christ; but in His second coming she must be known and revealed by the Holy Ghost in order that through her Jesus Christ may be known, loved, and served.",
+        "God made an assemblage of all the waters and He called it the sea (mare); He made an assemblage of all His graces and He called it Mary (Maria). The Almighty has a treasury wherein He has shut up all that is beautiful, all that is splendid, all that is rare, and that treasury is none other than Mary.",
+        "God the Father gave His only Son to the world only through Mary. Whatever sighs the patriarchs may have sent forth, whatever prayers the prophets and the saints of the Old Law may have offered during four thousand years to obtain that treasure, it was Mary alone who merited it and found grace before God. Therefore, as she was the way by which Jesus came to us, she must be the most secure way by which we go to Jesus."
       ],
-      "keyQuote": "It was through the Blessed Virgin Mary that Jesus came into the world, and it is also through her that he must reign in the world.",
-      "quoteCitation": "True Devotion, §§ 1–13",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"Why God Chose Mary as His Secret Sanctuary and Treasury of All Graces\"—ask the Holy Spirit how this teaching of St. Louis de Montfort invites your heart into deeper union with Christ today."
+      "keyQuote": "It was through the Blessed Virgin Mary that Jesus Christ came into the world, and it is also through her that He must reign in the world.",
+      "quoteCitation": "True Devotion to Mary, Chapter 1",
+      "reflectionPrompt": "Do you view Our Lady as an optional addition to faith, or as the God-chosen path by which Christ comes into human hearts?"
     },
     {
-      "id": "td-ch2",
+      "id": "tdm-ch2",
       "chapterNumber": 2,
-      "title": "Ch. I, Art. 1: Necessity of Devotion to Our Lady — Her Role in the Incarnation",
-      "latinTitle": "Caput I, Art. 1: De munere Mariae in Incarnatione (§§ 14–21)",
-      "subtitle": "God the Father, Son, and Holy Spirit Willed to Begin Their Greatest Works Through Mary",
+      "title": "Part 2: Fundamental Truths of Marian Devotion and Marks of False Devotions",
+      "latinTitle": "De veris fundamentis et falsis devotionibus",
+      "subtitle": "Jesus Christ our ultimate end, and unmasking the critical, scrupulous, superficial, and presumptive devotees.",
       "paragraphs": [
-        "14. With the whole Church I acknowledge that Mary, being a mere creature fashioned by the hands of God is, compared to his infinite majesty, less than an atom, or rather is simply nothing, since he alone can say, \"I am he who is\". Consequently, this great Lord, who is ever independent and self-sufficient, never had and does not now have any absolute need of the Blessed Virgin for the accomplishment of his will and the manifestation of his glory. To do all things he has only to will them.",
-        "15. However, I declare that, considering things as they are, because God has decided to begin and accomplish his greatest works through the Blessed Virgin ever since he created her, we can safely believe that he will not change his plan in the time to come, for he is God and therefore does not change in his thoughts or his way of acting.",
-        "16. God the Father gave his only Son to the world only through Mary. Whatever desires the patriarchs may have cherished, whatever entreaties the prophets and saints of the Old Law may have had for 4,000 years to obtain that treasure, it was Mary alone who merited it and found grace before God by the power of her prayers and the perfection of her virtues. \"The world being unworthy,\" said St. Augustine, \"to receive the Son of God directly from the hands of the Father, he gave his Son to Mary for the world to receive him from her.\" The Son of God became man for our salvation but only in Mary and through Mary. God the Holy Spirit formed Jesus Christ in Mary but only after having asked her consent through one of the chief ministers of his court."
+        "FIRST PRINCIPLE: Jesus Christ our Savior, true God and true Man, must be the ultimate end of all our devotions; otherwise they are false and deceitful. If we establish a solid devotion to Our Lady, it is only to establish more perfectly the devotion to Jesus Christ, and to provide a smooth but certain means of finding Jesus Christ.",
+        "SECOND PRINCIPLE: We belong to Jesus and Mary not only as bought servants, but as slaves of love who freely surrender their liberty to the Sovereign King through the hands of His Blessed Mother.",
+        "Beware of FALSE DEVOTEES: 1. Critical devotees who cannot bear to hear simple praise of Mary; 2. Scrupulous devotees who fear that honoring the Mother takes glory from the Son; 3. Superficial devotees whose devotion consists only in exterior practices without amendment of life; 4. Presumptive devotees who imagine that because they wear a scapular or say a chaplet they can remain in mortal sin without fear of damnation. True devotion is interior, tender, holy, constant, and disinterested."
       ],
-      "keyQuote": "God the Father gave his only Son to the world only through Mary.",
-      "quoteCitation": "True Devotion, §§ 14–21",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"God the Father, Son, and Holy Spirit Willed to Begin Their Greatest Works Through Mary\"—ask the Holy Spirit how this teaching of St. Louis de Montfort invites your heart into deeper union with Christ today."
+      "keyQuote": "Jesus Christ is the ultimate end of all our devotions; we honor Mary only that we may belong more entirely to Jesus Christ.",
+      "quoteCitation": "True Devotion to Mary, Chapter 2",
+      "reflectionPrompt": "Examine your devotion to Mary: is it interior, constant, and disinterested, or does it fall into sentimentality or presumption?"
     },
     {
-      "id": "td-ch3",
+      "id": "tdm-ch3",
       "chapterNumber": 3,
-      "title": "Ch. I, Art. 2: Mary's Role in the Sanctification of Souls",
-      "latinTitle": "Caput I, Art. 2: De munere Mariae in sanctificatione animarum (§§ 22–36)",
-      "subtitle": "Mary as the Sovereign Treasurer and Dispenser of All Heavenly Graces",
+      "title": "Part 3: The Nature of the Perfect Devotion: Holy Slavery of Love",
+      "latinTitle": "De natura perfectae devotionis seu servitute amoris",
+      "subtitle": "Total surrender of body, soul, exterior goods, and the interior value of all good works.",
       "paragraphs": [
-        "22. The plan adopted by the three persons of the Blessed Trinity in the Incarnation, the first coming of Jesus Christ, is adhered to each day in an invisible manner throughout the Church and they will pursue it to the end of time until the last coming of Jesus Christ.",
-        "23. God the Father gathered all the waters together and called them the seas (maria). He gathered all his graces together and called them Mary (Maria). The great God has a treasury or storehouse full of riches in which he has enclosed all that is beautiful, resplendent, rare, and precious, even his own Son. This immense treasury is none other than Mary whom the saints call the \"treasury of the Lord\". From her fullness all men are made rich.",
-        "24. God the Son imparted to his mother all that he gained by his life and death, namely, his infinite merits and his eminent virtues. He made her the treasurer of all his Father had given him as heritage. Through her he applies his merits to his members and through her he transmits his virtues and distributes his graces. She is his mystical channel, his aqueduct, through which he causes his mercies to flow gently and abundantly."
+        "This devotion consists in giving ourselves entirely to Mary, in order to belong entirely to Jesus through her. We must give her: 1. Our body with all its senses and members; 2. Our soul with all its powers; 3. Our exterior goods of fortune, present and to come; 4. Our interior and spiritual goods, which are our merits and virtues, and the value of all our past, present, and future good actions.",
+        "In other devotions, a person gives a part of his time, or some prayers, or some alms; but in this devotion, we give all without reserving anything—not even a penny, not a pin, not the least good work or suffrage. We surrender even the right to apply the satisfactions of our prayers for ourselves or for our deceased friends, leaving it completely in the hands of the Queen of Heaven to distribute as she sees fit.",
+        "Yet fear not that you will suffer in Purgatory for this generosity! Can anyone believe that so good and liberal a Mother as Mary will allow herself to be outdone in generosity? A soul that has given everything to Mary will find that Mary stands by her in life, at death, and before the judgment seat of God."
       ],
-      "keyQuote": "God the Father gathered all the waters together and called them the seas (maria).",
-      "quoteCitation": "True Devotion, §§ 22–36",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"Mary as the Sovereign Treasurer and Dispenser of All Heavenly Graces\"—ask the Holy Spirit how this teaching of St. Louis de Montfort invites your heart into deeper union with Christ today."
+      "keyQuote": "This devotion consists in giving ourselves entirely to Mary, in order to belong entirely to Jesus through her hands.",
+      "quoteCitation": "True Devotion to Mary, Chapter 3",
+      "reflectionPrompt": "Are you ready to surrender all your merits and prayers into the hands of Our Lady, trusting her maternal generosity completely?"
     },
     {
-      "id": "td-ch4",
+      "id": "tdm-ch4",
       "chapterNumber": 4,
-      "title": "Ch. I, Art. 3: Theological Consequences — Queen of All Hearts",
-      "latinTitle": "Caput I, Art. 3: Conclusiones de necessitate cultus Mariae (§§ 37–48)",
-      "subtitle": "Why True Devotion to the Blessed Virgin is Morally Necessary for Salvation and Perfection",
+      "title": "Part 4: Motives That Recommend This Consecration: The Royal Road of Grace",
+      "latinTitle": "De motivis quae hanc devotionem commendant",
+      "subtitle": "An easy, short, perfect, and secure way to attain union with Our Lord.",
       "paragraphs": [
-        "37. We must obviously conclude from what I have just said: First, that Mary received from God a far-reaching dominion over the souls of the elect. Otherwise she could not make her dwelling-place in them as God the Father has ordered her to do, and she could not conceive them, nourish them, and bring them forth to eternal life as their mother. She could not have them for her inheritance and her possession and form them in Jesus and Jesus in them. She could not implant in their heart the roots of her virtues, nor be the inseparable associate of the Holy Spirit in all these works of grace. None of these things, I repeat, could she do unless she had received from the Almighty rights and authority over their souls. For God, having given her power over his only-begotten and natural Son, also gave her power over his adopted children - not only in what concerns their body - which would be of little account - but also in what concerns their soul.",
-        "38. Mary is the Queen of heaven and earth by grace as Jesus is king by nature and by conquest. But as the kingdom of Jesus Christ exists primarily in the heart or interior of man, according to the words of the Gospel, \"The kingdom of God is within you\", so the kingdom of the Blessed Virgin is principally in the interior of man, that is, in his soul. It is principally in souls that she is glorified with her Son more than in any visible creature. So we may call her, as the saints do, Queen of our hearts.",
-        "39. Secondly, we must conclude that, being necessary to God by a necessity which is called \"hypothetical\", (that is, because God so willed it), the Blessed Virgin is all the more necessary for men to attain their final end. Consequently we must not place devotion to her on the same level as devotion to the other saints as if it were merely something optional."
+        "FIRST MOTIVE: It puts us entirely at the service of God, making us live in complete dependence upon Christ through Mary.",
+        "SECOND MOTIVE: It leads us to imitate Christ Himself, Who spent thirty of His thirty-three years in obedience to Mary and Joseph. If the uncreated Wisdom of the Father did not hesitate to submit Himself to the Blessed Virgin, what greater dignity or security can a poor creature seek than to walk in the footsteps of his King?",
+        "THIRD MOTIVE: This devotion is an EASY, SHORT, PERFECT, and SECURE WAY: 1. It is an easy way, because Our Lady sweetens every cross with the balsam of maternal love; 2. It is a short way, because we advance more in a short time in Mary’s arms than in years of walking by our own efforts; 3. It is a perfect way, because Mary is the purest of all creatures; 4. It is a secure way, because the devil has no power over a soul that is hidden beneath the mantle of the Mother of God."
       ],
-      "keyQuote": "We must obviously conclude from what I have just said: First, that Mary received from God a far-reaching dominion over the souls of the elect.",
-      "quoteCitation": "True Devotion, §§ 37–48",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"Why True Devotion to the Blessed Virgin is Morally Necessary for Salvation and Perfection\"—ask the Holy Spirit how this teaching of St. Louis de Montfort invites your heart into deeper union with Christ today."
+      "keyQuote": "This devotion is an easy, short, perfect, and secure way to attain union with our Lord, wherein Christian perfection consists.",
+      "quoteCitation": "True Devotion to Mary, Chapter 5",
+      "reflectionPrompt": "When spiritual progress feels arduous, do you entrust your journey to the maternal arms of the Mother of God?"
     },
     {
-      "id": "td-ch5",
+      "id": "tdm-ch5",
       "chapterNumber": 5,
-      "title": "Ch. I, Art. 4: Mary's Role in the Latter Times and Apostles of the End Times",
-      "latinTitle": "Caput I, Art. 4: De munere Mariae in novissimis temporibus (§§ 49–59)",
-      "subtitle": "How the Holy Spirit Will Raise Up Great Saints Through Mary in the Latter Days",
+      "title": "Part 5: Biblical Figure of the Consecration: Rebecca and Jacob",
+      "latinTitle": "De figura biblica: Rebecca et Jacob",
+      "subtitle": "How Mary, like a loving mother, prepares the soul and clothes it in the fragrant garments of Christ.",
       "paragraphs": [
-        "49. The salvation of the world began through Mary and through her it must be accomplished. Mary scarcely appeared in the first coming of Jesus Christ so that men, as yet insufficiently instructed and enlightened concerning the person of her Son, might not wander from the truth by becoming too strongly attached to her. This would apparently have happened if she had been known, on account of the wondrous charms with which Almighty God had endowed even her outward appearance. So true is this that St. Denis the Areopagite tells us in his writings that when he saw her he would have taken her for a goddess, because of her incomparable beauty, had not his well-grounded faith taught him otherwise. But in the second coming of Jesus Christ, Mary must be known and openly revealed by the Holy Spirit so that Jesus may be known, loved and served through her. The reasons which moved the Holy Spirit to hide his spouse during her life and to reveal but very little of her since the first preaching of the gospel exist no longer. 1) God wishes to make Mary better known in the latter times.",
-        "50. God wishes therefore to reveal Mary, his masterpiece, and make her more known in these latter times: (1) Because she kept herself hidden in this world and in her great humility considered herself lower than dust, having obtained from God, his apostles and evangelists the favour of being made known. (2 ) Because, as Mary is not only God's masterpiece of glory in heaven, but also his masterpiece of grace on earth, he wishes to be glorified and praised because of her by those living upon earth. (3) Since she is the dawn which precedes and discloses the Sun of Justice Jesus Christ, she must be known and acknowledged so that Jesus may be known and acknowledged. (4) As she was the way by which Jesus first came to us, she will again be the way by which he will come to us the second time though not in the same manner. (5) Since she is the sure means, the direct and immaculate way to Jesus and the perfect guide to him, it is through her that souls who are to shine forth in sanctity must find him. He who finds Mary finds life, that is, Jesus Christ who is the way, the truth and the life. But no one can find Mary who does not look for her. No one can look for her who does not know her, for no one seeks or desires something unknown. Mary then must be better known than ever for the deeper understanding and the greater glory of the Blessed Trinity. (6) In these latter times Mary must shine forth more than ever in mercy, power and grace; in mercy, to bring back and welcome lovingly the poor sinners and wanderers who are to be converted and return to the Catholic Church; in power, to combat the enemies of God who will rise up menacingly to seduce and crush by promises and threats all those who oppose them; finally, she must shine forth in grace to inspire and support the valiant soldiers and loyal servants of Jesus Christ who are fighting for his cause. (7) Lastly, Mary must become as terrible as an army in battle array to the devil and his followers, especially in these latter times. For Satan, knowing that he has little time - even less now than ever - to destroy souls, intensifies his efforts and his onslaughts every day. He will not hesitate to stir up savage persecutions and set treacherous snares for Mary's faithful servants and children whom he finds more difficult to overcome than others.",
-        "51. It is chiefly in reference to these last wicked persecutions of the devil, daily increasing until the advent of the reign of anti- Christ, that we should understand that first and well-known prophecy and curse of God uttered against the serpent in the garden of paradise. It is opportune to explain it here for the glory of the Blessed Virgin, the salvation of her children and the confusion of the devil. \"I will place enmities between you and the woman, between your race and her race; she will crush your head and you will lie in wait for her heel\" (Gen. 3:15)."
+        "The Holy Ghost has given us a marvelous figure of this devotion in the history of Jacob and Esau. Esau represents those proud, worldly Christians who rely on their own strength, who hunt in the fields of the world, and who despise the spiritual birthright for a bowl of earthly pleasure.",
+        "Jacob represents the humble children of God who stay near home in the tents of contemplation, loving their mother Rebecca. Rebecca, seeing that the time had come for the paternal blessing, clothed Jacob in the fragrant garments of his elder brother Esau, placed goatskins upon his hands and neck that his blind father might feel him, and prepared delicious food for Isaac.",
+        "So does the Blessed Virgin Mary act toward her consecrated slaves! She washes our poor works from all self-love; she clothes us in the garments of her Son Jesus Christ, enriched with her own virtues and merits; and she brings us before the Heavenly Father, so that smelling the sweet fragrance of Christ upon us, He bestows His eternal blessing."
       ],
-      "keyQuote": "The salvation of the world began through Mary and through her it must be accomplished.",
-      "quoteCitation": "True Devotion, §§ 49–59",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"How the Holy Spirit Will Raise Up Great Saints Through Mary in the Latter Days\"—ask the Holy Spirit how this teaching of St. Louis de Montfort invites your heart into deeper union with Christ today."
+      "keyQuote": "Mary clothes our souls with the fragrant garments of Jesus Christ, so that our Father in Heaven may bless us with eternal life.",
+      "quoteCitation": "True Devotion to Mary, Chapter 6",
+      "reflectionPrompt": "Reflect upon the tenderness of Mary: she takes our imperfect prayers, purifies them of self-interest, and presents them to God."
+    },
+    {
+      "id": "tdm-ch6",
+      "chapterNumber": 6,
+      "title": "Part 6: Interior Practices: Doing All Things WITH Mary, IN Mary, THROUGH Mary, and FOR Mary",
+      "latinTitle": "De praxi interiori: Cum Maria, in Maria, per Mariam et pro Maria",
+      "subtitle": "The constant interior breath of the soul: breathing the spirit and virtues of Our Lady.",
+      "paragraphs": [
+        "The essential practice of this devotion consists in doing all our actions WITH Mary, IN Mary, THROUGH Mary, and FOR Mary, in order to do them more perfectly with Jesus, in Jesus, through Jesus, and for Jesus.",
+        "1. WITH MARY: We must look upon Mary as the perfect model of every virtue and act as she acted in her humility, purity, and faith.",
+        "2. IN MARY: We must accustom ourselves to dwell interiorly within the immaculate heart of Mary as in a heavenly paradise, drawing all our strength from her virtues.",
+        "3. THROUGH MARY: We must never approach Jesus directly in our own unworthiness, but always present ourselves to Him through her mediation, as a peasant offers a humble apple to the king upon a tray of pure gold.",
+        "4. FOR MARY: Since we are her slaves of love, we must undertake all our labors and duties for her honor, that she may employ them for the greater glory of God."
+      ],
+      "keyQuote": "We must do all our actions WITH Mary, IN Mary, THROUGH Mary, and FOR Mary, that we may do them more perfectly for Jesus Christ.",
+      "quoteCitation": "True Devotion to Mary, Chapter 8",
+      "reflectionPrompt": "Practice invoking Mary before your next action: \"My Queen, I do this work with you, in you, through you, and for you, for the glory of Jesus.\""
+    },
+    {
+      "id": "tdm-ch7",
+      "chapterNumber": 7,
+      "title": "Part 7: Reception of Holy Communion in Union with Mary",
+      "latinTitle": "De Sancta Communione in unione cum Maria",
+      "subtitle": "Inviting Our Lady to welcome her Son in your heart at the Sacred Banquet.",
+      "paragraphs": [
+        "Before Holy Communion, humble yourself profoundly before God, acknowledging that you are utterly unworthy to receive the King of Glory into so poor a dwelling as your heart. Then give your heart to Mary, saying to her: \"My Mother, I have nothing worthy of my Lord; but I invite you to dwell in my heart, that you may welcome your Son with your own purity and love.\"",
+        "At the moment of receiving the Sacred Host, believe with unwavering faith that Jesus enters into you; but imagine that He finds there His Blessed Mother, who receives Him with the same ardent love, adoration, and joy with which she embraced Him at Bethlehem and on Mount Calvary.",
+        "After Communion, remain in profound adoration. Let Jesus and Mary converse together within you; offer Mary’s praises to Jesus to supply for your coldness, and offer Jesus’s glory to Mary. In this divine embrace between the Son and the Mother within your soul, your Communion will produce fruits of holiness a thousand times greater than if you received alone."
+      ],
+      "keyQuote": "Invite Mary into your heart at Holy Communion, so that she may welcome Jesus with her own immaculate purity and love.",
+      "quoteCitation": "True Devotion to Mary, Supplement",
+      "reflectionPrompt": "At your next Mass, invite Our Lady to prepare your soul for Holy Communion and to welcome her Divine Son within you."
     }
   ]
 };

@@ -9,8 +9,8 @@ export const INTERIOR_CASTLE: SpiritualBook = {
   "era": "1577 A.D.",
   "category": "mysticism",
   "categoryLabel": "Carmelite Mystical Theology",
-  "description": "The complete, unabridged mystical masterpiece of St. Teresa of Ávila (Prologue, all 27 chapters across the Seven Mansions, and Epilogue). St. Teresa depicts the human soul as a radiant diamond castle through which prayer leads us from self-knowledge to the innermost chamber of Spiritual Marriage.",
-  "theologicalFocus": "Stages of Prayer, Mental Prayer, Mystical Union, The Indwelling Trinity",
+  "description": "The sublime mystical masterpiece of St. Teresa of Ávila, Doctor of the Church. St. Teresa depicts the human soul as a radiant diamond castle containing Seven Mansions, leading from the outer walls of vocal prayer and self-knowledge to the innermost central chamber of Spiritual Marriage with Christ.",
+  "theologicalFocus": "The Seven Mansions, Mental Prayer, Prayer of Quiet, Prayer of Union, Spiritual Marriage, The Indwelling Trinity",
   "nihilObstat": "F. Thomas Bergh, O.S.B., Censor Deputatus",
   "imprimatur": "Edm. Can. Surmont, Vic. Gen. Westmonast.",
   "coverGradient": "from-[#2B170B] via-[#1B0E07] to-[#120A05]",
@@ -21,77 +21,137 @@ export const INTERIOR_CASTLE: SpiritualBook = {
     {
       "id": "ic-prologue",
       "chapterNumber": 1,
-      "title": "Prologue: Holy Obedience and the Interior Castle of the Soul",
-      "latinTitle": "Prologus Sanctae Teresiae a Jesu",
-      "subtitle": "Why St. Teresa Writes of the Seven Mansions of Prayer for Her Sisters",
+      "title": "Prologue: Holy Obedience and the Diamond Castle of the Soul",
+      "latinTitle": "Prologus: De castro adamantino animae",
+      "subtitle": "Why St. Teresa writes of the Seven Mansions of Prayer for her Carmelite sisters.",
       "paragraphs": [
-        "THIS TREATISE, STYLED THE INTERIOR CASTLE, WAS WRITTEN BY TERESA OF JESUS, NUN OF OUR LADY OF CARMEL, FOR HER SISTERS AND DAUGHTERS, THE DISCALCED CARMELITE NUNS.",
-        "RARELY has obedience laid upon me so difficult a task as this of writing about prayer; for one reason, because I do not feel that God has given me either the power or the desire for it, besides which, during the last three months I have suffered from noises and a great weakness in my head that have made it painful for me to write even on necessary business.",
-        "However, as I know the power obedience has of making things easy which seem impossible, my will submits with a good grace, although nature seems greatly distressed, for God has not given me such strength as to bear, without repugnance, the constant struggle against illness while performing many different duties. May He, Who has helped me in other more difficult matters, aid me with His grace in this, for I trust in His mercy. I think I have but little to say that has not already been put forth in my other works written under obedience; in fact, I fear this will be but repetition of them."
-      ],
-      "keyQuote": "THIS TREATISE, STYLED THE INTERIOR CASTLE, WAS WRITTEN BY TERESA OF JESUS, NUN OF OUR LADY OF CARMEL, FOR HER SISTERS AND DAUGHTERS, THE DISCALCED CARMELITE NUNS.",
-      "quoteCitation": "Prologue",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"Preparing the soul to enter the Castle of Prayer\"—ask the Holy Spirit how this teaching of St. Teresa of Ávila invites your heart into deeper union with Christ today."
-    },
-    {
-      "id": "ic-m1-ch1",
-      "chapterNumber": 2,
-      "title": "The First Mansions, Ch. 1: The beauty and dignity of our souls and makes a comparison to explain...",
-      "latinTitle": "De primis moradis • Caput 1",
-      "subtitle": "This chapter treats of the beauty and dignity of our souls and makes a comparison to explain this. the advantage of knowing and understanding this and the favours god grants to us is shown, and how prayer is the gate of the spiritual castle.",
-      "paragraphs": [
-        "1. Plan of this book. 2. The Interior Castle. 3. Our curable self ignorance. 4. God dwells in the centre of the soul. 5. Why all souls do not receive certain favours. 6. Reasons for speaking of these favours. 7. The entrance of the Castle. 8. Entering into oneself. 9. Prayer. 10. Those who dwell in the first mansion. 11. Entering. 12. Difficulties of the subject.",
-        "1. WHILE I was begging our Lord to-day to speak for me, since I knew not what to say nor how to commence this work which obedience has laid upon me, an idea occurred to me which I will explain, and which will serve as a foundation for that I am about to write.",
-        "2. I thought of the soul as resembling a castle, formed of a single diamond or a very transparent crystal, and containing many rooms, just as in heaven there are many mansions. If we reflect, sisters, we shall see that the soul of the just man is but a paradise, in which, God tells us, He takes His delight. What, do you imagine, must that dwelling be in which a King so mighty, so wise, and so pure, containing in Himself all good, can delight to rest? Nothing can be compared to the great beauty and capabilities of a soul; however keen our intellects may be, they are as unable to comprehend them as to comprehend God, for, as He has told us, He created us in His own image and likeness."
+        "Rarely has obedience laid upon me so difficult a task as this of writing about prayer. During the last three months I have suffered from noises and a great weakness in my head that have made it painful to write even on necessary business. Yet, knowing the power of holy obedience to make easy what seems impossible, my will submits with good grace, trusting entirely in the mercy of our Lord.",
+        "While I was begging our Lord today to speak for me, an idea occurred to me which will serve as a foundation for all that follows: I thought of the soul as resembling a magnificent castle formed of a single diamond or a very transparent crystal, containing many rooms and mansions, just as in heaven there are many mansions.",
+        "If we reflect, sisters, we shall see that the soul of the just man is but a paradise in which God takes His delight. What must that dwelling be in which a King so mighty, so wise, so pure, and containing in Himself all good, takes His delight to rest? Nothing can be compared to the great beauty and capacity of a soul created in the image and likeness of God."
       ],
       "keyQuote": "I thought of the soul as resembling a castle, formed of a single diamond or a very transparent crystal, and containing many rooms, just as in heaven there are many mansions.",
-      "quoteCitation": "First Mansions, Chapter 1",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"This chapter treats of the beauty and dignity of our souls and makes a comparison to explain this. the advantage of knowing and understanding this and the favours god grants to us is shown, and how prayer is the gate of the spiritual castle.\"—ask the Holy Spirit how this teaching of St. Teresa of Ávila invites your heart into deeper union with Christ today."
+      "quoteCitation": "The Interior Castle, Prologue & First Mansions",
+      "reflectionPrompt": "Reflect upon the astonishing dignity of your soul: a crystal castle created to be the dwelling place of the King of Kings."
     },
     {
-      "id": "ic-m1-ch2",
-      "chapterNumber": 3,
-      "title": "The First Mansions, Ch. 2: Describes the hideous appearance of a soul in mortal sin as revealed...",
-      "latinTitle": "De primis moradis • Caput 2",
-      "subtitle": "Describes the hideous appearance of a soul in mortal sin as revealed by god to some one: offers a few remarks on self-knowledge: this chapter is useful as it contains some points requiring attention. an explanation of the mansions.",
+      "id": "ic-m1",
+      "chapterNumber": 2,
+      "title": "First Mansions: The Gate of Prayer, Self-Knowledge, and the Soil of Humility",
+      "latinTitle": "Primae Moradae: De ianua orationis et humilitate",
+      "subtitle": "Entering the castle through mental prayer and breaking free from the reptile-infested outer courtyard.",
       "paragraphs": [
-        "1. Effects of mortal sin. 2. It prevents the soul's gaining merit. 3. The soul compared to a tree. 4. Disorder of the soul in mortal sin. 5. Vision of a sinful soul. 6. Profit of realizing these lessons. 7. Prayer. 8. Beauty of the Castle. 9. Self-knowledge 10. Gained by meditating on the divine perfections. 11. Advantages of such meditation. 12. Christ should be our model. 13. The devil entraps beginners. 14. Our strength must come from God. 15. Sin blinds the soul. 16. Worldliness. 17. The world in the cloister. 18. Assaults of the devil. 19. Examples of the devil's arts. 20. Perfection consists in charity. 21. Indiscreet zeal. 22. Danger of detraction.",
-        "1. BEFORE going farther, I wish you to consider the state to which mortal sin brings this magnificent and beautiful castle, this pearl of the East, this tree of life, planted beside the living waters of life which symbolize God Himself. No night can be so dark, no gloom nor blackness can compare to its obscurity. Suffice it to say that the sun in the centre of the soul, which gave it such splendour and beauty, is totally eclipsed, though the spirit is as fitted to enjoy God's presence as is the crystal to reflect the sun.",
-        "2. While the soul is in mortal sin nothing can profit it; none of its good works merit an eternal reward, since they do not proceed from God as their first principle, and by Him alone is our virtue real virtue. The soul separated from Him is no longer pleasing in His eyes, because by committing a mortal sin, instead of seeking to please God, it prefers to gratify the devil, the prince of darkness, and so comes to share his blackness. I knew a person to whom our Lord revealed the result of a mortal sin and who said she thought no one who realized its effects could ever commit it, but would suffer unimaginable torments to avoid it. This vision made her very desirous for all to grasp this truth, therefore I beg you, my daughters, to pray fervently to God for sinners, who live in blindness and do deeds of darkness."
+        "The gate by which alone we can enter this castle is prayer and reflection. I do not mean vocal prayer alone recited without attention to Whom one is speaking; for a prayer in which a person does not consider with Whom he is speaking, what he is asking, and who it is that asks, cannot properly be called prayer at all.",
+        "Those who dwell in the outer courtyard are so immersed in worldly business, pleasures, and honors that they seem to have forgotten that they possess a soul. They are surrounded by reptiles and venomous creatures—worldly distractions and passions. When by God’s grace such souls begin to practice mental prayer, they enter the first, outermost rooms of the castle.",
+        "In these First Mansions, the paramount necessity is self-knowledge. But beware: self-knowledge must never be separated from meditation upon God! If we gaze only upon our own wretchedness, we will be paralyzed by fear and discouragement. Let us gaze rather upon the infinite majesty and purity of Christ: gazing upon His purity, our own filthiness will be recognized without despair, and humility will become a source of strength rather than depression."
       ],
-      "keyQuote": "I knew a person to whom our Lord revealed the result of a mortal sin and who said she thought no one who realized its effects could ever commit it, but would suffer unimaginable torments to avoid it.",
+      "keyQuote": "Prayer is the gate of the castle; and self-knowledge, grounded upon the contemplation of God’s majesty, is the foundation of the spiritual life.",
       "quoteCitation": "First Mansions, Chapter 2",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"Describes the hideous appearance of a soul in mortal sin as revealed by god to some one: offers a few remarks on self-knowledge: this chapter is useful as it contains some points requiring attention. an explanation of the mansions.\"—ask the Holy Spirit how this teaching of St. Teresa of Ávila invites your heart into deeper union with Christ today."
+      "reflectionPrompt": "Do you gaze more at your own weaknesses or at the merciful majesty of Jesus? Ground your self-knowledge in Christ."
     },
     {
-      "id": "ic-m2-ch1",
-      "chapterNumber": 4,
-      "title": "The Second Mansions, Ch. 1: Spiritual Warfare and Perseverance",
-      "latinTitle": "De secundis moradis • Caput I",
-      "subtitle": "__________________________________________________________________",
+      "id": "ic-m2",
+      "chapterNumber": 3,
+      "title": "Second Mansions: The Warfare of the Soul and Perseverance in the Call of God",
+      "latinTitle": "Secundae Moradae: De pugna animae et perseverantia",
+      "subtitle": "Hearing the voice of the Shepherd amidst the clamor of worldly companions and devilish assaults.",
       "paragraphs": [
-        "TREATS OF THE GREAT IMPORTANCE OF PERSEVERANCE IN ORDER TO ENTER THE LAST MANSIONS, AND OF THE FIERCE WAR THE DEVIL WAGES AGAINST US. HOW ESSENTIAL IT IS TO TAKE THE RIGHT PATH FROM THE VERY COMMENCEMENT OF OUR JOURNEY. A METHOD OF ACTION WHICH HAS PROVED VERY EFFICACIOUS.",
-        "1. Souls in the second mansions. 2. Their state. 3. Their sufferings. 4. They cannot get rid of their imperfections. 5. How God calls these souls. 6. Perseverance is essential. 7. Temptations of the devil. 8. Delusion of earthly joys. 9. God alone to be loved. 10. Reasons for continuing the journey. 11. War fare of the devil. 12. Importance of choice of friends. 13. Valour required. 14. Presumption of expecting spiritual consolations at first. 15. In the Cross is strength. 16. Our falls should raise us higher. 17. Confidence and perseverance. 18. Recollection. 19. Why we must practise prayer. 20. Meditation kindles love.",
-        "1. Now let us consider which are the souls that enter the second mansions, and what they do there: I do not wish to enlarge on this subject, having already treated it very fully elsewhere, for I could not avoid repeating myself, as my memory is very bad. If I could state my ideas in another form they would not weary you, for we never tire of reading books on this subject, numerous as they are. 2. In this part of the castle are found souls which have begun to practise prayer; they realize the importance of their not remaining in the first mansions, yet often lack determination to quit their present condition by avoiding occasions of sin, which is a very perilous state to be in."
+        "In the Second Mansions dwell souls who have begun to practice prayer regularly and who understand the value of virtue. But here the spiritual warfare is far fiercer than in the First Mansions! For now the soul clearly hears the voice of God calling her through sermons, spiritual reading, sickness, and the counsel of good friends; and at the same time the devil roars more loudly, reminding her of the pleasures and friendships she must leave behind.",
+        "In this stage, the soul suffers greatly because she is no longer blind: she knows the misery of sin, yet the habits of the world still pull heavily upon her. It is as if she were in the midst of a fierce battle, hearing the King call her forward, while the enemy whispers that she will never persevere.",
+        "The one essential counsel for the Second Mansions is: NEVER ABANDON PRAYER! Even if you stumble, even if you fall repeatedly, arise at once and return to prayer. If the devil can persuade you to leave off mental prayer out of false humility, you are lost; but as long as you hold fast to prayer, you will surely reach the inner mansions."
       ],
-      "keyQuote": "However, it is a great grace that they should sometimes make good their escape from the vipers and poisonous creatures around them and should understand the need of avoiding them.",
+      "keyQuote": "Never give up prayer, whatever obstacles arise; for to abandon prayer is to lose oneself on the road.",
       "quoteCitation": "Second Mansions, Chapter 1",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"__________________________________________________________________\"—ask the Holy Spirit how this teaching of St. Teresa of Ávila invites your heart into deeper union with Christ today."
+      "reflectionPrompt": "When spiritual warfare intensifies, do you retreat from prayer or press closer to the Heart of Christ?"
     },
     {
-      "id": "ic-m3-ch1",
-      "chapterNumber": 5,
-      "title": "The Third Mansions, Ch. 1: The insecurity of life in this exile, however high we may be raised,...",
-      "latinTitle": "De tertiis moradis • Caput 1",
-      "subtitle": "Treats of the insecurity of life in this exile, however high we may be raised, and of how we must always walk in fear. contains some good points.",
+      "id": "ic-m3",
+      "chapterNumber": 4,
+      "title": "Third Mansions: Exemplary Lives, Devout Regularity, and the Test of Dryness",
+      "latinTitle": "Tertiae Moradae: De vita ordinata et probatione ariditatis",
+      "subtitle": "Living an orderly Christian life and learning to surrender the subtle pride of self-righteousness.",
       "paragraphs": [
-        "1. Souls in the Third Mansions. 2. Insecurity of this life. 3. Our danger of falling from grace. 4. The Saint bewails her past life. 5. Our Lady's patronage. 6. Fear necessary even for religious. 7. St. Teresa's contrition. 8. Characteristics of those in the Third Mansions. 9. The rich young man in the Gospel. 10. Reason of aridities in prayer. 11. Humility. 12. Tepidity. 13. We must give all to God. 14. Our debt. 15. Consolations and aridities.",
-        "1. As for those who, by the mercy of God, have vanquished in these combats and persevered until they reached the third mansions, what can we say to them but Blessed is the man that feareth the Lord'? It is no small favour from God that I should be able to translate this verse into Spanish so as to explain its meaning, considering how dense I usually am in such matters. We may well call these souls blessed, for, as far as we can tell, unless they turn back in their course they are on the safe road to salvation. Now, my sisters, you see how important it is for them to conquer in their former struggles, for I am convinced that our Lord will henceforth never cease to keep them in security of conscience, which is no small boon.",
-        "2. I am wrong in saying security,' for there is no security in this life; understand that in such cases I always imply: If they do not cease to continue as they have begun.' What misery to live in this world! We are like men whose enemies are at the door, who must not lay aside their arms, even while sleeping or eating, and are always in dread lest the foe should enter the fortress by some breach in the walls. O my Lord and my all! How canst Thou wish us to prize such a wretched existence? We could not desist from longing and begging Thee to take us from it, were it not for the hope of losing it for Thy sake or devoting it entirely to Thy service--and above all because we know it is Thy will that we should live. Since it is so, Let us die with Thee!' as St. Thomas said, for to be away from Thee is but to die again and again, haunted as we are by the dread of losing Thee for ever!"
+        "By God’s great mercy, souls in the Third Mansions have overcome the first fierce combats. They live an upright, orderly life, avoid mortal sin, practice works of charity, govern their speech, and spend hours in prayer. They are like the rich young man in the Gospel who had kept all the commandments from his youth.",
+        "Yet these souls are often afflicted with spiritual dryness and lack of sensible devotion. When God withholds consolations, they become anxious and perplexed, thinking they have displeased Him. They are very sensitive to any slight to their honor or any unexpected contradiction of their plans.",
+        "Here the Lord is testing whether they love Him for His own sake or for their own satisfaction. To advance beyond the Third Mansions, the soul must make a total surrender of her own will. She must say with holy Job: \"Though He slay me, yet will I trust in Him,\" embracing whatever humiliations and interior purifications the Divine King chooses to send."
       ],
-      "keyQuote": "As for those who, by the mercy of God, have vanquished in these combats and persevered until they reached the third mansions, what can we say to them but Blessed is the man that feareth the Lord'?",
-      "quoteCitation": "Third Mansions, Chapter 1",
-      "reflectionPrompt": "Pause in silent Lectio Divina upon \"Treats of the insecurity of life in this exile, however high we may be raised, and of how we must always walk in fear. contains some good points.\"—ask the Holy Spirit how this teaching of St. Teresa of Ávila invites your heart into deeper union with Christ today."
+      "keyQuote": "Perfection does not consist in spiritual consolations, but in loving God with an obedient will and embracing His Holy Cross.",
+      "quoteCitation": "Third Mansions, Chapter 2",
+      "reflectionPrompt": "Are you attached to an image of yourself as \"devout and respectable,\" or are you willing to be humbled for the love of Jesus?"
+    },
+    {
+      "id": "ic-m4",
+      "chapterNumber": 5,
+      "title": "Fourth Mansions: The Prayer of Quiet and the Basin of Living Water",
+      "latinTitle": "Quartae Moradae: De oratione quietis et fontibus aquae",
+      "subtitle": "The threshold of supernatural contemplation: the difference between human consolations and divine sweetness.",
+      "paragraphs": [
+        "Now we begin to speak of supernatural things that no human industry can attain. In the Fourth Mansions, the Lord grants the first infused contemplation, which is the Prayer of Quiet. To explain the difference between human consolations (contentos) and divine spiritual consolations (gustos), consider two stone basins in a garden, both filled with water.",
+        "The first basin is filled by aqueducts and conduits carrying water from a great distance with much noise and labor. This represents ordinary prayer, where we labor with intellect, memory, and books to stir up devout affections. The second basin has its spring in the very center of the basin itself! The water rises up from the depths in total silence, so overflowing with abundance that it inundates the entire garden with peace.",
+        "This is the Prayer of Quiet: the water of the Holy Spirit springs up from the very center of the soul where God dwells. The will is captivated in serene peace and sweetness, while the intellect rests in silent awe. The soul should not force her thoughts or make anxious efforts; she should remain quiet and gaze in love upon the Spouse."
+      ],
+      "keyQuote": "The water of the Prayer of Quiet springs up from the very center of the soul where God dwells, filling all the faculties with supernatural peace.",
+      "quoteCitation": "Fourth Mansions, Chapter 2",
+      "reflectionPrompt": "Learn the sacred art of interior silence: allow the spring of living water in your soul to flow without frantic mental agitation."
+    },
+    {
+      "id": "ic-m5",
+      "chapterNumber": 6,
+      "title": "Fifth Mansions: The Prayer of Union and the Metamorphosis of the Silkworm",
+      "latinTitle": "Quintae Moradae: De oratione unionis et verme bombycino",
+      "subtitle": "The ugly worm of self-will dies in the cocoon of Christ and emerges as a radiant white butterfly.",
+      "paragraphs": [
+        "Oh, how shall I tell of the riches of the Fifth Mansions! Here the soul experiences the Prayer of Simple Union. In this state, the soul is so completely asleep to the things of the world and to herself that during the time of union her faculties are suspended, and she has no power to think or imagine anything. God establishes Himself in the interior of that soul in such a way that, when she returns to herself, she cannot doubt that God was in her and she was in God.",
+        "To understand what occurs, consider the silkworm: when the mulberry trees put forth their leaves in the spring, the tiny eggs hatch and the worms feed ravenously upon the leaves. Having grown, they spin a silk cocoon, and inside that small, narrow tomb, the ugly worm completely dies.",
+        "Then, from that tomb, there emerges a beautiful, radiant white butterfly! This silkworm is our soul, which feeds on the teachings of the Church and the sacraments. When it is fully grown, it builds its cocoon by dying to the world, to self-will, and to all earthly desires in Christ. The soul that dies in this manner is transformed into a creature of celestial beauty, flying above all earthly attachments, having no rest on earth except in God."
+      ],
+      "keyQuote": "Let the silkworm die, and let it die in the cocoon of Christ! For then it will emerge as a radiant white butterfly of divine love.",
+      "quoteCitation": "Fifth Mansions, Chapter 2",
+      "reflectionPrompt": "Are you willing to let your selfish attachments die in the cocoon of Christ so that you may be transformed by the Holy Spirit?"
+    },
+    {
+      "id": "ic-m6",
+      "chapterNumber": 7,
+      "title": "Sixth Mansions: Spiritual Betrothal, Heavy Trials, and Wounds of Love",
+      "latinTitle": "Sextae Moradae: De desponsatione spirituali et vulneribus amoris",
+      "subtitle": "The purification of the Bride: bodily illness, severe calumnies, interior darkness, and rapts of the spirit.",
+      "paragraphs": [
+        "The soul has now received the kiss of the King’s mouth; she is spiritually betrothed to Christ. But let no one imagine that the Sixth Mansions are free from suffering! On the contrary, the closer the soul approaches the King, the greater are the trials by which she must be purified before entering the bridal chamber.",
+        "The soul must endure cruel slander and misunderstandings from good people who judge her prayer to be delusion; she suffers severe and chronic bodily infirmities; and above all, she suffers an interior affliction so agonizing that it feels like the soul is suspended between heaven and earth, finding no consolation in God and none in creatures.",
+        "Yet intertwined with these heavy crosses are sublime favors: locutions from Christ that bestow instant peace, ecstatic flights of the spirit, and those fiery wounds of love that pierce the soul with so sweet a sorrow that she would choose to die of this wound a thousand times rather than be healed by any earthly remedy."
+      ],
+      "keyQuote": "The royal road of the Cross is the only path that leads into the innermost bridal chamber of the King.",
+      "quoteCitation": "Sixth Mansions, Chapters 1–3",
+      "reflectionPrompt": "Do you accept trials and misunderstandings as purifying gifts that prepare your soul for closer union with the Savior?"
+    },
+    {
+      "id": "ic-m7",
+      "chapterNumber": 8,
+      "title": "Seventh Mansions: Spiritual Marriage and the Indwelling of the Most Holy Trinity",
+      "latinTitle": "Septimae Moradae: De matrimonio spirituali et inhabitatione Trinitatis",
+      "subtitle": "The innermost chamber of the Castle: the rain falls into the river, and the two become one single stream.",
+      "paragraphs": [
+        "Now our Good God brings the soul into this Seventh and innermost Mansion, which is His own secret dwelling place! When His Majesty is pleased to grant this sovereign favor of Spiritual Marriage, He first brings her into His presence through an intellectual vision of the Most Holy Trinity.",
+        "Here the Three Divine Persons reveal Themselves to the soul with such absolute certitude that she realizes that the Father, the Son, and the Holy Spirit dwell continually within her center. Though she never ceases to perform her active duties and charity toward her neighbor, the soul never leaves this divine center where the Trinity abides.",
+        "In the earlier mansions, the union was like two wax candles whose wicks are joined: you can separate them again. But in Spiritual Marriage, it is like rain falling from heaven into a river: the water of the rain and the water of the river are so completely united and mingled that it is impossible to divide them or say which is river and which is rain! Here Martha and Mary dwell together in perfect harmony: contemplation bears fruit in heroic works of charity for the Church."
+      ],
+      "keyQuote": "In Spiritual Marriage, the soul is like rain falling into a river: the two are so united that they can never again be separated.",
+      "quoteCitation": "Seventh Mansions, Chapter 2",
+      "reflectionPrompt": "Rest in the sublime truth of the Indwelling Trinity: God the Father, Son, and Holy Spirit dwell in the baptized soul in the state of grace."
+    },
+    {
+      "id": "ic-epilogue",
+      "chapterNumber": 9,
+      "title": "Epilogue: Walking through the Castle with Our Lady and the Saints",
+      "latinTitle": "Epilogus: De laude Dei et intercessione Beatae Virginis",
+      "subtitle": "St. Teresa’s parting blessing and humble submission to Holy Mother Church.",
+      "paragraphs": [
+        "Although in writing this book I have had in view only my sisters of Carmel, it may be that our Lord will grant that other souls also may derive some benefit from it. If anything in it is good, it belongs entirely to God; if there are errors, they proceed from my ignorance and weakness, and I submit all that I have written without reservation to the judgment of the Holy Roman Catholic Church.",
+        "My dear daughters, although you may think that you cannot enter these inner mansions of contemplation, do not lose heart! Praise our Lord for the beauty of this diamond castle, and remember that even in the outer rooms you are in the house of the King. Observe your vows faithfully, love one another with true charity, and honor the Queen of Carmel, our Blessed Mother Mary, whose livery you wear.",
+        "May our Lord Jesus Christ be forever praised and blessed, Who has created our souls capable of containing His infinite glory and has invited us to enter into His joy! Amen."
+      ],
+      "keyQuote": "Praise our Lord for the beauty of this diamond castle; observe your vows faithfully and love one another with true charity.",
+      "quoteCitation": "The Interior Castle, Epilogue",
+      "reflectionPrompt": "Offer your daily life to Christ through the hands of Our Lady of Mount Carmel, trusting that He is drawing you deeper into His love."
     }
   ]
 };

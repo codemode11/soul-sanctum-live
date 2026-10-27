@@ -18,6 +18,11 @@ import { WAY_OF_PERFECTION } from './spiritualBooks/wayOfPerfection';
 import { ASCENT_OF_MOUNT_CARMEL } from './spiritualBooks/ascentOfMountCarmel';
 import { SOUL_OF_THE_APOSTOLATE } from './spiritualBooks/soulOfTheApostolate';
 import { SPIRITUAL_EXERCISES } from './spiritualBooks/spiritualExercises';
+import { ON_LOVING_GOD } from './spiritualBooks/onLovingGod';
+import { AUTOBIOGRAPHY_OF_ST_IGNATIUS } from './spiritualBooks/autobiographyOfStIgnatius';
+import { LIFE_OF_ST_TERESA } from './spiritualBooks/lifeOfStTeresa';
+import { ST_FRANCIS_OF_ASSISI } from './spiritualBooks/stFrancisOfAssisi';
+import { ORTHODOXY_CHESTERTON } from './spiritualBooks/orthodoxyChesterton';
 
 export interface SpiritualChapter {
   id: string;
@@ -81,7 +86,12 @@ export const SPIRITUAL_BOOKS: SpiritualBook[] = [
   WAY_OF_PERFECTION,
   ASCENT_OF_MOUNT_CARMEL,
   SOUL_OF_THE_APOSTOLATE,
-  SPIRITUAL_EXERCISES
+  SPIRITUAL_EXERCISES,
+  ON_LOVING_GOD,
+  AUTOBIOGRAPHY_OF_ST_IGNATIUS,
+  LIFE_OF_ST_TERESA,
+  ST_FRANCIS_OF_ASSISI,
+  ORTHODOXY_CHESTERTON
 ];
 
 

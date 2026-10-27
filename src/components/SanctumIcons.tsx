@@ -898,4 +898,44 @@ export const EucharisticMonstranceNavIcon: React.FC<IconProps> = ({ className = 
   </svg>
 );
 
+/**
+ * 14. Spiritual Checklist Icon: A notebook with a ballpen
+ * Depicts a neat bound notebook with ruled lines, margin, and a sleek ballpen with pen clip and nib.
+ */
+export const NotebookWithBallpenIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="1.7" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+    aria-label="Notebook with Ballpen"
+  >
+    {/* Notebook Cover and Pages */}
+    <rect x="3.5" y="3" width="13" height="18" rx="2" strokeWidth="1.7" />
+    {/* Spiral / Left binding seam */}
+    <line x1="6.5" y1="3" x2="6.5" y2="21" strokeWidth="1.2" opacity="0.65" />
+    <path d="M2.5 6.5h2M2.5 10.5h2M2.5 14.5h2M2.5 18.5h2" strokeWidth="1.4" />
+    {/* Ruled lines on page */}
+    <line x1="9" y1="7.5" x2="13.5" y2="7.5" strokeWidth="1.3" />
+    <line x1="9" y1="11.5" x2="14" y2="11.5" strokeWidth="1.3" />
+    <line x1="9" y1="15.5" x2="12.5" y2="15.5" strokeWidth="1.3" />
+    {/* Ballpen angled on the right side */}
+    {/* Pen body and cone tip */}
+    <path 
+      d="M19.8 2.2a1.3 1.3 0 0 1 1.8 1.8L15.3 10.3l-2.6.9.9-2.6L19.8 2.2z" 
+      strokeWidth="1.6" 
+      fill="currentColor" 
+      fillOpacity="0.12" 
+    />
+    {/* Ballpen tip ballpoint */}
+    <circle cx="12.6" cy="11.2" r="0.4" fill="currentColor" stroke="none" />
+    {/* Ballpen clip */}
+    <path d="M18.8 3.2l-1.3 1.3" strokeWidth="1.3" />
+  </svg>
+);
+
+
 

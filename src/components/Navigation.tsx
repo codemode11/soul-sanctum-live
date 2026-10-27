@@ -38,7 +38,8 @@ import {
   ThreePersonsPrayingIcon,
   CatholicPodcastNavIcon,
   GoldenMonstranceIcon,
-  EucharisticMonstranceNavIcon
+  EucharisticMonstranceNavIcon,
+  NotebookWithBallpenIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -65,7 +66,8 @@ export type ActiveTab =
   | 'bible-flashcards'
   | 'sacred-art'
   | 'prayer-requests'
-  | 'catholic-links';
+  | 'catholic-links'
+  | 'piety-dashboard';
 
 interface NavigationProps {
   activeTab: ActiveTab;
@@ -376,6 +378,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: Link2, 
       tag: 'Websites', 
       subtext: 'Curated Catholic Websites and Reviews' 
+    },
+    { 
+      id: 'piety-dashboard', 
+      label: 'Spiritual Checklist', 
+      icon: NotebookWithBallpenIcon, 
+      tag: 'Checklist', 
+      subtext: 'Customizable Spiritual Checklist' 
     }
   ];
 
