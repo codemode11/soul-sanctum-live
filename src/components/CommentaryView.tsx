@@ -238,10 +238,10 @@ ${selectedCommentary.practicalApplication}`;
             <Scroll className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
               <h2 className="font-cinzel text-lg sm:text-xl font-bold text-white tracking-wide leading-tight">
-                Homily, Commentary, and Notes from the Magisterium
+                Commentary and Notes from the Magisterium
               </h2>
               <p className="text-[11px] text-amber-300/80 font-cinzel uppercase tracking-wider">
-                Patristic Homilies • Catena Aurea • Cornelius à Lapide • Notes from the Magisterium
+                Catena Aurea • Cornelius à Lapide • Notes from the Magisterium
               </p>
             </div>
           </div>
@@ -534,7 +534,7 @@ ${selectedCommentary.practicalApplication}`;
               {selectedCommentary.sourceName}
             </h3>
             <p className="text-xs font-semibold text-amber-900 font-cinzel">
-              Regarding: {selectedCommentary.scriptureReference} • <span className="text-stone-500 font-serif italic font-normal">{selectedCommentary.author}</span>
+              Regarding: {selectedCommentary.scriptureReference} • <span className="text-stone-500 font-serif italic font-normal">{selectedCommentary.author.replace(/^.*?\bwith\s+/i, '')}</span>
             </p>
           </div>
           <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[11px] font-bold font-cinzel self-start sm:self-auto shrink-0 border border-amber-200/60">
@@ -568,7 +568,8 @@ ${selectedCommentary.practicalApplication}`;
           <div className="pt-2">
             <StructuredCommentaryDisplay 
               commentaryText={selectedCommentary.commentaryText} 
-              fontSizeStyle={commentaryStyle} 
+              fontSizeStyle={commentaryStyle}
+              hideHomily
             />
           </div>
         </div>

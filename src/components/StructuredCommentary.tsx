@@ -156,41 +156,47 @@ export const StylizedDivider: React.FC<{ title: string }> = ({ title }) => (
 interface StructuredCommentaryDisplayProps {
   commentaryText: string;
   fontSizeStyle?: React.CSSProperties;
+  homilyOnly?: boolean;
+  hideHomily?: boolean;
 }
 
 export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayProps> = ({
   commentaryText,
-  fontSizeStyle
+  fontSizeStyle,
+  homilyOnly = false,
+  hideHomily = false
 }) => {
   const data = parseStructuredCommentary(commentaryText);
 
   return (
     <div className="space-y-6">
       {/* 1. HOMILY SECTION */}
-      <div className="space-y-3">
-        {/* Homily Title */}
-        {data.homilyTitle && (
-          <div>
-            <h3 className="font-cinzel text-base sm:text-lg font-bold text-[#2A1B0E] leading-snug tracking-wide">
-              {data.homilyTitle}
-            </h3>
-            {/* Separate the homily title from the first paragraph with one line */}
-            <div className="h-px bg-[#DBCBB5] my-3" />
-          </div>
-        )}
+      {!hideHomily && (
+        <div className="space-y-3">
+          {/* Homily Title */}
+          {data.homilyTitle && (
+            <div>
+              <h3 className="font-cinzel text-base sm:text-lg font-bold text-[#2A1B0E] leading-snug tracking-wide">
+                {data.homilyTitle}
+              </h3>
+              {/* Separate the homily title from the first paragraph with one line */}
+              <div className="h-px bg-[#DBCBB5] my-3" />
+            </div>
+          )}
 
-        {/* Homily Body Paragraphs */}
-        <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
-          {data.homilyParagraphs.map((para, idx) => (
-            <p key={idx} className="whitespace-pre-line">
-              {para}
-            </p>
-          ))}
+          {/* Homily Body Paragraphs */}
+          <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
+            {data.homilyParagraphs.map((para, idx) => (
+              <p key={idx} className="whitespace-pre-line">
+                {para}
+              </p>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 2. CATENA AUREA SECTION */}
-      {data.catenaAureaParagraphs.length > 0 && (
+      {!homilyOnly && data.catenaAureaParagraphs.length > 0 && (
         <div>
           {/* Stylized line followed by title "Catena Aurea." */}
           <StylizedDivider title="Catena Aurea" />
@@ -206,7 +212,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
       )}
 
       {/* 3. CORNELIUS A LAPIDE SECTION */}
-      {data.lapideParagraphs.length > 0 && (
+      {!homilyOnly && data.lapideParagraphs.length > 0 && (
         <div>
           {/* Stylized line followed by name "Cornelius a Lapide." */}
           <StylizedDivider title="Cornelius a Lapide" />
@@ -222,7 +228,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
       )}
 
       {/* 4. NOTES FROM THE MAGISTERIUM SECTION */}
-      {data.magisteriumParagraphs.length > 0 && (
+      {!homilyOnly && data.magisteriumParagraphs.length > 0 && (
         <div>
           {/* Stylized line followed by title "Notes from the Magisterium." */}
           <StylizedDivider title="Notes from the Magisterium" />

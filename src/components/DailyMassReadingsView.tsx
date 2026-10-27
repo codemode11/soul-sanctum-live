@@ -25,8 +25,7 @@ import {
 import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { LectorControlsBar } from './LectorControlsBar';
-import { getDailyGospelCommentaries } from '../data/commentary';
-import { StructuredCommentaryDisplay } from './StructuredCommentary';
+import { getDailySaintHomily } from '../data/dailyHomilies';
 
 interface DailyMassReadingsViewProps {
   reading: MassReading;
@@ -118,11 +117,6 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
     lineHeight: '1.5'
   };
 
-  const reflectionStyle = {
-    fontSize: fontSize === 'normal' ? '1.25rem' : fontSize === 'large' ? '1.55rem' : fontSize === 'xlarge' ? '1.95rem' : '2.35rem',
-    lineHeight: '1.8'
-  };
-
   const handlePrevDay = () => {
     const d = new Date(reading.date + 'T12:00:00Z');
     d.setDate(d.getDate() - 1);
@@ -199,11 +193,7 @@ ALLELUIA
 "${reading.alleluia.verse}"
 
 HOLY GOSPEL (${reading.gospel.citation})
-${reading.gospel.text}
-
-REFLECTION
-${reading.reflection.title} (${reading.reflection.author})
-${reading.reflection.content}`;
+${reading.gospel.text}`;
 
     navigator.clipboard.writeText(fullText);
     setCopied(true);
@@ -519,26 +509,24 @@ ${reading.reflection.content}`;
 
       {/* Direct Callout Banner & Full Patristic Homily of the Day */}
       {(() => {
-        const comms = getDailyGospelCommentaries(reading);
-        const topComm = comms[0];
-        if (!topComm) return null;
+        const dailyHomily = getDailySaintHomily(reading);
         return (
           <article className="bg-[#F8F4ED] text-[#2C1C0E] rounded-xl p-6 sm:p-8 shadow-sm border border-[#DDD0BE] space-y-5">
             <div className="border-b border-[#E3D6C5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-full bg-[#8C6239] text-white text-[11px] font-bold uppercase tracking-wider font-serif">
-                    Patristic Exposition
+                    Saints & Doctors of the Church
                   </span>
                   <span className="text-xs text-[#6B523B] font-serif font-semibold">
-                    {reading.gospel.citation}
+                    {reading.gospel.citation} • {dailyHomily.yearDelivered}
                   </span>
                 </div>
                 <h4 className="font-serif text-xl sm:text-2xl font-bold text-[#2A1B0E]">
-                  Commentary and Notes from the Magisterium
+                  Homily
                 </h4>
                 <p className="text-xs text-[#6B523B] font-serif italic">
-                  {topComm.author}
+                  {dailyHomily.saintName}, {dailyHomily.doctorTitle} ({dailyHomily.workTitle}, {dailyHomily.yearDelivered})
                 </p>
               </div>
 
@@ -547,7 +535,7 @@ ${reading.reflection.content}`;
                   onClick={() => setShowInlineHomily(!showInlineHomily)}
                   className="px-3.5 py-2 rounded-xl bg-[#EDE4D6] hover:bg-[#E3D7C5] text-[#3B2818] text-xs font-serif font-bold border border-[#D5C6B1] transition-all cursor-pointer"
                 >
-                  {showInlineHomily ? 'Collapse Commentary' : 'Expand Full Commentary'}
+                  {showInlineHomily ? 'Collapse Homily' : 'Expand Full Homily'}
                 </button>
                 {onSelectTab && (
                   <button
@@ -555,7 +543,7 @@ ${reading.reflection.content}`;
                     className="px-4 py-2 rounded-xl bg-[#8C6239] hover:bg-[#734F2D] text-white font-serif font-bold text-xs shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
-                    <span>View All Commentaries</span>
+                    <span>View Bible Commentary</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 )}
@@ -564,14 +552,26 @@ ${reading.reflection.content}`;
 
             {showInlineHomily && (
               <>
-                <div className="pt-2">
-                  <StructuredCommentaryDisplay commentaryText={topComm.commentaryText} />
+                <div className="pt-2 space-y-3">
+                  <div>
+                    <h3 className="font-cinzel text-base sm:text-lg font-bold text-[#2A1B0E] leading-snug tracking-wide">
+                      {dailyHomily.homilyHeading}
+                    </h3>
+                    <div className="h-px bg-[#DBCBB5] my-3" />
+                  </div>
+                  <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={scriptureStyle}>
+                    {dailyHomily.paragraphs.map((para, idx) => (
+                      <p key={idx} className="whitespace-pre-line">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
                 </div>
 
-                {topComm.practicalApplication && (
+                {dailyHomily.spiritualApplication && (
                   <div className="p-3.5 rounded-xl bg-[#FAF4EA] border border-[#E5D7C3] text-[#4A3623] text-xs sm:text-sm font-serif italic">
                     <span className="font-bold not-italic text-[#8C6239] block mb-1">Spiritual Application:</span>
-                    "{topComm.practicalApplication}"
+                    "{dailyHomily.spiritualApplication}"
                   </div>
                 )}
               </>
@@ -689,25 +689,6 @@ ${reading.reflection.content}`;
           </div>
         </div>
       )}
-
-      {/* DAILY PATRISTIC and LITURGICAL REFLECTION — Solid White Background */}
-      <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-3">
-        <div className="flex items-center gap-2 text-amber-900">
-          <BookOpen className="w-4 h-4" />
-          <h3 className="font-serif text-lg sm:text-xl font-bold text-amber-950 tracking-normal">
-            Reflection
-          </h3>
-        </div>
-        <h4 className="font-serif text-xl sm:text-2xl font-bold text-stone-900">
-          {reading.reflection.title}
-        </h4>
-        <p className="text-xs sm:text-sm font-serif italic text-amber-900 font-medium">
-          Source: {reading.reflection.author}
-        </p>
-        <p className="font-serif-sacred text-stone-800 whitespace-pre-line" style={reflectionStyle}>
-          {reading.reflection.content}
-        </p>
-      </article>
 
     </div>
   );
