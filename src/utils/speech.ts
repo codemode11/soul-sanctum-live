@@ -491,6 +491,19 @@ export function getSaintReaderPersona(nameOrExcerpt: string): SaintReaderPersona
   if (norm.includes('bellarmine') || norm.includes('robert')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bellarmine')!;
   if (norm.includes('albert')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-albert')!;
   if (norm.includes('thomas') || norm.includes('aquinas') || norm.includes('catena')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-thomas-aquinas')!;
+  if (norm.includes('vatican') || norm.includes('catechism') || norm.includes('ccc') || norm.includes('magisterium') || norm.includes('benedict') || norm.includes('francis') || norm.includes('john paul')) {
+    return {
+      id: 'vatican-magisterium',
+      saintName: 'Vatican Magisterial Teaching',
+      title: 'Vatican II & Sacred Magisterium',
+      timbreDescription: 'Solemn Magisterial Baritone',
+      era: 'Magisterium of the Catholic Church',
+      pitch: 0.95,
+      rate: 0.90,
+      voiceKeywords: ['david', 'daniel', 'en-us'],
+      sampleQuote: 'The Sacred Liturgy is the summit toward which the activity of the Church is directed.'
+    };
+  }
   return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'general-lector')!;
 }
 
@@ -640,6 +653,7 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
        upper.includes('JEROME') || upper.includes('THEOPHYLACT') || upper.includes('LAPIDE') || 
        upper.includes('CHRYSOSTOM') || upper.includes('BASIL') || upper.includes('THOMAS') ||
        upper.includes('BONAVENTURE') || upper.includes('ALPHONSUS') || upper.includes('BELLARMINE') || upper.includes('ALBERT') ||
+       upper.includes('VATICAN') || upper.includes('CATECHISM') || upper.includes('CCC') || upper.includes('MAGISTERIUM') || upper.includes('BENEDICT') || upper.includes('FRANCIS') || upper.includes('PAUL') || upper.includes('LEO') ||
        upper.includes('BLESSED'))
     ) {
       matchesFound++;
