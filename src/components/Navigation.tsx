@@ -377,6 +377,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: Link2, 
       tag: 'Websites', 
       subtext: 'Curated Catholic Websites and Reviews' 
+    },
+    { 
+      id: 'piety-dashboard', 
+      label: 'Daily Checklist', 
+      icon: ShieldCheck, 
+      tag: 'Checklist', 
+      subtext: 'Customizable Prayers & Spiritual Activities' 
     }
   ];
 

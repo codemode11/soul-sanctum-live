@@ -683,8 +683,13 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
       {/* =========================================================================
           SECTION 3: UPCOMING FEASTS IN NOVEMBER and DECEMBER and NOVENA TREASURY
          ========================================================================= */}
-      <div className="bg-[#FAF7F2] rounded-2xl p-6 sm:p-8 border border-stone-200/90 shadow-xs space-y-6">
-        <div className="space-y-5 border-b border-stone-200/80 pb-6">
+      <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F5EDE0]/75 via-[#EDE1CF]/65 to-[#F8F2E8]/75 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_40px_rgba(120,74,34,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-6">
+        {/* Ambient Liturgical Glow Orbs behind the Frosted Glass */}
+        <div className="pointer-events-none absolute -top-16 -left-16 w-80 h-80 rounded-full bg-amber-300/40 blur-3xl z-0" />
+        <div className="pointer-events-none absolute top-1/3 -right-16 w-96 h-96 rounded-full bg-orange-200/40 blur-3xl z-0" />
+        <div className="pointer-events-none absolute -bottom-16 left-1/4 w-96 h-96 rounded-full bg-rose-200/35 blur-3xl z-0" />
+
+        <div className="relative z-10 space-y-5 border-b border-white/70 pb-6">
           <div className="space-y-2 max-w-3xl">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-amber-800" />
@@ -695,7 +700,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
             <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight">
               Upcoming Feasts and Novenas
             </h3>
-            <p className="text-sm sm:text-base text-stone-600 font-serif-sacred leading-relaxed">
+            <p className="text-sm sm:text-base text-stone-700 font-serif-sacred leading-relaxed">
               Prepare for the great Solemnities and Feasts of the liturgical season—including All Saints and All Souls, St. Martin de Porres, Mother Cabrini, Christ the King, St. Cecilia, the Miraculous Medal, St. Andrew, St. Francis Xavier, the Immaculate Conception, Our Lady of Guadalupe, St. Lucy, Simbang Gabi (Christmas), and the Holy Family.
             </p>
           </div>
@@ -708,8 +713,8 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                 onClick={() => setFeastMonthFilter(tab)}
                 className={`px-4 py-2 rounded-lg text-xs font-cinzel font-bold tracking-wide transition-all cursor-pointer ${
                   feastMonthFilter === tab
-                    ? 'bg-amber-900 text-amber-50 shadow-xs'
-                    : 'bg-white text-stone-700 border border-stone-200/90 hover:border-amber-800/40 hover:bg-amber-50/40'
+                    ? 'bg-amber-900/90 backdrop-blur-md text-amber-50 border border-amber-700/80 shadow-sm'
+                    : 'bg-white/55 hover:bg-white/80 backdrop-blur-md text-stone-800 border border-white/85 ring-1 ring-[#D5C3AE]/60 hover:ring-amber-800/40 shadow-2xs'
                 }`}
               >
                 {tab === 'All'
@@ -722,7 +727,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-5">
           {filteredLibraryNovenas.map(novena => {
             const userEntry = userNovenas.find(u => u.novenaId === novena.id);
             const isUserActive = Boolean(userEntry && !userEntry.isCompleted && userEntry.completedDays.length < 9);
@@ -732,30 +737,30 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
             return (
               <div 
                 key={novena.id} 
-                className="bg-white p-6 rounded-xl border border-stone-200/90 shadow-2xs flex flex-col justify-between gap-4 hover:border-amber-800/40 hover:shadow-md transition-all"
+                className="bg-white/55 hover:bg-white/75 backdrop-blur-xl backdrop-saturate-150 p-6 rounded-xl border border-white/85 hover:border-white ring-1 ring-[#DFD3C3]/80 shadow-[0_8px_28px_rgba(120,74,34,0.08),inset_0_1px_2px_rgba(255,255,255,0.92)] hover:shadow-[0_12px_32px_rgba(120,74,34,0.14)] flex flex-col justify-between gap-4 transition-all"
               >
                 <div className="space-y-3">
                   {/* Top Meta Bar: Feast Date and Schedule Status */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-stone-100">
-                    <span className="px-2.5 py-1 rounded-md bg-amber-50 text-amber-950 text-[11px] font-bold uppercase tracking-wider font-cinzel border border-amber-200/80">
+                  <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-white/70">
+                    <span className="px-2.5 py-1 rounded-md bg-amber-50/75 backdrop-blur-sm text-amber-950 text-[11px] font-bold uppercase tracking-wider font-cinzel border border-white/80 ring-1 ring-amber-300/60">
                       {novena.associatedFeast}
                     </span>
 
                     {scheduleInfo.status === 'in-progress' ? (
-                      <span className="px-2.5 py-1 rounded-md bg-sky-100 text-sky-900 border border-sky-300 text-[11px] font-bold font-cinzel">
+                      <span className="px-2.5 py-1 rounded-md bg-sky-100/80 backdrop-blur-sm text-sky-900 border border-white/80 ring-1 ring-sky-300/70 text-[11px] font-bold font-cinzel">
                         Active Now • Day {scheduleInfo.activeDay} of 9
                       </span>
                     ) : scheduleInfo.status === 'starting-soon' ? (
-                      <span className="text-[11px] font-bold text-amber-800 font-cinzel flex items-center gap-1">
+                      <span className="text-[11px] font-bold text-amber-900 font-cinzel flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5" />
                         Starts {scheduleInfo.startDateFormatted} ({scheduleInfo.daysUntilStart === 1 ? 'Tomorrow' : `in ${scheduleInfo.daysUntilStart} days`})
                       </span>
                     ) : scheduleInfo.status === 'anytime' ? (
-                      <span className="text-[11px] font-semibold text-stone-500 font-cinzel">
+                      <span className="text-[11px] font-semibold text-stone-600 font-cinzel">
                         Year-Round Devotion
                       </span>
                     ) : (
-                      <span className="text-[11px] font-semibold text-stone-600 font-cinzel">
+                      <span className="text-[11px] font-semibold text-stone-700 font-cinzel">
                         Starts {scheduleInfo.startDateFormatted}
                       </span>
                     )}
@@ -766,34 +771,34 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
                     <h4 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900 leading-snug">
                       {novena.title}
                     </h4>
-                    <p className="text-xs sm:text-sm text-amber-900/90 font-serif-sacred italic">
+                    <p className="text-xs sm:text-sm text-amber-900 font-serif-sacred italic">
                       {novena.patronOrSubject}
                     </p>
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm sm:text-base text-stone-600 font-serif-sacred leading-relaxed">
+                  <p className="text-sm sm:text-base text-stone-700 font-serif-sacred leading-relaxed">
                     {novena.description}
                   </p>
                 </div>
 
                 {/* Card Action Footer */}
-                <div className="pt-3 border-t border-stone-100 flex items-center justify-between gap-3">
-                  <span className="text-[11px] font-cinzel font-semibold uppercase tracking-wider text-stone-400">
+                <div className="pt-3 border-t border-white/70 flex items-center justify-between gap-3">
+                  <span className="text-[11px] font-cinzel font-semibold uppercase tracking-wider text-stone-500">
                     9-Day Sacred Novena
                   </span>
 
                   {isUserActive ? (
                     <button
                       onClick={() => setViewingNovenaId(novena.id)}
-                      className="px-4 py-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-950 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0"
+                      className="px-4 py-2 rounded-lg bg-amber-100/80 hover:bg-amber-200/90 backdrop-blur-sm text-amber-950 border border-amber-300/70 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0"
                     >
                       Praying Now (View)
                     </button>
                   ) : isUserCompleted ? (
                     <button
                       onClick={() => handleRestartNovena(novena.id)}
-                      className="px-4 py-2 rounded-lg bg-white hover:bg-amber-50 text-amber-950 border border-amber-300 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0 shadow-2xs"
+                      className="px-4 py-2 rounded-lg bg-white/75 hover:bg-white backdrop-blur-sm text-amber-950 border border-amber-300 text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0 shadow-2xs"
                     >
                       Completed ✓ (Pray Again)
                     </button>

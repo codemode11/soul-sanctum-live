@@ -935,17 +935,17 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
   return (
     <section
       id="personal-piety-dashboard"
-      aria-label="Personal Piety & Indulgence Collective Dashboard"
+      aria-label="Daily Checklist of Prayers and Spiritual Activities"
       className="w-full rounded-2xl bg-[#FAF6EE] text-[#261A10] border border-[#D8C8AC] shadow-[0_16px_48px_rgba(38,26,16,0.28)] overflow-hidden"
     >
-      {/* Top Warm Alabaster Editorial Banner inspired by Indulgence Collective */}
+      {/* Top Warm Alabaster Editorial Banner */}
       <div className="bg-gradient-to-b from-[#FDFBF7] to-[#F4EFE4] border-b border-[#E2D5BE] px-5 sm:px-8 py-6 sm:py-8">
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
           <div className="space-y-2.5 max-w-3xl">
             <div className="flex flex-wrap items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-[0.2em] text-[#8C6226]">
-              <span>Regimen of Personal Piety</span>
+              <span>Daily Checklist</span>
               <span aria-hidden="true">·</span>
-              <span>The Indulgence Collective</span>
+              <span>Customizable Rule of Life</span>
               <span aria-hidden="true">·</span>
               <span>{formattedCurrentDate}</span>
             </div>
@@ -954,12 +954,12 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
               className="font-cinzel text-2xl sm:text-3xl font-bold text-[#23170D] tracking-wide leading-tight"
               style={{ fontFamily: "'Cinzel', serif" }}
             >
-              Daily Rule of Life &amp; Treasury of Sacred Indulgences
+              Daily Checklist of Prayers &amp; Spiritual Activities
             </h2>
 
             <p className="font-serif text-sm sm:text-base text-[#4E3B2B] leading-relaxed">
-              Inspired by the mission of <span className="font-semibold text-[#23170D]">The Indulgence Collective</span> and the{' '}
-              <span className="italic">Enchiridion Indulgentiarum</span> (Manual of Indulgences)—guiding Catholics to sanctify each day according to their state in life, time, and physical condition, while uniting Plenary and Partial Indulgences by way of suffrage for the Holy Souls in Purgatory.
+              Essential daily prayers and spiritual activities—all customizable to each individual Catholic, his state in life, available time, and daily physical circumstances. Includes the indulgenced prayers, spiritual works, and liturgical calendar recommended by{' '}
+              <span className="font-semibold text-[#23170D]">The Indulgence Collective</span>, gratefully attributed here for content that is deeply fruitful for souls not only in this world, but also for the Holy Souls in Purgatory.
             </p>
           </div>
 
@@ -1017,9 +1017,9 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
         <div className="mt-6 pt-5 border-t border-[#E5DAC3] flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-2">
             {[
-              { id: 'all', label: 'Complete Overview', icon: Sparkles },
-              { id: 'checklist', label: 'I. Daily Piety Checklist', icon: CheckCircle2 },
-              { id: 'collective', label: 'II. Indulgence Collective & Calendar', icon: Award },
+              { id: 'all', label: 'Complete Daily Checklist', icon: Sparkles },
+              { id: 'checklist', label: 'I. Customizable Prayers & Activities', icon: CheckCircle2 },
+              { id: 'collective', label: 'II. Sacred Indulgences & Calendar', icon: Award },
               { id: 'precepts', label: 'III. Precepts (Mass · Confession · Friday)', icon: ShieldCheck },
               { id: 'ecclesial', label: 'IV. Novenas · Cebu Relics · Vatican', icon: Globe }
             ].map((tab) => {
@@ -1413,7 +1413,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                   Section II · Enchiridion Indulgentiarum &amp; Suffrage Apostolate
                 </span>
                 <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#23170D] mt-1">
-                  The Indulgence Collective: Conditions, Everyday Grants &amp; Liturgical Calendar
+                  Sacred Indulgences: Conditions, Everyday Grants &amp; Liturgical Calendar
                 </h3>
                 <p className="font-serif text-sm text-[#5A4432] mt-1">
                   "An indulgence is a remission before God of the temporal punishment due to sins whose guilt has already been forgiven." (CCC 1471 · Apostolic Constitution <em>Indulgentiarum Doctrina</em>)
