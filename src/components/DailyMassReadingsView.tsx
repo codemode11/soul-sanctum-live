@@ -512,9 +512,8 @@ ${reading.reflection.content}`;
           {reading.gospel.text}
         </div>
 
-        <div className="pt-3 border-t border-stone-200 space-y-2 text-sm sm:text-base font-serif text-stone-800">
-          <p className="not-italic">The Gospel of the Lord.</p>
-          <p className="font-semibold text-stone-900 not-italic">Praise to you, Lord Jesus Christ.</p>
+        <div className="pt-2 text-xs font-serif text-stone-600 italic">
+          The Gospel of the Lord. <span className="font-semibold text-stone-800 not-italic">R. Praise to you, Lord Jesus Christ.</span>
         </div>
       </article>
 
