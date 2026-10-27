@@ -38,11 +38,13 @@ import {
 import { SacredReader } from '@/utils/speech';
 
 export const RosaryAndChapletView: React.FC = () => {
-  const [activeDevotion, setActiveDevotion] = useState<'divine-mercy' | 'faustina' | 'rosary' | 'marian-promises'>('divine-mercy');
+  const [activeDevotion, setActiveDevotion] = useState<'divine-mercy' | 'faustina' | 'three-oclock' | 'rosary' | 'marian-promises'>('divine-mercy');
   const [copiedPromiseNum, setCopiedPromiseNum] = useState<number | null>(null);
   const [copiedMarianNum, setCopiedMarianNum] = useState<number | null>(null);
   const [copiedExcerptId, setCopiedExcerptId] = useState<string | null>(null);
   const [readingExcerptId, setReadingExcerptId] = useState<string | null>(null);
+  const [isReadingThreeOClock, setIsReadingThreeOClock] = useState(false);
+  const [copiedThreeOClock, setCopiedThreeOClock] = useState(false);
   
   // Rosary State
   const [selectedMysteryGroup, setSelectedMysteryGroup] = useState<RosaryMysteryGroup>(getTodaysMysteryGroup);
@@ -289,6 +291,89 @@ export const RosaryAndChapletView: React.FC = () => {
   const progressPercent = Math.round(((currentStepNum + 1) / activeStepsList.length) * 100);
   const mercyProgressPercent = Math.round(((mercyStepIndex + 1) / mercySteps.length) * 100);
 
+  const renderThreeOClockCard = (highlighted = false) => (
+    <div className={`rounded-xl p-6 sm:p-8 bg-gradient-to-r from-red-950 via-amber-950 to-stone-900 border ${highlighted ? 'ring-2 ring-red-400 border-red-400/80 shadow-2xl' : 'border-red-500/40 shadow-xl'} space-y-4 text-white`}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-500/30 pb-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-red-600/30 border border-red-400/40 flex items-center justify-center shrink-0">
+            <Sparkles className="w-5 h-5 text-amber-300" />
+          </div>
+          <div>
+            <span className="text-[11px] font-cinzel font-bold tracking-widest text-amber-300 uppercase block">
+              Hour of Great Mercy • Diary of St. Faustina #1320
+            </span>
+            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-amber-100">
+              The Three O' Clock Prayer of Divine Mercy
+            </h3>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+          <button
+            onClick={() => {
+              if (isReadingThreeOClock) {
+                SacredReader.stop();
+                setIsReadingThreeOClock(false);
+              } else {
+                setIsReadingThreeOClock(true);
+                const fullText = `The Three O'Clock Prayer of Divine Mercy. You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us. ... O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You. O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You. O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You. ... Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen.`;
+                SacredReader.speak(fullText, () => setIsReadingThreeOClock(false), 'female', 0.85);
+              }
+            }}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md ${
+              isReadingThreeOClock
+                ? 'bg-red-600 text-white animate-pulse'
+                : 'bg-gradient-to-r from-red-700 to-amber-800 hover:from-red-600 hover:to-amber-700 text-amber-100 border border-red-400/50'
+            }`}
+          >
+            {isReadingThreeOClock ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
+            <span>{isReadingThreeOClock ? 'Stop Audio' : 'Listen to Prayer'}</span>
+          </button>
+
+          <button
+            onClick={() => {
+              const text = `THE THREE O'CLOCK PRAYER OF DIVINE MERCY\n(Diary of St. Faustina, 1320)\n\n"You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us."\n\n"O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You!" (3 times)\n\n"Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen."`;
+              navigator.clipboard.writeText(text);
+              setCopiedThreeOClock(true);
+              setTimeout(() => setCopiedThreeOClock(false), 2000);
+            }}
+            className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white transition-colors cursor-pointer"
+            title="Copy 3 O'Clock Prayer"
+          >
+            {copiedThreeOClock ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+          </button>
+        </div>
+      </div>
+
+      <p className="text-xs sm:text-sm font-serif italic text-amber-200/90 leading-relaxed bg-black/30 p-3.5 rounded-xl border border-red-500/20">
+        "At three o'clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion, particularly in My abandonment at the moment of agony... This is the hour of great mercy for the whole world." — Our Lord to St. Faustina (Diary 1320)
+      </p>
+
+      <div className="space-y-4 bg-black/40 p-5 rounded-xl border border-red-500/20 text-white font-serif">
+        <div className="space-y-1">
+          <span className="text-[10px] font-cinzel font-bold text-amber-400 uppercase tracking-widest block">Opening Offering</span>
+          <p className="text-sm sm:text-base md:text-lg italic text-amber-50 leading-relaxed">
+            "You expired, Jesus, but the source of life gushed forth for souls, and the ocean of mercy opened up for the whole world. O Fount of Life, unfathomable Divine Mercy, envelop the whole world and empty Yourself out upon us."
+          </p>
+        </div>
+
+        <div className="space-y-1 pt-3 border-t border-white/10">
+          <span className="text-[10px] font-cinzel font-bold text-amber-400 uppercase tracking-widest block">Triple Invocation of Blood & Water</span>
+          <p className="text-sm sm:text-base md:text-lg font-bold text-red-200 leading-relaxed">
+            "O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You!" <span className="font-normal text-xs text-amber-300/80">(Repeat 3 times)</span>
+          </p>
+        </div>
+
+        <div className="space-y-1 pt-3 border-t border-white/10">
+          <span className="text-[10px] font-cinzel font-bold text-amber-400 uppercase tracking-widest block">Concluding Prayer</span>
+          <p className="text-xs sm:text-sm md:text-base text-stone-200 leading-relaxed">
+            "Eternal God, in whom mercy is endless and the treasury of compassion inexhaustible, look kindly upon us and increase Your mercy in us, that in difficult moments we might not despair nor become despondent, but with great confidence submit ourselves to Your holy will, which is Love and Mercy itself. Amen."
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
@@ -297,14 +382,14 @@ export const RosaryAndChapletView: React.FC = () => {
           2. The Diary and the 14 Promises
           3. The Holy Rosary
           4. Promises of Mary (The Secret of the Rosary, de Montfort) */}
-      <div className="flex flex-wrap rounded-lg bg-stone-900/90 p-1.5 max-w-2xl mx-auto shadow-xl border border-amber-500/30 backdrop-blur-md gap-1.5">
+      <div className="flex flex-wrap rounded-xl bg-stone-900/90 p-1.5 max-w-3xl mx-auto shadow-xl border border-amber-500/30 backdrop-blur-md gap-1.5">
         {/* 1. Chaplet */}
         <button
           onClick={() => {
             setActiveDevotion('divine-mercy');
             handleReset();
           }}
-          className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-md text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
+          className={`flex-1 min-w-[110px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
             activeDevotion === 'divine-mercy'
               ? 'bg-gradient-to-r from-red-700 via-red-800 to-red-950 text-white shadow-lg border border-red-400/50 scale-[1.02]'
               : 'text-stone-300 hover:text-white hover:bg-white/5'
@@ -319,22 +404,37 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('faustina');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[160px] py-2.5 px-3 rounded-md text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
+          className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
             activeDevotion === 'faustina'
               ? 'bg-gradient-to-r from-purple-800 via-purple-900 to-stone-950 text-amber-200 shadow-lg border border-purple-400/50 scale-[1.02]'
               : 'text-stone-300 hover:text-white hover:bg-white/5'
           }`}
         >
-          <span>The Diary and 14 Promises</span>
+          <span>The Diary & 14 Promises</span>
         </button>
 
-        {/* 3. The Holy Rosary */}
+        {/* 3. Three O'Clock Prayer */}
+        <button
+          onClick={() => {
+            setActiveDevotion('three-oclock');
+            SacredReader.stop();
+          }}
+          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
+            activeDevotion === 'three-oclock'
+              ? 'bg-gradient-to-r from-red-800 via-amber-900 to-stone-950 text-amber-200 shadow-lg border border-red-400/50 scale-[1.02]'
+              : 'text-stone-300 hover:text-white hover:bg-white/5'
+          }`}
+        >
+          <span>3 O'Clock Prayer</span>
+        </button>
+
+        {/* 4. The Holy Rosary */}
         <button
           onClick={() => {
             setActiveDevotion('rosary');
             handleReset();
           }}
-          className={`flex-1 min-w-[130px] py-2.5 px-3 rounded-md text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
+          className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
             activeDevotion === 'rosary'
               ? 'bg-gradient-to-r from-amber-700 via-amber-800 to-amber-950 text-amber-50 shadow-lg border border-amber-400/50 scale-[1.02]'
               : 'text-stone-300 hover:text-white hover:bg-white/5'
@@ -343,13 +443,13 @@ export const RosaryAndChapletView: React.FC = () => {
           <span>The Holy Rosary</span>
         </button>
 
-        {/* 4. Promises of Mary (The Secret of the Rosary, de Montfort) */}
+        {/* 5. Promises of Mary */}
         <button
           onClick={() => {
             setActiveDevotion('marian-promises');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-md text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
+          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center ${
             activeDevotion === 'marian-promises'
               ? 'bg-gradient-to-r from-blue-800 via-indigo-900 to-stone-950 text-amber-200 shadow-lg border border-blue-400/50 scale-[1.02]'
               : 'text-stone-300 hover:text-white hover:bg-white/5'
@@ -372,6 +472,12 @@ export const RosaryAndChapletView: React.FC = () => {
                 <span className="font-cinzel text-xs font-bold text-amber-300 uppercase tracking-widest">
                   AUTOPLAY PRAYER MODE
                 </span>
+                <button
+                  onClick={() => setActiveDevotion('three-oclock')}
+                  className="px-2.5 py-0.5 rounded-full bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] font-cinzel font-bold tracking-wider transition-all cursor-pointer"
+                >
+                  3 O'Clock Prayer
+                </button>
               </div>
               <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred">
                 The leader continuously prays all prayers and mysteries sequentially without requiring manual bead presses.
@@ -713,11 +819,20 @@ export const RosaryAndChapletView: React.FC = () => {
           
           {/* 3:00 PM Hour of Great Mercy Banner */}
           <div className="bg-gradient-to-r from-red-950 via-stone-900 to-red-900 rounded-xl p-6 sm:p-8 text-white shadow-md border border-red-900/40 space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500 animate-ping" />
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-red-300">
-                {DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyTitle}
-              </span>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping" />
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-red-300">
+                  {DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyTitle}
+                </span>
+              </div>
+              <button
+                onClick={() => setActiveDevotion('three-oclock')}
+                className="px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-xs font-cinzel font-bold tracking-wider transition-all cursor-pointer self-start sm:self-auto flex items-center gap-1.5"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <span>Pray The 3 O'Clock Prayer</span>
+              </button>
             </div>
             <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-amber-100">
               The Chaplet of the Divine Mercy
@@ -1245,6 +1360,9 @@ export const RosaryAndChapletView: React.FC = () => {
             </div>
           </div>
 
+          {/* THE 3 O'CLOCK PRAYER OF DIVINE MERCY (PLACED AFTER THE PROMISES OF JESUS) */}
+          {renderThreeOClockCard(true)}
+
           {/* KEY EXCERPTS FROM THE DIARY OF ST. FAUSTINA */}
           <div className="rounded-xl p-6 sm:p-8 bg-stone-900/90 border border-purple-500/25 shadow-xl space-y-6">
             <div className="flex items-center justify-between border-b border-purple-500/20 pb-4">
@@ -1338,6 +1456,15 @@ export const RosaryAndChapletView: React.FC = () => {
             </div>
           </div>
 
+        </div>
+      )}
+
+      {/* =========================================================================
+          3. THREE O'CLOCK PRAYER VIEW
+         ========================================================================= */}
+      {activeDevotion === 'three-oclock' && (
+        <div className="space-y-6 animate-in fade-in duration-300">
+          {renderThreeOClockCard(true)}
         </div>
       )}
 
