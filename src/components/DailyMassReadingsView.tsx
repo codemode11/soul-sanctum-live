@@ -117,6 +117,25 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
     lineHeight: '1.5'
   };
 
+  // Formats quotations so they wrap into well-proportioned lines and never leave a single word on the second line
+  const formatBalancedQuotation = (quote: string): string => {
+    if (!quote) return '';
+    const trimmed = quote.trim();
+    // Bind short prepositions and articles to the following word so they don't dangle at the end of a line
+    const withBoundPhrases = trimmed.replace(
+      /\b(in|to|of|for|with|on|by|from|into|unto|upon|as|a|an|the)\s+/gi,
+      '$1\u00A0'
+    );
+    // Ensure at least the final 3 words stay together on the second line so a single word is never stranded
+    const tokens = withBoundPhrases.split(' ');
+    if (tokens.length >= 3) {
+      const head = tokens.slice(0, -2).join(' ');
+      const tail = tokens.slice(-2).join('\u00A0');
+      return `${head} ${tail}`;
+    }
+    return withBoundPhrases;
+  };
+
   const handlePrevDay = () => {
     const d = new Date(reading.date + 'T12:00:00Z');
     d.setDate(d.getDate() - 1);
@@ -392,8 +411,8 @@ ${reading.gospel.text}`;
           ? 'border-amber-500 ring-2 ring-amber-400/50 shadow-xl bg-amber-50/95' 
           : 'bg-white border-stone-200/90 shadow-sm'
       }`}>
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-stone-200 pb-3 gap-2">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-stone-200 pb-3 gap-4">
+          <div className="shrink-0">
             <div className="flex items-center gap-2.5">
               <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
                 First Reading
@@ -405,12 +424,12 @@ ${reading.gospel.text}`;
           </div>
 
           {reading.firstReading.theme && (
-            <div className="self-start sm:self-auto">
+            <div className="self-start sm:self-auto sm:ml-auto">
               <p 
-                className="italic font-serif text-amber-900/95 font-semibold max-w-lg sm:text-right drop-shadow-2xs transition-all duration-200"
-                style={italicVerseStyle}
+                className="italic font-serif text-amber-900/95 font-semibold sm:text-right drop-shadow-2xs transition-all duration-200 text-balance"
+                style={{ ...italicVerseStyle, textWrap: 'balance', maxWidth: '19em' }}
               >
-                "{reading.firstReading.theme}"
+                "{formatBalancedQuotation(reading.firstReading.theme)}"
               </p>
             </div>
           )}
@@ -466,10 +485,10 @@ ${reading.gospel.text}`;
           Alleluia, alleluia.
         </p>
         <p 
-          className="text-amber-950 max-w-2xl mx-auto font-serif italic font-semibold leading-relaxed transition-all duration-200"
-          style={alleluiaStyle}
+          className="text-amber-950 mx-auto font-serif italic font-semibold leading-relaxed transition-all duration-200 text-balance"
+          style={{ ...alleluiaStyle, textWrap: 'balance', maxWidth: '25em' }}
         >
-          "{reading.alleluia.verse}"
+          "{formatBalancedQuotation(reading.alleluia.verse)}"
         </p>
         <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-amber-950 italic font-serif">
           Alleluia, alleluia.
