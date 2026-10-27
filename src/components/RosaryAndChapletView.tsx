@@ -1236,49 +1236,62 @@ export const RosaryAndChapletView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Font Size Stepper */}
-              <div className="flex items-center gap-1 bg-black/60 px-3 py-1.5 rounded-xl border border-amber-500/30 self-start sm:self-auto shadow-sm">
-                <span className="text-xs text-amber-300 font-cinzel mr-1">Text Size:</span>
-                <button
-                  onClick={decreasePromisesFontSize}
-                  disabled={promisesFontSize === 'normal'}
-                  className="px-2 py-0.5 rounded-lg text-xs font-bold text-amber-200 hover:text-white hover:bg-white/10 disabled:opacity-30 cursor-pointer transition-all"
-                  title="Smaller text"
-                >
-                  A-
-                </button>
-                <button
-                  onClick={() => setPromisesFontSize('normal')}
-                  className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all cursor-pointer ${
-                    promisesFontSize === 'normal' ? 'bg-amber-600 text-white font-bold shadow-xs' : 'text-stone-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  Normal
-                </button>
-                <button
-                  onClick={() => setPromisesFontSize('large')}
-                  className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all cursor-pointer ${
-                    promisesFontSize === 'large' ? 'bg-amber-600 text-white font-bold shadow-xs' : 'text-stone-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  Large
-                </button>
-                <button
-                  onClick={() => setPromisesFontSize('xlarge')}
-                  className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all cursor-pointer ${
-                    promisesFontSize === 'xlarge' ? 'bg-amber-600 text-white font-bold shadow-xs' : 'text-stone-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  X-Large
-                </button>
-                <button
-                  onClick={increasePromisesFontSize}
-                  disabled={promisesFontSize === 'xlarge'}
-                  className="px-2 py-0.5 rounded-lg text-xs font-bold text-amber-300 hover:text-white hover:bg-white/10 disabled:opacity-30 cursor-pointer transition-all"
-                  title="Larger text"
-                >
-                  A+
-                </button>
+              {/* Standardized Font Size Stepper */}
+              <div className="flex items-center gap-2.5 self-start sm:self-auto">
+                <span className="font-medium text-amber-200/90 text-xs">Text Size:</span>
+                <div className="flex items-center gap-1 bg-black/50 p-1 rounded-md border border-amber-500/30 shadow-2xs">
+                  <button
+                    onClick={decreasePromisesFontSize}
+                    disabled={promisesFontSize === 'normal'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-200 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Decrease font size"
+                    aria-label="Decrease font size"
+                  >
+                    A-
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('normal')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'normal'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-amber-200 hover:text-white hover:bg-white/10'
+                    }`}
+                    title="Default text size (100%)"
+                  >
+                    A
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('large')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'large'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-amber-200 hover:text-white hover:bg-white/10'
+                    }`}
+                    title="Large text size (125%)"
+                  >
+                    A+
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('xlarge')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'xlarge'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-amber-200 hover:text-white hover:bg-white/10'
+                    }`}
+                    title="Extra large text size (155%)"
+                  >
+                    A++
+                  </button>
+                  <button
+                    onClick={increasePromisesFontSize}
+                    disabled={promisesFontSize === 'xlarge'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Increase font size"
+                    aria-label="Increase font size"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
 

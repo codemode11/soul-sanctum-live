@@ -597,110 +597,172 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
     strokeWidth="1.8" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
-    aria-label="Novena Tracker — Roman Numeral IX Candles"
+    className={`${className} overflow-visible`}
+    aria-label="Novena Tracker — Roman Numeral IX Flickering Candles"
   >
+    <style>{`
+      @keyframes sanctumFlameFlicker1 {
+        0%, 100% { transform: translateY(0px) scale(1, 1) rotate(-8deg); opacity: 1; }
+        20% { transform: translateY(-0.9px) scale(0.82, 1.28) rotate(10deg); opacity: 0.65; }
+        40% { transform: translateY(0.5px) scale(1.18, 0.78) rotate(-12deg); opacity: 0.95; }
+        60% { transform: translateY(-0.7px) scale(0.88, 1.22) rotate(9deg); opacity: 0.55; }
+        80% { transform: translateY(0.3px) scale(1.12, 0.86) rotate(-6deg); opacity: 1; }
+      }
+      @keyframes sanctumFlameFlicker2 {
+        0%, 100% { transform: translateY(-0.5px) scale(0.9, 1.2) rotate(11deg); opacity: 0.75; }
+        25% { transform: translateY(0.6px) scale(1.16, 0.76) rotate(-11deg); opacity: 1; }
+        50% { transform: translateY(-1.0px) scale(0.84, 1.32) rotate(8deg); opacity: 0.5; }
+        75% { transform: translateY(0.4px) scale(1.14, 0.85) rotate(-9deg); opacity: 0.95; }
+      }
+      @keyframes sanctumFlameFlicker3 {
+        0%, 100% { transform: translateY(0.4px) scale(1.15, 0.82) rotate(-10deg); opacity: 0.9; }
+        18% { transform: translateY(-1.0px) scale(0.8, 1.3) rotate(12deg); opacity: 0.55; }
+        45% { transform: translateY(0.5px) scale(1.18, 0.78) rotate(-8deg); opacity: 1; }
+        72% { transform: translateY(-0.8px) scale(0.86, 1.25) rotate(10deg); opacity: 0.6; }
+      }
+      @keyframes sanctumHaloPulse {
+        0%, 100% { opacity: 0.25; transform: scale(0.85); }
+        50% { opacity: 0.75; transform: scale(1.35); }
+      }
+      .sanctum-flame-1 {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+        animation: sanctumFlameFlicker1 0.55s infinite ease-in-out;
+      }
+      .sanctum-flame-2 {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+        animation: sanctumFlameFlicker2 0.48s infinite ease-in-out;
+      }
+      .sanctum-flame-3 {
+        transform-box: fill-box;
+        transform-origin: 50% 100%;
+        animation: sanctumFlameFlicker3 0.62s infinite ease-in-out;
+      }
+      .sanctum-halo-1 {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: sanctumHaloPulse 0.55s infinite ease-in-out;
+      }
+      .sanctum-halo-2 {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: sanctumHaloPulse 0.48s infinite ease-in-out 0.15s;
+      }
+      .sanctum-halo-3 {
+        transform-box: fill-box;
+        transform-origin: 50% 50%;
+        animation: sanctumHaloPulse 0.62s infinite ease-in-out 0.3s;
+      }
+    `}</style>
+
     {/* === FLICKERING FIRE ON TOP OF "I" (x = 5.5) === */}
-    <g>
-      <animateTransform
-        attributeName="transform"
-        type="rotate"
-        values="-4 5.5 7.5; 5 5.5 7.5; -3 5.5 7.5; 4 5.5 7.5; -4 5.5 7.5"
-        dur="1.6s"
-        repeatCount="indefinite"
-      />
+    <circle cx="5.5" cy="4.3" r="2.7" fill="#F59E0B" stroke="none" className="sanctum-halo-1" />
+    <g className="sanctum-flame-1">
       {/* Outer flickering flame tongue */}
       <path
-        d="M5.5 1.4C4.2 3.1 3.7 4.6 3.9 5.8c.2 1.0.8 1.6 1.6 1.6s1.4-.6 1.6-1.6c.2-1.2-.3-2.7-1.6-4.4Z"
-        fill="currentColor"
-        fillOpacity="0.3"
+        d="M5.5 0.6C3.8 2.6 3.3 4.4 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.7 4.4 7.2 2.6 5.5 0.6Z"
+        fill="#F59E0B"
+        fillOpacity="0.85"
         stroke="currentColor"
-        strokeWidth="1.3"
-      />
-      {/* Inner bright flame core */}
-      <path
-        d="M5.5 3.6c-.5.9-.7 1.7-.5 2.4.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.4Z"
-        fill="currentColor"
-        stroke="none"
+        strokeWidth="1.15"
       >
-        <animate attributeName="opacity" values="0.95;0.55;1;0.7;0.95" dur="1.2s" repeatCount="indefinite" />
+        <animate
+          attributeName="d"
+          values="M5.5 0.6C3.8 2.6 3.3 4.4 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.7 4.4 7.2 2.6 5.5 0.6Z;
+                  M6.2 0.2C4.1 2.4 3.4 4.4 3.7 5.9c.3 1.1 1.0 1.7 1.8 1.7s1.6-.6 1.9-1.7C7.8 4.2 7.5 2.2 6.2 0.2Z;
+                  M4.7 0.9C3.4 2.7 3.2 4.5 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.6 4.5 6.6 2.8 4.7 0.9Z;
+                  M5.5 0.6C3.8 2.6 3.3 4.4 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.7 4.4 7.2 2.6 5.5 0.6Z"
+          dur="0.52s"
+          repeatCount="indefinite"
+        />
       </path>
+      {/* Inner white-gold hot flame core */}
+      <path
+        d="M5.5 3.0c-.6 1.1-.8 2.0-.6 2.8.1.6.4.9.6.9s.5-.3.6-.9c.2-.8 0-1.7-.6-2.8Z"
+        fill="#FEF08A"
+        stroke="none"
+      />
     </g>
 
     {/* === FLICKERING FIRE ON TOP-LEFT OF "X" (x = 12.0) === */}
-    <g>
-      <animateTransform
-        attributeName="transform"
-        type="rotate"
-        values="5 12 7.5; -4 12 7.5; 4 12 7.5; -3 12 7.5; 5 12 7.5"
-        dur="1.4s"
-        repeatCount="indefinite"
-      />
+    <circle cx="12.0" cy="4.3" r="2.7" fill="#F59E0B" stroke="none" className="sanctum-halo-2" />
+    <g className="sanctum-flame-2">
       {/* Outer flickering flame tongue */}
       <path
-        d="M12.0 1.4C10.7 3.1 10.2 4.6 10.4 5.8c.2 1.0.8 1.6 1.6 1.6s1.4-.6 1.6-1.6c.2-1.2-.3-2.7-1.6-4.4Z"
-        fill="currentColor"
-        fillOpacity="0.3"
+        d="M12.0 0.6C10.3 2.6 9.8 4.4 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
+        fill="#F59E0B"
+        fillOpacity="0.85"
         stroke="currentColor"
-        strokeWidth="1.3"
-      />
-      {/* Inner bright flame core */}
-      <path
-        d="M12.0 3.6c-.5.9-.7 1.7-.5 2.4.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.4Z"
-        fill="currentColor"
-        stroke="none"
+        strokeWidth="1.15"
       >
-        <animate attributeName="opacity" values="0.65;1;0.6;0.95;0.65" dur="1.1s" repeatCount="indefinite" />
+        <animate
+          attributeName="d"
+          values="M12.0 0.6C10.3 2.6 9.8 4.4 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z;
+                  M11.2 0.9C9.9 2.7 9.7 4.5 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.2-1.4-.8-3.1-2.7-5.0Z;
+                  M12.8 0.2C10.6 2.4 9.9 4.4 10.2 5.9c.3 1.1 1.0 1.7 1.8 1.7s1.6-.6 1.9-1.7c.4-1.7.1-3.7-1.1-5.7Z;
+                  M12.0 0.6C10.3 2.6 9.8 4.4 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
+          dur="0.46s"
+          repeatCount="indefinite"
+        />
       </path>
+      {/* Inner white-gold hot flame core */}
+      <path
+        d="M12.0 3.0c-.6 1.1-.8 2.0-.6 2.8.1.6.4.9.6.9s.5-.3.6-.9c.2-.8 0-1.7-.6-2.8Z"
+        fill="#FEF08A"
+        stroke="none"
+      />
     </g>
 
     {/* === FLICKERING FIRE ON TOP-RIGHT OF "X" (x = 19.0) === */}
-    <g>
-      <animateTransform
-        attributeName="transform"
-        type="rotate"
-        values="-3 19 7.5; 5 19 7.5; -5 19 7.5; 3 19 7.5; -3 19 7.5"
-        dur="1.8s"
-        repeatCount="indefinite"
-      />
+    <circle cx="19.0" cy="4.3" r="2.7" fill="#F59E0B" stroke="none" className="sanctum-halo-3" />
+    <g className="sanctum-flame-3">
       {/* Outer flickering flame tongue */}
       <path
-        d="M19.0 1.4C17.7 3.1 17.2 4.6 17.4 5.8c.2 1.0.8 1.6 1.6 1.6s1.4-.6 1.6-1.6c.2-1.2-.3-2.7-1.6-4.4Z"
-        fill="currentColor"
-        fillOpacity="0.3"
+        d="M19.0 0.6C17.3 2.6 16.8 4.4 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
+        fill="#F59E0B"
+        fillOpacity="0.85"
         stroke="currentColor"
-        strokeWidth="1.3"
-      />
-      {/* Inner bright flame core */}
-      <path
-        d="M19.0 3.6c-.5.9-.7 1.7-.5 2.4.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.4Z"
-        fill="currentColor"
-        stroke="none"
+        strokeWidth="1.15"
       >
-        <animate attributeName="opacity" values="1;0.6;0.95;0.65;1" dur="1.35s" repeatCount="indefinite" />
+        <animate
+          attributeName="d"
+          values="M19.0 0.6C17.3 2.6 16.8 4.4 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z;
+                  M19.8 0.2C17.6 2.4 16.9 4.4 17.2 5.9c.3 1.1 1.0 1.7 1.8 1.7s1.6-.6 1.9-1.7c.4-1.7.1-3.7-1.1-5.7Z;
+                  M18.2 1.0C16.9 2.8 16.7 4.5 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.2-1.4-.8-3.0-2.7-4.9Z;
+                  M19.0 0.6C17.3 2.6 16.8 4.4 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
+          dur="0.58s"
+          repeatCount="indefinite"
+        />
       </path>
+      {/* Inner white-gold hot flame core */}
+      <path
+        d="M19.0 3.0c-.6 1.1-.8 2.0-.6 2.8.1.6.4.9.6.9s.5-.3.6-.9c.2-.8 0-1.7-.6-2.8Z"
+        fill="#FEF08A"
+        stroke="none"
+      />
     </g>
 
     {/* === CANDLE WICKS === */}
-    <line x1="5.5" y1="7.4" x2="5.5" y2="8.8" strokeWidth="1.2" />
-    <line x1="12.0" y1="7.4" x2="12.0" y2="8.8" strokeWidth="1.2" />
-    <line x1="19.0" y1="7.4" x2="19.0" y2="8.8" strokeWidth="1.2" />
+    <line x1="5.5" y1="7.5" x2="5.5" y2="8.9" strokeWidth="1.2" />
+    <line x1="12.0" y1="7.5" x2="12.0" y2="8.9" strokeWidth="1.2" />
+    <line x1="19.0" y1="7.5" x2="19.0" y2="8.9" strokeWidth="1.2" />
 
     {/* === ROMAN NUMERAL "I" CANDLE (LEFT) === */}
     {/* Top candle rim / serif */}
-    <line x1="3.9" y1="8.8" x2="7.1" y2="8.8" strokeWidth="1.7" />
+    <line x1="3.9" y1="8.9" x2="7.1" y2="8.9" strokeWidth="1.7" />
     {/* Vertical pillar of "I" */}
-    <line x1="5.5" y1="8.8" x2="5.5" y2="21.2" strokeWidth="2.1" />
+    <line x1="5.5" y1="8.9" x2="5.5" y2="21.2" strokeWidth="2.1" />
     {/* Bottom base serif of "I" */}
     <line x1="3.7" y1="21.2" x2="7.3" y2="21.2" strokeWidth="1.8" />
 
     {/* === ROMAN NUMERAL "X" CANDLES (RIGHT) === */}
     {/* Top candle rims / serifs at the two upper tips of "X" */}
-    <line x1="10.5" y1="8.8" x2="13.5" y2="8.8" strokeWidth="1.7" />
-    <line x1="17.5" y1="8.8" x2="20.5" y2="8.8" strokeWidth="1.7" />
+    <line x1="10.5" y1="8.9" x2="13.5" y2="8.9" strokeWidth="1.7" />
+    <line x1="17.5" y1="8.9" x2="20.5" y2="8.9" strokeWidth="1.7" />
     {/* Diagonal candle strokes forming "X" */}
-    <line x1="12.0" y1="8.8" x2="19.0" y2="21.2" strokeWidth="2.05" />
-    <line x1="19.0" y1="8.8" x2="12.0" y2="21.2" strokeWidth="2.05" />
+    <line x1="12.0" y1="8.9" x2="19.0" y2="21.2" strokeWidth="2.05" />
+    <line x1="19.0" y1="8.9" x2="12.0" y2="21.2" strokeWidth="2.05" />
     {/* Bottom base serifs of "X" */}
     <line x1="10.4" y1="21.2" x2="13.6" y2="21.2" strokeWidth="1.8" />
     <line x1="17.4" y1="21.2" x2="20.6" y2="21.2" strokeWidth="1.8" />
