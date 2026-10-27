@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   BookOpen, 
   Scroll, 
@@ -10,7 +10,9 @@ import {
   Compass, 
   Headphones,
   Play,
-  Pause
+  Pause,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { BibleCommentary, MassReading } from '../types';
 import { getDailyGospelCommentaries } from '../data/commentary';
@@ -42,6 +44,8 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   const [speakingSectionIndex, setSpeakingSectionIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
+  
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleVoiceSelect = (v: 'ava-grace' | 'david') => {
     setRecitationVoice(v);
@@ -199,10 +203,34 @@ ${selectedCommentary.practicalApplication}`;
     c.commentaryText.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const activeList = filteredCommentaries.length > 0 ? filteredCommentaries : dailyCommentaries;
+  const currentIndex = activeList.findIndex(c => c.id === selectedCommentary.id);
+
+  const handlePrevPassage = () => {
+    if (currentIndex > 0) {
+      setSelectedCommentary(activeList[currentIndex - 1]);
+      if (isReadingAloud) SacredReader.stop();
+    }
+  };
+
+  const handleNextPassage = () => {
+    if (currentIndex >= 0 && currentIndex < activeList.length - 1) {
+      setSelectedCommentary(activeList[currentIndex + 1]);
+      if (isReadingAloud) SacredReader.stop();
+    }
+  };
+
+  const scrollPills = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -280 : 280;
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 mb-10">
       
-      {/* Compact Banner (Cut in half) */}
+      {/* Compact Banner */}
       <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl px-4 py-3 text-amber-50 shadow-sm border border-amber-900/40">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <div className="flex items-center gap-2.5">
@@ -212,25 +240,25 @@ ${selectedCommentary.practicalApplication}`;
                 Catholic Bible Commentary
               </h2>
               <p className="text-[11px] text-amber-300/80 font-cinzel uppercase tracking-wider">
-                Cornelius à Lapide, Catena Aurea & Patristic Exegesis
+                Catena Aurea • Cornelius à Lapide • Vatican Magisterium • Saint Homilies
               </p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-1.5 shrink-0">
             {/* Font Size Stepper */}
-            <div className="flex items-center gap-0.5 bg-black/40 p-0.5 rounded-md border border-white/20">
+            <div className="flex items-center gap-0.5 bg-black/40 p-0.5 rounded-xl border border-white/20">
               <button
                 onClick={decreaseFontSize}
                 disabled={fontSize === 'normal'}
-                className="w-6 h-6 flex items-center justify-center rounded text-[11px] font-bold text-amber-200 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                className="w-6 h-6 flex items-center justify-center rounded-lg text-[11px] font-bold text-amber-200 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
                 title="Decrease font size"
               >
                 A-
               </button>
               <button
                 onClick={() => setFontSize('normal')}
-                className={`px-1.5 py-0.5 text-[11px] rounded font-semibold transition-all cursor-pointer ${
+                className={`px-1.5 py-0.5 text-[11px] rounded-lg font-semibold transition-all cursor-pointer ${
                   fontSize === 'normal' 
                     ? 'bg-[#6B4423] text-white shadow-xs font-bold' 
                     : 'text-amber-200 hover:text-white hover:bg-white/10'
@@ -241,7 +269,7 @@ ${selectedCommentary.practicalApplication}`;
               </button>
               <button
                 onClick={() => setFontSize('large')}
-                className={`px-1.5 py-0.5 text-[11px] rounded font-semibold transition-all cursor-pointer ${
+                className={`px-1.5 py-0.5 text-[11px] rounded-lg font-semibold transition-all cursor-pointer ${
                   fontSize === 'large' 
                     ? 'bg-[#6B4423] text-white shadow-xs font-bold' 
                     : 'text-amber-200 hover:text-white hover:bg-white/10'
@@ -252,7 +280,7 @@ ${selectedCommentary.practicalApplication}`;
               </button>
               <button
                 onClick={() => setFontSize('xlarge')}
-                className={`px-1.5 py-0.5 text-[11px] rounded font-semibold transition-all cursor-pointer ${
+                className={`px-1.5 py-0.5 text-[11px] rounded-lg font-semibold transition-all cursor-pointer ${
                   fontSize === 'xlarge' 
                     ? 'bg-[#6B4423] text-white shadow-xs font-bold' 
                     : 'text-amber-200 hover:text-white hover:bg-white/10'
@@ -264,7 +292,7 @@ ${selectedCommentary.practicalApplication}`;
               <button
                 onClick={increaseFontSize}
                 disabled={fontSize === 'xlarge'}
-                className="w-6 h-6 flex items-center justify-center rounded text-[11px] font-bold text-amber-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                className="w-6 h-6 flex items-center justify-center rounded-lg text-[11px] font-bold text-amber-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
                 title="Increase font size"
               >
                 +
@@ -274,7 +302,7 @@ ${selectedCommentary.practicalApplication}`;
             {/* Complete Commentary Audio Toggle */}
             <button
               onClick={handleToggleSpeak}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-xs ${
                 isReadingAloud
                   ? 'bg-[#6B4423] text-white animate-pulse'
                   : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
@@ -286,12 +314,12 @@ ${selectedCommentary.practicalApplication}`;
               <span>{isReadingAloud ? 'Stop' : 'Listen All'}</span>
             </button>
 
-            {/* Recitation Voice Option: Ava Grace (Prioritized) vs David */}
-            <div className="flex items-center bg-black/40 border border-stone-700/80 rounded-md p-0.5 text-xs">
+            {/* Recitation Voice Option: Ava Grace vs David */}
+            <div className="flex items-center bg-black/40 border border-stone-700/80 rounded-xl p-0.5 text-xs">
               <button
                 type="button"
                 onClick={() => handleVoiceSelect('ava-grace')}
-                className={`px-2 py-1 rounded text-xs font-serif font-medium transition-all cursor-pointer ${
+                className={`px-2 py-1 rounded-lg text-xs font-serif font-medium transition-all cursor-pointer ${
                   recitationVoice === 'ava-grace'
                     ? 'bg-[#6B4423] text-white font-bold shadow-xs'
                     : 'text-stone-300 hover:text-amber-200'
@@ -303,7 +331,7 @@ ${selectedCommentary.practicalApplication}`;
               <button
                 type="button"
                 onClick={() => handleVoiceSelect('david')}
-                className={`px-2 py-1 rounded text-xs font-serif font-medium transition-all cursor-pointer ${
+                className={`px-2 py-1 rounded-lg text-xs font-serif font-medium transition-all cursor-pointer ${
                   recitationVoice === 'david'
                     ? 'bg-[#6B4423] text-white font-bold shadow-xs'
                     : 'text-stone-300 hover:text-amber-200'
@@ -316,7 +344,7 @@ ${selectedCommentary.practicalApplication}`;
 
             <button
               onClick={handleCopy}
-              className="p-1.5 rounded-md bg-stone-800 text-amber-200 border border-stone-700 hover:bg-stone-700 transition-colors cursor-pointer"
+              className="p-1.5 rounded-xl bg-stone-800 text-amber-200 border border-stone-700 hover:bg-stone-700 transition-colors cursor-pointer"
               title="Copy commentary"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -329,7 +357,7 @@ ${selectedCommentary.practicalApplication}`;
       {isReadingAloud && activeSpeakingSection && (
         <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 rounded-xl px-4 py-2.5 border border-amber-600/50 shadow-md text-amber-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-fadeIn">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-md bg-amber-600/30 border border-amber-500/40 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-amber-600/30 border border-amber-500/40 flex items-center justify-center shrink-0">
               <Headphones className="w-4 h-4 text-amber-300 animate-bounce" />
             </div>
             <div>
@@ -347,14 +375,14 @@ ${selectedCommentary.practicalApplication}`;
           <div className="flex items-center gap-2 self-end sm:self-center">
             <button
               onClick={handleTogglePause}
-              className="px-2.5 py-1 rounded-md bg-amber-900/60 hover:bg-amber-900 border border-amber-700/60 text-xs font-semibold text-amber-100 flex items-center gap-1 transition-colors cursor-pointer"
+              className="px-2.5 py-1 rounded-xl bg-amber-900/60 hover:bg-amber-900 border border-amber-700/60 text-xs font-semibold text-amber-100 flex items-center gap-1 transition-colors cursor-pointer"
             >
               {isPaused ? <Play className="w-3 h-3 text-amber-300" /> : <Pause className="w-3 h-3 text-amber-300" />}
               <span>{isPaused ? 'Resume' : 'Pause'}</span>
             </button>
             <button
               onClick={handleToggleSpeak}
-              className="px-2.5 py-1 rounded-md bg-red-950/80 hover:bg-red-900 border border-red-800/60 text-xs font-semibold text-red-200 flex items-center gap-1 transition-colors cursor-pointer"
+              className="px-2.5 py-1 rounded-xl bg-red-950/80 hover:bg-red-900 border border-red-800/60 text-xs font-semibold text-red-200 flex items-center gap-1 transition-colors cursor-pointer"
             >
               <VolumeX className="w-3 h-3 text-red-300" />
               <span>Stop</span>
@@ -363,47 +391,141 @@ ${selectedCommentary.practicalApplication}`;
         </div>
       )}
 
-      {/* Compact Passage Selector Bar */}
+      {/* Passage Selector Bar with Navigation Arrows */}
       <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl px-3.5 py-2.5 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
-            Scriptural Passages
-          </span>
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Filter passages or authors..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-xs pl-7 pr-2.5 py-1 rounded-md bg-white/60 backdrop-blur-sm border border-white/70 focus:outline-none focus:border-amber-700 w-full sm:w-52"
-            />
-            <Search className="w-3 h-3 text-stone-500 absolute left-2.5 top-2" />
+          <div className="flex items-center gap-2">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
+              Scriptural Passages ({activeList.length})
+            </span>
+            <span className="text-[11px] font-semibold text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full font-cinzel border border-amber-200/80">
+              Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {/* Quick Prev / Next Passage Arrow Buttons */}
+            <div className="flex items-center gap-1 bg-white/70 border border-stone-200/80 rounded-xl p-0.5 shadow-2xs">
+              <button
+                onClick={handlePrevPassage}
+                disabled={currentIndex <= 0}
+                className="p-1 rounded-lg text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
+                title="Previous Passage"
+                aria-label="Previous Passage"
+              >
+                <ChevronLeft className="w-4 h-4 text-amber-800" />
+                <span className="hidden sm:inline">Prev</span>
+              </button>
+              <span className="text-stone-300">|</span>
+              <button
+                onClick={handleNextPassage}
+                disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
+                className="p-1 rounded-lg text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
+                title="Next Passage"
+                aria-label="Next Passage"
+              >
+                <span className="hidden sm:inline">Next</span>
+                <ChevronRight className="w-4 h-4 text-amber-800" />
+              </button>
+            </div>
+
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Filter passages or authors..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="text-xs pl-7 pr-2.5 py-1 rounded-xl bg-white/60 backdrop-blur-sm border border-white/70 focus:outline-none focus:border-amber-700 w-full sm:w-48"
+              />
+              <Search className="w-3 h-3 text-stone-500 absolute left-2.5 top-2" />
+            </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-          {filteredCommentaries.map(comm => {
-            const isSelected = comm.id === selectedCommentary.id;
-            return (
-              <button
-                key={comm.id}
-                onClick={() => setSelectedCommentary(comm)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                  isSelected
-                    ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
-                    : 'bg-white/55 hover:bg-white/80 text-stone-800 border border-white/60'
-                }`}
-              >
-                {comm.scriptureReference} — {comm.sourceName.split('(')[0]}
-              </button>
-            );
-          })}
+        {/* Scrollable Passage Pills Row with Scroll Arrows */}
+        <div className="relative flex items-center gap-1.5">
+          <button
+            onClick={() => scrollPills('left')}
+            className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
+            title="Scroll left"
+            aria-label="Scroll passage list left"
+          >
+            <ChevronLeft className="w-4 h-4 text-amber-800" />
+          </button>
+
+          <div
+            ref={scrollRef}
+            className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth w-full"
+          >
+            {activeList.map(comm => {
+              const isSelected = comm.id === selectedCommentary.id;
+              return (
+                <button
+                  key={comm.id}
+                  onClick={() => setSelectedCommentary(comm)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+                    isSelected
+                      ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold ring-1 ring-amber-700'
+                      : 'bg-white/55 hover:bg-white/80 text-stone-800 border border-white/60'
+                  }`}
+                >
+                  {comm.scriptureReference} — {comm.sourceName.split(',')[0]}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={() => scrollPills('right')}
+            className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
+            title="Scroll right"
+            aria-label="Scroll passage list right"
+          >
+            <ChevronRight className="w-4 h-4 text-amber-800" />
+          </button>
         </div>
       </div>
 
-      {/* Main Commentary Display Card — Solid White Background for Lengthy Exegesis */}
+      {/* Main Commentary Display Card */}
       <article className="bg-white rounded-xl p-5 sm:p-7 shadow-sm border border-stone-200/90 space-y-4">
         
+        {/* Top Passage Navigation Arrows & Controls */}
+        <div className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/90 border border-stone-200 text-xs">
+          <button
+            onClick={handlePrevPassage}
+            disabled={currentIndex <= 0}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-white cursor-pointer transition-all shadow-2xs"
+            title="Go to previous passage commentary"
+            aria-label="Previous passage commentary"
+          >
+            <ChevronLeft className="w-4 h-4 text-amber-800" />
+            <span className="truncate max-w-[140px] sm:max-w-none">
+              {currentIndex > 0
+                ? activeList[currentIndex - 1].scriptureReference
+                : 'Previous Passage'}
+            </span>
+          </button>
+
+          <span className="font-cinzel text-amber-950 font-bold text-[11px] uppercase tracking-wider bg-amber-100/70 px-2.5 py-1 rounded-full border border-amber-200/80">
+            Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
+          </span>
+
+          <button
+            onClick={handleNextPassage}
+            disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-white cursor-pointer transition-all shadow-2xs"
+            title="Go to next passage commentary"
+            aria-label="Next passage commentary"
+          >
+            <span className="truncate max-w-[140px] sm:max-w-none">
+              {currentIndex >= 0 && currentIndex < activeList.length - 1
+                ? activeList[currentIndex + 1].scriptureReference
+                : 'Next Passage'}
+            </span>
+            <ChevronRight className="w-4 h-4 text-amber-800" />
+          </button>
+        </div>
+
         {/* Header and Source Details */}
         <div className="border-b border-stone-200 pb-2.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
           <div>
@@ -414,13 +536,13 @@ ${selectedCommentary.practicalApplication}`;
               Regarding: {selectedCommentary.scriptureReference} • <span className="text-stone-500 font-serif italic font-normal">{selectedCommentary.author}</span>
             </p>
           </div>
-          <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[11px] font-bold font-cinzel self-start sm:self-auto shrink-0">
+          <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[11px] font-bold font-cinzel self-start sm:self-auto shrink-0 border border-amber-200/60">
             {selectedCommentary.sourceEra}
           </span>
         </div>
 
         {/* The Scripture Text */}
-        <div className="p-3.5 rounded-md bg-[#FAF8F5] border border-stone-200/80 border-l-3 border-l-amber-800 space-y-0.5">
+        <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-stone-200/80 border-l-4 border-l-amber-800 space-y-0.5">
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel">
             Sacred Scripture ({selectedCommentary.scriptureReference})
           </span>
@@ -432,12 +554,12 @@ ${selectedCommentary.practicalApplication}`;
           </p>
         </div>
 
-        {/* Patristic Commentary Sections */}
+        {/* Patristic Commentary & Homily Sections */}
         <div className="space-y-2.5">
           <div className="flex items-center justify-between border-b border-stone-200 pb-1.5">
             <div className="flex items-center gap-1.5 text-stone-900 font-cinzel font-bold text-xs uppercase tracking-wider">
               <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-              <span>Patristic Exposition and Church Fathers</span>
+              <span>Catholic Exegesis, Lapide & Saint Homily</span>
             </div>
           </div>
 
@@ -450,7 +572,7 @@ ${selectedCommentary.practicalApplication}`;
                 return (
                   <div
                     key={sec.id || idx}
-                    className={`rounded-md p-4 border transition-all duration-300 ${
+                    className={`rounded-xl p-4 border transition-all duration-300 ${
                       isThisSpeaking
                         ? 'bg-amber-50/90 border-[#8B5A2B] shadow-xs ring-1 ring-[#8B5A2B]/40'
                         : 'bg-white hover:bg-stone-50/60 border-stone-200/90 shadow-2xs'
@@ -469,7 +591,7 @@ ${selectedCommentary.practicalApplication}`;
 
                       <button
                         onClick={() => handleSpeakSingleSaint(sec)}
-                        className={`p-1.5 rounded-md transition-all cursor-pointer shrink-0 ${
+                        className={`p-1.5 rounded-xl transition-all cursor-pointer shrink-0 ${
                           isThisSpeaking
                             ? 'bg-[#6B4423] text-white shadow-xs'
                             : 'bg-white hover:bg-[#FAF4EE] text-[#5A381C] border border-stone-200 hover:border-[#8B5A2B]'
@@ -508,7 +630,7 @@ ${selectedCommentary.practicalApplication}`;
         </div>
 
         {/* Practical Spiritual Application */}
-        <div className="rounded-md p-3.5 bg-amber-50/80 border border-amber-200/80 space-y-1">
+        <div className="rounded-xl p-3.5 bg-amber-50/80 border border-amber-200/80 space-y-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-amber-950 font-cinzel font-bold text-[11px] uppercase tracking-wider">
               <Compass className="w-3.5 h-3.5 text-amber-800" />
@@ -521,6 +643,43 @@ ${selectedCommentary.practicalApplication}`;
           >
             "{selectedCommentary.practicalApplication}"
           </p>
+        </div>
+
+        {/* Bottom Passage Navigation Arrows */}
+        <div className="flex items-center justify-between pt-3 border-t border-stone-200 text-xs">
+          <button
+            onClick={handlePrevPassage}
+            disabled={currentIndex <= 0}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+            title="Go to previous passage commentary"
+            aria-label="Previous passage commentary"
+          >
+            <ChevronLeft className="w-4 h-4 text-amber-800" />
+            <span className="truncate max-w-[140px] sm:max-w-none">
+              {currentIndex > 0
+                ? activeList[currentIndex - 1].scriptureReference
+                : 'Previous Passage'}
+            </span>
+          </button>
+
+          <span className="font-cinzel text-stone-600 font-bold text-[11px] uppercase tracking-wider hidden xs:inline">
+            Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
+          </span>
+
+          <button
+            onClick={handleNextPassage}
+            disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+            title="Go to next passage commentary"
+            aria-label="Next passage commentary"
+          >
+            <span className="truncate max-w-[140px] sm:max-w-none">
+              {currentIndex >= 0 && currentIndex < activeList.length - 1
+                ? activeList[currentIndex + 1].scriptureReference
+                : 'Next Passage'}
+            </span>
+            <ChevronRight className="w-4 h-4 text-amber-800" />
+          </button>
         </div>
 
       </article>

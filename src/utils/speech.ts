@@ -636,7 +636,7 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
 
   // 2. Parse commentaryText by Saint headings
   const rawText = commentary.commentaryText.trim();
-  const saintPattern = /(?:^|\n\n)([A-Z\s.,'ÀÈÉ]+?):\s*([\s\S]*?)(?=(?:\n\n[A-Z\s.,'ÀÈÉ]+?:)|$)/g;
+  const saintPattern = /(?:^|\n\n)([A-Z0-9\s.,'ÀÈÉ\(\)&\-]+?):\s*([\s\S]*?)(?=(?:\n\n[A-Z0-9\s.,'ÀÈÉ\(\)&\-]+?:)|$)/g;
   
   let match: RegExpExecArray | null;
   let matchesFound = 0;
@@ -648,7 +648,7 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
     const upper = rawSaintName.toUpperCase();
     if (
       rawSaintName.length > 2 && 
-      (upper.includes('ST.') || upper.includes('BEDE') || upper.includes('POPE') || 
+      (upper.includes('ST.') || upper.includes('HOMILY') || upper.includes('BEDE') || upper.includes('POPE') || 
        upper.includes('AMBROSE') || upper.includes('AUGUSTINE') || upper.includes('CYRIL') ||
        upper.includes('JEROME') || upper.includes('THEOPHYLACT') || upper.includes('LAPIDE') || 
        upper.includes('CHRYSOSTOM') || upper.includes('BASIL') || upper.includes('THOMAS') ||
