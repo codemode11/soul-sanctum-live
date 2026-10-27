@@ -136,10 +136,8 @@ export const StylizedDivider: React.FC<{ title: string }> = ({ title }) => (
     {/* Stylized Line */}
     <div className="flex items-center gap-3 w-full">
       <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C29B62]/60 to-[#9E733B]" />
-      <span className="text-[#8C6239] text-base select-none font-serif tracking-widest flex items-center gap-2 px-2">
-        <span className="text-xs">⚜</span>
+      <span className="text-[#8C6239] text-base select-none font-serif tracking-widest flex items-center px-2">
         <span className="text-sm font-bold">✠</span>
-        <span className="text-xs">⚜</span>
       </span>
       <div className="flex-1 h-px bg-gradient-to-r from-[#9E733B] via-[#C29B62]/60 to-transparent" />
     </div>
