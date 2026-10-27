@@ -1390,19 +1390,79 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -top-16 -right-16 w-80 h-80 rounded-full bg-amber-300/35 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -left-16 w-80 h-80 rounded-full bg-rose-300/35 blur-3xl z-0" />
 
-            <div className="relative z-10 flex items-center justify-between border-b border-white/75 pb-4">
+            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/75 pb-4 gap-3">
               <div className="flex items-center gap-2.5">
-                <BookOpen className="w-5 h-5 text-[#8B5A2B]" />
-                <h3 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
-                  Cornerstone Excerpts from The Diary of St. Faustina
-                </h3>
+                <BookOpen className="w-6 h-6 text-[#8B5A2B] shrink-0" />
+                <div>
+                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
+                    Cornerstone Excerpts from The Diary of St. Faustina
+                  </h3>
+                  <span className="text-xs sm:text-sm font-serif text-stone-700">
+                    Divine Mercy in My Soul
+                  </span>
+                </div>
               </div>
-              <span className="text-[11px] font-serif text-stone-700">
-                Divine Mercy in My Soul
-              </span>
+
+              {/* Standardized Font Size Stepper */}
+              <div className="flex items-center gap-2.5 self-start sm:self-auto">
+                <span className="font-medium text-stone-700 text-xs">Text Size:</span>
+                <div className="flex items-center gap-1 bg-white/60 backdrop-blur-md p-1 rounded-md border border-white/85 ring-1 ring-[#D5CEBF]/70 shadow-2xs">
+                  <button
+                    onClick={decreasePromisesFontSize}
+                    disabled={promisesFontSize === 'normal'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-stone-700 hover:text-stone-900 hover:bg-white/70 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Decrease font size"
+                    aria-label="Decrease font size"
+                  >
+                    A-
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('normal')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'normal'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                    }`}
+                    title="Default text size (100%)"
+                  >
+                    A
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('large')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'large'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                    }`}
+                    title="Large text size (125%)"
+                  >
+                    A+
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('xlarge')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'xlarge'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                    }`}
+                    title="Extra large text size (155%)"
+                  >
+                    A++
+                  </button>
+                  <button
+                    onClick={increasePromisesFontSize}
+                    disabled={promisesFontSize === 'xlarge'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-[#6B4423] hover:text-stone-900 hover:bg-white/70 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Increase font size"
+                    aria-label="Increase font size"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <div className="relative z-10 space-y-4">
+            <div className="relative z-10 space-y-5">
               {FAUSTINA_DIARY_EXCERPTS.map((excerpt) => {
                 const isCopied = copiedExcerptId === excerpt.id;
                 const isReading = readingExcerptId === excerpt.id;
@@ -1410,24 +1470,30 @@ export const RosaryAndChapletView: React.FC = () => {
                 return (
                   <article 
                     key={excerpt.id}
-                    className="p-5 rounded-xl bg-white/55 hover:bg-white/75 backdrop-blur-xl backdrop-saturate-150 border border-white/85 hover:border-white ring-1 ring-[#DFD3C3]/80 transition-all space-y-3 shadow-[0_8px_28px_rgba(139,90,43,0.08),inset_0_1px_2px_rgba(255,255,255,0.92)] hover:shadow-[0_12px_32px_rgba(139,90,43,0.14)]"
+                    className="p-5 sm:p-6 rounded-xl bg-white/55 hover:bg-white/75 backdrop-blur-xl backdrop-saturate-150 border border-white/85 hover:border-white ring-1 ring-[#DFD3C3]/80 transition-all space-y-4 shadow-[0_8px_28px_rgba(139,90,43,0.08),inset_0_1px_2px_rgba(255,255,255,0.92)] hover:shadow-[0_12px_32px_rgba(139,90,43,0.14)]"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div className="flex items-center gap-2">
-                        <span className="font-cinzel text-xs font-bold text-[#8B5A2B]">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-cinzel text-sm sm:text-base font-bold text-[#8B5A2B] tracking-wide">
                           Diary #{excerpt.diaryNumber}
                         </span>
                         <span className="text-stone-400">•</span>
-                        <h4 className="font-serif text-sm font-bold text-stone-900">
+                        <h4 className={`font-serif font-bold text-stone-900 ${
+                          promisesFontSize === 'normal' ? 'text-lg sm:text-xl' :
+                          promisesFontSize === 'large' ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'
+                        }`}>
                           {excerpt.title}
                         </h4>
                       </div>
-                      <span className="text-[10px] font-serif px-2.5 py-0.5 rounded-full bg-white/65 backdrop-blur-sm text-[#6B4423] border border-white/85 ring-1 ring-[#DFD2C0] self-start sm:self-auto font-medium">
+                      <span className="text-xs sm:text-sm font-serif px-3 py-1 rounded-full bg-white/65 backdrop-blur-sm text-[#6B4423] border border-white/85 ring-1 ring-[#DFD2C0] self-start sm:self-auto font-medium">
                         Spoken by {excerpt.spokenBy}
                       </span>
                     </div>
 
-                    <div className="relative text-xs sm:text-sm font-serif italic text-stone-800 leading-relaxed bg-white/55 backdrop-blur-md p-4 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)]">
+                    <div className={`relative font-serif italic text-stone-800 leading-relaxed bg-white/55 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
+                      promisesFontSize === 'normal' ? 'text-base sm:text-lg md:text-xl' :
+                      promisesFontSize === 'large' ? 'text-lg sm:text-xl md:text-2xl' : 'text-xl sm:text-2xl md:text-3xl'
+                    }`}>
                       <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342]" />
                       <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342]" />
                       <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-[#B48342]" />
@@ -1435,12 +1501,15 @@ export const RosaryAndChapletView: React.FC = () => {
                       "{excerpt.quote}"
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white/45 backdrop-blur-sm border border-white/80 ring-1 ring-[#E6DFD3]/60 text-xs font-serif text-stone-700">
+                    <div className={`p-3.5 sm:p-4 rounded-xl bg-white/45 backdrop-blur-sm border border-white/80 ring-1 ring-[#E6DFD3]/60 font-serif text-stone-700 leading-relaxed ${
+                      promisesFontSize === 'normal' ? 'text-sm sm:text-base md:text-lg' :
+                      promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
+                    }`}>
                       <strong className="text-[#6B4423]">Theological Meaning: </strong>
                       {excerpt.reflection}
                     </div>
 
-                    <div className="pt-2 flex items-center justify-end gap-2">
+                    <div className="pt-2 flex items-center justify-end gap-2.5">
                       <button
                         onClick={() => {
                           const text = `Diary of St. Faustina (${excerpt.diaryNumber}): ${excerpt.title}\n"${excerpt.quote}"\n\nReflection: ${excerpt.reflection}`;
@@ -1448,10 +1517,10 @@ export const RosaryAndChapletView: React.FC = () => {
                           setCopiedExcerptId(excerpt.id);
                           setTimeout(() => setCopiedExcerptId(null), 2000);
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-white/65 hover:bg-white/90 backdrop-blur-sm text-stone-700 hover:text-stone-900 border border-white/85 ring-1 ring-stone-200/80 text-xs font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-white/65 hover:bg-white/90 backdrop-blur-sm text-stone-700 hover:text-stone-900 border border-white/85 ring-1 ring-stone-200/80 text-xs sm:text-sm font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
                         title="Copy excerpt"
                       >
-                        {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                        {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                         <span>{isCopied ? 'Copied' : 'Copy'}</span>
                       </button>
 
@@ -1468,7 +1537,7 @@ export const RosaryAndChapletView: React.FC = () => {
                             );
                           }
                         }}
-                        className={`p-2 rounded-lg text-xs font-serif flex items-center transition-colors cursor-pointer ${
+                        className={`p-2 rounded-lg text-xs sm:text-sm font-serif flex items-center transition-colors cursor-pointer ${
                           isReading
                             ? 'bg-[#6B4423] text-white animate-pulse'
                             : 'bg-white/65 hover:bg-white/90 backdrop-blur-sm text-[#6B4423] border border-white/85 ring-1 ring-[#DFD2C0]'
