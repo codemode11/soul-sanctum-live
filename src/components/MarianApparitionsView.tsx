@@ -12,7 +12,6 @@ import {
   Heart, 
   ShieldCheck, 
   Star,
-  Quote,
   Feather,
   MapPin,
   Flame,
@@ -386,7 +385,6 @@ export const MarianApparitionsView: React.FC = () => {
                     <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400" />
                     <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400" />
                     <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400" />
-                    <Quote className="w-6 h-6 text-amber-400/40 absolute top-3 right-3" />
                     <span className="font-cinzel text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wider block">
                       Words of the Blessed Virgin Mary
                     </span>

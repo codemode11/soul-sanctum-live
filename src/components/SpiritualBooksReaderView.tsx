@@ -853,34 +853,34 @@ export const SpiritualBooksReaderView: React.FC = () => {
           return (
             <div
               key={book.id}
-              className="rounded-xl overflow-hidden border border-[#C89F72]/60 bg-gradient-to-br from-[#855D3B] via-[#684528] to-[#3D2514] text-stone-100 shadow-xl hover:border-[#E6C29F] transition-all duration-300 flex flex-col justify-between"
+              className="rounded-xl overflow-hidden border border-[#8B5A2B]/40 bg-white text-[#3D2514] shadow-xl hover:border-[#8B5A2B] transition-all duration-300 flex flex-col justify-between"
             >
               <div className="p-6 sm:p-7 space-y-4">
                 
                 {/* Book Header with Latin Subtitle and Era */}
                 <div className="space-y-1">
-                  <span className="text-[10px] uppercase font-cinzel tracking-widest text-[#F5D7B2] font-bold">
+                  <span className="text-[10px] uppercase font-cinzel tracking-widest text-[#8B5A2B] font-bold">
                     {book.era} • {book.categoryLabel}
                   </span>
-                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide">
+                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#3D2514] tracking-wide">
                     {book.title}
                   </h3>
-                  <p className="text-xs text-[#F3DEC4] font-serif-sacred italic">
+                  <p className="text-xs text-[#684528] font-serif-sacred italic">
                     {book.latinTitle}
                   </p>
                 </div>
 
                 {/* Author Info */}
-                <div className="flex items-center gap-2 text-xs text-stone-100 border-y border-[#9C7049]/50 py-2">
-                  <span className="font-bold text-white font-cinzel">{book.author}</span>
-                  <span className="text-[#E2C4A6]">•</span>
-                  <span className="text-stone-200 font-serif-sacred italic line-clamp-1">
+                <div className="flex items-center gap-2 text-xs text-[#4A2E1B] border-y border-[#8B5A2B]/25 py-2">
+                  <span className="font-bold text-[#3D2514] font-cinzel">{book.author}</span>
+                  <span className="text-[#8B5A2B]">•</span>
+                  <span className="text-[#684528] font-serif-sacred italic line-clamp-1">
                     {book.authorTitle}
                   </span>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs sm:text-sm text-stone-100 font-serif-sacred leading-relaxed line-clamp-3">
+                <p className="text-xs sm:text-sm text-[#4A2E1B] font-serif-sacred leading-relaxed line-clamp-3">
                   {book.description}
                 </p>
 
@@ -889,7 +889,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                   {book.theologicalFocus.split(', ').map((tag, tIdx) => (
                     <span
                       key={tIdx}
-                      className="px-2.5 py-0.5 rounded-full bg-[#4A301B]/70 border border-[#C89F72]/50 text-[10px] text-[#F5D7B2] font-cinzel"
+                      className="px-2.5 py-0.5 rounded-full bg-[#FAF5EE] border border-[#8B5A2B]/35 text-[10px] text-[#5C3A21] font-cinzel font-semibold"
                     >
                       {tag}
                     </span>
@@ -898,15 +898,15 @@ export const SpiritualBooksReaderView: React.FC = () => {
               </div>
 
               {/* Card Footer with Chapter Counts and Action Buttons */}
-              <div className="px-6 py-4 bg-gradient-to-r from-[#362011]/90 via-[#472B17]/85 to-[#2D1A0E]/90 border-t border-[#C89F72]/40 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4 text-xs text-stone-200 font-serif-sacred">
+              <div className="px-6 py-4 bg-[#FAF6F0] border-t border-[#8B5A2B]/25 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4 text-xs text-[#4A2E1B] font-serif-sacred">
                   <span className="flex flex-col items-center justify-center gap-1 text-center">
-                    <BookOpen className="w-4 h-4 text-[#F5D7B2]" />
+                    <BookOpen className="w-4 h-4 text-[#8B5A2B]" />
                     <span>{book.chapters.length} Chapters</span>
                   </span>
-                  <span className="text-[#C89F72]">•</span>
+                  <span className="text-[#8B5A2B]/60">•</span>
                   <span className="flex flex-col items-center justify-center gap-1 text-center">
-                    <Clock className="w-4 h-4 text-[#F5D7B2]" />
+                    <Clock className="w-4 h-4 text-[#8B5A2B]" />
                     <span>~{book.estimatedMinutesPerChapter}m / ch</span>
                   </span>
                 </div>
@@ -918,10 +918,10 @@ export const SpiritualBooksReaderView: React.FC = () => {
                         setActiveBookId(book.id);
                         setActiveChapterIndex(bookmarkedChapter.chapterIndex);
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-[#5C3A21] hover:bg-[#6B4423] text-[#F5D7B2] border border-[#C89F72]/50 text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1"
+                      className="px-3 py-1.5 rounded-lg bg-[#F3E9DC] hover:bg-[#E8D7C3] text-[#4A2E1B] border border-[#8B5A2B]/40 text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1"
                       title="Jump to saved bookmark"
                     >
-                      <BookmarkCheck className="w-3.5 h-3.5" />
+                      <BookmarkCheck className="w-3.5 h-3.5 text-[#8B5A2B]" />
                       <span className="hidden sm:inline">Ch. {bookmarkedChapter.chapterIndex + 1}</span>
                     </button>
                   )}
@@ -931,7 +931,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                       setActiveBookId(book.id);
                       setActiveChapterIndex(0);
                     }}
-                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#9C6B3B] to-[#7A4E2D] hover:from-[#B07C49] hover:to-[#8B5A2B] border border-[#DFB991]/40 text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#684528] to-[#4A2E1B] hover:from-[#855D3B] hover:to-[#5C3A21] border border-[#8B5A2B]/50 text-white text-xs font-cinzel font-bold tracking-wider transition-all shadow-md cursor-pointer flex items-center gap-1.5"
                   >
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>Open Reader</span>
