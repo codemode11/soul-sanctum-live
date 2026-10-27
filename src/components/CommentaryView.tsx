@@ -543,7 +543,11 @@ ${selectedCommentary.practicalApplication}`;
         </div>
 
         {/* The Scripture Text */}
-        <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-stone-200/80 border-l-4 border-l-amber-800 space-y-0.5">
+        <div className="relative p-3.5 rounded-xl bg-[#FAF8F5] shadow-2xs space-y-0.5">
+          <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-800" />
+          <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-800" />
+          <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-800" />
+          <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-800" />
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel">
             Sacred Scripture ({selectedCommentary.scriptureReference})
           </span>

@@ -697,7 +697,11 @@ export const RosaryAndChapletView: React.FC = () => {
 
               {/* Scripture and Meditation (if decade start) */}
               {currentRosaryStep.mysteryName && (
-                <div className="p-4 rounded-xl bg-[#FAF8F5] border-l-4 border-amber-700 space-y-2">
+                <div className="relative p-4 rounded-xl bg-[#FAF8F5] shadow-2xs space-y-2">
+                  <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-700" />
+                  <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-700" />
+                  <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-700" />
+                  <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-700" />
                   <div className="text-xs font-bold uppercase tracking-wider text-amber-900 font-cinzel">
                     Scripture Contemplation
                   </div>
@@ -1318,12 +1322,16 @@ export const RosaryAndChapletView: React.FC = () => {
                       }`}>
                         {item.title}
                       </h4>
-                      <p className={`font-serif italic text-stone-800 leading-relaxed bg-[#FDFBF7] p-3.5 sm:p-4 rounded-xl border-l-4 border-[#B48342] shadow-2xs ${
+                      <div className={`relative font-serif italic text-stone-800 leading-relaxed bg-[#FDFBF7] p-3.5 sm:p-4 rounded-xl shadow-2xs ${
                         promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
                         promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
                       }`}>
+                        <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342]" />
+                        <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342]" />
+                        <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-[#B48342]" />
+                        <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-[#B48342]" />
                         "{item.promise}"
-                      </p>
+                      </div>
                       <p className={`font-serif text-stone-600 leading-relaxed pt-1 ${
                         promisesFontSize === 'normal' ? 'text-xs sm:text-sm' :
                         promisesFontSize === 'large' ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
@@ -1406,9 +1414,13 @@ export const RosaryAndChapletView: React.FC = () => {
                       </span>
                     </div>
 
-                    <p className="text-xs sm:text-sm font-serif italic text-stone-800 leading-relaxed bg-[#FDFBF7] p-4 rounded-xl border-l-4 border-[#B48342]">
+                    <div className="relative text-xs sm:text-sm font-serif italic text-stone-800 leading-relaxed bg-[#FDFBF7] p-4 rounded-xl shadow-2xs">
+                      <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342]" />
+                      <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342]" />
+                      <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-[#B48342]" />
+                      <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-[#B48342]" />
                       "{excerpt.quote}"
-                    </p>
+                    </div>
 
                     <div className="p-3 rounded-xl bg-[#F7F3EB] border border-[#E6DFD3] text-xs font-serif text-stone-700">
                       <strong className="text-[#6B4423]">Theological Meaning: </strong>
@@ -1595,12 +1607,16 @@ export const RosaryAndChapletView: React.FC = () => {
                       }`}>
                         {item.title}
                       </h5>
-                      <p className={`font-serif italic text-stone-800 leading-relaxed bg-[#F8FAFC] p-3.5 sm:p-4 rounded-xl border-l-4 border-blue-500 shadow-2xs ${
+                      <div className={`relative font-serif italic text-stone-800 leading-relaxed bg-[#F8FAFC] p-3.5 sm:p-4 rounded-xl shadow-2xs ${
                         promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
                         promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
                       }`}>
+                        <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-blue-500" />
+                        <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-blue-500" />
+                        <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-blue-500" />
+                        <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-blue-500" />
                         "{item.promise}"
-                      </p>
+                      </div>
                       <p className={`font-serif text-stone-600 leading-relaxed pt-1 ${
                         promisesFontSize === 'normal' ? 'text-xs sm:text-sm' :
                         promisesFontSize === 'large' ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
