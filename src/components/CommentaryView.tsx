@@ -238,7 +238,7 @@ ${selectedCommentary.practicalApplication}`;
             <Scroll className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
               <h2 className="font-cinzel text-lg sm:text-xl font-bold text-white tracking-wide leading-tight">
-                Commentary and Notes from the Magisterium
+                Bible Commentary
               </h2>
               <p className="text-[11px] text-amber-300/80 font-cinzel uppercase tracking-wider">
                 Catena Aurea • Cornelius à Lapide • Notes from the Magisterium
@@ -560,7 +560,7 @@ ${selectedCommentary.practicalApplication}`;
           <div className="flex items-center justify-between border-b border-stone-200 pb-1.5">
             <div className="flex items-center gap-1.5 text-stone-900 font-cinzel font-bold text-xs uppercase tracking-wider">
               <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-              <span>Commentary and Notes from the Magisterium</span>
+              <span>Bible Commentary</span>
             </div>
           </div>
 

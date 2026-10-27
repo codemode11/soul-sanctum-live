@@ -6,7 +6,7 @@ export const BIBLE_COMMENTARIES_DATABASE: BibleCommentary[] = [
     id: 'comm-luke-12-54-59-signs-of-time-catena',
     scriptureReference: 'Luke 12:54-59',
     scriptureText: '"When you see a cloud rising in the west you say immediately that it is going to rain—and so it does; and when you notice that the wind is blowing from the south you say that it is going to be hot—and so it is. You hypocrites! You know how to interpret the appearance of the earth and the sky; why do you not know how to interpret the present time? Why do you not judge for yourselves what is right? If you are to go with your opponent before a magistrate, make an effort to settle the matter on the way..."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Gregory Nazianzen (c. 380 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Vatican Magisterium',
     commentaryText: `HOMILY OF ST. GREGORY NAZIANZEN (c. 380 AD — ON DISCERNING THE SEASONS OF DIVINE GRACE): When you look upon the western horizon and behold a cloud rising, you immediately declare that rain is coming, and so it happens. When the south wind blows, you anticipate heat, and so it comes to pass. You hypocrites! You know how to discern the face of the earth and the sky; how is it that you do not discern this present time of salvation? Why do you not judge for yourselves what is right?
@@ -34,7 +34,7 @@ VATICAN MAGISTERIUM (CCC 1428 & DEI VERBUM): As Vatican II affirms in Dei Verbum
     id: 'comm-luke-12-49-53-fire-on-earth-catena',
     scriptureReference: 'Luke 12:49-53',
     scriptureText: '"I have come to set the earth on fire, and how I wish it were already blazing! There is a baptism with which I must be baptized, and how great is my anguish until it is accomplished! Do you think that I have come to establish peace on the earth? No, I tell you, but rather division..."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Ephrem the Syrian (c. 363 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Pope Benedict XVI',
     commentaryText: `HOMILY OF ST. EPHREM THE SYRIAN (c. 363 AD — ON THE DIVINE FIRE AND THE BAPTISM OF THE CROSS): Our Lord Jesus Christ declared: "I have come to cast fire upon the earth, and how I wish it were already blazing!" What is this celestial fire which the Savior brought down from the height of heaven? It is the divine flame of the Holy Spirit, the unquenchable fire of supernatural charity that consumes the thorns of sin, purifies human nature, and transforms cold hearts into burning altars of love!
@@ -60,7 +60,7 @@ POPE BENEDICT XVI (VATICAN MAGISTERIUM): The fire that Jesus brings to the earth
     id: 'comm-luke-12-39-48-faithful-steward-catena',
     scriptureReference: 'Luke 12:39-48',
     scriptureText: '"You also must be prepared, for at an hour you do not expect, the Son of Man will come... Who, then, is the faithful and prudent steward whom the master will put in charge of his servants to distribute the food allowance at the proper time? Blessed is that servant whom his master on arrival finds doing so... Much will be required of the person entrusted with much, and still more will be demanded of the person entrusted with more."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. John Chrysostom (c. 390 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `HOMILY OF ST. JOHN CHRYSOSTOM (c. 390 AD — ON THE FAITHFUL AND PRUDENT STEWARD): Our Master commands us to watch, for at an hour we expect not, the Son of Man will come. He compares the Christian to a householder who knows not in which watch of the night the thief will break in. If the householder knew the hour, he would keep watch continuously; because he knows not the exact time, he remains vigilant every single night. In like manner, God has hidden from us the day of our death and the end of the world, so that every day of our lives may be lived in holy vigilance and readiness for judgment.
@@ -86,7 +86,7 @@ VATICAN II (LUMEN GENTIUM 32-37): The sacred Synod teaches that every baptized p
     id: 'comm-luke-13-1-9-barren-fig-tree-catena',
     scriptureReference: 'Luke 13:1-9',
     scriptureText: '"There once was a person who had a fig tree planted in his orchard, and when he came in search of fruit on it but found none, he said to the gardener, \'For three years now I have come in search of fruit on this fig tree but have found none. So cut it down. Why should it exhaust the soil?\' He said to him in reply, \'Sir, leave it for this year also, and I shall cultivate the ground around it and fertilize it; it may bear fruit in the future.\'"',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Caesarius of Arles (c. 510 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and St. John Paul II',
     commentaryText: `HOMILY OF ST. CAESARIUS OF ARLES (c. 510 AD — ON DIVINE PATIENCE AND THE FIG TREE IN THE VINEYARD): When news reached the crowd concerning the Galileans whose blood Pilate had mingled with their sacrifices, or the eighteen men crushed beneath the fallen tower of Siloam, human pride was quick to conclude that those victims were far greater sinners than the rest of Israel. But Our Redeemer corrected their rash judgment: "No, I tell you; but unless you repent, you will all likewise perish!" Every earthly calamity and sudden death is a trumpet call of divine mercy, reminding us that life is fleeting and that judgment awaits every soul.
@@ -112,7 +112,7 @@ ST. JOHN PAUL II (RECONCILIATIO ET PAENITENTIA): The parable of the fig tree dem
     id: 'comm-mark-10-46-52-bartimaeus-catena',
     scriptureReference: 'Mark 10:46-52',
     scriptureText: '"Bartimaeus, a blind man, the son of Timaeus, sat by the roadside begging. On hearing that it was Jesus of Nazareth, he began to cry out and say, \'Jesus, son of David, have pity on me.\'... He threw aside his cloak, sprang up, and came to Jesus. Jesus said to him in reply, \'What do you want me to do for you?\' The blind man replied to him, \'Master, I want to see.\' Jesus told him, \'Go your way; your faith has saved you.\' Immediately he received his sight and followed him on the way."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Leo the Great (c. 450 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Pope Benedict XVI',
     commentaryText: `HOMILY OF ST. LEO THE GREAT (c. 450 AD — ON BARTIMAEUS AND THE RECOVERY OF SPIRITUAL SIGHT): As Our Savior departed from Jericho on His journey toward Jerusalem to undergo His saving Passion, Bartimaeus, a blind man, sat begging by the roadside. Jericho, which signifies the moon in scriptural allegory, represents our changeable, mortal existence. Man, blinded by original sin and cast out of the light of paradise, sat in darkness beside the road of life, incapable of seeing the way to heaven. But when Bartimaeus heard that Jesus of Nazareth was passing by, a divine spark ignited in his soul, and he began to cry out: "Jesus, Son of David, have pity on me!"
@@ -138,7 +138,7 @@ POPE BENEDICT XVI (VATICAN MAGISTERIUM): Bartimaeus represents man who has lost 
     id: 'comm-luke-13-10-17-crippled-woman-catena',
     scriptureReference: 'Luke 13:10-17',
     scriptureText: '"And a woman was there who for eighteen years had been crippled by a spirit; she was bent over, completely incapable of standing erect. When Jesus saw her, he called her forward and said to her, \'Woman, you are set free of your infirmity.\' He laid his hands on her, and she at once stood up straight and glorified God."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Chromatius of Aquileia (c. 400 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
     commentaryText: `HOMILY OF ST. CHROMATIUS OF AQUILEIA (c. 400 AD — ON THE HEALING OF THE WOMAN BENT DOUBLE): On a Sabbath day, Jesus was teaching in one of the synagogues, and behold, there was a woman who for eighteen years had been afflicted by a spirit of infirmity. She was bent double, completely unable to stand erect or look up toward heaven. What a vivid picture of the soul bound by sin! For eighteen years—a number signifying the full weight of transgressions against the divine commandments—this woman walked with her face fixed upon the dust of the earth.
@@ -164,7 +164,7 @@ CATECHISM OF THE CATHOLIC CHURCH (CCC 2173): The Gospel reports many incidents w
     id: 'comm-ephesians-4-32-5-8-children-of-light-chrysostom',
     scriptureReference: 'Ephesians 4:32–5:8',
     scriptureText: '"Be kind to one another, compassionate, forgiving one another as God has forgiven you in Christ. Be imitators of God, as beloved children, and live in love, as Christ loved us and handed himself over for us as a sacrificial offering to God for a fragrant aroma... For you were once darkness, but now you are light in the Lord. Live as children of light."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Augustine of Hippo (c. 415 AD) with St. John Chrysostom, St. Jerome, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `HOMILY OF ST. AUGUSTINE OF HIPPO (c. 415 AD — ON WALKING AS CHILDREN OF LIGHT): The holy Apostle Paul summons us to a divine dignity: "Be imitators of God, as beloved children, and live in love, as Christ loved us and handed Himself over for us as a sacrificial offering to God for a fragrant aroma." How can mortal man imitate the Almighty God? In His power to create stars or raise the dead? No! We imitate God through mercy, forgiveness, and sacrificial love! As God has forgiven us in Christ while we were yet sinners, so we must forgive those who trespass against us from the bottom of our hearts.
@@ -188,7 +188,7 @@ VATICAN II (LUMEN GENTIUM 39-42): The universal call to holiness in the Church i
     id: 'comm-luke-13-31-35-jerusalem-wings-catena',
     scriptureReference: 'Luke 13:31-35',
     scriptureText: '"Jerusalem, Jerusalem, you who kill the prophets and stone those sent to you, how many times I yearned to gather your children together as a hen gathers her brood under her wings, but you were unwilling! Behold, your house will be abandoned. But I tell you, you will not see me until the time comes when you say, \'Blessed is he who comes in the name of the Lord.\'"',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Bernard of Clairvaux (c. 1140 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
     commentaryText: `HOMILY OF ST. BERNARD OF CLAIRVAUX (c. 1140 AD — ON THE PROTECTIVE WINGS OF THE SAVIOR): Jerusalem, Jerusalem, killer of the prophets and stoner of those sent to her! How often would I have gathered your children together as a hen gathers her brood under her wings, but you were unwilling! Behold, your house is left to you desolate.
@@ -212,7 +212,7 @@ CATECHISM OF THE CATHOLIC CHURCH (CCC 558): Jesus' lamentation over Jerusalem ex
     id: 'comm-luke-14-1-6-sabbath-healing-catena',
     scriptureReference: 'Luke 14:1-6',
     scriptureText: '"In front of him there was a man suffering from dropsy. Jesus spoke to the scholars of the law and Pharisees in reply, asking, \'Is it lawful to cure on the sabbath or not?\' But they kept silent; so he took the man and, after he had healed him, dismissed him."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Cyril of Alexandria (c. 430 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
     commentaryText: `HOMILY OF ST. CYRIL OF ALEXANDRIA (c. 430 AD — ON THE HEALING OF THE DROPSICAL MAN): On a Sabbath day, Jesus entered the house of one of the leading Pharisees to eat a meal, and the scholars of the law were watching Him closely. In front of Him was a man suffering from dropsy. Jesus asked the lawyers and Pharisees: "Is it lawful to heal on the Sabbath or not?" But they kept silent. So He took the man, healed him, and sent him away.
@@ -236,7 +236,7 @@ CATECHISM OF THE CATHOLIC CHURCH (CCC 2173): On the Sabbath, Jesus shows that th
     id: 'comm-luke-14-1-7-11-lowest-place-catena',
     scriptureReference: 'Luke 14:1, 7-11',
     scriptureText: '"Rather, when you are invited, go and take the lowest place so that when the host comes to you he may say, \'My friend, move up to a higher position.\' Then you will enjoy the esteem of your companions at the table. For everyone who exalts himself will be humbled, but the one who humbles himself will be exalted."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Francis de Sales (c. 1610 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Pope Francis',
     commentaryText: `HOMILY OF ST. FRANCIS DE SALES (c. 1610 AD — ON CHOOSING THE LOWEST PLACE AT THE BANQUET): When Jesus noticed how the guests chose the places of honor at the table, He told them a parable: "When you are invited by someone to a wedding banquet, do not recline at the place of honor, lest someone more distinguished than you has been invited... Rather, when you are invited, go and sit down in the lowest place, so that when your host comes he may say to you: Friend, move up to a higher position. For everyone who exalts himself will be humbled, but he who humbles himself will be exalted."
@@ -260,7 +260,7 @@ POPE FRANCIS (ANGELUS ON HUMILITY): Jesus shows us the way of true greatness: no
     id: 'comm-luke-13-18-21-mustard-seed-catena',
     scriptureReference: 'Luke 13:18-21',
     scriptureText: '"What is the Kingdom of God like? To what can I compare it? It is like a mustard seed that a man took and planted in the garden. When it was fully grown, it became a large bush and the birds of the sky dwelt in its branches... It is like yeast that a woman took and mixed in with three measures of wheat flour until the whole batch of dough was leavened."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'Catena Aurea Fathers, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `ST. AMBROSE OF MILAN: The grain of mustard seed is Christ Himself, who appeared small and humble in the eyes of the world, was planted in the garden of Joseph of Arimathea's sepulcher, and rose in resurrection power as a mighty tree whose branches overspread the whole earth, giving shelter to the contemplatives ("the birds of the sky").
@@ -278,7 +278,7 @@ VATICAN II (LUMEN GENTIUM 5): The mystery of the Holy Church is manifest in its 
     id: 'comm-luke-6-12-16-twelve-apostles-catena',
     scriptureReference: 'Luke 6:12-16',
     scriptureText: '"In those days Jesus departed to the mountain to pray, and he spent the night in prayer to God. When day came, he called his disciples to himself, and from them he chose Twelve, whom he also named Apostles..."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. John Chrysostom (c. 392 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
     commentaryText: `HOMILY OF ST. JOHN CHRYSOSTOM (c. 392 AD — ON NIGHT-LONG PRAYER AND THE ELECTION OF THE APOSTLES): In those days Jesus went out to the mountain to pray, and He spent the entire night in prayer to God. When day came, He called His disciples to Himself and chose Twelve from among them, whom He also named Apostles.
@@ -302,7 +302,7 @@ CATECHISM OF THE CATHOLIC CHURCH (CCC 857-860): The Church is Apostolic because 
     id: 'comm-luke-12-vigilant-servants-catena',
     scriptureReference: 'Luke 12:35-38',
     scriptureText: '"Let your loins be girded and your lamps burning, and be like men who are waiting for their master to come home from the marriage feast, so that they may open to him at once when he comes and knocks. Blessed are those servants whom the master finds awake when he comes; truly, I say to you, he will gird himself and have them sit at table, and he will come and serve them. If he comes in the second watch, or in the third, and finds them so, blessed are those servants!"',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Augustine of Hippo (c. 420 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `HOMILY OF ST. AUGUSTINE OF HIPPO (c. 420 AD — ON THE VIGILANT SERVANTS AND THE BRIDEGROOM): Let your loins be girded and your lamps burning, and be like men who are waiting for their master to return from the marriage feast, so that they may open to him immediately when he comes and knocks! Blessed are those servants whom the master finds awake when he comes!
@@ -330,7 +330,7 @@ VATICAN II (SACROSANCTUM CONCILIUM 8): In the earthly liturgy we take part in a 
     id: 'comm-luke-12-catena-aquinas',
     scriptureReference: 'Luke 12:1-7',
     scriptureText: '"Beware of the leaven of the Pharisees, which is hypocrisy... Are not five sparrows sold for two pennies? And not one of them is forgotten before God. Even the hairs of your head are all numbered. Fear not; you are of more value than many sparrows."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Ambrose of Milan (c. 388 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
     commentaryText: `HOMILY OF ST. AMBROSE OF MILAN (c. 388 AD — ON FEARLESSNESS AND DIVINE PROVIDENCE): Beware of the leaven of the Pharisees, which is hypocrisy! There is nothing covered that will not be revealed, nor hidden that will not be known... I tell you, my friends, do not be afraid of those who kill the body and after that can do no more. But I will show you whom you should fear: fear Him who, after killing, has power to cast into hell. Yes, I tell you, fear Him! Are not five sparrows sold for two pennies? Yet not one of them is forgotten before God. Even the very hairs of your head are all numbered. Fear not; you are of more value than many sparrows.
@@ -356,7 +356,7 @@ CATECHISM OF THE CATHOLIC CHURCH (CCC 305): Divine Providence extends to all thi
     id: 'comm-luke-12-rich-fool-cyril',
     scriptureReference: 'Luke 12:13-21',
     scriptureText: '"Take care to guard against all greed, for though one may be rich, one\'s life does not consist of possessions... God said to him, \'You fool, this night your life will be demanded of you; and the things you have prepared, to whom will they belong?\' Thus will it be for the one who stores up treasure for himself but is not rich in what matters to God."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. John Chrysostom (c. 395 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `HOMILY OF ST. JOHN CHRYSOSTOM (c. 395 AD — ON THE RICH FOOL AND TRUE WEALTH): Someone in the crowd said to Him: "Teacher, tell my brother to divide the inheritance with me." But He said to him: "Man, who appointed Me a judge or arbitrator over you?" Then He said to them: "Take care to guard against all greed, for though one may be rich, one's life does not consist of possessions." And He told them a parable: "The land of a certain rich man produced a bountiful harvest. He thought to himself: What shall I do, for I have nowhere to store my crops? Then he said: This is what I will do: I will tear down my barns and build larger ones, and there I will store all my grain and my goods. And I will say to my soul: Soul, you have many good things laid up for many years; rest, eat, drink, be merry. But God said to him: You fool, this night your life will be demanded of you; and the things you have prepared, to whom will they belong? Thus will it be for the one who stores up treasure for himself but is not rich in what matters to God."
@@ -382,7 +382,7 @@ VATICAN II (GAUDIUM ET SPES 69): God intended the earth with everything containe
     id: 'comm-john-6-lapide',
     scriptureReference: 'John 6:51-56',
     scriptureText: '"I am the living bread that came down from heaven. If anyone eats of this bread, he will live forever. And the bread that I will give for the life of the world is my flesh... For my flesh is true food, and my blood is true drink."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Thomas Aquinas (c. 1264 AD) with St. John Chrysostom, St. Cyril of Alexandria, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `HOMILY OF ST. THOMAS AQUINAS (c. 1264 AD — ON THE MOST HOLY SACRAMENT OF THE ALTAR): I am the living bread that came down from heaven. If anyone eats of this bread, he will live forever; and the bread that I will give for the life of the world is My flesh... For My flesh is true food, and My blood is true drink. Whoever eats My flesh and drinks My blood abides in Me, and I in him.
@@ -406,7 +406,7 @@ VATICAN II (SACROSANCTUM CONCILIUM 47 / CCC 1374): At the Last Supper Our Savior
     id: 'comm-matt-16-catena-augustine',
     scriptureReference: 'Matthew 16:16-19',
     scriptureText: '"Simon Peter replied, \'You are the Christ, the Son of the living God.\' And Jesus answered him, \'Blessed are you, Simon Bar-Jonah! For flesh and blood has not revealed this to you, but my Father who is in heaven. And I tell you, you are Peter, and on this rock I will build my church, and the gates of hell shall not prevail against it. I will give you the keys of the kingdom of heaven.\'"',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Augustine of Hippo (c. 410 AD) with Pope St. Leo the Great, St. Jerome, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `HOMILY OF ST. AUGUSTINE OF HIPPO (c. 410 AD — ON THE ROCK AND THE KEYS OF THE KINGDOM): Simon Peter answered and said: "You are the Christ, the Son of the living God!" And Jesus answered him: "Blessed are you, Simon Bar-Jonah! For flesh and blood has not revealed this to you, but My Father who is in heaven. And I tell you that you are Peter, and upon this rock I will build My Church, and the gates of hell shall not prevail against it. I will give you the keys of the kingdom of heaven; whatever you bind on earth shall be bound in heaven, and whatever you loose on earth shall be loosed in heaven."
@@ -432,7 +432,7 @@ VATICAN II (LUMEN GENTIUM 18-22): The Roman Pontiff, as the successor of Peter, 
     id: 'comm-luke-1-bernard',
     scriptureReference: 'Luke 1:26-38',
     scriptureText: '"And the angel said to her, \'Hail, full of grace, the Lord is with you!\'... And Mary said, \'Behold, I am the handmaid of the Lord; let it be to me according to your word.\'"',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Ephrem the Syrian (c. 370 AD) with St. Bernard of Clairvaux, St. Ambrose, Cornelius à Lapide, S.J. and Vatican II',
     commentaryText: `HOMILY OF ST. EPHREM THE SYRIAN (c. 370 AD — ON THE ANNUNCIATION TO THE BLESSED VIRGIN): In the sixth month, the Archangel Gabriel was sent from God to a city of Galilee named Nazareth, to a virgin betrothed to a man named Joseph, of the house of David; and the virgin's name was Mary. Coming to her, the angel said: "Hail, full of grace, the Lord is with you! Blessed are you among women."
@@ -456,7 +456,7 @@ VATICAN II (LUMEN GENTIUM 56 / CCC 494): The Father of mercies willed that the I
     id: 'comm-matt-5-augustine',
     scriptureReference: 'Matthew 5:1-12',
     scriptureText: '"Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they shall be comforted. Blessed are the meek, for they shall inherit the earth."',
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Leo the Great (c. 444 AD) with St. Augustine, St. John Chrysostom, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
     commentaryText: `HOMILY OF ST. LEO THE GREAT (c. 444 AD — ON THE BEATITUDES AND SPIRITUAL POVERTY): Seeing the crowds, Jesus went up on the mountain, and when He sat down His disciples came to Him. And He opened His mouth and taught them, saying: "Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they shall be comforted. Blessed are the meek, for they shall inherit the earth..."
@@ -524,7 +524,7 @@ export function getDailyGospelCommentaries(
     id: `comm-daily-gospel-${reading?.date || targetCitation}`,
     scriptureReference: targetCitation,
     scriptureText: reading?.gospel.text || `"${targetCitation}"`,
-    sourceName: 'Commentary and Notes from the Magisterium',
+    sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. John Chrysostom (c. 390 AD) with Catena Aurea Fathers, Cornelius à Lapide, S.J. and Vatican Magisterium',
     commentaryText: `HOMILY OF ST. JOHN CHRYSOSTOM (c. 390 AD — ON THE GOSPEL OF THE DAY): Whenever the Holy Gospel is proclaimed in the assembly of the faithful, Christ Himself stands in our midst speaking directly to our hearts. Let us receive His holy words not as human opinion, but as the living bread of life that purifies the soul, illuminates the mind, and guides our feet into the path of eternal salvation.

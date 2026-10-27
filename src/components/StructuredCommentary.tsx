@@ -198,8 +198,12 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
       {/* 2. CATENA AUREA SECTION */}
       {!homilyOnly && data.catenaAureaParagraphs.length > 0 && (
         <div>
-          {/* Stylized line followed by title "Catena Aurea." */}
-          <StylizedDivider title="Catena Aurea" />
+          {/* Title "Catena Aurea" without stylized line */}
+          <div className="mb-3 text-center">
+            <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#3B2512] tracking-wider uppercase inline-block bg-[#F3ECE0] px-4 py-1.5 rounded-full border border-[#D8C9B5] shadow-2xs">
+              Catena Aurea
+            </h4>
+          </div>
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
             {data.catenaAureaParagraphs.map((para, idx) => (
