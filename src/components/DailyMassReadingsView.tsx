@@ -26,6 +26,7 @@ import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { LectorControlsBar } from './LectorControlsBar';
 import { getDailyGospelCommentaries } from '../data/commentary';
+import { StructuredCommentaryDisplay } from './StructuredCommentary';
 
 interface DailyMassReadingsViewProps {
   reading: MassReading;
@@ -533,14 +534,14 @@ ${reading.reflection.content}`;
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-full bg-[#8C6239] text-white text-[11px] font-bold uppercase tracking-wider font-serif">
-                    Patristic Homily of a Saint
+                    Patristic Exposition
                   </span>
                   <span className="text-xs text-[#6B523B] font-serif font-semibold">
                     {reading.gospel.citation}
                   </span>
                 </div>
                 <h4 className="font-serif text-xl sm:text-2xl font-bold text-[#2A1B0E]">
-                  Homily, Commentary, and Notes from the Magisterium
+                  Commentary and Notes from the Magisterium
                 </h4>
                 <p className="text-xs text-[#6B523B] font-serif italic">
                   {topComm.author}
@@ -552,7 +553,7 @@ ${reading.reflection.content}`;
                   onClick={() => setShowInlineHomily(!showInlineHomily)}
                   className="px-3.5 py-2 rounded-xl bg-[#EDE4D6] hover:bg-[#E3D7C5] text-[#3B2818] text-xs font-serif font-bold border border-[#D5C6B1] transition-all cursor-pointer"
                 >
-                  {showInlineHomily ? 'Collapse Homily' : 'Expand Full Homily'}
+                  {showInlineHomily ? 'Collapse Commentary' : 'Expand Full Commentary'}
                 </button>
                 {onSelectTab && (
                   <button
@@ -569,8 +570,8 @@ ${reading.reflection.content}`;
 
             {showInlineHomily && (
               <>
-                <div className="font-serif-sacred text-[#2C1C0E] text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-3 border-l-4 border-l-[#8C6239] pl-4 bg-[#FAF7F2] p-4 rounded-r-xl border border-[#E8DEC8]">
-                  {topComm.commentaryText}
+                <div className="pt-2">
+                  <StructuredCommentaryDisplay commentaryText={topComm.commentaryText} />
                 </div>
 
                 {topComm.practicalApplication && (

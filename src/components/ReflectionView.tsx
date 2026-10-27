@@ -16,6 +16,7 @@ import { MassReading } from '../types';
 import { LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
 import { SacredReader } from '../utils/speech';
 import { getDailyGospelCommentaries } from '../data/commentary';
+import { StructuredCommentaryDisplay } from './StructuredCommentary';
 
 interface ReflectionViewProps {
   reading: MassReading;
@@ -190,7 +191,7 @@ ${reading.reflection.content}`;
         </div>
       </article>
 
-      {/* PATRISTIC HOMILY OF A SAINT / DOCTOR OF THE CHURCH */}
+      {/* PATRISTIC EXPOSITION AND BIBLE COMMENTARY */}
       {(() => {
         const comms = getDailyGospelCommentaries(reading);
         const topComm = comms[0];
@@ -200,10 +201,10 @@ ${reading.reflection.content}`;
             <div className="border-b border-[#E3D6C5] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <span className="inline-block px-3 py-1 rounded-full bg-[#8C6239] text-white text-xs font-bold uppercase tracking-widest font-serif mb-2">
-                  Patristic Homily of a Saint
+                  Patristic Exposition
                 </span>
                 <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2A1B0E] tracking-normal">
-                  Homily, Commentary, and Notes from the Magisterium
+                  Commentary and Notes from the Magisterium
                 </h3>
                 <p className="text-xs sm:text-sm text-[#6B523B] font-serif italic mt-1">
                   Gospel Passage: {topComm.scriptureReference} — {topComm.author}
@@ -211,9 +212,9 @@ ${reading.reflection.content}`;
               </div>
             </div>
 
-            {/* Unabridged Homily Text */}
-            <div className="font-serif-sacred text-[#2C1C0E] text-lg sm:text-xl leading-relaxed whitespace-pre-line space-y-4 border-l-4 border-l-[#8C6239] pl-4 sm:pl-6 bg-[#FAF7F2] p-4 rounded-r-xl border border-[#E8DEC8]">
-              {topComm.commentaryText}
+            {/* Structured Commentary Display */}
+            <div className="pt-2">
+              <StructuredCommentaryDisplay commentaryText={topComm.commentaryText} />
             </div>
 
             {/* Practical Application */}

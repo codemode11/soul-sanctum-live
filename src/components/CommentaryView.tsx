@@ -21,6 +21,7 @@ import {
   parseCommentaryBySaints, 
   CommentarySaintSection 
 } from '../utils/speech';
+import { StructuredCommentaryDisplay } from './StructuredCommentary';
 
 export interface CommentaryViewProps {
   currentGospelCitation?: string;
@@ -559,89 +560,17 @@ ${selectedCommentary.practicalApplication}`;
           <div className="flex items-center justify-between border-b border-stone-200 pb-1.5">
             <div className="flex items-center gap-1.5 text-stone-900 font-cinzel font-bold text-xs uppercase tracking-wider">
               <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-              <span>Homily, Commentary, and Notes from the Magisterium</span>
+              <span>Commentary and Notes from the Magisterium</span>
             </div>
           </div>
 
-          {/* If structured into separate Saint sections */}
-          {saintExpositionSections.length > 0 ? (
-            <div className="space-y-3">
-              {saintExpositionSections.map((sec, idx) => {
-                const isThisSpeaking = isReadingAloud && activeSpeakingSection?.id === sec.id;
-
-                return (
-                  <div
-                    key={sec.id || idx}
-                    className={`rounded-xl p-4 border transition-all duration-300 ${
-                      isThisSpeaking
-                        ? 'bg-amber-50/90 border-[#8B5A2B] shadow-xs ring-1 ring-[#8B5A2B]/40'
-                        : sec.saintName.toLowerCase().includes('homily')
-                        ? 'bg-[#F8F4ED] hover:bg-[#F3ECE0] border-[#E2D4C0] shadow-2xs'
-                        : 'bg-white hover:bg-stone-50/60 border-stone-200/90 shadow-2xs'
-                    }`}
-                  >
-                    {/* Saint Header */}
-                    <div className="flex items-center justify-between gap-2 pb-1.5 mb-2 border-b border-stone-200/80">
-                      <div className="flex flex-wrap items-baseline gap-2">
-                        {sec.saintName.toLowerCase().includes('homily') ? (
-                          <span className="px-2 py-0.5 rounded-full bg-[#8C6239] text-white text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
-                            Patristic Homily
-                          </span>
-                        ) : sec.saintName.toLowerCase().includes('vatican') || sec.saintName.toLowerCase().includes('catechism') || sec.saintName.toLowerCase().includes('magisterium') ? (
-                          <span className="px-2 py-0.5 rounded-full bg-stone-800 text-amber-200 text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
-                            Magisterium
-                          </span>
-                        ) : (
-                          <span className="px-2 py-0.5 rounded-full bg-stone-200 text-stone-800 text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
-                            Commentary
-                          </span>
-                        )}
-                        <span className="font-cinzel font-bold text-amber-950 text-xs sm:text-sm tracking-wide">
-                          {sec.saintName}
-                        </span>
-                        <span className="text-[11px] text-stone-500 font-serif italic">
-                          {sec.persona.title}
-                        </span>
-                      </div>
-
-                      <button
-                        onClick={() => handleSpeakSingleSaint(sec)}
-                        className={`p-1.5 rounded-xl transition-all cursor-pointer shrink-0 ${
-                          isThisSpeaking
-                            ? 'bg-[#6B4423] text-white shadow-xs'
-                            : 'bg-white hover:bg-[#FAF4EE] text-[#5A381C] border border-stone-200 hover:border-[#8B5A2B]'
-                        }`}
-                        title={isThisSpeaking ? `Stop listening to ${sec.saintName}` : `Listen to ${sec.saintName}`}
-                        aria-label={isThisSpeaking ? `Stop listening to ${sec.saintName}` : `Listen to ${sec.saintName}`}
-                      >
-                        {isThisSpeaking ? (
-                          <VolumeX className="w-3.5 h-3.5 text-white" />
-                        ) : (
-                          <Volume2 className="w-3.5 h-3.5 text-[#6B4423]" />
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Exegesis Text */}
-                    <div 
-                      className="font-serif-sacred text-stone-900 leading-relaxed transition-all duration-200 whitespace-pre-line space-y-2"
-                      style={commentaryStyle}
-                    >
-                      {sec.bodyOnly}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            /* Fallback single text block */
-            <div 
-              className="font-serif-sacred text-stone-900 leading-snug whitespace-pre-line pl-2 transition-all duration-200"
-              style={commentaryStyle}
-            >
-              {selectedCommentary.commentaryText}
-            </div>
-          )}
+          {/* Structured Commentary Display with Stylized Separator Lines */}
+          <div className="pt-2">
+            <StructuredCommentaryDisplay 
+              commentaryText={selectedCommentary.commentaryText} 
+              fontSizeStyle={commentaryStyle} 
+            />
+          </div>
         </div>
 
         {/* Practical Spiritual Application */}
