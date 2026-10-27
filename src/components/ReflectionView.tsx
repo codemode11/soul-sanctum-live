@@ -15,6 +15,7 @@ import {
 import { MassReading } from '../types';
 import { LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
 import { SacredReader } from '../utils/speech';
+import { getDailyGospelCommentaries } from '../data/commentary';
 
 interface ReflectionViewProps {
   reading: MassReading;
@@ -184,10 +185,47 @@ ${reading.reflection.content}`;
           <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <div>
             <span className="font-bold block">Gospel Tie-in:</span>
-            <span>{reading.gospel.citation} — "You are worth more than many sparrows."</span>
+            <span>{reading.gospel.citation}</span>
           </div>
         </div>
       </article>
+
+      {/* PATRISTIC HOMILY OF A SAINT / DOCTOR OF THE CHURCH */}
+      {(() => {
+        const comms = getDailyGospelCommentaries(reading);
+        const topComm = comms[0];
+        if (!topComm) return null;
+        return (
+          <article className="bg-gradient-to-br from-amber-950 via-stone-900 to-amber-950 text-amber-50 rounded-xl p-6 sm:p-10 shadow-lg border border-amber-600/40 space-y-6">
+            <div className="border-b border-amber-700/60 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span className="inline-block px-3 py-1 rounded-full bg-amber-600 text-stone-950 text-xs font-bold uppercase tracking-widest font-serif mb-2">
+                  Patristic Homily of a Saint
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-normal">
+                  Homily, Commentary, and Notes from the Magisterium
+                </h3>
+                <p className="text-xs sm:text-sm text-amber-200/90 font-serif italic mt-1">
+                  Gospel Passage: {topComm.scriptureReference} — {topComm.author}
+                </p>
+              </div>
+            </div>
+
+            {/* Unabridged Homily Text */}
+            <div className="font-serif-sacred text-amber-100 text-lg sm:text-xl leading-relaxed whitespace-pre-line space-y-4 border-l-2 border-amber-500/80 pl-4 sm:pl-6 bg-black/20 p-4 rounded-r-xl">
+              {topComm.commentaryText}
+            </div>
+
+            {/* Practical Application */}
+            {topComm.practicalApplication && (
+              <div className="p-4 rounded-xl bg-amber-900/40 border border-amber-700/50 text-amber-200 text-xs sm:text-sm font-serif italic">
+                <span className="font-bold not-italic text-amber-300 block mb-1">Practical Spiritual Fruit:</span>
+                "{topComm.practicalApplication}"
+              </div>
+            )}
+          </article>
+        );
+      })()}
     </div>
   );
 };

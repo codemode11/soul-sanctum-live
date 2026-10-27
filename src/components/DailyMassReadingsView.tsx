@@ -25,6 +25,7 @@ import {
 import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { LectorControlsBar } from './LectorControlsBar';
+import { getDailyGospelCommentaries } from '../data/commentary';
 
 interface DailyMassReadingsViewProps {
   reading: MassReading;
@@ -74,6 +75,7 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
   const [playingPartId, setPlayingPartId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [isCalendarPickerOpen, setIsCalendarPickerOpen] = useState(false);
+  const [showInlineHomily, setShowInlineHomily] = useState(true);
 
   useEffect(() => {
     const unsub = SacredReader.addListener((speaking, partId) => {
@@ -520,33 +522,68 @@ ${reading.reflection.content}`;
         </div>
       </article>
 
-      {/* Direct Callout Banner to Today's Full Patristic Homily & Commentary */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-5 sm:p-6 border border-amber-600/50 shadow-md text-amber-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="space-y-1 text-center sm:text-left">
-          <div className="flex items-center justify-center sm:justify-start gap-2">
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span className="text-xs font-bold uppercase tracking-widest text-amber-300 font-serif">
-              Patristic Homily of the Day
-            </span>
-          </div>
-          <h4 className="font-serif text-lg sm:text-xl font-bold text-white">
-            Homily, Commentary, and Notes from the Magisterium
-          </h4>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-            Read the full, unabridged Patristic Homily by the Saint (with historical date), followed by Catena Aurea, Cornelius à Lapide, S.J., and Vatican Magisterial notes for today's Gospel ({reading.gospel.citation}).
-          </p>
-        </div>
-        {onSelectTab && (
-          <button
-            onClick={() => onSelectTab('bible-study')}
-            className="px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 font-serif font-bold text-sm shadow-md transition-all shrink-0 cursor-pointer flex items-center gap-2"
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>Read Today's Homily</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        )}
-      </div>
+      {/* Direct Callout Banner & Full Patristic Homily of the Day */}
+      {(() => {
+        const comms = getDailyGospelCommentaries(reading);
+        const topComm = comms[0];
+        if (!topComm) return null;
+        return (
+          <article className="bg-gradient-to-br from-stone-900 via-amber-950 to-stone-950 text-amber-50 rounded-xl p-6 sm:p-8 shadow-md border border-amber-600/50 space-y-5">
+            <div className="border-b border-amber-700/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-600 text-stone-950 text-[11px] font-bold uppercase tracking-wider font-serif">
+                    Patristic Homily of a Saint
+                  </span>
+                  <span className="text-xs text-amber-300 font-serif">
+                    {reading.gospel.citation}
+                  </span>
+                </div>
+                <h4 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                  Homily, Commentary, and Notes from the Magisterium
+                </h4>
+                <p className="text-xs text-amber-200/90 font-serif italic">
+                  {topComm.author}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => setShowInlineHomily(!showInlineHomily)}
+                  className="px-3.5 py-2 rounded-xl bg-amber-900/80 hover:bg-amber-800 text-amber-100 text-xs font-serif font-bold border border-amber-700/60 transition-all cursor-pointer"
+                >
+                  {showInlineHomily ? 'Collapse Homily' : 'Expand Full Homily'}
+                </button>
+                {onSelectTab && (
+                  <button
+                    onClick={() => onSelectTab('bible-study')}
+                    className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 font-serif font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                  >
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>View All Commentaries</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {showInlineHomily && (
+              <>
+                <div className="font-serif-sacred text-amber-100 text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-3 border-l-2 border-amber-500/80 pl-4 bg-black/30 p-4 rounded-r-xl">
+                  {topComm.commentaryText}
+                </div>
+
+                {topComm.practicalApplication && (
+                  <div className="p-3.5 rounded-xl bg-amber-900/30 border border-amber-700/40 text-amber-200 text-xs sm:text-sm font-serif italic">
+                    <span className="font-bold not-italic text-amber-300 block mb-1">Spiritual Application:</span>
+                    "{topComm.practicalApplication}"
+                  </div>
+                )}
+              </>
+            )}
+          </article>
+        );
+      })()}
 
       {/* Masterpiece Sacred Art Companion: Visio Divina */}
       {pairedArt && (
