@@ -15,8 +15,6 @@ import {
 import { MassReading } from '../types';
 import { LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
 import { SacredReader } from '../utils/speech';
-import { getDailyGospelCommentaries } from '../data/commentary';
-import { StructuredCommentaryDisplay } from './StructuredCommentary';
 
 interface ReflectionViewProps {
   reading: MassReading;
@@ -190,43 +188,6 @@ ${reading.reflection.content}`;
           </div>
         </div>
       </article>
-
-      {/* PATRISTIC EXPOSITION AND BIBLE COMMENTARY */}
-      {(() => {
-        const comms = getDailyGospelCommentaries(reading);
-        const topComm = comms[0];
-        if (!topComm) return null;
-        return (
-          <article className="bg-[#F8F4ED] text-[#2C1C0E] rounded-xl p-6 sm:p-10 shadow-sm border border-[#DDD0BE] space-y-6">
-            <div className="border-b border-[#E3D6C5] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <span className="inline-block px-3 py-1 rounded-full bg-[#8C6239] text-white text-xs font-bold uppercase tracking-widest font-serif mb-2">
-                  Patristic Exposition
-                </span>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#2A1B0E] tracking-normal">
-                  Commentary and Notes from the Magisterium
-                </h3>
-                <p className="text-xs sm:text-sm text-[#6B523B] font-serif italic mt-1">
-                  Gospel Passage: {topComm.scriptureReference} — {topComm.author}
-                </p>
-              </div>
-            </div>
-
-            {/* Structured Commentary Display */}
-            <div className="pt-2">
-              <StructuredCommentaryDisplay commentaryText={topComm.commentaryText} />
-            </div>
-
-            {/* Practical Application */}
-            {topComm.practicalApplication && (
-              <div className="p-4 rounded-xl bg-[#FAF4EA] border border-[#E5D7C3] text-[#4A3623] text-xs sm:text-sm font-serif italic">
-                <span className="font-bold not-italic text-[#8C6239] block mb-1">Practical Spiritual Fruit:</span>
-                "{topComm.practicalApplication}"
-              </div>
-            )}
-          </article>
-        );
-      })()}
     </div>
   );
 };

@@ -525,9 +525,6 @@ ${reading.gospel.text}`;
                 <h4 className="font-serif text-xl sm:text-2xl font-bold text-[#2A1B0E]">
                   Homily
                 </h4>
-                <p className="text-xs text-[#6B523B] font-serif italic">
-                  {dailyHomily.saintName}, {dailyHomily.doctorTitle} ({dailyHomily.workTitle}, {dailyHomily.yearDelivered})
-                </p>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
@@ -555,7 +552,10 @@ ${reading.gospel.text}`;
                 <div className="pt-2 space-y-3">
                   <div>
                     <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2A1B0E] leading-snug">
-                      {dailyHomily.homilyHeading}
+                      <span className="block">{dailyHomily.homilyTitle}</span>
+                      <span className="block text-sm sm:text-base font-normal text-[#4A3520] mt-1">
+                        {dailyHomily.homilyAttribution}
+                      </span>
                     </h3>
                     <div className="h-px bg-[#DBCBB5] my-3" />
                   </div>
