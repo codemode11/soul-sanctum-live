@@ -636,7 +636,7 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
 
   // 2. Parse commentaryText by Saint headings
   const rawText = commentary.commentaryText.trim();
-  const saintPattern = /(?:^|\n\n)([A-Z0-9\s.,'ÀÈÉ\(\)&\-]+?):\s*([\s\S]*?)(?=(?:\n\n[A-Z0-9\s.,'ÀÈÉ\(\)&\-]+?:)|$)/g;
+  const saintPattern = /(?:^|\n\n)([A-Z0-9\s.,'ÀÈÉ\(\)&\-\u2013\u2014—–]+?):\s*([\s\S]*?)(?=(?:\n\n[A-Z0-9\s.,'ÀÈÉ\(\)&\-\u2013\u2014—–]+?:)|$)/g;
   
   let match: RegExpExecArray | null;
   let matchesFound = 0;
@@ -659,11 +659,20 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
       matchesFound++;
       const persona = getSaintReaderPersona(rawSaintName);
       
-      const formattedName = rawSaintName
-        .toLowerCase()
-        .replace(/\b(st\.|pope|the|of|in|and)\b/g, (w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .replace(/\b\w/g, (c) => c.toUpperCase())
-        .replace(/St\./g, 'Saint');
+      let formattedName = rawSaintName;
+      if (upper.startsWith('HOMILY')) {
+        formattedName = rawSaintName
+          .replace(/^HOMILY OF /i, 'Homily of ')
+          .replace(/\bST\./gi, 'St.')
+          .replace(/\bAD\b/gi, 'AD')
+          .replace(/\bBC\b/gi, 'BC');
+      } else {
+        formattedName = rawSaintName
+          .toLowerCase()
+          .replace(/\b(st\.|pope|the|of|in|and)\b/g, (w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .replace(/\b\w/g, (c) => c.toUpperCase())
+          .replace(/St\./g, 'Saint');
+      }
 
       const titleAnnouncement = persona.title && !persona.title.includes('General') && !persona.title.includes('Catholic Lector') 
         ? `, ${persona.title},` 

@@ -575,12 +575,27 @@ ${selectedCommentary.practicalApplication}`;
                     className={`rounded-xl p-4 border transition-all duration-300 ${
                       isThisSpeaking
                         ? 'bg-amber-50/90 border-[#8B5A2B] shadow-xs ring-1 ring-[#8B5A2B]/40'
+                        : sec.saintName.toLowerCase().includes('homily')
+                        ? 'bg-amber-50/40 hover:bg-amber-50/70 border-amber-300/80 shadow-2xs'
                         : 'bg-white hover:bg-stone-50/60 border-stone-200/90 shadow-2xs'
                     }`}
                   >
                     {/* Saint Header */}
                     <div className="flex items-center justify-between gap-2 pb-1.5 mb-2 border-b border-stone-200/80">
                       <div className="flex flex-wrap items-baseline gap-2">
+                        {sec.saintName.toLowerCase().includes('homily') ? (
+                          <span className="px-2 py-0.5 rounded-full bg-amber-900 text-amber-100 text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
+                            Patristic Homily
+                          </span>
+                        ) : sec.saintName.toLowerCase().includes('vatican') || sec.saintName.toLowerCase().includes('catechism') || sec.saintName.toLowerCase().includes('magisterium') ? (
+                          <span className="px-2 py-0.5 rounded-full bg-stone-800 text-amber-200 text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
+                            Magisterium
+                          </span>
+                        ) : (
+                          <span className="px-2 py-0.5 rounded-full bg-stone-200 text-stone-800 text-[10px] font-bold font-cinzel uppercase tracking-wider shrink-0">
+                            Commentary
+                          </span>
+                        )}
                         <span className="font-cinzel font-bold text-amber-950 text-xs sm:text-sm tracking-wide">
                           {sec.saintName}
                         </span>
@@ -609,7 +624,7 @@ ${selectedCommentary.practicalApplication}`;
 
                     {/* Exegesis Text */}
                     <div 
-                      className="font-serif-sacred text-stone-900 leading-relaxed transition-all duration-200"
+                      className="font-serif-sacred text-stone-900 leading-relaxed transition-all duration-200 whitespace-pre-line space-y-2"
                       style={commentaryStyle}
                     >
                       {sec.bodyOnly}
