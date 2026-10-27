@@ -245,7 +245,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
       
       {/* Novena Tracker Banner */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/30 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="group bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/30 flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
             <NovenaHands9Icon className="w-5 h-5 text-amber-400" />

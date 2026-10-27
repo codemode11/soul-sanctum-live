@@ -602,142 +602,115 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
   >
     <style>{`
       @keyframes sanctumFlameFlicker1 {
-        0%, 100% { transform: translateY(0px) scale(1, 1) rotate(-8deg); opacity: 1; }
-        20% { transform: translateY(-0.9px) scale(0.82, 1.28) rotate(10deg); opacity: 0.65; }
-        40% { transform: translateY(0.5px) scale(1.18, 0.78) rotate(-12deg); opacity: 0.95; }
-        60% { transform: translateY(-0.7px) scale(0.88, 1.22) rotate(9deg); opacity: 0.55; }
-        80% { transform: translateY(0.3px) scale(1.12, 0.86) rotate(-6deg); opacity: 1; }
+        0%, 100% { transform: translateY(0px) scale(1, 1) rotate(-2.5deg); opacity: 0.98; }
+        35% { transform: translateY(-0.25px) scale(0.95, 1.07) rotate(3deg); opacity: 0.84; }
+        70% { transform: translateY(0.15px) scale(1.04, 0.95) rotate(-3deg); opacity: 0.94; }
       }
       @keyframes sanctumFlameFlicker2 {
-        0%, 100% { transform: translateY(-0.5px) scale(0.9, 1.2) rotate(11deg); opacity: 0.75; }
-        25% { transform: translateY(0.6px) scale(1.16, 0.76) rotate(-11deg); opacity: 1; }
-        50% { transform: translateY(-1.0px) scale(0.84, 1.32) rotate(8deg); opacity: 0.5; }
-        75% { transform: translateY(0.4px) scale(1.14, 0.85) rotate(-9deg); opacity: 0.95; }
+        0%, 100% { transform: translateY(-0.15px) scale(0.97, 1.05) rotate(2.5deg); opacity: 0.9; }
+        40% { transform: translateY(0.15px) scale(1.04, 0.95) rotate(-3deg); opacity: 1; }
+        75% { transform: translateY(-0.25px) scale(0.95, 1.07) rotate(2deg); opacity: 0.82; }
       }
       @keyframes sanctumFlameFlicker3 {
-        0%, 100% { transform: translateY(0.4px) scale(1.15, 0.82) rotate(-10deg); opacity: 0.9; }
-        18% { transform: translateY(-1.0px) scale(0.8, 1.3) rotate(12deg); opacity: 0.55; }
-        45% { transform: translateY(0.5px) scale(1.18, 0.78) rotate(-8deg); opacity: 1; }
-        72% { transform: translateY(-0.8px) scale(0.86, 1.25) rotate(10deg); opacity: 0.6; }
+        0%, 100% { transform: translateY(0.1px) scale(1.03, 0.96) rotate(-2deg); opacity: 0.95; }
+        30% { transform: translateY(-0.25px) scale(0.95, 1.06) rotate(3deg); opacity: 0.83; }
+        65% { transform: translateY(0.1px) scale(1.03, 0.97) rotate(-2.5deg); opacity: 1; }
       }
       @keyframes sanctumHaloPulse {
-        0%, 100% { opacity: 0.25; transform: scale(0.85); }
-        50% { opacity: 0.75; transform: scale(1.35); }
+        0%, 100% { opacity: 0.14; transform: scale(0.95); }
+        50% { opacity: 0.28; transform: scale(1.08); }
       }
-      .sanctum-flame-1 {
-        transform-box: fill-box;
-        transform-origin: 50% 100%;
-        animation: sanctumFlameFlicker1 0.55s infinite ease-in-out;
-      }
-      .sanctum-flame-2 {
-        transform-box: fill-box;
-        transform-origin: 50% 100%;
-        animation: sanctumFlameFlicker2 0.48s infinite ease-in-out;
-      }
+      .sanctum-flame-1,
+      .sanctum-flame-2,
       .sanctum-flame-3 {
         transform-box: fill-box;
         transform-origin: 50% 100%;
-        animation: sanctumFlameFlicker3 0.62s infinite ease-in-out;
       }
-      .sanctum-halo-1 {
-        transform-box: fill-box;
-        transform-origin: 50% 50%;
-        animation: sanctumHaloPulse 0.55s infinite ease-in-out;
-      }
-      .sanctum-halo-2 {
-        transform-box: fill-box;
-        transform-origin: 50% 50%;
-        animation: sanctumHaloPulse 0.48s infinite ease-in-out 0.15s;
-      }
+      .sanctum-halo-1,
+      .sanctum-halo-2,
       .sanctum-halo-3 {
         transform-box: fill-box;
         transform-origin: 50% 50%;
-        animation: sanctumHaloPulse 0.62s infinite ease-in-out 0.3s;
+        opacity: 0.14;
+      }
+      .group:hover .sanctum-flame-1,
+      svg:hover .sanctum-flame-1 {
+        animation: sanctumFlameFlicker1 0.9s infinite ease-in-out;
+      }
+      .group:hover .sanctum-flame-2,
+      svg:hover .sanctum-flame-2 {
+        animation: sanctumFlameFlicker2 0.78s infinite ease-in-out;
+      }
+      .group:hover .sanctum-flame-3,
+      svg:hover .sanctum-flame-3 {
+        animation: sanctumFlameFlicker3 1.02s infinite ease-in-out;
+      }
+      .group:hover .sanctum-halo-1,
+      svg:hover .sanctum-halo-1 {
+        animation: sanctumHaloPulse 0.9s infinite ease-in-out;
+      }
+      .group:hover .sanctum-halo-2,
+      svg:hover .sanctum-halo-2 {
+        animation: sanctumHaloPulse 0.78s infinite ease-in-out 0.15s;
+      }
+      .group:hover .sanctum-halo-3,
+      svg:hover .sanctum-halo-3 {
+        animation: sanctumHaloPulse 1.02s infinite ease-in-out 0.3s;
       }
     `}</style>
 
-    {/* === FLICKERING FIRE ON TOP OF "I" (x = 5.5) === */}
-    <circle cx="5.5" cy="4.3" r="2.7" fill="#F59E0B" stroke="none" className="sanctum-halo-1" />
+    {/* === GENTLE FLICKERING FIRE ON TOP OF "I" (x = 5.5) === */}
+    <circle cx="5.5" cy="4.5" r="2.1" fill="#F59E0B" stroke="none" className="sanctum-halo-1" />
     <g className="sanctum-flame-1">
       {/* Outer flickering flame tongue */}
       <path
-        d="M5.5 0.6C3.8 2.6 3.3 4.4 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.7 4.4 7.2 2.6 5.5 0.6Z"
+        d="M5.5 1.1C4.1 2.9 3.6 4.5 3.8 5.8c.2 1.0.9 1.6 1.7 1.6s1.5-.6 1.7-1.6C7.4 4.5 6.9 2.9 5.5 1.1Z"
         fill="#F59E0B"
-        fillOpacity="0.85"
+        fillOpacity="0.7"
         stroke="currentColor"
-        strokeWidth="1.15"
-      >
-        <animate
-          attributeName="d"
-          values="M5.5 0.6C3.8 2.6 3.3 4.4 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.7 4.4 7.2 2.6 5.5 0.6Z;
-                  M6.2 0.2C4.1 2.4 3.4 4.4 3.7 5.9c.3 1.1 1.0 1.7 1.8 1.7s1.6-.6 1.9-1.7C7.8 4.2 7.5 2.2 6.2 0.2Z;
-                  M4.7 0.9C3.4 2.7 3.2 4.5 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.6 4.5 6.6 2.8 4.7 0.9Z;
-                  M5.5 0.6C3.8 2.6 3.3 4.4 3.6 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7C7.7 4.4 7.2 2.6 5.5 0.6Z"
-          dur="0.52s"
-          repeatCount="indefinite"
-        />
-      </path>
+        strokeWidth="1.2"
+      />
       {/* Inner white-gold hot flame core */}
       <path
-        d="M5.5 3.0c-.6 1.1-.8 2.0-.6 2.8.1.6.4.9.6.9s.5-.3.6-.9c.2-.8 0-1.7-.6-2.8Z"
+        d="M5.5 3.3c-.5 1.0-.7 1.8-.5 2.5.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.5Z"
         fill="#FEF08A"
         stroke="none"
       />
     </g>
 
-    {/* === FLICKERING FIRE ON TOP-LEFT OF "X" (x = 12.0) === */}
-    <circle cx="12.0" cy="4.3" r="2.7" fill="#F59E0B" stroke="none" className="sanctum-halo-2" />
+    {/* === GENTLE FLICKERING FIRE ON TOP-LEFT OF "X" (x = 12.0) === */}
+    <circle cx="12.0" cy="4.5" r="2.1" fill="#F59E0B" stroke="none" className="sanctum-halo-2" />
     <g className="sanctum-flame-2">
       {/* Outer flickering flame tongue */}
       <path
-        d="M12.0 0.6C10.3 2.6 9.8 4.4 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
+        d="M12.0 1.1C10.6 2.9 10.1 4.5 10.3 5.8c.2 1.0.9 1.6 1.7 1.6s1.5-.6 1.7-1.6c.2-1.3-.3-2.9-1.7-4.7Z"
         fill="#F59E0B"
-        fillOpacity="0.85"
+        fillOpacity="0.7"
         stroke="currentColor"
-        strokeWidth="1.15"
-      >
-        <animate
-          attributeName="d"
-          values="M12.0 0.6C10.3 2.6 9.8 4.4 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z;
-                  M11.2 0.9C9.9 2.7 9.7 4.5 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.2-1.4-.8-3.1-2.7-5.0Z;
-                  M12.8 0.2C10.6 2.4 9.9 4.4 10.2 5.9c.3 1.1 1.0 1.7 1.8 1.7s1.6-.6 1.9-1.7c.4-1.7.1-3.7-1.1-5.7Z;
-                  M12.0 0.6C10.3 2.6 9.8 4.4 10.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
-          dur="0.46s"
-          repeatCount="indefinite"
-        />
-      </path>
+        strokeWidth="1.2"
+      />
       {/* Inner white-gold hot flame core */}
       <path
-        d="M12.0 3.0c-.6 1.1-.8 2.0-.6 2.8.1.6.4.9.6.9s.5-.3.6-.9c.2-.8 0-1.7-.6-2.8Z"
+        d="M12.0 3.3c-.5 1.0-.7 1.8-.5 2.5.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.5Z"
         fill="#FEF08A"
         stroke="none"
       />
     </g>
 
-    {/* === FLICKERING FIRE ON TOP-RIGHT OF "X" (x = 19.0) === */}
-    <circle cx="19.0" cy="4.3" r="2.7" fill="#F59E0B" stroke="none" className="sanctum-halo-3" />
+    {/* === GENTLE FLICKERING FIRE ON TOP-RIGHT OF "X" (x = 19.0) === */}
+    <circle cx="19.0" cy="4.5" r="2.1" fill="#F59E0B" stroke="none" className="sanctum-halo-3" />
     <g className="sanctum-flame-3">
       {/* Outer flickering flame tongue */}
       <path
-        d="M19.0 0.6C17.3 2.6 16.8 4.4 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
+        d="M19.0 1.1C17.6 2.9 17.1 4.5 17.3 5.8c.2 1.0.9 1.6 1.7 1.6s1.5-.6 1.7-1.6c.2-1.3-.3-2.9-1.7-4.7Z"
         fill="#F59E0B"
-        fillOpacity="0.85"
+        fillOpacity="0.7"
         stroke="currentColor"
-        strokeWidth="1.15"
-      >
-        <animate
-          attributeName="d"
-          values="M19.0 0.6C17.3 2.6 16.8 4.4 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z;
-                  M19.8 0.2C17.6 2.4 16.9 4.4 17.2 5.9c.3 1.1 1.0 1.7 1.8 1.7s1.6-.6 1.9-1.7c.4-1.7.1-3.7-1.1-5.7Z;
-                  M18.2 1.0C16.9 2.8 16.7 4.5 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.2-1.4-.8-3.0-2.7-4.9Z;
-                  M19.0 0.6C17.3 2.6 16.8 4.4 17.1 5.9c.3 1.1 1.0 1.7 1.9 1.7s1.6-.6 1.9-1.7c.3-1.5-.2-3.3-1.9-5.3Z"
-          dur="0.58s"
-          repeatCount="indefinite"
-        />
-      </path>
+        strokeWidth="1.2"
+      />
       {/* Inner white-gold hot flame core */}
       <path
-        d="M19.0 3.0c-.6 1.1-.8 2.0-.6 2.8.1.6.4.9.6.9s.5-.3.6-.9c.2-.8 0-1.7-.6-2.8Z"
+        d="M19.0 3.3c-.5 1.0-.7 1.8-.5 2.5.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.5Z"
         fill="#FEF08A"
         stroke="none"
       />

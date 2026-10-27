@@ -1204,33 +1204,33 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'faustina' && (
         <div className="space-y-6 animate-fadeIn">
           {/* Header Banner */}
-          <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-br from-purple-950 via-[#18111f] to-stone-950 border border-purple-500/35 shadow-2xl text-stone-100 space-y-3">
+          <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-br from-[#FDFBF7] via-[#F7F2E7] to-[#F3E8E2] border border-[#D5C3AE] shadow-md text-stone-900 space-y-3">
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-400/30">
+              <span className="p-1.5 rounded-xl bg-amber-100/80 text-[#8B5A2B] border border-amber-300/70">
                 <Star className="w-4 h-4" />
               </span>
-              <span className="font-cinzel text-xs font-bold text-amber-300 tracking-wider uppercase">
+              <span className="font-cinzel text-xs font-bold text-[#8B5A2B] tracking-wider uppercase">
                 Saint Maria Faustina Kowalska • Vilnius and Kraków
               </span>
             </div>
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide">
               The Diary and The 14 Promises of Jesus
             </h2>
-            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-stone-700 font-serif-sacred max-w-2xl leading-relaxed">
               "My Heart overflows with great mercy for souls... The graces of My mercy are drawn by means of one vessel only, and that is—trust" (Diary 1731). Discover the 14 extraordinary promises given by Christ to souls who recite the Chaplet of Divine Mercy, along with cornerstone passages from the Diary.
             </p>
           </div>
 
           {/* 14 PROMISES OF JESUS */}
-          <div className="rounded-xl p-6 sm:p-8 bg-stone-900/90 border border-amber-500/25 shadow-xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-amber-500/20 pb-4 gap-3">
+          <div className="rounded-xl p-6 sm:p-8 bg-[#FAF8F5] border border-[#E2D9C8] shadow-md space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#E2D9C8] pb-4 gap-3">
               <div className="flex items-center gap-2.5">
-                <ShieldCheck className="w-6 h-6 text-amber-400 shrink-0" />
+                <ShieldCheck className="w-6 h-6 text-[#8B5A2B] shrink-0" />
                 <div>
-                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-amber-200">
+                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
                     The 14 Promises of Jesus for Praying the Chaplet
                   </h3>
-                  <span className="text-xs sm:text-sm font-serif text-stone-300">
+                  <span className="text-xs sm:text-sm font-serif text-stone-600">
                     Approved by the Holy See • From the Diary of St. Maria Faustina Kowalska
                   </span>
                 </div>
@@ -1238,12 +1238,12 @@ export const RosaryAndChapletView: React.FC = () => {
 
               {/* Standardized Font Size Stepper */}
               <div className="flex items-center gap-2.5 self-start sm:self-auto">
-                <span className="font-medium text-amber-200/90 text-xs">Text Size:</span>
-                <div className="flex items-center gap-1 bg-black/50 p-1 rounded-md border border-amber-500/30 shadow-2xs">
+                <span className="font-medium text-stone-600 text-xs">Text Size:</span>
+                <div className="flex items-center gap-1 bg-[#EFECE6] p-1 rounded-md border border-[#D5CEBF] shadow-2xs">
                   <button
                     onClick={decreasePromisesFontSize}
                     disabled={promisesFontSize === 'normal'}
-                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-200 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-stone-700 hover:text-stone-900 hover:bg-white/70 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
                     title="Decrease font size"
                     aria-label="Decrease font size"
                   >
@@ -1254,7 +1254,7 @@ export const RosaryAndChapletView: React.FC = () => {
                     className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                       promisesFontSize === 'normal'
                         ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
-                        : 'text-amber-200 hover:text-white hover:bg-white/10'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
                     }`}
                     title="Default text size (100%)"
                   >
@@ -1265,7 +1265,7 @@ export const RosaryAndChapletView: React.FC = () => {
                     className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                       promisesFontSize === 'large'
                         ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
-                        : 'text-amber-200 hover:text-white hover:bg-white/10'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
                     }`}
                     title="Large text size (125%)"
                   >
@@ -1276,7 +1276,7 @@ export const RosaryAndChapletView: React.FC = () => {
                     className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                       promisesFontSize === 'xlarge'
                         ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
-                        : 'text-amber-200 hover:text-white hover:bg-white/10'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
                     }`}
                     title="Extra large text size (155%)"
                   >
@@ -1285,7 +1285,7 @@ export const RosaryAndChapletView: React.FC = () => {
                   <button
                     onClick={increasePromisesFontSize}
                     disabled={promisesFontSize === 'xlarge'}
-                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-[#6B4423] hover:text-stone-900 hover:bg-white/70 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
                     title="Increase font size"
                     aria-label="Increase font size"
                   >
@@ -1301,30 +1301,30 @@ export const RosaryAndChapletView: React.FC = () => {
                 return (
                   <div 
                     key={item.number} 
-                    className="p-5 sm:p-6 rounded-xl bg-black/50 border border-amber-500/25 hover:border-amber-400/50 transition-all space-y-3.5 flex flex-col justify-between shadow-md"
+                    className="p-5 sm:p-6 rounded-xl bg-white border border-[#E6DFD3] hover:border-[#C8B294] transition-all space-y-3.5 flex flex-col justify-between shadow-sm hover:shadow-md"
                   >
                     <div className="space-y-2.5">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="font-cinzel text-sm sm:text-base font-bold text-amber-300 tracking-wide">
+                        <span className="font-cinzel text-sm sm:text-base font-bold text-[#8B5A2B] tracking-wide">
                           Promise #{item.number}
                         </span>
-                        <span className="text-xs sm:text-sm font-serif px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-500/40 font-medium">
+                        <span className="text-xs sm:text-sm font-serif px-3 py-1 rounded-full bg-[#F5EFE6] text-[#6B4423] border border-[#DFD2C0] font-medium">
                           {item.diaryCitation}
                         </span>
                       </div>
-                      <h4 className={`font-serif font-bold text-white tracking-wide ${
+                      <h4 className={`font-serif font-bold text-stone-900 tracking-wide ${
                         promisesFontSize === 'normal' ? 'text-base sm:text-lg' :
                         promisesFontSize === 'large' ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
                       }`}>
                         {item.title}
                       </h4>
-                      <p className={`font-serif italic text-amber-50 leading-relaxed bg-white/10 p-3.5 sm:p-4 rounded-xl border-l-4 border-amber-400 shadow-inner ${
+                      <p className={`font-serif italic text-stone-800 leading-relaxed bg-[#FDFBF7] p-3.5 sm:p-4 rounded-xl border-l-4 border-[#B48342] shadow-2xs ${
                         promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
                         promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
                       }`}>
                         "{item.promise}"
                       </p>
-                      <p className={`font-serif text-stone-200 leading-relaxed pt-1 ${
+                      <p className={`font-serif text-stone-600 leading-relaxed pt-1 ${
                         promisesFontSize === 'normal' ? 'text-xs sm:text-sm' :
                         promisesFontSize === 'large' ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
                       }`}>
@@ -1332,7 +1332,7 @@ export const RosaryAndChapletView: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-white/10 flex items-center justify-end gap-2.5">
+                    <div className="pt-3 border-t border-stone-200/80 flex items-center justify-end gap-2.5">
                       <button
                         onClick={() => {
                           const text = `Promise of Jesus #${item.number}: ${item.title} (${item.diaryCitation})\n"${item.promise}"\nContext: ${item.theologicalContext}`;
@@ -1340,10 +1340,10 @@ export const RosaryAndChapletView: React.FC = () => {
                           setCopiedPromiseNum(item.number);
                           setTimeout(() => setCopiedPromiseNum(null), 2000);
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white text-xs sm:text-sm font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200/80 text-xs sm:text-sm font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
                         title="Copy promise"
                       >
-                        {isCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                        {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                         <span>{isCopied ? 'Copied' : 'Copy'}</span>
                       </button>
 
@@ -1351,11 +1351,11 @@ export const RosaryAndChapletView: React.FC = () => {
                         onClick={() => {
                           SacredReader.speak(`${item.title}. Jesus says: ${item.promise}`);
                         }}
-                        className="p-2 rounded-lg bg-amber-500/25 hover:bg-amber-500/40 text-amber-200 transition-colors cursor-pointer"
+                        className="p-2 rounded-lg bg-[#F5EFE6] hover:bg-[#EBE0D0] text-[#6B4423] border border-[#DFD2C0] transition-colors cursor-pointer"
                         title="Listen with human voice"
                         aria-label="Listen with human voice"
                       >
-                        <Volume2 className="w-4 h-4 text-amber-300" />
+                        <Volume2 className="w-4 h-4 text-[#8B5A2B]" />
                       </button>
                     </div>
                   </div>
@@ -1368,15 +1368,15 @@ export const RosaryAndChapletView: React.FC = () => {
           {renderThreeOClockCard(true)}
 
           {/* KEY EXCERPTS FROM THE DIARY OF ST. FAUSTINA */}
-          <div className="rounded-xl p-6 sm:p-8 bg-stone-900/90 border border-purple-500/25 shadow-xl space-y-6">
-            <div className="flex items-center justify-between border-b border-purple-500/20 pb-4">
+          <div className="rounded-xl p-6 sm:p-8 bg-[#FAF8F5] border border-[#E2D9C8] shadow-md space-y-6">
+            <div className="flex items-center justify-between border-b border-[#E2D9C8] pb-4">
               <div className="flex items-center gap-2.5">
-                <BookOpen className="w-5 h-5 text-purple-300" />
-                <h3 className="font-cinzel text-lg sm:text-xl font-bold text-purple-200">
+                <BookOpen className="w-5 h-5 text-[#8B5A2B]" />
+                <h3 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
                   Cornerstone Excerpts from The Diary of St. Faustina
                 </h3>
               </div>
-              <span className="text-[11px] font-serif text-stone-400">
+              <span className="text-[11px] font-serif text-stone-600">
                 Divine Mercy in My Soul
               </span>
             </div>
@@ -1389,29 +1389,29 @@ export const RosaryAndChapletView: React.FC = () => {
                 return (
                   <article 
                     key={excerpt.id}
-                    className="p-5 rounded-xl bg-black/40 border border-purple-500/20 hover:border-purple-400/35 transition-all space-y-3"
+                    className="p-5 rounded-xl bg-white border border-[#E6DFD3] hover:border-[#C8B294] transition-all space-y-3 shadow-sm"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <span className="font-cinzel text-xs font-bold text-purple-300">
+                        <span className="font-cinzel text-xs font-bold text-[#8B5A2B]">
                           Diary #{excerpt.diaryNumber}
                         </span>
                         <span className="text-stone-400">•</span>
-                        <h4 className="font-serif text-sm font-bold text-white">
+                        <h4 className="font-serif text-sm font-bold text-stone-900">
                           {excerpt.title}
                         </h4>
                       </div>
-                      <span className="text-[10px] font-serif px-2 py-0.5 rounded-full bg-purple-500/15 text-purple-200 border border-purple-500/30 self-start sm:self-auto">
+                      <span className="text-[10px] font-serif px-2.5 py-0.5 rounded-full bg-[#F5EFE6] text-[#6B4423] border border-[#DFD2C0] self-start sm:self-auto font-medium">
                         Spoken by {excerpt.spokenBy}
                       </span>
                     </div>
 
-                    <p className="text-xs sm:text-sm font-serif italic text-purple-100/95 leading-relaxed bg-white/5 p-4 rounded-xl border-l-2 border-purple-400">
+                    <p className="text-xs sm:text-sm font-serif italic text-stone-800 leading-relaxed bg-[#FDFBF7] p-4 rounded-xl border-l-4 border-[#B48342]">
                       "{excerpt.quote}"
                     </p>
 
-                    <div className="p-3 rounded-xl bg-purple-950/20 border border-purple-500/20 text-xs font-serif text-stone-300">
-                      <strong className="text-purple-300">Theological Meaning: </strong>
+                    <div className="p-3 rounded-xl bg-[#F7F3EB] border border-[#E6DFD3] text-xs font-serif text-stone-700">
+                      <strong className="text-[#6B4423]">Theological Meaning: </strong>
                       {excerpt.reflection}
                     </div>
 
@@ -1423,10 +1423,10 @@ export const RosaryAndChapletView: React.FC = () => {
                           setCopiedExcerptId(excerpt.id);
                           setTimeout(() => setCopiedExcerptId(null), 2000);
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white text-xs font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200/80 text-xs font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
                         title="Copy excerpt"
                       >
-                        {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                         <span>{isCopied ? 'Copied' : 'Copy'}</span>
                       </button>
 
@@ -1445,13 +1445,13 @@ export const RosaryAndChapletView: React.FC = () => {
                         }}
                         className={`p-2 rounded-lg text-xs font-serif flex items-center transition-colors cursor-pointer ${
                           isReading
-                            ? 'bg-purple-700 text-white animate-pulse'
-                            : 'bg-purple-500/20 hover:bg-purple-500/35 text-purple-200 border border-purple-400/30'
+                            ? 'bg-[#6B4423] text-white animate-pulse'
+                            : 'bg-[#F5EFE6] hover:bg-[#EBE0D0] text-[#6B4423] border border-[#DFD2C0]'
                         }`}
                         title="Listen with human voice"
                         aria-label="Listen with human voice"
                       >
-                        <Volume2 className="w-4 h-4 text-purple-300" />
+                        <Volume2 className={`w-4 h-4 ${isReading ? 'text-white' : 'text-[#8B5A2B]'}`} />
                       </button>
                     </div>
                   </article>
@@ -1479,37 +1479,97 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="space-y-6 animate-in fade-in duration-300">
           
           {/* Header Banner */}
-          <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-r from-blue-950 via-indigo-950 to-stone-900 border border-blue-500/35 shadow-2xl space-y-3 text-white">
+          <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-br from-[#F7FAFC] via-[#EFF6FF] to-[#F5F0E6] border border-[#BFD4EA] shadow-md space-y-3 text-stone-900">
             <div className="flex items-center gap-2.5">
-              <span className="p-2.5 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-400/30">
-                <Star className="w-5 h-5 text-blue-300" />
+              <span className="p-2.5 rounded-xl bg-blue-100/80 text-blue-800 border border-blue-300/70">
+                <Star className="w-5 h-5 text-blue-700" />
               </span>
               <div>
-                <span className="text-[11px] font-cinzel font-bold tracking-widest text-blue-300 uppercase block">
+                <span className="text-[11px] font-cinzel font-bold tracking-widest text-blue-800 uppercase block">
                   The Secret of the Rosary • Saint Louis-Marie de Montfort
                 </span>
-                <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-amber-100">
+                <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
                   The 15 Promises of Mary to Devotees of the Holy Rosary
                 </h3>
               </div>
             </div>
-            <p className="text-xs sm:text-sm font-serif text-stone-200 leading-relaxed max-w-3xl">
-              As revealed to Saint Dominic and Blessed Alan de la Roche, and compiled by Saint Louis-Marie Grignion de Montfort in his immortal spiritual classic <span className="italic text-amber-200 font-medium">The Secret of the Rosary</span>.
+            <p className="text-xs sm:text-sm font-serif text-stone-700 leading-relaxed max-w-3xl">
+              As revealed to Saint Dominic and Blessed Alan de la Roche, and compiled by Saint Louis-Marie Grignion de Montfort in his immortal spiritual classic <span className="italic text-blue-900 font-semibold">The Secret of the Rosary</span>.
             </p>
           </div>
 
           {/* 15 Promises Grid */}
-          <div className="rounded-xl p-6 sm:p-8 bg-stone-900/90 border border-blue-500/25 shadow-xl space-y-6">
-            <div className="flex items-center justify-between border-b border-blue-500/20 pb-4">
+          <div className="rounded-xl p-6 sm:p-8 bg-[#FAF8F5] border border-[#D8E2ED] shadow-md space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#D8E2ED] pb-4 gap-3">
               <div className="flex items-center gap-2.5">
-                <ShieldCheck className="w-5 h-5 text-blue-400" />
-                <h4 className="font-cinzel text-base sm:text-lg font-bold text-blue-200">
-                  Fifteen Assurances of the Mother of God
-                </h4>
+                <ShieldCheck className="w-6 h-6 text-blue-700 shrink-0" />
+                <div>
+                  <h4 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
+                    Fifteen Assurances of the Mother of God
+                  </h4>
+                  <span className="text-xs sm:text-sm font-serif text-stone-600">
+                    Catholic Tradition and Magisterium • The Secret of the Rosary
+                  </span>
+                </div>
               </div>
-              <span className="text-[11px] font-serif text-stone-400">
-                Catholic Tradition and Magisterium
-              </span>
+
+              {/* Standardized Font Size Stepper */}
+              <div className="flex items-center gap-2.5 self-start sm:self-auto">
+                <span className="font-medium text-stone-600 text-xs">Text Size:</span>
+                <div className="flex items-center gap-1 bg-[#EFECE6] p-1 rounded-md border border-[#D5CEBF] shadow-2xs">
+                  <button
+                    onClick={decreasePromisesFontSize}
+                    disabled={promisesFontSize === 'normal'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-stone-700 hover:text-stone-900 hover:bg-white/70 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Decrease font size"
+                    aria-label="Decrease font size"
+                  >
+                    A-
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('normal')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'normal'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                    }`}
+                    title="Default text size (100%)"
+                  >
+                    A
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('large')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'large'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                    }`}
+                    title="Large text size (125%)"
+                  >
+                    A+
+                  </button>
+                  <button
+                    onClick={() => setPromisesFontSize('xlarge')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      promisesFontSize === 'xlarge'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                    }`}
+                    title="Extra large text size (155%)"
+                  >
+                    A++
+                  </button>
+                  <button
+                    onClick={increasePromisesFontSize}
+                    disabled={promisesFontSize === 'xlarge'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-[#6B4423] hover:text-stone-900 hover:bg-white/70 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Increase font size"
+                    aria-label="Increase font size"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -1518,29 +1578,38 @@ export const RosaryAndChapletView: React.FC = () => {
                 return (
                   <div 
                     key={item.number} 
-                    className="p-5 rounded-xl bg-black/45 border border-blue-500/20 hover:border-blue-400/40 transition-all space-y-3.5 flex flex-col justify-between shadow-md"
+                    className="p-5 sm:p-6 rounded-xl bg-white border border-[#DCE6F2] hover:border-[#93B4D8] transition-all space-y-3.5 flex flex-col justify-between shadow-sm hover:shadow-md"
                   >
                     <div className="space-y-2.5">
                       <div className="flex items-center justify-between">
-                        <span className="font-cinzel text-sm font-bold text-blue-300">
+                        <span className="font-cinzel text-sm sm:text-base font-bold text-blue-800 tracking-wide">
                           Promise #{item.number}
                         </span>
-                        <span className="text-xs font-serif px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-200 border border-blue-500/30">
+                        <span className="text-xs font-serif px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-200 font-medium">
                           De Montfort
                         </span>
                       </div>
-                      <h5 className="font-serif text-base sm:text-lg font-bold text-amber-100">
+                      <h5 className={`font-serif font-bold text-stone-900 ${
+                        promisesFontSize === 'normal' ? 'text-base sm:text-lg' :
+                        promisesFontSize === 'large' ? 'text-lg sm:text-xl' : 'text-xl sm:text-2xl'
+                      }`}>
                         {item.title}
                       </h5>
-                      <p className="text-sm sm:text-base font-serif italic text-white/95 leading-relaxed bg-white/5 p-3.5 rounded-xl border-l-2 border-blue-400">
+                      <p className={`font-serif italic text-stone-800 leading-relaxed bg-[#F8FAFC] p-3.5 sm:p-4 rounded-xl border-l-4 border-blue-500 shadow-2xs ${
+                        promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
+                        promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
+                      }`}>
                         "{item.promise}"
                       </p>
-                      <p className="text-xs sm:text-sm font-serif text-stone-200 leading-normal pt-1.5">
+                      <p className={`font-serif text-stone-600 leading-relaxed pt-1 ${
+                        promisesFontSize === 'normal' ? 'text-xs sm:text-sm' :
+                        promisesFontSize === 'large' ? 'text-sm sm:text-base' : 'text-base sm:text-lg'
+                      }`}>
                         {item.theologicalContext}
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-white/5 flex items-center justify-end gap-2">
+                    <div className="pt-3 border-t border-stone-200/80 flex items-center justify-end gap-2.5">
                       <button
                         onClick={() => {
                           const text = `The 15 Promises of Mary (Promise #${item.number}): ${item.title}\n"${item.promise}"\n— Saint Louis-Marie de Montfort, The Secret of the Rosary\nContext: ${item.theologicalContext}`;
@@ -1548,10 +1617,10 @@ export const RosaryAndChapletView: React.FC = () => {
                           setCopiedMarianNum(item.number);
                           setTimeout(() => setCopiedMarianNum(null), 2000);
                         }}
-                        className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-stone-300 hover:text-white text-[11px] font-serif flex items-center gap-1 transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200/80 text-xs sm:text-sm font-serif flex items-center gap-1.5 transition-colors cursor-pointer"
                         title="Copy promise"
                       >
-                        {isCopied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                        {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
                         <span>{isCopied ? 'Copied' : 'Copy'}</span>
                       </button>
 
@@ -1559,11 +1628,11 @@ export const RosaryAndChapletView: React.FC = () => {
                         onClick={() => {
                           SacredReader.speak(`The ${item.number} promise of Our Lady. ${item.title}. Our Lady promises: ${item.promise}. ${item.theologicalContext}`, undefined, 'female');
                         }}
-                        className="p-1.5 rounded-lg bg-blue-500/20 hover:bg-blue-500/35 text-blue-200 transition-colors cursor-pointer"
+                        className="p-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 transition-colors cursor-pointer"
                         title="Listen with human voice"
                         aria-label="Listen with human voice"
                       >
-                        <Volume2 className="w-3.5 h-3.5 text-blue-300" />
+                        <Volume2 className="w-4 h-4 text-blue-700" />
                       </button>
                     </div>
                   </div>
