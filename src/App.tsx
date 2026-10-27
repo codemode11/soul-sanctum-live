@@ -545,6 +545,7 @@ export default function App() {
                 reading={currentMassReading}
                 onSelectDate={(date) => setCurrentDateStr(date)}
                 onOpenArtViewer={handleOpenArtFromReadings}
+                onSelectTab={handleSelectTab}
               />
             )}
 

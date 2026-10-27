@@ -30,12 +30,14 @@ interface DailyMassReadingsViewProps {
   reading: MassReading;
   onSelectDate: (dateStr: string) => void;
   onOpenArtViewer?: (artId: string) => void;
+  onSelectTab?: (tab: any) => void;
 }
 
 export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
   reading,
   onSelectDate,
-  onOpenArtViewer
+  onOpenArtViewer,
+  onSelectTab
 }) => {
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>(() => {
     if (typeof window !== 'undefined') {
@@ -517,6 +519,34 @@ ${reading.reflection.content}`;
           The Gospel of the Lord. <span className="font-semibold text-stone-900 not-italic">R. Praise to you, Lord Jesus Christ.</span>
         </div>
       </article>
+
+      {/* Direct Callout Banner to Today's Full Patristic Homily & Commentary */}
+      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-5 sm:p-6 border border-amber-600/50 shadow-md text-amber-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="space-y-1 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2">
+            <Sparkles className="w-4 h-4 text-amber-400" />
+            <span className="text-xs font-bold uppercase tracking-widest text-amber-300 font-serif">
+              Patristic Homily of the Day
+            </span>
+          </div>
+          <h4 className="font-serif text-lg sm:text-xl font-bold text-white">
+            Homily, Commentary, and Notes from the Magisterium
+          </h4>
+          <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
+            Read the full, unabridged Patristic Homily by the Saint (with historical date), followed by Catena Aurea, Cornelius à Lapide, S.J., and Vatican Magisterial notes for today's Gospel ({reading.gospel.citation}).
+          </p>
+        </div>
+        {onSelectTab && (
+          <button
+            onClick={() => onSelectTab('bible-study')}
+            className="px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 font-serif font-bold text-sm shadow-md transition-all shrink-0 cursor-pointer flex items-center gap-2"
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Read Today's Homily</span>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        )}
+      </div>
 
       {/* Masterpiece Sacred Art Companion: Visio Divina */}
       {pairedArt && (
