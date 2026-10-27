@@ -212,7 +212,7 @@ ${selectedCommentary.practicalApplication}`;
                 Catholic Bible Commentary
               </h2>
               <p className="text-[11px] text-amber-300/80 font-cinzel uppercase tracking-wider">
-                Catena Aurea and Patristic Exegesis
+                Cornelius à Lapide, Catena Aurea & Patristic Exegesis
               </p>
             </div>
           </div>

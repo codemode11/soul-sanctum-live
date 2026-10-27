@@ -229,7 +229,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: 'Bible Commentary', 
       icon: BibleStudyHighlightedIcon, 
       tag: 'Exegesis', 
-      subtext: 'Catena Aurea and Patristic Study' 
+      subtext: 'Cornelius à Lapide, Catena Aurea and Patristic Study' 
     },
     { 
       id: 'bible-flashcards', 

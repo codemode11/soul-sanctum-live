@@ -6,10 +6,12 @@ export const BIBLE_COMMENTARIES_DATABASE: BibleCommentary[] = [
     id: 'comm-luke-12-54-59-signs-of-time-catena',
     scriptureReference: 'Luke 12:54-59',
     scriptureText: '"When you see a cloud rising in the west you say immediately that it is going to rain—and so it does; and when you notice that the wind is blowing from the south you say that it is going to be hot—and so it is. You hypocrites! You know how to interpret the appearance of the earth and the sky; why do you not know how to interpret the present time? Why do you not judge for yourselves what is right? If you are to go with your opponent before a magistrate, make an effort to settle the matter on the way..."',
-    sourceName: 'Catena Aurea (Golden Chain)',
-    sourceEra: 'Patristic Compilation of St. Thomas Aquinas',
-    author: 'St. Thomas Aquinas citing St. Cyril of Alexandria, St. Ambrose, St. Augustine, and The Venerable Bede',
-    commentaryText: `ST. CYRIL OF ALEXANDRIA: Men who dwell upon the earth observe the visible signs of the sky with great sharpness: when a cloud rises in the west, they foretell rain; when the south wind blows, they anticipate heat. Why then, asks the Savior, do you not turn the clear eye of the soul toward the "present time"—namely, the time of the Messianic visitation, when the Sun of Justice has risen upon the world and the spiritual rain of heavenly doctrine descends upon thirsty hearts?
+    sourceName: 'Great Commentary of Cornelius à Lapide & Catena Aurea',
+    sourceEra: 'Post-Tridentine & Patristic Synthesis',
+    author: 'Cornelius à Lapide, S.J. with St. Cyril of Alexandria, St. Ambrose, St. Augustine, and St. Bede',
+    commentaryText: `CORNELIUS À LAPIDE, S.J.: Note the double warning of Christ in this Gospel: first, that men are eagle-eyed in discerning weather patterns and worldly gain, yet spiritually blind in recognizing the day of divine visitation; second, that we must settle our debt with our adversary "on the way." By the "adversary," Lapide explains, is meant God's holy Law and our own conscience. While we are "on the way"—that is, in this fleeting mortal life—we have time to satisfy Divine Justice through sacramental Penance, sincere contrition, and almsgiving. Once the earthly way ends, the unrepentant soul is brought before the Supreme Magistrate and cast into prison until the very last mite is paid.
+
+ST. CYRIL OF ALEXANDRIA: Men who dwell upon the earth observe the visible signs of the sky with great sharpness: when a cloud rises in the west, they foretell rain; when the south wind blows, they anticipate heat. Why then, asks the Savior, do you not turn the clear eye of the soul toward the "present time"—namely, the time of the Messianic visitation, when the Sun of Justice has risen upon the world and the spiritual rain of heavenly doctrine descends upon thirsty hearts?
 
 ST. AMBROSE OF MILAN: Mystically, the "cloud rising in the west" signifies the sacred humanity of Christ and the overshadowing grace of the Holy Spirit, which cools the fever of human concupiscence; and the "south wind" denotes the fervent warmth of divine charity blowing from the heights of heaven to enflame cold hearts. Those who study the skies of this world while ignoring the advent of their Redeemer are rightly reproved, for the signs of His mercy shine more brightly than the heavens.
 
@@ -370,13 +372,17 @@ export function getDailyGospelCommentaries(
     id: `comm-daily-gospel-${reading?.date || targetCitation}`,
     scriptureReference: targetCitation,
     scriptureText: reading?.gospel.text || `"${targetCitation}"`,
-    sourceName: 'Catena Aurea (Golden Chain)',
-    sourceEra: 'Patristic Compilation of St. Thomas Aquinas',
-    author: reading?.reflection.author
-      ? `St. Thomas Aquinas citing ${reading.reflection.author}, St. John Chrysostom, and St. Bede the Venerable`
-      : 'St. Thomas Aquinas citing St. Augustine, St. Cyril of Alexandria, and St. John Chrysostom',
-    commentaryText: `${patristicAuthorHeader}: ${reading?.reflection.content || 'Every word spoken by the Incarnate Word in the Holy Gospel is spirit and life, calling the Christian soul out of worldly anxiety and into the radiant peace of divine charity.'}\n\nST. JOHN CHRYSOSTOM: In today's Gospel (${targetCitation}), proclaimed by the Church on ${reading?.liturgicalDay || 'this liturgical day'}, Our Lord does not merely instruct the intellect; He heals the wounded will. Notice how He draws His listeners step by step from visible signs to the invisible mysteries of the Kingdom of Heaven, asking of us an unshakeable faith and a merciful heart toward our neighbor.\n\nST. BEDE THE VENERABLE: In the harmony of the sacred liturgy, today's First Reading (${reading?.firstReading.citation || 'Sacred Scripture'}) and Responsorial Psalm ("${reading?.responsorialPsalm.antiphon || 'Blessed be the Lord'}") prepare the soul for the Gospel proclamation. What the Law and the Prophets foretold in shadow, Christ unveils in the full light of grace, nourishing His pilgrim Church through Word and Sacrament.`,
-    practicalApplication: `Read today's Gospel (${targetCitation}) slowly twice today—once in the morning and once at evening examination of conscience—asking Our Lord how He invites you to live "${reading?.responsorialPsalm.antiphon || 'His holy will'}" in concrete acts of charity.`
+    sourceName: 'Great Commentary of Cornelius à Lapide & Catena Aurea',
+    sourceEra: 'Post-Tridentine & Patristic Synthesis',
+    author: 'Cornelius à Lapide, S.J. with St. Thomas Aquinas, St. Augustine, and St. John Chrysostom',
+    commentaryText: `CORNELIUS À LAPIDE, S.J.: Observe the fourfold Catholic depth of this Holy Gospel according to sacred exegesis. Literally, Christ our Divine Master speaks to His disciples on ${reading?.liturgicalDay || 'this sacred day'}, summoning us to spiritual watchfulness. Allegorically, He reveals the mystery of His Risen Body and the sacraments of the Church. Morally (tropologically), He instructs each Christian soul to cleanse the conscience from every hidden fault and to abound in secret works of charity. Anagogically, He directs our longing toward the heavenly Jerusalem where the elect shall contemplate the Holy Trinity face to face.
+
+${patristicAuthorHeader}: ${reading?.reflection.content || 'Every word spoken by the Incarnate Word in the Holy Gospel is spirit and life, calling the Christian soul out of worldly anxiety and into the radiant peace of divine charity.'}
+
+ST. JOHN CHRYSOSTOM: In today's Gospel (${targetCitation}), proclaimed by the Church on ${reading?.liturgicalDay || 'this liturgical day'}, Our Lord does not merely instruct the intellect; He heals the wounded will. Notice how He draws His listeners step by step from visible signs to the invisible mysteries of the Kingdom of Heaven, asking of us an unshakeable faith and a merciful heart toward our neighbor.
+
+ST. BEDE THE VENERABLE: In the harmony of the sacred liturgy, today's First Reading (${reading?.firstReading.citation || 'Sacred Scripture'}) and Responsorial Psalm ("${reading?.responsorialPsalm.antiphon || 'Blessed be the Lord'}") prepare the soul for the Gospel proclamation. What the Law and the Prophets foretold in shadow, Christ unveils in the full light of grace, nourishing His pilgrim Church through Word and Sacrament.`,
+    practicalApplication: `Read today's Gospel (${targetCitation}) slowly twice today—once in the morning and once at evening examination of conscience—asking Our Lord through the intercession of the saints to live "${reading?.responsorialPsalm.antiphon || 'His holy will'}" in concrete acts of charity.`
   };
 
   return [dynamicDailyCommentary, ...BIBLE_COMMENTARIES_DATABASE];
