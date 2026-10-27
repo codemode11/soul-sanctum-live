@@ -461,67 +461,105 @@ export const Navigation: React.FC<NavigationProps> = ({
     <>
       {/* 1. Desktop and Tablet Sticky Left-Side Navigation with Music-Style Slider */}
       <aside className="hidden lg:block w-72 lg:w-80 shrink-0 sticky top-6 self-start">
-        <div className="relative rounded-xl bg-stone-950/80 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex items-stretch max-h-[calc(100vh-3rem)] overflow-hidden">
-          <div 
-            ref={sidebarRef}
-            onScroll={handleSidebarScroll}
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            className="flex-1 p-4 pr-2.5 overflow-y-auto no-scrollbar"
-          >
-            {renderNavList()}
-          </div>
-
-          {/* Music-Style Vertical Slider (Light Brown with 3 Dark Brown Lines; Becomes Dark Brown at Index) */}
-          <div className="py-6 pr-3 pl-1 flex flex-col items-center select-none">
-            <div
-              ref={sliderTrackRef}
-              onPointerDown={handleSliderPointerDown}
-              onPointerMove={handleSliderPointerMove}
-              onPointerUp={handleSliderPointerUp}
-              onPointerCancel={handleSliderPointerUp}
-              role="slider"
-              aria-label="Index scroll slider"
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={Math.round(scrollProgress * 100)}
-              className="relative w-4 h-full flex justify-center cursor-pointer group touch-none"
-              title="Drag or click to slide through the Index"
+        <div className="relative rounded-xl bg-stone-950/80 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex flex-col max-h-[calc(100vh-3rem)] overflow-hidden">
+          <div className="flex items-stretch flex-1 min-h-0 overflow-hidden">
+            <div 
+              ref={sidebarRef}
+              onScroll={handleSidebarScroll}
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              className="flex-1 p-4 pr-2.5 overflow-y-auto no-scrollbar"
             >
-              {/* Rectangular Slider: Light brown with 3 dark brown lines; completely blends with Index background at top */}
-              {(() => {
-                const isAtTopIndex = scrollProgress <= 0.04;
-                return (
-                  <div
-                    data-slider-thumb="true"
-                    className={`absolute left-1/2 -translate-x-1/2 w-4 h-11 rounded-[3px] flex flex-col items-center justify-center gap-1.5 transition-[background-color,border-color,box-shadow,opacity] duration-150 cursor-grab active:cursor-grabbing ${
-                      isAtTopIndex
-                        ? 'bg-transparent border border-transparent shadow-none opacity-0'
-                        : 'bg-[#CBB5A0] border border-[#9C7A5B] shadow-[0_2px_10px_rgba(0,0,0,0.65)] opacity-100'
-                    } ${
-                      isDraggingSlider && !isAtTopIndex ? 'scale-110 shadow-xl' : 'group-hover:scale-105'
-                    }`}
-                    style={{ top: `calc(${scrollProgress} * (100% - 44px))` }}
-                  >
-                    <div 
-                      className={`w-2.5 h-[1.5px] rounded-full transition-colors duration-150 ${
-                        isAtTopIndex ? 'bg-transparent' : 'bg-[#3E2412]'
-                      }`} 
-                    />
-                    <div 
-                      className={`w-2.5 h-[1.5px] rounded-full transition-colors duration-150 ${
-                        isAtTopIndex ? 'bg-transparent' : 'bg-[#3E2412]'
-                      }`} 
-                    />
-                    <div 
-                      className={`w-2.5 h-[1.5px] rounded-full transition-colors duration-150 ${
-                        isAtTopIndex ? 'bg-transparent' : 'bg-[#3E2412]'
-                      }`} 
-                    />
-                  </div>
-                );
-              })()}
+              {renderNavList()}
+            </div>
+
+            {/* Music-Style Vertical Slider (Light Brown with 3 Dark Brown Lines; Becomes Dark Brown at Index) */}
+            <div className="py-6 pr-3 pl-1 flex flex-col items-center select-none">
+              <div
+                ref={sliderTrackRef}
+                onPointerDown={handleSliderPointerDown}
+                onPointerMove={handleSliderPointerMove}
+                onPointerUp={handleSliderPointerUp}
+                onPointerCancel={handleSliderPointerUp}
+                role="slider"
+                aria-label="Index scroll slider"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(scrollProgress * 100)}
+                className="relative w-4 h-full flex justify-center cursor-pointer group touch-none"
+                title="Drag or click to slide through the Index"
+              >
+                {/* Rectangular Slider: Light brown with 3 dark brown lines; completely blends with Index background at top */}
+                {(() => {
+                  const isAtTopIndex = scrollProgress <= 0.04;
+                  return (
+                    <div
+                      data-slider-thumb="true"
+                      className={`absolute left-1/2 -translate-x-1/2 w-4 h-11 rounded-[3px] flex flex-col items-center justify-center gap-1.5 transition-[background-color,border-color,box-shadow,opacity] duration-150 cursor-grab active:cursor-grabbing ${
+                        isAtTopIndex
+                          ? 'bg-transparent border border-transparent shadow-none opacity-0'
+                          : 'bg-[#CBB5A0] border border-[#9C7A5B] shadow-[0_2px_10px_rgba(0,0,0,0.65)] opacity-100'
+                      } ${
+                        isDraggingSlider && !isAtTopIndex ? 'scale-110 shadow-xl' : 'group-hover:scale-105'
+                      }`}
+                      style={{ top: `calc(${scrollProgress} * (100% - 44px))` }}
+                    >
+                      <div 
+                        className={`w-2.5 h-[1.5px] rounded-full transition-colors duration-150 ${
+                          isAtTopIndex ? 'bg-transparent' : 'bg-[#3E2412]'
+                        }`} 
+                      />
+                      <div 
+                        className={`w-2.5 h-[1.5px] rounded-full transition-colors duration-150 ${
+                          isAtTopIndex ? 'bg-transparent' : 'bg-[#3E2412]'
+                        }`} 
+                      />
+                      <div 
+                        className={`w-2.5 h-[1.5px] rounded-full transition-colors duration-150 ${
+                          isAtTopIndex ? 'bg-transparent' : 'bg-[#3E2412]'
+                        }`} 
+                      />
+                    </div>
+                  );
+                })()}
+              </div>
             </div>
           </div>
+
+          {/* Pinned Bottom Daily Checklist Anchor so it is immediately visible at the bottom of the Index even before scrolling */}
+          {scrollProgress < 0.88 && (
+            <div className="px-4 py-2.5 border-t border-[#D4AF37]/35 bg-stone-950/95 backdrop-blur-xl shrink-0">
+              <button
+                type="button"
+                onClick={() => onSelectTab('piety-dashboard')}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg cursor-pointer select-none group text-left border transition-colors duration-500 ease-out ${
+                  activeTab === 'piety-dashboard'
+                    ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] backdrop-blur-md'
+                    : 'text-stone-200 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border-[#D4AF37]/25 bg-white/[0.03]'
+                }`}
+              >
+                <div className={`flex items-center gap-3 min-w-0 flex-1 origin-left transition-transform duration-500 ease-out transform-gpu will-change-transform ${
+                  activeTab === 'piety-dashboard' ? 'scale-[1.06]' : 'scale-100 group-hover:scale-[1.06]'
+                }`}>
+                  <div className={`p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 ${
+                    activeTab === 'piety-dashboard'
+                      ? 'bg-[#FFD700]/25 text-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.3)]'
+                      : 'bg-[#FFD700]/15 text-[#FFD700] group-hover:bg-[#FFD700]/25'
+                  }`}>
+                    <ShieldCheck className="w-5 h-5 shrink-0 text-[#FFD700]" />
+                  </div>
+                  <div className="min-w-0 flex-1 overflow-visible">
+                    <span className={`block font-serif text-base font-medium leading-tight whitespace-nowrap transition-colors duration-500 ease-out ${
+                      activeTab === 'piety-dashboard'
+                        ? 'text-[#FFD700] drop-shadow-xs'
+                        : 'text-amber-100 group-hover:text-[#FFD700]'
+                    }`}>
+                      Daily Checklist
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          )}
         </div>
       </aside>
 
