@@ -65,8 +65,7 @@ export type ActiveTab =
   | 'bible-flashcards'
   | 'sacred-art'
   | 'prayer-requests'
-  | 'catholic-links'
-  | 'piety-dashboard';
+  | 'catholic-links';
 
 interface NavigationProps {
   activeTab: ActiveTab;
@@ -377,13 +376,6 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: Link2, 
       tag: 'Websites', 
       subtext: 'Curated Catholic Websites and Reviews' 
-    },
-    { 
-      id: 'piety-dashboard', 
-      label: 'Daily Checklist', 
-      icon: ShieldCheck, 
-      tag: 'Checklist', 
-      subtext: 'Customizable Prayers & Spiritual Activities' 
     }
   ];
 
@@ -524,42 +516,6 @@ export const Navigation: React.FC<NavigationProps> = ({
               </div>
             </div>
           </div>
-
-          {/* Pinned Bottom Daily Checklist Anchor so it is immediately visible at the bottom of the Index even before scrolling */}
-          {scrollProgress < 0.88 && (
-            <div className="px-4 py-2.5 border-t border-[#D4AF37]/35 bg-stone-950/95 backdrop-blur-xl shrink-0">
-              <button
-                type="button"
-                onClick={() => onSelectTab('piety-dashboard')}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg cursor-pointer select-none group text-left border transition-colors duration-500 ease-out ${
-                  activeTab === 'piety-dashboard'
-                    ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] backdrop-blur-md'
-                    : 'text-stone-200 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border-[#D4AF37]/25 bg-white/[0.03]'
-                }`}
-              >
-                <div className={`flex items-center gap-3 min-w-0 flex-1 origin-left transition-transform duration-500 ease-out transform-gpu will-change-transform ${
-                  activeTab === 'piety-dashboard' ? 'scale-[1.06]' : 'scale-100 group-hover:scale-[1.06]'
-                }`}>
-                  <div className={`p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 ${
-                    activeTab === 'piety-dashboard'
-                      ? 'bg-[#FFD700]/25 text-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.3)]'
-                      : 'bg-[#FFD700]/15 text-[#FFD700] group-hover:bg-[#FFD700]/25'
-                  }`}>
-                    <ShieldCheck className="w-5 h-5 shrink-0 text-[#FFD700]" />
-                  </div>
-                  <div className="min-w-0 flex-1 overflow-visible">
-                    <span className={`block font-serif text-base font-medium leading-tight whitespace-nowrap transition-colors duration-500 ease-out ${
-                      activeTab === 'piety-dashboard'
-                        ? 'text-[#FFD700] drop-shadow-xs'
-                        : 'text-amber-100 group-hover:text-[#FFD700]'
-                    }`}>
-                      Daily Checklist
-                    </span>
-                  </div>
-                </div>
-              </button>
-            </div>
-          )}
         </div>
       </aside>
 

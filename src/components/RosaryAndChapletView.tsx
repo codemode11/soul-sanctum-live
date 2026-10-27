@@ -383,10 +383,10 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('divine-mercy');
             handleReset();
           }}
-          className={`flex-1 min-w-[110px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#6B1114] via-[#520B0E] to-[#3A0608] text-amber-50 border ${
+          className={`flex-1 min-w-[110px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'divine-mercy'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#7E1D20]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
           <span>Chaplet</span>
@@ -398,10 +398,10 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('faustina');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#6B1114] via-[#520B0E] to-[#3A0608] text-amber-50 border ${
+          className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'faustina'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#7E1D20]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
           <span>The Diary & 14 Promises</span>
@@ -413,10 +413,10 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('three-oclock');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#6B1114] via-[#520B0E] to-[#3A0608] text-amber-50 border ${
+          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'three-oclock'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#7E1D20]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
           <span>3 O'Clock Prayer</span>
@@ -428,10 +428,10 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('rosary');
             handleReset();
           }}
-          className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#162C58] via-[#0E1E3F] to-[#071126] text-amber-100 border ${
+          className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'rosary'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#25447D]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
           <span>The Holy Rosary</span>
@@ -443,10 +443,10 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('marian-promises');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-gradient-to-b from-[#162C58] via-[#0E1E3F] to-[#071126] text-amber-100 border ${
+          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'marian-promises'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
-              : 'border-[#25447D]/80 opacity-95 hover:opacity-100 hover:scale-[1.01]'
+              : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
           <span>Promises of Mary</span>
@@ -1473,14 +1473,14 @@ export const RosaryAndChapletView: React.FC = () => {
                     className="p-5 sm:p-6 rounded-xl bg-white/55 hover:bg-white/75 backdrop-blur-xl backdrop-saturate-150 border border-white/85 hover:border-white ring-1 ring-[#DFD3C3]/80 transition-all space-y-4 shadow-[0_8px_28px_rgba(139,90,43,0.08),inset_0_1px_2px_rgba(255,255,255,0.92)] hover:shadow-[0_12px_32px_rgba(139,90,43,0.14)]"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-cinzel text-sm sm:text-base font-bold text-[#8B5A2B] tracking-wide">
+                      <div className="flex flex-wrap items-center gap-2.5">
+                        <span className="font-cinzel text-base sm:text-lg font-bold text-[#8B5A2B] tracking-wide">
                           Diary #{excerpt.diaryNumber}
                         </span>
                         <span className="text-stone-400">•</span>
                         <h4 className={`font-serif font-bold text-stone-900 ${
-                          promisesFontSize === 'normal' ? 'text-lg sm:text-xl' :
-                          promisesFontSize === 'large' ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'
+                          promisesFontSize === 'normal' ? 'text-xl sm:text-2xl' :
+                          promisesFontSize === 'large' ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'
                         }`}>
                           {excerpt.title}
                         </h4>
@@ -1490,9 +1490,9 @@ export const RosaryAndChapletView: React.FC = () => {
                       </span>
                     </div>
 
-                    <div className={`relative font-serif italic text-stone-800 leading-relaxed bg-white/55 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
-                      promisesFontSize === 'normal' ? 'text-base sm:text-lg md:text-xl' :
-                      promisesFontSize === 'large' ? 'text-lg sm:text-xl md:text-2xl' : 'text-xl sm:text-2xl md:text-3xl'
+                    <div className={`relative font-serif italic text-stone-900 leading-relaxed bg-white/55 backdrop-blur-md p-5 sm:p-6 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
+                      promisesFontSize === 'normal' ? 'text-lg sm:text-xl md:text-2xl' :
+                      promisesFontSize === 'large' ? 'text-xl sm:text-2xl md:text-3xl' : 'text-2xl sm:text-3xl md:text-4xl'
                     }`}>
                       <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342]" />
                       <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342]" />
@@ -1501,9 +1501,9 @@ export const RosaryAndChapletView: React.FC = () => {
                       "{excerpt.quote}"
                     </div>
 
-                    <div className={`p-3.5 sm:p-4 rounded-xl bg-white/45 backdrop-blur-sm border border-white/80 ring-1 ring-[#E6DFD3]/60 font-serif text-stone-700 leading-relaxed ${
-                      promisesFontSize === 'normal' ? 'text-sm sm:text-base md:text-lg' :
-                      promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
+                    <div className={`p-4 sm:p-5 rounded-xl bg-white/45 backdrop-blur-sm border border-white/80 ring-1 ring-[#E6DFD3]/60 font-serif text-stone-800 leading-relaxed ${
+                      promisesFontSize === 'normal' ? 'text-base sm:text-lg md:text-xl' :
+                      promisesFontSize === 'large' ? 'text-lg sm:text-xl md:text-2xl' : 'text-xl sm:text-2xl md:text-3xl'
                     }`}>
                       <strong className="text-[#6B4423]">Theological Meaning: </strong>
                       {excerpt.reflection}
