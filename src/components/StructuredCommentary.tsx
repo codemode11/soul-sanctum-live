@@ -213,11 +213,11 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
         </div>
       )}
 
-      {/* 3. CORNELIUS A LAPIDE SECTION */}
+      {/* 3. CORNELIUS À LAPIDE SECTION */}
       {!homilyOnly && data.lapideParagraphs.length > 0 && (
         <div>
-          {/* Stylized line followed by name "Cornelius a Lapide." */}
-          <StylizedDivider title="Cornelius a Lapide" />
+          {/* Stylized line followed by name "Cornelius à Lapide." */}
+          <StylizedDivider title="Cornelius à Lapide" />
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
             {data.lapideParagraphs.map((para, idx) => (

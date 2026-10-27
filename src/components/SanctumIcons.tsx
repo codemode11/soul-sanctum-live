@@ -586,8 +586,8 @@ export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h
 );
 
 /**
- * 8. Novena Tracker icon: Three connected candles in the manner of a candelabra,
- * and its base is the number 9.
+ * 8. Novena Tracker icon: Roman numeral IX with flickering fire on the top parts
+ * as though the strokes of IX were lit liturgical candles.
  */
 export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -598,26 +598,112 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
     strokeLinecap="round" 
     strokeLinejoin="round" 
     className={className}
+    aria-label="Novena Tracker — Roman Numeral IX Candles"
   >
-    {/* Three candle flames (center slightly elevated, left and right symmetric) */}
-    <path d="M12 1.1c.85 1.05.85 2.0 0 2.65-.85-.65-.85-1.6 0-2.65Z" fill="currentColor" strokeWidth="1.1" />
-    <path d="M5.5 2.0c.8 1.0.8 1.9 0 2.5-.8-.6-.8-1.5 0-2.5Z" fill="currentColor" strokeWidth="1.1" />
-    <path d="M18.5 2.0c.8 1.0.8 1.9 0 2.5-.8-.6-.8-1.5 0-2.5Z" fill="currentColor" strokeWidth="1.1" />
+    {/* === FLICKERING FIRE ON TOP OF "I" (x = 5.5) === */}
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="-4 5.5 7.5; 5 5.5 7.5; -3 5.5 7.5; 4 5.5 7.5; -4 5.5 7.5"
+        dur="1.6s"
+        repeatCount="indefinite"
+      />
+      {/* Outer flickering flame tongue */}
+      <path
+        d="M5.5 1.4C4.2 3.1 3.7 4.6 3.9 5.8c.2 1.0.8 1.6 1.6 1.6s1.4-.6 1.6-1.6c.2-1.2-.3-2.7-1.6-4.4Z"
+        fill="currentColor"
+        fillOpacity="0.3"
+        stroke="currentColor"
+        strokeWidth="1.3"
+      />
+      {/* Inner bright flame core */}
+      <path
+        d="M5.5 3.6c-.5.9-.7 1.7-.5 2.4.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.4Z"
+        fill="currentColor"
+        stroke="none"
+      >
+        <animate attributeName="opacity" values="0.95;0.55;1;0.7;0.95" dur="1.2s" repeatCount="indefinite" />
+      </path>
+    </g>
 
-    {/* Candle drip pans (bobèches) */}
-    <path d="M10.6 5.1h2.8" strokeWidth="1.5" />
-    <path d="M4.1 5.8h2.8" strokeWidth="1.5" />
-    <path d="M17.1 5.8h2.8" strokeWidth="1.5" />
+    {/* === FLICKERING FIRE ON TOP-LEFT OF "X" (x = 12.0) === */}
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="5 12 7.5; -4 12 7.5; 4 12 7.5; -3 12 7.5; 5 12 7.5"
+        dur="1.4s"
+        repeatCount="indefinite"
+      />
+      {/* Outer flickering flame tongue */}
+      <path
+        d="M12.0 1.4C10.7 3.1 10.2 4.6 10.4 5.8c.2 1.0.8 1.6 1.6 1.6s1.4-.6 1.6-1.6c.2-1.2-.3-2.7-1.6-4.4Z"
+        fill="currentColor"
+        fillOpacity="0.3"
+        stroke="currentColor"
+        strokeWidth="1.3"
+      />
+      {/* Inner bright flame core */}
+      <path
+        d="M12.0 3.6c-.5.9-.7 1.7-.5 2.4.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.4Z"
+        fill="currentColor"
+        stroke="none"
+      >
+        <animate attributeName="opacity" values="0.65;1;0.6;0.95;0.65" dur="1.1s" repeatCount="indefinite" />
+      </path>
+    </g>
 
-    {/* Three connected candles forming a candelabra */}
-    {/* Center candle & vertical shaft down to the number 9 base */}
-    <path d="M12 4.4v8.0" strokeWidth="1.8" />
-    {/* Left and right candles descending and curving inward as connected candelabra arms */}
-    <path d="M5.5 5.0v3.2c0 2.3 2.8 3.6 6.5 3.6s6.5-1.3 6.5-3.6V5.0" strokeWidth="1.8" />
+    {/* === FLICKERING FIRE ON TOP-RIGHT OF "X" (x = 19.0) === */}
+    <g>
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="-3 19 7.5; 5 19 7.5; -5 19 7.5; 3 19 7.5; -3 19 7.5"
+        dur="1.8s"
+        repeatCount="indefinite"
+      />
+      {/* Outer flickering flame tongue */}
+      <path
+        d="M19.0 1.4C17.7 3.1 17.2 4.6 17.4 5.8c.2 1.0.8 1.6 1.6 1.6s1.4-.6 1.6-1.6c.2-1.2-.3-2.7-1.6-4.4Z"
+        fill="currentColor"
+        fillOpacity="0.3"
+        stroke="currentColor"
+        strokeWidth="1.3"
+      />
+      {/* Inner bright flame core */}
+      <path
+        d="M19.0 3.6c-.5.9-.7 1.7-.5 2.4.1.5.3.8.5.8s.4-.3.5-.8c.2-.7 0-1.5-.5-2.4Z"
+        fill="currentColor"
+        stroke="none"
+      >
+        <animate attributeName="opacity" values="1;0.6;0.95;0.65;1" dur="1.35s" repeatCount="indefinite" />
+      </path>
+    </g>
 
-    {/* Base of the candelabra formed by the number 9 */}
-    <circle cx="12" cy="15.0" r="2.6" strokeWidth="1.8" />
-    <path d="M14.6 15.0v4.4c0 1.85-1.35 3.1-3.1 3.1-1.25 0-2.25-.55-2.75-1.45" strokeWidth="1.8" />
+    {/* === CANDLE WICKS === */}
+    <line x1="5.5" y1="7.4" x2="5.5" y2="8.8" strokeWidth="1.2" />
+    <line x1="12.0" y1="7.4" x2="12.0" y2="8.8" strokeWidth="1.2" />
+    <line x1="19.0" y1="7.4" x2="19.0" y2="8.8" strokeWidth="1.2" />
+
+    {/* === ROMAN NUMERAL "I" CANDLE (LEFT) === */}
+    {/* Top candle rim / serif */}
+    <line x1="3.9" y1="8.8" x2="7.1" y2="8.8" strokeWidth="1.7" />
+    {/* Vertical pillar of "I" */}
+    <line x1="5.5" y1="8.8" x2="5.5" y2="21.2" strokeWidth="2.1" />
+    {/* Bottom base serif of "I" */}
+    <line x1="3.7" y1="21.2" x2="7.3" y2="21.2" strokeWidth="1.8" />
+
+    {/* === ROMAN NUMERAL "X" CANDLES (RIGHT) === */}
+    {/* Top candle rims / serifs at the two upper tips of "X" */}
+    <line x1="10.5" y1="8.8" x2="13.5" y2="8.8" strokeWidth="1.7" />
+    <line x1="17.5" y1="8.8" x2="20.5" y2="8.8" strokeWidth="1.7" />
+    {/* Diagonal candle strokes forming "X" */}
+    <line x1="12.0" y1="8.8" x2="19.0" y2="21.2" strokeWidth="2.05" />
+    <line x1="19.0" y1="8.8" x2="12.0" y2="21.2" strokeWidth="2.05" />
+    {/* Bottom base serifs of "X" */}
+    <line x1="10.4" y1="21.2" x2="13.6" y2="21.2" strokeWidth="1.8" />
+    <line x1="17.4" y1="21.2" x2="20.6" y2="21.2" strokeWidth="1.8" />
   </svg>
 );
 
