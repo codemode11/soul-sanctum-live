@@ -355,10 +355,10 @@ export const RosaryAndChapletView: React.FC = () => {
         </p>
 
         <p className="text-amber-50 pt-3 border-t border-white/10">
-          Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. <span className="italic text-amber-300/90">(three times)</span>
+          Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. (three times)
         </p>
 
-        <p className="font-bold text-amber-200 pt-3 border-t border-white/10">
+        <p className="font-bold text-[#FFD700] pt-3 border-t border-white/10">
           Jesus, King of Mercy, We trust in you!
         </p>
       </div>
