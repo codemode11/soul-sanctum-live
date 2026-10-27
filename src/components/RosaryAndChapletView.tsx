@@ -292,18 +292,18 @@ export const RosaryAndChapletView: React.FC = () => {
   const mercyProgressPercent = Math.round(((mercyStepIndex + 1) / mercySteps.length) * 100);
 
   const renderThreeOClockCard = (highlighted = false) => (
-    <div className={`rounded-xl p-6 sm:p-8 bg-gradient-to-r from-red-950 via-amber-950 to-stone-900 border ${highlighted ? 'ring-2 ring-red-400 border-red-400/80 shadow-2xl' : 'border-red-500/40 shadow-xl'} space-y-4 text-white`}>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-500/30 pb-4">
+    <div className={`rounded-xl p-6 sm:p-8 bg-gradient-to-br from-[#FDFBF7] via-[#FAF6F0] to-[#FDF4F5] border ${highlighted ? 'ring-2 ring-[#C89D7C]/60 border-[#D5C3AE] shadow-lg' : 'border-[#E2D9C8] shadow-md'} space-y-5 text-stone-900`}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2D9C8] pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-red-600/30 border border-red-400/40 flex items-center justify-center shrink-0">
-            <Sparkles className="w-5 h-5 text-amber-300" />
+          <div className="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200/80 flex items-center justify-center shrink-0 shadow-2xs">
+            <Sparkles className="w-5 h-5 text-rose-800" />
           </div>
           <div>
-            <span className="text-[11px] font-cinzel font-bold tracking-widest text-amber-300 uppercase block">
+            <span className="text-[11px] font-cinzel font-bold tracking-widest text-rose-900 uppercase block">
               Hour of Great Mercy • 3:00 PM Devotion
             </span>
-            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-amber-100">
-              Three o' Clock Prayer
+            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
+              The Three O'Clock Prayer
             </h3>
           </div>
         </div>
@@ -316,49 +316,49 @@ export const RosaryAndChapletView: React.FC = () => {
                 setIsReadingThreeOClock(false);
               } else {
                 setIsReadingThreeOClock(true);
-                const fullText = `Three o' Clock Prayer. You died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us. ... O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you! ... Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. ... Jesus, King of Mercy, We trust in you!`;
+                const fullText = `The Three O'Clock Prayer. You died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us. ... O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you! ... Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. ... Jesus, King of Mercy, We trust in you!`;
                 SacredReader.speak(fullText, () => setIsReadingThreeOClock(false), 'female', 0.85);
               }
             }}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md ${
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-xs ${
               isReadingThreeOClock
-                ? 'bg-red-600 text-white animate-pulse'
-                : 'bg-gradient-to-r from-red-700 to-amber-800 hover:from-red-600 hover:to-amber-700 text-amber-100 border border-red-400/50'
+                ? 'bg-rose-800 text-white animate-pulse'
+                : 'bg-[#F5EFE6] hover:bg-[#EBE0D0] text-[#6B4423] border border-[#DFD2C0]'
             }`}
           >
-            {isReadingThreeOClock ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
+            {isReadingThreeOClock ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-rose-800" />}
             <span>{isReadingThreeOClock ? 'Stop Audio' : 'Listen to Prayer'}</span>
           </button>
 
           <button
             onClick={() => {
-              const text = `THREE O' CLOCK PRAYER\n\nYou died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us.\n\nO Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!\n\nHoly God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. (three times)\n\nJesus, King of Mercy, We trust in you!`;
+              const text = `THE THREE O'CLOCK PRAYER\n\nYou died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us.\n\nO Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!\n\nHoly God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. (three times)\n\nJesus, King of Mercy, We trust in you!`;
               navigator.clipboard.writeText(text);
               setCopiedThreeOClock(true);
               setTimeout(() => setCopiedThreeOClock(false), 2000);
             }}
-            className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white transition-colors cursor-pointer"
-            title="Copy Three o' Clock Prayer"
+            className="p-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-stone-900 border border-stone-200/80 transition-colors cursor-pointer"
+            title="Copy The Three O'Clock Prayer"
           >
-            {copiedThreeOClock ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            {copiedThreeOClock ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
-      <div className="space-y-4 bg-black/40 p-5 sm:p-6 rounded-xl border border-red-500/20 text-white font-serif text-base sm:text-lg md:text-xl leading-relaxed">
-        <p className="text-amber-50">
+      <div className="space-y-4 bg-white p-6 sm:p-8 rounded-xl border border-[#E6DFD3] shadow-xs text-stone-900 font-serif text-base sm:text-lg md:text-xl leading-relaxed">
+        <p className="text-stone-800">
           You died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us.
         </p>
 
-        <p className="text-amber-50 pt-3 border-t border-white/10">
+        <p className="text-stone-800 pt-3.5 border-t border-stone-200/80">
           O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!
         </p>
 
-        <p className="text-amber-50 pt-3 border-t border-white/10">
-          Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. (three times)
+        <p className="text-stone-800 pt-3.5 border-t border-stone-200/80">
+          Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. <span className="italic text-stone-500 text-sm sm:text-base">(three times)</span>
         </p>
 
-        <p className="font-bold text-[#FFD700] pt-3 border-t border-white/10">
+        <p className="font-bold text-rose-900 pt-3.5 border-t border-stone-200/80">
           Jesus, King of Mercy, We trust in you!
         </p>
       </div>
