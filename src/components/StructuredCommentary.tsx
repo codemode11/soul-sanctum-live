@@ -144,7 +144,7 @@ export const StylizedDivider: React.FC<{ title: string }> = ({ title }) => (
 
     {/* Section Title */}
     <div className="text-center">
-      <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#3B2512] tracking-wider uppercase inline-block bg-[#F3ECE0] px-4 py-1.5 rounded-full border border-[#D8C9B5] shadow-2xs">
+      <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#3B2512] tracking-wider uppercase">
         {title}
       </h4>
     </div>
@@ -198,7 +198,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
         <div>
           {/* Title "Catena Aurea" without stylized line */}
           <div className="mb-3 text-center">
-            <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#3B2512] tracking-wider uppercase inline-block bg-[#F3ECE0] px-4 py-1.5 rounded-full border border-[#D8C9B5] shadow-2xs">
+            <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#3B2512] tracking-wider uppercase">
               Catena Aurea
             </h4>
           </div>

@@ -470,7 +470,7 @@ ${selectedCommentary.practicalApplication}`;
                       : 'bg-white/55 hover:bg-white/80 text-stone-800 border border-white/60'
                   }`}
                 >
-                  {comm.scriptureReference} — {comm.sourceName.split(',')[0]}
+                  {comm.scriptureReference}
                 </button>
               );
             })}
@@ -537,7 +537,7 @@ ${selectedCommentary.practicalApplication}`;
               Regarding: {selectedCommentary.scriptureReference} • <span className="text-stone-500 font-serif italic font-normal">{selectedCommentary.author.replace(/^.*?\bwith\s+/i, '')}</span>
             </p>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[11px] font-bold font-cinzel self-start sm:self-auto shrink-0 border border-amber-200/60">
+          <span className="text-amber-900 text-[11px] font-bold font-cinzel self-start sm:self-auto shrink-0">
             {selectedCommentary.sourceEra}
           </span>
         </div>
