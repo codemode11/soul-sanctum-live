@@ -3,105 +3,202 @@ import { SpiritualBook } from '../spiritualBooks';
 export const TREATISE_ON_LOVE_OF_GOD: SpiritualBook = {
   id: 'treatise-on-love-of-god',
   title: 'Treatise on the Love of God',
-  latinTitle: 'Tractatus de Amore Dei • Traité de l\'Amour de Dieu',
+  latinTitle: 'Tractatus de Amore Dei • Theotimus Doctoris Caritatis',
   author: 'St. Francis de Sales',
-  authorTitle: 'Bishop and Prince of Geneva, Doctor of Charity',
+  authorTitle: 'Prince-Bishop of Geneva, Co-Founder of the Visitation Order, and Doctor of the Church (Doctor of Charity)',
   era: '1616 A.D.',
-  category: 'doctors',
-  categoryLabel: 'Doctor of Divine Charity',
-  description: 'The supreme theological and mystical masterpiece of St. Francis de Sales, addressed to "Theotimus" (the human spirit that desires to love God). Written in collaboration with the contemplative experience of St. Jane Frances de Chantal and the Sisters of the Visitation, it traces the birth, growth, perfection, and holy indifference of Divine Charity from the first spark of grace to Calvary, the Academy of Love.',
-  theologicalFocus: 'Theology of Charity, Complacency & Benevolence, Holy Indifference, Union of Wills, Calvary',
-  nihilObstat: 'Facultas Theologica Lugdunensis (1616)',
-  imprimatur: 'Archbishop Denis-Simon de Marquemont of Lyon',
-  coverGradient: 'from-[#7C2D12] via-[#9A3412] to-[#431407]',
-  accentColor: '#FB923C',
+  category: 'mysticism',
+  categoryLabel: 'Mystical & Affective Theology of Charity',
+  description: 'Addressed to "Theotimus" (the human spirit that desires to love God) and inspired by his spiritual conversations with St. Jane Frances de Chantal and the first Visitation Sisters, this complete presentation covers the Dedicatory Prayer and all Twelve Books of St. Francis de Sales’s crowning masterpiece on the birth, growth, prayer, conformity, and Calvary summit of Divine Love.',
+  theologicalFocus: 'The Fine Point of the Spirit, Prevenient Grace, Love of Complacency and Benevolence, Contemplation, Conformity of Will, Holy Indifference, and Calvary as the Academy of Love',
+  nihilObstat: 'Annecy Critical Edition (Oeuvres de Saint François de Sales, Tomes IV–V)',
+  imprimatur: 'Proclaimed Doctor of the Universal Church by Pope Pius IX (1877)',
+  coverGradient: 'from-[#881337] via-[#701A3C] to-[#4C0519]',
+  accentColor: '#F59E0B',
   emblemSymbol: '❤️‍🔥',
-  estimatedMinutesPerChapter: 9,
+  estimatedMinutesPerChapter: 10,
   chapters: [
     {
-      id: 'tlg-ch-1',
+      id: 'tlg-pref',
       chapterNumber: 1,
-      title: 'Book I: The Natural Inclination of the Human Heart to Love God Above All Things',
-      latinTitle: 'Liber I • De Naturali Cordis Humani Propensione ad Deum Super Omnia Diligendum',
-      subtitle: 'How man was created in the image and likeness of God, so that our heart remains restless until it reposes in the Sovereign Good.',
+      title: 'Dedicatory Prayer to the Mother of God and St. Joseph, and Author’s Preface',
+      latinTitle: 'Oratio Dedicatoria ad Deiparam et S. Iosephum ac Praefatio ad Theotimum',
+      subtitle: 'Placing the entire work at the feet of Mary and Joseph, the incomparable pair of sacred lovers of the Incarnate Word.',
       paragraphs: [
-        'In the visible royal court of our soul, O Theotimus, the will holds the scepter of empire over all our other faculties, and love is the supreme monarch of all the movements of the will. As soon as man perceives what is good and fair, his heart is drawn toward it by a secret, irresistible weight—just as iron, as soon as it feels the hidden virtue of the magnet, turns and trembles and leaps toward the magnet to unite itself therewith.',
-        'Now between God and man there is the closest proportion and likeness: "Let Us make man to Our image and likeness" (Gen. 1:26). Although our nature was wounded and weakened by original sin, like an eagle whose wings have been bruised and pinioned so that it can no longer soar by its own strength into the sun, nevertheless our heart retains a deep, indelible natural instinct to love God above all things! Just as birds damaged in flight still gaze upward toward the sky for which they were made, so the human heart—even amid its wanderings—sighs after the Infinite.',
-        'Watch how chickens, even if hatched in an oven without ever having seen a mother hen, run instinctively to shelter beneath her wings the very first time they hear her clucking voice! Even so, Theotimus, no sooner does the supernatural light of grace touch our understanding and reveal to us the infinite beauty and goodness of our Creator than our heart recognizes its true Homeland and cries out: "Thou hast made us for Thyself, O Lord, and our heart is restless until it rests in Thee!"',
-        'Why then do men love creatures instead of the Creator? Not because they hate the Sovereign Good, for no will can hate the Good; but because, blinded by the senses, they seek the infinite happiness of God inside finite, painted vessels of clay that crack and leave them thirsty. Every human desire—even the most misguided—is at root a homesickness for God.',
-        'Therefore, let us govern all our affections by this single royal rule: since charity is the queen of all virtues, let every thought, word, and action of our day be dressed in the livery of love, so that our whole life becomes one continuous hymn of love to the Father of Lights.'
+        'Most Holy Mother of God, Vessel of Election and Queen of Sovereign Dilection, you who are the most lovely, the most loving, and the most beloved of all creatures: cast your eyes of mercy upon this poor treatise of love, and together with your most chaste spouse St. Joseph, obtain for all who read it the living flame of the Holy Spirit!',
+        'In the Introduction to the Devout Life I spoke to Philothea of how the soul enters the path of devotion in the world; here I speak to Theotimus—the spirit already consecrated to love—unfolding the entire history of the birth, progress, decay, operations, and sacred perfection of the Love of God.'
       ],
-      keyQuote: 'Just as iron, as soon as it feels the hidden virtue of the magnet, turns and leaps toward it, so our heart—created to the image of God—retains an indelible natural instinct to love Him above all things.',
-      quoteCitation: 'Book I: The Inclination of the Heart to Love God',
-      reflectionPrompt: 'Pause and recognize that every restlessness in your heart today is a secret invitation from God drawing you back to Himself.'
+      keyQuote: 'In the Church of God, everything belongs to love, lives in love, is done for love, and comes from love.',
+      quoteCitation: 'Dedicatory Prayer & Preface to Theotimus',
+      reflectionPrompt: 'Ask Our Lady and St. Joseph to open your heart as "Theotimus"—a soul that desires above all things to love God.'
     },
     {
-      id: 'tlg-ch-2',
+      id: 'tlg-book-1',
       chapterNumber: 2,
-      title: 'Book II: How God First Loved Us With an Eternal and Prevenient Love',
-      latinTitle: 'Liber II • Quomodo Deus Prior Dilexit Nos Amore Aeterno et Praeveniente',
-      subtitle: 'The heavenly history of Divine Providence: how God foresaw us from all eternity and knocks gently at the door of human freedom without ever forcing it.',
+      title: 'Book I: Preparation of the Soul — The Faculties of the Spirit and Its Natural Inclination to Love God',
+      latinTitle: 'Liber I • De Praeparatione Animae et Inclinatione Naturali ad Diligendum Deum',
+      subtitle: 'How love must rule all the passions, the sanctuary of the "fine point of the spirit," and why man naturally inclines to love God above all things.',
       paragraphs: [
-        'Before we could ever think of loving God, Theotimus, He loved us from all eternity with an incomprehensible love: "I have loved thee with an everlasting love, therefore have I drawn thee, taking pity on thee" (Jer. 31:3). Consider how the eternal Father, beholding all possible worlds in the mirror of His wisdom, chose you by name, fashioned your soul, and prepared every drop of grace you would ever need to reach His bosom.',
-        'More than this: in the supreme decree of the Incarnation, the Eternal Word looked upon our fallen race and loved us so tenderly that He willed to become our Brother, taking our flesh so that He might die for each one of us individually, as St. Paul testifies: "Who loved me, and delivered Himself for me" (Gal. 2:20)—just as truly as if you were the only soul in the universe!',
-        'See how Divine Love approaches the sleeping soul! Like the morning sun rising over the mountains of Savoy: first it sends a faint silver glimmer into the windows of the room, then a golden ray upon the eyelids of the sleeper, gently warming and inviting him to awake and open the shutters. So the Holy Spirit preveniently touches our heart with holy inspirations, sacred readings, and interior movements: "Behold, I stand at the gate, and knock: if any man shall hear My voice, and open to Me the door, I will come in to him, and will sup with him, and he with Me" (Apoc. 3:20).',
-        'Notice the infinite courtesy of God! Though He is Almighty and could shatter the door of our heart in an instant, He stands outside and knocks, waiting for our free consent; for love ceases to be love if it is not freely given. If we shut our ears, He does not abandon us immediately, but returns again and again, putting His hand through the lattice to touch the bolt of our stubborn will.',
-        'And if we open the door to Him, who holds the glory of our conversion? God alone! Just as a traveler awakened by the sun can take no credit for creating the sunlight simply because he did not keep his eyes shut, so when we consent to grace, all the praise belongs to the Prevenient Mercy of God Who first loved us.'
+        'To govern the republic of the soul aright, the will—guided by the intellect—must rule over all the lower passions and appetites through its queenly movement, which is Love; for every other passion (joy, hope, fear, sorrow) takes its color and character from the love that animates the heart.',
+        'Just as the Temple of Solomon had three courts—the outer court of the Gentiles, the court of the Israelites, and the Holy of Holies where the High Priest entered alone—so the human soul has the outer court of the senses, the middle court of discursive reason, and the innermost sanctuary called the "apex" or "fine point of the spirit," where the soul communes directly with God in faith and retains its natural inclination to love its Creator above all things.'
       ],
-      keyQuote: 'Notice the infinite courtesy of God! Though He is Almighty, He stands at the door of our heart and knocks, waiting for our free consent—for love ceases to be love if it is not freely given.',
-      quoteCitation: 'Book II: How God First Loved Us',
-      reflectionPrompt: 'Where is the Holy Spirit gently knocking at the door of your conscience today? Open the shutters of your heart to His light.'
+      keyQuote: 'Man is the perfection of the universe; the spirit is the perfection of man; love is the perfection of the spirit; and charity is the perfection of love.',
+      quoteCitation: 'Book I, Chapters 1–18',
+      reflectionPrompt: 'How does retreating into the "fine point of the spirit" allow you to love God even when the lower senses feel tired or troubled?'
     },
     {
-      id: 'tlg-ch-3',
+      id: 'tlg-book-2',
       chapterNumber: 3,
-      title: 'Book V: The Twofold Exercise of Sacred Love — Complacency and Benevolence',
-      latinTitle: 'Liber V • De Duplici Exercitio Sacri Amoris: Complacentia et Benevolentia',
-      subtitle: 'How the loving soul rejoices first that God is infinitely perfect in Himself, and desires all creatures in heaven and on earth to praise Him.',
+      title: 'Book II: History of the Generation and Heavenly Birth of Divine Love',
+      latinTitle: 'Liber II • De Generatione et Ortu Caelesti Divini Amoris per Gratiam',
+      subtitle: 'God’s eternal prevenient love, the predestination of Christ and Mary, and how grace knocks gently at human freedom without forcing it.',
       paragraphs: [
-        'True charity, O Theotimus, rises far above the love of mere self-interest; it loves God for His own sake, because He is supremely good in Himself. Its first movement is what theologians call the *Love of Complacency* (*Amor Complacentiae*)—that pure delight whereby the soul, beholding the infinite beauty, wisdom, holiness, and majesty of God, rejoices with unspeakable gladness that God is God!',
-        'Just as a little nightingale sings in the forest until its tiny heart almost bursts for sheer delight in the beauty of the spring morning and the melodies of its fellow birds, so the devout soul, contemplating in prayer that God is infinitely blessed, all-powerful, and eternal, cries out: "O Lord, it is enough for me that Thou art Who Thou art! Even if I gained nothing thereby, my heart exults that Thy perfection is boundless and Thy throne unshakable forever!"',
-        'By this love of complacency, we draw all the riches of God into our own heart, making His glory our treasure, just as a clear mirror set before the sun takes the whole sun into its bosom without diminishing the sun in the sky.',
-        'From complacency springs immediately the second movement: the *Love of Benevolence* (*Amor Benevolentiae*), whereby we desire to give something to our Beloved and to magnify His glory. "Wait," you say, "how can we wish any good to God, Who already possesses all infinite good and needs nothing?" Ah, Theotimus, while we cannot add anything to God in Himself, we can desire and labor with all our might that He may be known, adored, and loved by all creatures externally—beginning with every fiber of our own soul!',
-        'This is the spirit of the *Gloria Patri* and the *Benedicite* ("All ye works of the Lord, bless the Lord"): the loving soul looks upon the stars, the oceans, the flowers of the field, the angels, and all mankind, and invites the whole universe to join in one grand symphony of praise to the Divine Goodness.'
+        'From all eternity God foresaw and loved us, ordaining the Incarnation of His Son as the supreme masterpiece of His love and predestining the Blessed Virgin Mary to be the Mother of the Redeemer and Mother of all the living. To every human heart upon earth God sends abundant prevenient graces—like the morning sun shining upon every window and knocking gently at the shutters of free will.',
+        'Look at the bird called the apode, which has such tiny feet that if it lands on the ground it cannot launch itself into the air unless a breeze comes to lift its wings; yet if the bird refuses to spread its wings when the wind blows, it remains on the earth. So it is with our soul: we cannot rise to supernatural love without the wind of God’s preventing grace, yet when that grace breathes upon us, we must freely spread the wings of our consent!'
       ],
-      keyQuote: 'By the love of complacency, the soul rejoices with unspeakable gladness simply that God is God—crying out: "O Lord, it is enough for me that Thou art infinitely blessed forever!"',
-      quoteCitation: 'Book V: Complacency and Benevolence',
-      reflectionPrompt: 'Spend a moment in pure prayer of complacency—asking for nothing, simply rejoicing that God is infinitely good, holy, and glorious.'
+      keyQuote: 'Like a bird lifted by the wind, we cannot rise to God without the breeze of His grace; yet when His grace breathes upon us, He asks us freely to spread the wings of our consent.',
+      quoteCitation: 'Book II, Chapters 1–22',
+      reflectionPrompt: 'What gentle inspiration of the Holy Spirit is breathing upon your heart today, waiting for you to spread the wings of your "Yes"?'
     },
     {
-      id: 'tlg-ch-4',
+      id: 'tlg-book-3',
       chapterNumber: 4,
-      title: 'Books VIII & IX: Conformity of Will and Holy Indifference',
-      latinTitle: 'Libri VIII–IX • De Conformitate Voluntatis et Sancta Indifferentia',
-      subtitle: 'Distinguishing God’s Signified Will from the Will of His Good Pleasure, and the childlike surrender of Holy Indifference.',
+      title: 'Book III: Of the Progress and Perfection of Charity in Wayfarers and the Blessed',
+      latinTitle: 'Liber III • De Progressu et Perfectione Caritatis in Viatoribus et Comprehensoribus',
+      subtitle: 'How charity can grow continually until the last breath of life, final perseverance, and the beatific vision in Heaven.',
       paragraphs: [
-        'If you wish to know whether a soul truly loves God, do not ask how many sweet consolations or tears it feels in prayer; ask how faithfully it fulfills the Will of God! Now the Will of God, Theotimus, is made known to us in two distinct ways, which every Christian must clearly understand: first, the *Signified Will* (*Voluntas Signi*), and second, the *Will of God\'s Good Pleasure* (*Voluntas Beneplaciti*).',
-        'The Signified Will of God consists of His Commandments, the precepts of the Church, the evangelical counsels, the duties of our state in life, and holy inspirations. Toward this Signified Will we must never be passive or indifferent! On the contrary, we must embrace it with active zeal, diligence, and fidelity, doing everything in our power to obey God\'s law, serve our neighbor, and preserve our health and family according to duty.',
-        'Put once we have done our part faithfully, everything else that happens in the world—except sin—belongs to the *Will of God\'s Good Pleasure*: sickness or health, poverty or abundance, rain or sunshine, success or failure, life or death, interior consolation or spiritual dryness. Toward this Will of God\'s Good Pleasure we must practice not merely submission, but *Holy Indifference*!',
-        'What is Holy Indifference? It does not mean stoic coldness or lack of feeling; rather, it means that the heart loves nothing for its own sake, but loves the Will of God inside everything! Consider a deaf-mute musician who plays the lute solely to please his Prince: when the Prince bids him play, he plays with all his heart; when the Prince bids him stop and put the lute away, he stops with equal joy, because he cares not for the music, but only for pleasing his Prince.',
-        'Or look at the infant Jesus in the arms of His Blessed Mother: He does not choose whether they go into Egypt or return to Nazareth, whether He is carried on her right arm or her left; He leaves all care of the journey to His Mother, resting content on her heart. So the soul in Holy Indifference says to its Heavenly Father: "Lord, I desire neither console nor affliction, neither long life nor short, save insofar as Thou willest it; Thy good pleasure is my only paradise!"'
+        'So long as we are wayfarers upon this earth, there is no limit to the growth of holy charity in our hearts: every smallest act of patience, every fervent Holy Communion, and every prayer increases the treasure of sanctifying grace, whereas in the Blessed Virgin Mary charity never knew a single instant of delay or hindrance from the moment of her Immaculate Conception.',
+        'In Heaven, faith gives way to the clear Vision of God—where the Eternal Father shines as infinite Light into our intellect, and the soul is forever united to the Sovereign Good without any possibility of losing Him.'
       ],
-      keyQuote: 'The indifferent heart is like a ball of wax in the hands of its God, ready to receive any impression of His eternal good pleasure—caring not for the gift, but only for the Giver.',
-      quoteCitation: 'Book IX: Union of Wills and Holy Indifference',
-      reflectionPrompt: 'Distinguish today between what is in your hands (your duty, kindness, and prayer—God\'s Signified Will) and what is in God\'s hands (outcomes beyond your control—His Good Pleasure).'
+      keyQuote: 'In this mortal life charity can grow until our very last breath; in the Blessed Virgin Mary, every heartbeat was a new ascent of love.',
+      quoteCitation: 'Book III, Chapters 1–15',
+      reflectionPrompt: 'How does knowing that even a small act of patience increases your eternal capacity to love God in Heaven inspire daily fidelity?'
     },
     {
-      id: 'tlg-ch-5',
+      id: 'tlg-book-4',
       chapterNumber: 5,
-      title: 'Book XII: Mount Calvary, the True Academy of Love',
-      latinTitle: 'Liber XII • Mons Calvariae, Vera Academia Sacri Amoris',
-      subtitle: 'The crowning conclusion of the Treatise: how the Cross of Jesus Christ is the supreme school and furnace of eternal charity.',
+      title: 'Book IV: Of the Decay and Ruin of Charity in the Soul',
+      latinTitle: 'Liber IV • De Defectu et Ruina Caritatis in Anima',
+      subtitle: 'Why God never forsakes a soul unless the soul first forsakes Him, and how penitential love restores everything.',
       paragraphs: [
-        'We have come now, dear Theotimus, to the summit of our treatise, and where else can we conclude our discourse on Sacred Love than upon Mount Calvary? Mount Calvary is the mount of lovers! All love that does not take its origin from the Savior\'s Passion is frivolous and dangerous. Unhappy is death without the love of the Savior; unhappy is love without the death of the Savior! Love and death are so mingled in the Passion of Jesus that we cannot have the one in our heart without the other.',
-        'Why did our Divine Master choose to die upon the Cross? He might have redeemed the world with a single tear or a single sigh of love, for every act of the God-Man possesses infinite value. Yet He willed to die bruised, pierced, and drained of every drop of His Precious Blood so that no human heart could ever look upon the Crucifix without being conquered by the excess of His charity: "Greater love than this no man hath, that a man lay down his life for his friends" (John 15:13).',
-        'Think of it, Theotimus: what was it that nailed our Lord to the wood? Iron nails held His hands and feet, yes, but it was Love alone that held Him fast to the Cross and broke His Sacred Heart! On Calvary, Divine Mercy and human misery met in an eternal embrace.',
-        'Therefore, when your love grows cold, when prayer seems dry, or when the weight of daily duties presses heavily upon your shoulders, climb in spirit to Mount Calvary and kneel beside Mary, St. John, and St. Mary Magdalene at the foot of the Cross. Place your heart against the wounded Side of Jesus, that furnace of burning charity.',
-        'Let us conclude with the eternal resolution of St. Paul: "Either to die, or to love; and if we cannot love without dying to ourselves, let us die to all self-will that we may live forever in the love of Jesus Crucified!" Live Jesus! Whom to love is our beatitude in time and in eternity. Amen.'
+        'It is an article of Catholic faith that God never withdraws His grace from the just unless they first voluntarily turn their backs upon Him through mortal sin. As the sun never ceases to shine unless we close our shutters against it, so God is always faithful.',
+        'When a soul unhappily falls into sin, it is like a bee struck down by a storm that lies lifeless in the dust—until the warm rays of the sun shine upon it and restore its life! By the preventing grace of contrition and the Sacrament of Penance, God raises the penitent soul and restores to it all its former merits and virtues.'
       ],
-      keyQuote: 'Mount Calvary is the mount of lovers! All love that does not take its origin from the Savior\'s Passion is frivolous and dangerous.',
-      quoteCitation: 'Book XII: Mount Calvary, the Academy of Love',
-      reflectionPrompt: 'Gaze upon a Crucifix for one quiet minute and repeat St. Francis de Sales\' motto from the depths of your heart: "Live Jesus!"'
+      keyQuote: 'God never forsakes the soul unless the soul first forsakes Him; and the moment the penitent turns back to the Sun of Mercy in Confession, all past merits revive!',
+      quoteCitation: 'Book IV, Chapters 1–10',
+      reflectionPrompt: 'Thank Our Lord for the Sacrament of Confession, which not only forgives sin but revives every good work previously performed in grace.'
+    },
+    {
+      id: 'tlg-book-5',
+      chapterNumber: 6,
+      title: 'Book V: Of the Two Principal Exercises of Sacred Love — Complacency and Benevolence',
+      latinTitle: 'Liber V • De Duobus Exercitiis Praecipuis Amoris: Complacentia et Benevolentia',
+      subtitle: 'Rejoicing in God’s infinite perfection (Love of Complacency) and desiring that all creation glorify Him (Love of Benevolence).',
+      paragraphs: [
+        'Sacred Love has two primary movements: first, the Love of Complacency, by which the soul gazes upon the infinite beauty, wisdom, goodness, and beatitude of God and rejoices with all its strength that God is God! Like a child delighting in the splendor of its kingly father, the soul drinks in God’s perfection until its heart cries: "It is enough for me that God is infinitely happy and glorious!"',
+        'Second, from this complacency springs the Love of Benevolence: though we cannot add anything to God’s intrinsic perfection, we ardently desire that His Name be hallowed, loved, and obeyed by our own heart and by every angel and human creature in the universe, inviting all creation with the Three Young Men in the furnace to bless the Lord forever.'
+      ],
+      keyQuote: 'By the Love of Complacency we rejoice that God is infinitely perfect and blessed in Himself; by the Love of Benevolence we desire that all creation praise and glorify His Name.',
+      quoteCitation: 'Book V, Chapters 1–12',
+      reflectionPrompt: 'Make an act of the Love of Complacency right now: tell God how glad you are that He is infinitely good, holy, and blessed forever!'
+    },
+    {
+      id: 'tlg-book-6',
+      chapterNumber: 7,
+      title: 'Book VI: Of the Exercises of Sacred Love in Prayer — Meditation, Contemplation, and Quiet',
+      latinTitle: 'Liber VI • De Exercitiis Sacri Amoris in Oratione: Meditatio et Contemplatio',
+      subtitle: 'How meditation gathers the honey from flower to flower, while contemplation savors the comb of divine love in simple peace.',
+      paragraphs: [
+        'Mystical theology is nothing else than secret, loving conversation of the soul with God in prayer. What is the difference between Meditation and Contemplation? Meditation is like the little bee flying industriously from flower to flower across the mysteries of Christ’s life to gather the nectar of devout affections; Contemplation is the bee resting quietly in the hive to eat and savor the honey it has gathered! Meditation looks at the virtues of the Beloved piece by piece; Contemplation gazes upon the Beloved Himself with a simple, loving, unified glance.',
+        'In the Prayer of Quiet, the soul rests like an infant on its mother’s breast: it no longer needs to multiply long discourses, but abides peacefully in the presence of God, careful not to disturb its own stillness by anxious curiosity.'
+      ],
+      keyQuote: 'Meditation is the bee flying from flower to flower to gather honey; contemplation is savoring the honey of divine love in one simple, loving gaze upon God.',
+      quoteCitation: 'Book VI, Chapters 1–15',
+      reflectionPrompt: 'In your prayer today, after meditating on a mystery of Christ, allow your heart a few minutes of simple, quiet gaze upon Him.'
+    },
+    {
+      id: 'tlg-book-7',
+      chapterNumber: 8,
+      title: 'Book VII: Of the Union of the Soul with God Perfected in Prayer and the Ecstasy of Life',
+      latinTitle: 'Liber VII • De Unione Animae cum Deo et triplici Exstasi Operis',
+      subtitle: 'Why the highest ecstasy is not bodily levitation, but the "Ecstasy of Action and Life"—living completely above worldly ways in Christ.',
+      paragraphs: [
+        'There are three kinds of ecstasy: the ecstasy of the intellect in light, the ecstasy of the heart in fervor, and—highest and surest of all—the Ecstasy of Work and Life! A person might have raptures in prayer and yet be proud or uncharitable; such raptures are illusions.',
+        'True, unfeigned ecstasy is the Ecstasy of Life: when a Christian lives no longer according to human selfishness, resentment, and vanity, but lives entirely above himself in the meekness, purity, humility, and charity of Jesus Christ, dying to self for love of Him Who died for us!'
+      ],
+      keyQuote: 'The crown of all ecstasy is the Ecstasy of Work and Life: living entirely above human selfishness in the meekness, humility, and charity of Christ.',
+      quoteCitation: 'Book VII, Chapters 1–14',
+      reflectionPrompt: 'How can you practice the "Ecstasy of Life" today by responding to a provocation or duty with supernatural meekness rather than natural impatience?'
+    },
+    {
+      id: 'tlg-book-8',
+      chapterNumber: 9,
+      title: 'Book VIII: Of the Love of Conformity to God’s Signified Will',
+      latinTitle: 'Liber VIII • De Amore Conformitatis erga Voluntatem Dei Significatam',
+      subtitle: 'Uniting our will with God’s Will signified in the Commandments, the teachings of the Church, the duties of our state, and the evangelical counsels.',
+      paragraphs: [
+        'God makes known His holy Will to us in two distinct ways: first, as His "Signified Will" (Voluntas Signi)—comprising His Ten Commandments, the precepts of Holy Church, the evangelical counsels, interior inspirations, and the duties of our vocation; second, as His "Will of Good Pleasure" (Voluntas Beneplaciti)—comprising all events that actually happen by His providence.',
+        'Toward God’s Signified Will our duty is active, zealous Conformity: we must desire, pray, and labor with all our strength to keep every commandment, fulfill every duty of our state in life with loving exactness, and obey legitimate authority as the voice of God Himself.'
+      ],
+      keyQuote: 'Toward God’s Signified Will—His Commandments, Church precepts, and the duties of our state—love demands active, joyful, and wholehearted obedience.',
+      quoteCitation: 'Book VIII, Chapters 1–14',
+      reflectionPrompt: 'How does seeing the daily duties of your vocation as "God’s Signified Will" fill ordinary work with sacred dignity?'
+    },
+    {
+      id: 'tlg-book-9',
+      chapterNumber: 10,
+      title: 'Book IX: Of the Love of Submission and Holy Indifference to God’s Will of Good Pleasure',
+      latinTitle: 'Liber IX • De Amore Submissionis et Sancta Indifferentia',
+      subtitle: 'The parable of the deaf lute-player singing for his King alone, and loving God’s Will in sickness and cross even more than in consolation.',
+      paragraphs: [
+        'Toward God’s Will of Good Pleasure—sickness, bereavement, dryness, weather, and trials beyond our control—love rises from patient resignation to "Holy Indifference." Holy indifference is not stoic coldness; rather, the indifferent heart is like a ball of wax in the hands of God, loving nothing for itself, but loving everything solely because God wills it!',
+        'Imagine a deaf musician commanded by his Prince to play the lute and sing: when the Prince listens, he sings with joy; if the Prince turns away to go hunting while commanding him to keep playing, the deaf musician continues playing with equal love because he cannot hear his own music anyway and sings solely to please his Prince! And to love God’s Will in tribulation is even purer than in consolation, because in consolation we love the sweetness along with God’s Will, whereas on the Cross we love God’s Will purely for itself.'
+      ],
+      keyQuote: 'In consolation we love God’s Will mingled with sweetness; in tribulation we love God’s Will purely for itself, like the deaf musician playing solely to please his King.',
+      quoteCitation: 'Book IX, Chapters 1–16',
+      reflectionPrompt: 'Reflect on St. Francis de Sales’s parable of the deaf lute-player: how can you continue singing for your King even when you cannot feel spiritual sweetness?'
+    },
+    {
+      id: 'tlg-book-10',
+      chapterNumber: 11,
+      title: 'Book X: Of the Commandment of Loving God Above All Things and Our Neighbor in God',
+      latinTitle: 'Liber X • De Mandato Diligendi Deum Super Omnia et Proximum Propter Deum',
+      subtitle: 'How heaven’s highest privilege is made our sweetest commandment on earth, and how divine love orders all human affections.',
+      paragraphs: [
+        'O admirable goodness of our Creator! If God had forbidden poor mortals to love His infinite Majesty, what torment it would be for a generous heart; instead, He strictly commands us under pain of sin to do that which is the highest beatitude of the Seraphim—to love Him with all our heart, soul, mind, and strength!',
+        'And this sovereign love does not destroy pure human friendships or family bonds; rather, it baptizes and elevates them, teaching us to love our family, friends, and even our enemies in God and for God, after the pattern of the Sacred Heart of Jesus.'
+      ],
+      keyQuote: 'What is the highest beatitude of the Seraphim in Heaven, God has made our sweetest commandment on earth: "Thou shalt love the Lord thy God with thy whole heart!"',
+      quoteCitation: 'Book X, Chapters 1–17',
+      reflectionPrompt: 'How does loving your family and friends "in God and for God" make your affection for them truer, purer, and everlasting?'
+    },
+    {
+      id: 'tlg-book-11',
+      chapterNumber: 12,
+      title: 'Book XI: Of the Sovereign Authority Which Sacred Love Holds Over All the Virtues',
+      latinTitle: 'Liber XI • De Supremo Imperio Caritatis Super Omnes Virtutes',
+      subtitle: 'How Charity is the Queen that gives life, supernatural merit, and beauty to every other moral and theological virtue.',
+      paragraphs: [
+        'Without charity, says the Apostle, though I speak with the tongues of men and of angels, or give my body to be burned, it profits me nothing! Natural virtues without sanctifying charity are like fragrant flowers that have been cut from their roots, or like aromatic spices before they are steeped in honey; when Divine Charity enters the soul, it animates, orders, and crowns every virtue with eternal merit.',
+        'Yet even inside the sanctuary of the soul, peace is preserved by humility and simplicity, refusing to become troubled when involuntary fears or sadness brush against the lower senses while the will remains faithful to God.'
+      ],
+      keyQuote: 'Charity is the Queen of all virtues: when she enters the soul, every patience, fast, and prayer is steeped in eternal life.',
+      quoteCitation: 'Book XI, Chapters 1–21',
+      reflectionPrompt: 'Before performing any good work today, renew your intention of doing it purely out of love for God.'
+    },
+    {
+      id: 'tlg-book-12',
+      chapterNumber: 13,
+      title: 'Book XII: Choice Counsels for Progress in Sacred Love and Mount Calvary, the Academy of Love',
+      latinTitle: 'Liber XII • De Montis Calvariae Academia Amoris et Electione "Aut Mori, Aut Amare"',
+      subtitle: 'Cutting off useless desires, firing jaculatory prayers, and St. Francis de Sales’s final cry on Mount Calvary: "Either to die or to love!"',
+      paragraphs: [
+        'In this final Book I leave you practical counsels for advancing daily in divine love: prune away useless desires that do not belong to your present state (just as a man with a fever should not waste time wishing for distant springs when he has medicine at hand); practice frequent jaculatory prayers and spiritual retreats into your heart during the day; and receive the Sacraments with ever-growing hunger.',
+        'Finally, Theotimus, Mount Calvary is the true Academy of Love! There on the Cross, the Savior dies of love for us, and His opened Heart cries out to every Christian soul: "Either to die, or to love; and if I cannot love without dying to self, then let me die to every other love that I may live forever in Jesus Crucified!" Live Jesus, whom I love! Amen.'
+      ],
+      keyQuote: 'Mount Calvary is the true Academy of Love! Either to love God, or to die—and to die to every disordered love so as to live only for Jesus Crucified!',
+      quoteCitation: 'Book XII, Chapters 1–13',
+      reflectionPrompt: 'Stand in spirit on Mount Calvary today and pray with St. Francis de Sales: "Live Jesus, whom I love!"'
     }
   ]
 };

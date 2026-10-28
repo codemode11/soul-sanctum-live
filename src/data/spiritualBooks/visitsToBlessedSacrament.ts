@@ -5,125 +5,481 @@ export const VISITS_TO_BLESSED_SACRAMENT: SpiritualBook = {
   title: 'Visits to the Most Blessed Sacrament and the Blessed Virgin Mary',
   latinTitle: 'Visitationes Sanctissimi Sacramenti et Beatae Mariae Virginis',
   author: 'St. Alphonsus Maria de Liguori',
-  authorTitle: 'Bishop, Founder of the Redemptorists, Doctor of the Church',
+  authorTitle: 'Bishop, Founder of the Redemptorists, and Doctor of the Church',
   era: '1745 A.D.',
-  category: 'devotion',
-  categoryLabel: 'Eucharistic Adoration and Marian Devotion',
-  description: 'One of the most beloved Eucharistic prayer manuals in Catholic history, published in over two thousand editions during and after St. Alphonsus Liguori’s lifetime. Includes the classic Preliminary Prayer before the Tabernacle, the Act of Spiritual Communion, and the complete cycle of Eucharistic and Marian Visits for every day of the month.',
-  theologicalFocus: 'Eucharistic Adoration, Real Presence in the Tabernacle, Spiritual Communion, Marian Intercession',
-  nihilObstat: 'Censor Deputatus Neapolitanus (1745)',
-  imprimatur: 'Archdiocese of Naples',
-  coverGradient: 'from-[#7A5536] via-[#6B482B] to-[#593A22]',
-  accentColor: '#F59E0B',
-  emblemSymbol: '☀️',
-  estimatedMinutesPerChapter: 7,
+  category: 'prayer',
+  categoryLabel: 'Eucharistic Adoration & Marian Devotion',
+  description: 'Published in 1745 and translated into every language of Christendom, this complete thirty-three-chapter edition contains the Author’s Introduction and Preliminary Prayers, all Thirty-One Daily Visits to the Most Blessed Sacrament and to the Blessed Virgin Mary for every day of the month, the classic Spiritual Communion formula, and the Concluding Eucharistic Affections.',
+  theologicalFocus: 'Eucharistic Adoration, The Real Presence, Spiritual Communion, Daily Visits to Our Lady, and Intimate Friendship with Christ in the Tabernacle',
+  nihilObstat: 'Redemptorist Critical Edition (Opere Ascetiche di S. Alfonso Maria de Liguori)',
+  imprimatur: 'Enriched with Plenary and Partial Indulgences by Pope Pius IX and Pope St. Pius X',
+  coverGradient: 'from-[#78350F] via-[#5A270B] to-[#3B1806]',
+  accentColor: '#FBBF24',
+  emblemSymbol: '✨',
+  estimatedMinutesPerChapter: 6,
   chapters: [
     {
-      id: 'vbs-ch-1',
-      chapterNumber: 1,
-      title: 'Introduction and Preliminary Prayers: Act of Faith, Adoration, and Spiritual Communion',
-      latinTitle: 'Introductio • Actus Fidei et Communio Spiritualis',
-      subtitle: 'Why visiting Jesus in the Most Blessed Sacrament is the most profitable of all devotions, together with St. Alphonsus’s classic daily prayers before the Altar.',
-      paragraphs: [
-        'Our holy Faith teaches us, and we are bound to believe, that in the consecrated Host Jesus Christ is really present under the species of bread, as He is present in Heaven; as the Council of Trent teaches: "Truly, really, and substantially under the species of those sensible things." Since, then, we are not permitted in this valley of tears to behold our Lord face to face with bodily eyes, what sweeter joy can a loving soul have on earth than to kneel before the Tabernacle where the King of Heaven dwells night and day for love of us?',
-        'Know that in a single quarter of an hour\'s prayer before the Blessed Sacrament, you will perhaps gain more grace and spiritual strength than in all the other spiritual exercises of the day! Every Visit begins with this Preliminary Prayer before the Tabernacle, and concludes with the Act of Spiritual Communion and a Visit to Our Blessed Mother Mary:',
-        'PRELIMINARY PRAYER BEFORE EVERY VISIT: "My Lord Jesus Christ, Who for the love Which Thou bearest to men, remainest night and day in this Sacrament, full of compassion and of love, awaiting, calling, and welcoming all who come to visit Thee: I believe that Thou art present in the Sacrament of the Altar. I adore Thee from the abyss of my nothingness, and I thank Thee for all the graces which Thou hast bestowed upon me, and in particular for having given me Thyself in this Sacrament, for having given me Thy Most Holy Mother Mary as my Advocate, and for having called me to visit Thee in this church. I now salute Thy most loving Heart, and this for three ends: First, in thanksgiving for this great gift; Secondly, to make amends to Thee for all the outrages which Thou receivest in this Sacrament from all Thine enemies; Thirdly, I intend by this visit to adore Thee in all the places on earth in which Thou art present in this Sacrament, and in which Thou art the least revered and the most abandoned. My Jesus, I love Thee with my whole heart. I grieve for having hitherto so many times offended Thine infinite goodness. I purpose by Thy grace never more to offend Thee for the time to come; and now, miserable and unworthy though I be, I consecrate myself to Thee without reserve; I give Thee and renounce to Thee my entire will, my affections, my desires, and all that I possess. From henceforward do Thou dispose of me and of all that is mine as Thou pleasest. All that I ask of Thee and desire is Thy holy love, final perseverance, and the perfect accomplishment of Thy will. I recommend to Thee the souls in Purgatory, hardware especially those who had the greatest devotion to the Most Blessed Sacrament and to the Most Blessed Virgin Mary. I also recommend to Thee all poor sinners. In fine, my dear Savior, I unite all my affections with the affections of Thy most loving Heart; and I offer them, thus united, to Thy Eternal Father, and beseech Him in Thy Name to vouchsafe, for Thy love, to accept and grant them."',
-        'ACT OF SPIRITUAL COMMUNION (To be prayed at every Visit): "My Jesus, I believe that Thou art really present in the Most Holy Sacrament. I love Thee above all things, and I desire to possess Thee within my soul. Since I cannot now receive Thee sacramentally, come at least spiritually into my heart. I embrace Thee as being already there, and unite myself wholly to Thee; never permit me to be separated from Thee."'
-      ],
-      keyQuote: 'My Lord Jesus Christ, Who for the love Which Thou bearest to men, remainest night and day in this Sacrament, full of compassion and of love, awaiting, calling, and welcoming all who come to visit Thee: I believe that Thou art present in the Sacrament of the Altar.',
-      quoteCitation: 'Introduction and Preliminary Prayers',
-      reflectionPrompt: 'Pray St. Alphonsus\'s Preliminary Prayer and Spiritual Communion slowly from the heart, imagining yourself kneeling before the quiet sanctuary lamp.'
+        "id": "vbs-intro",
+        "chapterNumber": 1,
+        "title": "Introduction and Preliminary Prayers: Act of Faith, Adoration, and Spiritual Communion",
+        "latinTitle": "Introductio et Preces Quotidiana • Actus Fidei, Adorationis et Communionis Spiritualis",
+        "subtitle": "Why visiting Jesus in the Most Blessed Sacrament is the most profitable of all devotions, with St. Alphonsus’s classic daily prayers.",
+        "paragraphs": [
+            "Of all devotions, that of adoring Jesus in the Blessed Sacrament is the greatest after the sacraments, the one dearest to God and the one most helpful to us! Do not omit making a Visit every day: detach yourself for fifteen minutes from worldly cares, kneel before the Tabernacle, and speak to Jesus heart to heart as to your dearest Friend.",
+            "PRELIMINARY PRAYER BEFORE EVERY VISIT: \"My Lord Jesus Christ, Who for the love which Thou bearest to men remainest night and day in this Sacrament full of compassion and of love, awaiting, calling, and welcoming all who come to visit Thee: I believe that Thou art present in the Sacrament of the Altar; I adore Thee from the abyss of my nothingness, and I thank Thee for all the graces which Thou hast bestowed upon me, and in particular for having given me Thyself in this Sacrament, for having given me Thy most holy Mother Mary for my Advocate, and for having called me to visit Thee in this church.\"",
+            "GOLDEN FORMULA OF SPIRITUAL COMMUNION: \"My Jesus, I believe that Thou art truly present in the Most Blessed Sacrament. I love Thee above all things, and I desire to possess Thee within my soul. Since I am unable now to receive Thee sacramentally, come at least spiritually into my heart. I embrace Thee as being already there, and unite myself wholly to Thee; never permit me to be separated from Thee!\""
+        ],
+        "keyQuote": "Of all devotions, that of adoring Jesus in the Blessed Sacrament is the greatest after the sacraments, the one dearest to God and the one most helpful to us!",
+        "quoteCitation": "Author’s Introduction & Preliminary Prayers",
+        "reflectionPrompt": "Pray St. Alphonsus’s Spiritual Communion formula slowly right now, welcoming Jesus into your heart."
     },
     {
-      id: 'vbs-ch-2',
-      chapterNumber: 2,
-      title: 'Visits 1 to 6: The Fountain of Goods, The Shepherd at Night, and the Delight of Christ',
-      latinTitle: 'Visitationes I–VI • De Fonte Bonorum et Deliciis Christi Cum Filiis Hominum',
-      subtitle: 'Meditations for Days 1 to 6 of the Month: Christ waiting for us at the Fountain, His delight to be with the children of men, and the Furnace of Charity.',
-      paragraphs: [
-        'VISIT 1 (Day 1 — The Fountain of All Goods): Behold here the Source of every good, Jesus in the Most Blessed Sacrament, Who says to us: "If any man thirst, let him come to Me!" (John 7:37). Oh, what abundant streams of grace have the Saints drawn from this Fountain of the Altar! There Jesus bestows all the merits of His Passion. Ah, my Most Amiable Word in the Sacrament, Thou hast remained on our altars in order to enrich all who visit Thee! Give me a burning thirst solely for Thy pure love. — To Mary: Most holy Immaculate Virgin and my Mother Mary, to thee who art the Mother of my Lord, the Queen of the world, the Advocate, the Hope, and the Refuge of sinners, I have recourse today, I who am the most miserable of all.',
-        'VISIT 2 (Day 2 — The Loving Shepherd Remaining Day and Night): If our Redeemer had focused only on our salvation, it would have sufficed for Him to die on Calvary and then return to Heaven. Why then did He institute the Eucharist? Because His love could not bear to leave us orphans during our exile! Like the tenderest of shepherds, He remains day and night in the Tabernacle to guard His flock in person. Ah, my sweet Lord, since Thou remainest here to hear my petitions, hear me now: strip my heart of all earthly attachments so that it may beat for Thee alone! — To Mary: O my Sovereign Lady, in thee I place all my hope; receive me as thy servant and cover me with the mantle of thy protection.',
-        'VISIT 3 (Day 3 — "My Delights Are to Be with the Children of Men"): "My delights were to be with the children of men" (Prov. 8:31). Notice how Jesus counts it His very delight to remain enclosed in the narrow ciborium on our altars just to be near us! Earthly kings make it difficult for poor subjects to obtain an audience; the King of Heaven leaves His doors open all day long and complains only that we visit Him so rarely. O my Jesus, may Thy Sacred Tabernacle henceforth be my only delight on earth! — To Mary: Under thy protection we take refuge, O Holy Mother of God; despise not our petitions in our necessities.',
-        'VISIT 4 (Day 4 — The Furnace of Charity): St. Gregory of Nyssa compares the Eucharist to a blazing fire around which cold travelers gather to warm themselves. Do you feel cold in divine love? Draw near to this Sacrament of Fire; simply remain in His presence with a humble desire to love Him, and His divine warmth will melt the ice of your heart. — To Mary: Remember, O most gracious Virgin Mary, that never was it known that anyone who fled to thy protection was left unaided.',
-        'VISIT 5 (Day 5 — The Hidden God): "Truly Thou art a hidden God, the God of Israel, the Savior" (Isa. 45:15). On the Cross, Christ hid His Divinity alone; in the Eucharist, He hides even His Sacred Humanity, appearing as a tiny fragment of bread so that we may approach Him without fear and speak to Him as friend to friend. O Hidden Majesty, increase my faith! — To Mary: O Mother of Mercy, appease thy Son on our behalf and keep us under thy maternal gaze.',
-        'VISIT 6 (Day 6 — The Friend Who Never Leaves): Worldly friends visit us in prosperity and abandon us in poverty or death; Jesus in the Blessed Sacrament accompanies us through every storm of life and enters our very breast as Viaticum to carry us across the threshold of eternity. O Faithful Friend, bind my soul indissolubly to Thy Eucharistic Heart! — To Mary: O Mary, Star of the Sea, guide our fragile bark safely into the harbor of eternal salvation.'
-      ],
-      keyQuote: 'Earthly kings make it difficult for poor subjects to obtain an audience; the King of Heaven in the Tabernacle leaves His doors open all day long and complains only that we visit Him so rarely.',
-      quoteCitation: 'Visits 1–6 (Days 1 to 6)',
-      reflectionPrompt: 'Which of these six titles of Jesus in the Eucharist—Fountain of Goods, Night Shepherd, Delight of Men, Furnace of Charity, Hidden God, or Faithful Friend—speaks most deeply to your heart today?'
+        "id": "vbs-visit-1",
+        "chapterNumber": 2,
+        "title": "Visit 1: Fountain of All Goods",
+        "latinTitle": "Visitatio 1 • Fons Omnium Bonorum (Zach. 13:1)",
+        "subtitle": "Jesus waiting in the Tabernacle like a crystal fountain open to cleanse and enrich every soul that draws near.",
+        "paragraphs": [
+            "Behold the Fountain of all goods, Jesus in the Most Blessed Sacrament, Who says: \"If any man thirst, let him come to Me and drink!\" What countless graces have the Saints drawn from this altar! Our Lord stays day and night on the altar so that everyone may easily find Him and pour out their needs before Him.",
+            "SPIRITUAL COMMUNION & VISIT TO MARY: My Jesus, I believe that Thou art truly present in the Most Blessed Sacrament; I love Thee above all things, and I desire to possess Thee within my soul! And to thee, O Immaculate Virgin Mary, whom St. Germanus calls the breath of Christians, I turn today as my Mother and Queen."
+        ],
+        "keyQuote": "Behold the Fountain of all goods, Jesus in the Most Blessed Sacrament, Who says: \"If any man thirst, let him come to Me and drink!\" What countless graces have the Saints drawn from this altar! Our Lord stays day and night on the altar so that everyone may easily find Him and pour out their needs before Him.",
+        "quoteCitation": "Visit 1 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 1 (Fountain of All Goods) and make a Spiritual Communion."
     },
     {
-      id: 'vbs-ch-3',
-      chapterNumber: 3,
-      title: 'Visits 7 to 12: The Tree of Life, TheMemorial of Wonders, and the Magnet of Hearts',
-      latinTitle: 'Visitationes VII–XII • De Ligno Vitae et Memoriali Mirabilium Dei',
-      subtitle: 'Meditations for Days 7 to 12 of the Month: How the Eucharist heals the poison of sin, perpetuates Calvary, and draws souls like a divine magnet.',
-      paragraphs: [
-        'VISIT 7 (Day 7 — The Tree of Life in the New Paradise): In the earthly paradise stood the Tree of Life; in the paradise of the Church stands the Eucharist, whose fruit restores health to souls wounded by concupiscence. "He that eateth Me, the same also shall live by Me" (John 6:58). O Bread of Angels, heal every weakness of my soul! — To Mary: Blessed is the fruit of thy womb, Jesus, Whom thou hast given to be the Bread of our souls.',
-        'VISIT 8 (Day 8 — The Memorial of His Wonderful Works): "He hath made a remembrance of His wonderful works, being a merciful and gracious Lord: He hath given food to them that fear Him" (Ps. 110:4-5). As St. Thomas Aquinas sings, all the miracles of creation and salvation history are summed up in the miracle of the Altar. Here Calvary is renewed without shedding of blood. — To Mary: O Queen of Prophets and Apostles, obtain for us a grateful memory of the Passion of thy Son.',
-        'VISIT 9 (Day 9 — The Divine Magnet of Hearts): Just as a magnet draws iron to itself, so the Sacred Host draws humble hearts out of the mire of earthly desires into union with God. "And I, if I be lifted up from the earth, will draw all things to Myself" (John 12:32). Draw me after Thee, O Eucharistic Lord, that I may run in the odor of Thy ointments! — To Mary: Draw our hearts after thee, O Immaculate Mother, for every soul that loves thee is led straight to Jesus.',
-        'VISIT 10 (Day 10 — The Treasury of All Graces): Before ascending to the Father, Jesus left us not a lifeless portrait or golden relic of Himself, but His own living Person in the Blessed Sacrament. If you had the privilege of kneeling before the Infant in Bethlehem or at the feet of Jesus in Bethany with Mary Magdalene, what would you ask of Him? Ask it now, for He is the very same Lord! — To Mary: O Mother of Fairest Love, teach us to sit at the feet of Jesus as thou didst at Nazareth.',
-        'VISIT 11 (Day 11 — TheGood Physician Among the Sick): Why does a physician open his clinic in the middle of a hospital? To heal the sick! Do not stay away from visiting or receiving Jesus because you feel weak and full of faults; come to the Altar precisely because you are sick and need the Physician of Life! — To Mary: O Health of the Sick (Salus Infirmorum), present our wounded souls to thy Divine Son.',
-        'VISIT 12 (Day 12 — The Pledge of Future Glory): "O Sacred Banquet, in which Christ is received, the memory of His Passion is renewed, the mind is filled with grace, and a pledge of future glory is given to us!" Every Visit and every Communion is an earnest of our resurrection and eternal beatitude. — To Mary: O Gate of Heaven (Janua Coeli), open to us after this exile the vision of thy Son face to face.'
-      ],
-      keyQuote: 'Before ascending to the Father, Jesus left us not a lifeless portrait of Himself, but His own living Person in the Blessed Sacrament.',
-      quoteCitation: 'Visits 7–12 (Days 7 to 12)',
-      reflectionPrompt: 'If you were kneeling physically at the feet of Jesus in Bethany or Bethlehem right now, what grace would you ask of Him? Ask Him now before the Altar.'
+        "id": "vbs-visit-2",
+        "chapterNumber": 3,
+        "title": "Visit 2: The Shepherd Remaining at Night",
+        "latinTitle": "Visitatio 2 • Pastor Excubans Nocte ac Die Prope Gregem Suum",
+        "subtitle": "Earthly kings grant audiences only a few hours a day; the King of Heaven remains night and day in the Tabernacle for us.",
+        "paragraphs": [
+            "Earthly monarchs give audience to their subjects only on certain days and through many guards; Jesus, the King of Heaven, remains veiled beneath the sacramental species night and day without closing His doors, inviting the poorest soul to converse with Him as a friend with his friend!",
+            "VISIT TO MARY: Let us go with confidence to the Throne of Grace, which in the New Law is Mary! Ask her today to present your heart to her Eucharistic Son."
+        ],
+        "keyQuote": "Earthly monarchs give audience to their subjects only on certain days and through many guards; Jesus, the King of Heaven, remains veiled beneath the sacramental species night and day without closing His doors, inviting the poorest soul to converse with Him as a friend with his friend!",
+        "quoteCitation": "Visit 2 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 2 (The Shepherd Remaining at Night) and make a Spiritual Communion."
     },
     {
-      id: 'vbs-ch-4',
-      chapterNumber: 4,
-      title: 'Visits 13 to 18: The Prisoner of Love, TheGrain of Wheat, and the Fire from Heaven',
-      latinTitle: 'Visitationes XIII–XVIII • De Captivo Amoris et Grano Frumenti',
-      subtitle: 'Meditations for Days 13 to 18 of the Month: How love holds Jesus captive in the Tabernacle, the mystical Grain of Wheat, and the fire Christ came to cast on earth.',
-      paragraphs: [
-        'VISIT 13 (Day 13 — The Prisoner of Love): Why is Jesus locked behind the bronze door of the Tabernacle? Not by iron chains, but by the bonds of His own infinite charity for us! He is the Prisoner of Love who refuses to leave His prison until the end of the world so that no sinner may ever seek Him in vain. — To Mary: O Mother of Divine Grace, bind our wandering hearts with the sweet chains of thy Son\'s love.',
-        'VISIT 14 (Day 14 — The Mystical Grain of Wheat): "Unless the grain of wheat falling into the ground die, itself remaineth alone; but if it die, it bringeth forth much fruit" (John 12:24). Ground between the millstones of His Passion and baked in the fire of charity on the Cross, Jesus became the pure white Bread of the Altar. Teach me, Lord, to die to my self-love so that I may live wholly for Thee! — To Mary: O Virgin Most Faithful, who stood beneath the Cross, teach us the fruitfulness of sacrifice.',
-        'VISIT 15 (Day 15 — "I Am Come to Cast Fire on the Earth"): "I am come to cast fire on the earth, and what will I, but that it be kindled?" (Luke 12:49). Nowhere does that heavenly fire burn more brightly than in the Sacred Host. Even a single spark from the Tabernacle is enough to turn a cold sinner into a seraph of love! — To Mary: O Spouse of the Holy Spirit, fan into flame within our breasts the fire of divine charity.',
-        'VISIT 16 (Day 16 — The Lily Among Thorns): In the Sacrament of the Altar, our Beloved feeds among the lilies of pure and humble hearts. Even if our past life has been overgrown with thorns of sin, one look of contrition before the Blessed Sacrament transforms our desert into a garden for the King. — To Mary: O Mystical Rose and Lily of Israel, clothe our souls in purity and humility.',
-        'VISIT 17 (Day 17 — The King Upon His Throne of Mercy): In eternity Jesus will sit upon the throne of justice; in the Tabernacle He sits solely upon the Throne of Mercy, holding out the golden scepter of pardon to all who approach Him. "Let us go therefore with confidence to the throne of grace" (Heb. 4:16). — To Mary: Hail, Holy Queen, Mother of Mercy! Turn thine eyes of mercy toward us.',
-        'VISIT 18 (Day 18 — Union of the Drop of Water with the Ocean): When the priest mingles a tiny drop of water with the wine in the chalice at Mass, that drop is absorbed into the Precious Blood. So in Eucharistic Adoration and Communion, our poor human soul is drawn up into the boundless ocean of Christ\'s divinity! — To Mary: O Vessel of Singular Devotion, unite our prayers with thine own Immaculate Heart.'
-      ],
-      keyQuote: 'In eternity Jesus will sit upon the throne of justice; in the Tabernacle He sits solely upon the Throne of Mercy, holding out pardon to all who approach Him.',
-      quoteCitation: 'Visits 13–18 (Days 13 to 18)',
-      reflectionPrompt: 'Approach the Throne of Mercy in the Tabernacle with complete confidence, laying down any guilt or fear at the feet of the Prisoner of Love.'
+        "id": "vbs-visit-3",
+        "chapterNumber": 4,
+        "title": "Visit 3: My Delights Are to Be with the Children of Men",
+        "latinTitle": "Visitatio 3 • Deliciae Meae Esse Cum Filiis Hominum (Prov. 8:31)",
+        "subtitle": "How Christ cannot bear to be separated even for an hour from the souls He redeemed with His Blood.",
+        "paragraphs": [
+            "Why does Jesus remain on our altars after ascending into glory? Because His love cannot bear to leave us orphans! He declares in Proverbs: \"My delights are to be with the children of men.\" Even if all men forsook Him, He would remain in the Tabernacle if only to console a single loving soul.",
+            "VISIT TO MARY: O Mother of Perpetual Succor, as Jesus delights to dwell with us on the altar, obtain for me the grace to delight in remaining at His feet!"
+        ],
+        "keyQuote": "Why does Jesus remain on our altars after ascending into glory? Because His love cannot bear to leave us orphans! He declares in Proverbs: \"My delights are to be with the children of men.\" Even if all men forsook Him, He would remain in the Tabernacle if only to console a single loving soul.",
+        "quoteCitation": "Visit 3 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 3 (My Delights Are to Be with the Children of Men) and make a Spiritual Communion."
     },
     {
-      id: 'vbs-ch-5',
-      chapterNumber: 5,
-      title: 'Visits 19 to 24: ThePelican of Love, The Spouse of the Soul, and the Refuge in Storm',
-      latinTitle: 'Visitationes XIX–XXIV • De Pelicano Amoris et Sponso Animae',
-      subtitle: 'Meditations for Days 19 to 24 of the Month: The Eucharistic Pelican feeding us with His own Blood, the Bridegroom of the Soul, and the Haven of Peace.',
-      paragraphs: [
-        'VISIT 19 (Day 19 — The Divine Pelican): Ancient tradition spoke of the pelican piercing its own breast to revive its dying young with its blood; St. Thomas Aquinas invokes this image for Jesus in the Eucharist: "Pie Pelicane, Jesu Domine, me immundum munda Tuo Sanguine—O Loving Pelican, Lord Jesus, cleanse me the unclean in Thy Blood, whereof a single drop can save the whole world from all sin!" — To Mary: O Mother of the Crucified Redeemer, apply to our souls the merits of His Precious Blood.',
-        'VISIT 20 (Day 20 — The Bridegroom of the Soul): In the Eucharist, God does not merely send angels or prophets to visit us; the Divine Bridegroom comes in person to espouse our soul in faith and charity (Hosea 2:19). What more could He have done to win our hearts? — To Mary: O Virgin of Virgins, adorn our souls with the wedding garment of sanctifying grace.',
-        'VISIT 21 (Day 21 — The Refuge from the World\'s Storms): Like Noah\'s Ark floating safely above the floodwaters, the sanctuary of the Blessed Sacrament is our quiet harbor where the noise and malice of the world cannot harm us. Whenever your heart is buffeted by sorrow or anxiety, flee to the Tabernacle! — To Mary: O Ark of the Covenant, shelter us beneath thy mantle when the tempests of life arise.',
-        'VISIT 22 (Day 22 — The Good Shepherd Carrying the Lost Sheep): Why does the Good Shepherd remain in the Eucharist? To welcome back the bruised and wandering sheep and carry it home upon His shoulders! Never fear to approach the Altar with a contrite heart. — To Mary: O Refuge of Sinners, lead every wandering soul back to the Eucharistic fold of thy Son.',
-        'VISIT 23 (Day 23 — "Where Thy Treasure Is, There Is Thy Heart"): Earthly misers keep their thoughts continually fixed on the chest where their gold is locked; for the Christian, our infinite Treasure is locked in the Tabernacle! Let our hearts fly toward the Altar many times each day. — To Mary: O Seat of Wisdom, teach us to prize the Pearl of Great Price above all earthly goods.',
-        'VISIT 24 (Day 24 — The Gift That Contains the Giver): All other gifts of God—creation, light, health, even the grace of the other Sacraments—are distinct from God Himself; in the Most Holy Eucharist, the Gift is the Giver Himself! In giving us the Host, God has exhausted His omnipotence and given us all that He is. — To Mary: O Cause of Our Joy, help us to render worthy thanksgiving for the unspeakable Gift of the Altar.'
-      ],
-      keyQuote: 'All other gifts of God are distinct from God Himself; in the Most Holy Eucharist, the Gift is the Giver Himself! In giving us the Host, God has given us all that He is.',
-      quoteCitation: 'Visits 19–24 (Days 19 to 24)',
-      reflectionPrompt: 'Marvel at the truth that in the Eucharist "the Gift is the Giver Himself"—what can we give back to Jesus except the total gift of our own heart?'
+        "id": "vbs-visit-4",
+        "chapterNumber": 5,
+        "title": "Visit 4: The Furnace of Divine Charity",
+        "latinTitle": "Visitatio 4 • Fornax Ardens Caritatis in Monte Sion",
+        "subtitle": "Isaiah’s prophecy of the Lord whose fire is in Sion and whose furnace is in Jerusalem—the Tabernacle of Love.",
+        "paragraphs": [
+            "St. Gregory of Nyssa and St. John Chrysostom call the Eucharist a Furnace of Divine Charity: just as no one can approach a great fire without being warmed, so no one can kneel devoutly before the Blessed Sacrament without carrying away the warmth of divine love!",
+            "VISIT TO MARY: O Queen of Love, cast the coldness of my heart into the fiery furnace of thy Son’s Eucharistic Heart!"
+        ],
+        "keyQuote": "St. Gregory of Nyssa and St. John Chrysostom call the Eucharist a Furnace of Divine Charity: just as no one can approach a great fire without being warmed, so no one can kneel devoutly before the Blessed Sacrament without carrying away the warmth of divine love!",
+        "quoteCitation": "Visit 4 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 4 (The Furnace of Divine Charity) and make a Spiritual Communion."
     },
     {
-      id: 'vbs-ch-6',
-      chapterNumber: 6,
-      title: 'Visits 25 to 31: The Viaticum of Eternity, The School of Humility, and Final Consecration',
-      latinTitle: 'Visitationes XXV–XXXI • De Viatico Aeternitatis et Schola Humilitatis',
-      subtitle: 'Meditations for Days 25 to 31 of the Month: The School of Eucharistic Humility, the Companion at the Hour of Death, and total consecration to Jesus and Mary.',
-      paragraphs: [
-        'VISIT 25 (Day 25 — The School of Profound Humility): Behold the Creator of the universe silent, obedient to the voice of a priest, placed on the paten, enclosed in the dark Tabernacle, without complaint whether He is adored or forgotten! How can we harbor pride when we look upon the humility of God in the Host? — To Mary: O Handmaid of the Lord, obtain for us the grace of true humility of heart.',
-        'VISIT 26 (Day 26 — "Behold, I Stand at the Gate and Knock"): "Behold, I stand at the gate, and knock. If any man shall hear My voice, and open to Me the door, I will come in to him, and will sup with him, and he with Me" (Apoc. 3:20). Open wide the door of your will to Jesus today! — To Mary: O Mother of Good Counsel, teach us to hear and obey every knock of thy Divine Son.',
-        'VISIT 27 (Day 27 — Reparation for Coldness and Ingratitude): How many pass by churches every day without a glance of love toward the Prisoner of the Tabernacle! Let our Visit today be an act of tender reparation, offering Jesus our love to console His Sacred Heart for the forgetfulness of men. — To Mary: O Comfortress of the Afflicted, unite our reparation with thy spotless love beneath the Cross.',
-        'VISIT 28 (Day 28 — "Remain With Us, Lord, for Evening Draws Near"): Like the two disciples at Emmaus who cried, "Stay with us, Lord, because it is towards evening" (Luke 24:29), let us beg our Eucharistic Savior to abide with us as the evening of our mortal life draws near, and to open our eyes in the breaking of the Bread. — To Mary: O Morning Star and Star of Evening, watch over us in life and at the hour of our death.',
-        'VISIT 29 (Day 29 — The Sovereign Remedy Against Daily Faults): As the Council of Trent teaches, the Eucharist is the antidote whereby we are freed from daily faults and preserved from mortal sins. Never allow a day to pass without at least a fervent Spiritual Communion and a loving glance toward the nearest Tabernacle. — To Mary: O Tower of Ivory, defend us from every snare of the enemy.',
-        'VISIT 30 (Day 30 — Holy Viaticum and the Passage to Eternity): Those who have faithfully visited and loved Jesus in the Blessed Sacrament during life will welcome Him without terror when He comes to their bedside as Holy Viaticum at the hour of death, to lead them from the veil of the Host to the unveiled vision of Heaven. — To Mary: Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death.',
-        'VISIT 31 (Day 31 — Total Consecration of Heart to Jesus in the Sacrament and to Mary): "O my Jesus, since Thou hast given Thyself wholly to me in this Most Holy Sacrament, I give myself wholly to Thee! Take my memory, that it may remember only Thy mercies; take my intellect, that it may contemplate only Thy truth; take my will, that it may love only Thy goodness. Living and dying, I desire to belong entirely to Thee, O Jesus in the Blessed Sacrament, and to thee, O Mary, my Immaculate Mother! Amen."'
-      ],
-      keyQuote: 'O my Jesus, since Thou hast given Thyself wholly to me in this Most Holy Sacrament, I give myself wholly to Thee! Living and dying, I desire to belong entirely to Thee and to Mary my Mother.',
-      quoteCitation: 'Visits 25–31 (Days 25 to 31)',
-      reflectionPrompt: 'Conclude your reading by praying Visit 31 aloud as your personal consecration to Jesus in the Most Blessed Sacrament and to the Blessed Virgin Mary.'
+        "id": "vbs-visit-5",
+        "chapterNumber": 6,
+        "title": "Visit 5: Where Thy Treasure Is, There Is Thy Heart Also",
+        "latinTitle": "Visitatio 5 • Ubi Thesaurus Tuus, Ibi et Cor Tuum (Matt. 6:21)",
+        "subtitle": "Why the hearts of the Saints flew continually toward the Tabernacle like iron drawn to a magnet.",
+        "paragraphs": [
+            "The worldling keeps his heart locked in his coffers of gold or earthly ambition; the Saints kept their hearts continually inside the Tabernacle with Jesus! St. Francis Xavier, after toiling all day baptizing multitudes in India, spent the night stretched at the foot of the altar conversing with his Eucharistic Lord.",
+            "VISIT TO MARY: O Treasury of the Lord, Mary most holy, detach my affections from passing dust and lock my heart inside the Tabernacle of thy Son!"
+        ],
+        "keyQuote": "The worldling keeps his heart locked in his coffers of gold or earthly ambition; the Saints kept their hearts continually inside the Tabernacle with Jesus! St. Francis Xavier, after toiling all day baptizing multitudes in India, spent the night stretched at the foot of the altar conversing with his Eucharistic Lord.",
+        "quoteCitation": "Visit 5 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 5 (Where Thy Treasure Is, There Is Thy Heart Also) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-6",
+        "chapterNumber": 7,
+        "title": "Visit 6: The Good Shepherd Giving His Life and His Flesh",
+        "latinTitle": "Visitatio 6 • Pastor Bonus Animam Suam et Carnem Dans Pro Ovibus",
+        "subtitle": "Not content with dying once on Calvary, the Good Shepherd remains on the altar to feed His sheep with His own Flesh.",
+        "paragraphs": [
+            "Behold how the Good Shepherd fulfills His promise to the uttermost: on Calvary He gave His life for His sheep; in the Blessed Sacrament He gives His very Body, Blood, Soul, and Divinity to nourish them along their pilgrimage to eternity!",
+            "VISIT TO MARY: O Mother of the Divine Shepherd, bring back every wandering sheep to the fold of Confession and the pasture of the Altar!"
+        ],
+        "keyQuote": "Behold how the Good Shepherd fulfills His promise to the uttermost: on Calvary He gave His life for His sheep; in the Blessed Sacrament He gives His very Body, Blood, Soul, and Divinity to nourish them along their pilgrimage to eternity!",
+        "quoteCitation": "Visit 6 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 6 (The Good Shepherd Giving His Life and His Flesh) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-7",
+        "chapterNumber": 8,
+        "title": "Visit 7: The Tree of Life Planted in the Midst of the Church",
+        "latinTitle": "Visitatio 7 • Lignum Vitae in Medio Paradisi Ecclesiae",
+        "subtitle": "How the Eucharist repairs the poison of the forbidden tree of Eden and bestows immortality on body and soul.",
+        "paragraphs": [
+            "In the earthly paradise stood the Tree of Life; in the new paradise of the Catholic Church stands the true Tree of Life, Jesus in the Blessed Sacrament! Whoever eats of this Bread and abides beneath its shade is healed of the venom of concupiscence and receives the pledge of glorious resurrection.",
+            "VISIT TO MARY: Hail, Mystical Earth that bore the Tree of Life! Obtain for me a hunger for the Bread of Angels."
+        ],
+        "keyQuote": "In the earthly paradise stood the Tree of Life; in the new paradise of the Catholic Church stands the true Tree of Life, Jesus in the Blessed Sacrament! Whoever eats of this Bread and abides beneath its shade is healed of the venom of concupiscence and receives the pledge of glorious resurrection.",
+        "quoteCitation": "Visit 7 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 7 (The Tree of Life Planted in the Midst of the Church) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-8",
+        "chapterNumber": 9,
+        "title": "Visit 8: The Memorial of All His Wonderful Works",
+        "latinTitle": "Visitatio 8 • Memoriam Fecit Mirabilium Suorum (Ps. 110:4)",
+        "subtitle": "Why the Blessed Sacrament is the summary and continuation of all the miracles of God’s love.",
+        "paragraphs": [
+            "\"He hath made a memorial of His wonderful works, being a merciful and gracious Lord: He hath given food to them that fear Him\" (Psalm 110:4). As St. Thomas Aquinas sings in the Office of Corpus Christi, among all the miracles of Omnipotence, none is sweeter or more stupendous than the Real Presence on the Altar!",
+            "VISIT TO MARY: O Virgin most faithful, who pondered all the wonders of thy Son in thy heart, teach me to adore His Eucharistic miracle with living faith!"
+        ],
+        "keyQuote": "\"He hath made a memorial of His wonderful works, being a merciful and gracious Lord: He hath given food to them that fear Him\" (Psalm 110:4). As St. Thomas Aquinas sings in the Office of Corpus Christi, among all the miracles of Omnipotence, none is sweeter or more stupendous than the Real Presence on the Altar!",
+        "quoteCitation": "Visit 8 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 8 (The Memorial of All His Wonderful Works) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-9",
+        "chapterNumber": 10,
+        "title": "Visit 9: The Ark of the New Covenant",
+        "latinTitle": "Visitatio 9 • Arca Novi Foederis et Propitiatorium Gratiae",
+        "subtitle": "If the house of Obededom was blessed for sheltering the wooden Ark, how much more is the soul blessed that visits the Living Ark!",
+        "paragraphs": [
+            "In the Old Testament, because Obededom sheltered the Ark of the Covenant for three months, the Lord blessed his entire household (2 Kings 6:11). How much richer are the blessings poured upon the soul and family that honors and visits the Living Ark—Jesus in the Tabernacle!",
+            "VISIT TO MARY: O Living Ark of the Covenant, Mary Immaculate, make my home and my heart a pure sanctuary of peace!"
+        ],
+        "keyQuote": "In the Old Testament, because Obededom sheltered the Ark of the Covenant for three months, the Lord blessed his entire household (2 Kings 6:11). How much richer are the blessings poured upon the soul and family that honors and visits the Living Ark—Jesus in the Tabernacle!",
+        "quoteCitation": "Visit 9 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 9 (The Ark of the New Covenant) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-10",
+        "chapterNumber": 11,
+        "title": "Visit 10: The Magnet of Christian Hearts",
+        "latinTitle": "Visitatio 10 • Magnes Cordium Amantium",
+        "subtitle": "How the Magi traveled from the East to find the Infant in a stable, while we have Him waiting in our own parish church.",
+        "paragraphs": [
+            "The holy Magi left their palaces and traveled for months through deserts to adore the Infant Jesus in Bethlehem; we need walk only a few steps to find the very same God-Man waiting for us in the nearest church—and yet how often His throne is left deserted!",
+            "VISIT TO MARY: O Star of the Sea who led the Magi to Jesus, lead my steps daily to adore thy Son upon the Altar!"
+        ],
+        "keyQuote": "The holy Magi left their palaces and traveled for months through deserts to adore the Infant Jesus in Bethlehem; we need walk only a few steps to find the very same God-Man waiting for us in the nearest church—and yet how often His throne is left deserted!",
+        "quoteCitation": "Visit 10 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 10 (The Magnet of Christian Hearts) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-11",
+        "chapterNumber": 12,
+        "title": "Visit 11: Behold, He Standeth Behind Our Wall",
+        "latinTitle": "Visitatio 11 • En Ipse Stat Post Parietem Nostrum (Cant. 2:9)",
+        "subtitle": "The Heavenly Bridegroom gazing at us through the lattices of the Eucharistic species.",
+        "paragraphs": [
+            "In the Song of Songs the Bride sings: \"Behold, He standeth behind our wall, looking through the windows, looking through the lattices!\" Beneath the white veil of the Sacred Host, Jesus sees your every tear, hears your softest sigh, and looks upon you with infinite tenderness.",
+            "VISIT TO MARY: O Spouse of the Canticle, open the eyes of my faith to behold Jesus gazing upon me from the Tabernacle!"
+        ],
+        "keyQuote": "In the Song of Songs the Bride sings: \"Behold, He standeth behind our wall, looking through the windows, looking through the lattices!\" Beneath the white veil of the Sacred Host, Jesus sees your every tear, hears your softest sigh, and looks upon you with infinite tenderness.",
+        "quoteCitation": "Visit 11 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 11 (Behold, He Standeth Behind Our Wall) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-12",
+        "chapterNumber": 13,
+        "title": "Visit 12: A Bundle of Myrrh Is My Beloved to Me",
+        "latinTitle": "Visitatio 12 • Fasciculus Myrrhae Dilectus Meus Mihi (Cant. 1:12)",
+        "subtitle": "The Altar as the living continuation of Calvary where Christ shows His glorious wounds to the Eternal Father.",
+        "paragraphs": [
+            "Every Tabernacle is a mystical Calvary where the Lamb of God continues to offer the merits of His Passion for our sins. When you kneel before the Blessed Sacrament, unite your pains and crosses with the bundle of myrrh of Jesus Crucified.",
+            "VISIT TO MARY: O Sorrowful Mother who stood beneath the Cross, teach me to unite my daily crosses with the Sacrifice of the Altar!"
+        ],
+        "keyQuote": "Every Tabernacle is a mystical Calvary where the Lamb of God continues to offer the merits of His Passion for our sins. When you kneel before the Blessed Sacrament, unite your pains and crosses with the bundle of myrrh of Jesus Crucified.",
+        "quoteCitation": "Visit 12 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 12 (A Bundle of Myrrh Is My Beloved to Me) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-13",
+        "chapterNumber": 14,
+        "title": "Visit 13: The Prisoner of Love in the Tabernacle",
+        "latinTitle": "Visitatio 13 • Captivus Amoris in Tabernaculo Altissimi",
+        "subtitle": "Bound not by chains of iron, but by the invincible bonds of His own charity for mankind.",
+        "paragraphs": [
+            "Why does the Sovereign Lord of the universe shut Himself up inside a narrow ciborium? He is the Prisoner of Love! Earthly prisoners long to be set free from their dungeons; Jesus rejoices in His Eucharistic prison so that He may be close to us in our exile.",
+            "VISIT TO MARY: O Mother of fair love, bind my wandering heart with the sweet chains of thy Son’s Eucharistic charity!"
+        ],
+        "keyQuote": "Why does the Sovereign Lord of the universe shut Himself up inside a narrow ciborium? He is the Prisoner of Love! Earthly prisoners long to be set free from their dungeons; Jesus rejoices in His Eucharistic prison so that He may be close to us in our exile.",
+        "quoteCitation": "Visit 13 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 13 (The Prisoner of Love in the Tabernacle) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-14",
+        "chapterNumber": 15,
+        "title": "Visit 14: The Grain of Wheat Falling into the Ground",
+        "latinTitle": "Visitatio 14 • Granum Frumenti Cadens in Terram (Ioan. 12:24)",
+        "subtitle": "How Christ died on the Cross like a grain of wheat so as to multiply Himself on a hundred thousand altars.",
+        "paragraphs": [
+            "\"Unless the grain of wheat falling into the ground die, itself remaineth alone; but if it die, it bringeth forth much fruit\" (John 12:24). From the single Sacrifice of Calvary springs the golden harvest of the Eucharist, feeding virgins, martyrs, and penitents in every century.",
+            "VISIT TO MARY: O fertile Soil of Bethlehem—House of Bread—nourish my soul with the Wheat of the Elect!"
+        ],
+        "keyQuote": "\"Unless the grain of wheat falling into the ground die, itself remaineth alone; but if it die, it bringeth forth much fruit\" (John 12:24). From the single Sacrifice of Calvary springs the golden harvest of the Eucharist, feeding virgins, martyrs, and penitents in every century.",
+        "quoteCitation": "Visit 14 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 14 (The Grain of Wheat Falling into the Ground) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-15",
+        "chapterNumber": 16,
+        "title": "Visit 15: Come to Me, All You That Labor and Are Burdened",
+        "latinTitle": "Visitatio 15 • Venite ad Me Omnes Qui Laboratis et Onerati Estis (Matt. 11:28)",
+        "subtitle": "Finding true rest and refreshment of soul not in worldly distractions, but before the Meek and Humble Heart of Jesus.",
+        "paragraphs": [
+            "When trials weigh you down and friends fail you, where do you go for comfort? Listen to the voice calling from the Tabernacle: \"Come to Me, all you that labor and are burdened, and I will refresh you!\" One quarter of an hour before the Blessed Sacrament consoles the heart more than all the conversations of men.",
+            "VISIT TO MARY: O Consoler of the Afflicted, carry my weary heart to the feet of Jesus in the Blessed Sacrament!"
+        ],
+        "keyQuote": "When trials weigh you down and friends fail you, where do you go for comfort? Listen to the voice calling from the Tabernacle: \"Come to Me, all you that labor and are burdened, and I will refresh you!\" One quarter of an hour before the Blessed Sacrament consoles the heart more than all the conversations of men.",
+        "quoteCitation": "Visit 15 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 15 (Come to Me, All You That Labor and Are Burdened) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-16",
+        "chapterNumber": 17,
+        "title": "Visit 16: I Am Come to Cast Fire on the Earth",
+        "latinTitle": "Visitatio 16 • Ignem Veni Mittere in Terram (Luc. 12:49)",
+        "subtitle": "Why Jesus desires nothing else from His Eucharistic throne than to see our cold hearts kindled with love.",
+        "paragraphs": [
+            "\"I am come to cast fire on the earth, and what will I, but that it be kindled?\" Tell Our Lord frankly before the altar: \"Lord, if I love Thee too little, give me the grace to love Thee as Thou deservest to be loved!\" No prayer pleases Him more.",
+            "VISIT TO MARY: O Mother of Burning Charity, fan the tiny spark of my love into a great flame before the Tabernacle!"
+        ],
+        "keyQuote": "\"I am come to cast fire on the earth, and what will I, but that it be kindled?\" Tell Our Lord frankly before the altar: \"Lord, if I love Thee too little, give me the grace to love Thee as Thou deservest to be loved!\" No prayer pleases Him more.",
+        "quoteCitation": "Visit 16 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 16 (I Am Come to Cast Fire on the Earth) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-17",
+        "chapterNumber": 18,
+        "title": "Visit 17: TheHidden God (Vere Tu Es Deus Absconditus)",
+        "latinTitle": "Visitatio 17 • Vere Tu Es Deus Absconditus, Deus Israel Salvator (Isa. 45:15)",
+        "subtitle": "Why Jesus hides His blinding majesty in the Host so that we may approach Him without fear and with familiar love.",
+        "paragraphs": [
+            "In the Incarnation Jesus hid His Divinity beneath His Humanity; in the Blessed Sacrament He hides even His Humanity beneath the species of bread! Why? First, that our faith may have greater merit; second, that we may not be terrified by His glory, but may speak to Him with all the confidence of a child and bride!",
+            "VISIT TO MARY: O Humble Handmaid of Nazareth, teach me to love the hidden life of faith and humility with Jesus on the Altar!"
+        ],
+        "keyQuote": "In the Incarnation Jesus hid His Divinity beneath His Humanity; in the Blessed Sacrament He hides even His Humanity beneath the species of bread! Why? First, that our faith may have greater merit; second, that we may not be terrified by His glory, but may speak to Him with all the confidence of a child and bride!",
+        "quoteCitation": "Visit 17 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 17 (TheHidden God (Vere Tu Es Deus Absconditus)) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-18",
+        "chapterNumber": 19,
+        "title": "Visit 18: With Desire I Have Desired to Eat This Pasch with You",
+        "latinTitle": "Visitatio 18 • Desiderio Desideravi Hoc Pascha Manducare Vobiscum (Luc. 22:15)",
+        "subtitle": "The burning longing of the Sacred Heart of Jesus to unite Himself to us in Holy Communion and Spiritual Communion.",
+        "paragraphs": [
+            "On the night before He died, Jesus said to His Apostles: \"With desire I have desired to eat this Pasch with you!\" And the same desire burns in His Heart today: as a mother whose breasts are full of milk longs for her infant to nurse, so Jesus in the Host longs for souls to receive Him in Sacramental and Spiritual Communion.",
+            "VISIT TO MARY: O Mother of Divine Grace, prepare my heart every day to receive thy Son worthily and fervently!"
+        ],
+        "keyQuote": "On the night before He died, Jesus said to His Apostles: \"With desire I have desired to eat this Pasch with you!\" And the same desire burns in His Heart today: as a mother whose breasts are full of milk longs for her infant to nurse, so Jesus in the Host longs for souls to receive Him in Sacramental and Spiritual Communion.",
+        "quoteCitation": "Visit 18 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 18 (With Desire I Have Desired to Eat This Pasch with You) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-19",
+        "chapterNumber": 20,
+        "title": "Visit 19: The Pelican Feeding Her Young with Her Own Blood",
+        "latinTitle": "Visitatio 19 • Pie Pelicane, Iesu Domine",
+        "subtitle": "St. Thomas Aquinas’s Eucharistic symbol: one single drop of Christ’s Blood can save the whole world from every crime.",
+        "paragraphs": [
+            "As the pelican in ancient symbol pierces its own breast to revive its dying young with its lifeblood, so Jesus the Divine Pelican opened His Sacred Heart on Calvary and pours out His Precious Blood in every Mass and Communion to wash away our stains!",
+            "VISIT TO MARY: O Mother of the Divine Pelican, wash my soul in the Precious Blood of thy Son!"
+        ],
+        "keyQuote": "As the pelican in ancient symbol pierces its own breast to revive its dying young with its lifeblood, so Jesus the Divine Pelican opened His Sacred Heart on Calvary and pours out His Precious Blood in every Mass and Communion to wash away our stains!",
+        "quoteCitation": "Visit 19 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 19 (The Pelican Feeding Her Young with Her Own Blood) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-20",
+        "chapterNumber": 21,
+        "title": "Visit 20: The Heavenly Physician at the Bedside of the Sick",
+        "latinTitle": "Visitatio 20 • Medicus Caelestis: Virtus De Illo Exibat et Sanabat Omnes (Luc. 6:19)",
+        "subtitle": "Touching the hem of Christ’s sacramental garment to be healed of pride, anger, tepidity, and impurity.",
+        "paragraphs": [
+            "When Jesus walked through Galilee, \"virtue went out from Him and healed all\" (Luke 6:19). Today He is on the altar for the very same purpose! Show Him the wounds of your soul—your impatience, your self-love, your weakness—and say with the leper: \"Lord, if Thou wilt, Thou canst make me clean!\"",
+            "VISIT TO MARY: O Health of the Sick (Salus Infirmorum), lay thy maternal hand upon the wounds of my soul before the Altar!"
+        ],
+        "keyQuote": "When Jesus walked through Galilee, \"virtue went out from Him and healed all\" (Luke 6:19). Today He is on the altar for the very same purpose! Show Him the wounds of your soul—your impatience, your self-love, your weakness—and say with the leper: \"Lord, if Thou wilt, Thou canst make me clean!\"",
+        "quoteCitation": "Visit 20 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 20 (The Heavenly Physician at the Bedside of the Sick) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-21",
+        "chapterNumber": 22,
+        "title": "Visit 21: Ask, and You Shall Receive, That Your Joy May Be Full",
+        "latinTitle": "Visitatio 21 • Petite et Accipietis, ut Gaudium Vestrum Sit Plenum (Ioan. 16:24)",
+        "subtitle": "Why the Eternal Father cannot refuse any petition we offer in union with His Eucharistic Son.",
+        "paragraphs": [
+            "Before the Tabernacle we do not come empty-handed: we hold in our hands Jesus Christ Himself, the Beloved Son of the Father! Ask boldly for great graces—conversion of sinners, victory over temptation, ardent charity, and a holy death—for here the King opens His hands to enrich all who ask.",
+            "VISIT TO MARY: O Omnipotent Suppliant, join thy all-powerful intercession to my poor prayers before the Blessed Sacrament!"
+        ],
+        "keyQuote": "Before the Tabernacle we do not come empty-handed: we hold in our hands Jesus Christ Himself, the Beloved Son of the Father! Ask boldly for great graces—conversion of sinners, victory over temptation, ardent charity, and a holy death—for here the King opens His hands to enrich all who ask.",
+        "quoteCitation": "Visit 21 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 21 (Ask, and You Shall Receive, That Your Joy May Be Full) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-22",
+        "chapterNumber": 23,
+        "title": "Visit 22: Lord, To Whom Shall We Go? Thou Hast the Words of Eternal Life",
+        "latinTitle": "Visitatio 22 • Domine, Ad Quem Ibimus? Verba Vitae Aeternae Habes (Ioan. 6:69)",
+        "subtitle": "St. Peter’s profession of Eucharistic faith at Capharnaum when the lukewarm disciples walked away.",
+        "paragraphs": [
+            "When many disciples murmured at the promise of the Eucharist saying, \"This saying is hard,\" and walked no more with Him, Jesus turned to the Twelve with pierced Heart: \"Will you also go away?\" Repeat with St. Peter before the Altar today: \"Lord, to whom shall we go? Thou hast the words of eternal life!\"",
+            "VISIT TO MARY: O Queen of Apostles, keep me unshakeably faithful to the Eucharistic Lord even if the whole world should forsake Him!"
+        ],
+        "keyQuote": "When many disciples murmured at the promise of the Eucharist saying, \"This saying is hard,\" and walked no more with Him, Jesus turned to the Twelve with pierced Heart: \"Will you also go away?\" Repeat with St. Peter before the Altar today: \"Lord, to whom shall we go? Thou hast the words of eternal life!\"",
+        "quoteCitation": "Visit 22 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 22 (Lord, To Whom Shall We Go? Thou Hast the Words of Eternal Life) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-23",
+        "chapterNumber": 24,
+        "title": "Visit 23: Abide in Me, and I in You",
+        "latinTitle": "Visitatio 23 • Manete in Me, et Ego in Vobis (Ioan. 15:4)",
+        "subtitle": "How Holy Communion and Visits to the Blessed Sacrament graft the branch ever more deeply into the True Vine.",
+        "paragraphs": [
+            "\"He that eateth My Flesh and drinketh My Blood abideth in Me, and I in him\" (John 6:57). Unlike ordinary food, which is changed into our bodily substance, the Eucharistic Bread transforms the soul that receives It with love into the likeness of Christ Himself!",
+            "VISIT TO MARY: O Mystical Rose grafted into the Divine Vine, obtain that I may never be separated from Jesus by mortal sin!"
+        ],
+        "keyQuote": "\"He that eateth My Flesh and drinketh My Blood abideth in Me, and I in him\" (John 6:57). Unlike ordinary food, which is changed into our bodily substance, the Eucharistic Bread transforms the soul that receives It with love into the likeness of Christ Himself!",
+        "quoteCitation": "Visit 23 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 23 (Abide in Me, and I in You) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-24",
+        "chapterNumber": 25,
+        "title": "Visit 24: The Spouse of the Soul in the Garden of Spices",
+        "latinTitle": "Visitatio 24 • Dilectus Meus Mihi, et Ego Illi, Qui Pascitur Inter Lilia (Cant. 2:16)",
+        "subtitle": "Giving our whole heart without division to the One Who gave Himself wholly to us.",
+        "paragraphs": [
+            "\"My Beloved to me, and I to Him, Who feedeth among the lilies!\" Jesus gave you not part of His Blood or part of His love, but His entire Self on the Cross and in the Host. How unjust it would be to give Him only a divided, half-hearted affection in return!",
+            "VISIT TO MARY: O Lily of Purity, make my heart clean and undivided so that Jesus may take His delight therein!"
+        ],
+        "keyQuote": "\"My Beloved to me, and I to Him, Who feedeth among the lilies!\" Jesus gave you not part of His Blood or part of His love, but His entire Self on the Cross and in the Host. How unjust it would be to give Him only a divided, half-hearted affection in return!",
+        "quoteCitation": "Visit 24 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 24 (The Spouse of the Soul in the Garden of Spices) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-25",
+        "chapterNumber": 26,
+        "title": "Visit 25: The Refuge in the Tempest of Temptation",
+        "latinTitle": "Visitatio 25 • Turris Fortitudinis a Facie Inimici (Ps. 60:4)",
+        "subtitle": "Flying to the foot of the Altar whenever the storms of temptation or sorrow rise against the soul.",
+        "paragraphs": [
+            "As the stag pursued by hounds plunges into the cool stream to escape its pursuers, so the Christian pursued by the temptations of the world, the flesh, and the devil finds invincible safety the moment he kneels before the Blessed Sacrament and invokes Jesus and Mary!",
+            "VISIT TO MARY: O Tower of David and Refuge of Sinners, shield me beneath thy mantle before the Eucharistic throne!"
+        ],
+        "keyQuote": "As the stag pursued by hounds plunges into the cool stream to escape its pursuers, so the Christian pursued by the temptations of the world, the flesh, and the devil finds invincible safety the moment he kneels before the Blessed Sacrament and invokes Jesus and Mary!",
+        "quoteCitation": "Visit 25 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 25 (The Refuge in the Tempest of Temptation) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-26",
+        "chapterNumber": 27,
+        "title": "Visit 26: I Have Loved Thee with an Everlasting Love",
+        "latinTitle": "Visitatio 26 • In Caritate Perpetua Dilexi Te (Ier. 31:3)",
+        "subtitle": "Remembering that when Jesus instituted the Eucharist on Holy Thursday, He saw and loved each of us individually by name.",
+        "paragraphs": [
+            "When Our Lord instituted the Most Blessed Sacrament on the night before His Passion, His divine eyes looked down through the centuries and saw YOU kneeling before the altar today! Out of eternal, personal love for your soul, He left Himself in this Sacrament.",
+            "VISIT TO MARY: O Mother of Eternal Love, teach me to answer my Savior’s everlasting love with daily fidelity and gratitude!"
+        ],
+        "keyQuote": "When Our Lord instituted the Most Blessed Sacrament on the night before His Passion, His divine eyes looked down through the centuries and saw YOU kneeling before the altar today! Out of eternal, personal love for your soul, He left Himself in this Sacrament.",
+        "quoteCitation": "Visit 26 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 26 (I Have Loved Thee with an Everlasting Love) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-27",
+        "chapterNumber": 28,
+        "title": "Visit 27: The Treasure Hidden in the Field of the Church",
+        "latinTitle": "Visitatio 27 • Thesaurus Absconditus in Agro Ecclesiae (Matt. 13:44)",
+        "subtitle": "Why a single Communion or devout Visit is worth more than all the empires and riches of the earth.",
+        "paragraphs": [
+            "The Kingdom of Heaven is like a treasure hidden in a field, which a man having found, goes and sells all that he has with joy to buy that field! In the field of the Catholic Church lies the infinite Treasure—Jesus in the Blessed Sacrament. Detach your heart from earthly trifles so as to possess the All!",
+            "VISIT TO MARY: O Pearl of Great Price, Mary most holy, teach me to value the grace of thy Son above all earthly treasures!"
+        ],
+        "keyQuote": "The Kingdom of Heaven is like a treasure hidden in a field, which a man having found, goes and sells all that he has with joy to buy that field! In the field of the Catholic Church lies the infinite Treasure—Jesus in the Blessed Sacrament. Detach your heart from earthly trifles so as to possess the All!",
+        "quoteCitation": "Visit 27 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 27 (The Treasure Hidden in the Field of the Church) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-28",
+        "chapterNumber": 29,
+        "title": "Visit 28: The School of Meekness and Humility of Heart",
+        "latinTitle": "Visitatio 28 • Discite a Me, Quia Mitis Sum et Humilis Corde (Matt. 11:29)",
+        "subtitle": "Learning silence, patience, and self-effacement from the silent Lamb on the Altar.",
+        "paragraphs": [
+            "Look how silent, patient, and humble Jesus remains in the Tabernacle: forgotten by millions, profaned by sacrileges, treated with coldness even by many Christians, yet He remains in meek silence pouring out graces upon all! Who can remain proud or resentful while gazing upon the Humble Host?",
+            "VISIT TO MARY: O Queen of Humility, form my heart after the meek and humble Heart of thy Eucharistic Son!"
+        ],
+        "keyQuote": "Look how silent, patient, and humble Jesus remains in the Tabernacle: forgotten by millions, profaned by sacrileges, treated with coldness even by many Christians, yet He remains in meek silence pouring out graces upon all! Who can remain proud or resentful while gazing upon the Humble Host?",
+        "quoteCitation": "Visit 28 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 28 (The School of Meekness and Humility of Heart) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-29",
+        "chapterNumber": 30,
+        "title": "Visit 29: Stay With Us, Lord, For It Is Toward Evening",
+        "latinTitle": "Visitatio 29 • Mane Nobiscum, Domine, Quoniam Advesperascit (Luc. 24:29)",
+        "subtitle": "The prayer of the Emmaus disciples as the shadows of evening and the end of earthly life draw near.",
+        "paragraphs": [
+            "As the day of our mortal life declines toward the evening of old age and death, let us hold fast to Jesus in the Blessed Sacrament and cry with the disciples at Emmaus: \"Stay with us, Lord, for it is toward evening and the day is now far spent!\" If Jesus stays with us, the night of death will become the dawn of eternity.",
+            "VISIT TO MARY: O Gate of Heaven, stand beside me in the evening of life and show unto me the Blessed Fruit of thy Womb, Jesus!"
+        ],
+        "keyQuote": "As the day of our mortal life declines toward the evening of old age and death, let us hold fast to Jesus in the Blessed Sacrament and cry with the disciples at Emmaus: \"Stay with us, Lord, for it is toward evening and the day is now far spent!\" If Jesus stays with us, the night of death will become the dawn of eternity.",
+        "quoteCitation": "Visit 29 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 29 (Stay With Us, Lord, For It Is Toward Evening) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-30",
+        "chapterNumber": 31,
+        "title": "Visit 30: The Viaticum of Immortality and Pledge of Future Glory",
+        "latinTitle": "Visitatio 30 • Pignus Futurae Gloriae et Viaticum Aeternitatis",
+        "subtitle": "How the Eucharist sustains the dying Christian across the threshold of judgment into the marriage feast of Heaven.",
+        "paragraphs": [
+            "What unspeakable consolation fills the dying Christian who has loved and visited Jesus in the Blessed Sacrament throughout his life, when he sees the Priest enter his room bearing his Divine Friend as Holy Viaticum! The very Lord Who will judge him comes first into his breast as his Savior and Companion for the journey into eternity.",
+            "VISIT TO MARY: O Sweet Mother, obtain for me the grace of receiving Holy Viaticum with fervent love at the hour of my death!"
+        ],
+        "keyQuote": "What unspeakable consolation fills the dying Christian who has loved and visited Jesus in the Blessed Sacrament throughout his life, when he sees the Priest enter his room bearing his Divine Friend as Holy Viaticum! The very Lord Who will judge him comes first into his breast as his Savior and Companion for the journey into eternity.",
+        "quoteCitation": "Visit 30 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 30 (The Viaticum of Immortality and Pledge of Future Glory) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-visit-31",
+        "chapterNumber": 32,
+        "title": "Visit 31: Final Consecration of the Soul to Jesus in the Blessed Sacrament and to Mary",
+        "latinTitle": "Visitatio 31 • Consecratio Totalis Animae ad Iesum Sacramentatum et Mariam",
+        "subtitle": "The thirty-first Visit: surrendering memory, intellect, will, life, and death forever to the Eucharistic King and His Mother.",
+        "paragraphs": [
+            "At the conclusion of this month of Visits, kneel before the Tabernacle and make an irrevocable gift of your whole self: \"O my Jesus in the Most Blessed Sacrament, Thou hast given Thyself wholly to me; today I give myself wholly to Thee! I consecrate to Thee my eyes to gaze upon Thy altar, my tongue to praise Thy Name, my hands to serve Thy poor, and my heart to love Thee alone forever!\"",
+            "FINAL VISIT TO MARY: And to thee, O Mary my Mother and my Hope, I consecrate my body and soul: guard my consecration under thy mantle until I behold thy Son face to face in Paradise! Amen."
+        ],
+        "keyQuote": "At the conclusion of this month of Visits, kneel before the Tabernacle and make an irrevocable gift of your whole self: \"O my Jesus in the Most Blessed Sacrament, Thou hast given Thyself wholly to me; today I give myself wholly to Thee! I consecrate to Thee my eyes to gaze upon Thy altar, my tongue to praise Thy Name, my hands to serve Thy poor, and my heart to love Thee alone forever!\"",
+        "quoteCitation": "Visit 31 to the Most Blessed Sacrament and to the Blessed Virgin Mary",
+        "reflectionPrompt": "Pause in silent adoration for a moment on the theme of Visit 31 (Final Consecration of the Soul to Jesus in the Blessed Sacrament and to Mary) and make a Spiritual Communion."
+    },
+    {
+        "id": "vbs-conclusion",
+        "chapterNumber": 33,
+        "title": "Concluding Devotions: Affections of Love Before the Altar and Thanksgivings After Communion",
+        "latinTitle": "Devotiones Conclusivae • Affectus Amoris Coram Altari et Gratiarum Actio",
+        "subtitle": "St. Alphonsus’s burning aspirations after Holy Communion and final prayer of union with the Eucharistic Heart of Jesus.",
+        "paragraphs": [
+            "Remember the counsel of St. Teresa and St. Philip Neri: there is no time more precious for winning treasures of grace than the fifteen minutes immediately after receiving Holy Communion, when the King of Heaven is seated upon the throne of your heart asking, \"What wilt thou that I do for thee?\"",
+            "Cry out to Him with St. Alphonsus: \"O God of love, how couldst Thou love me so much as to make Thyself my Food? Take away from my heart everything that displeases Thee, and nail my will forever to Thy Cross, so that I may live and die in Thy grace!\""
+        ],
+        "keyQuote": "There is no time on earth more precious for winning treasures of grace than the moments immediately following Holy Communion and during our daily Visit to the Altar.",
+        "quoteCitation": "Concluding Affections of Love Before the Blessed Sacrament",
+        "reflectionPrompt": "Resolve never to leave church hurriedly after Holy Communion, giving Our Lord at least ten to fifteen minutes of heartfelt thanksgiving."
     }
-  ]
+]
 };

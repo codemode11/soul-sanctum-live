@@ -1,97 +1,157 @@
-import { SpiritualBook } from "../spiritualBooks";
+import { SpiritualBook } from '../spiritualBooks';
 
 export const ORTHODOXY_CHESTERTON: SpiritualBook = {
-  "id": "orthodoxy-chesterton",
-  "title": "Orthodoxy",
-  "latinTitle": "De Fide Catholica et Sanitate Mentis",
-  "author": "G.K. Chesterton",
-  "authorTitle": "Catholic Apologist, Philosopher, and Master of Paradox",
-  "era": "1908 A.D.",
-  "category": "devotion",
-  "categoryLabel": "Modern Catholic Apologetics & Philosophy",
-  "description": "Chesterton’s dazzling, witty, and profoundly philosophical masterpiece of Catholic apologetics. Using the metaphor of an English yachtsman who sets out to discover a foreign continent and discovers his own homeland of England, Chesterton recounts how his search for a sane philosophy of existence led him to discover that the ancient Catholic Church had possessed the answers all along.",
-  "theologicalFocus": "The Sanity of Catholic Dogma, The Ethics of Elfland, The Paradoxes of the Gospel, Joy and Wonder",
-  "nihilObstat": "Censor Deputatus",
-  "imprimatur": "Archdiocese of Westminster",
-  "coverGradient": "from-[#1E3A8A] via-[#172554] to-[#0F172A]",
-  "accentColor": "#3B82F6",
-  "emblemSymbol": "⛵",
-  "estimatedMinutesPerChapter": 11,
-  "chapters": [
+  id: 'orthodoxy-chesterton',
+  title: 'Orthodoxy',
+  latinTitle: 'Orthodoxia • Fides Apostolica ut Mirabilis Adventura',
+  author: 'G.K. Chesterton',
+  authorTitle: 'Apostle of Common Sense and Defender of the Catholic Faith',
+  era: '1908 A.D.',
+  category: 'doctors',
+  categoryLabel: 'Catholic Apologetics & Christian Philosophy',
+  description: 'G.K. Chesterton’s complete nine-chapter masterpiece recounting how he set out to invent a brand-new philosophy of wonder, sanity, and freedom—only to discover that his new heresy was the two-thousand-year-old Apostles’ Creed.',
+  theologicalFocus: 'The Apostles’ Creed, Sanity vs. Modern Materialism, Wonder and Gratitude, Christian Paradox, Original Sin, Free Will, and the Joy of Christ',
+  nihilObstat: 'Public Domain Classic Edition (London: John Lane, The Bodley Head, 1908)',
+  imprimatur: 'Commended by Catholic Apologists and Papal Scholars Worldwide',
+  coverGradient: 'from-[#283593] via-[#1A237E] to-[#0D1346]',
+  accentColor: '#F59E0B',
+  emblemSymbol: '⚓',
+  estimatedMinutesPerChapter: 12,
+  chapters: [
     {
-      "id": "ort-ch1",
-      "chapterNumber": 1,
-      "title": "Chapter 1: Introduction in Defense of Everything Else",
-      "latinTitle": "Prologus: De navigatione et inventione patriae",
-      "subtitle": "The English yachtsman who discovered England: finding ancient orthodoxy at the end of modern questing.",
-      "paragraphs": [
-        "This book is an autobiography of a philosophy. The only possible excuse for writing it is that the question was asked by my critics: \"What is your own philosophy?\" In answering it, I have attempted to describe not whether I can prove Christianity to an unbeliever, but how the universe looked to me when I discovered that the ancient Catholic Faith was true.",
-        "I have often had a fancy for writing a romance about an English yachtsman who slightly miscalculated his course and discovered England under the impression that it was a new island in the South Seas. He lands with an armed guard, plant his flag upon Brighton pier, and declares it conquered in the name of the King, only to discover that it is Brighton!",
-        "That is exactly what happened to my intellect. I tried to be some ten minutes in advance of the truth; and I found that I was eighteen hundred years behind it. I set out to invent a heresy of my own, and when I had put the last touches to it, I discovered that it was Orthodoxy."
+      id: 'orth-ch-1',
+      chapterNumber: 1,
+      title: 'Chapter I: Introduction in Defense of Everything Else',
+      latinTitle: 'Caput I • Introductio in Defensionem Omnium Rerum',
+      subtitle: 'The yachtsman who discovered England, and why a man needs to see his own home as a strange and wondrous island.',
+      paragraphs: [
+        'I have often fancied that it would be a glorious poetical romance about an English yachtsman who slightly miscalculated his course and discovered England under the impression that it was a new island in the South Seas. What could be more delightful than to have in the same few minutes all the fascinating terrors of going abroad combined with all the humane security of coming home again?',
+        'How can we contrive to be at once astonished at the world and yet at home in it? That is the central problem of philosophy. I set out with my own little scraps of theory to invent a new heresy of my own that would preserve wonder and gratitude; and when I had put the last touches to it, I discovered that it was Orthodoxy—the Apostles’ Creed of historic Christendom.',
+        'I am the man who with the utmost daring discovered what had been discovered before. When I fancied that I stood alone, I was really in the ridiculous position of being backed up by all Christendom. It may be that Heaven forgive me, I did try to be original; bust the Eternal Truth had anticipated me by two thousand years.'
       ],
-      "keyQuote": "I set out to invent a heresy of my own, and when I had put the last touches to it, I discovered that it was Orthodoxy.",
-      "quoteCitation": "Orthodoxy, Chapter 1",
-      "reflectionPrompt": "Have you ever discovered that the Catholic doctrines you questioned in youth are the very truths that anchor your soul in maturity?"
+      keyQuote: 'How can we contrive to be at once astonished at the world and yet at home in it? When I fancied that I stood alone, I was really in the ridiculous position of being backed up by all Christendom.',
+      quoteCitation: 'Chapter I: Introduction in Defense of Everything Else',
+      reflectionPrompt: 'How does rediscovering the ancient Catholic Creed awaken both childlike wonder and the deep peace of coming home?'
     },
     {
-      "id": "ort-ch2",
-      "chapterNumber": 2,
-      "title": "Chapter 2: The Maniac and the Suicide of Thought",
-      "latinTitle": "De insanis et suicidio cogitationis",
-      "subtitle": "Why materialism is a tiny, clean prison, while Catholic orthodoxy is a sprawling palace of sanity.",
-      "paragraphs": [
-        "The modern world is not evil because it has lost its reason; it is evil because it has lost everything except its reason. The madman is not the man who has lost his reason; the madman is the man who has lost everything except his reason. His mind moves in a perfect, unbroken circle: he believes that everyone is conspiring against him, and every fact you present him is instantly fitted into his conspiracy theory.",
-        "Materialism is a madhouse of exactly this kind. It explains everything by small, mechanical causes; but its explanation leaves out the sunlight, poetry, free will, courage, and love. It is complete, but it is microscopic.",
-        "Christianity, on the other hand, is like the sun: you cannot look directly into it, but by its light you see everything else. It leaves room for mystery, for freedom, for tragedy, and for supreme joy."
+      id: 'orth-ch-2',
+      chapterNumber: 2,
+      title: 'Chapter II: The Maniac',
+      latinTitle: 'Caput II • De Insania Rationalismi Sia Latitudine Mentis',
+      subtitle: 'Why materialism is not a breadth of mind but a suffocating contraction of reason divorced from mystery.',
+      paragraphs: [
+        'Thoroughly worldly people never understand even the world; they rely altogether on a few cynical maxims which are not true. In the same way, modern materialists imagine that madness comes from an excess of poetry or religious imagination. The exact opposite is true: poetry is sane because it floats easily in an infinite sea; reason seeks to cross the infinite sea, and so make it finite. The poet only asks to get his head into the heavens; it is the logician who seeks to get the heavens into his head—and it is his head that splits.',
+        'The madman is not the man who has lost his reason. The madman is the man who has lost everything except his reason. The madman’s explanation of a thing is always complete, and often in a purely rationalistic sense satisfactory. If a man says that other men are conspiring against him, and you point out that all the men deny it, he replies that a conspiracy of silence is the very mark of a conspiracy. His mind moves in a perfect but narrow circle.',
+        'A small circle is quite as infinite as a large circle; auras of determinism and materialism lock the human spirit inside a tiny, airless cell. It is the Christian mystery—the cross that points outward in four directions without bound—that breaks the suffocating circle of fatalism and restores sanity to the mind.'
       ],
-      "keyQuote": "The madman is not the man who has lost his reason; the madman is the man who has lost everything except his reason.",
-      "quoteCitation": "Orthodoxy, Chapter 2",
-      "reflectionPrompt": "Does your worldview leave room for the vastness of divine mystery, or does it try to squeeze God into the narrow box of human logic?"
+      keyQuote: 'The poet only asks to get his head into the heavens. It is the logician who seeks to get the heavens into his head. And it is his head that splits. The madman is not the man who has lost his reason; the madman is the man who has lost everything except his reason.',
+      quoteCitation: 'Chapter II: The Maniac',
+      reflectionPrompt: 'Why does humility before the mysteries of God keep the human mind healthy, free, and expansive?'
     },
     {
-      "id": "ort-ch3",
-      "chapterNumber": 3,
-      "title": "Chapter 3: The Ethics of Elfland and the Wonder of Creation",
-      "latinTitle": "De ethica faborum et miraculo creationis",
-      "subtitle": "Why nursery tales tell the truth about conditional joy, gratitude, and the magic of the cosmos.",
-      "paragraphs": [
-        "My first and last philosophy, that which I believe with the greatest certainty, I learned in the nursery. It was the philosophy of fairy tales. Fairy tales teach us that this world is a wild and startling place, which might have been quite different, but which is quite delightfully real.",
-        "They teach that joy is conditioned upon a veto: Cinderella may go to the ball, but she must be home by midnight; the Sleeping Beauty may live in a magnificent palace, but she must not touch the spindle. This is the ancient Catholic doctrine of the Garden of Eden: that all good things are given to us freely, provided we observe the holy law of the King.",
-        "Above all, fairy tales teach gratitude. We should be astonished that the grass is green and that apples fall down rather than fly up. Repetition in nature is not blind mechanics; it is God saying to the sun every morning: \"Do it again!\" as an untiring child cries to his father."
+      id: 'orth-ch-3',
+      chapterNumber: 3,
+      title: 'Chapter III: The Suicide of Thought',
+      latinTitle: 'Caput III • De Interitu Cogitationis Moderna',
+      subtitle: 'How modern skepticism destroys not only religious authority, but the very power of human reason to know truth.',
+      paragraphs: [
+        'The phrases of the street are not only forcible but subtle: for a figure of speech can often get into a crack too small for a definition. Modern thought has undergone a strange transformation: the old skeptics doubted whether the Church was right, whereas the new skeptics doubt whether there is any such thing as being right at all.',
+        'In former days the heretic was proud of not being a heretic. It was the kingdoms of the world and the police and the judges who were heretics. He was orthodox. He had no pride in having rebelled against them; they had rebelled against him. Modern relativism, by contrast, attacks the root of reason itself, declaring that no man can behold objective reality.',
+        'We are on the road to producing a race of men too mentally modest to believe in the multiplication table. When authority is cast out, reason does not triumph; reason itself collapses for lack of an anchor. Only the Church, which guards divine revelation, simultaneously defends the natural light of human reason against universal skepticism.'
       ],
-      "keyQuote": "It is possible that God says every morning to the sun: \"Do it again!\" because He has the eternal appetite of infancy.",
-      "quoteCitation": "Orthodoxy, Chapter 4",
-      "reflectionPrompt": "Look at the creation around you with fresh wonder today: thank God for the sunrise as if it were a brand-new miracle."
+      keyQuote: 'We are on the road to producing a race of men too mentally modest to believe in the multiplication table. Without divine truth, human thought commits suicide.',
+      quoteCitation: 'Chapter III: The Suicide of Thought',
+      reflectionPrompt: 'How does the Catholic Church serve as the guardian of both supernatural Faith and natural human reason?'
     },
     {
-      "id": "ort-ch4",
-      "chapterNumber": 4,
-      "title": "Chapter 4: The Paradoxes of Christianity and the Balance of the Cross",
-      "latinTitle": "De paradoxis Christianitatis et statera Crucis",
-      "subtitle": "How the Church holds fierce extremes in harmonious equilibrium.",
-      "paragraphs": [
-        "The pagan world tried to find virtue by striking a mediocre compromise between extremes: a little pride, a little humility; a little courage, a little prudence. But Christianity took two raging lions and made them lie down together.",
-        "Consider humility and dignity: Christianity tells man that he is a creature so fallen that his very best deeds are tainted with sin, a worm of the dust; and in the same breath it tells him that his soul is so valuable that the Almighty God shed His blood upon the Cross to ransom it! It does not dilute pride and humility; it gives us an absolute humility and an absolute dignity side by side.",
-        "This is the grand equilibrium of the Catholic Church. It is not a dull compromise; it is a thrilling high-wire walk where every divine truth is preserved intact against heresies that would tear one half from the other."
+      id: 'orth-ch-4',
+      chapterNumber: 4,
+      title: 'Chapter IV: The Ethics of Elfland',
+      latinTitle: 'Caput IV • De Ethica Regni Mirabilium et Traditione',
+      subtitle: 'Tradition as the democracy of the dead, and the fairy-tale wisdom that every gift of creation comes with a sacred condition.',
+      paragraphs: [
+        'My first and last philosophy, that which I believe in with unbroken certainty, I learnt in the nursery. In the world of fairy tales, one learns two supreme truths that modern scientists forget: first, that the world is contingent—it did not have to exist, and its laws are a marvel rather than a dreary necessity; second, that every magical gift rests upon an "if"—you may live in a palace of gold IF you do not pick the iron pear.',
+        'Because children have abounding vitality, because they are in spirit fierce and free, therefore they want things repeated and unchanged. They always say, "Do it again"; and the grown-up person does it again until he is nearly dead. For grown-up people are not strong enough to exult in monotony. But perhaps God is strong enough to exult in monotony. It is possible that God says every morning, "Do it again" to the sun; and every evening, "Do it again" to the moon.',
+        'Here too I discovered the true meaning of Tradition. Tradition means giving votes to the most obscure of all classes, our ancestors. It is the democracy of the dead. Tradition refuses to submit to the small and arrogant oligarchy of those who merely happen to be walking about.'
       ],
-      "keyQuote": "Christianity took two raging lions—fierce humility and boundless dignity—and made them lie down together.",
-      "quoteCitation": "Orthodoxy, Chapter 6",
-      "reflectionPrompt": "Do you balance deep repentance for your sins with joyful confidence in Christ’s infinite love for your soul?"
+      keyQuote: 'Because children have abounding vitality, they always say, "Do it again." It is possible that God says every morning, "Do it again" to the sun; and every evening, "Do it again" to the moon.',
+      quoteCitation: 'Chapter IV: The Ethics of Elfland',
+      reflectionPrompt: 'How does seeing every sunrise and breath as an intentional gift of God’s joy transform daily routine into thanksgiving?'
     },
     {
-      "id": "ort-ch5",
-      "chapterNumber": 5,
-      "title": "Chapter 5: The Romance of Orthodoxy and the Hidden Joy of Christ",
-      "latinTitle": "De gaudio abscondito Christi et victoria Fidei",
-      "subtitle": "Why orthodoxy is the only enduring adventure, and the secret joy at the heart of the Gospel.",
-      "paragraphs": [
-        "People talk of orthodoxy as if it were a heavy, motionless thing. In reality, orthodoxy is the most thrilling and dangerous adventure in the history of the world. It is the roaring chariot that races through the centuries, swerving neither into the ditch of optimism on the right nor into the ditch of pessimism on the left.",
-        "The pagan philosophers were often cheerful on the surface, but hopeless at the core; their joy was an illusion masking an eternal despair. The Christian faith is the exact opposite: its outer garments are sorrow, penance, and mourning, but its innermost heart is an untamable, roaring fire of joy.",
-        "When we look upon Christ in the Gospels, we see His tears over Jerusalem; we see His righteous anger in the Temple; we see His agony in Gethsemane. But there was one thing He hidden from men because it was too great for human eyes to bear: His gigantic secret joy!"
+      id: 'orth-ch-5',
+      chapterNumber: 5,
+      title: 'Chapter V: The Flag of the World',
+      latinTitle: 'Caput V • De Vexillo Mundi: Amor Cosmicus et Spes',
+      subtitle: 'Why the Christian loves the world enough to reform it, avoiding both the despair of the pessimist and the complacency of the optimist.',
+      paragraphs: [
+        'When I was a boy there were two curious men running about who were called the optimist and the pessimist. The optimist said that this world is as good as it can be, and therefore nothing needs to be mended; the pessimist said that this world is utterly rotten, and therefore nothing is worth mending. Both ended in paralysis.',
+        'Christianity solved this riddle by demanding not a lukewarm compromise, but a fierce loyalty to creation combined with a fierce hatred of its corruption. The Christian is like a patriot who loves his native land not because it is faultless, but because it is his—and precisely because he loves it, he will fight to the death to cleanse it of tyranny.',
+        'Thus the Church condemned suicide as the ultimate insult to God the Creator, while honoring the martyr above all heroes. The martyr is a man who cares so much for something outside him that he forgets his own personal life; the suicide is a man who cares so little for anything outside him that he wants to see the last of everything. One wants some-thing to begin; the other wants everything to end.'
       ],
-      "keyQuote": "There was one thing that was too great for God to show us when He walked upon our earth; and I have sometimes fancied that it was His mirth.",
-      "quoteCitation": "Orthodoxy, Chapter 9",
-      "reflectionPrompt": "Live today in the supernatural joy of the Resurrection: no sorrow or suffering in this world can extinguish the joy of Christ."
+      keyQuote: 'The martyr is a man who cares so much for something outside him that he forgets his own personal life; the suicide is a man who cares so little for anything outside him that he wants to see the last of everything.',
+      quoteCitation: 'Chapter V: The Flag of the World',
+      reflectionPrompt: 'How does Christian hope enable us to love God’s creation deeply while working courageously for its sanctification?'
+    },
+    {
+      id: 'orth-ch-6',
+      chapterNumber: 6,
+      title: 'Chapter VI: The Paradoxes of Christianity',
+      latinTitle: 'Caput VI • De Paradoxis Fidei Christianae',
+      subtitle: 'How the Church holds opposites at white heat—the Lion and the Lamb, divine majesty and the manger, fierce courage and deep humility.',
+      paragraphs: [
+        'Pagans had declared that virtue is a balance or mean between two extremes: courage, said Aristotle, is the midpoint between cowardice and rashness. Christianity declared something far bolder: that a man must hold two seemingly opposite passions at full intensity at the very same moment! The martyr must hate his life and yet love life; he must have a strong desire to live and an even stronger readiness to die.',
+        'Wherever the Catholic sun doth shine, these living paradoxes blaze side by side. Christ was not a tepid mixture of God and man; He was completely God and completely Man. Therefore the saint is at once humbler than the worm and prouder than Caesar—humble in himself as a sinner, yet royal as an adopted son of the Most High.',
+        'Look at the red and white in the vesture of the Church: red for the flaming charity of the martyrs’ blood, white for the spotless purity of the virgins. Paganism mixed red and white to produce a pale, safe pink; Catholicism keeps the scarlet of sacrifice and the snow of chastity side by side in their full, blinding splendor.'
+      ],
+      keyQuote: 'Christianity got over the difficulty of combining furious opposites, by keeping them both, and keeping them both furious. The Church was positive on both points.',
+      quoteCitation: 'Chapter VI: The Paradoxes of Christianity',
+      reflectionPrompt: 'Where in your spiritual life is Christ calling you not to lukewarm compromise, but to both deeper humility and bolder charity?'
+    },
+    {
+      id: 'orth-ch-7',
+      chapterNumber: 7,
+      title: 'Chapter VII: The Eternal Revolution',
+      latinTitle: 'Caput VII • De Revolutione Aeterna et Peccato Originali',
+      subtitle: 'Why only an unchanging standard of goodness allows man to reform himself in every generation without losing his way.',
+      paragraphs: [
+        'Modern progressives talk constantly of changing the ideal, not realizing that if you change your destination every five minutes, you never make any progress at all. If you want a white post to remain white in the smoky air of London, you cannot leave it alone—it will soon turn black. To keep the post white, you must be constantly repainting it.',
+        'The Church is the only thing that saves a man from the degrading slavery of being a child of his age. Because the Catholic ideal of sanctity is fixed in heaven, the Christian is the only true reformer on earth: he can judge every passing century by the eternal standard of Christ rather than judging Christ by the fashions of the century.',
+        'Moreover, this eternal renovation rests on the most verifiable doctrine in all theology: Original Sin. Certain new theologians dispute Original Sin, which is the only part of Christian theology which can really be proved—for you can see it in the street! Yet precisely because man has fallen from a high estate, every beggar still bears the crown of a dethroned king whom Christ came to restore.'
+      ],
+      keyQuote: 'The Church is the only thing that saves a man from the degrading slavery of being a child of his age. If you want a white post to stay white, you must be always repainting it.',
+      quoteCitation: 'Chapter VII: The Eternal Revolution',
+      reflectionPrompt: 'How does the Sacrament of Confession act as the "eternal revolution" that continually restores the soul to baptismal whiteness?'
+    },
+    {
+      id: 'orth-ch-8',
+      chapterNumber: 8,
+      title: 'Chapter VIII: The Romance of Orthodoxy',
+      latinTitle: 'Caput VIII • De Pulchritudine et Libertate Dogmatis',
+      subtitle: 'The heavenly chariot thundering through the ages, and why Catholic dogma is the wall around the playground of human freedom.',
+      paragraphs: [
+        'People have fallen into a foolish habit of speaking of orthodoxy as something heavy, humdrum, and safe. There never was anything so perilous or so exciting as orthodoxy. It was sanity: and to be sane is more dramatic than to be mad. It was the equilibrium of a man behind madly rushing horses, seeming to stoop this way and to sway that, yet in every attitude having the grace of statuary and the accuracy of arithmetic.',
+        'Look at the history of the Church through the great Councils: the dull heresies—Arianism, Pelagianism, Calvinism, Jansenism—went sprawling andirely flat, while the heavenly chariot of the Faith flew thundering through the ages, the dull heresies sprawling and prostrate, the wild truth reeling but erect!',
+        'Dogma is not the prison of thought; it is the cliff wall around a high mountain plateau. As long as the wall of Catholic truth stands firm, the children can dance and sing and play at the top of their lungs in the sunlight; tear down the wall in the name of false liberty, and you find the children huddled in terror around the center of the rock for fear of falling into the abyss.'
+      ],
+      keyQuote: 'This is the thrilling romance of Orthodoxy: the heavenly chariot flies thundering through the ages, the dull heresies sprawling and prostrate, the wild truth reeling but erect.',
+      quoteCitation: 'Chapter VIII: The Romance of Orthodoxy',
+      reflectionPrompt: 'How do the clear dogmas of the Catholic Faith protect the freedom and joy of the Christian soul?'
+    },
+    {
+      id: 'orth-ch-9',
+      chapterNumber: 9,
+      title: 'Chapter IX: Authority and the Adventurer',
+      latinTitle: 'Caput IX • De Auctoritate Ecclesiae et Gaudio Christi',
+      subtitle: 'The final summation: why the Catholic Church is larger on the inside than on the outside, and the secret of Christ’s joy.',
+      paragraphs: [
+        'When I looked at the Christian Church from the outside, my critics told me it was a narrow prison of gloomy prohibitions. When at last I stepped across the threshold and entered the Church from the inside, I found that it was like the Stable of Bethlehem: larger on the inside than on the outside, opening onto the infinite heavens.',
+        'In the Gospels we see Our Lord sharing everything of human nature—His anger at the money-changers, His tears over Jerusalem and Lazarus, His agony in the garden. Only one thing did He partly conceal while He walked among men: there was something that He hid from all men when He went up a mountain to pray.',
+        'There was some one thing that was too great for God to show us when He walked upon our earth; and I have sometimes fancied that it was His mirth. Joy, which was the small publicity of the pagan, is the gigantic secret of the Christian.'
+      ],
+      keyQuote: 'Joy, which was the small publicity of the pagan, is the gigantic secret of the Christian. There was some one thing that was too great for God to show us when He walked upon our earth; and I have sometimes fancied that it was His mirth.',
+      quoteCitation: 'Chapter IX: Authority and the Adventurer',
+      reflectionPrompt: 'How have you experienced the truth that the Catholic Church is "larger on the inside than on the outside"?'
     }
   ]
 };
