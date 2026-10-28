@@ -351,7 +351,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span className="font-cinzel text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider text-stone-900">
-                Treasury of Sacred Catholic Prayers
+                Treasury of Catholic Prayers
               </span>
               <div className="relative w-full sm:w-64">
                 <input

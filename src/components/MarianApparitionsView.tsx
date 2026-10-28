@@ -314,13 +314,13 @@ export const MarianApparitionsView: React.FC = () => {
                         <span className="text-xl" title={app.country}>
                           {app.flagSymbol}
                         </span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-sky-400/25 text-sky-200 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-sky-300/50">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#5C9CE6] text-white text-[10px] font-bold uppercase tracking-wider font-cinzel border border-[#8BBBF0] shadow-2xs">
                           {app.year}
                         </span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-blue-600/40 text-blue-100 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-blue-400/55">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#1E40AF] text-blue-50 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-[#3B82F6] shadow-2xs">
                           {app.approvalStatus}
                         </span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-[#0B1D48] text-blue-200 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-blue-700/75 shadow-2xs">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#0A1938] text-blue-100 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-[#1E3A8A] shadow-2xs">
                           Feast: {app.feastDay}
                         </span>
                       </div>
