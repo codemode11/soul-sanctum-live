@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Bell, Volume2, X, Sparkles, Music } from 'lucide-react';
+import { Volume2, X, Sparkles } from 'lucide-react';
 import { bellSynth } from '../utils/audioSynth';
 import { SacredReader } from '../utils/speech';
 

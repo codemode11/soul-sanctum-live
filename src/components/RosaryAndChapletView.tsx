@@ -15,8 +15,7 @@ import {
   Copy,
   Check,
   ShieldCheck,
-  Star,
-  Bell
+  Star
 } from 'lucide-react';
 import { RosaryMysteryGroup } from '@/types';
 import { 
