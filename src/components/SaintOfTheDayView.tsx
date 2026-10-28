@@ -712,7 +712,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
   const romanNumerals = ['II', 'III', 'IV'];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+    <div className="max-w-6xl mx-auto pt-0 pb-8">
       <div className="bg-white/45 dark:bg-stone-950/50 backdrop-blur-xl backdrop-saturate-150 rounded-xl border border-white/60 dark:border-stone-700/60 ring-1 ring-inset ring-white/40 dark:ring-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.28)] p-6 sm:p-10 space-y-10">
         {/* Editorial Masthead & Daily Navigation Bar */}
         <header className="border-b border-stone-900/15 dark:border-stone-700/60 pb-6">

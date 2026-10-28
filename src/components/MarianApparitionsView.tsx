@@ -314,13 +314,13 @@ export const MarianApparitionsView: React.FC = () => {
                         <span className="text-xl" title={app.country}>
                           {app.flagSymbol}
                         </span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-blue-400/30">
+                        <span className="px-2.5 py-0.5 rounded-full bg-sky-400/25 text-sky-200 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-sky-300/50">
                           {app.year}
                         </span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-amber-400/30">
+                        <span className="px-2.5 py-0.5 rounded-full bg-blue-600/40 text-blue-100 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-blue-400/55">
                           {app.approvalStatus}
                         </span>
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-emerald-400/30">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#0B1D48] text-blue-200 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-blue-700/75 shadow-2xs">
                           Feast: {app.feastDay}
                         </span>
                       </div>
@@ -396,8 +396,7 @@ export const MarianApparitionsView: React.FC = () => {
                   {/* Grid: Miraculous Signs and Devotional Practice */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                     <div className="p-4 sm:p-5 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                      <div className={`flex items-center gap-2 text-amber-300 font-bold font-cinzel ${sectionHeadingClass}`}>
-                        <Flame className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0" />
+                      <div className={`flex items-center text-amber-300 font-bold font-cinzel ${sectionHeadingClass}`}>
                         <span>Miraculous Signs and Wonders</span>
                       </div>
                       <p className={`font-serif text-stone-200 transition-all duration-200 ${bodyTextClass}`}>
@@ -406,8 +405,7 @@ export const MarianApparitionsView: React.FC = () => {
                     </div>
 
                     <div className="p-4 sm:p-5 rounded-xl bg-white/5 border border-white/10 space-y-2">
-                      <div className={`flex items-center gap-2 text-blue-300 font-bold font-cinzel ${sectionHeadingClass}`}>
-                        <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 shrink-0" />
+                      <div className={`flex items-center text-blue-300 font-bold font-cinzel ${sectionHeadingClass}`}>
                         <span>Devotional Practice and Sacramentals</span>
                       </div>
                       <p className={`font-serif text-stone-200 transition-all duration-200 ${bodyTextClass}`}>
@@ -418,8 +416,7 @@ export const MarianApparitionsView: React.FC = () => {
 
                   {/* Scripture Anchor and Tags */}
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-white/10">
-                    <div className={`flex items-start sm:items-center gap-2 font-serif italic text-amber-200 transition-all duration-200 ${bodyTextClass}`}>
-                      <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 shrink-0 mt-1 sm:mt-0" />
+                    <div className={`flex items-start sm:items-center font-serif italic text-amber-200 transition-all duration-200 ${bodyTextClass}`}>
                       <span>{app.scriptureAnchor}</span>
                     </div>
 

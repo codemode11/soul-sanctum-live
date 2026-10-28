@@ -158,7 +158,7 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
   }, [currentIndex, filteredArt, isFullscreenModalOpen]);
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 pb-16">
+    <div className="max-w-7xl mx-auto pt-0 pb-16">
       <div className="bg-[#FAF8F5]/75 dark:bg-stone-950/75 backdrop-blur-md rounded-xl border border-amber-200/70 dark:border-stone-800/80 shadow-2xl p-5 sm:p-8 space-y-6">
         
         {/* Horizontal Gallery Masthead & Artist Filter Bar */}

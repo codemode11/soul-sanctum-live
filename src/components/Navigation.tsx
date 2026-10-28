@@ -75,8 +75,10 @@ interface NavigationProps {
   onOpenNotifications: () => void;
   activeNovenasCount?: number;
   isMobileOpen?: boolean;
+  onOpenMobile?: () => void;
   onCloseMobile?: () => void;
   onOpenAdoration?: () => void;
+  isAndroidPreviewMode?: boolean;
 }
 
 export interface NavItem {
@@ -94,8 +96,10 @@ export const Navigation: React.FC<NavigationProps> = ({
   onOpenNotifications,
   activeNovenasCount = 2,
   isMobileOpen = false,
+  onOpenMobile,
   onCloseMobile,
-  onOpenAdoration
+  onOpenAdoration,
+  isAndroidPreviewMode = false
 }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sliderTrackRef = useRef<HTMLDivElement>(null);
@@ -319,7 +323,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     { 
       id: 'rosary', 
-      label: 'Rosary and Chaplet', 
+      label: 'Chaplet and Rosary', 
       icon: RosaryAndChapletIcon, 
       tag: 'Marian', 
       subtext: 'Guided Mysteries and Chaplet' 
@@ -461,7 +465,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   return (
     <>
       {/* 1. Desktop and Tablet Sticky Left-Side Navigation with Music-Style Slider */}
-      <aside className="hidden lg:block w-72 lg:w-80 shrink-0 sticky top-6 self-start">
+      <aside className={`${isAndroidPreviewMode ? 'hidden' : 'hidden lg:block'} w-72 lg:w-80 shrink-0 sticky top-6 self-start`}>
         <div className="relative rounded-xl bg-stone-950/80 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex flex-col max-h-[calc(100vh-3rem)] overflow-hidden">
           <div className="flex items-stretch flex-1 min-h-0 overflow-hidden">
             <div 
@@ -529,10 +533,10 @@ export const Navigation: React.FC<NavigationProps> = ({
       </aside>
 
       {/* 2. Mobile Compact Navigation Strip (Word "Menu" removed) */}
-      <div className="lg:hidden w-full sticky top-0 z-30 bg-stone-950/90 backdrop-blur-xl border-b border-amber-500/25 px-4 py-2.5 flex items-center justify-between text-stone-100 shadow-lg">
+      <div className={`${isAndroidPreviewMode ? 'flex' : 'flex lg:hidden'} w-full sticky top-0 z-30 bg-stone-950/90 backdrop-blur-xl border-b border-amber-500/25 rounded-xl px-3.5 py-2 items-center justify-between text-stone-100 shadow-lg`}>
         <button
-          onClick={() => onCloseMobile && onCloseMobile()}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-semibold cursor-pointer"
+          onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-semibold cursor-pointer"
         >
           <Layers className="w-4 h-4 text-amber-300" />
           <span>Index</span>
@@ -540,13 +544,13 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         <div className="flex items-center gap-2">
           {currentItem && (
-            <span className="text-xs font-serif font-semibold text-amber-100 truncate max-w-[170px]">
+            <span className="text-xs font-serif font-semibold text-amber-100 truncate max-w-[190px]">
               {currentItem.label}
             </span>
           )}
           <button
             onClick={onOpenNotifications}
-            className="p-1.5 rounded-lg text-stone-300 hover:text-amber-200 bg-white/5 border border-white/10"
+            className="p-1.5 rounded-lg text-stone-300 hover:text-amber-200 bg-white/5 border border-white/10 cursor-pointer"
             title="Reminders"
           >
             <BellRing className="w-3.5 h-3.5 text-amber-400" />
@@ -556,7 +560,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
       {/* 3. Mobile Slide-out Drawer */}
       {isMobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex">
+        <div className="fixed inset-0 z-50 flex">
           {/* Backdrop */}
           <div 
             onClick={onCloseMobile}

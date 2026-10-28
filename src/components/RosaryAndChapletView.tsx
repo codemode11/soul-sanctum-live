@@ -292,22 +292,22 @@ export const RosaryAndChapletView: React.FC = () => {
   const mercyProgressPercent = Math.round(((mercyStepIndex + 1) / mercySteps.length) * 100);
 
   const renderThreeOClockCard = (highlighted = false) => (
-    <div className={`relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F9ECEE]/75 via-[#F6EFE4]/65 to-[#EBF3F9]/75 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ${highlighted ? 'ring-2 ring-[#C89D7C]/70 shadow-[0_12px_40px_rgba(139,58,58,0.14),inset_0_1px_2px_rgba(255,255,255,0.95)]' : 'ring-1 ring-[#E2D9C8]/80 shadow-[0_10px_32px_rgba(139,58,58,0.10),inset_0_1px_2px_rgba(255,255,255,0.95)]'} space-y-5 text-stone-900`}>
-      {/* Ambient Divine Mercy Rays behind Frosted Glass */}
-      <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-rose-300/40 blur-3xl z-0" />
-      <div className="pointer-events-none absolute -bottom-14 -right-14 w-72 h-72 rounded-full bg-sky-200/45 blur-3xl z-0" />
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-44 rounded-full bg-amber-200/35 blur-3xl z-0" />
+    <div className={`relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EFE3D3]/85 via-[#E4D1B9]/80 to-[#D6BC9E]/85 backdrop-blur-2xl backdrop-saturate-150 border border-[#C8AD8D]/85 ${highlighted ? 'ring-2 ring-[#9C6D3E]/70 shadow-[0_12px_40px_rgba(92,58,30,0.18),inset_0_1px_2px_rgba(255,255,255,0.85)]' : 'ring-1 ring-[#C8AD8D]/80 shadow-[0_10px_32px_rgba(92,58,30,0.12),inset_0_1px_2px_rgba(255,255,255,0.85)]'} space-y-5 text-stone-900`}>
+      {/* Ambient Warm Brown & Golden Rays behind Frosted Glass */}
+      <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-[#B6895B]/35 blur-3xl z-0" />
+      <div className="pointer-events-none absolute -bottom-14 -right-14 w-72 h-72 rounded-full bg-[#8C5E35]/30 blur-3xl z-0" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-44 rounded-full bg-[#D4A373]/30 blur-3xl z-0" />
 
-      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/75 pb-4">
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C8AD8D]/60 pb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/65 backdrop-blur-md border border-white/85 ring-1 ring-rose-200/80 flex items-center justify-center shrink-0 shadow-2xs">
-            <Sparkles className="w-5 h-5 text-rose-800" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6B4423] to-[#4A2E16] border border-[#8B5A2B] ring-1 ring-[#D4A373]/50 flex items-center justify-center shrink-0 shadow-sm">
+            <Sparkles className="w-5 h-5 text-amber-200" />
           </div>
           <div>
-            <span className="text-[11px] font-cinzel font-bold tracking-widest text-rose-900 uppercase block">
+            <span className="text-[11px] font-cinzel font-bold tracking-widest text-[#5C3A1E] uppercase block">
               Hour of Great Mercy • 3:00 PM Devotion
             </span>
-            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
+            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#2E1B0E]">
               The Three O'Clock Prayer
             </h3>
           </div>
@@ -327,11 +327,11 @@ export const RosaryAndChapletView: React.FC = () => {
             }}
             className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-xs ${
               isReadingThreeOClock
-                ? 'bg-rose-800 text-white animate-pulse'
-                : 'bg-white/65 hover:bg-white/85 backdrop-blur-md text-[#6B4423] border border-white/85 ring-1 ring-[#DFD2C0]'
+                ? 'bg-gradient-to-r from-[#5C3A1E] to-[#3E2412] text-amber-50 animate-pulse'
+                : 'bg-gradient-to-b from-[#FAF3E8] to-[#EFE2CE] hover:from-white hover:to-[#F5E9D6] text-[#5C3A1E] border border-[#C8AD8D] ring-1 ring-[#DFD2C0]'
             }`}
           >
-            {isReadingThreeOClock ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-rose-800" />}
+            {isReadingThreeOClock ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#6B4423]" />}
             <span>{isReadingThreeOClock ? 'Stop Audio' : 'Listen to Prayer'}</span>
           </button>
 
@@ -342,28 +342,28 @@ export const RosaryAndChapletView: React.FC = () => {
               setCopiedThreeOClock(true);
               setTimeout(() => setCopiedThreeOClock(false), 2000);
             }}
-            className="p-2.5 rounded-xl bg-white/65 hover:bg-white/85 backdrop-blur-md text-stone-700 hover:text-stone-900 border border-white/85 ring-1 ring-stone-200/80 transition-colors cursor-pointer"
+            className="p-2.5 rounded-xl bg-gradient-to-b from-[#FAF3E8] to-[#EFE2CE] hover:from-white hover:to-[#F5E9D6] text-[#5C3A1E] hover:text-[#2E1B0E] border border-[#C8AD8D] ring-1 ring-[#DFD2C0] transition-colors cursor-pointer"
             title="Copy The Three O'Clock Prayer"
           >
-            {copiedThreeOClock ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+            {copiedThreeOClock ? <Check className="w-4 h-4 text-emerald-700" /> : <Copy className="w-4 h-4" />}
           </button>
         </div>
       </div>
 
-      <div className="relative z-10 space-y-4 bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-6 sm:p-8 rounded-xl border border-white/85 ring-1 ring-[#E6DFD3]/75 shadow-[0_6px_24px_rgba(139,58,58,0.06),inset_0_1px_2px_rgba(255,255,255,0.92)] text-stone-900 font-serif text-base sm:text-lg md:text-xl leading-relaxed">
-        <p className="text-stone-800">
+      <div className="relative z-10 space-y-4 bg-gradient-to-br from-[#FAF5EC]/85 via-[#F4E9D8]/80 to-[#EAD9C0]/85 backdrop-blur-xl backdrop-saturate-150 p-6 sm:p-8 rounded-xl border border-[#D5BE9F] ring-1 ring-[#E6DFD3]/80 shadow-[0_6px_24px_rgba(92,58,30,0.08),inset_0_1px_2px_rgba(255,255,255,0.9)] text-stone-900 font-serif text-base sm:text-lg md:text-xl leading-relaxed">
+        <p className="text-[#2E1B0E]">
           You died, Jesus, but the source of life flowed out for souls, and the ocean of mercy opened up for the whole world. O Fountain of Life, immeasurable Divine Mercy, cover the whole world and empty yourself out upon us.
         </p>
 
-        <p className="text-stone-800 pt-3.5 border-t border-white/75">
+        <p className="text-[#2E1B0E] pt-3.5 border-t border-[#D5BE9F]/60">
           O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!
         </p>
 
-        <p className="text-stone-800 pt-3.5 border-t border-white/75">
-          Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. <span className="italic text-stone-600 text-sm sm:text-base">(three times)</span>
+        <p className="text-[#2E1B0E] pt-3.5 border-t border-[#D5BE9F]/60">
+          Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. <span className="italic text-[#6B4423] text-sm sm:text-base">(three times)</span>
         </p>
 
-        <p className="font-bold text-rose-900 pt-3.5 border-t border-white/75">
+        <p className="font-bold text-[#5C3A1E] pt-3.5 border-t border-[#D5BE9F]/60">
           Jesus, King of Mercy, We trust in you!
         </p>
       </div>
@@ -373,10 +373,8 @@ export const RosaryAndChapletView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
-      {/* Devotion Switcher Tabs:
-          Divine Mercy Trio (Chaplet, The Diary & 14 Promises, 3 O'Clock Prayer): Same dark red
-          Marian Pair (The Holy Rosary, Promises of Mary): Same dark blue */}
-      <div className="flex flex-wrap rounded-xl bg-[#F4ECE1]/90 p-1.5 max-w-3xl mx-auto shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1.5">
+      {/* Devotion Switcher Tabs: Full-width (w-full) so left and right edges align with the rectangle below */}
+      <div className="flex flex-wrap rounded-xl bg-[#F4ECE1]/90 p-1.5 w-full shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1.5">
         {/* 1. Chaplet (Dark Red) */}
         <button
           onClick={() => {
@@ -1210,9 +1208,9 @@ export const RosaryAndChapletView: React.FC = () => {
          ========================================================================= */}
       {activeDevotion === 'faustina' && (
         <div className="relative isolate space-y-6 animate-fadeIn">
-          {/* Header Banner - Frosted Glass */}
-          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F7EFE4]/75 via-[#EFE3D2]/65 to-[#F9EFEF]/75 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_36px_rgba(139,90,43,0.11),inset_0_1px_2px_rgba(255,255,255,0.95)] text-stone-900 space-y-3">
-            <div className="pointer-events-none absolute -top-12 -left-12 w-64 h-64 rounded-full bg-rose-300/35 blur-3xl z-0" />
+          {/* Header Banner - Frosted Glass (Pink and wine colors removed) */}
+          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F7EFE4]/80 via-[#EFE3D2]/75 to-[#E8D7C1]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_36px_rgba(139,90,43,0.11),inset_0_1px_2px_rgba(255,255,255,0.95)] text-stone-900 space-y-3">
+            <div className="pointer-events-none absolute -top-12 -left-12 w-64 h-64 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-amber-300/35 blur-3xl z-0" />
             <div className="relative z-10 flex items-center gap-2">
               <span className="p-1.5 rounded-xl bg-white/70 backdrop-blur-md text-[#8B5A2B] border border-white/85 ring-1 ring-amber-300/70">
@@ -1230,11 +1228,11 @@ export const RosaryAndChapletView: React.FC = () => {
             </p>
           </div>
 
-          {/* 14 PROMISES OF JESUS - Frosted Glass Container */}
-          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F6EDE0]/75 via-[#EDE0CE]/65 to-[#F8EFEF]/75 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_40px_rgba(139,90,43,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-6">
-            {/* Ambient Divine Mercy Rays behind the Frosted Glass */}
-            <div className="pointer-events-none absolute -top-16 -left-16 w-80 h-80 rounded-full bg-rose-300/40 blur-3xl z-0" />
-            <div className="pointer-events-none absolute top-1/3 -right-16 w-96 h-96 rounded-full bg-sky-200/45 blur-3xl z-0" />
+          {/* 14 PROMISES OF JESUS - Frosted Glass Container (Pink and wine colors removed) */}
+          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F6EDE0]/80 via-[#EDE0CE]/75 to-[#E6D5BF]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_40px_rgba(139,90,43,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-6">
+            {/* Ambient Warm Golden & Parchment Rays behind the Frosted Glass */}
+            <div className="pointer-events-none absolute -top-16 -left-16 w-80 h-80 rounded-full bg-amber-200/35 blur-3xl z-0" />
+            <div className="pointer-events-none absolute top-1/3 -right-16 w-96 h-96 rounded-full bg-stone-200/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 left-1/4 w-96 h-96 rounded-full bg-amber-300/35 blur-3xl z-0" />
 
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/75 pb-4 gap-3">
@@ -1385,10 +1383,10 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* THE 3 O'CLOCK PRAYER OF DIVINE MERCY (PLACED AFTER THE PROMISES OF JESUS) */}
           {renderThreeOClockCard(true)}
 
-          {/* KEY EXCERPTS FROM THE DIARY OF ST. FAUSTINA - Frosted Glass Container */}
-          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F6EDE0]/75 via-[#EDE0CE]/65 to-[#F8F2E8]/75 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_40px_rgba(139,90,43,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-6">
+          {/* KEY EXCERPTS FROM THE DIARY OF ST. FAUSTINA - Frosted Glass Container (Pink and wine colors removed) */}
+          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F6EDE0]/80 via-[#EDE0CE]/75 to-[#E8D7C1]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_40px_rgba(139,90,43,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-6">
             <div className="pointer-events-none absolute -top-16 -right-16 w-80 h-80 rounded-full bg-amber-300/35 blur-3xl z-0" />
-            <div className="pointer-events-none absolute -bottom-16 -left-16 w-80 h-80 rounded-full bg-rose-300/35 blur-3xl z-0" />
+            <div className="pointer-events-none absolute -bottom-16 -left-16 w-80 h-80 rounded-full bg-amber-200/35 blur-3xl z-0" />
 
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/75 pb-4 gap-3">
               <div className="flex items-center gap-2.5">

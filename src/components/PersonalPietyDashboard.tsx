@@ -244,18 +244,18 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12 animate-fadeIn text-stone-900">
       
-      {/* Header Banner - Light Cream & Gold Parchment Palette */}
-      <div className="rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#FCF9F3] via-[#FAF4EA] to-[#F5ECE0] border border-[#E8DCC8] shadow-[0_10px_30px_rgba(180,140,80,0.08)] space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EADFCF] pb-4">
+      {/* Header Banner - Medium-Dark Brown (Darker brown, but not very dark brown) */}
+      <div className="rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#7A5230] via-[#6B4628] to-[#5C3B20] border border-[#9E7348]/80 shadow-[0_12px_32px_rgba(92,59,32,0.28)] space-y-4 text-amber-50">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#9E7348]/45 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#EFE3D0] border border-[#DFCBB0] flex items-center justify-center text-[#8C6239] shadow-xs">
-              <NotebookWithBallpenIcon className="w-6 h-6 text-[#8C6239]" />
+            <div className="w-10 h-10 rounded-xl bg-[#52341C] border border-[#A67B4E]/70 flex items-center justify-center text-amber-200 shadow-xs">
+              <NotebookWithBallpenIcon className="w-6 h-6 text-amber-200" />
             </div>
             <div>
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#9C6D3B] block">
+              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-200/90 block">
                 Daily Devotional Practice
               </span>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900">
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-amber-50">
                 Spiritual Checklist
               </h2>
             </div>
@@ -264,14 +264,14 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
           <div className="flex items-center gap-2 self-start sm:self-auto">
             <button
               onClick={() => setShowIndulgenceGuide(!showIndulgenceGuide)}
-              className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-[#FDFBF7] border border-[#D5C2A5] text-[#7A4E1D] text-xs font-cinzel font-bold shadow-2xs transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-lg bg-[#52341C]/90 hover:bg-[#462B16] border border-[#B08558]/70 text-amber-100 text-xs font-cinzel font-bold shadow-2xs transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Award className="w-4 h-4 text-[#B8860B]" />
+              <Award className="w-4 h-4 text-amber-300" />
               <span>Indulgence Guide</span>
             </button>
             <button
               onClick={resetAll}
-              className="p-1.5 rounded-lg bg-white hover:bg-stone-100 border border-[#D5C2A5] text-stone-600 hover:text-stone-900 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-[#52341C]/90 hover:bg-[#462B16] border border-[#B08558]/70 text-amber-200 hover:text-white transition-colors cursor-pointer"
               title="Reset today's checklist"
             >
               <RotateCcw className="w-4 h-4" />
@@ -280,39 +280,39 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
         </div>
 
         {/* Attribution to The Indulgence Collective (Included Once as Requested) */}
-        <div className="p-3.5 rounded-xl bg-white/70 border border-[#E6D7C3] flex items-start gap-3">
-          <Sparkles className="w-5 h-5 text-[#B8860B] shrink-0 mt-0.5" />
-          <div className="text-xs sm:text-sm text-stone-700 leading-relaxed font-serif">
-            <strong className="text-[#8C6239] font-cinzel tracking-wide">Recommended Devotions & Indulgences: </strong>
-            Inspired by and attributed to <span className="font-bold text-stone-900">The Indulgence Collective</span>, 
+        <div className="p-3.5 rounded-xl bg-[#52341C]/65 border border-[#9E7348]/55 flex items-start gap-3">
+          <Sparkles className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
+          <div className="text-xs sm:text-sm text-amber-100/95 leading-relaxed font-serif">
+            <strong className="text-amber-200 font-cinzel tracking-wide">Recommended Devotions &amp; Indulgences: </strong>
+            Inspired by and attributed to <span className="font-bold text-white">The Indulgence Collective</span>, 
             providing verified prayers, apostolic works, and spiritual treasures of the Church for the sanctification of souls in this world and the relief of the faithful departed in purgatory.
           </div>
         </div>
 
         {/* Progress Bar & Counter */}
-        <div className="bg-white/90 p-4 rounded-xl border border-[#E6D7C3] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="bg-[#FDF9F1] p-4 rounded-xl border border-[#D8C3A5] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-stone-900 shadow-inner">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-600">
+              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-700">
                 Today’s Spiritual Checklist Progress
               </span>
-              <span className="text-xs font-bold text-[#8C6239] font-cinzel">
+              <span className="text-xs font-bold text-[#6B4628] font-cinzel">
                 {completedCount} of {totalCount} Completed
               </span>
             </div>
             <div className="w-full sm:w-80 h-3 bg-stone-200 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-gradient-to-r from-[#8C6239] to-[#D4AF37] transition-all duration-500 rounded-full"
+                className="h-full bg-gradient-to-r from-[#6B4628] to-[#D4AF37] transition-all duration-500 rounded-full"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
           </div>
 
           <div className="text-right flex items-center justify-between sm:justify-end gap-3">
-            <div className="text-xs text-stone-500 font-serif">
-              Adjustable to your daily schedule & health condition
+            <div className="text-xs text-stone-600 font-serif">
+              Adjustable to your daily schedule &amp; health condition
             </div>
-            <span className="text-2xl font-bold font-cinzel text-[#8C6239]">
+            <span className="text-2xl font-bold font-cinzel text-[#6B4628]">
               {progressPercent}%
             </span>
           </div>
