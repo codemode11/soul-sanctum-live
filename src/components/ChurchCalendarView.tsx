@@ -410,9 +410,9 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
           </div>
           <button
             onClick={onOpenCebuParishes}
-            className="px-4 py-2.5 rounded-lg bg-[#3A2213] hover:bg-[#4E301C] text-amber-50 text-xs sm:text-sm font-serif font-semibold cursor-pointer whitespace-nowrap self-start sm:self-auto transition-all shadow-xs leading-none"
+            className="px-4 py-2.5 rounded-lg bg-white hover:bg-stone-50 text-[#24140B] border border-[#8B5A2B]/40 text-xs sm:text-sm font-serif font-bold cursor-pointer whitespace-nowrap self-start sm:self-auto transition-all shadow-xs leading-none"
           >
-            View Parish Schedules
+            Mass and Confession Schedules
           </button>
         </div>
       )}

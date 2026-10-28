@@ -416,9 +416,9 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             {onOpenCebuParishes && (
               <button 
                 onClick={onOpenCebuParishes}
-                className="text-[11px] font-cinzel text-[#8C6239] hover:underline font-bold"
+                className="px-3 py-1.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/40 text-[11px] font-cinzel text-[#24140B] font-bold shadow-2xs transition-all cursor-pointer"
               >
-                Parish Schedules →
+                Mass &amp; Confession Schedules →
               </button>
             )}
           </div>

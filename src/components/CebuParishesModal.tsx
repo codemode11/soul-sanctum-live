@@ -25,8 +25,15 @@ export const CebuParishesModal: React.FC<CebuParishesModalProps> = ({ isOpen, on
   const [selectedParish, setSelectedParish] = useState<ParishSchedule>(CEBU_CITY_PARISHES[0]);
   const [activeTabFilter, setActiveTabFilter] = useState<'all' | 'confession'>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copiedSlotKey, setCopiedSlotKey] = useState<string | null>(null);
 
   if (!isOpen) return null;
+
+  const handleCopySlot = (slotKey: string, text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedSlotKey(slotKey);
+    setTimeout(() => setCopiedSlotKey(null), 2000);
+  };
 
   const filteredParishes = CEBU_CITY_PARISHES.filter(parish => {
     const query = searchQuery.toLowerCase();
@@ -112,7 +119,7 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search parish name, Sto. Niño, Cathedral, street, or patron..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#EBE1D4] border border-[#8B5A2B]/35 text-base text-[#24140B] placeholder-[#8C6F58] focus:outline-none focus:border-[#6B3E1E] focus:ring-1 focus:ring-[#6B3E1E] shadow-2xs font-serif"
+              className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-[#8B5A2B]/35 text-base text-[#24140B] placeholder-[#8C6F58] focus:outline-none focus:border-[#6B3E1E] focus:ring-1 focus:ring-[#6B3E1E] shadow-2xs font-serif"
             />
           </div>
 
@@ -123,7 +130,7 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
               className={`px-4 py-2 rounded-lg text-sm font-serif transition-colors cursor-pointer whitespace-nowrap shadow-xs ${
                 activeTabFilter === 'all'
                   ? 'bg-[#3A2213] text-amber-50 font-semibold'
-                  : 'bg-[#EAE0D3] text-[#4A2E1B] hover:bg-[#F2EAE0] border border-[#8B5A2B]/30'
+                  : 'bg-white text-[#4A2E1B] hover:bg-stone-50 border border-[#8B5A2B]/30'
               }`}
             >
               All Parishes ({CEBU_CITY_PARISHES.length})
@@ -133,7 +140,7 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
               className={`px-4 py-2 rounded-lg text-sm font-serif transition-colors cursor-pointer whitespace-nowrap shadow-xs ${
                 activeTabFilter === 'confession'
                   ? 'bg-[#6B3E1E] text-amber-50 font-semibold border border-[#4A2810]'
-                  : 'bg-[#EAE0D3] text-[#4A2E1B] hover:bg-[#F2EAE0] border border-[#8B5A2B]/30'
+                  : 'bg-white text-[#4A2E1B] hover:bg-stone-50 border border-[#8B5A2B]/30'
               }`}
             >
               Sacrament of Penance
@@ -160,7 +167,7 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
                     className={`w-full text-left p-3.5 rounded-lg transition-all cursor-pointer group flex items-start justify-between gap-3 ${
                       isSelected
                         ? 'bg-[#3A2213] text-white border-2 border-amber-500/80 shadow-md'
-                        : 'bg-[#ECE2D5] hover:bg-[#F3EBE1] text-[#3A2213] border border-[#8B5A2B]/20'
+                        : 'bg-white hover:bg-stone-50 text-[#3A2213] border border-[#8B5A2B]/25 shadow-2xs'
                     }`}
                   >
                     <div className="min-w-0">
@@ -254,11 +261,29 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
                   Sacrament of Reconciliation (Confession)
                 </h4>
               </div>
-              <ul className="space-y-1.5 font-serif text-base text-[#2E1B0F] font-normal pl-5 list-disc">
-                {selectedParish.confessionSchedule.map((c, idx) => (
-                  <li key={idx} className="leading-relaxed">{c}</li>
-                ))}
-              </ul>
+              <div className="grid grid-cols-1 gap-2.5 pt-0.5">
+                {selectedParish.confessionSchedule.map((c, idx) => {
+                  const slotKey = `${selectedParish.id}-confession-${idx}`;
+                  const isSlotCopied = copiedSlotKey === slotKey;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Confession: ${c}`)}
+                      className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex items-center justify-between gap-3 text-left font-serif text-base text-[#24140B] shadow-xs hover:shadow-sm transition-all cursor-pointer"
+                      title="Click to copy Confession schedule"
+                    >
+                      <span className="font-semibold text-[#24140B] leading-snug">{c}</span>
+                      {isSlotCopied && (
+                        <span className="text-xs font-sans font-bold text-emerald-700 shrink-0 flex items-center gap-1">
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Copied</span>
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Sunday Masses */}
@@ -270,12 +295,31 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
                 </h4>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
-                {selectedParish.sundayMasses.map((m, idx) => (
-                  <div key={idx} className="p-3 rounded-lg bg-[#F6EFE7] border border-[#8B5A2B]/20 flex items-center justify-between text-base font-serif shadow-2xs">
-                    <span className="font-bold text-[#24140B]">{m.time}</span>
-                    <span className="text-[#6B3E1E] text-sm font-semibold">{m.language}</span>
-                  </div>
-                ))}
+                {selectedParish.sundayMasses.map((m, idx) => {
+                  const slotKey = `${selectedParish.id}-sunday-${idx}`;
+                  const isSlotCopied = copiedSlotKey === slotKey;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Sunday Mass: ${m.time} (${m.language}${m.notes ? `, ${m.notes}` : ''})`)}
+                      className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex flex-col justify-center gap-1 text-left font-serif shadow-xs hover:shadow-sm transition-all cursor-pointer"
+                      title="Click to copy Sunday Mass schedule"
+                    >
+                      <div className="w-full flex items-center justify-between gap-2">
+                        <span className="font-bold text-base text-[#24140B]">{m.time}</span>
+                        <span className="text-[#6B3E1E] text-sm font-semibold">
+                          {isSlotCopied ? 'Copied!' : m.language}
+                        </span>
+                      </div>
+                      {m.notes && (
+                        <span className="text-xs text-[#5C3D28] font-serif italic block">
+                          {m.notes}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -288,20 +332,54 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
                 </h4>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-0.5">
-                {selectedParish.dailyMasses.map((m, idx) => (
-                  <div key={idx} className="p-3 rounded-lg bg-[#F6EFE7] border border-[#8B5A2B]/20 flex items-center justify-between text-base font-serif shadow-2xs">
-                    <span className="font-bold text-[#24140B]">{m.time}</span>
-                    <span className="text-[#5C3D28] text-sm font-medium">{m.language}</span>
-                  </div>
-                ))}
+                {selectedParish.dailyMasses.map((m, idx) => {
+                  const slotKey = `${selectedParish.id}-daily-${idx}`;
+                  const isSlotCopied = copiedSlotKey === slotKey;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Weekday Mass: ${m.time} (${m.language}${m.notes ? `, ${m.notes}` : ''})`)}
+                      className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex flex-col justify-center gap-1 text-left font-serif shadow-xs hover:shadow-sm transition-all cursor-pointer"
+                      title="Click to copy Weekday Mass schedule"
+                    >
+                      <div className="w-full flex items-center justify-between gap-2">
+                        <span className="font-bold text-base text-[#24140B]">{m.time}</span>
+                        <span className="text-[#5C3D28] text-sm font-semibold">
+                          {isSlotCopied ? 'Copied!' : m.language}
+                        </span>
+                      </div>
+                      {m.notes && (
+                        <span className="text-xs text-[#5C3D28] font-serif italic block">
+                          {m.notes}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
             {/* Adoration Chapel and Notes */}
-            <div className="p-4 rounded-xl bg-[#E8DDD0] border border-[#8B5A2B]/25 text-sm sm:text-base font-serif text-[#3A2213] space-y-1.5 leading-relaxed">
-              <p><strong className="font-semibold text-[#24140B]">Eucharistic Adoration Chapel:</strong> {selectedParish.adorationChapelHours}</p>
+            <div className="space-y-2.5 rounded-xl p-5 bg-[#E8DDD0] border border-[#8B5A2B]/25 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => handleCopySlot(`${selectedParish.id}-adoration`, `${selectedParish.name} — Eucharistic Adoration Chapel: ${selectedParish.adorationChapelHours}`)}
+                className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex items-center justify-between gap-3 text-left text-sm sm:text-base font-serif text-[#24140B] shadow-xs hover:shadow-sm transition-all cursor-pointer"
+                title="Click to copy Adoration Chapel schedule"
+              >
+                <span>
+                  <strong className="font-bold text-[#24140B]">Eucharistic Adoration Chapel:</strong>{' '}
+                  {selectedParish.adorationChapelHours}
+                </span>
+                {copiedSlotKey === `${selectedParish.id}-adoration` && (
+                  <span className="text-xs font-sans font-bold text-emerald-700 shrink-0">Copied</span>
+                )}
+              </button>
               {selectedParish.notes && (
-                <p><strong className="font-semibold text-[#24140B]">Patron Feast and Notes:</strong> {selectedParish.notes}</p>
+                <p className="text-sm sm:text-base font-serif text-[#3A2213] pt-1 leading-relaxed">
+                  <strong className="font-semibold text-[#24140B]">Patron Feast and Notes:</strong> {selectedParish.notes}
+                </p>
               )}
             </div>
 
