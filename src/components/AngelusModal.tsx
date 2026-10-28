@@ -14,29 +14,24 @@ export const AngelusModal: React.FC<AngelusModalProps> = ({ isOpen, onClose }) =
 
   React.useEffect(() => {
     if (isOpen) {
-      bellSynth.playAngelusToll((status) => {
-        setBellStatus(status);
-      });
+      bellSynth.playNoonChimes();
+      setBellStatus('Playing Sanctuary Noon Chimes...');
+      const timer = setTimeout(() => setBellStatus(''), 5000);
+      return () => {
+        clearTimeout(timer);
+        bellSynth.stopBells();
+      };
     } else {
       bellSynth.stopBells();
       setBellStatus('');
     }
-    return () => {
-      bellSynth.stopBells();
-    };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleTollBells = () => {
-    bellSynth.playAngelusToll((status) => {
-      setBellStatus(status);
-    });
-  };
-
   const handleNoonChimes = () => {
     bellSynth.playNoonChimes();
-    setBellStatus('Ringing Westminster Noon Sanctuary Chimes...');
+    setBellStatus('Playing Sanctuary Noon Chimes...');
     setTimeout(() => setBellStatus(''), 5000);
   };
 
@@ -64,7 +59,7 @@ Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, tha
         <div className="flex items-start justify-between border-b border-stone-200 pb-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-[#172B69] animate-bounce" />
+              <Bell className="w-4 h-4 text-[#172B69]" />
               <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#172B69]">
                 Traditional 6am, 12pm and 6pm Prayer
               </span>
@@ -86,24 +81,15 @@ Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, tha
           </button>
         </div>
 
-        {/* Approved Bell Tolling Bar */}
+        {/* Sanctuary Chimes Bar */}
         <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-[#F0F6FC] border border-blue-200">
-          <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={handleTollBells}
-              className="px-3 py-1.5 rounded-lg bg-[#172B69] hover:bg-[#1E3A8A] text-amber-100 text-xs font-cinzel font-bold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
-            >
-              <Bell className="w-3.5 h-3.5 text-amber-300" />
-              <span>Toll Angelus Bell (3×3)</span>
-            </button>
-            <button
-              onClick={handleNoonChimes}
-              className="px-3 py-1.5 rounded-lg bg-white hover:bg-blue-50 text-[#172B69] border border-blue-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Noon Chimes</span>
-            </button>
-          </div>
+          <button
+            onClick={handleNoonChimes}
+            className="px-3.5 py-1.5 rounded-lg bg-[#172B69] hover:bg-[#1E3A8A] text-amber-100 text-xs font-cinzel font-bold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <span>Noon Chimes</span>
+          </button>
           {bellStatus && (
             <span className="text-[11px] font-cinzel font-bold text-[#172B69] animate-pulse">
               {bellStatus}

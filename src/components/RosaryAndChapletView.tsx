@@ -466,19 +466,21 @@ export const RosaryAndChapletView: React.FC = () => {
           <span className="truncate">Promises of Mary</span>
         </button>
 
-        {/* 6. The Angelus (Dark Blue - 3rd Marian Button, with approved bell tolling) */}
+        {/* 6. The Angelus (Dark Blue - 3rd Marian Button, with approved chimes) */}
         <button
           onClick={() => {
             setActiveDevotion('angelus');
             SacredReader.stop();
-            bellSynth.playAngelusToll((status) => setAngelusBellStatus(status));
+            bellSynth.playNoonChimes();
+            setAngelusBellStatus('Playing Sanctuary Noon Chimes...');
+            setTimeout(() => setAngelusBellStatus(''), 5000);
           }}
           className={`sm:flex-1 min-w-0 py-2 px-1.5 sm:px-2 rounded-lg text-[11px] sm:text-xs font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center gap-1 bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'angelus'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
-          title="The Angelus — Click to open and toll the Angelus Bell"
+          title="The Angelus — Click to open and play Sanctuary Chimes"
         >
           <Bell className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-300 shrink-0" />
           <span className="truncate">The Angelus</span>
@@ -1783,12 +1785,12 @@ export const RosaryAndChapletView: React.FC = () => {
       )}
 
       {/* =========================================================================
-          5. THE ANGELUS (ANGELUS DOMINI) — MARIAN DEVOTION WITH APPROVED BELL TOLLING
+          5. THE ANGELUS (ANGELUS DOMINI) — MARIAN DEVOTION WITH SANCTUARY CHIMES
          ========================================================================= */}
       {activeDevotion === 'angelus' && (
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
-          {/* Header & Approved Bell Tolling Console - Marian Blue Frosted Glass */}
+          {/* Header & Approved Chimes Console - Marian Blue Frosted Glass */}
           <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/75 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-5 text-stone-900">
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/40 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-14 -right-14 w-72 h-72 rounded-full bg-amber-200/40 blur-3xl z-0" />
@@ -1808,29 +1810,18 @@ export const RosaryAndChapletView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Approved Bell Tolling & Prayer Controls */}
+              {/* Approved Sanctuary Chimes & Prayer Controls */}
               <div className="flex flex-wrap items-center gap-2 self-start md:self-auto shrink-0">
                 <button
                   onClick={() => {
-                    bellSynth.playAngelusToll((status) => setAngelusBellStatus(status));
+                    bellSynth.playNoonChimes();
+                    setAngelusBellStatus('Playing Sanctuary Noon Chimes...');
+                    setTimeout(() => setAngelusBellStatus(''), 5000);
                   }}
                   className="px-4 py-2.5 rounded-xl bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 border border-amber-300/80 text-xs sm:text-sm font-cinzel font-bold flex items-center gap-2 shadow-md transition-all cursor-pointer"
-                  title="Toll the traditional 3×3 Angelus strokes and 12-stroke Sanctus Peal"
+                  title="Play the approved Sanctuary Noon Chimes"
                 >
-                  <Bell className="w-4 h-4 text-amber-300" />
-                  <span>Toll Angelus Bell (3×3 + Peal)</span>
-                </button>
-
-                <button
-                  onClick={() => {
-                    bellSynth.playNoonChimes();
-                    setAngelusBellStatus('Ringing Westminster Noon Sanctuary Chimes...');
-                    setTimeout(() => setAngelusBellStatus(''), 5500);
-                  }}
-                  className="px-3.5 py-2.5 rounded-xl bg-white/80 hover:bg-white text-[#172B69] border border-blue-300/80 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
-                  title="Play the approved Westminster Noon Sanctuary Chimes"
-                >
-                  <Sparkles className="w-4 h-4 text-amber-600" />
+                  <Sparkles className="w-4 h-4 text-amber-300" />
                   <span>Noon Chimes</span>
                 </button>
 
@@ -1881,47 +1872,34 @@ export const RosaryAndChapletView: React.FC = () => {
               </div>
             </div>
 
-            {/* Active Bell Tolling Status Banner */}
+            {/* Active Chimes Status Banner */}
             {angelusBellStatus && (
               <div className="relative z-10 px-4 py-3 rounded-xl bg-gradient-to-r from-[#172B69] via-[#1E3A8A] to-[#172B69] text-amber-100 border border-amber-300/80 shadow-md flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5">
-                  <Bell className="w-4 h-4 text-amber-300 animate-bounce shrink-0" />
+                  <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0" />
                   <span className="font-cinzel text-xs sm:text-sm font-bold tracking-wide text-amber-200">
                     {angelusBellStatus}
                   </span>
                 </div>
                 <span className="text-[11px] font-serif italic text-blue-200 hidden sm:inline">
-                  Cathedral Bronze E4 &amp; Bourdon A3
+                  Sanctuary Carillon Chimes
                 </span>
               </div>
             )}
 
             <p className="relative z-10 text-xs sm:text-sm font-serif text-stone-700 leading-relaxed">
-              For centuries, at the sound of the church bell at dawn (6:00 AM), noon (12:00 PM), and dusk (6:00 PM), the faithful pause their labor to venerate the Mystery of the Incarnation—the moment the Eternal Word took flesh in the womb of the Blessed Virgin Mary. The traditional Angelus bell rings <strong>three strokes</strong> before each of the three Hail Marys, followed by a <strong>twelve-stroke swinging peal</strong> during the concluding Collect.
+              For centuries, at dawn (6:00 AM), noon (12:00 PM), and dusk (6:00 PM), the faithful pause their labor to venerate the Mystery of the Incarnation—the moment the Eternal Word took flesh in the womb of the Blessed Virgin Mary.
             </p>
 
             {/* Three Versicles & Hail Marys + Concluding Collect */}
             <div className="relative z-10 space-y-4">
               
-              {/* First Mystery: The Annunciation (3 Bell Strokes) */}
+              {/* First Mystery: The Annunciation */}
               <div className="p-5 sm:p-6 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 ring-1 ring-blue-200/80 shadow-xs space-y-3">
                 <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
                   <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#172B69]">
-                    I. The Angelic Salutation • First 3 Bell Strokes
+                    I. The Angelic Salutation
                   </span>
-                  <button
-                    onClick={() => {
-                      bellSynth.playChurchBell(329.63, 4.0, 0.6);
-                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 1100);
-                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 2200);
-                      setAngelusBellStatus("1st Ave: 'The Angel of the Lord declared' (3 Strokes)");
-                      setTimeout(() => setAngelusBellStatus(''), 4500);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#172B69] border border-blue-200 text-xs font-cinzel font-bold cursor-pointer transition-colors"
-                  >
-                    <Bell className="w-3 h-3 text-blue-800" />
-                    <span>Toll 3 Strokes</span>
-                  </button>
                 </div>
 
                 <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-stone-900">
@@ -1941,25 +1919,12 @@ export const RosaryAndChapletView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Second Mystery: Mary's Fiat (3 Bell Strokes) */}
+              {/* Second Mystery: Mary's Fiat */}
               <div className="p-5 sm:p-6 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 ring-1 ring-blue-200/80 shadow-xs space-y-3">
                 <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
                   <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#172B69]">
-                    II. The Fiat of Our Lady • Second 3 Bell Strokes
+                    II. The Fiat of Our Lady
                   </span>
-                  <button
-                    onClick={() => {
-                      bellSynth.playChurchBell(329.63, 4.0, 0.6);
-                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 1100);
-                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 2200);
-                      setAngelusBellStatus("2nd Ave: 'Behold the handmaid of the Lord' (3 Strokes)");
-                      setTimeout(() => setAngelusBellStatus(''), 4500);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#172B69] border border-blue-200 text-xs font-cinzel font-bold cursor-pointer transition-colors"
-                  >
-                    <Bell className="w-3 h-3 text-blue-800" />
-                    <span>Toll 3 Strokes</span>
-                  </button>
                 </div>
 
                 <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-stone-900">
@@ -1979,25 +1944,12 @@ export const RosaryAndChapletView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Third Mystery: The Word Made Flesh (3 Bell Strokes) */}
+              {/* Third Mystery: The Word Made Flesh */}
               <div className="p-5 sm:p-6 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 ring-1 ring-blue-200/80 shadow-xs space-y-3">
                 <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
                   <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#172B69]">
-                    III. The Incarnation of the Word • Third 3 Bell Strokes
+                    III. The Incarnation of the Word
                   </span>
-                  <button
-                    onClick={() => {
-                      bellSynth.playChurchBell(329.63, 4.0, 0.6);
-                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 1100);
-                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 2200);
-                      setAngelusBellStatus("3rd Ave: 'And the Word was made flesh' (3 Strokes)");
-                      setTimeout(() => setAngelusBellStatus(''), 4500);
-                    }}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#172B69] border border-blue-200 text-xs font-cinzel font-bold cursor-pointer transition-colors"
-                  >
-                    <Bell className="w-3 h-3 text-blue-800" />
-                    <span>Toll 3 Strokes</span>
-                  </button>
                 </div>
 
                 <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-stone-900">
@@ -2020,21 +1972,12 @@ export const RosaryAndChapletView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Concluding Versicle & Collect Prayer (12-Stroke Angelus Peal) */}
+              {/* Concluding Versicle & Collect Prayer */}
               <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-br from-[#172B69] via-[#1B337A] to-[#0F1E4D] text-amber-50 border border-amber-300/70 shadow-lg space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-blue-400/30 pb-3">
                   <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-                    Concluding Versicle &amp; Collect • 12-Stroke Sanctus Peal
+                    Concluding Versicle &amp; Collect
                   </span>
-                  <button
-                    onClick={() => {
-                      bellSynth.playGrandCathedralPeal((status) => setAngelusBellStatus(status));
-                    }}
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 border border-amber-300/50 text-xs font-cinzel font-bold cursor-pointer transition-colors self-start sm:self-auto"
-                  >
-                    <Bell className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Ring Concluding Cathedral Peal</span>
-                  </button>
                 </div>
 
                 <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-white">
