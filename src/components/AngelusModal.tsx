@@ -12,6 +12,20 @@ export const AngelusModal: React.FC<AngelusModalProps> = ({ isOpen, onClose }) =
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [bellStatus, setBellStatus] = useState<string>('');
 
+  React.useEffect(() => {
+    if (isOpen) {
+      bellSynth.playAngelusToll((status) => {
+        setBellStatus(status);
+      });
+    } else {
+      bellSynth.stopBells();
+      setBellStatus('');
+    }
+    return () => {
+      bellSynth.stopBells();
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleTollBells = () => {
@@ -20,10 +34,10 @@ export const AngelusModal: React.FC<AngelusModalProps> = ({ isOpen, onClose }) =
     });
   };
 
-  const handleGrandPeal = () => {
-    bellSynth.playGrandCathedralPeal((status) => {
-      setBellStatus(status);
-    });
+  const handleNoonChimes = () => {
+    bellSynth.playNoonChimes();
+    setBellStatus('Ringing Westminster Noon Sanctuary Chimes...');
+    setTimeout(() => setBellStatus(''), 5000);
   };
 
   const handleReadAngelus = () => {
@@ -44,14 +58,14 @@ Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, tha
 
   return (
     <div className="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl border border-stone-200">
+      <div className="bg-white rounded-xl p-6 sm:p-8 max-w-lg w-full space-y-5 shadow-2xl border border-stone-200">
         
         {/* Header */}
         <div className="flex items-start justify-between border-b border-stone-200 pb-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-amber-800 animate-bounce" />
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-900">
+              <Bell className="w-4 h-4 text-[#172B69] animate-bounce" />
+              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#172B69]">
                 Traditional 6am, 12pm and 6pm Prayer
               </span>
             </div>
@@ -62,6 +76,7 @@ Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, tha
 
           <button
             onClick={() => {
+              bellSynth.stopBells();
               SacredReader.stop();
               onClose();
             }}
@@ -71,7 +86,30 @@ Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, tha
           </button>
         </div>
 
-
+        {/* Approved Bell Tolling Bar */}
+        <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-[#F0F6FC] border border-blue-200">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={handleTollBells}
+              className="px-3 py-1.5 rounded-lg bg-[#172B69] hover:bg-[#1E3A8A] text-amber-100 text-xs font-cinzel font-bold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+            >
+              <Bell className="w-3.5 h-3.5 text-amber-300" />
+              <span>Toll Angelus Bell (3×3)</span>
+            </button>
+            <button
+              onClick={handleNoonChimes}
+              className="px-3 py-1.5 rounded-lg bg-white hover:bg-blue-50 text-[#172B69] border border-blue-300 text-xs font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>Noon Chimes</span>
+            </button>
+          </div>
+          {bellStatus && (
+            <span className="text-[11px] font-cinzel font-bold text-[#172B69] animate-pulse">
+              {bellStatus}
+            </span>
+          )}
+        </div>
 
         {/* Angelus Versicles and Responses */}
         <div className="space-y-4 font-serif-sacred text-stone-900 text-base leading-relaxed">

@@ -179,11 +179,25 @@ class BellSynthesizer {
     }
   }
 
+  private bellTimers: number[] = [];
+
+  public stopBells(): void {
+    this.bellTimers.forEach((id) => window.clearTimeout(id));
+    this.bellTimers = [];
+  }
+
+  private scheduleBell(fn: () => void, delayMs: number): void {
+    if (typeof window === 'undefined') return;
+    const id = window.setTimeout(fn, delayMs);
+    this.bellTimers.push(id);
+  }
+
   /**
    * Plays the Glorious Westminster Noon Chimes:
    * A vibrant, majestic 8-note Westminster carillon chime sequence followed by a deep 12 o'clock cathedral toll.
    */
   public playNoonChimes(): void {
+    this.stopBells();
     // 8-Note Westminster Melody Frequencies (Hz):
     // E5 (659.25), C#5 (554.37), D5 (587.33), A4 (440.00)
     const E5 = 659.25;
@@ -205,7 +219,7 @@ class BellSynthesizer {
 
     // Play 8-note carillon sequence
     melody.forEach(m => {
-      setTimeout(() => {
+      this.scheduleBell(() => {
         this.playCarillonNote(m.note, 3.8, 0.48);
       }, m.delay);
     });
@@ -245,6 +259,7 @@ class BellSynthesizer {
    * 3 strokes (Annunciation) -> pause -> 3 strokes (Handmaid) -> pause -> 3 strokes (Incarnation) -> pause -> 12-stroke swinging Bourdon/Angelus Sanctus peal.
    */
   public playAngelusToll(onStatusChange?: (status: string) => void): void {
+    this.stopBells();
     const bellNote = 329.63; // E4 cathedral bell
     const bourdonNote = 220.00; // Deep A3 Bourdon bell
 
@@ -253,26 +268,26 @@ class BellSynthesizer {
     };
 
     // First group of 3 (Annunciation)
-    updateStatus("1st Ave: 'The Angel of the Lord declared' (3 Strokes)");
+    updateStatus("1st Ave: 'The Angel of the Lord declared' (3 Bell Strokes)");
     this.playChurchBell(bellNote, 4.0, 0.60);
-    setTimeout(() => this.playChurchBell(bellNote, 4.0, 0.60), 1200);
-    setTimeout(() => this.playChurchBell(bellNote, 4.0, 0.60), 2400);
+    this.scheduleBell(() => this.playChurchBell(bellNote, 4.0, 0.60), 1200);
+    this.scheduleBell(() => this.playChurchBell(bellNote, 4.0, 0.60), 2400);
 
     // Second group of 3 (Handmaid of the Lord)
-    setTimeout(() => {
-      updateStatus("2nd Ave: 'Behold the handmaid of the Lord' (3 Strokes)");
+    this.scheduleBell(() => {
+      updateStatus("2nd Ave: 'Behold the handmaid of the Lord' (3 Bell Strokes)");
       this.playChurchBell(bellNote, 4.0, 0.60);
     }, 4500);
-    setTimeout(() => this.playChurchBell(bellNote, 4.0, 0.60), 5700);
-    setTimeout(() => this.playChurchBell(bellNote, 4.0, 0.60), 6900);
+    this.scheduleBell(() => this.playChurchBell(bellNote, 4.0, 0.60), 5700);
+    this.scheduleBell(() => this.playChurchBell(bellNote, 4.0, 0.60), 6900);
 
     // Third group of 3 (Word made flesh)
-    setTimeout(() => {
-      updateStatus("3rd Ave: 'And the Word was made flesh' (3 Strokes)");
+    this.scheduleBell(() => {
+      updateStatus("3rd Ave: 'And the Word was made flesh' (3 Bell Strokes)");
       this.playChurchBell(bellNote, 4.0, 0.60);
     }, 9000);
-    setTimeout(() => this.playChurchBell(bellNote, 4.0, 0.60), 10200);
-    setTimeout(() => this.playChurchBell(bellNote, 4.0, 0.60), 11400);
+    this.scheduleBell(() => this.playChurchBell(bellNote, 4.0, 0.60), 10200);
+    this.scheduleBell(() => this.playChurchBell(bellNote, 4.0, 0.60), 11400);
 
     // Final 12-stroke swinging Bourdon / Angelus Sanctus Peal
     const pealStrokes = [
@@ -291,11 +306,11 @@ class BellSynthesizer {
     ];
 
     pealStrokes.forEach((s, idx) => {
-      setTimeout(() => {
+      this.scheduleBell(() => {
         if (idx === 0) updateStatus("Angelus Sanctus Peal (12 Swinging Cathedral Strokes)");
         this.playChurchBell(s.note, 6.0, s.vol);
         if (idx === pealStrokes.length - 1) {
-          setTimeout(() => updateStatus(""), 6000);
+          this.scheduleBell(() => updateStatus(""), 6000);
         }
       }, s.delay);
     });
@@ -305,6 +320,7 @@ class BellSynthesizer {
    * Plays a Grand Basilica multi-bell change-ringing carillon peal
    */
   public playGrandCathedralPeal(onStatusChange?: (status: string) => void): void {
+    this.stopBells();
     const bells = [
       { freq: 220.00, name: "Bourdon A3" },  // Deepest bell
       { freq: 261.63, name: "Sanctus C4" },
@@ -324,11 +340,11 @@ class BellSynthesizer {
     ];
 
     sequence.forEach((bellIdx, step) => {
-      setTimeout(() => {
+      this.scheduleBell(() => {
         const b = bells[bellIdx];
         this.playChurchBell(b.freq, 5.5, 0.55);
         if (step === sequence.length - 1 && onStatusChange) {
-          setTimeout(() => onStatusChange(""), 5000);
+          this.scheduleBell(() => onStatusChange(""), 5000);
         }
       }, step * 650);
     });

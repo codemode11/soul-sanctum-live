@@ -379,98 +379,109 @@ export const RosaryAndChapletView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
-      {/* Devotion Switcher Tabs: 3 Divine Mercy (Red) + 3 Marian (Blue) aligned full-width with rectangle below */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-nowrap rounded-xl bg-[#F4ECE1]/90 p-1.5 w-full shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1.5">
+      {/* Devotion Switcher Tabs: 3 Divine Mercy (Red) + 3 Marian (Blue) adjusted to fit all 6 buttons on a single line aligned with rectangle below */}
+      <div className="grid grid-cols-3 sm:flex sm:flex-nowrap items-stretch rounded-xl bg-[#F4ECE1]/90 p-1 sm:p-1.5 w-full shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1 sm:gap-1.5">
         {/* 1. Chaplet (Dark Red) */}
         <button
           onClick={() => {
+            bellSynth.stopBells();
+            setAngelusBellStatus('');
             setActiveDevotion('divine-mercy');
             handleReset();
           }}
-          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+          className={`sm:flex-1 min-w-0 py-2 px-1.5 sm:px-2 rounded-lg text-[11px] sm:text-xs font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'divine-mercy'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>Chaplet</span>
+          <span className="truncate">Chaplet</span>
         </button>
 
-        {/* 2. The Diary and the 14 Promises (Same Dark Red) */}
+        {/* 2. The Diary and the 14 Promises (Dark Red) */}
         <button
           onClick={() => {
+            bellSynth.stopBells();
+            setAngelusBellStatus('');
             setActiveDevotion('faustina');
             SacredReader.stop();
           }}
-          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+          className={`sm:flex-1 min-w-0 py-2 px-1.5 sm:px-2 rounded-lg text-[11px] sm:text-xs font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'faustina'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>The Diary &amp; 14 Promises</span>
+          <span className="truncate">Diary &amp; 14 Promises</span>
         </button>
 
-        {/* 3. Three O'Clock Prayer (Same Dark Red) */}
+        {/* 3. Three O'Clock Prayer (Dark Red) */}
         <button
           onClick={() => {
+            bellSynth.stopBells();
+            setAngelusBellStatus('');
             setActiveDevotion('three-oclock');
             SacredReader.stop();
           }}
-          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+          className={`sm:flex-1 min-w-0 py-2 px-1.5 sm:px-2 rounded-lg text-[11px] sm:text-xs font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'three-oclock'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>3 O&apos;Clock Prayer</span>
+          <span className="truncate">3 O&apos;Clock Prayer</span>
         </button>
 
         {/* 4. The Holy Rosary (Dark Blue - 1st Marian Button) */}
         <button
           onClick={() => {
+            bellSynth.stopBells();
+            setAngelusBellStatus('');
             setActiveDevotion('rosary');
             handleReset();
           }}
-          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+          className={`sm:flex-1 min-w-0 py-2 px-1.5 sm:px-2 rounded-lg text-[11px] sm:text-xs font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'rosary'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>The Holy Rosary</span>
+          <span className="truncate">The Holy Rosary</span>
         </button>
 
-        {/* 5. Promises of Mary (Same Dark Blue - 2nd Marian Button) */}
+        {/* 5. Promises of Mary (Dark Blue - 2nd Marian Button) */}
         <button
           onClick={() => {
+            bellSynth.stopBells();
+            setAngelusBellStatus('');
             setActiveDevotion('marian-promises');
             SacredReader.stop();
           }}
-          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+          className={`sm:flex-1 min-w-0 py-2 px-1.5 sm:px-2 rounded-lg text-[11px] sm:text-xs font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'marian-promises'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>Promises of Mary</span>
+          <span className="truncate">Promises of Mary</span>
         </button>
 
-        {/* 6. The Angelus (Same Dark Blue - 3rd Marian Button, with approved bell tolling) */}
+        {/* 6. The Angelus (Dark Blue - 3rd Marian Button, with approved bell tolling) */}
         <button
           onClick={() => {
             setActiveDevotion('angelus');
             SacredReader.stop();
             bellSynth.playAngelusToll((status) => setAngelusBellStatus(status));
           }}
-          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+          className={`sm:flex-1 min-w-0 py-2 px-1.5 sm:px-2 rounded-lg text-[11px] sm:text-xs font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center gap-1 bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'angelus'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
+          title="The Angelus — Click to open and toll the Angelus Bell"
         >
-          <Bell className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-          <span>The Angelus</span>
+          <Bell className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-300 shrink-0" />
+          <span className="truncate">The Angelus</span>
         </button>
       </div>
 
