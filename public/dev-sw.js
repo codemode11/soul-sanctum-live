@@ -4,17 +4,19 @@ self.addEventListener('install', () => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches
-      .keys()
+    self.clients
+      .claim()
+      .then(() => caches.keys())
       .then((cacheNames) => Promise.all(cacheNames.map((name) => caches.delete(name))))
-      .then(() => self.registration.unregister())
-      .then(() => self.clients.matchAll({ type: 'window' }))
-      .then((clients) => {
-        clients.forEach((client) => {
-          if ('navigate' in client) {
-            client.navigate(client.url);
-          }
-        });
-      })
+      .then(() => self.clients.matchAll({ type: 'window', includeUncontrolled: true }))
+      .then((clients) =>
+        self.registration.unregister().then(() => {
+          clients.forEach((client) => {
+            if ('navigate' in client) {
+              client.navigate(client.url);
+            }
+          });
+        })
+      )
   );
 });

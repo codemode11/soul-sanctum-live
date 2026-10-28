@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Website Masthead */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7">
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6">
+        <div className="flex flex-row items-start justify-between gap-4 sm:gap-6">
           
           {/* Brand Lockup: Emblem and Left-Aligned Stacked Soul Sanctum Title */}
           <div className="flex items-start gap-4 sm:gap-5">

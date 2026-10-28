@@ -2,13 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#1C0F08" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="SoulSanctum" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Soul Sanctum - Catholic Daily Companion and Liturgical Treasury</title>
@@ -30,8 +24,8 @@
                 caches.keys().then(function (names) {
                   return Promise.all(names.map(function (n) { return caches.delete(n); }));
                 }).then(function () {
-                  if (hadRegistrations && !sessionStorage.getItem('sanctum_sw_cleared_v4')) {
-                    sessionStorage.setItem('sanctum_sw_cleared_v4', '1');
+                  if (hadRegistrations && !sessionStorage.getItem('sanctum_sw_cleared_v5')) {
+                    sessionStorage.setItem('sanctum_sw_cleared_v5', '1');
                     window.location.reload();
                   }
                 });

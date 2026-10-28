@@ -109,20 +109,6 @@ export default function App() {
     };
   }, [currentDateStr]);
 
-  // Handle Android Home Screen App Shortcut deep links (?tab=readings, ?tab=rosary, ?tab=saints, ?tab=spiritual-books, etc.)
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const requestedTab = params.get('tab') as ActiveTab | null;
-    if (requestedTab) {
-      setActiveTab(requestedTab);
-      setTimeout(() => {
-        const el = document.getElementById('main-content-area');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 250);
-    }
-  }, []);
 
   const activeEstablishingImage =
     NIEPOKALANOW_HIGH_RES_IMAGES.find((img) => img.id === activeEstablishingImageId) ||
@@ -471,7 +457,7 @@ export default function App() {
       <div className="relative z-10 flex flex-col min-h-screen">
         
         {/* Masthead Section */}
-        <div className="w-full flex flex-col justify-start pb-3 sm:pb-5">
+        <div className="w-full min-h-[85vh] sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between pb-6 sm:pb-10">
           {/* Sacred Top Header */}
           <Header
             currentDateStr={currentDateStr}
@@ -490,7 +476,7 @@ export default function App() {
           />
 
           {/* Main Story: Vatican News Masthead Dispatch */}
-          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 md:mt-8">
+          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-48 sm:mt-64 md:mt-72 lg:mt-80">
             <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/80 hover:bg-black/90 border border-amber-500/50 hover:border-amber-400 text-amber-100 backdrop-blur-2xl shadow-[0_12px_50px_rgba(0,0,0,0.92)] transition-all py-3.5 px-5 sm:py-4 sm:px-7 text-center space-y-1.5 sm:space-y-2">
               <div className="flex items-center justify-center">
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300">
@@ -530,13 +516,13 @@ export default function App() {
         </div>
 
         {/* Main Body Layout */}
-        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-16 sm:pb-24 flex flex-col items-center">
+        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-16 sm:pb-24 flex flex-col items-center">
           
           {/* Dual Column Container: Left Navigation Index + Centered Main View */}
           <div 
             ref={mainContentRef}
             id="main-content-area"
-            className="w-full flex flex-col md:flex-row gap-6 lg:gap-8 items-start justify-center mt-0"
+            className="w-full flex flex-col md:flex-row gap-6 lg:gap-8 items-start justify-center"
           >
             
             {/* Left-Side Liturgical Menu */}
