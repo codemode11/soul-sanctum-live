@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Volume2, VolumeX, Copy, Check } from 'lucide-react';
 import { CatechismReading } from '../types';
 import { DAILY_CATECHISM_READINGS, CCC_CATEGORIES } from '../data/catechism';
 import { SacredReader } from '../utils/speech';
@@ -178,26 +179,27 @@ ${reading.meditationQuestion}`;
                 </p>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={handleToggleReadAloud}
-                  className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  className={`p-2.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center justify-center ${
                     isReadingAloud
                       ? 'bg-amber-600 text-white animate-pulse'
                       : 'bg-amber-800/60 hover:bg-amber-700/80 text-amber-100 border border-amber-700/50'
                   }`}
-                  title="Listen to Catechism"
-                  aria-label="Listen to Catechism"
+                  title={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}
+                  aria-label={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}
                 >
-                  {isReadingAloud ? 'Stop Audio' : 'Listen Aloud'}
+                  {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                 </button>
 
                 <button
                   onClick={handleCopy}
-                  className="px-3.5 py-2 rounded-lg bg-stone-800/80 hover:bg-stone-700 text-amber-200 border border-amber-900/50 text-xs font-semibold transition-colors cursor-pointer"
-                  title="Copy Catechism text"
+                  className="p-2.5 rounded-lg bg-stone-800/80 hover:bg-stone-700 text-amber-200 border border-amber-900/50 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center"
+                  title={copied ? 'Copied' : 'Copy Catechism text'}
+                  aria-label={copied ? 'Copied' : 'Copy Catechism text'}
                 >
-                  {copied ? 'Copied' : 'Copy Text'}
+                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>
             </div>
