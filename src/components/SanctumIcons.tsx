@@ -901,6 +901,7 @@ export const EucharisticMonstranceNavIcon: React.FC<IconProps> = ({ className = 
 /**
  * 14. Spiritual Checklist Icon: A notebook with a ballpen
  * Depicts a neat bound notebook with ruled lines, margin, and a sleek ballpen with pen clip and nib.
+ * When hovered on, the ballpen animates to write a checkmark on the notebook page.
  */
 export const NotebookWithBallpenIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg 
@@ -910,7 +911,7 @@ export const NotebookWithBallpenIcon: React.FC<IconProps> = ({ className = 'w-5 
     strokeWidth="1.7" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
     aria-label="Notebook with Ballpen"
   >
     {/* Notebook Cover and Pages */}
@@ -919,23 +920,31 @@ export const NotebookWithBallpenIcon: React.FC<IconProps> = ({ className = 'w-5 
     <line x1="6.5" y1="3" x2="6.5" y2="21" strokeWidth="1.2" opacity="0.65" />
     <path d="M2.5 6.5h2M2.5 10.5h2M2.5 14.5h2M2.5 18.5h2" strokeWidth="1.4" />
     {/* Ruled lines on page */}
-    <line x1="9" y1="7.5" x2="13.5" y2="7.5" strokeWidth="1.3" />
-    <line x1="9" y1="11.5" x2="14" y2="11.5" strokeWidth="1.3" />
-    <line x1="9" y1="15.5" x2="12.5" y2="15.5" strokeWidth="1.3" />
-    {/* Ballpen angled on the right side */}
-    {/* Pen body and cone tip */}
-    <path 
-      d="M19.8 2.2a1.3 1.3 0 0 1 1.8 1.8L15.3 10.3l-2.6.9.9-2.6L19.8 2.2z" 
-      strokeWidth="1.6" 
-      fill="currentColor" 
-      fillOpacity="0.12" 
+    <line x1="8.8" y1="6.8" x2="13.8" y2="6.8" strokeWidth="1.25" opacity="0.8" />
+    <line x1="8.8" y1="9.3" x2="13.2" y2="9.3" strokeWidth="1.25" opacity="0.8" />
+    <line x1="8.8" y1="18.0" x2="14.2" y2="18.0" strokeWidth="1.2" opacity="0.6" />
+
+    {/* Checkmark drawn on the notebook by the ballpen when hovered */}
+    <path
+      d="M8.8 13.8L10.6 15.8L14.4 11.2"
+      pathLength={10}
+      strokeWidth="1.95"
+      className="sanctum-checklist-mark"
     />
-    {/* Ballpen tip ballpoint */}
-    <circle cx="12.6" cy="11.2" r="0.4" fill="currentColor" stroke="none" />
-    {/* Ballpen clip */}
-    <path d="M18.8 3.2l-1.3 1.3" strokeWidth="1.3" />
+
+    {/* Ballpen angled on the right side (animates across checkmark on hover) */}
+    <g className="sanctum-checklist-pen">
+      {/* Pen body and cone tip */}
+      <path 
+        d="M19.8 2.2a1.3 1.3 0 0 1 1.8 1.8L15.3 10.3l-2.6.9.9-2.6L19.8 2.2z" 
+        strokeWidth="1.6" 
+        fill="currentColor" 
+        fillOpacity="0.12" 
+      />
+      {/* Ballpen tip ballpoint */}
+      <circle cx="12.6" cy="11.2" r="0.45" fill="currentColor" stroke="none" />
+      {/* Ballpen clip */}
+      <path d="M18.8 3.2l-1.3 1.3" strokeWidth="1.3" />
+    </g>
   </svg>
 );
-
-
-

@@ -247,7 +247,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
       {/* Header Banner - Medium-Dark Brown (Darker brown, but not very dark brown) */}
       <div className="rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#7A5230] via-[#6B4628] to-[#5C3B20] border border-[#9E7348]/80 shadow-[0_12px_32px_rgba(92,59,32,0.28)] space-y-4 text-amber-50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#9E7348]/45 pb-4">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 group">
             <div className="w-10 h-10 rounded-xl bg-[#52341C] border border-[#A67B4E]/70 flex items-center justify-center text-amber-200 shadow-xs">
               <NotebookWithBallpenIcon className="w-6 h-6 text-amber-200" />
             </div>

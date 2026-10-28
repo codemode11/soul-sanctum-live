@@ -15,7 +15,8 @@ import {
   Copy,
   Check,
   ShieldCheck,
-  Star
+  Star,
+  Bell
 } from 'lucide-react';
 import { RosaryMysteryGroup } from '@/types';
 import { 
@@ -36,15 +37,20 @@ import {
   FaustinaDiaryExcerpt
 } from '@/data/faustinaDivineMercy';
 import { SacredReader } from '@/utils/speech';
+import { bellSynth } from '@/utils/audioSynth';
 
 export const RosaryAndChapletView: React.FC = () => {
-  const [activeDevotion, setActiveDevotion] = useState<'divine-mercy' | 'faustina' | 'three-oclock' | 'rosary' | 'marian-promises'>('divine-mercy');
+  const [activeDevotion, setActiveDevotion] = useState<'divine-mercy' | 'faustina' | 'three-oclock' | 'rosary' | 'marian-promises' | 'angelus'>('divine-mercy');
   const [copiedPromiseNum, setCopiedPromiseNum] = useState<number | null>(null);
   const [copiedMarianNum, setCopiedMarianNum] = useState<number | null>(null);
   const [copiedExcerptId, setCopiedExcerptId] = useState<string | null>(null);
   const [readingExcerptId, setReadingExcerptId] = useState<string | null>(null);
   const [isReadingThreeOClock, setIsReadingThreeOClock] = useState(false);
   const [copiedThreeOClock, setCopiedThreeOClock] = useState(false);
+  const [angelusBellStatus, setAngelusBellStatus] = useState<string>('');
+  const [isReadingAngelus, setIsReadingAngelus] = useState(false);
+  const [copiedAngelus, setCopiedAngelus] = useState(false);
+  const [angelusShowLatin, setAngelusShowLatin] = useState(false);
   
   // Rosary State
   const [selectedMysteryGroup, setSelectedMysteryGroup] = useState<RosaryMysteryGroup>(getTodaysMysteryGroup);
@@ -373,17 +379,17 @@ export const RosaryAndChapletView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
-      {/* Devotion Switcher Tabs: Full-width (w-full) so left and right edges align with the rectangle below */}
-      <div className="flex flex-wrap rounded-xl bg-[#F4ECE1]/90 p-1.5 w-full shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1.5">
+      {/* Devotion Switcher Tabs: 3 Divine Mercy (Red) + 3 Marian (Blue) aligned full-width with rectangle below */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-nowrap rounded-xl bg-[#F4ECE1]/90 p-1.5 w-full shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1.5">
         {/* 1. Chaplet (Dark Red) */}
         <button
           onClick={() => {
             setActiveDevotion('divine-mercy');
             handleReset();
           }}
-          className={`flex-1 min-w-[110px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'divine-mercy'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
               : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
@@ -396,13 +402,13 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('faustina');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[150px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'faustina'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
               : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>The Diary & 14 Promises</span>
+          <span>The Diary &amp; 14 Promises</span>
         </button>
 
         {/* 3. Three O'Clock Prayer (Same Dark Red) */}
@@ -411,43 +417,60 @@ export const RosaryAndChapletView: React.FC = () => {
             setActiveDevotion('three-oclock');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
             activeDevotion === 'three-oclock'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
               : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>3 O'Clock Prayer</span>
+          <span>3 O&apos;Clock Prayer</span>
         </button>
 
-        {/* 4. The Holy Rosary (Dark Blue) */}
+        {/* 4. The Holy Rosary (Dark Blue - 1st Marian Button) */}
         <button
           onClick={() => {
             setActiveDevotion('rosary');
             handleReset();
           }}
-          className={`flex-1 min-w-[120px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'rosary'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
               : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
           <span>The Holy Rosary</span>
         </button>
 
-        {/* 5. Promises of Mary (Same Dark Blue) */}
+        {/* 5. Promises of Mary (Same Dark Blue - 2nd Marian Button) */}
         <button
           onClick={() => {
             setActiveDevotion('marian-promises');
             SacredReader.stop();
           }}
-          className={`flex-1 min-w-[140px] py-2.5 px-3 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'marian-promises'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.03]'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
               : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
           <span>Promises of Mary</span>
+        </button>
+
+        {/* 6. The Angelus (Same Dark Blue - 3rd Marian Button, with approved bell tolling) */}
+        <button
+          onClick={() => {
+            setActiveDevotion('angelus');
+            SacredReader.stop();
+            bellSynth.playAngelusToll((status) => setAngelusBellStatus(status));
+          }}
+          className={`lg:flex-1 py-2.5 px-2.5 rounded-lg text-xs sm:text-[13px] font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center justify-center gap-1.5 bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+            activeDevotion === 'angelus'
+              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.02]'
+              : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
+          }`}
+        >
+          <Bell className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+          <span>The Angelus</span>
         </button>
       </div>
 
@@ -1742,6 +1765,298 @@ export const RosaryAndChapletView: React.FC = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+        </div>
+      )}
+
+      {/* =========================================================================
+          5. THE ANGELUS (ANGELUS DOMINI) — MARIAN DEVOTION WITH APPROVED BELL TOLLING
+         ========================================================================= */}
+      {activeDevotion === 'angelus' && (
+        <div className="relative isolate space-y-6 animate-in fade-in duration-300">
+          
+          {/* Header & Approved Bell Tolling Console - Marian Blue Frosted Glass */}
+          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/75 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-5 text-stone-900">
+            <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/40 blur-3xl z-0" />
+            <div className="pointer-events-none absolute -bottom-14 -right-14 w-72 h-72 rounded-full bg-amber-200/40 blur-3xl z-0" />
+
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-200/70 pb-5">
+              <div className="flex items-start sm:items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] border border-amber-300/70 flex items-center justify-center shrink-0 shadow-md">
+                  <Bell className={`w-5 h-5 text-amber-300 ${angelusBellStatus ? 'animate-bounce' : ''}`} />
+                </div>
+                <div>
+                  <span className="text-[11px] font-cinzel font-bold tracking-widest text-blue-900 uppercase block">
+                    Traditional 6:00 AM, 12:00 Noon &amp; 6:00 PM Marian Devotion
+                  </span>
+                  <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-stone-900">
+                    The Angelus (Angelus Domini)
+                  </h3>
+                </div>
+              </div>
+
+              {/* Approved Bell Tolling & Prayer Controls */}
+              <div className="flex flex-wrap items-center gap-2 self-start md:self-auto shrink-0">
+                <button
+                  onClick={() => {
+                    bellSynth.playAngelusToll((status) => setAngelusBellStatus(status));
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 border border-amber-300/80 text-xs sm:text-sm font-cinzel font-bold flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                  title="Toll the traditional 3×3 Angelus strokes and 12-stroke Sanctus Peal"
+                >
+                  <Bell className="w-4 h-4 text-amber-300" />
+                  <span>Toll Angelus Bell (3×3 + Peal)</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    bellSynth.playNoonChimes();
+                    setAngelusBellStatus('Ringing Westminster Noon Sanctuary Chimes...');
+                    setTimeout(() => setAngelusBellStatus(''), 5500);
+                  }}
+                  className="px-3.5 py-2.5 rounded-xl bg-white/80 hover:bg-white text-[#172B69] border border-blue-300/80 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
+                  title="Play the approved Westminster Noon Sanctuary Chimes"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-600" />
+                  <span>Noon Chimes</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    if (isReadingAngelus) {
+                      SacredReader.stop();
+                      setIsReadingAngelus(false);
+                    } else {
+                      setIsReadingAngelus(true);
+                      const fullSpeech = `The Angelus. ... The Angel of the Lord declared unto Mary. And she conceived of the Holy Spirit. ... Hail Mary, full of grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen. ... Behold the handmaid of the Lord. Be it done unto me according to thy word. ... Hail Mary, full of grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen. ... And the Word was made flesh. And dwelt among us. ... Hail Mary, full of grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen. ... Pray for us, O holy Mother of God. That we may be made worthy of the promises of Christ. ... Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the Incarnation of Christ, Thy Son, was made known by the message of an Angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ our Lord. Amen.`;
+                      SacredReader.speak(fullSpeech, () => setIsReadingAngelus(false), 'female', 0.84);
+                    }
+                  }}
+                  className={`px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
+                    isReadingAngelus
+                      ? 'bg-[#172B69] text-amber-100 border border-amber-300 animate-pulse'
+                      : 'bg-white/80 hover:bg-white text-[#172B69] border border-blue-300/80'
+                  }`}
+                >
+                  {isReadingAngelus ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-blue-800" />}
+                  <span>{isReadingAngelus ? 'Stop Audio' : 'Listen to Prayer'}</span>
+                </button>
+
+                <button
+                  onClick={() => setAngelusShowLatin(!angelusShowLatin)}
+                  className={`px-3 py-2.5 rounded-xl text-xs font-cinzel font-bold border transition-all cursor-pointer ${
+                    angelusShowLatin
+                      ? 'bg-[#172B69] text-amber-200 border-amber-300'
+                      : 'bg-white/80 hover:bg-white text-blue-950 border-blue-300/80'
+                  }`}
+                >
+                  {angelusShowLatin ? 'English Only' : 'Latin / English'}
+                </button>
+
+                <button
+                  onClick={() => {
+                    const text = `THE ANGELUS (ANGELUS DOMINI)\n\nV. The Angel of the Lord declared unto Mary.\nR. And she conceived of the Holy Spirit.\n(Hail Mary...)\n\nV. Behold the handmaid of the Lord.\nR. Be it done unto me according to thy word.\n(Hail Mary...)\n\nV. And the Word was made flesh.\nR. And dwelt among us.\n(Hail Mary...)\n\nV. Pray for us, O holy Mother of God.\nR. That we may be made worthy of the promises of Christ.\n\nLet us pray:\nPour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the Incarnation of Christ, Thy Son, was made known by the message of an Angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ our Lord. Amen.`;
+                    navigator.clipboard.writeText(text);
+                    setCopiedAngelus(true);
+                    setTimeout(() => setCopiedAngelus(false), 2000);
+                  }}
+                  className="p-2.5 rounded-xl bg-white/80 hover:bg-white text-blue-900 border border-blue-300/80 transition-colors cursor-pointer"
+                  title="Copy The Angelus Prayer"
+                >
+                  {copiedAngelus ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Active Bell Tolling Status Banner */}
+            {angelusBellStatus && (
+              <div className="relative z-10 px-4 py-3 rounded-xl bg-gradient-to-r from-[#172B69] via-[#1E3A8A] to-[#172B69] text-amber-100 border border-amber-300/80 shadow-md flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <Bell className="w-4 h-4 text-amber-300 animate-bounce shrink-0" />
+                  <span className="font-cinzel text-xs sm:text-sm font-bold tracking-wide text-amber-200">
+                    {angelusBellStatus}
+                  </span>
+                </div>
+                <span className="text-[11px] font-serif italic text-blue-200 hidden sm:inline">
+                  Cathedral Bronze E4 &amp; Bourdon A3
+                </span>
+              </div>
+            )}
+
+            <p className="relative z-10 text-xs sm:text-sm font-serif text-stone-700 leading-relaxed">
+              For centuries, at the sound of the church bell at dawn (6:00 AM), noon (12:00 PM), and dusk (6:00 PM), the faithful pause their labor to venerate the Mystery of the Incarnation—the moment the Eternal Word took flesh in the womb of the Blessed Virgin Mary. The traditional Angelus bell rings <strong>three strokes</strong> before each of the three Hail Marys, followed by a <strong>twelve-stroke swinging peal</strong> during the concluding Collect.
+            </p>
+
+            {/* Three Versicles & Hail Marys + Concluding Collect */}
+            <div className="relative z-10 space-y-4">
+              
+              {/* First Mystery: The Annunciation (3 Bell Strokes) */}
+              <div className="p-5 sm:p-6 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 ring-1 ring-blue-200/80 shadow-xs space-y-3">
+                <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
+                  <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#172B69]">
+                    I. The Angelic Salutation • First 3 Bell Strokes
+                  </span>
+                  <button
+                    onClick={() => {
+                      bellSynth.playChurchBell(329.63, 4.0, 0.6);
+                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 1100);
+                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 2200);
+                      setAngelusBellStatus("1st Ave: 'The Angel of the Lord declared' (3 Strokes)");
+                      setTimeout(() => setAngelusBellStatus(''), 4500);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#172B69] border border-blue-200 text-xs font-cinzel font-bold cursor-pointer transition-colors"
+                  >
+                    <Bell className="w-3 h-3 text-blue-800" />
+                    <span>Toll 3 Strokes</span>
+                  </button>
+                </div>
+
+                <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-stone-900">
+                  <p><span className="font-cinzel font-bold text-[#172B69] mr-1.5">V.</span> The Angel of the Lord declared unto Mary.</p>
+                  <p className="font-semibold"><span className="font-cinzel font-bold text-[#172B69] mr-1.5">R.</span> And she conceived of the Holy Spirit.</p>
+                  {angelusShowLatin && (
+                    <div className="pt-1 text-sm sm:text-base italic text-blue-950/85 space-y-0.5">
+                      <p><span className="font-cinzel font-bold not-italic">V.</span> Angelus Domini nuntiavit Mariae.</p>
+                      <p><span className="font-cinzel font-bold not-italic">R.</span> Et concepit de Spiritu Sancto.</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-3.5 rounded-lg bg-[#F5F9FD] border border-blue-200/60 font-serif text-sm sm:text-base text-stone-800 leading-relaxed">
+                  <strong className="font-cinzel text-xs uppercase tracking-wider text-blue-900 block mb-1">Hail Mary (Ave Maria):</strong>
+                  Hail Mary, full of grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.
+                </div>
+              </div>
+
+              {/* Second Mystery: Mary's Fiat (3 Bell Strokes) */}
+              <div className="p-5 sm:p-6 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 ring-1 ring-blue-200/80 shadow-xs space-y-3">
+                <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
+                  <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#172B69]">
+                    II. The Fiat of Our Lady • Second 3 Bell Strokes
+                  </span>
+                  <button
+                    onClick={() => {
+                      bellSynth.playChurchBell(329.63, 4.0, 0.6);
+                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 1100);
+                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 2200);
+                      setAngelusBellStatus("2nd Ave: 'Behold the handmaid of the Lord' (3 Strokes)");
+                      setTimeout(() => setAngelusBellStatus(''), 4500);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#172B69] border border-blue-200 text-xs font-cinzel font-bold cursor-pointer transition-colors"
+                  >
+                    <Bell className="w-3 h-3 text-blue-800" />
+                    <span>Toll 3 Strokes</span>
+                  </button>
+                </div>
+
+                <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-stone-900">
+                  <p><span className="font-cinzel font-bold text-[#172B69] mr-1.5">V.</span> Behold the handmaid of the Lord.</p>
+                  <p className="font-semibold"><span className="font-cinzel font-bold text-[#172B69] mr-1.5">R.</span> Be it done unto me according to thy word.</p>
+                  {angelusShowLatin && (
+                    <div className="pt-1 text-sm sm:text-base italic text-blue-950/85 space-y-0.5">
+                      <p><span className="font-cinzel font-bold not-italic">V.</span> Ecce ancilla Domini.</p>
+                      <p><span className="font-cinzel font-bold not-italic">R.</span> Fiat mihi secundum verbum tuum.</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-3.5 rounded-lg bg-[#F5F9FD] border border-blue-200/60 font-serif text-sm sm:text-base text-stone-800 leading-relaxed">
+                  <strong className="font-cinzel text-xs uppercase tracking-wider text-blue-900 block mb-1">Hail Mary (Ave Maria):</strong>
+                  Hail Mary, full of grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.
+                </div>
+              </div>
+
+              {/* Third Mystery: The Word Made Flesh (3 Bell Strokes) */}
+              <div className="p-5 sm:p-6 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 ring-1 ring-blue-200/80 shadow-xs space-y-3">
+                <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
+                  <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#172B69]">
+                    III. The Incarnation of the Word • Third 3 Bell Strokes
+                  </span>
+                  <button
+                    onClick={() => {
+                      bellSynth.playChurchBell(329.63, 4.0, 0.6);
+                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 1100);
+                      setTimeout(() => bellSynth.playChurchBell(329.63, 4.0, 0.6), 2200);
+                      setAngelusBellStatus("3rd Ave: 'And the Word was made flesh' (3 Strokes)");
+                      setTimeout(() => setAngelusBellStatus(''), 4500);
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#172B69] border border-blue-200 text-xs font-cinzel font-bold cursor-pointer transition-colors"
+                  >
+                    <Bell className="w-3 h-3 text-blue-800" />
+                    <span>Toll 3 Strokes</span>
+                  </button>
+                </div>
+
+                <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-stone-900">
+                  <p>
+                    <span className="font-cinzel font-bold text-[#172B69] mr-1.5">V.</span> And the Word was made flesh.{' '}
+                    <span className="text-xs sm:text-sm italic text-blue-800 font-medium">(Here devoutly genuflect or bow)</span>
+                  </p>
+                  <p className="font-semibold"><span className="font-cinzel font-bold text-[#172B69] mr-1.5">R.</span> And dwelt among us.</p>
+                  {angelusShowLatin && (
+                    <div className="pt-1 text-sm sm:text-base italic text-blue-950/85 space-y-0.5">
+                      <p><span className="font-cinzel font-bold not-italic">V.</span> Et Verbum caro factum est.</p>
+                      <p><span className="font-cinzel font-bold not-italic">R.</span> Et habitavit in nobis.</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-3.5 rounded-lg bg-[#F5F9FD] border border-blue-200/60 font-serif text-sm sm:text-base text-stone-800 leading-relaxed">
+                  <strong className="font-cinzel text-xs uppercase tracking-wider text-blue-900 block mb-1">Hail Mary (Ave Maria):</strong>
+                  Hail Mary, full of grace, the Lord is with thee. Blessed art thou amongst women, and blessed is the fruit of thy womb, Jesus. Holy Mary, Mother of God, pray for us sinners, now and at the hour of our death. Amen.
+                </div>
+              </div>
+
+              {/* Concluding Versicle & Collect Prayer (12-Stroke Angelus Peal) */}
+              <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-br from-[#172B69] via-[#1B337A] to-[#0F1E4D] text-amber-50 border border-amber-300/70 shadow-lg space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-blue-400/30 pb-3">
+                  <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+                    Concluding Versicle &amp; Collect • 12-Stroke Sanctus Peal
+                  </span>
+                  <button
+                    onClick={() => {
+                      bellSynth.playGrandCathedralPeal((status) => setAngelusBellStatus(status));
+                    }}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 border border-amber-300/50 text-xs font-cinzel font-bold cursor-pointer transition-colors self-start sm:self-auto"
+                  >
+                    <Bell className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Ring Concluding Cathedral Peal</span>
+                  </button>
+                </div>
+
+                <div className="space-y-1.5 font-serif text-base sm:text-lg md:text-xl text-white">
+                  <p><span className="font-cinzel font-bold text-amber-300 mr-1.5">V.</span> Pray for us, O holy Mother of God.</p>
+                  <p className="font-semibold"><span className="font-cinzel font-bold text-amber-300 mr-1.5">R.</span> That we may be made worthy of the promises of Christ.</p>
+                  {angelusShowLatin && (
+                    <div className="pt-1 text-sm sm:text-base italic text-blue-200 space-y-0.5">
+                      <p><span className="font-cinzel font-bold not-italic text-amber-300">V.</span> Ora pro nobis, sancta Dei Genetrix.</p>
+                      <p><span className="font-cinzel font-bold not-italic text-amber-300">R.</span> Ut digni efficiamur promissionibus Christi.</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-4 sm:p-5 rounded-xl bg-black/25 border border-amber-300/35 space-y-2 font-serif text-base sm:text-lg md:text-xl leading-relaxed text-amber-50">
+                  <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-300 block">
+                    Let us pray (Oremus):
+                  </span>
+                  <p>
+                    Pour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the Incarnation of Christ, Thy Son, was made known by the message of an Angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ our Lord. <strong className="text-amber-300">Amen.</strong>
+                  </p>
+                  {angelusShowLatin && (
+                    <p className="pt-2 border-t border-white/15 text-sm sm:text-base italic text-blue-200">
+                      Gratiam tuam, quaesumus, Domine, mentibus nostris infunde; ut qui, Angelo nuntiante, Christi Filii tui Incarnationem cognovimus, per Passionem eius et Crucem, ad Resurrectionis gloriam perducamur. Per eundem Christum Dominum nostrum. Amen.
+                    </p>
+                  )}
+                </div>
+
+                <div className="text-xs sm:text-sm font-serif text-blue-100/90 pt-1">
+                  <strong className="text-amber-300 font-cinzel">Concluding Doxology: </strong>
+                  Recite <em>Glory Be to the Father, and to the Son, and to the Holy Spirit...</em> three times in thanksgiving for the Most Holy Trinity.
+                </div>
+              </div>
+
             </div>
           </div>
 

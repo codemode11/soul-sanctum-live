@@ -83,4 +83,73 @@
   background: transparent !important;
 }
 
+/* Spiritual Checklist Icon: Ballpen writes a checkmark on the notebook on hover */
+@keyframes sanctumBallpenWriteCheck {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  16% {
+    /* Ballpen tip (12.6, 11.2) moves to checkmark start (8.8, 13.8) */
+    transform: translate(-3.8px, 2.6px) rotate(4deg);
+  }
+  38% {
+    /* Ballpen strokes down-right to checkmark vertex (10.6, 15.8) */
+    transform: translate(-2.0px, 4.6px) rotate(-3deg);
+  }
+  68% {
+    /* Ballpen strokes up-right to checkmark end (14.4, 11.2) */
+    transform: translate(1.8px, 0px) rotate(5deg);
+  }
+  88% {
+    /* Ballpen lifts slightly to the side while completed checkmark shines on notebook */
+    transform: translate(2.4px, -0.8px) rotate(2deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
 
+@keyframes sanctumCheckmarkDraw {
+  0%, 16% {
+    stroke-dashoffset: 10;
+    opacity: 0;
+  }
+  18% {
+    stroke-dashoffset: 10;
+    opacity: 1;
+  }
+  38% {
+    stroke-dashoffset: 6.9;
+    opacity: 1;
+  }
+  68%, 90% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.sanctum-checklist-pen {
+  transform-box: view-box;
+  transform-origin: 12.6px 11.2px;
+  transition: transform 0.25s ease-out;
+}
+
+.sanctum-checklist-mark {
+  stroke-dasharray: 10;
+  stroke-dashoffset: 10;
+  opacity: 0;
+}
+
+.group:hover .sanctum-checklist-pen,
+svg:hover .sanctum-checklist-pen {
+  animation: sanctumBallpenWriteCheck 1.55s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.group:hover .sanctum-checklist-mark,
+svg:hover .sanctum-checklist-mark {
+  animation: sanctumCheckmarkDraw 1.55s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
