@@ -1797,10 +1797,9 @@ export const RosaryAndChapletView: React.FC = () => {
                     setAngelusBellStatus('Playing Sanctuary Noon Chimes...');
                     setTimeout(() => setAngelusBellStatus(''), 5000);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 border border-amber-300/80 text-xs sm:text-sm font-cinzel font-bold flex items-center gap-2 shadow-md transition-all cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 border border-amber-300/80 text-xs sm:text-sm font-cinzel font-bold flex items-center justify-center shadow-md transition-all cursor-pointer"
                   title="Play the approved Sanctuary Noon Chimes"
                 >
-                  <Sparkles className="w-4 h-4 text-amber-300" />
                   <span>Noon Chimes</span>
                 </button>
 
@@ -1854,8 +1853,7 @@ export const RosaryAndChapletView: React.FC = () => {
             {/* Active Chimes Status Banner */}
             {angelusBellStatus && (
               <div className="relative z-10 px-4 py-3 rounded-xl bg-gradient-to-r from-[#172B69] via-[#1E3A8A] to-[#172B69] text-amber-100 border border-amber-300/80 shadow-md flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <Sparkles className="w-4 h-4 text-amber-300 animate-pulse shrink-0" />
+                <div className="flex items-center">
                   <span className="font-cinzel text-xs sm:text-sm font-bold tracking-wide text-amber-200">
                     {angelusBellStatus}
                   </span>

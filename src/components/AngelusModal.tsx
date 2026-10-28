@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, X, Sparkles } from 'lucide-react';
+import { Volume2, X } from 'lucide-react';
 import { bellSynth } from '../utils/audioSynth';
 import { SacredReader } from '../utils/speech';
 
@@ -84,9 +84,8 @@ Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, tha
         <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-[#F0F6FC] border border-blue-200">
           <button
             onClick={handleNoonChimes}
-            className="px-3.5 py-1.5 rounded-lg bg-[#172B69] hover:bg-[#1E3A8A] text-amber-100 text-xs font-cinzel font-bold flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+            className="px-3.5 py-1.5 rounded-lg bg-[#172B69] hover:bg-[#1E3A8A] text-amber-100 text-xs font-cinzel font-bold flex items-center justify-center cursor-pointer shadow-xs transition-colors"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
             <span>Noon Chimes</span>
           </button>
           {bellStatus && (
