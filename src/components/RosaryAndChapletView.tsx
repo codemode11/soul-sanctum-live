@@ -409,7 +409,7 @@ export const RosaryAndChapletView: React.FC = () => {
           <span>14 Promises</span>
         </button>
 
-        {/* 3. 3 o' Clock Prayer (Dark Red) */}
+        {/* 3. 3 O'Clock Prayer (Dark Red) */}
         <button
           onClick={() => {
             bellSynth.stopBells();
@@ -423,7 +423,7 @@ export const RosaryAndChapletView: React.FC = () => {
               : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
         >
-          <span>3 o&apos; Clock Prayer</span>
+          <span>3 O&apos;Clock Prayer</span>
         </button>
 
         {/* 4. Holy Rosary (Dark Blue - 1st Marian Button) */}
