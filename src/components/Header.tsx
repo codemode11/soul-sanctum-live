@@ -84,11 +84,10 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-start gap-4 sm:gap-5">
             <button 
               onClick={() => {
-                handlePlayBell();
                 onOpenEmblemSelector();
               }}
               className={`group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 transition-all duration-300 hover:scale-105 cursor-pointer shrink-0 border border-[#8B5A2B]/70 shadow-[0_4px_20px_rgba(0,0,0,0.9)] mt-1`}
-              title={`${activeEmblem.name} — Click to customize emblem or toll sanctuary bell`}
+              title={`${activeEmblem.name} — Click to customize emblem`}
             >
               {activeEmblem.id === 'eucharist-monstrance' ? (
                 <GoldenMonstranceIcon className="w-8 h-8 sm:w-9 sm:h-9 group-hover:scale-110 transition-transform drop-shadow-[0_2px_14px_rgba(251,191,36,0.85)] text-amber-200" />

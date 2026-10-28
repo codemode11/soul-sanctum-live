@@ -13,18 +13,13 @@ export const AngelusModal: React.FC<AngelusModalProps> = ({ isOpen, onClose }) =
   const [bellStatus, setBellStatus] = useState<string>('');
 
   React.useEffect(() => {
-    if (isOpen) {
-      bellSynth.playNoonChimes();
-      setBellStatus('Playing Sanctuary Noon Chimes...');
-      const timer = setTimeout(() => setBellStatus(''), 5000);
-      return () => {
-        clearTimeout(timer);
-        bellSynth.stopBells();
-      };
-    } else {
+    if (!isOpen) {
       bellSynth.stopBells();
       setBellStatus('');
     }
+    return () => {
+      bellSynth.stopBells();
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;

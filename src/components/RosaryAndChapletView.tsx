@@ -463,18 +463,17 @@ export const RosaryAndChapletView: React.FC = () => {
         {/* 6. The Angelus (Dark Blue - 3rd Marian Button, no bell icon) */}
         <button
           onClick={() => {
+            bellSynth.stopBells();
+            setAngelusBellStatus('');
             setActiveDevotion('angelus');
             SacredReader.stop();
-            bellSynth.playNoonChimes();
-            setAngelusBellStatus('Playing Sanctuary Noon Chimes...');
-            setTimeout(() => setAngelusBellStatus(''), 5000);
           }}
           className={`w-full min-w-0 py-2.5 sm:py-3 px-2 rounded-lg text-xs sm:text-[13px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
             activeDevotion === 'angelus'
               ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
               : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
           }`}
-          title="The Angelus — Click to open and play Sanctuary Chimes"
+          title="The Angelus"
         >
           <span>The Angelus</span>
         </button>
