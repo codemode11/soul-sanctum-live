@@ -49,11 +49,9 @@ import {
   ICON_COLOR_THEMES,
   ICON_FRAME_STYLES
 } from './data/emblems';
-import { Sparkles, Smartphone, Wifi, BatteryCharging } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { MaryAndBlessedSacramentIcon, GoldenMonstranceIcon } from './components/SanctumIcons';
 import { NIEPOKALANOW_HIGH_RES_IMAGES, NiepokalanowHighResImage } from './data/sacredArt';
-import { AndroidAppModal } from './components/AndroidAppModal';
-import { AndroidBottomNav, OfflineIndicator } from './components/AndroidBottomNav';
 
 const getTodayDateStr = () => {
   const now = new Date();
@@ -74,8 +72,6 @@ export default function App() {
   const [isAdorationOpen, setIsAdorationOpen] = useState(false);
   const [isCebuParishesOpen, setIsCebuParishesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAndroidModalOpen, setIsAndroidModalOpen] = useState(false);
-  const [isAndroidPreviewMode, setIsAndroidPreviewMode] = useState(false);
   const [showContactEmail, setShowContactEmail] = useState(false);
   const [currentEmblem, setCurrentEmblem] = useState<SacredEmblem>(getSavedEmblem);
   const [iconStyleConfig, setIconStyleConfig] = useState<IconStyleConfig>(getSavedIconStyle);
@@ -406,12 +402,8 @@ export default function App() {
   return (
     <div className="min-h-screen relative flex flex-col bg-stone-950 text-stone-900 selection:bg-amber-300 selection:text-amber-950">
       
-      {/* Fixed Full-Website Sacred Sanctum Background: Framed proportionally for mobile portrait & desktop */}
-      <div
-        className={`fixed inset-0 z-0 select-none pointer-events-none overflow-hidden flex flex-col items-center justify-start ${
-          isAndroidPreviewMode ? 'max-w-[430px] mx-auto px-0' : 'px-0 sm:px-6 lg:px-8'
-        }`}
-      >
+      {/* Fixed Full-Website Sacred Sanctum Background: Centered and Enlarged */}
+      <div className="fixed inset-0 z-0 select-none pointer-events-none overflow-hidden flex flex-col items-center justify-start px-4 sm:px-6 lg:px-8">
         {/* Enlarged and Centered Image Container with GPU-Accelerated Smooth Vertical-Only Parallax */}
         <div 
           ref={imageParallaxRef}
@@ -432,17 +424,13 @@ export default function App() {
                     target.src = '/images/sacred-art/eucharistic_adoration_altar.jpg';
                   }
                 }}
-                className={`${
-                  isAndroidPreviewMode
-                    ? 'w-[150%] -mt-[16%]'
-                    : 'w-[150%] -mt-[16%] sm:w-[130%] sm:-mt-[20%] lg:w-[120%] lg:-mt-[24.5%]'
-                } max-w-none h-auto block brightness-[1.06] contrast-[1.06] transform-gpu shrink-0`}
+                className="w-[120%] -mt-[24.5%] max-w-none h-auto block brightness-[1.06] contrast-[1.06] transform-gpu shrink-0"
               />
               {/* Subtle bottom edge feathering so the priest remains completely visible */}
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
             </div>
           ) : (
-            <div className="relative w-full h-[55vh] lg:h-[100vh] -mt-6 lg:-mt-20 flex items-center justify-center overflow-hidden transform-gpu">
+            <div className="relative w-full h-[85vh] sm:h-[100vh] -mt-12 sm:-mt-20 flex items-center justify-center overflow-hidden transform-gpu">
               <img
                 src={activeEstablishingImage.imageUrl}
                 alt={activeEstablishingImage.title}
@@ -480,49 +468,10 @@ export default function App() {
       </div>
 
       {/* Foreground Container with Frosted Glass Transparency and Sacred Ambiance */}
-      <div
-        className={`relative z-10 flex flex-col min-h-screen transition-all duration-300 ${
-          isAndroidPreviewMode
-            ? 'max-w-[430px] w-full mx-auto border-x-2 border-amber-500/45 shadow-[0_0_90px_rgba(0,0,0,0.95)] bg-stone-950/45 backdrop-blur-[2px] pb-20'
-            : 'pb-16 lg:pb-0'
-        }`}
-      >
-        {/* Android Status Bar when Android Phone Mode is active */}
-        {isAndroidPreviewMode && (
-          <div className="sticky top-0 z-50 flex items-center justify-between px-3.5 py-1.5 bg-[#120904]/95 border-b border-amber-500/30 text-[11px] font-serif text-amber-200 select-none backdrop-blur-md">
-            <div className="flex items-center gap-1.5">
-              <Smartphone className="w-3.5 h-3.5 text-amber-400" />
-              <span className="font-cinzel font-bold tracking-wider text-amber-100">
-                SOUL SANCTUM • ANDROID
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setIsAndroidModalOpen(true)}
-                className="px-2 py-0.5 rounded bg-amber-800/70 hover:bg-amber-700 text-amber-100 text-[10px] font-bold cursor-pointer"
-              >
-                APK / Install
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsAndroidPreviewMode(false)}
-                className="px-2 py-0.5 rounded bg-stone-800 hover:bg-stone-700 text-stone-200 text-[10px] cursor-pointer"
-              >
-                Desktop View
-              </button>
-              <Wifi className="w-3 h-3 text-emerald-400" />
-              <BatteryCharging className="w-3.5 h-3.5 text-emerald-400" />
-            </div>
-          </div>
-        )}
+      <div className="relative z-10 flex flex-col min-h-screen">
         
-        {/* Masthead Section: Compact with minimal negative space on mobile phones & desktop */}
-        <div
-          className={`w-full flex flex-col justify-start ${
-            isAndroidPreviewMode ? 'pb-1.5' : 'pb-2 lg:pb-5'
-          }`}
-        >
+        {/* Masthead Section */}
+        <div className="w-full flex flex-col justify-start pb-3 sm:pb-5">
           {/* Sacred Top Header */}
           <Header
             currentDateStr={currentDateStr}
@@ -538,53 +487,29 @@ export default function App() {
             onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             activeEstablishingImageId={activeEstablishingImageId}
             onSelectEstablishingImage={handleSelectEstablishingImage}
-            onOpenAndroidModal={() => setIsAndroidModalOpen(true)}
-            isAndroidPreviewMode={isAndroidPreviewMode}
           />
 
-          {/* Main Story: Vatican News Masthead Dispatch — Tightly positioned with no excess negative space */}
-          <div
-            className={`max-w-7xl w-full mx-auto ${
-              isAndroidPreviewMode
-                ? 'px-3 mt-2'
-                : 'px-3 sm:px-6 lg:px-8 mt-2 sm:mt-3 lg:mt-8'
-            }`}
-          >
-            <div
-              className={`w-full max-w-4xl mx-auto rounded-xl bg-black/80 hover:bg-black/90 border border-amber-500/50 hover:border-amber-400 text-amber-100 backdrop-blur-2xl shadow-[0_12px_50px_rgba(0,0,0,0.92)] transition-all text-center ${
-                isAndroidPreviewMode
-                  ? 'py-2.5 px-3.5 space-y-1'
-                  : 'py-3 px-4 sm:py-4 sm:px-7 space-y-1 sm:space-y-2'
-              }`}
-            >
+          {/* Main Story: Vatican News Masthead Dispatch */}
+          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-6 md:mt-8">
+            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/80 hover:bg-black/90 border border-amber-500/50 hover:border-amber-400 text-amber-100 backdrop-blur-2xl shadow-[0_12px_50px_rgba(0,0,0,0.92)] transition-all py-3.5 px-5 sm:py-4 sm:px-7 text-center space-y-1.5 sm:space-y-2">
               <div className="flex items-center justify-center">
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300">
                   FROM THE VATICAN
                 </span>
               </div>
               
-              {/* Lead Headline: Wraps up to 2 lines cleanly on mobile phones; single line on large desktop */}
+              {/* Single-Line Lead Headline */}
               <h2 
                 onClick={() => {
                   setActiveVaticanArticleId(topVaticanHeadline.id);
                   handleSelectTab('vatican-news');
                 }}
-                className={`font-serif font-extrabold text-white hover:text-amber-200 leading-snug max-w-full mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] tracking-tight cursor-pointer transition-colors -mt-0.5 ${
-                  isAndroidPreviewMode
-                    ? 'text-sm sm:text-base line-clamp-2 whitespace-normal'
-                    : 'text-sm sm:text-xl md:text-2xl lg:text-3xl font-extrabold line-clamp-2 lg:whitespace-nowrap lg:overflow-hidden lg:text-ellipsis'
-                }`}
+                className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-full mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] tracking-tight whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer transition-colors -mt-1"
               >
                 {topVaticanHeadline.title}
               </h2>
 
-              <p
-                className={`text-stone-200 font-serif italic max-w-3xl mx-auto leading-relaxed ${
-                  isAndroidPreviewMode
-                    ? 'text-xs line-clamp-2 pt-0.5'
-                    : 'text-xs sm:text-base line-clamp-2 pt-0.5'
-                }`}
-              >
+              <p className="text-xs sm:text-base text-stone-200 font-serif italic max-w-3xl mx-auto leading-relaxed line-clamp-2 pt-0.5">
                 {topVaticanHeadline.subtitle || topVaticanHeadline.summary}
               </p>
 
@@ -594,11 +519,7 @@ export default function App() {
                     setActiveVaticanArticleId(topVaticanHeadline.id);
                     handleSelectTab('vatican-news');
                   }}
-                  className={`inline-flex items-center rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer ${
-                    isAndroidPreviewMode
-                      ? 'px-3 py-1 text-[10px]'
-                      : 'px-3.5 py-1.5 sm:px-5 sm:py-2 text-[10px] sm:text-xs'
-                  }`}
+                  className="inline-flex items-center px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
                   title="Read this full Vatican News report"
                 >
                   <span>Read Full Story</span>
@@ -608,25 +529,17 @@ export default function App() {
           </div>
         </div>
 
-        {/* Main Body Layout: Immediately follows the masthead with zero wasted negative space */}
-        <div
-          className={`flex-1 max-w-7xl w-full mx-auto flex flex-col items-center ${
-            isAndroidPreviewMode
-              ? 'px-3 pt-1.5 pb-16'
-              : 'px-3 sm:px-6 lg:px-8 pt-2 sm:pt-4 lg:pt-6 pb-16 sm:pb-24'
-          }`}
-        >
+        {/* Main Body Layout */}
+        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-16 sm:pb-24 flex flex-col items-center">
           
           {/* Dual Column Container: Left Navigation Index + Centered Main View */}
           <div 
             ref={mainContentRef}
             id="main-content-area"
-            className={`w-full flex ${
-              isAndroidPreviewMode ? 'flex-col gap-2.5' : 'flex-col lg:flex-row gap-3 lg:gap-8'
-            } items-start justify-center mt-0`}
+            className="w-full flex flex-col md:flex-row gap-6 lg:gap-8 items-start justify-center mt-0"
           >
             
-            {/* Left-Side Liturgical Menu / Mobile Compact Strip */}
+            {/* Left-Side Liturgical Menu */}
             <Navigation
               activeTab={activeTab}
               onSelectTab={(tab) => {
@@ -638,7 +551,6 @@ export default function App() {
               onOpenMobile={() => setIsMobileMenuOpen(true)}
               onCloseMobile={() => setIsMobileMenuOpen(false)}
               onOpenAdoration={() => setIsAdorationOpen(true)}
-              isAndroidPreviewMode={isAndroidPreviewMode}
             />
 
             {/* Centered Main Content Area */}
@@ -906,16 +818,7 @@ export default function App() {
               </button>
               <span>•</span>
 
-              {/* 9. Android Mobile App */}
-              <button 
-                onClick={() => setIsAndroidModalOpen(true)} 
-                className="hover:text-amber-300 cursor-pointer transition-colors text-amber-200 font-semibold"
-              >
-                Android App
-              </button>
-              <span>•</span>
-
-              {/* 10. Contact */}
+              {/* 9. Contact */}
               <button
                 type="button"
                 onClick={() => setShowContactEmail((prev) => !prev)}
@@ -1016,25 +919,6 @@ export default function App() {
             handlePlayPodcast(podcastModalEpisode);
           }
         }}
-      />
-
-      {/* Offline Indicator & Android Mobile Bottom Navigation Bar */}
-      <OfflineIndicator />
-      <AndroidBottomNav
-        activeTab={activeTab}
-        onSelectTab={handleSelectTab}
-        onOpenIndexDrawer={() => setIsMobileMenuOpen(true)}
-        onOpenAndroidModal={() => setIsAndroidModalOpen(true)}
-        isAndroidPreviewMode={isAndroidPreviewMode}
-        onToggleAndroidPreviewMode={() => setIsAndroidPreviewMode((prev) => !prev)}
-      />
-
-      {/* Soul Sanctum for Android Installation & APK Builder Modal */}
-      <AndroidAppModal
-        isOpen={isAndroidModalOpen}
-        onClose={() => setIsAndroidModalOpen(false)}
-        isAndroidPreviewMode={isAndroidPreviewMode}
-        onToggleAndroidPreviewMode={() => setIsAndroidPreviewMode((prev) => !prev)}
       />
 
     </div>

@@ -465,7 +465,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   return (
     <>
       {/* 1. Desktop and Tablet Sticky Left-Side Navigation with Music-Style Slider */}
-      <aside className={`${isAndroidPreviewMode ? 'hidden' : 'hidden lg:block'} w-72 lg:w-80 shrink-0 sticky top-6 self-start`}>
+      <aside className="hidden md:block w-72 lg:w-80 shrink-0 sticky top-6 self-start">
         <div className="relative rounded-xl bg-stone-950/80 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex flex-col max-h-[calc(100vh-3rem)] overflow-hidden">
           <div className="flex items-stretch flex-1 min-h-0 overflow-hidden">
             <div 
@@ -533,7 +533,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       </aside>
 
       {/* 2. Mobile Compact Navigation Strip (Word "Menu" removed) */}
-      <div className={`${isAndroidPreviewMode ? 'flex' : 'flex lg:hidden'} w-full sticky top-0 z-30 bg-stone-950/90 backdrop-blur-xl border-b border-amber-500/25 rounded-xl px-3.5 py-2 items-center justify-between text-stone-100 shadow-lg`}>
+      <div className="flex md:hidden w-full sticky top-0 z-30 bg-stone-950/90 backdrop-blur-xl border-b border-amber-500/25 rounded-xl px-3.5 py-2 items-center justify-between text-stone-100 shadow-lg">
         <button
           onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-semibold cursor-pointer"

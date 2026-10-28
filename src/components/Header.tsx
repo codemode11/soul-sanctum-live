@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Sparkles, ChevronDown, Calendar as CalendarIcon, Compass, Volume2 } from 'lucide-react';
+import { ChevronDown, Calendar as CalendarIcon } from 'lucide-react';
 import { bellSynth } from '../utils/audioSynth';
-import { SacredReader } from '../utils/speech';
 import { LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
 import { LiturgicalColor } from '../types';
 import { 
@@ -14,7 +13,6 @@ import {
 import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { MaryAndBlessedSacramentIcon, GoldenMonstranceIcon } from './SanctumIcons';
 import { NIEPOKALANOW_HIGH_RES_IMAGES, NiepokalanowHighResImage } from '../data/sacredArt';
-import { PWAInstallButton } from './AndroidAppModal';
 
 interface HeaderProps {
   currentDateStr: string;
@@ -31,31 +29,22 @@ interface HeaderProps {
   onOpenCebuParishes?: () => void;
   activeEstablishingImageId?: string;
   onSelectEstablishingImage?: (img: NiepokalanowHighResImage) => void;
-  onOpenAndroidModal?: () => void;
-  isAndroidPreviewMode?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentDateStr,
   liturgicalColor,
   liturgicalTitle,
-  onOpenAngelus,
   onSelectDate,
   activeEmblem,
   onOpenEmblemSelector,
   iconStyleConfig = DEFAULT_STYLE_CONFIG,
-  onOpenArtViewer,
   onOpenAdoration,
-  onToggleMobileMenu,
-  onOpenCebuParishes,
   activeEstablishingImageId = 'unsplash-eucharistic-adoration',
-  onSelectEstablishingImage,
-  onOpenAndroidModal,
-  isAndroidPreviewMode = false
 }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-  const [voiceToast, setVoiceToast] = useState<string | null>(null);
-  const colorMeta = LITURGICAL_COLORS_INFO[liturgicalColor] || LITURGICAL_COLORS_INFO.white;
+  const [voiceToast] = useState<string | null>(null);
+  const _colorMeta = LITURGICAL_COLORS_INFO[liturgicalColor] || LITURGICAL_COLORS_INFO.white;
 
   const activeColorTheme = ICON_COLOR_THEMES.find(t => t.id === iconStyleConfig.colorTheme) || ICON_COLOR_THEMES[0];
   const activeFrame = ICON_FRAME_STYLES.find(f => f.id === iconStyleConfig.frameStyle) || ICON_FRAME_STYLES[0];
@@ -87,157 +76,8 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_35%_35%,rgba(251,191,36,0.22)_0%,rgba(217,119,6,0.06)_45%,transparent_75%)]" />
       </div>
 
-      {/* =====================================================================
-          1. CUSTOM MOBILE PHONE MASTHEAD (Active on < lg screens & Android Mode)
-             Eliminates excess negative space while framing the Altar & Monstrance
-         ===================================================================== */}
-      <div className={`${isAndroidPreviewMode ? 'block' : 'block lg:hidden'} relative z-10 px-3 pt-2.5 pb-1`}>
-        {/* Top Row: Brand Lockup on Left + Action Controls on Right */}
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <button
-              onClick={() => {
-                handlePlayBell();
-                onOpenEmblemSelector();
-              }}
-              className={`group relative flex items-center justify-center w-10 h-10 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 transition-all duration-300 active:scale-95 cursor-pointer shrink-0 border border-[#8B5A2B]/80 shadow-[0_4px_14px_rgba(0,0,0,0.9)]`}
-              title={`${activeEmblem.name} — Tap to customize emblem or toll sanctuary bell`}
-            >
-              {activeEmblem.id === 'eucharist-monstrance' ? (
-                <GoldenMonstranceIcon className="w-6 h-6 drop-shadow-[0_2px_10px_rgba(251,191,36,0.85)] text-amber-200" />
-              ) : activeEmblem.id === 'mary-blessed-sacrament' ? (
-                <MaryAndBlessedSacramentIcon className="w-6 h-6 drop-shadow-[0_2px_8px_rgba(251,191,36,0.6)] text-amber-200" />
-              ) : (
-                <span className="text-lg select-none drop-shadow-md">
-                  {activeEmblem.symbol}
-                </span>
-              )}
-            </button>
-
-            <div className="min-w-0">
-              <div className="relative inline-block">
-                <div
-                  className="absolute -inset-x-3 -inset-y-1.5 bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.5)_0%,rgba(245,158,11,0.25)_45%,transparent_80%)] blur-md pointer-events-none -z-10"
-                  aria-hidden="true"
-                />
-                <h1
-                  className="font-cinzel select-none flex items-baseline gap-1.5 text-left leading-none"
-                  style={{ fontFamily: "'Cinzel', serif" }}
-                >
-                  <span
-                    className="font-black text-lg sm:text-xl tracking-[0.18em]"
-                    style={{
-                      fontFamily: "'Cinzel', serif",
-                      color: '#FFFDF7',
-                      WebkitTextStroke: '0.9px #3E2415',
-                      textShadow: '0 0 12px rgba(253, 224, 71, 0.95), 0 0 22px rgba(251, 191, 36, 0.8), 0 2px 6px rgba(0, 0, 0, 0.9)',
-                    }}
-                  >
-                    SOUL SANCTUM
-                  </span>
-                </h1>
-              </div>
-
-              <div className="flex items-baseline gap-1.5 mt-0.5">
-                <span className="text-[11px] font-serif font-semibold text-white drop-shadow">
-                  Pray without ceasing.
-                </span>
-                <span className="text-[10px] font-serif font-bold text-[#D4AF37] drop-shadow">
-                  1 Thess 5:17
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Action Cluster: Android App + Mobile Index Drawer Button */}
-          <div className="flex items-center gap-1.5 shrink-0">
-            {onOpenAndroidModal && (
-              <PWAInstallButton
-                onOpenAndroidModal={onOpenAndroidModal}
-                isAndroidPreviewMode={isAndroidPreviewMode}
-              />
-            )}
-            {onToggleMobileMenu && (
-              <button
-                onClick={onToggleMobileMenu}
-                className="flex items-center justify-center p-1.5 rounded-lg bg-[#2D1A0E]/90 hover:bg-[#3D2312] border border-amber-400/45 text-amber-200 transition-all cursor-pointer backdrop-blur-md shadow-md"
-                title="Open Sanctum Index"
-                aria-label="Open Sanctum Index"
-              >
-                <Compass className="w-4 h-4 text-amber-300" />
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Compact Liturgical Day, Calendar Picker & Sanctuary Credit Strip (Zero wasted vertical space) */}
-        <div className="mt-2 rounded-xl bg-black/70 border border-amber-500/35 backdrop-blur-xl px-3 py-1.5 shadow-lg">
-          <div className="flex items-center justify-between gap-2">
-            {/* Liturgical Date Picker Trigger */}
-            <div className="relative">
-              <div
-                onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-                className="flex items-center gap-1.5 text-amber-100 hover:text-amber-200 cursor-pointer select-none"
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    setIsCalendarOpen(!isCalendarOpen);
-                  }
-                }}
-              >
-                <CalendarIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span className="font-serif font-semibold text-xs text-amber-100">
-                  {formattedDate}
-                </span>
-                <ChevronDown className={`w-3.5 h-3.5 text-amber-400 transition-transform duration-200 ${isCalendarOpen ? 'rotate-180' : ''}`} />
-              </div>
-
-              <LiturgicalCalendarPicker
-                selectedDateStr={currentDateStr}
-                onSelectDate={onSelectDate}
-                isOpen={isCalendarOpen}
-                onClose={() => setIsCalendarOpen(false)}
-              />
-            </div>
-
-            {/* Compact Source & Summit Credit Pill */}
-            <div className="text-[10px] font-serif text-amber-300/90 truncate">
-              <span className="font-bold text-amber-300">Source &amp; Summit</span>
-              <span className="text-stone-400 mx-1">•</span>
-              {activeImg.attributionUrl ? (
-                <a
-                  href={activeImg.attributionUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-stone-300 hover:text-amber-200 no-underline"
-                >
-                  {creditLabel}
-                </a>
-              ) : (
-                <span className="text-stone-300">{creditLabel}</span>
-              )}
-            </div>
-          </div>
-
-          {/* Liturgical Day & Memorial Line */}
-          <div className="mt-1 pt-1 border-t border-white/10 flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
-            <span className="font-serif font-semibold text-xs text-white leading-snug">
-              {mainTitlePart}
-            </span>
-            {memorialPart && (
-              <span className="text-xs text-amber-200 font-bold italic font-serif leading-snug">
-                {memorialPart}
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* =====================================================================
-          2. DESKTOP MASTHEAD (Active on lg+ screens when NOT in Android Mode)
-         ===================================================================== */}
-      <div className={`${isAndroidPreviewMode ? 'hidden' : 'hidden lg:block'} relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7`}>
+      {/* Website Masthead */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6">
           
           {/* Brand Lockup: Emblem and Left-Aligned Stacked Soul Sanctum Title */}
@@ -358,13 +198,6 @@ export const Header: React.FC<HeaderProps> = ({
                   onClose={() => setIsCalendarOpen(false)}
                 />
               </div>
-
-              {onOpenAndroidModal && (
-                <PWAInstallButton
-                  onOpenAndroidModal={onOpenAndroidModal}
-                  isAndroidPreviewMode={isAndroidPreviewMode}
-                />
-              )}
             </div>
 
             {voiceToast && (

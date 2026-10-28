@@ -304,18 +304,13 @@ export const RosaryAndChapletView: React.FC = () => {
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-44 rounded-full bg-[#D4A373]/30 blur-3xl z-0" />
 
       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#C8AD8D]/60 pb-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6B4423] to-[#4A2E16] border border-[#8B5A2B] ring-1 ring-[#D4A373]/50 flex items-center justify-center shrink-0 shadow-sm">
-            <Sparkles className="w-5 h-5 text-amber-200" />
-          </div>
-          <div>
-            <span className="text-[11px] font-cinzel font-bold tracking-widest text-[#5C3A1E] uppercase block">
-              Hour of Great Mercy • 3:00 PM Devotion
-            </span>
-            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#2E1B0E]">
-              The Three O'Clock Prayer
-            </h3>
-          </div>
+        <div>
+          <span className="text-[11px] font-cinzel font-bold tracking-widest text-[#5C3A1E] uppercase block">
+            Hour of Great Mercy • 3:00 PM Devotion
+          </span>
+          <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#2E1B0E]">
+            The Three O'Clock Prayer
+          </h3>
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
@@ -1247,9 +1242,6 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -top-12 -left-12 w-64 h-64 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-amber-300/35 blur-3xl z-0" />
             <div className="relative z-10 flex items-center gap-2">
-              <span className="p-1.5 rounded-xl bg-white/70 backdrop-blur-md text-[#8B5A2B] border border-white/85 ring-1 ring-amber-300/70">
-                <Star className="w-4 h-4" />
-              </span>
               <span className="font-cinzel text-xs font-bold text-[#8B5A2B] tracking-wider uppercase">
                 Saint Maria Faustina Kowalska • Vilnius and Kraków
               </span>
@@ -1270,16 +1262,13 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -bottom-16 left-1/4 w-96 h-96 rounded-full bg-amber-300/35 blur-3xl z-0" />
 
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/75 pb-4 gap-3">
-              <div className="flex items-center gap-2.5">
-                <ShieldCheck className="w-6 h-6 text-[#8B5A2B] shrink-0" />
-                <div>
-                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
-                    The 14 Promises of Jesus for Praying the Chaplet
-                  </h3>
-                  <span className="text-xs sm:text-sm font-serif text-stone-700">
-                    Approved by the Holy See • From the Diary of St. Maria Faustina Kowalska
-                  </span>
-                </div>
+              <div>
+                <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
+                  The 14 Promises of Jesus for Praying the Chaplet
+                </h3>
+                <span className="text-xs sm:text-sm font-serif text-stone-700">
+                  Approved by the Holy See • From the Diary of St. Maria Faustina Kowalska
+                </span>
               </div>
 
               {/* Standardized Font Size Stepper */}
@@ -1423,16 +1412,13 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -bottom-16 -left-16 w-80 h-80 rounded-full bg-amber-200/35 blur-3xl z-0" />
 
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/75 pb-4 gap-3">
-              <div className="flex items-center gap-2.5">
-                <BookOpen className="w-6 h-6 text-[#8B5A2B] shrink-0" />
-                <div>
-                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
-                    Cornerstone Excerpts from The Diary of St. Faustina
-                  </h3>
-                  <span className="text-xs sm:text-sm font-serif text-stone-700">
-                    Divine Mercy in My Soul
-                  </span>
-                </div>
+              <div>
+                <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
+                  Cornerstone Excerpts from The Diary of St. Faustina
+                </h3>
+                <span className="text-xs sm:text-sm font-serif text-stone-700">
+                  Divine Mercy in My Soul
+                </span>
               </div>
 
               {/* Standardized Font Size Stepper */}
