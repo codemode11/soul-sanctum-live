@@ -559,23 +559,13 @@ ${selectedCommentary.practicalApplication}`;
           </p>
         </div>
 
-        {/* Patristic Commentary & Homily Sections */}
-        <div className="space-y-2.5">
-          <div className="flex items-center justify-between border-b border-stone-200 pb-1.5">
-            <div className="flex items-center gap-1.5 text-stone-900 font-cinzel font-bold text-xs uppercase tracking-wider">
-              <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-              <span>Bible Commentary</span>
-            </div>
-          </div>
-
-          {/* Structured Commentary Display with Stylized Separator Lines */}
-          <div className="pt-2">
-            <StructuredCommentaryDisplay 
-              commentaryText={selectedCommentary.commentaryText} 
-              fontSizeStyle={commentaryStyle}
-              hideHomily
-            />
-          </div>
+        {/* Patristic Commentary Sections */}
+        <div className="pt-2">
+          <StructuredCommentaryDisplay 
+            commentaryText={selectedCommentary.commentaryText} 
+            fontSizeStyle={commentaryStyle}
+            hideHomily
+          />
         </div>
 
         {/* Practical Spiritual Application */}
