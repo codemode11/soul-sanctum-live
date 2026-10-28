@@ -59,7 +59,6 @@ Let us pray: Pour forth, we beseech Thee, O Lord, Thy grace into our hearts, tha
         <div className="flex items-start justify-between border-b border-stone-200 pb-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Bell className="w-4 h-4 text-[#172B69]" />
               <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#172B69]">
                 Traditional 6am, 12pm and 6pm Prayer
               </span>
