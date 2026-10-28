@@ -1596,9 +1596,6 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-amber-200/40 blur-3xl z-0" />
 
             <div className="relative z-10 flex items-center gap-2.5">
-              <span className="p-2.5 rounded-xl bg-white/70 backdrop-blur-md text-blue-800 border border-white/85 ring-1 ring-blue-300/70 shadow-2xs">
-                <Star className="w-5 h-5 text-blue-700" />
-              </span>
               <div>
                 <span className="text-[11px] font-cinzel font-bold tracking-widest text-blue-900 uppercase block">
                   The Secret of the Rosary • Saint Louis-Marie de Montfort
@@ -1622,7 +1619,6 @@ export const RosaryAndChapletView: React.FC = () => {
 
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/75 pb-4 gap-3">
               <div className="flex items-center gap-2.5">
-                <ShieldCheck className="w-6 h-6 text-blue-800 shrink-0" />
                 <div>
                   <h4 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
                     Fifteen Assurances of the Mother of God
