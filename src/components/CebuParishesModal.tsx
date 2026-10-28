@@ -57,16 +57,17 @@ ${parish.name} (${parish.popularName || ''})
 Address: ${parish.address}
 Patron: ${parish.patronSaint} • Feast Day: ${parish.feastDay}
 
-DAILY MASSES:
-${parish.dailyMasses.map(m => `• ${m.time} - ${m.language}${m.notes ? ` (${m.notes})` : ''}`).join('\n')}
-
 SUNDAY MASSES:
 ${parish.sundayMasses.map(m => `• ${m.time} - ${m.language}${m.notes ? ` (${m.notes})` : ''}`).join('\n')}
 
+WEEKDAY MASSES:
+${parish.dailyMasses.map(m => `• ${m.time} - ${m.language}${m.notes ? ` (${m.notes})` : ''}`).join('\n')}
+
+EUCHARISTIC ADORATION CHAPEL:
+${parish.adorationChapelHours}
+
 CONFESSION SCHEDULE:
 ${parish.confessionSchedule.join('\n')}
-
-Adoration Chapel: ${parish.adorationChapelHours}
 ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
 
     navigator.clipboard.writeText(text);
@@ -253,40 +254,7 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
               </div>
             )}
 
-            {/* Sacrament of Penance / Confession Schedule */}
-            <div className="space-y-2.5 rounded-xl p-5 bg-[#ECE1D4] border border-[#8B5A2B]/35 shadow-2xs">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-[#6B3E1E]" />
-                <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#24140B] uppercase tracking-wider">
-                  Sacrament of Reconciliation (Confession)
-                </h4>
-              </div>
-              <div className="grid grid-cols-1 gap-2.5 pt-0.5">
-                {selectedParish.confessionSchedule.map((c, idx) => {
-                  const slotKey = `${selectedParish.id}-confession-${idx}`;
-                  const isSlotCopied = copiedSlotKey === slotKey;
-                  return (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Confession: ${c}`)}
-                      className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex items-center justify-between gap-3 text-left font-serif text-base text-[#24140B] shadow-xs hover:shadow-sm transition-all cursor-pointer"
-                      title="Click to copy Confession schedule"
-                    >
-                      <span className="font-semibold text-[#24140B] leading-snug">{c}</span>
-                      {isSlotCopied && (
-                        <span className="text-xs font-sans font-bold text-emerald-700 shrink-0 flex items-center gap-1">
-                          <Check className="w-3.5 h-3.5" />
-                          <span>Copied</span>
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Sunday Masses */}
+            {/* 1. Sunday Holy Masses */}
             <div className="space-y-2.5 rounded-xl p-5 bg-[#EAE0D3] border border-[#8B5A2B]/25 shadow-2xs">
               <div className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-[#6B3E1E]" />
@@ -323,7 +291,7 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
               </div>
             </div>
 
-            {/* Daily Masses */}
+            {/* 2. Weekday Holy Masses */}
             <div className="space-y-2.5 rounded-xl p-5 bg-[#EAE0D3] border border-[#8B5A2B]/25 shadow-2xs">
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5 text-[#6B3E1E]" />
@@ -360,27 +328,70 @@ ${parish.notes ? `\nNotes: ${parish.notes}` : ''}`;
               </div>
             </div>
 
-            {/* Adoration Chapel and Notes */}
+            {/* 3. Eucharistic Adoration Chapel Schedule */}
             <div className="space-y-2.5 rounded-xl p-5 bg-[#E8DDD0] border border-[#8B5A2B]/25 shadow-2xs">
-              <button
-                type="button"
-                onClick={() => handleCopySlot(`${selectedParish.id}-adoration`, `${selectedParish.name} — Eucharistic Adoration Chapel: ${selectedParish.adorationChapelHours}`)}
-                className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex items-center justify-between gap-3 text-left text-sm sm:text-base font-serif text-[#24140B] shadow-xs hover:shadow-sm transition-all cursor-pointer"
-                title="Click to copy Adoration Chapel schedule"
-              >
-                <span>
-                  <strong className="font-bold text-[#24140B]">Eucharistic Adoration Chapel:</strong>{' '}
-                  {selectedParish.adorationChapelHours}
-                </span>
-                {copiedSlotKey === `${selectedParish.id}-adoration` && (
-                  <span className="text-xs font-sans font-bold text-emerald-700 shrink-0">Copied</span>
-                )}
-              </button>
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-[#6B3E1E]" />
+                <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#24140B] uppercase tracking-wider">
+                  Eucharistic Adoration Chapel
+                </h4>
+              </div>
+              <div className="pt-0.5">
+                <button
+                  type="button"
+                  onClick={() => handleCopySlot(`${selectedParish.id}-adoration`, `${selectedParish.name} — Eucharistic Adoration Chapel: ${selectedParish.adorationChapelHours}`)}
+                  className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex items-center justify-between gap-3 text-left text-sm sm:text-base font-serif text-[#24140B] shadow-xs hover:shadow-sm transition-all cursor-pointer"
+                  title="Click to copy Adoration Chapel schedule"
+                >
+                  <span className="font-semibold text-[#24140B] leading-snug">
+                    {selectedParish.adorationChapelHours}
+                  </span>
+                  {copiedSlotKey === `${selectedParish.id}-adoration` && (
+                    <span className="text-xs font-sans font-bold text-emerald-700 shrink-0 flex items-center gap-1">
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Copied</span>
+                    </span>
+                  )}
+                </button>
+              </div>
               {selectedParish.notes && (
                 <p className="text-sm sm:text-base font-serif text-[#3A2213] pt-1 leading-relaxed">
                   <strong className="font-semibold text-[#24140B]">Patron Feast and Notes:</strong> {selectedParish.notes}
                 </p>
               )}
+            </div>
+
+            {/* 4. Sacrament of Penance / Confession Schedule */}
+            <div className="space-y-2.5 rounded-xl p-5 bg-[#ECE1D4] border border-[#8B5A2B]/35 shadow-2xs">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-[#6B3E1E]" />
+                <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#24140B] uppercase tracking-wider">
+                  Sacrament of Reconciliation (Confession)
+                </h4>
+              </div>
+              <div className="grid grid-cols-1 gap-2.5 pt-0.5">
+                {selectedParish.confessionSchedule.map((c, idx) => {
+                  const slotKey = `${selectedParish.id}-confession-${idx}`;
+                  const isSlotCopied = copiedSlotKey === slotKey;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Confession: ${c}`)}
+                      className="w-full p-3.5 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/30 flex items-center justify-between gap-3 text-left font-serif text-base text-[#24140B] shadow-xs hover:shadow-sm transition-all cursor-pointer"
+                      title="Click to copy Confession schedule"
+                    >
+                      <span className="font-semibold text-[#24140B] leading-snug">{c}</span>
+                      {isSlotCopied && (
+                        <span className="text-xs font-sans font-bold text-emerald-700 shrink-0 flex items-center gap-1">
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Copied</span>
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
           </div>
