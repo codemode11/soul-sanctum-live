@@ -939,43 +939,50 @@ export const NotebookWithBallpenIcon: React.FC<IconProps> = ({ className = 'w-5 
 
 /**
  * 15. In Memoriam Icon: Holy Water
- * Depicts a sacred Holy Water droplet and font with a liturgical Cross and blessed water drops
- * used in the Rite of Final Commendation and sprinkling of the faithful departed.
+ * Depicts Holy Water inside a square container (bottle/vessel) with a Cross at the center.
  */
 export const HolyWaterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.75"
+    strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-label="Holy Water — In Memoriam"
   >
-    {/* Large central Holy Water droplet */}
+    {/* Bottle neck & cap at top of the square container */}
+    <path d="M9.5 5.5V3h5v2.5" strokeWidth="1.7" />
+    <line x1="8.5" y1="3" x2="15.5" y2="3" strokeWidth="1.8" />
+
+    {/* Square container body */}
+    <rect
+      x="4"
+      y="5.5"
+      width="16"
+      height="16"
+      rx="1.8"
+      strokeWidth="1.85"
+    />
+
+    {/* Holy Water inside the square container (subtle water surface wave + fill) */}
     <path
-      d="M12 2.2C12 2.2 6.2 9.1 6.2 13.6a5.8 5.8 0 0 0 11.6 0C17.8 9.1 12 2.2 12 2.2Z"
+      d="M4.2 10.2c2.6-1.0 5.2 1.0 7.8 0 2.6-1.0 5.2 1.0 7.8 0V20a1.3 1.3 0 0 1-1.3 1.3H5.5A1.3 1.3 0 0 1 4.2 20v-9.8Z"
       fill="currentColor"
-      fillOpacity="0.12"
-      strokeWidth="1.8"
-    />
-    {/* Sacred Cross inside the Holy Water droplet */}
-    <line x1="12" y1="9.2" x2="12" y2="16.2" strokeWidth="1.65" />
-    <line x1="9.4" y1="11.8" x2="14.6" y2="11.8" strokeWidth="1.65" />
-
-    {/* Two small sprinkled droplets of Holy Water flanking the top */}
-    <path
-      d="M4.2 5.4c0 0-1.4 1.8-1.4 2.8a1.4 1.4 0 0 0 2.8 0c0-1.0-1.4-2.8-1.4-2.8Z"
-      strokeWidth="1.35"
+      fillOpacity="0.14"
+      stroke="none"
     />
     <path
-      d="M19.8 5.4c0 0-1.4 1.8-1.4 2.8a1.4 1.4 0 0 0 2.8 0c0-1.0-1.4-2.8-1.4-2.8Z"
+      d="M4.2 10.2c2.6-1.0 5.2 1.0 7.8 0 2.6-1.0 5.2 1.0 7.8 0"
       strokeWidth="1.35"
+      opacity="0.75"
     />
 
-    {/* Gentle Holy Water font ripple / basin curve at base */}
-    <path d="M5.5 21.5c2.2.8 10.8.8 13 0" strokeWidth="1.5" opacity="0.85" />
+    {/* Sacred Cross at the center of the square container */}
+    <line x1="12" y1="9.2" x2="12" y2="18.2" strokeWidth="1.9" />
+    <line x1="8.5" y1="12.8" x2="15.5" y2="12.8" strokeWidth="1.9" />
   </svg>
 );
+
 
