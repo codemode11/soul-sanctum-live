@@ -39,7 +39,8 @@ import {
   CatholicPodcastNavIcon,
   GoldenMonstranceIcon,
   EucharisticMonstranceNavIcon,
-  NotebookWithBallpenIcon
+  NotebookWithBallpenIcon,
+  HolyWaterIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -66,6 +67,7 @@ export type ActiveTab =
   | 'bible-flashcards'
   | 'sacred-art'
   | 'prayer-requests'
+  | 'in-memoriam'
   | 'catholic-links'
   | 'piety-dashboard';
 
@@ -375,6 +377,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: ThreePersonsPrayingIcon, 
       tag: 'Wall', 
       subtext: 'Community Intentions Wall' 
+    },
+    { 
+      id: 'in-memoriam', 
+      label: 'In Memoriam', 
+      icon: HolyWaterIcon, 
+      tag: 'Requiem', 
+      subtext: 'Deceased Priests, Former Seminarians and Laity' 
     },
     { 
       id: 'catholic-links', 

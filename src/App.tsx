@@ -33,6 +33,7 @@ import { BibleFlashcardsView } from './components/BibleFlashcardsView';
 import { ChurchHistoryInfographicView } from './components/ChurchHistoryInfographicView';
 import { CatholicLinksView } from './components/CatholicLinksView';
 import { PersonalPietyDashboard } from './components/PersonalPietyDashboard';
+import { InMemoriamView } from './components/InMemoriamView';
 import { PodcastEpisode } from './types';
 import { getTopVaticanHeadline } from './data/news';
 import { SacredReader } from './utils/speech';
@@ -675,7 +676,10 @@ export default function App() {
               <PrayerWallAndTreasuryView initialSection="wall" />
             )}
 
-            {/* 16. Catholic Links */}
+            {/* 16. In Memoriam (Deceased Priests, Former Seminarians & Laity) */}
+            {activeTab === 'in-memoriam' && <InMemoriamView />}
+
+            {/* 17. Catholic Links */}
             {activeTab === 'catholic-links' && <CatholicLinksView />}
 
             {/* 17. Spiritual Checklist (Bottom of Index) */}

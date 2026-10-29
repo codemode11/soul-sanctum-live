@@ -936,3 +936,46 @@ export const NotebookWithBallpenIcon: React.FC<IconProps> = ({ className = 'w-5 
     </g>
   </svg>
 );
+
+/**
+ * 15. In Memoriam Icon: Holy Water
+ * Depicts a sacred Holy Water droplet and font with a liturgical Cross and blessed water drops
+ * used in the Rite of Final Commendation and sprinkling of the faithful departed.
+ */
+export const HolyWaterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Holy Water — In Memoriam"
+  >
+    {/* Large central Holy Water droplet */}
+    <path
+      d="M12 2.2C12 2.2 6.2 9.1 6.2 13.6a5.8 5.8 0 0 0 11.6 0C17.8 9.1 12 2.2 12 2.2Z"
+      fill="currentColor"
+      fillOpacity="0.12"
+      strokeWidth="1.8"
+    />
+    {/* Sacred Cross inside the Holy Water droplet */}
+    <line x1="12" y1="9.2" x2="12" y2="16.2" strokeWidth="1.65" />
+    <line x1="9.4" y1="11.8" x2="14.6" y2="11.8" strokeWidth="1.65" />
+
+    {/* Two small sprinkled droplets of Holy Water flanking the top */}
+    <path
+      d="M4.2 5.4c0 0-1.4 1.8-1.4 2.8a1.4 1.4 0 0 0 2.8 0c0-1.0-1.4-2.8-1.4-2.8Z"
+      strokeWidth="1.35"
+    />
+    <path
+      d="M19.8 5.4c0 0-1.4 1.8-1.4 2.8a1.4 1.4 0 0 0 2.8 0c0-1.0-1.4-2.8-1.4-2.8Z"
+      strokeWidth="1.35"
+    />
+
+    {/* Gentle Holy Water font ripple / basin curve at base */}
+    <path d="M5.5 21.5c2.2.8 10.8.8 13 0" strokeWidth="1.5" opacity="0.85" />
+  </svg>
+);
+
