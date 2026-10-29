@@ -721,24 +721,12 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
     <line x1="12.0" y1="7.5" x2="12.0" y2="8.9" strokeWidth="1.2" />
     <line x1="19.0" y1="7.5" x2="19.0" y2="8.9" strokeWidth="1.2" />
 
-    {/* === ROMAN NUMERAL "I" CANDLE (LEFT) === */}
-    {/* Top candle rim / serif */}
-    <line x1="3.9" y1="8.9" x2="7.1" y2="8.9" strokeWidth="1.7" />
-    {/* Vertical pillar of "I" */}
-    <line x1="5.5" y1="8.9" x2="5.5" y2="21.2" strokeWidth="2.1" />
-    {/* Bottom base serif of "I" */}
-    <line x1="3.7" y1="21.2" x2="7.3" y2="21.2" strokeWidth="1.8" />
+    {/* === ROMAN NUMERAL "I" CANDLE (LEFT, WITHOUT SERIFS) === */}
+    <line x1="5.5" y1="8.9" x2="5.5" y2="21.2" strokeWidth="2.2" />
 
-    {/* === ROMAN NUMERAL "X" CANDLES (RIGHT) === */}
-    {/* Top candle rims / serifs at the two upper tips of "X" */}
-    <line x1="10.5" y1="8.9" x2="13.5" y2="8.9" strokeWidth="1.7" />
-    <line x1="17.5" y1="8.9" x2="20.5" y2="8.9" strokeWidth="1.7" />
-    {/* Diagonal candle strokes forming "X" */}
-    <line x1="12.0" y1="8.9" x2="19.0" y2="21.2" strokeWidth="2.05" />
-    <line x1="19.0" y1="8.9" x2="12.0" y2="21.2" strokeWidth="2.05" />
-    {/* Bottom base serifs of "X" */}
-    <line x1="10.4" y1="21.2" x2="13.6" y2="21.2" strokeWidth="1.8" />
-    <line x1="17.4" y1="21.2" x2="20.6" y2="21.2" strokeWidth="1.8" />
+    {/* === ROMAN NUMERAL "X" CANDLES (RIGHT, WITHOUT SERIFS) === */}
+    <line x1="12.0" y1="8.9" x2="19.0" y2="21.2" strokeWidth="2.15" />
+    <line x1="19.0" y1="8.9" x2="12.0" y2="21.2" strokeWidth="2.15" />
   </svg>
 );
 
