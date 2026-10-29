@@ -52,9 +52,6 @@ import {
   ICON_FRAME_STYLES
 } from './data/emblems';
 import {
-  ScheduledMastheadLayout,
-  getScheduledMastheadLayouts,
-  saveScheduledMastheadLayouts,
   getActiveScheduledMastheadForDate
 } from './data/mastheadSchedule';
 import { Sparkles } from 'lucide-react';
@@ -83,7 +80,6 @@ export default function App() {
   const [showContactEmail, setShowContactEmail] = useState(false);
   const [currentEmblem, setCurrentEmblem] = useState<SacredEmblem>(getSavedEmblem);
   const [iconStyleConfig, setIconStyleConfig] = useState<IconStyleConfig>(getSavedIconStyle);
-  const [scheduledMastheads, setScheduledMastheads] = useState<ScheduledMastheadLayout[]>(getScheduledMastheadLayouts);
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
@@ -118,7 +114,7 @@ export default function App() {
     };
   }, [currentDateStr]);
 
-  const activeScheduledMasthead = getActiveScheduledMastheadForDate(currentDateStr, scheduledMastheads);
+  const activeScheduledMasthead = getActiveScheduledMastheadForDate(currentDateStr);
 
   const effectiveEstablishingImageId = activeScheduledMasthead
     ? activeScheduledMasthead.establishingImageId
@@ -882,15 +878,6 @@ export default function App() {
         onUpdateIconStyle={(newConfig) => {
           setIconStyleConfig(newConfig);
           saveIconStyle(newConfig);
-        }}
-        scheduledMastheads={scheduledMastheads}
-        onUpdateScheduledMastheads={(updated) => {
-          setScheduledMastheads(updated);
-          saveScheduledMastheadLayouts(updated);
-        }}
-        onPreviewScheduledDate={(dateStr) => {
-          setCurrentDateStr(dateStr);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
       />
 
