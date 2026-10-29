@@ -6,10 +6,205 @@ import {
   BookOpen, 
   Sparkles, 
   Clock,
-  Church 
+  Church,
+  Award,
+  Globe,
+  MapPin
 } from 'lucide-react';
 import { LiturgicalDayInfo, LiturgicalColor } from '../types';
 import { getLiturgicalMonth, LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
+
+interface SpecialReligiousEvent {
+  id: string;
+  dateRange: string;
+  targetDateStr: string;
+  title: string;
+  authority: 'both' | 'vatican' | 'cebu';
+  authorityLabel: string;
+  liturgicalRank: string;
+  vaticanObservance: string;
+  cebuObservance: string;
+  indulgenceGrant?: {
+    type: 'Plenary Indulgence' | 'Plenary & Partial Indulgence';
+    summary: string;
+    prescribedWork: string;
+  };
+}
+
+const NOVEMBER_SPECIAL_EVENTS: SpecialReligiousEvent[] = [
+  {
+    id: 'nov-1-all-saints',
+    dateRange: 'November 1',
+    targetDateStr: '2026-11-01',
+    title: 'Solemnity of All Saints & Opening of the All Souls Octave',
+    authority: 'both',
+    authorityLabel: 'Vatican & Archdiocese of Cebu',
+    liturgicalRank: 'Solemnity • Holy Day of Obligation',
+    vaticanObservance:
+      'Papal Angelus in St. Peter’s Square and solemn liturgical commemoration of all the redeemed in heaven, canonized and unknown.',
+    cebuObservance:
+      'Solemn Pontifical Masses at the Cebu Metropolitan Cathedral and Basilica Minore del Santo Niño; traditional Kalag-Kalag vigil prayers and blessing of family tombs across Cebu cemeteries.',
+    indulgenceGrant: {
+      type: 'Plenary Indulgence',
+      summary: 'Daily Plenary Indulgence for the Holy Souls in Purgatory (Nov 1 – Nov 8)',
+      prescribedWork:
+        'Devoutly visit a cemetery and pray (even mentally) for the faithful departed on any day from November 1 to November 8, under the usual conditions (Sacramental Confession, Eucharistic Communion, and prayer for the Holy Father’s intentions).'
+    }
+  },
+  {
+    id: 'nov-2-all-souls',
+    dateRange: 'November 2',
+    targetDateStr: '2026-11-02',
+    title: 'The Commemoration of All the Faithful Departed (All Souls’ Day)',
+    authority: 'both',
+    authorityLabel: 'Vatican & Archdiocese of Cebu',
+    liturgicalRank: 'Universal Commemoration • Three Requiem Masses',
+    vaticanObservance:
+      'The Supreme Pontiff celebrates the Afternoon Papal Requiem Mass at Rome’s monumental Verano Cemetery (4:00 PM) in suffrage for all the faithful departed.',
+    cebuObservance:
+      'Every priest in the Archdiocese of Cebu is privileged to offer three Requiem Masses (for a particular intention, for all the faithful departed, and for the intentions of the Pope) in all parishes, shrines, and public cemeteries.',
+    indulgenceGrant: {
+      type: 'Plenary Indulgence',
+      summary: 'All Souls’ Day Pious Visit to a Church or Oratory',
+      prescribedWork:
+        'Devoutly visit any parish church or public oratory on November 2 and recite one Our Father (Pater Noster) and the Apostles’ Creed (Credo), applicable solely to the Holy Souls in Purgatory.'
+    }
+  },
+  {
+    id: 'nov-1-8-octave',
+    dateRange: 'November 1 – 8',
+    targetDateStr: '2026-11-03',
+    title: 'Octave of Suffrages for the Holy Souls & Parish Necrology Masses',
+    authority: 'both',
+    authorityLabel: 'Apostolic Penitentiary & Archdiocese of Cebu',
+    liturgicalRank: 'Octave of Prayer for the Church Suffering',
+    vaticanObservance:
+      'Under Norm 29 of the Enchiridion Indulgentiarum, the Apostolic Penitentiary grants daily plenary indulgences for cemetery visits and partial indulgences for reciting the Requiem Aeternam or Office of the Dead.',
+    cebuObservance:
+      'Cebu parishes offer the Nine-Day Novena of Masses (Misa Pro Defunctis) at the altar for deceased priests, former seminarians, parents, benefactors, and parishioners inscribed in the November remembrance envelopes.',
+    indulgenceGrant: {
+      type: 'Plenary & Partial Indulgence',
+      summary: 'Daily Cemetery Visit (Plenary) & Eternal Rest Prayer (Partial)',
+      prescribedWork:
+        'Gain one Plenary Indulgence each day (Nov 1–8) by visiting a cemetery and praying for the dead; gain a Partial Indulgence throughout November whenever devoutly reciting "Eternal rest grant unto them, O Lord..."'
+    }
+  },
+  {
+    id: 'nov-5-deceased-bishops',
+    dateRange: 'November 5',
+    targetDateStr: '2026-11-05',
+    title: 'Papal Chapel Mass for Deceased Cardinals, Archbishops, and Bishops',
+    authority: 'vatican',
+    authorityLabel: 'The Vatican • Papal Chapel',
+    liturgicalRank: 'Solemn Papal Requiem Liturgy',
+    vaticanObservance:
+      'Celebrated at 9:00 AM at the Altar of the Cathedra in St. Peter’s Basilica by the Holy Father in suffrage for all Cardinals and Bishops of the Universal Church who have passed away during the past year.',
+    cebuObservance:
+      'Archdiocesan clergy, seminarians of San Carlos Seminary, and lay faithful unite in prayer for deceased Cebuano bishops, monsignori, and priests buried in the Cathedral crypt and Carreta Cemetery.'
+  },
+  {
+    id: 'nov-9-lateran-basilica',
+    dateRange: 'November 9',
+    targetDateStr: '2026-11-09',
+    title: 'Feast of the Dedication of the Lateran Basilica (Omnium Urbis et Orbis Ecclesiarum Mater et Caput)',
+    authority: 'both',
+    authorityLabel: 'Vatican & Archdiocese of Cebu',
+    liturgicalRank: 'Feast of the Lord',
+    vaticanObservance:
+      'Celebrates the 324 AD dedication of the Archbasilica of St. John Lateran, the Pope’s Cathedral as Bishop of Rome and "Mother and Head of all Churches of the City and the World."',
+    cebuObservance:
+      'Special liturgical observance at the Cebu Metropolitan Cathedral and the Basilica Minore del Santo Niño (which enjoys a special bond of spiritual affinity with the Papal Basilicas of Rome).',
+    indulgenceGrant: {
+      type: 'Plenary Indulgence',
+      summary: 'Pilgrim Visit to a Cathedral or Minor Basilica',
+      prescribedWork:
+        'Devoutly visit a Cathedral or Minor Basilica (such as the Basilica Minore del Santo Niño or Cebu Metropolitan Cathedral) on solemn liturgical occasions and recite one Our Father and the Creed.'
+    }
+  },
+  {
+    id: 'nov-15-world-day-poor',
+    dateRange: 'November 15 (33rd Sunday)',
+    targetDateStr: '2026-11-15',
+    title: 'World Day of the Poor (33rd Sunday in Ordinary Time)',
+    authority: 'both',
+    authorityLabel: 'Vatican & Archdiocese of Cebu',
+    liturgicalRank: 'Universal Pastoral Observance',
+    vaticanObservance:
+      'Papal Mass in St. Peter’s Basilica for the poor and marginalized, followed by the Holy Father’s fraternal luncheon with indigent guests in the Paul VI Audience Hall.',
+    cebuObservance:
+      'Caritas Cebu and the Archdiocesan Commission on Service lead parish-wide feeding programs, medical missions, and Corporal Works of Mercy for street families and urban poor communities across Metro Cebu.'
+  },
+  {
+    id: 'nov-18-st-peters-400',
+    dateRange: 'November 18',
+    targetDateStr: '2026-11-18',
+    title: '400th Anniversary of the Dedication of the Papal Basilica of St. Peter in the Vatican (1626–2026)',
+    authority: 'vatican',
+    authorityLabel: 'The Vatican • Quadricentennial Jubilee',
+    liturgicalRank: 'Memorial & Historic 400th Centenary',
+    vaticanObservance:
+      'Solemn Papal Mass in St. Peter’s Basilica (5:00 PM) commemorating the fourth centenary of the consecration of St. Peter’s Basilica by Pope Urban VIII on November 18, 1626, alongside the Basilica of St. Paul Outside the Walls.',
+    cebuObservance:
+      'Parishes and shrines in Cebu pray for the Supreme Pontiff and the Universal Church, honoring the martyrdom and faith of Saints Peter and Paul.',
+    indulgenceGrant: {
+      type: 'Plenary Indulgence',
+      summary: 'Dedication of the Basilicas of Sts. Peter and Paul',
+      prescribedWork:
+        'Granted to the faithful who devoutly visit a Minor Basilica or unite spiritually with the Papal Basilicas on their Feast of Dedication, reciting the Our Father and the Creed for the intentions of the Holy Father.'
+    }
+  },
+  {
+    id: 'nov-21-regla-cebu',
+    dateRange: 'November 12 – 21',
+    targetDateStr: '2026-11-21',
+    title: 'Presentation of the Blessed Virgin Mary & Archdiocesan Fiesta of Our Lady of the Rule (Birhen sa Regla)',
+    authority: 'cebu',
+    authorityLabel: 'Archdiocese of Cebu • National Marian Shrine',
+    liturgicalRank: 'Memorial & Archdiocesan Marian Pilgrimage',
+    vaticanObservance:
+      'Universal Memorial of the Presentation of the Blessed Virgin Mary in the Temple of Jerusalem, model of total consecration to God.',
+    cebuObservance:
+      'Thousands of Cebuano pilgrims cross to the National Shrine of Our Lady of the Rule (Birhen sa Regla) in Lapu-Lapu City (Archdiocese of Cebu) for the Novena, fluvial/foot processions, and Pontifical Fiesta Mass.',
+    indulgenceGrant: {
+      type: 'Plenary Indulgence',
+      summary: 'National Shrine Titular Feast Pilgrimage Indulgence',
+      prescribedWork:
+        'Devoutly visit the National Shrine on its titular feast day, participate in the Sacred Liturgy, and recite the Our Father and the Creed under the usual four conditions.'
+    }
+  },
+  {
+    id: 'nov-22-christ-the-king',
+    dateRange: 'November 22 (Last Sunday)',
+    targetDateStr: '2026-11-22',
+    title: 'Solemnity of Our Lord Jesus Christ, King of the Universe & Archdiocesan Youth Day',
+    authority: 'both',
+    authorityLabel: 'Vatican & Archdiocese of Cebu',
+    liturgicalRank: 'Solemnity • Climax of the Liturgical Year',
+    vaticanObservance:
+      'Closing Sunday of the Liturgical Year in St. Peter’s Basilica and Diocesan celebration of World Youth Day across the globe.',
+    cebuObservance:
+      'Grand Archdiocesan Eucharistic Processions, Parish Holy Hours before the Exposed Blessed Sacrament, solemn Benediction, and Commission on Youth (COY) gatherings across all Cebu vicariates.',
+    indulgenceGrant: {
+      type: 'Plenary Indulgence',
+      summary: 'Public Act of Consecration of the Human Race to Jesus Christ the King',
+      prescribedWork:
+        'Granted on the Solemnity of Christ the King to the faithful who publicly recite the Act of Consecration of the Human Race to Christ the King ("Most Sweet Jesus, Redeemer of the human race..."), under the usual conditions.'
+    }
+  },
+  {
+    id: 'nov-29-first-sunday-advent',
+    dateRange: 'November 29',
+    targetDateStr: '2026-11-29',
+    title: 'First Sunday of Advent & Opening of the New Liturgical Year',
+    authority: 'both',
+    authorityLabel: 'Vatican & Archdiocese of Cebu',
+    liturgicalRank: 'First Class Liturgical Sunday (Violet)',
+    vaticanObservance:
+      'Begins the new Liturgical Cycle of sacred preparation for the Nativity of Our Lord and His Second Coming in glory.',
+    cebuObservance:
+      'Blessing of the Advent Wreath and lighting of the first purple candle (Hope) in all Cebu parishes, inaugurating spiritual preparation for the December Misa de Gallo (Simbang Gabi).'
+  }
+];
 
 interface ChurchCalendarViewProps {
   onSelectDate: (dateStr: string) => void;
@@ -26,6 +221,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   const [currentYear, setCurrentYear] = useState(now.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(now.getMonth()); // 0-indexed
   const [inspectedDay, setInspectedDay] = useState<LiturgicalDayInfo | null>(null);
+  const [eventsFilter, setEventsFilter] = useState<'all' | 'vatican' | 'cebu' | 'indulgences'>('all');
 
   const days = getLiturgicalMonth(currentYear, currentMonth);
   const monthName = new Date(currentYear, currentMonth).toLocaleDateString('en-US', { month: 'long' });
@@ -391,6 +587,194 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
           </div>
         </div>
       )}
+
+      {/* =====================================================================
+          UPCOMING SPECIAL RELIGIOUS EVENTS & NOVEMBER INDULGENCES
+          (TAKING CUE FROM THE VATICAN & THE ARCHDIOCESE OF CEBU)
+         ===================================================================== */}
+      <div className="rounded-xl p-5 sm:p-7 border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.18)] bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] text-[#341D10] space-y-6">
+        
+        {/* Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#BFA287] pb-4">
+          <div className="space-y-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <Award className="w-5 h-5 text-[#6B3E1E]" />
+              <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#6B3E1E]">
+                The Vatican (Holy See) &amp; Archdiocese of Cebu
+              </span>
+            </div>
+            <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-[#24140B] leading-tight">
+              Upcoming Special Religious Events &amp; November Indulgences
+            </h3>
+            <p className="text-xs sm:text-sm font-serif text-[#5D371F] leading-relaxed max-w-3xl">
+              Major November liturgical celebrations, Papal Masses in Rome, Archdiocesan feasts and cemetery vigils in Cebu, and the granting of special Plenary and Partial Indulgences by the Apostolic Penitentiary.
+            </p>
+          </div>
+
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap items-center gap-1.5 self-start lg:self-center shrink-0">
+            <button
+              type="button"
+              onClick={() => setEventsFilter('all')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
+                eventsFilter === 'all'
+                  ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
+                  : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+              }`}
+            >
+              All Events ({NOVEMBER_SPECIAL_EVENTS.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setEventsFilter('vatican')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
+                eventsFilter === 'vatican'
+                  ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
+                  : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+              }`}
+            >
+              Vatican
+            </button>
+            <button
+              type="button"
+              onClick={() => setEventsFilter('cebu')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
+                eventsFilter === 'cebu'
+                  ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
+                  : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+              }`}
+            >
+              Archdiocese of Cebu
+            </button>
+            <button
+              type="button"
+              onClick={() => setEventsFilter('indulgences')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
+                eventsFilter === 'indulgences'
+                  ? 'bg-[#6B3E1E] text-amber-50 border-[#4A2810] shadow-2xs'
+                  : 'bg-white hover:bg-stone-50 text-[#6B3E1E] border-[#BFA287]'
+              }`}
+            >
+              Special Indulgences
+            </button>
+          </div>
+        </div>
+
+        {/* Summary Banner: Apostolic Penitentiary Norms for November Indulgences */}
+        <div className="p-4 sm:p-5 rounded-xl bg-white border border-[#C8AD8D] shadow-2xs space-y-2.5">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 text-[#6B3E1E]">
+              <Award className="w-4 h-4 shrink-0" />
+              <h4 className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#24140B]">
+                Granting of Special November Indulgences • Apostolic Penitentiary Norms
+              </h4>
+            </div>
+            <span className="text-[11px] font-cinzel font-bold px-2.5 py-0.5 rounded-full bg-[#FAF0D9] text-[#7A4E1D] border border-[#E5C98B]">
+              Enchiridion Indulgentiarum, Norm 29
+            </span>
+          </div>
+          <p className="text-xs sm:text-sm font-serif text-stone-700 leading-relaxed">
+            To gain any <strong>Plenary Indulgence</strong> in November (such as the <strong>Nov 1–8 Cemetery Visit</strong> for the Holy Souls, the <strong>Nov 2 All Souls’ Day Church Visit</strong>, the <strong>Cathedral/Basilica Pilgrimage</strong>, or the <strong>Christ the King Public Consecration</strong>), the faithful must be in the state of grace with complete detachment from all sin, and fulfill the three usual conditions: <strong>(1) Sacramental Confession</strong> (within about 20 days), <strong>(2) Eucharistic Communion</strong>, and <strong>(3) Prayer for the Holy Father’s Intentions</strong> (one <em>Our Father</em> and one <em>Hail Mary</em>).
+          </p>
+        </div>
+
+        {/* Events List */}
+        <div className="space-y-4">
+          {NOVEMBER_SPECIAL_EVENTS.filter(ev => {
+            if (eventsFilter === 'all') return true;
+            if (eventsFilter === 'vatican') return ev.authority === 'vatican' || ev.authority === 'both';
+            if (eventsFilter === 'cebu') return ev.authority === 'cebu' || ev.authority === 'both';
+            if (eventsFilter === 'indulgences') return Boolean(ev.indulgenceGrant);
+            return true;
+          }).map(ev => (
+            <div
+              key={ev.id}
+              className="rounded-xl bg-white border border-[#D5C2B0] shadow-xs overflow-hidden transition-all hover:border-[#8B5A2B]"
+            >
+              {/* Event Top Bar */}
+              <div className="px-5 py-3.5 bg-[#F6EFE7] border-b border-[#E5D5C4] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <div className="space-y-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-md bg-[#341D10] text-[#FAF4ED] font-cinzel text-xs font-bold">
+                      {ev.dateRange}
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-md bg-[#EFE4D7] text-[#5D371F] border border-[#C8AD8D] font-cinzel text-[11px] font-bold">
+                      {ev.authorityLabel}
+                    </span>
+                    <span className="text-xs font-serif italic text-[#6B3E1E] font-semibold">
+                      {ev.liturgicalRank}
+                    </span>
+                  </div>
+                  <h4 className="font-cinzel text-base sm:text-lg md:text-xl font-bold text-[#24140B] leading-snug pt-0.5">
+                    {ev.title}
+                  </h4>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const [yStr, mStr] = ev.targetDateStr.split('-');
+                    const y = parseInt(yStr, 10);
+                    const m = parseInt(mStr, 10) - 1;
+                    setCurrentYear(y);
+                    setCurrentMonth(m);
+                    onSelectDate(ev.targetDateStr);
+                  }}
+                  className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-[#FAF4ED] text-[#341D10] border border-[#A78262] font-cinzel text-xs font-bold transition-all cursor-pointer self-start sm:self-center shrink-0 shadow-2xs"
+                  title={`Open Mass Readings for ${ev.targetDateStr}`}
+                >
+                  Open Date &amp; Readings →
+                </button>
+              </div>
+
+              {/* Event Body: Vatican & Archdiocese of Cebu Columns + Special Indulgence Box */}
+              <div className="p-5 space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Vatican Cue */}
+                  <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DCC8] space-y-1">
+                    <div className="flex items-center gap-1.5 font-cinzel text-xs font-bold uppercase tracking-wider text-[#5D371F]">
+                      <Globe className="w-3.5 h-3.5 text-[#8B5A2B]" />
+                      <span>From the Vatican (Holy See)</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-serif text-[#3B2213] leading-relaxed">
+                      {ev.vaticanObservance}
+                    </p>
+                  </div>
+
+                  {/* Archdiocese of Cebu Cue */}
+                  <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DCC8] space-y-1">
+                    <div className="flex items-center gap-1.5 font-cinzel text-xs font-bold uppercase tracking-wider text-[#5D371F]">
+                      <MapPin className="w-3.5 h-3.5 text-[#8B5A2B]" />
+                      <span>Archdiocese of Cebu</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-serif text-[#3B2213] leading-relaxed">
+                      {ev.cebuObservance}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Special Indulgence Grant Box */}
+                {ev.indulgenceGrant && (
+                  <div className="p-4 rounded-xl bg-gradient-to-r from-[#FAF0D9] via-[#FDF6E4] to-[#FAF0D9] border border-[#E2C27D] space-y-1.5">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5 font-cinzel text-xs font-bold uppercase tracking-wider text-[#7A4E1D]">
+                        <Award className="w-4 h-4 text-[#B8860B] shrink-0" />
+                        <span>Special Indulgence Granted: {ev.indulgenceGrant.summary}</span>
+                      </div>
+                      <span className="px-2.5 py-0.5 rounded-full bg-white text-[#7A4E1D] border border-[#DFC07A] font-cinzel text-[10px] font-bold uppercase">
+                        {ev.indulgenceGrant.type}
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-serif text-[#3A2213] leading-relaxed">
+                      {ev.indulgenceGrant.prescribedWork}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Parish Schedules Card */}
       {onOpenCebuParishes && (
