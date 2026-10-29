@@ -44,12 +44,19 @@ import {
   getSavedEmblem, 
   saveEmblem, 
   SacredEmblem,
+  SACRED_EMBLEMS,
   getSavedIconStyle,
   saveIconStyle,
   IconStyleConfig,
   ICON_COLOR_THEMES,
   ICON_FRAME_STYLES
 } from './data/emblems';
+import {
+  ScheduledMastheadLayout,
+  getScheduledMastheadLayouts,
+  saveScheduledMastheadLayouts,
+  getActiveScheduledMastheadForDate
+} from './data/mastheadSchedule';
 import { Sparkles } from 'lucide-react';
 import { MaryAndBlessedSacramentIcon, GoldenMonstranceIcon } from './components/SanctumIcons';
 import { NIEPOKALANOW_HIGH_RES_IMAGES, NiepokalanowHighResImage } from './data/sacredArt';
@@ -76,6 +83,7 @@ export default function App() {
   const [showContactEmail, setShowContactEmail] = useState(false);
   const [currentEmblem, setCurrentEmblem] = useState<SacredEmblem>(getSavedEmblem);
   const [iconStyleConfig, setIconStyleConfig] = useState<IconStyleConfig>(getSavedIconStyle);
+  const [scheduledMastheads, setScheduledMastheads] = useState<ScheduledMastheadLayout[]>(getScheduledMastheadLayouts);
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
@@ -110,9 +118,26 @@ export default function App() {
     };
   }, [currentDateStr]);
 
+  const activeScheduledMasthead = getActiveScheduledMastheadForDate(currentDateStr, scheduledMastheads);
+
+  const effectiveEstablishingImageId = activeScheduledMasthead
+    ? activeScheduledMasthead.establishingImageId
+    : activeEstablishingImageId;
+
+  const effectiveEmblem = activeScheduledMasthead
+    ? SACRED_EMBLEMS.find((e) => e.id === activeScheduledMasthead.emblemId) || currentEmblem
+    : currentEmblem;
+
+  const effectiveIconStyleConfig: IconStyleConfig = activeScheduledMasthead
+    ? {
+        ...iconStyleConfig,
+        colorTheme: activeScheduledMasthead.colorTheme,
+        frameStyle: activeScheduledMasthead.frameStyle,
+      }
+    : iconStyleConfig;
 
   const activeEstablishingImage =
-    NIEPOKALANOW_HIGH_RES_IMAGES.find((img) => img.id === activeEstablishingImageId) ||
+    NIEPOKALANOW_HIGH_RES_IMAGES.find((img) => img.id === effectiveEstablishingImageId) ||
     NIEPOKALANOW_HIGH_RES_IMAGES[0];
 
   const handleSelectEstablishingImage = (img: NiepokalanowHighResImage) => {
@@ -466,14 +491,15 @@ export default function App() {
             liturgicalTitle={currentMassReading.liturgicalDay}
             onOpenAngelus={() => setIsAngelusOpen(true)}
             onSelectDate={(newDate) => setCurrentDateStr(newDate)}
-            activeEmblem={currentEmblem}
+            activeEmblem={effectiveEmblem}
             onOpenEmblemSelector={() => setIsEmblemSelectorOpen(true)}
-            iconStyleConfig={iconStyleConfig}
+            iconStyleConfig={effectiveIconStyleConfig}
             onOpenArtViewer={handleOpenArtFromReadings}
             onOpenAdoration={() => setIsAdorationOpen(true)}
             onToggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            activeEstablishingImageId={activeEstablishingImageId}
+            activeEstablishingImageId={effectiveEstablishingImageId}
             onSelectEstablishingImage={handleSelectEstablishingImage}
+            scheduledMasthead={activeScheduledMasthead}
           />
 
           {/* Main Story: Vatican News Masthead Dispatch */}
@@ -856,6 +882,15 @@ export default function App() {
         onUpdateIconStyle={(newConfig) => {
           setIconStyleConfig(newConfig);
           saveIconStyle(newConfig);
+        }}
+        scheduledMastheads={scheduledMastheads}
+        onUpdateScheduledMastheads={(updated) => {
+          setScheduledMastheads(updated);
+          saveScheduledMastheadLayouts(updated);
+        }}
+        onPreviewScheduledDate={(dateStr) => {
+          setCurrentDateStr(dateStr);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
       />
 
