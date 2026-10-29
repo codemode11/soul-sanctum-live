@@ -249,7 +249,7 @@ export const InMemoriamView: React.FC = () => {
 (${CATEGORY_LABELS[entry.category].singular} • ${entry.roleOrAffiliation})
 ${entry.dioceseOrCommunity} | ${entry.yearsOfLife}
 
-SHORT EULOGY:
+EULOGY:
 ${entry.shortEulogy}
 
 REQUEST FOR COMMUNITY PRAYER:
@@ -472,7 +472,7 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
 
           <div>
             <label className="block font-cinzel text-xs font-bold text-[#3A2213] uppercase mb-1">
-              Short Eulogy (Life, Ministry, Virtue &amp; Christian Witness) *
+              Eulogy (Life, Ministry, Virtue &amp; Christian Witness) *
             </label>
             <textarea
               rows={3}
@@ -663,10 +663,10 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
 
               {/* Body: Short Eulogy & Community Prayer Request */}
               <div className="p-5 sm:p-7 space-y-5 bg-white">
-                {/* 1. Short Eulogy */}
+                {/* 1. Eulogy */}
                 <div className="space-y-1.5">
                   <div className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#7A5230]">
-                    Short Eulogy &amp; Remembrance
+                    Eulogy &amp; Remembrance
                   </div>
                   <p className="font-serif text-sm sm:text-base md:text-[17px] text-stone-800 leading-relaxed">
                     {entry.shortEulogy}
