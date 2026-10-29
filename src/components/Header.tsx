@@ -21,7 +21,6 @@ interface HeaderProps {
   onOpenAngelus?: () => void;
   onSelectDate: (dateStr: string) => void;
   activeEmblem: SacredEmblem;
-  onOpenEmblemSelector: () => void;
   iconStyleConfig?: IconStyleConfig;
   onOpenArtViewer?: (artId: string) => void;
   onOpenAdoration?: () => void;
@@ -38,7 +37,6 @@ export const Header: React.FC<HeaderProps> = ({
   liturgicalTitle,
   onSelectDate,
   activeEmblem,
-  onOpenEmblemSelector,
   iconStyleConfig = DEFAULT_STYLE_CONFIG,
   onOpenAdoration,
   activeEstablishingImageId = 'unsplash-eucharistic-adoration',
@@ -75,13 +73,13 @@ export const Header: React.FC<HeaderProps> = ({
 
   const renderEmblemIcon = (sizeClass = 'w-8 h-8 sm:w-9 sm:h-9', textClass = 'text-2xl sm:text-3xl') => {
     if (activeEmblem.id === 'eucharist-monstrance') {
-      return <GoldenMonstranceIcon className={`${sizeClass} group-hover:scale-110 transition-transform drop-shadow-[0_2px_14px_rgba(251,191,36,0.85)] text-amber-200`} />;
+      return <GoldenMonstranceIcon className={`${sizeClass} drop-shadow-[0_2px_14px_rgba(251,191,36,0.85)] text-amber-200`} />;
     }
     if (activeEmblem.id === 'mary-blessed-sacrament') {
-      return <MaryAndBlessedSacramentIcon className={`${sizeClass} group-hover:scale-110 transition-transform drop-shadow-[0_2px_10px_rgba(251,191,36,0.6)] text-amber-200`} />;
+      return <MaryAndBlessedSacramentIcon className={`${sizeClass} drop-shadow-[0_2px_10px_rgba(251,191,36,0.6)] text-amber-200`} />;
     }
     return (
-      <span className={`${textClass} group-hover:scale-115 transition-transform select-none drop-shadow-md`}>
+      <span className={`${textClass} select-none drop-shadow-md`}>
         {activeEmblem.symbol}
       </span>
     );
@@ -101,17 +99,8 @@ export const Header: React.FC<HeaderProps> = ({
              SOLEMNITY CENTERED MASTHEAD LAYOUT (FOR SPECIAL FEAST DAYS)
              ===================================================================== */
           <div className="flex flex-col items-center text-center space-y-4">
-            {/* Top Utility Row: Scheduled Feast Badge on Left, Calendar Picker on Right */}
-            <div className="w-full flex flex-wrap items-center justify-between gap-3">
-              <button
-                type="button"
-                onClick={onOpenEmblemSelector}
-                className="px-3 py-1 rounded-full bg-black/55 hover:bg-black/75 border border-amber-400/40 text-amber-200 font-cinzel text-[11px] sm:text-xs font-bold uppercase tracking-widest transition-all cursor-pointer backdrop-blur-md"
-                title="Click to customize or schedule Masthead Layouts"
-              >
-                {scheduledMasthead ? `✦ Special Day Layout: ${scheduledMasthead.occasionName}` : '✦ Solemnity Masthead'}
-              </button>
-
+            {/* Top Utility Row: Calendar Picker on Right */}
+            <div className="w-full flex flex-wrap items-center justify-end gap-3">
               <div className="relative">
                 <div
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}
@@ -143,13 +132,12 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Centered Emblem + Regal Title Lockup */}
             <div className="flex flex-col items-center space-y-2.5 pt-1">
-              <button
-                onClick={onOpenEmblemSelector}
-                className={`group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 transition-all duration-300 hover:scale-105 cursor-pointer border border-[#8B5A2B]/80 shadow-[0_4px_24px_rgba(0,0,0,0.9)]`}
-                title={`${activeEmblem.name} — Click to customize emblem or schedule mastheads`}
+              <div
+                className={`relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 border border-[#8B5A2B]/80 shadow-[0_4px_24px_rgba(0,0,0,0.9)] select-none`}
+                title={activeEmblem.name}
               >
                 {renderEmblemIcon('w-9 h-9 sm:w-10 sm:h-10', 'text-3xl sm:text-4xl')}
-              </button>
+              </div>
 
               <div className="relative">
                 <div
@@ -197,13 +185,12 @@ export const Header: React.FC<HeaderProps> = ({
              ===================================================================== */
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-black/55 backdrop-blur-md border border-white/15 rounded-2xl px-4 py-3.5 sm:px-6 sm:py-4 shadow-2xl">
             <div className="flex items-center gap-3.5 sm:gap-4">
-              <button
-                onClick={onOpenEmblemSelector}
-                className={`group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 transition-all duration-300 hover:scale-105 cursor-pointer shrink-0 border border-[#8B5A2B]/70 shadow-lg`}
-                title={`${activeEmblem.name} — Click to customize emblem or schedule mastheads`}
+              <div
+                className={`relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 shrink-0 border border-[#8B5A2B]/70 shadow-lg select-none`}
+                title={activeEmblem.name}
               >
                 {renderEmblemIcon()}
-              </button>
+              </div>
               <div>
                 <h1
                   className="font-cinzel font-black text-xl sm:text-2xl md:text-3xl tracking-[0.22em]"
@@ -258,15 +245,12 @@ export const Header: React.FC<HeaderProps> = ({
             
             {/* Brand Lockup: Emblem and Left-Aligned Stacked Soul Sanctum Title */}
             <div className="flex items-start gap-4 sm:gap-5">
-              <button 
-                onClick={() => {
-                  onOpenEmblemSelector();
-                }}
-                className={`group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 transition-all duration-300 hover:scale-105 cursor-pointer shrink-0 border border-[#8B5A2B]/70 shadow-[0_4px_20px_rgba(0,0,0,0.9)] mt-1`}
-                title={`${activeEmblem.name} — Click to customize emblem or schedule mastheads`}
+              <div 
+                className={`relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 shrink-0 border border-[#8B5A2B]/70 shadow-[0_4px_20px_rgba(0,0,0,0.9)] mt-1 select-none`}
+                title={activeEmblem.name}
               >
                 {renderEmblemIcon()}
-              </button>
+              </div>
 
               <div className="space-y-1 text-left">
                 <div className="relative flex items-center gap-2.5 sm:gap-3">

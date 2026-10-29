@@ -16,7 +16,6 @@ import { CatholicNewsView } from './components/CatholicNewsView';
 import { PrayerWallAndTreasuryView } from './components/PrayerWallAndTreasuryView';
 import { NotificationsModal } from './components/NotificationsModal';
 import { AngelusModal } from './components/AngelusModal';
-import { EmblemSelectorModal } from './components/EmblemSelectorModal';
 import { SanctumAdorationModal } from './components/SanctumAdorationModal';
 import { ReflectionView } from './components/ReflectionView';
 import { VisioDivinaView } from './components/VisioDivinaView';
@@ -42,11 +41,9 @@ import { getMassReadingsForDate } from './data/massReadings';
 import { LITURGICAL_COLORS_INFO } from './data/liturgicalCalendar';
 import { 
   getSavedEmblem, 
-  saveEmblem, 
   SacredEmblem,
   SACRED_EMBLEMS,
   getSavedIconStyle,
-  saveIconStyle,
   IconStyleConfig,
   ICON_COLOR_THEMES,
   ICON_FRAME_STYLES
@@ -73,13 +70,12 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('readings');
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isAngelusOpen, setIsAngelusOpen] = useState(false);
-  const [isEmblemSelectorOpen, setIsEmblemSelectorOpen] = useState(false);
   const [isAdorationOpen, setIsAdorationOpen] = useState(false);
   const [isCebuParishesOpen, setIsCebuParishesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showContactEmail, setShowContactEmail] = useState(false);
-  const [currentEmblem, setCurrentEmblem] = useState<SacredEmblem>(getSavedEmblem);
-  const [iconStyleConfig, setIconStyleConfig] = useState<IconStyleConfig>(getSavedIconStyle);
+  const [currentEmblem] = useState<SacredEmblem>(getSavedEmblem);
+  const [iconStyleConfig] = useState<IconStyleConfig>(getSavedIconStyle);
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
@@ -488,7 +484,6 @@ export default function App() {
             onOpenAngelus={() => setIsAngelusOpen(true)}
             onSelectDate={(newDate) => setCurrentDateStr(newDate)}
             activeEmblem={effectiveEmblem}
-            onOpenEmblemSelector={() => setIsEmblemSelectorOpen(true)}
             iconStyleConfig={effectiveIconStyleConfig}
             onOpenArtViewer={handleOpenArtFromReadings}
             onOpenAdoration={() => setIsAdorationOpen(true)}
@@ -864,21 +859,6 @@ export default function App() {
       <AngelusModal
         isOpen={isAngelusOpen}
         onClose={() => setIsAngelusOpen(false)}
-      />
-
-      <EmblemSelectorModal
-        isOpen={isEmblemSelectorOpen}
-        onClose={() => setIsEmblemSelectorOpen(false)}
-        selectedEmblem={currentEmblem}
-        onSelectEmblem={(emblem) => {
-          setCurrentEmblem(emblem);
-          saveEmblem(emblem.id);
-        }}
-        iconStyleConfig={iconStyleConfig}
-        onUpdateIconStyle={(newConfig) => {
-          setIconStyleConfig(newConfig);
-          saveIconStyle(newConfig);
-        }}
       />
 
       <SanctumAdorationModal
