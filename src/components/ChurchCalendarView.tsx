@@ -589,97 +589,100 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
       )}
 
       {/* =====================================================================
-          UPCOMING SPECIAL RELIGIOUS EVENTS & NOVEMBER INDULGENCES
+          UPCOMING SPECIAL RELIGIOUS EVENTS
           (TAKING CUE FROM THE VATICAN & THE ARCHDIOCESE OF CEBU)
          ===================================================================== */}
-      <div className="rounded-xl p-5 sm:p-7 border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.18)] bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] text-[#341D10] space-y-6">
+      <div className="rounded-xl p-4 sm:p-5 border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.18)] bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] text-[#341D10] space-y-3.5">
         
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#BFA287] pb-4">
-          <div className="space-y-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <Award className="w-5 h-5 text-[#6B3E1E]" />
-              <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#6B3E1E]">
-                The Vatican (Holy See) &amp; Archdiocese of Cebu
-              </span>
+        <div className="border-b border-[#BFA287] pb-3 space-y-2.5">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <Award className="w-5 h-5 text-[#6B3E1E]" />
+                <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#6B3E1E]">
+                  The Vatican (Holy See) &amp; Archdiocese of Cebu
+                </span>
+              </div>
+              <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#24140B] leading-tight mt-0.5">
+                Upcoming Special Religious Events
+              </h3>
             </div>
-            <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-[#24140B] leading-tight">
-              Upcoming Special Religious Events &amp; November Indulgences
-            </h3>
-            <p className="text-xs sm:text-sm font-serif text-[#5D371F] leading-relaxed max-w-3xl">
-              Major November liturgical celebrations, Papal Masses in Rome, Archdiocesan feasts and cemetery vigils in Cebu, and the granting of special Plenary and Partial Indulgences by the Apostolic Penitentiary.
-            </p>
+
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                onClick={() => setEventsFilter('all')}
+                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
+                  eventsFilter === 'all'
+                    ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
+                    : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+                }`}
+              >
+                All Events ({NOVEMBER_SPECIAL_EVENTS.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setEventsFilter('vatican')}
+                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
+                  eventsFilter === 'vatican'
+                    ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
+                    : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+                }`}
+              >
+                Vatican
+              </button>
+              <button
+                type="button"
+                onClick={() => setEventsFilter('cebu')}
+                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
+                  eventsFilter === 'cebu'
+                    ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
+                    : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+                }`}
+              >
+                Archdiocese of Cebu
+              </button>
+              <button
+                type="button"
+                onClick={() => setEventsFilter('indulgences')}
+                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
+                  eventsFilter === 'indulgences'
+                    ? 'bg-[#6B3E1E] text-amber-50 border-[#4A2810] shadow-2xs'
+                    : 'bg-white hover:bg-stone-50 text-[#6B3E1E] border-[#BFA287]'
+                }`}
+              >
+                Special Indulgences
+              </button>
+            </div>
           </div>
 
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap items-center gap-1.5 self-start lg:self-center shrink-0">
-            <button
-              type="button"
-              onClick={() => setEventsFilter('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
-                eventsFilter === 'all'
-                  ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
-                  : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
-              }`}
-            >
-              All Events ({NOVEMBER_SPECIAL_EVENTS.length})
-            </button>
-            <button
-              type="button"
-              onClick={() => setEventsFilter('vatican')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
-                eventsFilter === 'vatican'
-                  ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
-                  : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
-              }`}
-            >
-              Vatican
-            </button>
-            <button
-              type="button"
-              onClick={() => setEventsFilter('cebu')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
-                eventsFilter === 'cebu'
-                  ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
-                  : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
-              }`}
-            >
-              Archdiocese of Cebu
-            </button>
-            <button
-              type="button"
-              onClick={() => setEventsFilter('indulgences')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
-                eventsFilter === 'indulgences'
-                  ? 'bg-[#6B3E1E] text-amber-50 border-[#4A2810] shadow-2xs'
-                  : 'bg-white hover:bg-stone-50 text-[#6B3E1E] border-[#BFA287]'
-              }`}
-            >
-              Special Indulgences
-            </button>
-          </div>
+          <p className="text-sm sm:text-base font-serif text-[#4A2B17] leading-snug">
+            Major November liturgical celebrations, Papal Masses in Rome, Archdiocesan feasts and cemetery vigils in Cebu, and the granting of special Plenary and Partial Indulgences by the Apostolic Penitentiary.
+          </p>
         </div>
 
         {/* Summary Banner: Apostolic Penitentiary Norms for November Indulgences */}
-        <div className="p-4 sm:p-5 rounded-xl bg-white border border-[#C8AD8D] shadow-2xs space-y-2.5">
-          <div className="flex items-center justify-between gap-2">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-[#C8AD8D] shadow-2xs space-y-1.5">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2 text-[#6B3E1E]">
-              <Award className="w-4 h-4 shrink-0" />
-              <h4 className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#24140B]">
+              <Award className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+              <h4 className="font-cinzel text-sm sm:text-base font-bold uppercase tracking-wider text-[#24140B]">
                 Granting of Special November Indulgences • Apostolic Penitentiary Norms
               </h4>
             </div>
-            <span className="text-[11px] font-cinzel font-bold px-2.5 py-0.5 rounded-full bg-[#FAF0D9] text-[#7A4E1D] border border-[#E5C98B]">
+            <span className="text-xs font-cinzel font-bold px-2.5 py-0.5 rounded-md bg-[#FAF0D9] text-[#7A4E1D] border border-[#E5C98B]">
               Enchiridion Indulgentiarum, Norm 29
             </span>
           </div>
-          <p className="text-xs sm:text-sm font-serif text-stone-700 leading-relaxed">
+          <p className="text-sm sm:text-base font-serif text-stone-800 leading-snug">
             To gain any <strong>Plenary Indulgence</strong> in November (such as the <strong>Nov 1–8 Cemetery Visit</strong> for the Holy Souls, the <strong>Nov 2 All Souls’ Day Church Visit</strong>, the <strong>Cathedral/Basilica Pilgrimage</strong>, or the <strong>Christ the King Public Consecration</strong>), the faithful must be in the state of grace with complete detachment from all sin, and fulfill the three usual conditions: <strong>(1) Sacramental Confession</strong> (within about 20 days), <strong>(2) Eucharistic Communion</strong>, and <strong>(3) Prayer for the Holy Father’s Intentions</strong> (one <em>Our Father</em> and one <em>Hail Mary</em>).
           </p>
         </div>
 
         {/* Events List */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {NOVEMBER_SPECIAL_EVENTS.filter(ev => {
             if (eventsFilter === 'all') return true;
             if (eventsFilter === 'vatican') return ev.authority === 'vatican' || ev.authority === 'both';
@@ -689,23 +692,23 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
           }).map(ev => (
             <div
               key={ev.id}
-              className="rounded-xl bg-white border border-[#D5C2B0] shadow-xs overflow-hidden transition-all hover:border-[#8B5A2B]"
+              className="rounded-xl bg-white border border-[#C8B29B] shadow-xs overflow-hidden transition-all hover:border-[#8B5A2B]"
             >
               {/* Event Top Bar */}
-              <div className="px-5 py-3.5 bg-[#F6EFE7] border-b border-[#E5D5C4] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div className="px-4 py-2.5 bg-[#F6EFE7] border-b border-[#E5D5C4] flex flex-col md:flex-row md:items-center justify-between gap-2">
                 <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md bg-[#341D10] text-[#FAF4ED] font-cinzel text-xs font-bold">
+                    <span className="px-2.5 py-0.5 rounded-md bg-[#341D10] text-[#FAF4ED] font-cinzel text-xs sm:text-sm font-bold">
                       {ev.dateRange}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-md bg-[#EFE4D7] text-[#5D371F] border border-[#C8AD8D] font-cinzel text-[11px] font-bold">
+                    <span className="px-2.5 py-0.5 rounded-md bg-[#EFE4D7] text-[#5D371F] border border-[#C8AD8D] font-cinzel text-xs sm:text-sm font-bold">
                       {ev.authorityLabel}
                     </span>
-                    <span className="text-xs font-serif italic text-[#6B3E1E] font-semibold">
-                      {ev.liturgicalRank}
+                    <span className="text-xs sm:text-sm font-serif italic text-[#6B3E1E] font-semibold">
+                      • {ev.liturgicalRank}
                     </span>
                   </div>
-                  <h4 className="font-cinzel text-base sm:text-lg md:text-xl font-bold text-[#24140B] leading-snug pt-0.5">
+                  <h4 className="font-cinzel text-lg sm:text-xl font-bold text-[#24140B] leading-snug">
                     {ev.title}
                   </h4>
                 </div>
@@ -720,7 +723,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                     setCurrentMonth(m);
                     onSelectDate(ev.targetDateStr);
                   }}
-                  className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-[#FAF4ED] text-[#341D10] border border-[#A78262] font-cinzel text-xs font-bold transition-all cursor-pointer self-start sm:self-center shrink-0 shadow-2xs"
+                  className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-[#FAF4ED] text-[#341D10] border border-[#A78262] font-cinzel text-xs sm:text-sm font-bold transition-all cursor-pointer self-start md:self-center shrink-0 shadow-2xs"
                   title={`Open Mass Readings for ${ev.targetDateStr}`}
                 >
                   Open Date &amp; Readings →
@@ -728,26 +731,26 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
               </div>
 
               {/* Event Body: Vatican & Archdiocese of Cebu Columns + Special Indulgence Box */}
-              <div className="p-5 space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="divide-y divide-[#E5D5C4]">
+                <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#E5D5C4]">
                   {/* Vatican Cue */}
-                  <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DCC8] space-y-1">
-                    <div className="flex items-center gap-1.5 font-cinzel text-xs font-bold uppercase tracking-wider text-[#5D371F]">
-                      <Globe className="w-3.5 h-3.5 text-[#8B5A2B]" />
+                  <div className="p-3.5 sm:p-4 bg-[#FAF7F2]/60 space-y-1">
+                    <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5D371F]">
+                      <Globe className="w-4 h-4 text-[#8B5A2B] shrink-0" />
                       <span>From the Vatican (Holy See)</span>
                     </div>
-                    <p className="text-xs sm:text-sm font-serif text-[#3B2213] leading-relaxed">
+                    <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-snug">
                       {ev.vaticanObservance}
                     </p>
                   </div>
 
                   {/* Archdiocese of Cebu Cue */}
-                  <div className="p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DCC8] space-y-1">
-                    <div className="flex items-center gap-1.5 font-cinzel text-xs font-bold uppercase tracking-wider text-[#5D371F]">
-                      <MapPin className="w-3.5 h-3.5 text-[#8B5A2B]" />
+                  <div className="p-3.5 sm:p-4 bg-[#FAF7F2]/60 space-y-1">
+                    <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5D371F]">
+                      <MapPin className="w-4 h-4 text-[#8B5A2B] shrink-0" />
                       <span>Archdiocese of Cebu</span>
                     </div>
-                    <p className="text-xs sm:text-sm font-serif text-[#3B2213] leading-relaxed">
+                    <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-snug">
                       {ev.cebuObservance}
                     </p>
                   </div>
@@ -755,17 +758,17 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
 
                 {/* Special Indulgence Grant Box */}
                 {ev.indulgenceGrant && (
-                  <div className="p-4 rounded-xl bg-gradient-to-r from-[#FAF0D9] via-[#FDF6E4] to-[#FAF0D9] border border-[#E2C27D] space-y-1.5">
+                  <div className="p-3.5 sm:p-4 bg-gradient-to-r from-[#FAF0D9] via-[#FDF6E4] to-[#FAF0D9] space-y-1">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5 font-cinzel text-xs font-bold uppercase tracking-wider text-[#7A4E1D]">
+                      <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#6E4518]">
                         <Award className="w-4 h-4 text-[#B8860B] shrink-0" />
                         <span>Special Indulgence Granted: {ev.indulgenceGrant.summary}</span>
                       </div>
-                      <span className="px-2.5 py-0.5 rounded-full bg-white text-[#7A4E1D] border border-[#DFC07A] font-cinzel text-[10px] font-bold uppercase">
+                      <span className="px-2.5 py-0.5 rounded-md bg-white text-[#7A4E1D] border border-[#DFC07A] font-cinzel text-xs font-bold uppercase">
                         {ev.indulgenceGrant.type}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm font-serif text-[#3A2213] leading-relaxed">
+                    <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-snug">
                       {ev.indulgenceGrant.prescribedWork}
                     </p>
                   </div>
