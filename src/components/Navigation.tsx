@@ -240,18 +240,18 @@ export const Navigation: React.FC<NavigationProps> = ({
       subtext: 'Cornelius à Lapide, Catena Aurea and Patristic Study' 
     },
     { 
-      id: 'bible-flashcards', 
-      label: 'Bible Flashcards', 
-      icon: BookmarkCheck, 
-      tag: 'Memory', 
-      subtext: 'Scripture Memorization and Recall' 
-    },
-    { 
       id: 'saints', 
       label: 'Saint of the Day', 
       icon: SaintWithHaloIcon, 
       tag: 'Hagiography', 
       subtext: 'Feasts, Lives and Patronages' 
+    },
+    { 
+      id: 'bible-flashcards', 
+      label: 'Bible Flashcards', 
+      icon: BookmarkCheck, 
+      tag: 'Memory', 
+      subtext: 'Scripture Memorization and Recall' 
     },
     { 
       id: 'reflection', 
