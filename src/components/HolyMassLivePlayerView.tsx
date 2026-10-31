@@ -144,7 +144,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             </h2>
 
             <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-              Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, St. Patrick&apos;s in New York, and sanctuaries worldwide.
+              Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, <strong>EWTN Daily Holy Mass (Our Lady of the Angels Chapel)</strong>, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, Basilica Minore del Santo Niño de Cebú, and sanctuaries worldwide.
             </p>
           </div>
 
@@ -166,6 +166,42 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               <span>{copied ? 'Link Copied' : 'Share Altar'}</span>
             </button>
           </div>
+        </div>
+
+        {/* Quick-Select Featured Livestreams Strip (Vatican, EWTN Mass, Santo Niño Cebu, Lourdes, Fátima) */}
+        <div className="px-5 py-3 bg-[#150D08] border-b border-amber-500/25 flex flex-wrap items-center gap-2">
+          <span className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-300 mr-1">
+            Featured Live Altars:
+          </span>
+          {[
+            { id: 'vatican-st-peters-live', label: "St. Peter's Basilica (Vatican)" },
+            { id: 'ewtn-our-lady-angels-chapel', label: 'EWTN Daily Mass' },
+            { id: 'santo-nino-cebu-cathedral', label: 'Santo Niño de Cebú' },
+            { id: 'lourdes-grotto-live', label: 'Lourdes Grotto' },
+            { id: 'fatima-capelinha-live', label: 'Fátima Capelinha' },
+            { id: 'national-shrine-dc-anticipated', label: 'National Shrine (D.C.)' }
+          ].map((feat) => {
+            const streamObj = HOLY_MASS_LIVESTREAMS.find((s) => s.id === feat.id);
+            if (!streamObj) return null;
+            const isActive = selectedStream.id === feat.id;
+            return (
+              <button
+                key={feat.id}
+                type="button"
+                onClick={() => {
+                  setSelectedStream(streamObj);
+                  setStreamKey(Date.now());
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
+                  isActive
+                    ? 'bg-[#6B4423] text-amber-50 border-amber-400/70 shadow-sm'
+                    : 'bg-stone-900/90 hover:bg-stone-800 text-stone-200 border-stone-700'
+                }`}
+              >
+                {feat.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Full-Width 16:9 Livestream Video Player */}

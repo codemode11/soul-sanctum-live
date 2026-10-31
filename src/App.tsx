@@ -32,6 +32,7 @@ import { BibleFlashcardsView } from './components/BibleFlashcardsView';
 import { ChurchHistoryInfographicView } from './components/ChurchHistoryInfographicView';
 import { CatholicLinksView } from './components/CatholicLinksView';
 import { PersonalPietyDashboard } from './components/PersonalPietyDashboard';
+import { PersonalCatholicDashboardView } from './components/PersonalCatholicDashboardView';
 import { InMemoriamView } from './components/InMemoriamView';
 import { PodcastEpisode } from './types';
 import { getTopVaticanHeadline } from './data/news';
@@ -402,6 +403,26 @@ export default function App() {
     setSelectedArtId(artId);
     handleSelectTab('sacred-art');
   };
+
+  const isStandaloneDashboardSite =
+    typeof window !== 'undefined' &&
+    (window.location.pathname.startsWith('/dashboard') ||
+      new URLSearchParams(window.location.search).has('dashboard') ||
+      window.location.hash === '#dashboard');
+
+  if (isStandaloneDashboardSite) {
+    return (
+      <div className="min-h-screen bg-[#18110C] text-[#24140B] py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <PersonalCatholicDashboardView
+            currentDateStr={currentDateStr}
+            currentReading={currentMassReading}
+            onSelectDate={(d) => setCurrentDateStr(d)}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen relative flex flex-col bg-stone-950 text-stone-900 selection:bg-amber-300 selection:text-amber-950">
