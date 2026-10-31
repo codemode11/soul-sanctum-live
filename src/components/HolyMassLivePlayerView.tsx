@@ -144,7 +144,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             </h2>
 
             <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-              Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, <strong>EWTN Daily Holy Mass (Our Lady of the Angels Chapel)</strong>, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, Basilica Minore del Santo Niño de Cebú, and sanctuaries worldwide.
+              Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, <strong>EWTN Catholic Daily Mass</strong>, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, Basilica Minore del Santo Niño de Cebú, and sanctuaries worldwide.
             </p>
           </div>
 
@@ -175,7 +175,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
           </span>
           {[
             { id: 'vatican-st-peters-live', label: "St. Peter's Basilica (Vatican)" },
-            { id: 'ewtn-our-lady-angels-chapel', label: 'EWTN Daily Mass' },
+            { id: 'ewtn-our-lady-angels-chapel', label: 'EWTN Catholic Daily Mass' },
             { id: 'santo-nino-cebu-cathedral', label: 'Santo Niño de Cebú' },
             { id: 'lourdes-grotto-live', label: 'Lourdes Grotto' },
             { id: 'fatima-capelinha-live', label: 'Fátima Capelinha' },
