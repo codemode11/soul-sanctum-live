@@ -26,7 +26,7 @@ export const HOLY_MASS_LIVESTREAMS: HolyMassLiveStream[] = [
   },
   {
     id: 'ewtn-our-lady-angels-chapel',
-    name: "EWTN Catholic Daily Mass",
+    name: "EWTN Live Mass & Devotions",
     sanctuary: "Our Lady of the Angels Chapel • EWTN Global Catholic Network",
     location: "Irondale, Alabama",
     country: "United States",
@@ -35,7 +35,7 @@ export const HOLY_MASS_LIVESTREAMS: HolyMassLiveStream[] = [
     youtubeLiveUrl: "https://www.youtube.com/@EWTN/live",
     fallbackStreamUrl: "https://www.ewtn.com/tv/watch-live",
     thumbnailUrl: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=700&auto=format&fit=crop",
-    description: "Official EWTN Catholic Daily Mass celebrated by the Franciscan Missionaries of the Eternal Word at Our Lady of the Angels Chapel in Irondale, Alabama, founded by Mother Angelica to broadcast the Holy Sacrifice of the Mass worldwide.",
+    description: "Official EWTN Live Mass & Devotions celebrated by the Franciscan Missionaries of the Eternal Word at Our Lady of the Angels Chapel in Irondale, Alabama, founded by Mother Angelica to broadcast the Holy Sacrifice of the Mass worldwide.",
     scheduleDescription: "Daily Holy Mass broadcast live at 8:00 AM ET (8:00 PM PHT), Encore at 12:00 PM Noon ET, 7:00 PM ET, and 12:00 AM Midnight ET; accompanied by the Holy Rosary and Chaplet of Divine Mercy.",
     nextMassTimeLocal: "8:00 AM, 12:00 PM Noon, and 7:00 PM Eastern Time (ET)",
     timeZone: "America/Chicago (UTC-6)",
