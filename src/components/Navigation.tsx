@@ -42,7 +42,8 @@ import {
   NotebookWithBallpenIcon,
   HolyWaterIcon,
   QuotationsRightFacingIcon,
-  MassReadingsBookFlipIcon
+  MassReadingsBookFlipIcon,
+  ChurchTimelineIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -370,7 +371,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'church-history', 
       label: 'Timeline of the Church', 
-      icon: Scroll, 
+      icon: ChurchTimelineIcon, 
       tag: 'Councils', 
       subtext: '21 Ecumenical Councils, Popes, and 2,000-Year History' 
     },
@@ -449,9 +450,9 @@ export const Navigation: React.FC<NavigationProps> = ({
                   : 'text-stone-300 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border-transparent'
               }`}
             >
-              {/* Unified Content Wrapper: Icon and Text grow TOGETHER in 1:1 synchronization */}
-              <div className="sanctum-nav-item-content flex items-center gap-3 min-w-0 flex-1 origin-left">
-                <div className={`p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 ${
+              {/* Unified Content Wrapper: Icon and Text grow smoothly without vertical shift */}
+              <div className="sanctum-nav-item-content flex items-center gap-3 min-w-0 flex-1 h-9">
+                <div className={`sanctum-nav-item-icon-box p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 flex items-center justify-center ${
                   isActive 
                     ? 'bg-[#FFD700]/25 text-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.3)]' 
                     : 'bg-white/5 text-stone-400 group-hover:text-[#FFD700] group-hover:bg-[#FFD700]/20 group-hover:shadow-[0_0_10px_rgba(255,215,0,0.25)]'
@@ -460,10 +461,10 @@ export const Navigation: React.FC<NavigationProps> = ({
                     isActive ? 'text-[#FFD700]' : 'text-stone-400 group-hover:text-[#FFD700]'
                   }`} />
                 </div>
-                <div className="min-w-0 flex-1 overflow-visible">
-                  <span className={`block font-serif ${
-                    item.id === 'readings' ? 'text-[19px] font-semibold' : 'text-base font-medium'
-                  } leading-tight whitespace-nowrap transition-colors duration-500 ease-out ${
+                <div className="min-w-0 flex-1 h-9 flex items-center overflow-visible">
+                  <span className={`sanctum-nav-item-label ${
+                    item.id === 'readings' ? 'sanctum-nav-item-label-readings' : ''
+                  } font-serif whitespace-nowrap transition-colors duration-500 ease-out ${
                     isActive
                       ? 'text-[#FFD700]'
                       : 'text-stone-200 group-hover:text-[#FFD700]'

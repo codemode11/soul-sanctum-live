@@ -226,17 +226,45 @@ svg:hover .sanctum-scroll-parchment {
   opacity: 1;
 }
 
-/* Unified Index Item Hover Scaling: Smoothly scales icon and text together on hover */
-.sanctum-nav-item-content {
-  transform-origin: left center;
-  transform: scale(1);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+/* Unified Index Item Hover Sizing: Smoothly enlarges icon and text on hover with zero vertical movement */
+.sanctum-nav-item-icon-box {
+  transform-origin: center center;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.5s ease-out,
+    color 0.5s ease-out,
+    box-shadow 0.5s ease-out;
 }
 
-.group:hover .sanctum-nav-item-content {
-  transform: scale(1.09);
+.group:hover .sanctum-nav-item-icon-box {
+  transform: translateZ(0) scale(1.08);
 }
 
+.sanctum-nav-item-label {
+  display: inline-block;
+  font-size: 17.5px;
+  font-weight: 500;
+  line-height: 1;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translateY(0px);
+  transition:
+    font-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.5s ease-out;
+}
 
+.sanctum-nav-item-label.sanctum-nav-item-label-readings {
+  font-size: 18px;
+  font-weight: 600;
+}
 
+.group:hover .sanctum-nav-item-label {
+  font-size: 19.2px;
+}
+
+.group:hover .sanctum-nav-item-label.sanctum-nav-item-label-readings {
+  font-size: 19.7px;
+}
