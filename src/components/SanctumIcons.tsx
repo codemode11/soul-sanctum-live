@@ -1081,8 +1081,7 @@ export const MassReadingsBookFlipIcon: React.FC<IconProps> = ({ className = 'w-5
 );
 
 /**
- * 18. Timeline of the Church Icon: Vertical timeline with Circle no. 1 and Circled no. 2
- * connected by a vertical line. At the right of circle no. 1 is AD 30, and at the right of circle no. 2 is AD 49.
+ * 18. Timeline of the Church Icon: "AD 107"
  */
 export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -1093,69 +1092,20 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
     strokeLinecap="round"
     strokeLinejoin="round"
     className={`${className} overflow-visible`}
-    aria-label="Timeline of the Church — Vertical Timeline AD 30 and AD 49"
+    aria-label="Timeline of the Church — AD 107"
   >
-    {/* Circle No. 1 (Top) */}
-    <circle
-      cx="4.6"
-      cy="6.0"
-      r="3.8"
-      strokeWidth="1.55"
-      fill="currentColor"
-      fillOpacity="0.14"
-    />
-    {/* Number 1 inside Circle 1 */}
-    <path
-      d="M4.0 4.9l.8-.55v3.4M3.9 7.75h1.6"
-      strokeWidth="1.4"
-    />
-
-    {/* Vertical Line Connecting Circle No. 1 and Circle No. 2 */}
-    <line x1="4.6" y1="9.8" x2="4.6" y2="14.2" strokeWidth="1.75" />
-
-    {/* Circled No. 2 (Bottom) */}
-    <circle
-      cx="4.6"
-      cy="18.0"
-      r="3.8"
-      strokeWidth="1.55"
-      fill="currentColor"
-      fillOpacity="0.14"
-    />
-    {/* Number 2 inside Circle 2 */}
-    <path
-      d="M3.55 17.05c0-.65.48-1.05 1.1-1.05.6 0 1.05.38 1.05.92 0 .45-.3.78-.85 1.25l-1.35 1.18h2.25"
-      strokeWidth="1.35"
-    />
-
-    {/* At the right of Circle No. 1: AD 30 */}
     <text
-      x="9.8"
-      y="7.85"
-      textAnchor="start"
-      fontSize="5.2"
+      x="12"
+      y="14.6"
+      textAnchor="middle"
+      fontSize="7.2"
       fontWeight="800"
-      letterSpacing="-0.25"
+      letterSpacing="-0.35"
       fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
       fill="currentColor"
       stroke="none"
     >
-      AD 30
-    </text>
-
-    {/* At the right of Circle No. 2: AD 49 */}
-    <text
-      x="9.8"
-      y="19.85"
-      textAnchor="start"
-      fontSize="5.2"
-      fontWeight="800"
-      letterSpacing="-0.25"
-      fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
-      fill="currentColor"
-      stroke="none"
-    >
-      AD 49
+      AD 107
     </text>
   </svg>
 );

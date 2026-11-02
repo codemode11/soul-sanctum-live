@@ -226,45 +226,46 @@ svg:hover .sanctum-scroll-parchment {
   opacity: 1;
 }
 
-/* Unified Index Item Hover Sizing: Smoothly enlarges icon and text on hover with zero vertical movement */
+/* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
-  transform-origin: center center;
-  transform: translateZ(0) scale(1);
+  transform-origin: 50% 50%;
+  transform: translate3d(0, 0, 0) scale3d(0.93, 0.93, 1);
   backface-visibility: hidden;
+  will-change: transform;
   transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.5s ease-out,
-    color 0.5s ease-out,
-    box-shadow 0.5s ease-out;
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.4s ease-out,
+    color 0.4s ease-out,
+    box-shadow 0.4s ease-out;
 }
 
 .group:hover .sanctum-nav-item-icon-box {
-  transform: translateZ(0) scale(1.08);
+  transform: translate3d(0, 0, 0) scale3d(0.9999, 0.9999, 1);
 }
 
 .sanctum-nav-item-label {
   display: inline-block;
-  font-size: 17.5px;
+  font-size: 19.2px;
   font-weight: 500;
   line-height: 1;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transform: translateY(0px);
+  backface-visibility: hidden;
+  will-change: transform;
+  transform-origin: 0% 58%;
+  transform: translate3d(0, 0, 0) scale3d(0.92, 0.92, 1);
   transition:
-    font-size 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    color 0.5s ease-out;
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.4s ease-out;
 }
 
 .sanctum-nav-item-label.sanctum-nav-item-label-readings {
-  font-size: 18px;
+  font-size: 19.6px;
   font-weight: 600;
 }
 
 .group:hover .sanctum-nav-item-label {
-  font-size: 19.2px;
+  transform: translate3d(0, 0, 0) scale3d(0.9999, 0.9999, 1);
 }
 
-.group:hover .sanctum-nav-item-label.sanctum-nav-item-label-readings {
-  font-size: 19.7px;
-}
