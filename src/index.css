@@ -226,5 +226,17 @@ svg:hover .sanctum-scroll-parchment {
   opacity: 1;
 }
 
+/* Unified Index Item Hover Scaling: Smoothly scales icon and text together on hover */
+.sanctum-nav-item-content {
+  transform-origin: left center;
+  transform: scale(1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.group:hover .sanctum-nav-item-content {
+  transform: scale(1.09);
+}
+
 
 

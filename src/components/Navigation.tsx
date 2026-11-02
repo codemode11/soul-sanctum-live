@@ -450,7 +450,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               }`}
             >
               {/* Unified Content Wrapper: Icon and Text grow TOGETHER in 1:1 synchronization */}
-              <div className="flex items-center gap-3 min-w-0 flex-1 origin-left transition-transform duration-500 ease-out scale-100 group-hover:scale-[1.08]">
+              <div className="sanctum-nav-item-content flex items-center gap-3 min-w-0 flex-1 origin-left">
                 <div className={`p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 ${
                   isActive 
                     ? 'bg-[#FFD700]/25 text-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.3)]' 
@@ -461,7 +461,9 @@ export const Navigation: React.FC<NavigationProps> = ({
                   }`} />
                 </div>
                 <div className="min-w-0 flex-1 overflow-visible">
-                  <span className={`block font-serif text-base font-medium leading-tight whitespace-nowrap transition-colors duration-500 ease-out ${
+                  <span className={`block font-serif ${
+                    item.id === 'readings' ? 'text-[19px] font-semibold' : 'text-base font-medium'
+                  } leading-tight whitespace-nowrap transition-colors duration-500 ease-out ${
                     isActive
                       ? 'text-[#FFD700]'
                       : 'text-stone-200 group-hover:text-[#FFD700]'
