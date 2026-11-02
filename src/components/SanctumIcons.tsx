@@ -1096,14 +1096,16 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
   >
     <text
       x="12"
-      y="14.6"
+      y="15.5"
       textAnchor="middle"
-      fontSize="7.2"
-      fontWeight="800"
-      letterSpacing="-0.35"
+      fontSize="10.2"
+      fontWeight="900"
+      textLength="30.5"
+      lengthAdjust="spacingAndGlyphs"
       fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
       fill="currentColor"
-      stroke="none"
+      stroke="currentColor"
+      strokeWidth="0.3"
     >
       AD 107
     </text>
