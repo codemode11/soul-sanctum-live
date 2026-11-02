@@ -358,12 +358,12 @@ export const BetterScrollIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
     className={`${className} overflow-visible`}
     aria-label="Catechism Scroll"
   >
-    {/* Unrolled Parchment Body, Sacred Cross & Doctrinal Lines (hidden/collapsed when closed, unfurls on hover) */}
+    {/* Unrolled Parchment Body, Sacred Cross & Doctrinal Lines (hidden/collapsed when closed, unfurls gradually on hover) */}
     <g className="sanctum-scroll-parchment">
-      {/* Flat straight parchment sheet between the two wooden rollers */}
-      <line x1="5.8" y1="5.6" x2="5.8" y2="18.4" strokeWidth="1.6" />
-      <line x1="18.2" y1="5.6" x2="18.2" y2="18.4" strokeWidth="1.6" />
-      <rect x="5.8" y="5.6" width="12.4" height="12.8" fill="currentColor" fillOpacity="0.06" stroke="none" />
+      {/* Flat straight parchment sheet between the two wooden rollers (y=5.7 to y=18.3, centered at y=12) */}
+      <line x1="5.8" y1="5.7" x2="5.8" y2="18.3" strokeWidth="1.6" />
+      <line x1="18.2" y1="5.7" x2="18.2" y2="18.3" strokeWidth="1.6" />
+      <rect x="5.8" y="5.7" width="12.4" height="12.6" fill="currentColor" fillOpacity="0.06" stroke="none" />
 
       {/* Sacred Cross on Catechism scroll */}
       <line x1="12" y1="7.6" x2="12" y2="13.2" strokeWidth="1.6" />

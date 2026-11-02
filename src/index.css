@@ -182,19 +182,21 @@ svg:hover .sanctum-book-flip-page {
   animation: sanctumBookPageFlip 0.78s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
-/* Catechism Icon: Wooden scroll rollers closed when not hovered, open on hover */
+/* Catechism Icon: Wooden scroll rollers closed when not hovered, gradually unrolling open on hover */
 .sanctum-scroll-top {
   transform-box: view-box;
   transform-origin: 12px 4.5px;
-  transform: translateY(6.1px);
-  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(6.3px);
+  transition: transform 1.15s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .sanctum-scroll-bottom {
   transform-box: view-box;
   transform-origin: 12px 19.5px;
-  transform: translateY(-6.1px);
-  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(-6.3px);
+  transition: transform 1.15s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .sanctum-scroll-parchment {
@@ -203,8 +205,9 @@ svg:hover .sanctum-book-flip-page {
   transform: scaleY(0);
   opacity: 0;
   transition:
-    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.28s ease-out;
+    transform 1.15s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.65s ease-in-out;
+  will-change: transform, opacity;
 }
 
 .group:hover .sanctum-scroll-top,
@@ -222,5 +225,6 @@ svg:hover .sanctum-scroll-parchment {
   transform: scaleY(1);
   opacity: 1;
 }
+
 
 
