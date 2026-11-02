@@ -1097,59 +1097,45 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
   >
     {/* Circle No. 1 (Top) */}
     <circle
-      cx="4.8"
-      cy="6.2"
+      cx="4.6"
+      cy="6.0"
       r="3.8"
-      strokeWidth="1.5"
+      strokeWidth="1.55"
       fill="currentColor"
-      fillOpacity="0.12"
+      fillOpacity="0.14"
     />
-    <text
-      x="4.8"
-      y="8.05"
-      textAnchor="middle"
-      fontSize="5.3"
-      fontWeight="800"
-      fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
-      fill="currentColor"
-      stroke="none"
-    >
-      1
-    </text>
+    {/* Number 1 inside Circle 1 */}
+    <path
+      d="M4.0 4.9l.8-.55v3.4M3.9 7.75h1.6"
+      strokeWidth="1.4"
+    />
 
     {/* Vertical Line Connecting Circle No. 1 and Circle No. 2 */}
-    <line x1="4.8" y1="10.0" x2="4.8" y2="14.0" strokeWidth="1.7" />
+    <line x1="4.6" y1="9.8" x2="4.6" y2="14.2" strokeWidth="1.75" />
 
     {/* Circled No. 2 (Bottom) */}
     <circle
-      cx="4.8"
-      cy="17.8"
+      cx="4.6"
+      cy="18.0"
       r="3.8"
-      strokeWidth="1.5"
+      strokeWidth="1.55"
       fill="currentColor"
-      fillOpacity="0.12"
+      fillOpacity="0.14"
     />
-    <text
-      x="4.8"
-      y="19.65"
-      textAnchor="middle"
-      fontSize="5.3"
-      fontWeight="800"
-      fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
-      fill="currentColor"
-      stroke="none"
-    >
-      2
-    </text>
+    {/* Number 2 inside Circle 2 */}
+    <path
+      d="M3.55 17.05c0-.65.48-1.05 1.1-1.05.6 0 1.05.38 1.05.92 0 .45-.3.78-.85 1.25l-1.35 1.18h2.25"
+      strokeWidth="1.35"
+    />
 
     {/* At the right of Circle No. 1: AD 30 */}
     <text
-      x="10.0"
-      y="8.05"
+      x="9.8"
+      y="7.85"
       textAnchor="start"
-      fontSize="5.0"
+      fontSize="5.2"
       fontWeight="800"
-      letterSpacing="-0.2"
+      letterSpacing="-0.25"
       fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
       fill="currentColor"
       stroke="none"
@@ -1159,12 +1145,12 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
 
     {/* At the right of Circle No. 2: AD 49 */}
     <text
-      x="10.0"
-      y="19.65"
+      x="9.8"
+      y="19.85"
       textAnchor="start"
-      fontSize="5.0"
+      fontSize="5.2"
       fontWeight="800"
-      letterSpacing="-0.2"
+      letterSpacing="-0.25"
       fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
       fill="currentColor"
       stroke="none"
