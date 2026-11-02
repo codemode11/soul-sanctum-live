@@ -450,7 +450,7 @@ export const KNOWN_NOVEMBER_DAYS: Record<number, Partial<LiturgicalDayInfo>> = {
     }
   },
   3: {
-    title: 'Optional Memorial of St. Martin de Porres, Religious',
+    title: 'Optional Memorial of St. Martin de Porres',
     rank: 'Optional Memorial',
     color: 'white',
     saintName: 'St. Martin de Porres',

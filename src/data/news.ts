@@ -324,7 +324,7 @@ export function getDailyVaticanNews(dateStr: string): CatholicNewsItem[] {
 
   const dailyLeadStory: CatholicNewsItem = {
     id: `news-daily-liturgy-${dateStr}`,
-    title: `Vatican Daily Dispatch: ${reading.liturgicalDay} — Putting the Holy Eucharist and ${reading.gospel.citation} at the Center of Christian Life`,
+    title: `Putting the Holy Eucharist and ${reading.gospel.citation} at the Center of Christian Life`,
     subtitle: `Holy Father reflects on today's Gospel (${reading.gospel.citation}) and calls the universal Church to fervent Eucharistic Adoration and charity`,
     summary: `In today's Vatican meditation for ${reading.liturgicalDay} (${dateFormatted}), the Holy Father invited the faithful to ponder the Holy Gospel (${reading.gospel.citation}) and draw strength from the Real Presence of Jesus in the Most Blessed Sacrament.`,
     content: `VATICAN CITY — On ${dateFormatted}, as the universal Church celebrates ${reading.liturgicalDay}, the Holy Father offered a pastoral meditation on the day's Liturgy of the Word, centering on the First Reading (${reading.firstReading.citation}), Responsorial Psalm (${reading.responsorialPsalm.citation})${reading.secondReading ? `, Second Reading (${reading.secondReading.citation}),` : ''} and Holy Gospel (${reading.gospel.citation}).

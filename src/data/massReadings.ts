@@ -876,7 +876,7 @@ For if we have grown into union with him through a death like his, we shall also
   '2026-11-03': {
     id: 'reading-2026-11-03',
     date: '2026-11-03',
-    liturgicalDay: 'Tuesday of the Thirty-First Week in Ordinary Time / Optional Memorial of St. Martin de Porres, Religious',
+    liturgicalDay: 'Tuesday of the Thirty-First Week in Ordinary Time / Optional Memorial of St. Martin de Porres',
     liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
     liturgicalColor: 'green',
     liturgicalRank: 'Optional Memorial',

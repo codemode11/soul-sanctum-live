@@ -172,7 +172,7 @@ export const Header: React.FC<HeaderProps> = ({
                   {mainTitlePart}
                 </span>
                 {memorialPart && (
-                  <span className="text-sm sm:text-base md:text-lg text-amber-200 font-bold italic font-serif drop-shadow-md">
+                  <span className="text-xs sm:text-sm text-white font-semibold not-italic font-serif drop-shadow-sm">
                     {memorialPart}
                   </span>
                 )}
@@ -205,7 +205,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <p className="text-xs sm:text-sm font-serif text-amber-100/95">
                   {mottoText} <span className="text-[#D4AF37] font-semibold">• {mottoCitation}</span>
                 </p>
-                <p className="text-xs sm:text-sm font-serif text-amber-200 font-semibold italic mt-0.5">
+                <p className="text-xs sm:text-sm font-serif text-white font-semibold not-italic mt-0.5">
                   {liturgicalTitle}
                 </p>
               </div>
@@ -308,8 +308,8 @@ export const Header: React.FC<HeaderProps> = ({
                   </div>
 
                   {memorialPart && (
-                    <div className="flex flex-wrap items-center gap-2 pt-0.5">
-                      <span className="text-base sm:text-lg md:text-xl text-amber-200 font-bold italic font-serif drop-shadow-md">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs sm:text-sm text-white font-semibold not-italic font-serif drop-shadow-sm">
                         {memorialPart}
                       </span>
                     </div>

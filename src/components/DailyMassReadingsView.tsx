@@ -251,18 +251,18 @@ ${reading.gospel.text}`;
             {/* Split title: Memorial on the next line with increased font size */}
             {/* Split title to two lines if it is too long to prevent overlap */}
             <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-normal text-amber-100 leading-tight">
-              {reading.liturgicalDay.length > 35 ? (
-                <>
-                  <span className="block">{reading.liturgicalDay.split(' of ')[0]} of</span>
-                  <span className="block text-xl sm:text-2xl md:text-3xl font-bold text-amber-200 mt-1 font-serif drop-shadow-md">
-                    {reading.liturgicalDay.split(' of ').slice(1).join(' of ')}
-                  </span>
-                </>
-              ) : reading.liturgicalDay.includes(' / ') ? (
+              {reading.liturgicalDay.includes(' / ') ? (
                 <>
                   <span className="block">{reading.liturgicalDay.split(' / ')[0]}</span>
-                  <span className="block text-xl sm:text-2xl md:text-3xl font-bold text-amber-200 italic mt-1.5 font-serif drop-shadow-md">
+                  <span className="block text-base sm:text-lg md:text-xl font-semibold text-white not-italic mt-1 font-serif drop-shadow-sm">
                     {reading.liturgicalDay.split(' / ')[1]}
+                  </span>
+                </>
+              ) : reading.liturgicalDay.length > 35 ? (
+                <>
+                  <span className="block">{reading.liturgicalDay.split(' of ')[0]} of</span>
+                  <span className="block text-xl sm:text-2xl md:text-3xl font-bold text-white not-italic mt-1 font-serif drop-shadow-md">
+                    {reading.liturgicalDay.split(' of ').slice(1).join(' of ')}
                   </span>
                 </>
               ) : (
