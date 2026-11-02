@@ -986,22 +986,23 @@ export const HolyWaterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) =>
 );
 
 /**
- * 16. Quotations Icon: Quotation marks that are facing right
+ * 16. Quotations Icon: Quotation marks that are facing right (smaller and sharply defined)
  */
 export const QuotationsRightFacingIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.85"
+    strokeWidth="1.65"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
     aria-label="Quotations — Right-Facing Quotation Marks"
   >
     {/* Left quotation mark facing right */}
-    <path d="M9 21c-3 0-7-1-7-8V5c0-1.25.757-2.017 2-2h4c1.25 0 2 .75 2 1.972V11c0 1.25-.75 2-2 2h-.75c0 2.25-.25 4 2.75 4v3c0 1 0 1-1 1z" />
+    <path d="M9.5 16.8C7.0 16.5 5.4 14.8 5.4 11.5V8.2c0-1 .7-1.7 1.7-1.7h1.8c1 0 1.7.7 1.7 1.7v2.4c0 .9-.7 1.6-1.6 1.6H7.8c.1 1.6.8 2.5 2.3 2.8v1.8h-.6z" />
     {/* Right quotation mark facing right */}
-    <path d="M21 21c-3 0-7-1-7-8V5c0-1.25.756-2.017 2-2h4c1.25 0 2 .75 2 1.972V11c0 1.25-.75 2-2 2-1 0-1 0-1 1v1c0 1 1 2 2 2s1 .008 1 1.031V20c0 1 0 1-1 1z" />
+    <path d="M17.7 16.8c-2.5-.3-4.1-2.0-4.1-5.3V8.2c0-1 .7-1.7 1.7-1.7h1.8c1 0 1.7.7 1.7 1.7v2.4c0 .9-.7 1.6-1.6 1.6h-1.2c.1 1.6.8 2.5 2.3 2.8v1.8h-.6z" />
   </svg>
 );
+

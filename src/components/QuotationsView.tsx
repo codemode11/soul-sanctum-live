@@ -17,9 +17,10 @@ export const QuotationsView: React.FC = () => {
 
   const handleCopy = (item: SacredQuotation) => {
     const prefix = item.subHeading ? `${item.subHeading}\n` : '';
-    const formatted = item.attribution
+    const base = item.attribution
       ? `${prefix}${item.text}\n${item.attribution}`
       : `${prefix}${item.text}`;
+    const formatted = item.postscript ? `${base}\n${item.postscript}` : base;
     navigator.clipboard.writeText(formatted);
     setCopiedId(item.id);
     setTimeout(() => setCopiedId(null), 2000);
@@ -31,9 +32,10 @@ export const QuotationsView: React.FC = () => {
       setSpeakingId(null);
     } else {
       const prefix = item.subHeading ? `${item.subHeading}. ` : '';
-      const speech = item.attribution
+      const base = item.attribution
         ? `${prefix}${item.text}. ${item.attribution}.`
         : `${prefix}${item.text}`;
+      const speech = item.postscript ? `${base} ${item.postscript}` : base;
       SacredReader.speak(speech, () => setSpeakingId(null));
       setSpeakingId(item.id);
     }
@@ -44,28 +46,26 @@ export const QuotationsView: React.FC = () => {
   );
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6 pb-12 animate-fadeIn">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-br from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
-
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/75 backdrop-blur-xl backdrop-saturate-150 border border-white/85 ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 animate-fadeIn">
+      {/* Header & Filter Card (Light Frosted Glass) */}
+      <div className="bg-white/85 backdrop-blur-xl rounded-xl p-5 sm:p-7 text-stone-900 shadow-xs border border-amber-900/15 relative overflow-hidden">
         <div className="relative z-10 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-900/50 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-900/15 pb-4">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500/20 border border-amber-400/40 text-amber-300">
-                <QuotationsRightFacingIcon className="w-6 h-6 text-amber-300" />
+              <div className="p-2 rounded-lg bg-amber-100/90 border border-amber-300/80 text-amber-900">
+                <QuotationsRightFacingIcon className="w-5 h-5 text-amber-900" />
               </div>
               <div>
-                <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-amber-100 drop-shadow-md">
+                <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-stone-950">
                   Quotations
                 </h2>
-                <p className="text-xs sm:text-sm text-amber-200/85 font-serif italic mt-0.5">
+                <p className="text-xs sm:text-sm text-stone-700 font-serif italic mt-0.5">
                   {QUOTATION_SECTIONS.length} Sacred Topics • {SACRED_QUOTATIONS_DATABASE.length} Catholic Quotations
                 </p>
               </div>
             </div>
 
-            <span className="self-start sm:self-auto px-3.5 py-1 rounded-full bg-amber-900/80 text-amber-200 text-xs sm:text-sm font-semibold border border-amber-700/60 uppercase tracking-wider font-cinzel">
+            <span className="self-start sm:self-auto px-3.5 py-1 rounded-full bg-amber-100/90 text-amber-950 text-xs sm:text-sm font-semibold border border-amber-300/80 uppercase tracking-wider font-cinzel">
               {SACRED_QUOTATIONS_DATABASE.length} Quotations
             </span>
           </div>
@@ -77,8 +77,8 @@ export const QuotationsView: React.FC = () => {
                 onClick={() => setSelectedSection('all')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-colors cursor-pointer ${
                   selectedSection === 'all'
-                    ? 'bg-amber-400 text-amber-950 shadow-xs'
-                    : 'bg-stone-800/90 text-amber-100 hover:bg-stone-700 border border-amber-500/25'
+                    ? 'bg-amber-900 text-amber-50 shadow-xs'
+                    : 'bg-stone-100/90 text-stone-800 hover:bg-amber-100/70 border border-stone-300/80'
                 }`}
               >
                 All ({SACRED_QUOTATIONS_DATABASE.length})
@@ -93,8 +93,8 @@ export const QuotationsView: React.FC = () => {
                     onClick={() => setSelectedSection(sec.id)}
                     className={`px-2.5 py-1 rounded-lg text-xs font-semibold font-cinzel transition-colors cursor-pointer ${
                       selectedSection === sec.id
-                        ? 'bg-amber-400 text-amber-950 shadow-xs'
-                        : 'bg-stone-800/90 text-amber-100 hover:bg-stone-700 border border-amber-500/25'
+                        ? 'bg-amber-900 text-amber-50 shadow-xs'
+                        : 'bg-stone-100/90 text-stone-800 hover:bg-amber-100/70 border border-stone-300/80'
                     }`}
                   >
                     {sec.title} ({count})
@@ -109,9 +109,9 @@ export const QuotationsView: React.FC = () => {
                 placeholder="Search quotations, saints, topics, or works..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full text-xs pl-8 pr-3 py-2 rounded-lg bg-stone-900/90 text-amber-50 placeholder:text-stone-400 border border-amber-500/30 focus:outline-none focus:border-amber-400"
+                className="w-full text-xs pl-8 pr-3 py-2 rounded-lg bg-white/95 text-stone-900 placeholder:text-stone-500 border border-stone-300 focus:outline-none focus:border-amber-700"
               />
-              <Search className="w-3.5 h-3.5 text-amber-300/70 absolute left-2.5 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-stone-500 absolute left-2.5 top-2.5" />
             </div>
           </div>
         </div>
@@ -128,7 +128,8 @@ export const QuotationsView: React.FC = () => {
               q.text.toLowerCase().includes(query) ||
               q.sectionTitle.toLowerCase().includes(query) ||
               (q.attribution && q.attribution.toLowerCase().includes(query)) ||
-              (q.subHeading && q.subHeading.toLowerCase().includes(query))
+              (q.subHeading && q.subHeading.toLowerCase().includes(query)) ||
+              (q.postscript && q.postscript.toLowerCase().includes(query))
             );
           });
 
@@ -137,25 +138,25 @@ export const QuotationsView: React.FC = () => {
           return (
             <section
               key={section.id}
-              className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-5 sm:p-8 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-5"
+              className="bg-white/90 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-5 sm:p-8 shadow-sm border border-white/95 ring-1 ring-inset ring-amber-900/10 space-y-5"
             >
               {/* Section Heading */}
               <div className="border-b border-amber-900/20 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
                 <div>
-                  <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide">
+                  <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-stone-950 tracking-wide">
                     {section.title}
                   </h3>
                   <p className="text-xs sm:text-sm text-stone-700 font-serif italic mt-0.5">
                     {section.subtitle}
                   </p>
                 </div>
-                <span className="text-xs font-cinzel font-bold uppercase tracking-wider text-amber-900 bg-amber-100/80 px-3 py-1 rounded-md border border-amber-300/70 self-start sm:self-auto">
+                <span className="text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950 bg-amber-100/90 px-3 py-1 rounded-md border border-amber-300/80 self-start sm:self-auto">
                   {sectionQuotes.length} {sectionQuotes.length === 1 ? 'Quotation' : 'Quotations'}
                 </span>
               </div>
 
               {/* Quotations List */}
-              <div className="divide-y divide-stone-300/60">
+              <div className="divide-y divide-stone-200/90">
                 {sectionQuotes.map(item => {
                   const isCopied = copiedId === item.id;
                   const isSpeaking = speakingId === item.id;
@@ -179,6 +180,11 @@ export const QuotationsView: React.FC = () => {
                             {item.attribution}
                           </p>
                         )}
+                        {item.postscript && (
+                          <p className="font-serif-sacred text-stone-950 text-lg sm:text-xl md:text-2xl leading-relaxed whitespace-pre-wrap pt-2">
+                            {item.postscript}
+                          </p>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-start pt-1">
@@ -187,7 +193,7 @@ export const QuotationsView: React.FC = () => {
                           className={`p-2 rounded-lg border transition-colors cursor-pointer ${
                             isSpeaking
                               ? 'bg-[#6B4423] text-white border-[#5A381C]'
-                              : 'bg-white/60 text-stone-600 hover:text-stone-950 hover:bg-white border-stone-300/80'
+                              : 'bg-stone-100/90 text-stone-700 hover:text-stone-950 hover:bg-amber-100/60 border-stone-300/90'
                           }`}
                           title="Listen to quotation"
                         >
@@ -200,7 +206,7 @@ export const QuotationsView: React.FC = () => {
 
                         <button
                           onClick={() => handleCopy(item)}
-                          className="p-2 rounded-lg bg-white/60 text-stone-600 hover:text-stone-950 hover:bg-white border border-stone-300/80 transition-colors cursor-pointer"
+                          className="p-2 rounded-lg bg-stone-100/90 text-stone-700 hover:text-stone-950 hover:bg-amber-100/60 border border-stone-300/90 transition-colors cursor-pointer"
                           title="Copy quotation"
                         >
                           {isCopied ? (

@@ -45,6 +45,7 @@ export interface SacredQuotation {
   subHeading?: string;
   text: string;
   attribution?: string;
+  postscript?: string;
   isNarrative?: boolean;
 }
 
@@ -2242,13 +2243,13 @@ export const SACRED_QUOTATIONS_DATABASE: SacredQuotation[] = [
     id: 'quote-piety-9',
     sectionId: 'piety',
     sectionTitle: 'Piety',
-    text: `One day a colleague of mine heard the devil say during an exorcism: "Every Hail Mary is like a blow on my head. If Christians knew how powerful the Rosary was, it would be my end." The secret that makes this prayer so effective is that the Rosary is both prayer and meditation. It is addressed to the Father, to the Blessed Virgin, and to the Holy Trinity, and is a meditation centered on Christ.
-\tI write in addition to the above: Please enunciate each word of the Rosary clearly and distinctly. Do not trample on the heels' of the words of anyone with your words. Do not speak over the leader, if you are following, or the responders if you are leading the Rosary. Remember that they also are having a conversation with Mary Our Mother and it is not polite to speak when someone else is speaking.
+    text: 'One day a colleague of mine heard the devil say during an exorcism: "Every Hail Mary is like a blow on my head. If Christians knew how powerful the Rosary was, it would be my end." The secret that makes this prayer so effective is that the Rosary is both prayer and meditation. It is addressed to the Father, to the Blessed Virgin, and to the Holy Trinity, and is a meditation centered on Christ.',
+    attribution: 'Fr. Gabriel Amorth',
+    postscript: `\tI write in addition to the above: Please enunciate each word of the Rosary clearly and distinctly. Do not trample on the heels' of the words of anyone with your words. Do not speak over the leader, if you are following, or the responders if you are leading the Rosary. Remember that they also are having a conversation with Mary Our Mother and it is not polite to speak when someone else is speaking.
 \tIn the case of the public Rosary there are only two people speaking, the Leader and the Responders. Each are speaking to their Mother and listening carefully to her response within their hearts as they meditate on the scene before them in their consideration of the mystery being spoken of and interpreted and translated into their lives. Spread this powerful prayer of exorcism, The Rosary which contains the Our Father, the Perfect Prayer, prayed five times in the recitation of each set of the Rosary's Mysteries, backed up by the powerful prayers of Our Mother who prays with us as we pray 53 Hail Marys. The Eternal Father described to a group of us, through a Visionary Friend of mine, what happens when we pray the Rosary, saying, "When you pray Holy Mary Mother of God, pray for us sinners now . . . , the Blessed Mother comes instantly to your side to pray with you. And she does not come alone. She brings angels with her. And not just one or two for she is the Queen of Angels, so choirs of angels come with her. And she and Jesus are joined at the heart and cannot be separated so she brings Jesus with her. And Jesus cannot be separated from the Trinity so He brings the Father and the Holy Spirit with Him.
 \tAnd where the Holy Trinity is all of creation is and you are surrounded by such beauty and light as you cannot imagine in this life. Your Mother comes as Our Lady of Grace with her hands out-stretched. Rays of light emit from her hands piercing your body, healing you and filling you with graces.
 \tThis is your inheritance which was poured out from the heart of Jesus on the Cross, when the centurion pierced His Heart with the spear, into the only pure vessel ready to receive such graces at that time, Your Mother.
-\tNow as you pray the Rosary, or even just recite one Hail Mary, you receive your portion of these graces. "He also said at this time, "Anyone who goes to Mary and prays the Rosary cannot be touched by Satan." Is it any wonder that anyone who prays the Rosary from the heart is so blessed and protected and powerful in their prayers for others?"`,
-    attribution: 'Fr. Gabriel Amorth'
+\tNow as you pray the Rosary, or even just recite one Hail Mary, you receive your portion of these graces. "He also said at this time, "Anyone who goes to Mary and prays the Rosary cannot be touched by Satan." Is it any wonder that anyone who prays the Rosary from the heart is so blessed and protected and powerful in their prayers for others?"`
   },
   {
     id: 'quote-piety-10',
