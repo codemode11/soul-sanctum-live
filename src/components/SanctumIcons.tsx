@@ -344,38 +344,77 @@ export const RodinThinkerIcon = RightFacingQuoteIcon;
 export const ReflectionIcon = RightFacingQuoteIcon;
 
 /**
- * 3. Catechism icon: A scroll without bends (flat straight parchment scroll)
+ * 3. Catechism icon: Wooden scroll rollers closed when not hovered,
+ * smoothly unrolling open to reveal the Catechism parchment and cross on hover.
  */
 export const BetterScrollIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
     viewBox="0 0 24 24" 
     fill="none" 
     stroke="currentColor" 
-    strokeWidth="1.8" 
+    strokeWidth="1.75" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
+    aria-label="Catechism Scroll"
   >
-    {/* Top straight dowel rod without bend with round finials */}
-    <line x1="3" y1="4.5" x2="21" y2="4.5" strokeWidth="2" />
-    <circle cx="3" cy="4.5" r="1.2" fill="currentColor" />
-    <circle cx="21" cy="4.5" r="1.2" fill="currentColor" />
+    {/* Unrolled Parchment Body, Sacred Cross & Doctrinal Lines (hidden/collapsed when closed, unfurls on hover) */}
+    <g className="sanctum-scroll-parchment">
+      {/* Flat straight parchment sheet between the two wooden rollers */}
+      <line x1="5.8" y1="5.6" x2="5.8" y2="18.4" strokeWidth="1.6" />
+      <line x1="18.2" y1="5.6" x2="18.2" y2="18.4" strokeWidth="1.6" />
+      <rect x="5.8" y="5.6" width="12.4" height="12.8" fill="currentColor" fillOpacity="0.06" stroke="none" />
 
-    {/* Bottom straight dowel rod without bend with round finials */}
-    <line x1="3" y1="19.5" x2="21" y2="19.5" strokeWidth="2" />
-    <circle cx="3" cy="19.5" r="1.2" fill="currentColor" />
-    <circle cx="21" cy="19.5" r="1.2" fill="currentColor" />
+      {/* Sacred Cross on Catechism scroll */}
+      <line x1="12" y1="7.6" x2="12" y2="13.2" strokeWidth="1.6" />
+      <line x1="9.6" y1="9.6" x2="14.4" y2="9.6" strokeWidth="1.6" />
 
-    {/* Flat straight parchment body without bend or curled curves */}
-    <rect x="5.5" y="4.5" width="13" height="15" fill="none" strokeWidth="1.6" />
+      {/* Straight doctrinal teaching lines */}
+      <line x1="8.6" y1="15.0" x2="15.4" y2="15.0" strokeWidth="1.3" />
+      <line x1="8.6" y1="16.8" x2="13.6" y2="16.8" strokeWidth="1.3" />
+    </g>
 
-    {/* Sacred Cross on Catechism scroll */}
-    <line x1="12" y1="7.5" x2="12" y2="13.5" strokeWidth="1.6" />
-    <line x1="9.5" y1="9.5" x2="14.5" y2="9.5" strokeWidth="1.6" />
+    {/* Top Wooden Scroll Roller & Turned Finials (closed at center by default, rolls up on hover) */}
+    <g className="sanctum-scroll-top">
+      {/* Left & right wooden dowel spindles */}
+      <line x1="2.8" y1="4.5" x2="5.2" y2="4.5" strokeWidth="1.9" />
+      <line x1="18.8" y1="4.5" x2="21.2" y2="4.5" strokeWidth="1.9" />
+      {/* Turned wooden finials */}
+      <circle cx="2.5" cy="4.5" r="1.2" fill="currentColor" stroke="none" />
+      <circle cx="21.5" cy="4.5" r="1.2" fill="currentColor" stroke="none" />
+      {/* Wooden scroll roller barrel */}
+      <rect
+        x="5.2"
+        y="3.3"
+        width="13.6"
+        height="2.4"
+        rx="1.1"
+        fill="currentColor"
+        fillOpacity="0.18"
+        strokeWidth="1.65"
+      />
+    </g>
 
-    {/* Straight doctrinal teaching lines */}
-    <line x1="8.5" y1="15" x2="15.5" y2="15" strokeWidth="1.3" />
-    <line x1="8.5" y1="17" x2="13.5" y2="17" strokeWidth="1.3" />
+    {/* Bottom Wooden Scroll Roller & Turned Finials (closed at center by default, rolls down on hover) */}
+    <g className="sanctum-scroll-bottom">
+      {/* Left & right wooden dowel spindles */}
+      <line x1="2.8" y1="19.5" x2="5.2" y2="19.5" strokeWidth="1.9" />
+      <line x1="18.8" y1="19.5" x2="21.2" y2="19.5" strokeWidth="1.9" />
+      {/* Turned wooden finials */}
+      <circle cx="2.5" cy="19.5" r="1.2" fill="currentColor" stroke="none" />
+      <circle cx="21.5" cy="19.5" r="1.2" fill="currentColor" stroke="none" />
+      {/* Wooden scroll roller barrel */}
+      <rect
+        x="5.2"
+        y="18.3"
+        width="13.6"
+        height="2.4"
+        rx="1.1"
+        fill="currentColor"
+        fillOpacity="0.18"
+        strokeWidth="1.65"
+      />
+    </g>
   </svg>
 );
 
