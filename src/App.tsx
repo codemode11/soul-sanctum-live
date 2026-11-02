@@ -8,6 +8,7 @@ import { RosaryAndChapletView } from './components/RosaryAndChapletView';
 import { NovenaTrackerView } from './components/NovenaTrackerView';
 import { ChurchCalendarView } from './components/ChurchCalendarView';
 import { WisdomTreasuryView } from './components/WisdomTreasuryView';
+import { QuotationsView } from './components/QuotationsView';
 import { CommentaryView } from './components/CommentaryView';
 import { SacredArtView } from './components/SacredArtView';
 import { SacredMusicView } from './components/SacredMusicView';
@@ -619,6 +620,9 @@ export default function App() {
 
             {/* 6. Wisdom of the Saints */}
             {activeTab === 'wisdom' && <WisdomTreasuryView />}
+
+            {/* Quotations */}
+            {activeTab === 'quotations' && <QuotationsView />}
 
             {/* In-App Spiritual Books Reader */}
             {activeTab === 'spiritual-books' && <SpiritualBooksReaderView />}

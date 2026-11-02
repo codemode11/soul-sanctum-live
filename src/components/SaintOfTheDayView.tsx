@@ -88,7 +88,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'O God, who for the evangelization of peoples strengthened the Bishop Saint Anthony Mary Claret with admirable charity and long-suffering, grant, through his intercession, that, seeking the things that are yours, we may earnestly devote ourselves to winning our brothers and sisters for Christ. Through Christ our Lord. Amen.',
     liturgicalColor: 'White',
     wikiSlug: 'Anthony_Mary_Claret',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/San_Antonio_Mar%C3%ADa_Claret.jpg/800px-San_Antonio_Mar%C3%ADa_Claret.jpg',
+    imageUrl: '/images/saints/saint-anthony-mary-claret.jpg',
     companionSaints: [
       {
         name: 'St. Felix of Thibiuca and Companions',
@@ -129,7 +129,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'Lord our God, you united Saints Chrysanthus and Daria in the bond of chaste charity and crowned their fearless witness to the Gospel on the Salarian Way; grant through their prayers that we may hold fast to Christ through every trial of life. Through Christ our Lord. Amen.',
     liturgicalColor: 'Red',
     wikiSlug: 'Chrysanthus_and_Daria',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Chrysanthus_and_Daria_Menologion_of_Basil_II.jpg/800px-Chrysanthus_and_Daria_Menologion_of_Basil_II.jpg',
+    imageUrl: '/images/saints/saints-chrysanthus-daria.jpg',
     companionSaints: [
       {
         name: 'Sts. Crispin and Crispinian',
@@ -170,7 +170,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'Almighty and eternal God, who chose Pope Saint Evaristus to govern and organize your flock in the heart of Rome, grant that through his intercession your Church may ever be faithfully shepherded in truth and charity. Through Christ our Lord. Amen.',
     liturgicalColor: 'Red',
     wikiSlug: 'Pope_Evaristus',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Evaristo_-_Basilica_di_San_Paolo_fuori_le_mura.jpg/800px-Evaristo_-_Basilica_di_San_Paolo_fuori_le_mura.jpg',
+    imageUrl: '/images/saints/pope-saint-evaristus.jpg',
     companionSaints: [
       {
         name: 'Sts. Lucian and Marcian',
@@ -211,7 +211,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'O God, who through the missionary zeal of Saint Frumentius brought the light of the Gospel to the peoples of Ethiopia, grant by his prayers that your Church may proclaim the peace of Christ to the ends of the earth. Through Christ our Lord. Amen.',
     liturgicalColor: 'White',
     wikiSlug: 'Frumentius',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Frumentius.jpg/800px-Frumentius.jpg',
+    imageUrl: '/images/saints/saint-frumentius.jpg',
     companionSaints: [
       {
         name: 'St. Capitolinus and St. Erotheis',
@@ -252,7 +252,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'O God, who by the blessed Apostles have brought us to acknowledge your name, graciously grant, through the intercession of Saints Simon and Jude, that the Church may constantly grow by increase of the peoples who believe in you. Through Christ our Lord. Amen.',
     liturgicalColor: 'Red',
     wikiSlug: 'Simon_the_Zealot',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Peter_Paul_Rubens_-_St_Simon_-_Prado.jpg/800px-Peter_Paul_Rubens_-_St_Simon_-_Prado.jpg',
+    imageUrl: '/images/saints/saint-jude.jpg',
     companionSaints: [
       {
         name: 'St. Faro of Meaux',
@@ -293,7 +293,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'O God, who adorned your Bishop Saint Narcissus with wonderful patience under false accusation and the power of miracles in your sanctuary, grant that we may ever walk in integrity of heart and bear witness to the light of the risen Christ. Through Christ our Lord. Amen.',
     liturgicalColor: 'White',
     wikiSlug: 'Narcissus_of_Jerusalem',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/St._Narcissus_of_Jerusalem.jpg/800px-St._Narcissus_of_Jerusalem.jpg',
+    imageUrl: '/images/saints/saint-narcissus.jpg',
     companionSaints: [
       {
         name: 'St. Chef (Theuderius) of Vienne',
@@ -334,7 +334,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'Almighty God, who gave the martyr Saint Marcellus the courage to prefer allegiance to Christ the Eternal King above all earthly honors, grant that we may never prefer anything to your love and truth. Through Christ our Lord. Amen.',
     liturgicalColor: 'Red',
     wikiSlug: 'Marcellus_of_Tangier',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/San_Marcelo_Centuri%C3%B3n_%28Le%C3%B3n%29.jpg/800px-San_Marcelo_Centuri%C3%B3n_%28Le%C3%B3n%29.jpg',
+    imageUrl: '/images/saints/saint-marcellus.jpg',
     companionSaints: [
       {
         name: 'St. Germanus of Capua',
@@ -375,7 +375,7 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'O God, who made the Bishop Saint Wolfgang shine forth with pastoral zeal, monastic humility, and tender charity toward the poor, grant by his intercession that we may faithfully serve you in our daily calling. Through Christ our Lord. Amen.',
     liturgicalColor: 'White',
     wikiSlug: 'Wolfgang_of_Regensburg',
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Michael_Pacher_004.jpg/800px-Michael_Pacher_004.jpg',
+    imageUrl: '/images/saints/saint-wolfgang.jpg',
     companionSaints: [
       {
         name: 'St. Quentin (Quintinus)',
@@ -394,6 +394,334 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         title: 'Jesuit Lay Brother and Mystic of Majorca',
         dates: '1532–1617',
         shortDescription: "After losing his wife, children, and wool business in Segovia, he entered the Society of Jesus at age thirty-eight as a humble lay brother. For forty-six years he served as porter (doorkeeper) at the College of Montesión in Palma de Majorca, greeting every visitor with 'I come, Lord!' and guiding St. Peter Claver to the missions of South America."
+      }
+    ]
+  },
+  '11-1': {
+    id: 'solemnity-all-saints',
+    name: 'All Saints of Heaven (Omnium Sanctorum)',
+    feastDate: 'November 1',
+    month: 11,
+    day: 1,
+    title: 'Solemnity of All Canonized and Unknown Saints Reigning in Glory',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 1)",
+    patronage: ['The Universal Church', 'All the Baptized', 'Every Christian Vocation'],
+    symbols: ['Multitude in White Robes', 'Palm Branches', 'Lamb of God upon Mount Zion', 'Crowns of Glory'],
+    quote: 'Why should our praise not go out to the saints? The Church of the firstborn awaits us, and though it were indifferent to them, it cannot be indifferent to us who crave their fellowship.',
+    biography: [
+      "As chronicled in Alban Butler's Lives of the Saints for November 1, the Catholic Church in this great Solemnity honors all the Saints reigning together in heavenly glory: first, to give thanks to Almighty God for the graces and crowns He has bestowed upon His elect; second, to stir up our hearts to the fervent imitation of their heroic virtues by contemplating saints of every age, state of life, and nation; and third, to implore the united intercession of the entire heavenly court, including the countless multitudes of holy souls whose names are not inscribed in earthly calendars.",
+      "After Emperor Phocas granted the ancient Roman Pantheon to Pope St. Boniface IV, the Pontiff consecrated it on May 13, 609 as the Basilica of Saint Mary and All Martyrs (Santa Maria ad Martyres), translating twenty-eight wagonloads of martyrs' relics from the Catacombs beneath its high altar.",
+      "Subsequently, Pope Gregory III (731–741) dedicated an oratory in St. Peter's Basilica on November 1 in honor of the Most Holy Savior, the Blessed Virgin Mary, the Holy Apostles, Martyrs, Confessors, and all the Just made perfect throughout the world; and in 835 Pope Gregory IV extended the November 1 Solemnity of All Saints to the entire universal Church."
+    ],
+    prayer: 'Almighty ever-living God, by whose gift we venerate in one celebration the merits of all the Saints, bestow on us, we pray, through the prayers of so many intercessors, an abundance of the reconciliation with you for which we earnestly long. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: "All_Saints'_Day",
+    imageUrl: '/images/saints/all-saints-coronation.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'St. Benignus of Dijon',
+        title: 'Priest, Martyr, and Apostle of Burgundy',
+        dates: '3rd Century',
+        shortDescription: "Early missionary priest from Smyrna sent by St. Polycarp into Gaul, who preached the Gospel at Autun, Langres, and Dijon and suffered martyrdom under Emperor Aurelian. His tomb at Dijon was restored and venerated by St. Gregory of Tours."
+      },
+      {
+        name: 'St. Marcel (Marcellus) of Paris',
+        title: 'Ninth Bishop of Paris and Confessor',
+        dates: 'd. c. 430',
+        shortDescription: "Born of humble parents in Paris, his extraordinary purity, gift of miracles, and pastoral vigilance were chronicled by St. Venantius Fortunatus, and his relics were long treasured in the Cathedral of Notre-Dame de Paris."
+      },
+      {
+        name: 'St. Caesarius of Terracina',
+        title: 'African Deacon and Martyr in Italy',
+        dates: 'd. c. 107 / 300',
+        shortDescription: "African deacon martyred at Terracina in Campania alongside the priest St. Julian for condemning pagan human sacrifices to Apollo; his relics were enshrined in the Imperial Chapel of San Cesareo on the Palatine Hill in Rome."
+      }
+    ]
+  },
+  '11-2': {
+    id: 'commemoration-all-souls-and-victorinus',
+    name: 'All the Faithful Departed & St. Victorinus of Pettau',
+    feastDate: 'November 2',
+    month: 11,
+    day: 2,
+    title: 'Commemoration of All Souls in Purgatory / Bishop, Exegete, and Martyr (d. 304)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 2)",
+    patronage: ['Holy Souls in Purgatory', 'Biblical Commentators', 'Slovenia and Styria'],
+    symbols: ['Angel Lifting Holy Souls to Heaven', 'Eucharistic Chalice and Host', 'Scroll of the Apocalypse', 'Palm of Martyrdom'],
+    quote: 'It is therefore a holy and wholesome thought to pray for the dead, that they may be loosed from sins.',
+    biography: [
+      "As recorded in Alban Butler's Lives of the Saints for November 2, on this day the Catholic Church solemnizes the Commemoration of All the Faithful Departed, instituted on November 2 in the year 998 by St. Odilo, Abbot of Cluny. Immediately after rejoicing on November 1 in the triumph of the Church Triumphant in Heaven, the Church Militant on earth pours forth prayers, almsgiving, indulgences, and three Requiem Masses for the relief of the Church Suffering in Purgatory.",
+      "From the earliest centuries documented by Tertullian, St. Cyprian, St. Cyril of Jerusalem, St. Ambrose, St. John Chrysostom, and St. Augustine (remembering his dying mother St. Monica's plea at Ostia: 'Lay this body anywhere; only this I beg of you, that you remember me at the altar of the Lord'), the Church has offered the adorable Sacrifice of the Mass so that souls departed in grace but not yet fully purified may enter the beatific vision.",
+      "The principal individual saint commemorated by Alban Butler on November 2 is St. Victorinus, Bishop of Pettau in Pannonia (modern Ptuj, Slovenia) and Martyr. Celebrated by St. Jerome in De Viris Illustribus as the earliest Latin biblical exegete, Victorinus authored commentaries on Genesis, Exodus, Leviticus, Isaiah, Ezekiel, Ecclesiastes, the Canticle of Canticles, and the Apocalypse before sealing his episcopal witness with martyrdom in 304 under Emperor Diocletian."
+    ],
+    prayer: 'Listen kindly to our prayers, O Lord, and, as our faith in your Son, raised from the dead, is deepened, so may our hope of resurrection for your departed servants also find fulfillment. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.',
+    liturgicalColor: 'Violet',
+    wikiSlug: 'Victorinus_of_Pettau',
+    imageUrl: '/images/saints/all-souls-purgatory.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'St. Marcian of Chalcis',
+        title: 'Anchoret and Confessor in Syria',
+        dates: 'd. c. 387',
+        shortDescription: "Syrian nobleman who forsook the imperial court to enclose himself in a tiny desert cell near Chalcis, eating only three ounces of bread at sunset while spending the nights chanting the Psalms and defending Nicene orthodoxy."
+      },
+      {
+        name: 'St. Vulgan of Arras',
+        title: 'Irish Missionary and Recluse',
+        dates: 'd. c. 704',
+        shortDescription: "Celtic missionary who sailed from the British Isles to Boulogne and spent his final years as a walled-in contemplative recluse adjoining the Abbey of St. Vaast at Arras, counseling pilgrims in the Gospel."
+      },
+      {
+        name: 'St. Malachy of Armagh',
+        title: 'Archbishop of Armagh and Papal Legate',
+        dates: '1094–1148',
+        shortDescription: "Restorer of Bangor Abbey and Archbishop of Armagh who renewed the Irish Church and died on November 2 at Clairvaux Abbey in the arms of his friend and biographer St. Bernard of Clairvaux."
+      }
+    ]
+  },
+  '11-3': {
+    id: 'saint-martin-de-porres',
+    name: 'St. Martin de Porres',
+    feastDate: 'November 3',
+    month: 11,
+    day: 3,
+    title: 'Dominican Lay Brother and Patron of Social Justice (1579–1639)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 3)",
+    patronage: ['Mixed-Race Peoples', 'Social Justice', 'Public Health Workers', 'Barbers', 'Peru'],
+    symbols: ['Dominican Habit and Rosary', 'Humble Broom', 'Crucifix', 'Dog, Cat, and Mouse Eating Together'],
+    quote: 'Compassion, my dear Brother, is preferable to cleanliness. With a little soap I can easily clean my bed, but even with a flood of tears I could never wash from my soul the stain that harshness toward the unfortunate would leave there.',
+    biography: [
+      "As recorded in Butler's Lives of the Saints for November 3, St. Martin de Porres was born in Lima, Peru, on December 9, 1579, the son of Don Juan de Porres, a Spanish nobleman of Alcántara, and Ana Velázquez, a freedwoman of African and Native Panamanian descent. Apprenticed in youth to a barber-surgeon and apothecary, Martin acquired medical skill that he placed entirely at the service of the poor.",
+      "Entering the Dominican Priory of the Holy Rosary in Lima first as a tertiary donado and later as a professed lay brother, Martin rejoiced in the humblest sweeping and menial tasks of the convent while serving as infirmarian and almoner to the entire city. He spent hours each night in ecstatic prayer before the Crucifix and the Blessed Sacrament, sometimes surrounded by heavenly light.",
+      "Martin founded the Orphanage and School of Santa Cruz for homeless children, fed nearly two hundred destitute souls daily from the priory gates, healed the sick through prayer and the Sign of the Cross, and was revered across Lima as 'Martin of Charity' until his holy death on November 3, 1639."
+    ],
+    prayer: 'O God, who led Saint Martin de Porres by the path of humility to heavenly glory, grant that we may so follow his radiant example in this life as to merit to be exalted with him in heaven. Through our Lord Jesus Christ, your Son. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: 'Martin_de_Porres',
+    imageUrl: '/images/saints/saint-martin-de-porres.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'St. Winifred (Wenefride) of Wales',
+        title: 'Virgin and Martyr',
+        dates: '7th Century',
+        shortDescription: "Noble Welsh maiden instructed by her uncle St. Beuno. Beheaded by Prince Caradoc for defending her vow of chastity and miraculously restored through St. Beuno's prayers; the healing spring where her head fell became the shrine of St. Winefride's Well."
+      },
+      {
+        name: 'St. Hubert of Liège',
+        title: 'Bishop of Liège and Apostle of the Ardennes',
+        dates: 'c. 656–727',
+        shortDescription: "Courtier of Aquitaine converted on Good Friday while hunting in the Ardennes forest, who became the disciple and successor of the martyred St. Lambert at Maastricht and first Bishop of Liège."
+      },
+      {
+        name: 'St. Papoul (Papulus) of Toulouse',
+        title: 'Missionary Priest and Martyr',
+        dates: 'd. c. 300',
+        shortDescription: "Companion of St. Saturninus of Toulouse who evangelized southern Gaul and suffered martyrdom during the Diocletian persecution at Saint-Papoul."
+      }
+    ]
+  },
+  '11-4': {
+    id: 'saint-charles-borromeo',
+    name: 'St. Charles Borromeo',
+    feastDate: 'November 4',
+    month: 11,
+    day: 4,
+    title: 'Cardinal Archbishop of Milan and Counter-Reformation Pastor (1538–1584)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 4)",
+    patronage: ['Bishops', 'Seminarians', 'Catechists', 'Spiritual Directors', 'Lombardy'],
+    symbols: ['Cardinal Galero and Red Robes', 'Penitential Rope Around Neck', 'Crucifix', 'Motto "Humilitas"'],
+    quote: 'Look to yourselves first, my brother priests: be sure that you first preach by the way you live. And if you must watch over so many souls, never neglect your own soul in prayer.',
+    biography: [
+      "As chronicled in Alban Butler's Lives of the Saints for November 4, St. Charles Borromeo was born on October 2, 1538 in the Castle of Arona upon Lake Maggiore, the son of Count Gilbert Borromeo and Margaret de' Medici. Called to Rome at twenty-two by his uncle Pope Pius IV and created Cardinal and Archbishop of Milan, he was the principal instrument in bringing the Council of Trent to its triumphant completion in 1563 and supervising the Roman Catechism.",
+      "Insisting on residing personally in Milan—which had not seen a resident archbishop in eighty years—Charles held six provincial councils and eleven diocesan synods, founded the first Tridentine seminaries, established the Confraternity of Christian Doctrine with 740 Sunday schools and over 40,000 pupils, and visited the most remote Alpine valleys on foot.",
+      "During the Great Plague of Milan (1576–1578), when the civic authorities fled, Charles remained in the stricken city, selling his principality and even his own bed to feed 60,000 poor daily, walking barefoot in penitential processions with a rope around his neck and the Crucifix in his hands, and personally administering Viaticum to the dying until he wore out his life at age forty-six on November 3–4, 1584."
+    ],
+    prayer: 'Preserve in your People, we pray, O Lord, the spirit with which you filled the Bishop Saint Charles Borromeo, that your Church may be constantly renewed and, by conforming herself to the likeness of Christ, may show his face to the world. Through Christ our Lord. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: 'Charles_Borromeo',
+    imageUrl: '/images/saints/saint-charles-borromeo.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'Sts. Vitalis and Agricola',
+        title: 'Martyrs of Bologna',
+        dates: 'd. c. 304',
+        shortDescription: "Vitalis, a Christian slave at Bologna, was tortured to death first under Diocletian to encourage his gentle master Agricola, who followed him into martyrdom nailed to a cross. St. Ambrose assisted at the solemn translation of their relics in 393."
+      },
+      {
+        name: 'St. Joannicius the Great',
+        title: 'Abbot of Mount Olympus in Bithynia',
+        dates: '752–846',
+        shortDescription: "Former soldier of the Byzantine guard who spent fifty years as a hermit and abbot on Mount Olympus, famed for miracles and his defense of sacred icons."
+      },
+      {
+        name: 'St. Emeric (Imre) of Hungary',
+        title: 'Royal Prince and Confessor',
+        dates: 'c. 1007–1031',
+        shortDescription: "Son of King St. Stephen I of Hungary and pupil of St. Gerard Sagredo, who lived in perpetual chastity and rose every midnight to chant the Psalms before the altar."
+      }
+    ]
+  },
+  '11-5': {
+    id: 'saints-zechariah-and-elizabeth',
+    name: 'Sts. Zechariah and Elizabeth',
+    feastDate: 'November 5',
+    month: 11,
+    day: 5,
+    title: 'Parents of St. John the Baptist (1st Century)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 5)",
+    patronage: ['Expectant Mothers', 'Priests in Liturgical Service', 'Elderly Married Couples'],
+    symbols: ['Golden Censer of the Temple', 'Writing Tablet', 'Scroll of the Benedictus'],
+    quote: 'Blessed art thou among women, and blessed is the fruit of thy womb. And whence is this to me, that the mother of my Lord should come to me?',
+    biography: [
+      "As recorded in Alban Butler's Lives of the Saints for November 5, both Zechariah, a priest of the priestly division of Abijah, and his wife Elizabeth, a descendant of Aaron, are praised by the Holy Spirit in the Gospel of St. Luke as 'righteous before God, walking in all the commandments and ordinances of the Lord blamelessly' (Luke 1:6).",
+      "In their advanced age, while Zechariah offered incense at the golden altar within the Temple of Jerusalem, the Archangel Gabriel announced the birth of St. John the Baptist, the Precursor of the Lord. When the Blessed Virgin Mary visited Elizabeth in the hill country of Judea, the child leaped in Elizabeth's womb and she hailed Mary as the Mother of her Lord.",
+      "At John's circumcision, Zechariah wrote upon a tablet, 'His name is John,' and immediately his speech was restored to prophesy the inspired Canticle of Zechariah (the Benedictus), proclaimed every morning by the universal Church at Lauds."
+    ],
+    prayer: 'O God, who bestowed upon Saints Zechariah and Elizabeth the grace to walk blamelessly in your commandments and to welcome the visitation of the Mother of your Son, grant that we too may rejoice in the dawn from on high that guides our feet into the way of peace. Through Christ our Lord. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: 'Elizabeth_(biblical_figure)',
+    imageUrl: '/images/saints/saints-zechariah-elizabeth.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'St. Bertille of Chelles',
+        title: 'Benedictine Abbess',
+        dates: 'd. c. 692',
+        shortDescription: "Noble Frankish nun trained at Jouarre who was chosen by Queen St. Bathildis as first Abbess of the royal Abbey of Chelles, governing it for forty-six years."
+      },
+      {
+        name: 'Sts. Galation and Episteme',
+        title: 'Spouses and Martyrs',
+        dates: 'd. c. 250',
+        shortDescription: "Christian husband of Emesa who converted his noble pagan bride Episteme; living in monastic continence near Mount Sinai, they suffered martyrdom together under Emperor Decius."
+      },
+      {
+        name: 'St. Fibicius of Trier',
+        title: 'Abbot and Bishop of Trier',
+        dates: 'd. c. 500',
+        shortDescription: "Abbot of St. Maximinus who was elected Bishop of Trier and restored Christian faith and charity across the Rhineland."
+      }
+    ]
+  },
+  '11-6': {
+    id: 'saint-leonard-of-noblac',
+    name: 'St. Leonard of Noblac',
+    feastDate: 'November 6',
+    month: 11,
+    day: 6,
+    title: 'Hermit and Confessor, Patron of Prisoners (d. c. 559)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 6)",
+    patronage: ['Prisoners and Captives', 'Mothers in Childbirth', 'Blacksmiths', 'Farmers'],
+    symbols: ['Broken Fetters and Chains', 'Benedictine Habit', 'Abbot Crosier'],
+    quote: 'He whose heart is set free by the grace of Christ counts it his highest joy to loose the chains of his suffering brethren.',
+    biography: [
+      "As recorded in Butler's Lives of the Saints for November 6, St. Leonard was a Frankish nobleman at the court of King Clovis I, converted to the Catholic Faith and instructed by St. Remigius, Archbishop of Reims. Imitating his master's charity, Leonard constantly visited prisons to instruct captives and obtained from the king the privilege of freeing those who showed true repentance.",
+      "Declining a bishopric and royal honors, Leonard withdrew first to the monastery of Micy near Orléans and then into the forest of Noblac near Limoges, where a spring burst forth at his prayer.",
+      "Freed prisoners flocked to his woodland hermitage to hang up their broken chains in thanksgiving and begin a new life of prayer and honest labor, forming the renowned Abbey of Saint-Léonard-de-Noblat."
+    ],
+    prayer: 'O God, who vouchsafed to make Blessed Leonard your Confessor shine forth with miracles in loosing the chains of captives, grant through his prayers that we may be freed from the fetters of sin and serve you in the glorious freedom of your children. Through Christ our Lord. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: 'Leonard_of_Noblac',
+    imageUrl: '/images/saints/saint-leonard-noblac.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'St. Winoc of Bergues',
+        title: 'Abbot in Flanders',
+        dates: 'd. c. 717',
+        shortDescription: "Breton prince who entered Sithiu Abbey under St. Bertin and founded the monastery of Wormhout near Dunkirk, grinding grain in his old age to feed the poor."
+      },
+      {
+        name: 'St. Illtud (Iltutus) of Wales',
+        title: 'Abbot and Master of Monastic Schools',
+        dates: 'd. c. 540',
+        shortDescription: "Founder of the famed monastic school of Llanilltud Fawr in Glamorgan, where he formed St. David, St. Samson, St. Magloire, and St. Gildas."
+      },
+      {
+        name: 'St. Melaine of Rennes',
+        title: 'Bishop and Confessor',
+        dates: 'd. c. 530',
+        shortDescription: "Bishop of Rennes and counselor to King Clovis I who presided at the First Council of Orléans in 511 and uprooted the last remnants of paganism in Brittany."
+      }
+    ]
+  },
+  '11-7': {
+    id: 'saint-willibrord-of-utrecht',
+    name: 'St. Willibrord of Utrecht',
+    feastDate: 'November 7',
+    month: 11,
+    day: 7,
+    title: 'First Bishop of Utrecht and Apostle of the Frisians (c. 658–739)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 7)",
+    patronage: ['The Netherlands', 'Luxembourg', 'Epilepsy Sufferers'],
+    symbols: ['Model of Utrecht Cathedral', 'Missionary Cross', 'Episcopal Staff'],
+    quote: 'In the Name of our Lord Jesus Christ, Clement Willibrord came across the sea into France in the year 690, and was ordained archbishop by the Apostolic man, Pope Sergius.',
+    biography: [
+      "As recorded in Butler's Lives of the Saints for November 7 (from Venerable Bede and Alcuin), St. Willibrord was born in Northumbria around 658, educated at Ripon Abbey under St. Wilfrid, and spent twelve years in Ireland studying sacred letters under St. Egbert.",
+      "In 690 he sailed with eleven companions to evangelize the pagan Frisians at the mouth of the Rhine. Twice journeying to Rome, he was consecrated Archbishop of the Frisians by Pope St. Sergius I in 695 and established his see at Utrecht.",
+      "Founding the great Abbey of Echternach in Luxembourg and assisted for three years by St. Boniface, Willibrord labored for nearly half a century converting tribes across Holland, Friesland, and Denmark until his peaceful death on November 7, 739."
+    ],
+    prayer: 'O God, who sent Saint Willibrord to proclaim the good news of your Kingdom and build up your Church among the peoples of Frisia, grant that through his intercession your Church may never lack zealous heralds of the Gospel. Through Christ our Lord. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: 'Willibrord',
+    imageUrl: '/images/saints/saint-willibrord.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'St. Werenfrid of Elst',
+        title: 'Priest and Co-Apostle of Friesland',
+        dates: 'd. c. 760',
+        shortDescription: "English monk and missionary companion of St. Willibrord who preached the Gospel at Elst and Westervoort in Gelderland."
+      },
+      {
+        name: 'St. Prosdocimus of Padua',
+        title: 'First Bishop of Padua',
+        dates: 'd. c. 100',
+        shortDescription: "Disciple ordained bishop by St. Peter the Apostle and sent to evangelize Venetia, founding the Church of Padua and baptizing St. Justina."
+      },
+      {
+        name: 'St. Engelbert of Cologne',
+        title: 'Archbishop of Cologne and Martyr',
+        dates: 'c. 1185–1225',
+        shortDescription: "Archbishop of Cologne and protector of the poor who was martyred while defending the rights and nuns of Essen Abbey."
+      }
+    ]
+  },
+  '11-8': {
+    id: 'pope-saint-leo-great-and-four-crowned',
+    name: 'The Four Crowned Martyrs & St. Godfrey of Amiens',
+    feastDate: 'November 8',
+    month: 11,
+    day: 8,
+    title: 'Martyrs of Rome and Pannonia (d. 306) / Bishop of Amiens (1066–1115)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (November 8)",
+    patronage: ['Sculptors and Stonecutters', 'Masons and Builders', 'Amiens'],
+    symbols: ['Four Martyr Crowns', 'Sculptor Mallet and Chisel', 'Palm Branches'],
+    quote: 'We will never fashion an image of a false idol with hands that have received the Body of Christ; for we adore the one living God who made heaven and earth.',
+    biography: [
+      "As recorded in Butler's Lives of the Saints for November 8, the Four Crowned Brothers (Santi Quattro Coronati)—Severus, Severianus, Carpophorus, and Victorinus—were four Christian brothers in Rome who suffered martyrdom under Emperor Diocletian, commemorated together with five Pannonian Christian sculptors (Claudius, Castorius, Symphorianus, Nicostratus, and Simplicius) who carved marble columns for the Emperor yet refused to sculpt a pagan statue of Aesculapius.",
+      "Martyred in 306, their relics are enshrined in the ancient Basilica of Santi Quattro Coronati on the Caelian Hill in Rome.",
+      "On this same day Alban Butler chronicles the life of St. Godfrey (Geoffrey), Benedictine Abbot of Nogent and Bishop of Amiens (1066–1115), who lived in monastic austerity, defended the poor, and died peacefully at the Abbey of St. Crispin in Soissons."
+    ],
+    prayer: 'Grant, we pray, almighty God, that the glorious intercession of the Four Crowned Martyrs and Bishop Saint Godfrey, who stood firm in confessing your name, may strengthen us in true faith and charity. Through Christ our Lord. Amen.',
+    liturgicalColor: 'Red',
+    wikiSlug: 'Four_Crowned_Martyrs',
+    imageUrl: '/images/saints/pope-saint-leo-great.jpg?v=20261102',
+    companionSaints: [
+      {
+        name: 'St. Willehad of Bremen',
+        title: 'First Bishop of Bremen and Apostle of Saxony',
+        dates: 'd. 789',
+        shortDescription: "Learned Northumbrian missionary who crossed into Frisia and Saxony to continue the work of St. Boniface, becoming first Bishop of Bremen in 787."
+      },
+      {
+        name: 'Bl. John Duns Scotus',
+        title: 'Franciscan Priest and Subtle Doctor',
+        dates: 'c. 1266–1308',
+        shortDescription: "Franciscan theologian at Oxford, Paris, and Cologne whose celebrated defense of the Immaculate Conception of the Blessed Virgin Mary prepared the way for the dogmatic definition of 1854."
+      },
+      {
+        name: 'St. Cybi of Holyhead',
+        title: 'Cornish Bishop and Abbot in Wales',
+        dates: '6th Century',
+        shortDescription: "Cousin of St. David of Wales who founded the monastery of Caer Gybi (Holyhead) on Anglesey."
       }
     ]
   }
@@ -577,12 +905,13 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
     }
 
     const fetchSaintOfTheDayPortrait = async () => {
-      const slug =
+      const rawSlug =
         selectedSaint.wikiSlug ||
         selectedSaint.name
           .replace(/^(Sts\.|St\.|Pope St\.|Saints|Saint)\s+/i, '')
           .trim()
           .replace(/\s+/g, '_');
+      const slug = rawSlug.includes('%') ? decodeURIComponent(rawSlug) : rawSlug;
 
       try {
         const response = await fetch(

@@ -770,6 +770,425 @@ Rather, when you are invited, go and take the lowest place so that when the host
       title: 'Choose the Lowest Place with Christ and Mary',
       content: `On the eve of All Saints' Day, Our Lord hands us the golden key to the heavenly banquet: humility. "Everyone who exalts himself will be humbled, but the one who humbles himself will be exalted." When we choose the lowest place in imitation of Jesus and His lowly Handmaid Mary, the Heavenly Host Himself lifts us up to the table of His Saints.`
     }
+  },
+
+  // November 1, 2026: Solemnity of All Saints
+  '2026-11-01': {
+    id: 'reading-2026-11-01',
+    date: '2026-11-01',
+    liturgicalDay: 'Solemnity of All Saints (Omnium Sanctorum)',
+    liturgicalSeason: 'Solemnity of the Universal Church',
+    liturgicalColor: 'white',
+    liturgicalRank: 'Solemnity',
+    firstReading: {
+      citation: 'Revelation 7:2-4, 9-14',
+      theme: 'After this I had a vision of a great multitude, which no one could count, from every nation, race, people, and tongue',
+      text: `I, John, saw another angel come up from the East, holding the seal of the living God. He cried out in a loud voice to the four angels who were given power to damage the land and the sea, "Do not damage the land or the sea or the trees until we put the seal on the foreheads of the servants of our God." I heard the number of those who had been marked with the seal, one hundred and forty-four thousand marked from every tribe of the children of Israel.
+
+After this I had a vision of a great multitude, which no one could count, from every nation, race, people, and tongue. They stood before the throne and before the Lamb, wearing white robes and holding palm branches in their hands. They cried out in a loud voice: "Salvation comes from our God, who is seated on the throne, and from the Lamb."
+
+All the angels stood around the throne and around the elders and the four living creatures. They prostrated themselves before the throne, worshiped God, and exclaimed: "Amen. Blessing and glory, wisdom and thanksgiving, honor, power, and might be to our God forever and ever. Amen." Then one of the elders spoke up and said to me, "Who are these wearing white robes, and where did they come from?" I said to him, "My lord, you are the one who knows." He said to me, "These are the ones who have survived the time of great distress; they have washed their robes and made them white in the Blood of the Lamb."`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 24:1bc-2, 3-4ab, 5-6',
+      antiphon: 'Lord, this is the people that longs to see your face.',
+      verses: [
+        'The LORD\'s are the earth and its fullness; the world and those who dwell in it. For he founded it upon the seas and established it upon the rivers.',
+        'Who can ascend the mountain of the LORD? or who may stand in his holy place? One whose hands are sinless, whose heart is clean, who desires not what is vain.',
+        'He shall receive a blessing from the LORD, a reward from God his savior. Such is the race that seeks for him, that seeks the face of the God of Jacob.'
+      ]
+    },
+    secondReading: {
+      citation: '1 John 3:1-3',
+      text: `Beloved: See what love the Father has bestowed on us that we may be called the children of God. Yet so we are. The reason the world does not know us is that it did not know him. Beloved, we are God's children now; what we shall be has not yet been revealed. We do know that when it is revealed we shall be like him, for we shall see him as he is. Everyone who has this hope based on him makes himself pure, as he is pure.`
+    },
+    alleluia: {
+      verse: 'Come to me, all you who labor and are burdened, and I will give you rest, says the Lord.'
+    },
+    gospel: {
+      citation: 'Matthew 5:1-12a',
+      text: `When Jesus saw the crowds, he went up the mountain, and after he had sat down, his disciples came to him. He began to teach them, saying:
+
+"Blessed are the poor in spirit, for theirs is the kingdom of heaven.
+Blessed are they who mourn, for they will be comforted.
+Blessed are the meek, for they will inherit the land.
+Blessed are they who hunger and thirst for righteousness, for they will be satisfied.
+Blessed are the merciful, for they will be shown mercy.
+Blessed are the clean of heart, for they will see God.
+Blessed are the peacemakers, for they will be called children of God.
+Blessed are they who are persecuted for the sake of righteousness, for theirs is the kingdom of heaven.
+Blessed are you when they insult you and persecute you and utter every kind of evil against you falsely because of me. Rejoice and be glad, for your reward will be great in heaven."`
+    },
+    reflection: {
+      author: 'St. Bernard of Clairvaux and St. Bede the Venerable',
+      title: 'The Heavenly Jerusalem and the Ladder of the Beatitudes',
+      content: `On this radiant Solemnity of All Saints, Holy Mother Church lifts our eyes to the Heavenly Jerusalem, where a countless multitude from every nation stands before the Throne and the Lamb clothed in robes washed white in His Precious Blood. How did these brothers and sisters of ours ascend to such glory? Through the eight Beatitudes proclaimed by Jesus on the Mount! The Beatitudes are the portrait of Christ Himself and the biography of every Saint. Let us call upon the intercession of all the Saints today, that walking in humility, mercy, and purity of heart, we may one day behold the face of the living God.`
+    }
+  },
+
+  // November 2, 2026: The Commemoration of All the Faithful Departed (All Souls' Day)
+  '2026-11-02': {
+    id: 'reading-2026-11-02',
+    date: '2026-11-02',
+    liturgicalDay: 'The Commemoration of All the Faithful Departed (All Souls\' Day)',
+    liturgicalSeason: 'Commemoration of All Souls',
+    liturgicalColor: 'violet',
+    liturgicalRank: 'Solemnity',
+    firstReading: {
+      citation: 'Wisdom 3:1-9',
+      theme: 'As sacrificial offerings he took them to himself',
+      text: `The souls of the just are in the hand of God, and no torment shall touch them. They seemed, in the view of the foolish, to be dead; and their passing away was thought an affliction and their going forth from us, utter destruction. But they are in peace.
+
+For if before men, indeed, they be punished, yet is their hope full of immortality; chastised a little, they shall be greatly blessed, because God tried them and found them worthy of himself. As gold in the furnace, he proved them, and as sacrificial offerings he took them to himself. In the time of their visitation they shall shine, and shall dart about as sparks through stubble; they shall judge nations and rule over peoples, and the LORD shall be their King forever. Those who trust in him shall understand truth, and the faithful shall abide with him in love: because grace and mercy are with his holy ones, and his care is with his elect.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 23:1-3a, 3b-4, 5, 6',
+      antiphon: 'The Lord is my shepherd; there is nothing I shall want.',
+      verses: [
+        'The LORD is my shepherd; I shall not want. In verdant pastures he gives me repose; beside restful waters he leads me; he refreshes my soul.',
+        'He guides me in right paths for his name\'s sake. Even though I walk in the dark valley I fear no evil; for you are at my side with your rod and your staff that give me courage.',
+        'You spread the table before me in the sight of my foes; you anoint my head with oil; my cup overflows.',
+        'Only goodness and kindness follow me all the days of my life; and I shall dwell in the house of the LORD for years to come.'
+      ]
+    },
+    secondReading: {
+      citation: 'Romans 6:3-9',
+      text: `Brothers and sisters: Are you unaware that we who were baptized into Christ Jesus were baptized into his death? We were indeed buried with him through baptism into death, so that, just as Christ was raised from the dead by the glory of the Father, we too might walk in newness of life.
+
+For if we have grown into union with him through a death like his, we shall also be united with him in the resurrection. We know that our old self was crucified with him, so that our sinful body might be done away with, that we might no longer be in slavery to sin. For a dead person has been absolved from sin. If, then, we have died with Christ, we believe that we shall also live with him. We know that Christ, raised from the dead, dies no more; death no longer has power over him.`
+    },
+    alleluia: {
+      verse: 'Come, you who are blessed by my Father, says the Lord; inherit the kingdom prepared for you from the foundation of the world.'
+    },
+    gospel: {
+      citation: 'John 6:37-40',
+      text: `Jesus said to the crowds:
+"Everything that the Father gives me will come to me, and I will not reject anyone who comes to me, because I came down from heaven not to do my own will but the will of the one who sent me. And this is the will of the one who sent me, that I should not lose anything of what he gave me, but that I should raise it on the last day. For this is the will of my Father, that everyone who sees the Son and believes in him may have eternal life, and I shall raise him on the last day."`
+    },
+    reflection: {
+      author: 'St. Augustine of Hippo, St. Odilo of Cluny, and St. John Chrysostom',
+      title: 'Remembering the Faithful Departed at the Altar of the Lamb',
+      content: `"This is the will of my Father, that everyone who sees the Son and believes in him may have eternal life, and I shall raise him on the last day" (John 6:40). On All Souls' Day, the Church Militant on earth unites in tender charity to intercede for the Church Suffering in Purgatory. As St. Monica begged her son St. Augustine on her deathbed at Ostia, "Only this I ask of you, that you remember me at the altar of the Lord, wherever you may be." Through the Holy Sacrifice of the Mass, the Plenary Indulgence of visiting the church or cemetery during the November Octave, and our prayers and alms, we hasten the hour when our departed loved ones behold the beatific vision face to face.`
+    }
+  },
+
+  // November 3, 2026: Tuesday of the Thirty-First Week in Ordinary Time (Optional Memorial: St. Martin de Porres)
+  '2026-11-03': {
+    id: 'reading-2026-11-03',
+    date: '2026-11-03',
+    liturgicalDay: 'Tuesday of the Thirty-First Week in Ordinary Time / Optional Memorial of St. Martin de Porres, Religious',
+    liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
+    liturgicalColor: 'green',
+    liturgicalRank: 'Optional Memorial',
+    firstReading: {
+      citation: 'Philippians 2:5-11',
+      theme: 'Christ Jesus emptied himself, taking the form of a slave; therefore God greatly exalted him',
+      text: `Brothers and sisters:
+Have among yourselves the same attitude that is also yours in Christ Jesus,
+Who, though he was in the form of God,
+did not regard equality with God something to be grasped.
+Rather, he emptied himself,
+taking the form of a slave,
+coming in human likeness;
+and found human in appearance,
+he humbled himself,
+becoming obedient to death, even death on a cross.
+Because of this, God greatly exalted him
+and bestowed on him the name
+that is above every name,
+that at the name of Jesus
+every knee should bend,
+of those in heaven and on earth and under the earth,
+and every tongue confess that
+Jesus Christ is Lord,
+to the glory of God the Father.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 22:26b-27, 28-30ab, 30e, 31-32',
+      antiphon: 'I will praise you, Lord, in the assembly of your people.',
+      verses: [
+        'I will fulfill my vows before those who fear him. The lowly shall eat their fill; they who seek the LORD shall praise him: "May your hearts be ever merry!"',
+        'All the ends of the earth shall remember and turn to the LORD; all the families of the nations shall bow down before him.',
+        'For dominion is the LORD\'s, and he rules the nations. To him alone shall bow down all who sleep in the earth.',
+        'To him my soul shall live; my descendants shall serve him. Let the coming generation be told of the LORD that they may proclaim to a people yet to be born the justice he has shown.'
+      ]
+    },
+    alleluia: {
+      verse: 'Come to me, all you who labor and are burdened, and I will give you rest, says the Lord.'
+    },
+    gospel: {
+      citation: 'Luke 14:15-24',
+      text: `One of his fellow guests on hearing this said to Jesus, "Blessed is the one who will dine in the Kingdom of God." He replied to him, "A man gave a great dinner to which he invited many. When the time for the dinner came, he dispatched his servant to say to those invited, 'Come, everything is now ready.' But one by one, they all began to excuse themselves. The first said to him, 'I have purchased a field and must go to examine it; I ask you, consider me excused.' And another said, 'I have purchased five yoke of oxen and am on my way to evaluate them; I ask you, consider me excused.' And another said, 'I have just married a woman, and therefore I cannot come.'
+
+The servant went and reported this to his master. Then the master of the house in a rage commanded his servant, 'Go out quickly into the streets and alleys of the town and bring in here the poor and the crippled, the blind and the lame.' The servant reported, 'Sir, your orders have been carried out and still there is room.' The master then ordered the servant, 'Go out to the highways and hedgerows and make people come in that my home may be filled. For, I tell you, none of those men who were invited will taste my dinner.'"`
+    },
+    reflection: {
+      author: 'Pope St. Gregory the Great and St. Martin de Porres',
+      title: 'Come, Everything Is Now Ready: The Eucharistic Banquet of Humility',
+      content: `In today's First Reading (Philippians 2:5-11), St. Paul chants the great Christological hymn of divine kenosis: Christ Jesus emptied Himself, taking the form of a servant and becoming obedient unto the Cross. In the Gospel (Luke 14:15-24), the Master prepares His great Eucharistic and heavenly supper, yet the proud and worldly excuse themselves—absorbed in fields, oxen, and earthly attachments—while the poor, the crippled, the blind, and the lowly hunger for His table. On this feast of St. Martin de Porres, who fed the destitute of Lima at the priory door and knelt for hours before the Tabernacle, let us never allow worldly cares to excuse us from the Banquet of the Lamb.`
+    }
+  },
+
+  // November 4, 2026: Memorial of St. Charles Borromeo, Bishop (Wednesday of the 31st Week in Ordinary Time)
+  '2026-11-04': {
+    id: 'reading-2026-11-04',
+    date: '2026-11-04',
+    liturgicalDay: 'Memorial of St. Charles Borromeo, Bishop (Wednesday of the Thirty-First Week in Ordinary Time)',
+    liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
+    liturgicalColor: 'white',
+    liturgicalRank: 'Memorial',
+    firstReading: {
+      citation: 'Philippians 2:12-18',
+      theme: 'Work out your salvation with fear and trembling, shining like lights in the world',
+      text: `Beloved:
+So then, my beloved, obedient as you have always been, not only when I am present but all the more now when I am absent, work out your salvation with fear and trembling. For God is the one who, for his good purpose, works in you both to desire and to work.
+
+Do everything without grumbling or questioning, that you may be blameless and innocent, children of God without blemish in the midst of a crooked and perverse generation, among whom you shine like lights in the world, as you hold on to the word of life, so that my boast for the day of Christ may be that I did not run in vain or labor in vain. But, even if I am poured out as a libation upon the sacrificial service of your faith, I rejoice and share my joy with all of you. In the same way you also should rejoice and share your joy with me.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 27:1, 4, 13-14',
+      antiphon: 'The Lord is my light and my salvation.',
+      verses: [
+        'The LORD is my light and my salvation; whom should I fear? The LORD is my life\'s refuge; of whom should I be afraid?',
+        'One thing I ask of the LORD; this I seek: To dwell in the house of the LORD all the days of my life, That I may gaze on the loveliness of the LORD and contemplate his temple.',
+        'I believe that I shall see the bounty of the LORD in the land of the living. Wait for the LORD with courage; be stouthearted, and wait for the LORD.'
+      ]
+    },
+    alleluia: {
+      verse: 'If you are insulted for the name of Christ, blessed are you, for the Spirit of God rests upon you.'
+    },
+    gospel: {
+      citation: 'Luke 14:25-33',
+      text: `Great crowds were traveling with Jesus, and he turned and addressed them, "If anyone comes to me without hating his father and mother, wife and children, brothers and sisters, and even his own life, he cannot be my disciple. Whoever does not carry his own cross and come after me cannot be my disciple.
+
+Which of you wishing to construct a tower does not first sit down and calculate the cost to see if there is enough for its completion? Otherwise, after laying the foundation and finding himself unable to finish the work the onlookers should laugh at him and say, 'This one began to build but did not have the resources to finish.' Or what king marching into battle would not first sit down and decide whether with ten thousand troops he can successfully oppose another king advancing upon him with twenty thousand troops? But if not, while he is still far away, he will send a delegation to ask for peace terms. In the same way, everyone of you who does not renounce all his possessions cannot be my disciple."`
+    },
+    reflection: {
+      author: 'St. Charles Borromeo and St. Basil the Great',
+      title: 'Calculating the Cost of the Cross and Shining Like Lights in the World',
+      content: `"Whoever does not carry his own cross and come after me cannot be my disciple" (Luke 14:27). On this Memorial of St. Charles Borromeo, Cardinal Archbishop of Milan, we behold a shepherd who calculated the cost of discipleship and gave everything for Christ. Selling his princely estates to feed sixty thousand poor during the Great Plague of Milan and walking barefoot through the streets carrying the Crucifix, Charles lived St. Paul's words to the Philippians: "Even if I am poured out as a libation upon the sacrificial service of your faith, I rejoice." Let us embrace our daily cross with undivided love.`
+    }
+  },
+
+  // November 5, 2026: Thursday of the Thirty-First Week in Ordinary Time
+  '2026-11-05': {
+    id: 'reading-2026-11-05',
+    date: '2026-11-05',
+    liturgicalDay: 'Thursday of the Thirty-First Week in Ordinary Time',
+    liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
+    liturgicalColor: 'green',
+    liturgicalRank: 'Weekday',
+    firstReading: {
+      citation: 'Philippians 3:3-8a',
+      theme: 'I consider everything as a loss because of the supreme good of knowing Christ Jesus my Lord',
+      text: `Brothers and sisters:
+We are the circumcision, we who worship through the Spirit of God, who boast in Christ Jesus and do not put our confidence in flesh, although I myself have grounds for confidence even in the flesh.
+
+If anyone else thinks he can be confident in flesh, all the more can I. Circumcised on the eighth day, of the race of Israel, of the tribe of Benjamin, a Hebrew of Hebrew parentage, in observance of the law a Pharisee, in zeal I persecuted the church, in righteousness based on the law I was blameless.
+
+But whatever gains I had, these I have come to consider a loss because of Christ. More than that, I even consider everything as a loss because of the supreme good of knowing Christ Jesus my Lord.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 105:2-3, 4-5, 6-7',
+      antiphon: 'Let hearts rejoice who search for the Lord.',
+      verses: [
+        'Sing to him, sing his praise, proclaim all his wondrous deeds. Glory in his holy name; rejoice, O hearts that seek the LORD!',
+        'Look to the LORD in his strength; seek to serve him constantly. Recall the wondrous deeds that he has wrought, his portents, and the judgments he has uttered.',
+        'You descendants of Abraham, his servants, sons of Jacob, his chosen ones! He, the LORD, is our God; throughout the earth his judgments prevail.'
+      ]
+    },
+    alleluia: {
+      verse: 'Come to me, all you who labor and are burdened, and I will give you rest, says the Lord.'
+    },
+    gospel: {
+      citation: 'Luke 15:1-10',
+      text: `The tax collectors and sinners were all drawing near to listen to Jesus, but the Pharisees and scribes began to complain, saying, "This man welcomes sinners and eats with them." So to them he addressed this parable.
+
+"What man among you having a hundred sheep and losing one of them would not leave the ninety-nine in the desert and go after the lost one until he finds it? And when he does find it, he sets it on his shoulders with great joy and, upon his arrival home, he calls together his friends and neighbors and says to them, 'Rejoice with me because I have found my lost sheep.' I tell you, in just the same way there will be more joy in heaven over one sinner who repents than over ninety-nine righteous people who have no need of repentance.
+
+Or what woman having ten coins and losing one would not light a lamp and sweep the house, searching carefully until she finds it? And when she does find it, she calls together her friends and neighbors and says to them, 'Rejoice with me because I have found the coin that I lost.' In just the same way, I tell you, there will be rejoicing among the angels of God over one sinner who repents."`
+    },
+    reflection: {
+      author: 'St. Ambrose of Milan and Pope St. Gregory the Great',
+      title: 'The Good Shepherd Who Carries the Lost Sheep Upon His Shoulders',
+      content: `"There will be rejoicing among the angels of God over one sinner who repents" (Luke 15:10). St. Ambrose marvels at the tenderness of the Good Shepherd in today's Gospel: when He finds the lost sheep, He does not strike it or drive it back with harshness, but places it gently upon His own sacred shoulders—for on the Cross, Christ bore our sins in His own Body. And the woman who lights a lamp to find the lost coin bearing the King's image is Holy Mother Church, who illuminates the world with the lamp of the Gospel to restore the divine image in every repentant soul.`
+    }
+  },
+
+  // November 6, 2026: Friday of the Thirty-First Week in Ordinary Time
+  '2026-11-06': {
+    id: 'reading-2026-11-06',
+    date: '2026-11-06',
+    liturgicalDay: 'Friday of the Thirty-First Week in Ordinary Time',
+    liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
+    liturgicalColor: 'green',
+    liturgicalRank: 'Weekday',
+    firstReading: {
+      citation: 'Philippians 3:17–4:1',
+      theme: 'Our citizenship is in heaven, and from it we also await a savior, the Lord Jesus Christ',
+      text: `Join with others in being imitators of me, brothers and sisters, and observe those who thus conduct themselves according to the model you have in us. For many, as I have often told you and now tell you even in tears, conduct themselves as enemies of the cross of Christ. Their end is destruction. Their god is their stomach; their glory is in their "shame." Their minds are occupied with earthly things.
+
+But our citizenship is in heaven, and from it we also await a savior, the Lord Jesus Christ. He will change our lowly body to conform with his glorified Body by the power that enables him also to bring all things into subjection to himself. Therefore, my brothers and sisters, whom I love and long for, my joy and crown, in this way stand firm in the Lord, beloved.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 122:1-2, 3-4ab, 4cd-5',
+      antiphon: 'Let us go rejoicing to the house of the Lord.',
+      verses: [
+        'I rejoiced because they said to me, "We will go up to the house of the LORD." And now we have set foot within your gates, O Jerusalem.',
+        'Jerusalem, built as a city with compact unity. To it the tribes go up, the tribes of the LORD.',
+        'According to the decree for Israel, to give thanks to the name of the LORD. In it are set up judgment seats, seats for the house of David.'
+      ]
+    },
+    alleluia: {
+      verse: 'Whoever keeps the word of Christ, the love of God is truly perfected in him.'
+    },
+    gospel: {
+      citation: 'Luke 16:1-8',
+      text: `Jesus said to his disciples, "A rich man had a steward who was reported to him for squandering his property. He summoned him and said, 'What is this I hear about you? Prepare a full account of your stewardship, because you can no longer be my steward.'
+
+The steward said to himself, 'What shall I do, now that my master is taking the position of steward away from me? I am not strong enough to dig and I am ashamed to beg. I know what I shall do so that, when I am removed from the stewardship, they may welcome me into their homes.' He called in his master's debtors one by one. To the first he said, 'How much do you owe my master?' He replied, 'One hundred measures of olive oil.' He said to him, 'Here is your promissory note. Sit down and quickly write one for fifty.' Then to another he said, 'And you, how much do you owe?' He replied, 'One hundred kors of wheat.' He said to him, 'Here is your promissory note; write one for eighty.'
+
+And the master commended that dishonest steward for acting prudently. For the children of this world are more prudent in dealing with their own generation than the children of light."`
+    },
+    reflection: {
+      author: 'St. Augustine of Hippo and St. John Chrysostom',
+      title: 'Children of Light Preparing for Our Heavenly Citizenship',
+      content: `Why does Our Lord point to the foresight of the steward in Luke 16:1-8? As St. Augustine explains, Christ does not praise the steward's fraud, but his urgent foresight in preparing for the future! How often the children of this world labor with tireless energy for fleeting earthly gain, while we—whose "citizenship is in heaven" (Philippians 3:20)—grow sluggish in prayer, almsgiving, and forgiving the debts of our brothers and sisters! Let us use the passing goods and hours of this life to store up eternal treasure in the house of the Lord.`
+    }
+  },
+
+  // November 7, 2026: Saturday of the Thirty-First Week in Ordinary Time
+  '2026-11-07': {
+    id: 'reading-2026-11-07',
+    date: '2026-11-07',
+    liturgicalDay: 'Saturday of the Thirty-First Week in Ordinary Time (Blessed Virgin Mary on Saturday)',
+    liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
+    liturgicalColor: 'green',
+    liturgicalRank: 'Weekday',
+    firstReading: {
+      citation: 'Philippians 4:10-19',
+      theme: 'I have the strength for everything through him who empowers me',
+      text: `Brothers and sisters:
+I rejoiced greatly in the Lord that now at last you revived your concern for me. You were, of course, concerned about me but lacked an opportunity. Not that I say this because of need, for I have learned, in whatever situation I find myself, to be self-sufficient. I know indeed how to live in humble circumstances; I know also how to live with abundance. In every circumstance and in all things I have learned the secret of being well fed and of going hungry, of living in abundance and of being in need. I have the strength for everything through him who empowers me.
+
+Still, it was kind of you to share in my distress. You Philippians indeed know that at the beginning of the Gospel, when I left Macedonia, not a single church shared with me in an account of giving and receiving, except you alone. For even when I was at Thessalonica you sent me something for my needs, not only once, but more than once. It is not that I am eager for the gift; rather, I am eager for the profit that accrues to your account. I have received full payment and I abound. I am very well supplied because of what I received from you through Epaphroditus, "a fragrant aroma," an acceptable sacrifice, pleasing to God. My God will fully supply whatever you need, in accord with his glorious riches in Christ Jesus.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 112:1b-2, 5-6, 8a and 9',
+      antiphon: 'Blessed the man who fears the Lord.',
+      verses: [
+        'Blessed the man who fears the LORD, who greatly delights in his commands. His posterity shall be mighty upon the earth; the upright generation shall be blessed.',
+        'Well for the man who is gracious and lends, who conducts his affairs with justice; He shall never be moved; the just one shall be in everlasting remembrance.',
+        'His heart is steadfast; he shall not fear. Lavishly he gives to the poor; his generosity shall endure forever; his horn shall be exalted in glory.'
+      ]
+    },
+    alleluia: {
+      verse: 'Though our Lord Jesus Christ was rich, he became poor, so that by his poverty you might become rich.'
+    },
+    gospel: {
+      citation: 'Luke 16:9-15',
+      text: `Jesus said to his disciples:
+"I tell you, make friends for yourselves with dishonest wealth, so that when it fails, you will be welcomed into eternal dwellings. The person who is trustworthy in very small matters is also trustworthy in great ones; and the person who is dishonest in very small matters is also dishonest in great ones. If, therefore, you are not trustworthy with dishonest wealth, who will trust you with true wealth? If you are not trustworthy with what belongs to another, who will give you what is yours?
+
+No servant can serve two masters. He will either hate one and love the other, or be devoted to one and despise the other. You cannot serve God and mammon."
+
+The Pharisees, who loved money, heard all these things and sneered at him. And he said to them, "You justify yourselves in the sight of others, but God knows your hearts; for what is of human esteem is an abomination in the sight of God."`
+    },
+    reflection: {
+      author: 'St. Cyril of Alexandria and St. Bede the Venerable',
+      title: 'Trustworthy in Small Matters and Undivided in Serving God Alone',
+      content: `"The person who is trustworthy in very small matters is also trustworthy in great ones... You cannot serve God and mammon" (Luke 16:10, 13). Together with St. Paul's triumphant confession—"I have the strength for everything through him who empowers me" (Philippians 4:13)—today's Gospel teaches us that holiness is forged in daily fidelity to small duties of prayer, honesty, and almsgiving. When we give generously to the poor, they become our intercessors who welcome us into the eternal dwellings of heaven.`
+    }
+  },
+
+  // November 8, 2026: Thirty-Second Sunday in Ordinary Time
+  '2026-11-08': {
+    id: 'reading-2026-11-08',
+    date: '2026-11-08',
+    liturgicalDay: 'Thirty-Second Sunday in Ordinary Time',
+    liturgicalSeason: 'Ordinary Time (Year B)',
+    liturgicalColor: 'green',
+    liturgicalRank: 'Sunday',
+    firstReading: {
+      citation: '1 Kings 17:10-16',
+      theme: 'The widow made a little cake from her handful of flour and gave it to Elijah',
+      text: `In those days, Elijah the prophet went to Zarephath. As he arrived at the entrance of the city, a widow was gathering sticks there; he called out to her, "Please bring me a small cupful of water to drink." She left to get it, and he called out after her, "Please bring along a bit of bread." She answered, "As the LORD, your God, lives, I have nothing baked; there is only a handful of flour in my jar and a little oil in my jug. Just now I was collecting a couple of sticks, to go in and prepare it for myself and my son; when we have eaten it, we shall die."
+
+Elijah said to her, "Do not be afraid. Go and do as you propose. But first make me a little cake and bring it to me. Then you can prepare something for yourself and your son. For the LORD, the God of Israel, says, 'The jar of flour shall not go empty, nor the jug of oil run dry, until the day the LORD sends rain upon the earth.'" She left and did as Elijah had said. She was able to eat for a year, and he and her son as well; the jar of flour did not go empty, nor the jug of oil run dry, just as the LORD had foretold through Elijah.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 146:7, 8-9, 9-10',
+      antiphon: 'Praise the Lord, my soul!',
+      verses: [
+        'The LORD keeps faith forever, secures justice for the oppressed, gives food to the hungry. The LORD sets captives free.',
+        'The LORD gives sight to the blind; the LORD raises up those who were bowed down. The LORD loves the just; the LORD protects strangers.',
+        'The fatherless and the widow he sustains, but the way of the wicked he thwarts. The LORD shall reign forever; your God, O Zion, through all generations. Alleluia.'
+      ]
+    },
+    secondReading: {
+      citation: 'Hebrews 9:24-28',
+      text: `Christ did not enter into a sanctuary made by hands, a copy of the true one, but heaven itself, that he might now appear before God on our behalf. Not that he might offer himself repeatedly, as the high priest enters each year into the sanctuary with blood that is not his own; if that were so, he would have had to suffer repeatedly from the foundation of the world. But now once for all he has appeared at the end of the ages to take away sin by his sacrifice. Just as it is appointed that human beings die once, and after this the judgment, so also Christ, offered once to take away the sins of many, will appear a second time, not to take away sin, but to bring salvation to those who eagerly await him.`
+    },
+    alleluia: {
+      verse: 'Blessed are the poor in spirit, for theirs is the kingdom of heaven.'
+    },
+    gospel: {
+      citation: 'Mark 12:38-44',
+      text: `In the course of his teaching Jesus said to the crowds, "Beware of the scribes, who like to go around in long robes and accept greetings in the marketplaces, seats of honor in synagogues, and places of honor at banquets. They devour the houses of widows and, as a pretext, recite lengthy prayers. They will receive a very severe condemnation."
+
+He sat down opposite the treasury and observed how the crowd put money into the treasury. Many rich people put in large sums. A poor widow also came and put in two small coins worth a few cents. Calling his disciples to himself, he said to them, "Amen, I say to you, this poor widow put in more than all the other contributors to the treasury. For they have all contributed from their surplus wealth, but she, from her poverty, has contributed all she had, her whole livelihood."`
+    },
+    reflection: {
+      author: 'Pope St. Leo the Great and St. Bede the Venerable',
+      title: 'The Widow\'s Two Coins and the Total Gift of the Heart',
+      content: `Sitting opposite the Temple treasury, Jesus gazes not upon the noisy gold of the proud, but upon the two small copper coins (lepta) of a poor widow: "She, from her poverty, has contributed all she had, her whole livelihood" (Mark 12:44). As Pope St. Leo the Great teaches, on the scales of divine justice God weighs not the quantity of the gift, but the love of the heart! Like the widow of Zarephath who shared her last handful of flour with the prophet Elijah (1 Kings 17), the soul that surrenders its whole livelihood to God discovers that the jar of divine grace never goes empty.`
+    }
+  },
+
+  // November 9, 2026: Feast of the Dedication of the Lateran Basilica
+  '2026-11-09': {
+    id: 'reading-2026-11-09',
+    date: '2026-11-09',
+    liturgicalDay: 'Feast of the Dedication of the Lateran Basilica in Rome',
+    liturgicalSeason: 'Feast of the Lord',
+    liturgicalColor: 'white',
+    liturgicalRank: 'Feast',
+    firstReading: {
+      citation: 'Ezekiel 47:1-2, 8-9, 12',
+      theme: 'I saw water flowing out from beneath the threshold of the temple toward the east',
+      text: `The angel brought me back to the entrance of the temple, and I saw water flowing out from beneath the threshold of the temple toward the east, for the facade of the temple was toward the east; the water flowed down from the southern side of the temple, south of the altar. He led me outside by the north gate, and around to the outer gate facing the east, where I saw water trickling from the southern side.
+
+He said to me, "This water flows into the eastern district down upon the Arabah, and empties into the sea, the salt waters, which it makes fresh. Wherever the river flows, every sort of living creature that can multiply shall live, and there shall be abundant fish, for wherever this water comes the sea shall be made fresh. Along both banks of the river, fruit trees of every kind shall grow; their leaves shall not fade, nor their fruit fail. Every month they shall bear fresh fruit, for they shall be watered by the flow from the sanctuary. Their fruit shall serve for food, and their leaves for medicine."`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 46:2-3, 5-6, 8-9',
+      antiphon: 'The waters of the river gladden the city of God, the holy dwelling of the Most High!',
+      verses: [
+        'God is our refuge and our strength, an ever-present help in distress. Therefore we fear not, though the earth be shaken and mountains plunge into the depths of the sea.',
+        'There is a stream whose runlets gladden the city of God, the holy dwelling of the Most High. God is in its midst; it shall not be disturbed; God will help it at the break of dawn.',
+        'The LORD of hosts is with us; our stronghold is the God of Jacob. Come! behold the deeds of the LORD, the astounding things he has wrought on earth.'
+      ]
+    },
+    secondReading: {
+      citation: '1 Corinthians 3:9c-11, 16-17',
+      text: `Brothers and sisters: You are God's building. According to the grace of God given to me, like a wise master builder I laid a foundation, and another is building upon it. But each one must be careful how he builds upon it, for no one can lay a foundation other than the one that is there, namely, Jesus Christ.
+
+Do you not know that you are the temple of God, and that the Spirit of God dwells in you? If anyone destroys God's temple, God will destroy that person; for the temple of God, which you are, is holy.`
+    },
+    alleluia: {
+      verse: 'I have chosen and consecrated this house, says the Lord, that my name may be there forever.'
+    },
+    gospel: {
+      citation: 'John 2:13-22',
+      text: `Since the Passover of the Jews was near, Jesus went up to Jerusalem. He found in the temple area those who sold oxen, sheep, and doves, as well as the money-changers seated there. He made a whip out of cords and drove them all out of the temple area, with the sheep and oxen, and spilled the coins of the money-changers and overturned their tables, and to those who sold doves he said, "Take these out of here, and stop making my Father's house a marketplace." His disciples recalled the words of Scripture, Zeal for your house will consume me.
+
+At this the Jews answered and said to him, "What sign can you show us for doing this?" Jesus answered and said to them, "Destroy this temple and in three days I will raise it up." The Jews said, "This temple has been under construction for forty-six years, and you will raise it up in three days?" But he was speaking about the temple of his Body. Therefore, when he was raised from the dead, his disciples remembered that he had said this, and they came to believe the Scripture and the word Jesus had spoken.`
+    },
+    reflection: {
+      author: 'St. Caesarius of Arles and St. Augustine',
+      title: 'The Mother and Head of All Churches and the Living Temple of Christ',
+      content: `Today the universal Church celebrates the Dedication of the Archbasilica of the Most Holy Savior and Saints John the Baptist and the Evangelist at the Lateran—consecrated by Pope St. Sylvester I on November 9, 324 as the Cathedral of the Bishop of Rome and inscribed "Omnium Urbis et Orbis Ecclesiarum Mater et Caput" ("Mother and Head of All the Churches of the City and the World"). As St. Caesarius of Arles reminds us, while we honor the visible sanctuary of stone from which the sacramental waters of Baptism and the Eucharist flow (Ezekiel 47), we ourselves are the living temples of the Holy Spirit (1 Corinthians 3:16) whom Christ cleanses by His zeal.`
+    }
   }
 };
 

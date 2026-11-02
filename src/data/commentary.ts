@@ -451,28 +451,220 @@ VATICAN II (LUMEN GENTIUM 56 / CCC 494): The Father of mercies willed that the I
     practicalApplication: 'Let Mary\'s "Fiat" be your own daily morning prayer. Whatever God asks of you today, surrender in humble confidence.'
   },
 
-  // The Beatitudes (Matthew 5:1-12)
+  // The Beatitudes (Matthew 5:1-12a) — Solemnity of All Saints (Nov 1)
   {
     id: 'comm-matt-5-augustine',
-    scriptureReference: 'Matthew 5:1-12',
+    scriptureReference: 'Matthew 5:1-12a',
     scriptureText: '"Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they shall be comforted. Blessed are the meek, for they shall inherit the earth."',
     sourceName: 'Bible Commentary',
     sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
     author: 'St. Leo the Great (c. 444 AD) with St. Augustine, St. John Chrysostom, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
-    commentaryText: `HOMILY OF ST. LEO THE GREAT (c. 444 AD — ON THE BEATITUDES AND SPIRITUAL POVERTY): Seeing the crowds, Jesus went up on the mountain, and when He sat down His disciples came to Him. And He opened His mouth and taught them, saying: "Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they shall be comforted. Blessed are the meek, for they shall inherit the earth..."
+    commentaryText: `HOMILY OF ST. LEO THE GREAT (c. 444 AD — SERMON 95, ON THE BEATITUDES AND ALL SAINTS): Seeing the crowds, Jesus went up on the mountain, and when He sat down His disciples came to Him. And He opened His mouth and taught them, saying: "Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they shall be comforted. Blessed are the meek, for they shall inherit the earth..."
 
-Great and glorious is this divine Sermon on the Mount, my beloved brethren! Christ begins His proclamation of the Gospel not with thundering laws, but with celestial Beatitudes. And He places poverty of spirit as the very first step of the ladder to heaven!
+Great and glorious is this divine Sermon on the Mount, my beloved brethren! Today, as the universal Church celebrates the Solemnity of All Saints, Christ Himself reveals the royal highway by which the numberless multitude of the redeemed ascended from earthly exile to eternal glory. He begins His proclamation of the Gospel not with thundering terror as at Sinai, but with celestial Beatitudes—and He places poverty of spirit as the very first step of the ladder to heaven!
 
-What is poverty of spirit? It is that holy humility which crushes pride, empties the soul of self-will and worldly ambition, and recognizes that all our righteousness comes from God alone. The proud man is full of himself and cannot receive God; the poor in spirit is empty of self and is filled with the unsearchable riches of Christ. Embrace this holy beatitude, for theirs is the kingdom of heaven!
+What is poverty of spirit? It is that holy humility which crushes pride, empties the soul of self-will and worldly ambition, and recognizes that all our righteousness comes from God alone. The proud man is full of himself and cannot receive God; the poor in spirit is empty of self and is filled with the unsearchable riches of Christ. Embrace this holy beatitude in communion with all the Saints, for theirs is the kingdom of heaven!
 
 ST. AUGUSTINE OF HIPPO: The poor in spirit are properly understood as the humble and those who fear God, that is, those who have not an inflated, puffed-up spirit. Let the proud seek after earthly kingdoms; the poor in spirit are blessed, "for theirs is the kingdom of heaven." The meek are those who do not resist the divine will in difficulties, nor murmur against the teachings of the Church, but submit themselves to the Word of God with gentle reverence.
 
-ST. JOHN CHRYSOSTOM: Notice how Christ begins His Sermon on the Mount: not with thunder and lightning as at Sinai, but with Beatitudes! He offers spiritual crowns to those who cultivate poverty of spirit, meekness, and purity of heart.
+ST. JOHN CHRYSOSTOM: Notice how Christ begins His Sermon on the Mount: not with thunder and lightning as at Sinai, but with Beatitudes! Why did He ascend the mountain? To teach us that whoever wishes to hear and practice the Beatitudes must rise above earthly tumults and ascend the spiritual mountain of prayer and contemplation.
 
-CORNELIUS À LAPIDE, S.J.: "Blessed are the poor in spirit." Lapide explains that poverty of spirit is the foundational beatitude—the voluntary detachment from earthly riches, pride, and self-will, making the soul receptive to the kingdom of heaven.
+CORNELIUS À LAPIDE, S.J.: "Blessed are the poor in spirit." Lapide explains that the eight Beatitudes form a golden chain of sanctity: poverty of spirit begets meekness; meekness moves the soul to mourn over sin; holy mourning awakens a burning hunger for justice; justice bears fruit in mercy; mercy purifies the heart to see God; and purity of heart radiates peace even amidst persecution.
 
-CATECHISM OF THE CATHOLIC CHURCH (CCC 1716-1724): The Beatitudes are at the heart of Jesus' preaching. They fulfill the promises made to the chosen people since Abraham, depicting the countenance of Jesus Christ and portraying His charity. They reveal the goal of human existence: ultimate beatitude in God.`,
-    practicalApplication: 'Holiness is not the accumulation of external trophies, but the beatitude of an interior heart purified by the Beatitudes of Christ.'
+CATECHISM OF THE CATHOLIC CHURCH (CCC 1716-1724, 956): The Beatitudes are at the heart of Jesus' preaching. They depict the countenance of Jesus Christ and portray His charity, while revealing the vocation of all the faithful to enter into the glory of the Communion of Saints.`,
+    practicalApplication: 'Holiness is not the accumulation of external trophies, but the beatitude of an interior heart purified by the Beatitudes of Christ in communion with all the Saints.'
+  },
+
+  // Commemoration of All the Faithful Departed / All Souls' Day (Nov 2): John 6:37-40
+  {
+    id: 'comm-john-6-37-40-allsouls',
+    scriptureReference: 'John 6:37-40',
+    scriptureText: '"And this is the will of the One who sent Me, that I should not lose anything of what He gave Me, but that I should raise it on the last day. For this is the will of My Father, that everyone who sees the Son and believes in Him may have eternal life, and I shall raise him on the last day."',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'St. Augustine of Hippo (c. 414 AD) with St. John Chrysostom, St. Cyril of Alexandria, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF ST. AUGUSTINE OF HIPPO (c. 414 AD — TRACTATES ON THE GOSPEL OF JOHN, TRACTATE 25 & DE CURA PRO MORTUIS GERENDA): Jesus said to the crowds: "Everything that the Father gives Me will come to Me, and I will not reject anyone who comes to Me, because I came down from heaven not to do My own will but the will of the One who sent Me. And this is the will of the One who sent Me, that I should not lose anything of what He gave Me, but that I should raise it on the last day."
+
+Listen, dearly beloved brethren, to the unfailing promise of the Incarnate Word, which is the anchor of our hope before the mystery of death! Death is not the annihilation of the Christian; it is a temporary sleep in the wounded and merciful hands of the Redeemer until the trumpet of the final Resurrection. Christ came down from heaven clothed in our mortal flesh precisely so that our mortal flesh might not perish forever in the dust, but be raised incorruptible on the last day.
+
+Because the Mystical Body of Christ is one, the bond of charity between the pilgrim Church on earth and the faithful departed undergoing purification is never severed by bodily death. As the universal Church has received from the Apostles themselves, the Eucharistic Sacrifice of the Altar, together with our fervent prayers and almsgiving, brings immense refreshment, light, and speedy release to the Holy Souls who died in the grace and friendship of God. Let us therefore assist our departed brethren with the most efficacious help of all: by offering the Holy Sacrifice of the Mass for their eternal rest!
+
+ST. JOHN CHRYSOSTOM: Observe how twice in two verses the Lord repeats the solemn pledge: "I shall raise him on the last day!" Why does He repeat it so emphatically? Lest anyone, seeing the bodies of the faithful dissolved into dust in the grave, should doubt the omnipotence of Christ to restore them to immortal glory. Not silently and in vain did the Apostles decree that in the celebration of the dread Mysteries of the Altar commemoration should be made of the departed; they knew that great gain and great assistance accrue to the souls when the whole people stands with uplifted hands while the tremendous Eucharistic Sacrifice lies upon the altar.
+
+ST. CYRIL OF ALEXANDRIA: Christ declares that it is the very will of the Father that nothing given to the Son should be lost. Just as the seed of the Eucharist—the Bread of Life—is planted within our mortal bodies through Holy Communion, so that same Eucharistic life becomes the pledge and seed of our bodily resurrection on the last day.
+
+CORNELIUS À LAPIDE, S.J.: "That I should not lose anything of what He gave Me, but that I should raise it on the last day." Lapide notes that Christ preserves not only the immortal soul of the believer, but even the very ashes of his body, guarding them in the treasury of Divine Providence to reunite soul and glorified body at the General Judgment. On All Souls' Day, the Church applies the infinite merits of Calvary to loose the temporal debts of the souls in Purgatory so they may swiftly behold the beatific vision.
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 1030-1032, 958): All who die in God's grace and friendship, but still imperfectly purified, are indeed assured of their eternal salvation; but after death they undergo purification, so as to achieve the holiness necessary to enter the joy of heaven. From the beginning the Church has honored the memory of the dead and offered prayers in suffrage for them, above all the Eucharistic sacrifice, so that, thus purified, they may attain the beatific vision of God.`,
+    practicalApplication: 'Offer Holy Mass, a Rosary, or an Indulgence today for the Holy Souls in Purgatory—especially for departed family members and for those souls who have no one left on earth to pray for them.'
+  },
+
+  // Parable of the Great Dinner (Luke 14:15-24) — Nov 3
+  {
+    id: 'comm-luke-14-15-24-gregory',
+    scriptureReference: 'Luke 14:15-24',
+    scriptureText: '"One of his fellow guests on hearing this said to him, \'Blessed is the one who will dine in the Kingdom of God.\' He replied to him, \'A man gave a great dinner to which he invited many...\'"',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'Pope St. Gregory the Great (591 AD) with St. Augustine, St. Cyril of Alexandria, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF POPE ST. GREGORY THE GREAT (591 AD — FORTY GOSPEL HOMILIES, HOMILY 36, DELIVERED AT THE BASILICA OF ST. PHILIP AND ST. JAMES IN ROME): One of His fellow guests on hearing this said to Jesus, "Blessed is the one who will dine in the Kingdom of God." He replied to him, "A man gave a great dinner to which he invited many. When the time for the dinner came, he dispatched his servant to say to those invited, 'Come, everything is now ready.' But one by one, they all began to excuse themselves..."
+
+Dearly beloved brethren, what is this great dinner which the Father of the family prepares, if not the eternal banquet of heavenly beatitude, foretasted here on earth in the Eucharistic Table of the Altar?Notice how the Master sends word: "Come, everything is now ready." Yet those who were invited all began to make excuses! One had bought a field and must go examine it; another had bought five yoke of oxen; a third had just married a wife.
+
+What is signified by the field, the five yoke of oxen, and the wife? By the field is meant earthly ambition and the desire for worldly possessions; by the five yoke of oxen are meant the five bodily senses when they are yoked only to curiosity and earthly things; by the wife is meant the allurements and pleasures of the flesh. Things that are lawful in themselves become deadly snares when they make a soul deaf to the voice of God calling us to His Eucharistic banquet! Meanwhile, the poor, the crippled, the blind, and the lame from the highways and hedgerows—the humble, the contrite sinners who know their own spiritual poverty—hasten in with joy and fill the Master's house!
+
+ST. AUGUSTINE OF HIPPO: Those who excused themselves from the great supper represent the three great concupiscences named by St. John: the purchase of the field is the pride of life and lust for dominion; the five yoke of oxen represent the curiosity of the five bodily senses; the marriage represents the concupiscence of the flesh. Let us not excuse ourselves when Christ invites us to His Altar, for humble confession opens the door that proud excuses close.
+
+ST. CYRIL OF ALEXANDRIA: The Master of the house is God the Father, who through His Son prepared the mystical and life-giving Supper of the Gospel and the Holy Eucharist. When the proud leaders rejected the invitation because of their attachment to earthly things, the Apostles were sent out into the streets and highways of the Gentiles to gather the poor and brokenhearted into the Church.
+
+CORNELIUS À LAPIDE, S.J.: "Go out to the highways and hedgerows and make people come in that my home may be filled." Lapide explains that God's prevenient grace urges us both inwardly by inspirations of the Holy Spirit and outwardly by the preaching of the Church and even by the trials of life, compelling reluctant souls to leave the thorny hedgerows of sin for the royal banquet of grace.
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 543-546, 1384): Everyone is called to enter the Kingdom. Jesus invites sinners to the table of the Kingdom, and in the Eucharist He anticipates the wedding feast of the Lamb in the heavenly Jerusalem.`,
+    practicalApplication: 'Never allow worldly busyness, material worries, or daily distractions to become excuses that crowd out daily prayer and the Holy Sacrifice of the Mass.'
+  },
+
+  // Conditions of Discipleship & Carrying the Cross (Luke 14:25-33) — Nov 4
+  {
+    id: 'comm-luke-14-25-33-basil',
+    scriptureReference: 'Luke 14:25-33',
+    scriptureText: '"Whoever does not carry his own cross and come after Me cannot be My disciple... In the same way, everyone of you who does not renounce all his possessions cannot be My disciple."',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'St. Basil the Great (c. 370 AD) with St. John Chrysostom, St. Bede the Venerable, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF ST. BASIL THE GREAT (c. 370 AD — THE MORALS & HOMILY ON JULITTA): Great crowds were traveling with Jesus, and He turned and addressed them, saying: "Whoever does not carry his own cross and come after Me cannot be My disciple. Which of you wishing to construct a tower does not first sit down and calculate the cost to see if there is enough for its completion?"
+
+Behold the candor of our Divine Master! Earthly leaders flatter the crowds with promises of ease in order to win followers; Christ turns to the multitude and sets before them the Cross, the tower of perfection, and the battle against the enemy. When the Lord commands us to "hate" father and mother and even our own life in order to be His disciple, He does not repeal the commandment of charity—far from it! Rather, He teaches that whenever human affection or self-love stands in competition with the love of God and fidelity to the truth, God must reign supreme without rival.
+
+Anyone who desires to build the spiritual tower of holiness—whose summit reaches to heaven—must lay the deep foundation of humility and calculate the cost: namely, the readiness to renounce every disordered attachment to possessions and self-will, and to follow Christ Crucified to the end.
+
+ST. JOHN CHRYSOSTOM: Christ does not command us simply to hate our kindred, for that would contradict His own law of charity; rather, when those dearest to us would hinder us from godliness or draw us away from the faith, we must prefer the love of Christ above father, mother, and life itself.
+
+ST. BEDE THE VENERABLE: The tower is the tall edifice of Christian perfection and good works; the ten thousand vs. twenty thousand soldiers signify the struggle of the Christian armed with the ten commandments against the manifold temptations of the world. Before entering the battle, let us take refuge in the prayer of humility and the grace of Christ.
+
+CORNELIUS À LAPIDE, S.J.: "Everyone of you who does not renounce all his possessions cannot be My disciple." Lapide distinguishes two degrees of renunciation: first, in affection and readiness of heart (which is required of every Christian, so as never to keep or seek any possession against the law of God); and second, in actual evangelical poverty (practiced by religious and saints like St. Charles Borromeo, who gave away his princely fortune to feed the poor and plague-stricken).
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 2544-2547, 618): Jesus enjoins His disciples to prefer Him to everything and everyone, and bids them "renounce all that they have" for His sake and that of the Gospel. The Cross is the unique sacrifice of Christ, and He calls His disciples to take up their cross and follow Him.`,
+    practicalApplication: 'Examine your heart today: is there any attachment, habit, or possession that keeps you from following Christ wholeheartedly? Surrender it at the foot of His Cross.'
+  },
+
+  // The Lost Sheep and the Lost Coin (Luke 15:1-10) — Nov 5
+  {
+    id: 'comm-luke-15-1-10-ambrose',
+    scriptureReference: 'Luke 15:1-10',
+    scriptureText: '"What man among you having a hundred sheep and losing one of them would not leave the ninety-nine in the desert and go after the lost one until he finds it? And when he does find it, he sets it on his shoulders with great joy..."',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'St. Ambrose of Milan (c. 389 AD) with Pope St. Gregory the Great, St. Cyril of Alexandria, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF ST. AMBROSE OF MILAN (c. 389 AD — EXPOSITION OF THE GOSPEL ACCORDING TO LUKE, BOOK VII): The tax collectors and sinners were all drawing near to listen to Jesus, but the Pharisees and scribes began to complain, saying, "This man welcomes sinners and eats with them." So to them He addressed this parable: "What man among you having a hundred sheep and losing one of them would not leave the ninety-nine in the desert and go after the lost one until he finds it?"
+
+Rejoice, O Christian soul, and weep tears of gratitude at the tenderness of your Redeemer! Who are the three figures in the three parables of Luke's fifteenth chapter? The Shepherd who seeks the lost sheep is Christ in His Passion; the Woman who lights the lamp to find the lost coin is the Church in her preaching and Sacraments; the Father who runs to embrace the prodigal son is God the Father in His infinite mercy!
+
+Look closely at the Good Shepherd: when He finds the weary, wandering sheep entangled in the thorns of sin, He does not strike it or drive it back with blows. No—He lifts it gently and places it upon His own shoulders! What are the shoulders of Christ? They are the arms of His Holy Cross! On the wood of the Cross He bore our sins in His own body, carrying lost humanity back to the fold of heaven while all the choirs of angels rejoice over one sinner who repents!
+
+POPE ST. GREGORY THE GREAT: The ninety-nine sheep left in the heavenly pastures are the nine choirs of holy Angels; the hundredth sheep that wandered away was the human race when Adam fell. To restore the perfect number of a hundred, the Son of God came down from heaven, sought us on earth, placed our human nature upon His divine shoulders in the Incarnation and Passion, and carried us back to the Father's house.
+
+ST. CYRIL OF ALEXANDRIA: Who is the woman having ten drachmas? She is the Divine Wisdom of God, who stamped humanity with the royal image and likeness of the King—like a silver coin bearing the Emperor's effigy. When that coin fell into the dust and darkness of sin, Wisdom lit the lamp—the light of Christ's sacred humanity—swept the house with the Gospel, and restored the royal image to its original brilliance.
+
+CORNELIUS À LAPIDE, S.J.: "I tell you, there will be rejoicing among the angels of God over one sinner who repents." Lapide observes that nothing gives greater glory to the Heart of Jesus or greater joy to the court of heaven than the contrite confession of a repentant soul, coupled with apostolic zeal to bring wandering souls back to the Sacraments.
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 545, 1439, 1465): Jesus invites sinners to the table of the Kingdom: "I came not to call the righteous, but sinners." In the Sacrament of Penance, the priest is the sign and the instrument of God's merciful love for the sinner, and the Good Shepherd places the lost sheep back upon His shoulders.`,
+    practicalApplication: 'Never despair of God\'s mercy, no matter how far you or a loved one may have wandered; approach the Sacrament of Confession with confidence and pray today for the conversion of sinners.'
+  },
+
+  // Parable of the Dishonest Steward (Luke 16:1-8) — Nov 6
+  {
+    id: 'comm-luke-16-1-8-augustine',
+    scriptureReference: 'Luke 16:1-8',
+    scriptureText: '"The master commended that dishonest steward for acting prudently. For the children of this world are more prudent in dealing with their own generation than the children of light."',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'St. Augustine of Hippo (c. 410 AD) with St. John Chrysostom, St. Gaudentius of Brescia, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF ST. AUGUSTINE OF HIPPO (c. 410 AD — SERMON 113, ON THE WORDS OF THE GOSPEL OF LUKE 16): Jesus said to His disciples, "A rich man had a steward who was reported to him for squandering his property. He summoned him and said, 'What is this I hear about you? Prepare a full account of your stewardship, for you can no longer be my steward...'"
+
+My brethren, why did the Lord set this parable before us? Assuredly He did not praise the steward for cheating his master—God forbid! Rather, He praised the foresight with which that man provided for his future when he knew he was about to be removed from his office. Every one of us is a steward, not an absolute owner, of the time, talents, health, and earthly goods entrusted to us by Almighty God. And very soon, at the hour of death, each of us will hear the summons: "Prepare a full account of your stewardship!"
+
+Look at the children of this world: how tirelessly they plan, calculate, and labor to secure a few years of earthly comfort! Why then are we, the children of light, so sluggish in securing eternal habitations? How do we transfer our goods from earth to heaven before death strips us of our stewardship? By placing them into the hands of the poor through almsgiving, and by forgiving those who are indebted to us!
+
+ST. JOHN CHRYSOSTOM: Nothing accuses our spiritual sloth so sharply as the zeal which worldly men show for passing things compared with our lukewarmness for eternal things. Notice the steward's words: "What shall I do when my master takes the stewardship away from me?" Let us ask ourselves that very question every evening before we sleep, and make the poor and the saints our advocates at the judgment seat of Christ.
+
+ST. GAUDENTIUS OF BRESCIA: All earthly possessions belong to God the Creator; we are appointed stewards to distribute what surpasses our need to our needy fellow servants. When we remit the debts of others through forgiveness and share our bread through mercy, we act with true heavenly prudence.
+
+CORNELIUS À LAPIDE, S.J.: "One hundred measures of olive oil... Write fifty." Lapide explains the spiritual allegory of the Fathers: olive oil is the symbol of mercy and charity; wheat is the symbol of faith and the Bread of Life. By showing mercy to our neighbor and forgiving offenses from our heart, our own immense debt before God is mercifully reduced.
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 2402-2405, 2447): Goods of production—material or immaterial—require the care of theiressori as stewards of Providence, who must bring them to bear fruit and share the benefits with others, first of all with the poor.`,
+    practicalApplication: 'Live today as a faithful steward of God\'s gifts: use your time, prayers, and resources generously in works of mercy that endure unto eternal life.'
+  },
+
+  // Trustworthy in Very Small Matters (Luke 16:9-15) — Nov 7
+  {
+    id: 'comm-luke-16-9-15-cyril',
+    scriptureReference: 'Luke 16:9-15',
+    scriptureText: '"The person who is trustworthy in very small matters is also trustworthy in great ones... No servant can serve two masters. You cannot serve God and mammon."',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'St. Cyril of Alexandria (c. 430 AD) with St. Augustine, St. Bede the Venerable, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF ST. CYRIL OF ALEXANDRIA (c. 430 AD — COMMENTARY ON THE GOSPEL OF LUKE, HOMILY 110): Jesus said to His disciples: "I tell you, make friends for yourselves with dishonest wealth, so that when it fails, you will be welcomed into eternal tents. The person who is trustworthy in very small matters is also trustworthy in great ones... You cannot serve God and mammon."
+
+Observe with what divine wisdom our Savior calls all earthly wealth "very small matters" and "another's property," while calling heavenly grace and eternal glory "true wealth" and "our own"! Why are earthly riches called "dishonest" or "unjust mammon"? Not because gold and silver are evil in their nature as creatures of God, but because covetousness so often acquires them unjustly or hoards them selfishly while the poor go hungry.
+
+Yet Christ shows us a divine alchemy: you can transform fleeting, perishable coins into everlasting friends in heaven! Who are those friends who have the power to welcome us into "eternal tents"? They are the poor, the sick, the orphans, and the saints of Christ! Moreover, the Lord teaches that fidelity in small daily duties is the test and school of great sanctity. And finally He pronounces the unchangeable law of the spiritual life: "You cannot serve God and mammon." Let God alone be the Master of your heart, and let earthly things be merely the servants of charity.
+
+ST. AUGUSTINE OF HIPPO: Why does the Lord call eternal mansions "yours" while calling earthly riches "another's"? Because earthly wealth belongs to no one permanently—we brought nothing into this world and we can carry nothing out; it passes from hand to hand like an inn for travelers. Only God, eternal truth, and heavenly charity are truly our own forever, for no thief can steal them and death cannot take them away.
+
+ST. BEDE THE VENERABLE: "What is of lofty esteem among men is an abomination in the sight of God." The Pharisees sneered at Christ because they measured holiness by outward wealth and human applause; the Lord pierces the veil and declares that God judges the hidden intention of the heart.
+
+CORNELIUS À LAPIDE, S.J.: "The person who is trustworthy in very small matters is also trustworthy in great ones." Lapide notes that this principle applies both to the faithful use of temporal goods (which are tiny compared to spiritual graces) and to fidelity in small everyday rules, prayers, and duties of state—for whoever guards small things with love will never fall in great ones.
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 2424, 2113, 2536): A theory that makes profit the exclusive norm and ultimate end of economic activity is morally unacceptable. Every practice that reduces persons to nothing more than a means of profit enslaves man, leads to idolizing money ("mammon"), and contradicts the worship owed to God alone.`,
+    practicalApplication: 'Sanctify the "very small matters" of today—your hidden prayers, daily work, and small acts of kindness—for Christ crowns small duties done with great love.'
+  },
+
+  // The Poor Widow's Contribution (Mark 12:38-44) — 32nd Sunday in Ordinary Time (Nov 8)
+  {
+    id: 'comm-mark-12-38-44-leo',
+    scriptureReference: 'Mark 12:38-44',
+    scriptureText: '"Amen, I say to you, this poor widow put in more than all the other contributors to the treasury. For they have all contributed from their surplus wealth, but she, from her poverty, has contributed all she had, her whole livelihood."',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'Pope St. Leo the Great (c. 450 AD) with St. Bede the Venerable, St. John Chrysostom, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF POPE ST. LEO THE GREAT (c. 450 AD — SERMONS ON ALMSGIVING AND CHRISTIAN GENEROSITY): Jesus sat down opposite the treasury and observed how the crowd put money into the treasury. Many rich people put in large sums. A poor widow also came and put in two small coins worth a few cents. Calling His disciples to Himself, He said to them, "Amen, I say to you, this poor widow put in more than all the other contributors to the treasury. For they have all contributed from their surplus wealth, but she, from her poverty, has contributed all she had, her whole livelihood."
+
+Behold, dearly beloved, how the scales of the sanctuary differ from the scales of the world! In the eyes of men, the gold and silver cast into the Temple treasury by the wealthy made a loud ringing sound; the two tiny copper leptons of the poor widow made scarcely a whisper. Yet Jesus sits opposite the treasury—looking not at the hand that gives, but at the heart from which the gift proceeds—and calls His Apostles together to pronounce a solemn judgment: this poor widow has given more than all the rest combined!
+
+In the Kingdom of God, charity is never measured by the material weight of the coin, but by the fullness of the love and trust with which it is offered. No one, therefore, can ever excuse himself from works of mercy on account of poverty! Even the poorest person possesses a heart capable of total self-gift, a cup of cold water, a fervent prayer, and the two coins of love of God and love of neighbor.
+
+ST. BEDE THE VENERABLE: Mystically, what are the two small brass coins (minuta duo) which the widow cast into the treasury of the Lord? They are the twin precepts of charity—the love of God and the love of neighbor—or else body and soul, or action and contemplation, offered together without reserve to God. Whoever gives his whole heart and life to God leaves nothing behind for self-love.
+
+ST. JOHN CHRYSOSTOM: Notice that Christ did not say, "She gave much," but "She gave more than all!" For the rich kept back the greater part of their substance, whereas this blessed widow emptied her hands completely into the treasury of God, trusting Divine Providence for her tomorrow's bread.
+
+CORNELIUS À LAPIDE, S.J.: "She, from her poverty, has contributed all she had, her whole livelihood (totum victum suum)." Lapide points out the marvelous contrast in today's liturgy between the two widows: the widow of Zarephath in the First Reading (1 Kings 17:10-16) who shared her last handful of flour and drop of oil with the prophet Elijah and saw her jar never go empty, and the widow in the Temple whose two coins purchased for her the eternal praise of the Son of God.
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 2444-2449, 1351): The Church's love for the poor is a part of her constant tradition. From the very beginning, Christians have brought, along with the bread and wine for the Eucharist, gifts to share with those in need; the custom of the collection, ever appropriate, is inspired by the example of Christ who became poor to make us rich, and by the poor widow whom Jesus praised.`,
+    practicalApplication: 'Give to God today not merely the "leftovers" of your time, attention, and charity, but the wholehearted gift of the two coins: love of God and love of neighbor.'
+  },
+
+  // Cleansing of the Temple (John 2:13-22) — Dedication of the Lateran Basilica (Nov 9)
+  {
+    id: 'comm-john-2-13-22-augustine',
+    scriptureReference: 'John 2:13-22',
+    scriptureText: '"Destroy this temple and in three days I will raise it up... But He was speaking about the temple of His body."',
+    sourceName: 'Bible Commentary',
+    sourceEra: 'Patristic Exegesis, Post-Tridentine Commentary & Vatican Synthesis',
+    author: 'St. Augustine of Hippo (c. 414 AD) with St. Caesarius of Arles, St. Bede the Venerable, Cornelius à Lapide, S.J. and Catechism of the Catholic Church',
+    commentaryText: `HOMILY OF ST. AUGUSTINE OF HIPPO (c. 414 AD — TRACTATES ON THE GOSPEL OF JOHN, TRACTATE 10, & SERMON 336 ON THE DEDICATION OF A CHURCH): Since the Passover of the Jews was near, Jesus went up to Jerusalem. He found in the temple area those who sold oxen, sheep, and doves, as well as the money-changers seated there. He made a whip out of cords and drove them all out of the temple area... and said, "Stop making My Father's house a marketplace!"
+
+Today, dearly beloved brethren, we celebrate with solemn joy the Feast of the Dedication of the Archbasilica of the Most Holy Savior at the Lateran—honored across the whole world as the "Mother and Head of all Churches of the City and the World." Why does Mother Church read the Gospel of the cleansing of the Temple on the anniversary of the dedication of her visible churches? Because what was done visibly in stone and mortar must be fulfilled spiritually within our own souls!
+
+As St. Paul proclaims in today's Second Reading: "Do you not know that you are the temple of God, and that the Spirit of God dwells in you?" Christ our Lord is Himself the True and Living Temple—whose sacred Body was destroyed on the Cross and raised up on the third day—and by Baptism He has made us living stones built upon Him. Let us therefore ask the Lord to drive out from the temple of our hearts every worldly traffic of avarice, vanity, and sin, so that our souls may be a pure house of prayer where the Most Holy Trinity delights to dwell!
+
+ST. CAESARIUS OF ARLES: Whenever we come to church, my brethren, let us prepare our own souls to be what the church building should be. Do you wish to find the basilica clean and shining? Then do not soil your own soul with the filth of sin. If you wish the church of stone to be bright with candles, God wishes your heart to shine with the light of good works and charity.
+
+ST. BEDE THE VENERABLE: "Zeal for your house will consume Me." The Lord cast out the sellers of oxen, sheep, and doves to show that the grace of the Holy Spirit (signified by the dove) and the pastoral ministry of the Church (signified by the sheep and oxen) must never be bought or sold for worldly gain, but ministered freely for the glory of the Father.
+
+CORNELIUS À LAPIDE, S.J.: "But He was speaking about the temple of His body." Lapide explains the threefold Temple in Christian theology: first, the Hypostatic Temple, which is the Sacred Humanity of Jesus Christ where the fullness of Divinity dwells bodily; second, the Mystical Temple, which is the One, Holy, Catholic, and Apostolic Church united to the See of Rome (the Lateran Cathedral of the Pope); and third, the Spiritual Temple, which is the sanctified soul of every believer in the state of grace.
+
+CATECHISM OF THE CATHOLIC CHURCH (CCC 583-586, 1179-1186): After His Resurrection, the Glorified Body of Jesus is the new and definitive Temple. Visible churches are not simply gathering places, but signify and make visible the Church living in this place, the dwelling of God with men reconciled and united in Christ.`,
+    practicalApplication: 'Renew your reverence whenever you enter a Catholic church—genuflecting devoutly toward the Tabernacle—and keep the temple of your own soul clean through prayer and Confession.'
   }
 ];
 

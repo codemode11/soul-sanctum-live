@@ -317,6 +317,139 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
       'Let us therefore weep for our departed brethren not as those who have no hope, but assist them with the most efficacious help of all: by offering the Holy Sacrifice of the Mass, praying for their eternal rest, and receiving Holy Communion, trusting in Christ’s solemn word: "Everyone who sees the Son and believes in Him may have eternal life, and I shall raise him on the last day."'
     ],
     spiritualApplication: 'Offer your prayers, Holy Mass, and a spiritual work of mercy today for the Holy Souls in Purgatory, especially for your departed family members and those who have no one to pray for them.'
+  },
+
+  // Tuesday of the 31st Week in Ordinary Time / St. Martin de Porres (Nov 3): Luke 14:15-24
+  {
+    id: 'homily-luke-14-15-24-gregory',
+    scriptureReference: 'Luke 14:15-24',
+    saintName: 'Pope St. Gregory the Great',
+    doctorTitle: 'Doctor of the Church',
+    workTitle: 'Forty Gospel Homilies (Homily 36)',
+    yearDelivered: '591 AD',
+    homilyTitle: 'On the Parable of the Great Supper and the Excuses of the World',
+    homilyAttribution: 'Pope St. Gregory the Great, Doctor of the Church (Forty Gospel Homilies, Homily 36, delivered at the Basilica of Ss. Philip and James in Rome, 591 AD)',
+    homilyHeading: 'On the Parable of the Great Supper and the Excuses of the World\nPope St. Gregory the Great, Doctor of the Church (Forty Gospel Homilies, Homily 36, delivered at the Basilica of Ss. Philip and James in Rome, 591 AD)',
+    paragraphs: [
+      'Dearly beloved brethren, between the delights of the body and the delights of the heart there is this great difference: bodily delights, before we possess them, awaken a burning desire, but once we have eaten our fill, they quickly turn into satiety and weariness; spiritual delights, on the contrary, are little understood by those who do not yet possess them, but the more we taste them, the more intensely we hunger for them! Therefore our Lord sets before us the parable of a man who prepared a great dinner and sent His servant at the hour of the feast to say to the invited guests: "Come, everything is now ready."',
+      'Yet behold the tragedy of human blindness: one by one, all who were invited began to excuse themselves! One said, "I have purchased a field and must go out and examine it"; another said, "I have purchased five yoke of oxen and am on my way to evaluate them"; a third said, "I have just married a wife and therefore I cannot come." What is signified by the field, if not earthly ambition? What are the five yoke of oxen, if not the five bodily senses when yoked solely to restless worldly curiosity? And what is symbolized by the marriage, if not the allurements of the flesh which chain the heart to earth?',
+      'Because the proud and the worldly spurned the invitation, the Master of the house commanded His servant to go out into the streets, lanes, highways, and hedgerows and bring in the poor, the crippled, the blind, and the lame—the humble and contrite sinners who recognize their own spiritual poverty and hasten with gratitude to the Eucharistic Banquet of the Lamb!'
+    ],
+    spiritualApplication: 'Whenever the Church calls you to prayer and the Holy Sacrifice of the Mass, cast aside every worldly excuse and approach the Altar with the humility of the poor in spirit.'
+  },
+
+  // Wednesday of the 31st Week in Ordinary Time / St. Charles Borromeo (Nov 4): Luke 14:25-33
+  {
+    id: 'homily-luke-14-25-33-basil',
+    scriptureReference: 'Luke 14:25-33',
+    saintName: 'St. Basil the Great',
+    doctorTitle: 'Doctor of the Church',
+    workTitle: 'The Morals & Ascetical Discourses on Evangelical Renunciation',
+    yearDelivered: 'c. 370 AD',
+    homilyTitle: 'On Carrying the Cross and Calculating the Cost of the Spiritual Tower',
+    homilyAttribution: 'St. Basil the Great, Doctor of the Church (Ascetical Discourses on Evangelical Renunciation, Caesarea in Cappadocia, c. 370 AD)',
+    homilyHeading: 'On Carrying the Cross and Calculating the Cost of the Spiritual Tower\nSt. Basil the Great, Doctor of the Church (Ascetical Discourses on Evangelical Renunciation, Caesarea in Cappadocia, c. 370 AD)',
+    paragraphs: [
+      'When great crowds were traveling with our Lord Jesus Christ, He turned and spoke to them words of piercing truth: "Whoever does not carry his own cross and come after Me cannot be My disciple... Everyone of you who does not renounce all his possessions cannot be My disciple." Earthly captains conceal the hardships of war to recruit soldiers; our Divine King reveals the Cross from the very outset so that our discipleship may be founded on resolute love rather than fleeting emotion.',
+      'Why does the Lord command us to prefer Him even above father, mother, and our own life? Not to destroy natural piety—which He Himself commanded in the Law—but to teach us that whenever human affection, worldly honor, or self-preservation would draw us away from fidelity to God, the Creator must be loved infinitely above every creature.',
+      'Like a wise builder constructing a watchtower whose summit reaches heaven, let us first dig deep into the bedrock of humility and calculate the cost: detaching our hearts from all earthly possessions so that, stripped of every weight that clings to us, we may follow Christ Crucified with joyful freedom.'
+    ],
+    spiritualApplication: 'In imitation of St. Charles Borromeo and St. Basil the Great, unite today’s trials and duties with the Cross of Christ and practice generous detachment from worldly goods.'
+  },
+
+  // Thursday of the 31st Week in Ordinary Time (Nov 5): Luke 15:1-10
+  {
+    id: 'homily-luke-15-1-10-ambrose',
+    scriptureReference: 'Luke 15:1-10',
+    saintName: 'St. Ambrose of Milan',
+    doctorTitle: 'Doctor of the Church',
+    workTitle: 'Exposition of the Holy Gospel According to Luke (Book VII)',
+    yearDelivered: 'c. 389 AD',
+    homilyTitle: 'On the Good Shepherd Who Carries the Lost Sheep upon His Shoulders',
+    homilyAttribution: 'St. Ambrose of Milan, Doctor of the Church (Exposition of the Holy Gospel According to Luke, Book VII, delivered at Milan, c. 389 AD)',
+    homilyHeading: 'On the Good Shepherd Who Carries the Lost Sheep upon His Shoulders\nSt. Ambrose of Milan, Doctor of the Church (Exposition of the Holy Gospel According to Luke, Book VII, delivered at Milan, c. 389 AD)',
+    paragraphs: [
+      'Take courage, O sinner, and never despair of pardon when you behold the three parables by which our Savior heals the wounds of fallen humanity! Who is this Shepherd who leaves the ninety-nine sheep in the heavenly heights to seek the one lost sheep in the wilderness? It is Christ the Lord! Who is the Woman who lights her lamp and sweeps the house to recover the lost silver coin? It is the Church of Christ! And who is the Father who runs out to embrace the returning prodigal? It is God the Father of mercies!',
+      'Rich is That Shepherd of whose flock the entire human race is but a single hundredth part, while the ninety-nine are the countless choirs of blessed Angels! When this one sheep strayed into the thorny thickets of sin and was too exhausted to walk back on its own, the Good Shepherd did not beat it or abandon it. He bent down from heaven in the Incarnation and lifted the weary sheep upon His own sacred shoulders.',
+      'What are the shoulders of Christ? They are the arms of His Holy Cross! There He bore our sins and carried our frail humanity back to the Father’s fold. And just as the lost drachma stamped with the image of the Emperor is found when the Church lights the lamp of the Gospel, so all the Angels of God rejoice whenever one contrite soul returns to grace through repentance!'
+    ],
+    spiritualApplication: 'Thank our Lord today for seeking you when you strayed, and pray fervently for the conversion and return of one soul who has wandered away from the Sacraments.'
+  },
+
+  // Friday of the 31st Week in Ordinary Time (Nov 6): Luke 16:1-8
+  {
+    id: 'homily-luke-16-1-8-augustine',
+    scriptureReference: 'Luke 16:1-8',
+    saintName: 'St. Augustine of Hippo',
+    doctorTitle: 'Doctor of Grace',
+    workTitle: 'Sermons on the Liturgical Seasons & New Testament (Sermon 113)',
+    yearDelivered: 'c. 410 AD',
+    homilyTitle: 'On Christian Stewardship and Providing for Our Eternal Dwelling',
+    homilyAttribution: 'St. Augustine of Hippo, Doctor of the Church (Sermon 113, On the Words of the Gospel of Luke 16, delivered at Hippo Regius, c. 410 AD)',
+    homilyHeading: 'On Christian Stewardship and Providing for Our Eternal Dwelling\nSt. Augustine of Hippo, Doctor of the Church (Sermon 113, On the Words of the Gospel of Luke 16, delivered at Hippo Regius, c. 410 AD)',
+    paragraphs: [
+      'Why did our Lord Jesus Christ set before us the parable of the steward who was about to be dismissed from his office? Assuredly not to teach us fraud—far be it from the Truth to praise dishonesty! Rather, He praised the foresight with which that man provided for his future when he knew his present stewardship was coming to an end. For "the children of this world are more prudent in dealing with their own generation than the children of light."',
+      'Every one of us in this mortal life is a steward, not an absolute proprietor, of the time, health, talents, and earthly resources entrusted to us by Almighty God. And very soon, at the hour of death, each of us will hear the voice of the Master: "Prepare a full account of your stewardship, for you can no longer be steward here!"',
+      'How then can we act with holy prudence while time remains? By remitting the debts of those who have offended us through heartfelt forgiveness, and by placing our temporal goods into the hands of Christ’s poor through almsgiving, so that what we must soon leave behind on earth may go before us to build an everlasting tabernacle in heaven.'
+    ],
+    spiritualApplication: 'Examine your stewardship of time and blessings today: forgive someone from the heart and perform a concrete work of charity that lays up treasure in heaven.'
+  },
+
+  // Saturday of the 31st Week in Ordinary Time (Nov 7): Luke 16:9-15
+  {
+    id: 'homily-luke-16-9-15-cyril',
+    scriptureReference: 'Luke 16:9-15',
+    saintName: 'St. Cyril of Alexandria',
+    doctorTitle: 'Doctor of the Incarnation',
+    workTitle: 'Commentary on the Gospel of Luke (Homily 110)',
+    yearDelivered: 'c. 430 AD',
+    homilyTitle: 'On Fidelity in Small Things and Serving God Alone',
+    homilyAttribution: 'St. Cyril of Alexandria, Doctor of the Church (Commentary on the Gospel of Luke, Homily 110, delivered at Alexandria, c. 430 AD)',
+    homilyHeading: 'On Fidelity in Small Things and Serving God Alone\nSt. Cyril of Alexandria, Doctor of the Church (Commentary on the Gospel of Luke, Homily 110, delivered at Alexandria, c. 430 AD)',
+    paragraphs: [
+      'Listen to the heavenly wisdom with which our Savior weighs all the riches of this passing world: He calls earthly wealth "very small matters" and "another’s property," whereas He calls divine grace and the Beatific Vision "true wealth" and "our own"! Earthly riches are "another’s" because no man brought them into the world at birth or can carry them with him through the gate of death.',
+      'Yet Christ reveals a blessed mystery: by sharing passing earthly goods with the poor and needy, we make for ourselves friends among the saints who will welcome us into eternal tents when this world passes away! And He adds the golden rule of spiritual progress: "The person who is trustworthy in very small matters is also trustworthy in great ones."',
+      'No servant can serve two masters whose commands are contrary: "You cannot serve God and mammon." Let us therefore enthrone God alone as the Lord of our hearts, sanctifying our smallest daily duties with undivided love and fidelity.'
+    ],
+    spiritualApplication: 'Offer your smallest daily tasks, prayers, and hidden sacrifices to God with great fidelity today, refusing to let worldly worries divide your heart.'
+  },
+
+  // 32nd Sunday in Ordinary Time (Nov 8): Mark 12:38-44
+  {
+    id: 'homily-mark-12-38-44-leo',
+    scriptureReference: 'Mark 12:38-44',
+    saintName: 'Pope St. Leo the Great',
+    doctorTitle: 'Doctor of the Church',
+    workTitle: 'Sermons on Almsgiving and the Treasury of Christian Charity',
+    yearDelivered: 'c. 450 AD',
+    homilyTitle: 'On the Poor Widow’s Two Coins and the Divine Scales of Charity',
+    homilyAttribution: 'Pope St. Leo the Great, Doctor of the Church (Sermons on the Collections and Christian Charity, delivered at Rome, c. 450 AD)',
+    homilyHeading: 'On the Poor Widow’s Two Coins and the Divine Scales of Charity\nPope St. Leo the Great, Doctor of the Church (Sermons on the Collections and Christian Charity, delivered at Rome, c. 450 AD)',
+    paragraphs: [
+      'In the scales of divine justice, dearly beloved, the quantity of our gifts is not measured by their outward weight in gold or silver, but by the fullness of the goodwill and charity of the soul that offers them! Today in the Gospel we behold our Lord Jesus Christ seated opposite the Temple treasury, watching not merely the hands of the givers, but the hidden secrets of their hearts.',
+      'Many rich men cast in large sums from their abundance, yet a poor widow came and silently dropped in two tiny copper coins worth scarcely a quadrant. Immediately the Eternal Judge summoned His disciples and pronounced sentence: "Amen, I say to you, this poor widow put in more than all the other contributors to the treasury. For they have all contributed from their surplus wealth, but she, from her poverty, has contributed all she had, her whole livelihood."',
+      'Let no one, therefore, fear that slender means can exclude him from the palm of charity! Even the poorest Christian is rich if his heart is full of love for God and neighbor. When you give yourself wholly to God—holding nothing back for pride or self-love, and entrusting your tomorrow to Divine Providence like the widow of Zarephath and the widow in the Temple—your two small coins purchase the Kingdom of Heaven!'
+    ],
+    spiritualApplication: 'Make a total offering of your day, your heart, and your charitable works to God today, remembering that Christ measures every gift by the love with which it is given.'
+  },
+
+  // Feast of the Dedication of the Lateran Basilica (Nov 9): John 2:13-22
+  {
+    id: 'homily-john-2-13-22-augustine',
+    scriptureReference: 'John 2:13-22',
+    saintName: 'St. Augustine of Hippo',
+    doctorTitle: 'Doctor of Grace',
+    workTitle: 'Tractates on the Gospel of John (Tractate 10) & Sermon 336 on the Dedication of a Church',
+    yearDelivered: 'c. 414 AD',
+    homilyTitle: 'On the Living Temple of Christ’s Body and the Dedication of Our Souls',
+    homilyAttribution: 'St. Augustine of Hippo, Doctor of the Church (Tractates on the Gospel of John, Tractate 10, & Sermon 336, Hippo Regius, c. 414 AD)',
+    homilyHeading: 'On the Living Temple of Christ’s Body and the Dedication of Our Souls\nSt. Augustine of Hippo, Doctor of the Church (Tractates on the Gospel of John, Tractate 10, & Sermon 336, Hippo Regius, c. 414 AD)',
+    paragraphs: [
+      'Whenever we celebrate with solemnity the Dedication of the House of God—and today the Dedication of the Mother and Head of all Churches in Rome—what is accomplished visibly in walls of stone must be fulfilled spiritually within our own souls! For as the Apostle Paul proclaims: "You are God’s building... Do you not know that you are the temple of God, and that the Spirit of God dwells in you?"',
+      'In today’s Gospel we behold our Lord Jesus Christ burning with holy zeal for His Father’s house, driving out the buyers and sellers who had turned the sanctuary of prayer into a marketplace of greed, and declaring of His own Sacred Humanity: "Destroy this temple, and in three days I will raise it up." Slain upon the altar of the Cross and raised in glory on Easter morning, Christ Himself is the true and everlasting Temple from whose pierced side flows the lifeblood of the Sacraments, like the life-giving river beheld by the prophet Ezekiel.',
+      'Let us therefore welcome Christ into the temple of our hearts today, beseeching Him to drive out every noisy traffic of worldly vanity, anger, and covetousness, so that our souls may remain a pure house of prayer, united in unshakable communion with the Universal Church.'
+    ],
+    spiritualApplication: 'Make an act of thanksgiving today for your baptismal incorporation into the Catholic Church, and visit or pray before the Blessed Sacrament with deep reverence.'
   }
 ];
 

@@ -315,7 +315,7 @@ export function getDailyVaticanNews(dateStr: string): CatholicNewsItem[] {
     date: dateFormatted
   };
 
-  if (dateStr === '2026-10-22') {
+  if (dateStr === '2026-10-26') {
     return [eucharistFirstStory, ...CATHOLIC_NEWS_DATABASE.slice(1)];
   }
 
@@ -324,14 +324,14 @@ export function getDailyVaticanNews(dateStr: string): CatholicNewsItem[] {
 
   const dailyLeadStory: CatholicNewsItem = {
     id: `news-daily-liturgy-${dateStr}`,
-    title: `Vatican Daily Dispatch: Celebrating ${reading.liturgicalDay}`,
-    subtitle: `Holy Father reflects on ${reading.gospel.citation} and calls the universal Church to Eucharistic adoration and active charity`,
-    summary: `In today's Vatican meditation for ${reading.liturgicalDay}, the Holy Father invited the faithful to ponder the Holy Gospel (${reading.gospel.citation}) and draw strength from the Real Presence of Jesus in the Most Blessed Sacrament.`,
-    content: `VATICAN CITY — On ${dateFormatted}, as the universal Church celebrates ${reading.liturgicalDay}, the Holy Father offered a pastoral meditation on the day's Liturgy of the Word, centering on the First Reading (${reading.firstReading.citation}), Responsorial Psalm (${reading.responsorialPsalm.citation}), and Holy Gospel (${reading.gospel.citation}).
+    title: `Vatican Daily Dispatch: ${reading.liturgicalDay} — Putting the Holy Eucharist and ${reading.gospel.citation} at the Center of Christian Life`,
+    subtitle: `Holy Father reflects on today's Gospel (${reading.gospel.citation}) and calls the universal Church to fervent Eucharistic Adoration and charity`,
+    summary: `In today's Vatican meditation for ${reading.liturgicalDay} (${dateFormatted}), the Holy Father invited the faithful to ponder the Holy Gospel (${reading.gospel.citation}) and draw strength from the Real Presence of Jesus in the Most Blessed Sacrament.`,
+    content: `VATICAN CITY — On ${dateFormatted}, as the universal Church celebrates ${reading.liturgicalDay}, the Holy Father offered a pastoral meditation on the day's Liturgy of the Word, centering on the First Reading (${reading.firstReading.citation}), Responsorial Psalm (${reading.responsorialPsalm.citation})${reading.secondReading ? `, Second Reading (${reading.secondReading.citation}),` : ''} and Holy Gospel (${reading.gospel.citation}).
 
 "${reading.reflection?.content || 'In every page of the Gospel, Christ speaks directly to the human heart today, inviting us out of fear and into the radiant peace of His Eucharistic presence,'}" the Vatican commentary observed.
 
-Pilgrims gathered in St. Peter's Basilica joined in praying the Responsorial Psalm antiphon—"${reading.responsorialPsalm.antiphon}"—before kneeling in silent adoration before the Blessed Sacrament exposed upon the altar.`,
+Pilgrims gathered in St. Peter's Basilica joined in praying the Responsorial Psalm antiphon—"${reading.responsorialPsalm.antiphon}"—before kneeling in silent adoration before the Most Blessed Sacrament exposed upon the altar.`,
     category: 'Vatican',
     author: 'Vatican News Editorial Staff',
     date: dateFormatted,
@@ -355,11 +355,11 @@ Pilgrims gathered in St. Peter's Basilica joined in praying the Responsorial Psa
     date: dateFormatted
   };
 
-  const remainingArchive = CATHOLIC_NEWS_DATABASE.slice(1).filter(
+  const remainingArchive = [eucharistFirstStory, ...CATHOLIC_NEWS_DATABASE.slice(1)].filter(
     item => item.title !== dailyStory2.title && item.title !== dailyStory3.title
   );
 
-  return [eucharistFirstStory, dailyLeadStory, dailyStory2, dailyStory3, ...remainingArchive];
+  return [dailyLeadStory, dailyStory2, dailyStory3, ...remainingArchive];
 }
 
 export function getTopVaticanHeadline(dateStr: string): CatholicNewsItem {

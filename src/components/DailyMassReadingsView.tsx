@@ -476,6 +476,36 @@ ${reading.gospel.text}`;
         </div>
       </article>
 
+      {/* SECOND READING (Sundays, Solemnities & Major Feasts) */}
+      {reading.secondReading && (
+        <article className={`rounded-xl p-6 sm:p-8 border space-y-4 transition-all duration-300 ${
+          playingPartId === 'second-reading'
+            ? 'border-amber-500 ring-2 ring-amber-400/50 shadow-xl bg-amber-50/95'
+            : 'bg-white border-stone-200/90 shadow-sm'
+        }`}>
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-stone-200 pb-3 gap-4">
+            <div className="shrink-0">
+              <div className="flex items-center gap-2.5">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
+                  Second Reading
+                </h3>
+              </div>
+              <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 mt-0.5">
+                {reading.secondReading.citation}
+              </p>
+            </div>
+          </div>
+
+          <div className="font-serif-sacred text-stone-800 whitespace-pre-line" style={scriptureStyle}>
+            {reading.secondReading.text}
+          </div>
+
+          <div className="pt-2 text-xs font-serif text-stone-600 italic">
+            The Word of the Lord. <span className="font-semibold text-stone-800 not-italic">R. Thanks be to God.</span>
+          </div>
+        </article>
+      )}
+
       {/* ALLELUIA ACCLAMATION: Increased font size for readability */}
       <div className="bg-white border border-amber-200/90 shadow-sm rounded-xl p-6 sm:p-8 text-center space-y-3 font-serif">
         <h3 className="font-serif text-lg sm:text-xl font-bold text-amber-950 tracking-normal">

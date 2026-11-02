@@ -40,7 +40,8 @@ import {
   GoldenMonstranceIcon,
   EucharisticMonstranceNavIcon,
   NotebookWithBallpenIcon,
-  HolyWaterIcon
+  HolyWaterIcon,
+  QuotationsRightFacingIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -50,6 +51,7 @@ export type ActiveTab =
   | 'visio-divina'
   | 'catechism'
   | 'wisdom'
+  | 'quotations'
   | 'spiritual-books'
   | 'catholic-podcasts'
   | 'live-mass'
@@ -280,6 +282,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: DoveWithHaloIcon, 
       tag: 'Fathers', 
       subtext: 'Doctors and Popes Treasury' 
+    },
+    { 
+      id: 'quotations', 
+      label: 'Quotations', 
+      icon: QuotationsRightFacingIcon, 
+      tag: 'Quotes', 
+      subtext: 'The Holy Trinity, Jesus Christ and The Blessed Virgin Mary' 
     },
     { 
       id: 'spiritual-books', 
