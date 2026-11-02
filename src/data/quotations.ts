@@ -407,12 +407,6 @@ export const SACRED_QUOTATIONS_DATABASE: SacredQuotation[] = [
     attribution: 'St. John Paul II, Homily, Puebla, 1979'
   },
   {
-    id: 'quote-trinity-23',
-    sectionId: 'holy-trinity',
-    sectionTitle: 'The Holy Trinity',
-    text: 'The Holy Trinity is a holy family; the Holy Family is a holy trinity.'
-  },
-  {
     id: 'quote-trinity-24',
     sectionId: 'holy-trinity',
     sectionTitle: 'The Holy Trinity',
@@ -482,13 +476,6 @@ export const SACRED_QUOTATIONS_DATABASE: SacredQuotation[] = [
     sectionTitle: 'The Blessed Virgin Mary',
     text: 'Tell everyone that God grants graces through the Immaculate Heart of Mary.',
     attribution: 'St. Jacinta Marto'
-  },
-  {
-    id: 'quote-mary-4',
-    sectionId: 'blessed-virgin-mary',
-    sectionTitle: 'The Blessed Virgin Mary',
-    text: 'One day someone asked St. Padre Pio: "Why do you insist so much on the Consecration to the Immaculate Heart of Mary?" He replied: "Because it is the only place where Satan has not set foot and he will never be able to take away the souls who enter there."',
-    isNarrative: true
   },
   {
     id: 'quote-mary-5',
@@ -2103,12 +2090,6 @@ export const SACRED_QUOTATIONS_DATABASE: SacredQuotation[] = [
     attribution: 'St. John Henry Cardinal Newman'
   },
   {
-    id: 'quote-holiness-16',
-    sectionId: 'holiness',
-    sectionTitle: 'Holiness',
-    text: 'Look back and thank God.\nLook forward and trust God.\nLook around and serve God.\nLook within and find God.'
-  },
-  {
     id: 'quote-holiness-17',
     sectionId: 'holiness',
     sectionTitle: 'Holiness',
@@ -2524,12 +2505,6 @@ export const SACRED_QUOTATIONS_DATABASE: SacredQuotation[] = [
     attribution: 'St. John Vianney'
   },
   {
-    id: 'quote-virtue-6',
-    sectionId: 'virtue',
-    sectionTitle: 'Virtue',
-    text: 'Lord, grant me humility, that I may acquire all the virtues; Lord, grant me all the virtues, that I may acquire humility.'
-  },
-  {
     id: 'quote-virtue-7',
     sectionId: 'virtue',
     sectionTitle: 'Virtue',
@@ -2800,12 +2775,6 @@ export const SACRED_QUOTATIONS_DATABASE: SacredQuotation[] = [
     sectionTitle: 'Holy Eucharist',
     text: 'The Eucharist is a promise of our future resurrection.',
     attribution: 'St. Lawrence of Brindisi'
-  },
-  {
-    id: 'quote-eucharist-22',
-    sectionId: 'holy-eucharist',
-    sectionTitle: 'Holy Eucharist',
-    text: 'The Eucharist is a present promise of our future resurrection.'
   },
   {
     id: 'quote-eucharist-23',
