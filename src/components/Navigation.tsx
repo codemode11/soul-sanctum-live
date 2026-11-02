@@ -41,7 +41,8 @@ import {
   EucharisticMonstranceNavIcon,
   NotebookWithBallpenIcon,
   HolyWaterIcon,
-  QuotationsRightFacingIcon
+  QuotationsRightFacingIcon,
+  MassReadingsBookFlipIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -230,7 +231,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'readings', 
       label: 'Mass Readings', 
-      icon: BookOpen, 
+      icon: MassReadingsBookFlipIcon, 
       tag: 'Daily', 
       subtext: 'Daily Lectionary and Gospel' 
     },

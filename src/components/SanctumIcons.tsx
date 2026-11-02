@@ -1006,3 +1006,38 @@ export const QuotationsRightFacingIcon: React.FC<IconProps> = ({ className = 'w-
   </svg>
 );
 
+/**
+ * 17. Mass Readings Icon: Open Lectionary Book that flips a page when hovered on
+ */
+export const MassReadingsBookFlipIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.85"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Mass Readings — Open Lectionary Book"
+  >
+    {/* Left Open Page */}
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+    {/* Right Open Base Page (remains visible beneath the flipping page leaf) */}
+    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+
+    {/* Flipping Right Page Leaf (pivots across the spine x=12 from right to left on hover) */}
+    <g className="sanctum-book-flip-page">
+      <path
+        d="M12 7a4 4 0 0 1 4-4h5.6v14.5H15a3 3 0 0 0-3 3V7z"
+        fill="currentColor"
+        fillOpacity="0.14"
+        strokeWidth="1.65"
+      />
+      {/* Delicate Lectionary text lines on the flipping page */}
+      <line x1="14.6" y1="7.5" x2="19.2" y2="7.5" strokeWidth="1.2" opacity="0.75" />
+      <line x1="14.6" y1="10.8" x2="19.2" y2="10.8" strokeWidth="1.2" opacity="0.75" />
+      <line x1="14.6" y1="14.1" x2="18.2" y2="14.1" strokeWidth="1.2" opacity="0.75" />
+    </g>
+  </svg>
+);
+
