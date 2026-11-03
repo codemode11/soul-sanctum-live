@@ -1347,7 +1347,7 @@ export const SpiritualClassicsBooksIcon: React.FC<IconProps> = ({ className = 'w
 );
 
 /**
- * 22. Holy Mass Live Icon: A TV that reveals a Catholic Altar inside the screen when hovered on.
+ * 22. Holy Mass Live Icon: Clean TV outline that slowly turns once when hovered on.
  */
 export const HolyMassLiveTvAltarIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -1358,57 +1358,14 @@ export const HolyMassLiveTvAltarIcon: React.FC<IconProps> = ({ className = 'w-5 
     strokeLinecap="round"
     strokeLinejoin="round"
     className={`${className} overflow-visible`}
-    aria-label="Holy Mass Live — TV with Sanctuary Altar"
+    aria-label="Holy Mass Live — TV"
   >
-    {/* TV Antenna */}
-    <polyline points="17 2 12 7 7 2" />
+    <g className="sanctum-tv-turn">
+      {/* TV Antenna */}
+      <polyline points="17 2 12 7 7 2" />
 
-    {/* TV Screen Frame */}
-    <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
-
-    {/* Sanctuary Altar inside the TV screen (appears when hovered on) */}
-    <g className="sanctum-tv-altar">
-      {/* Subtle warm broadcast glow inside TV screen */}
-      <rect
-        x="2.8"
-        y="7.8"
-        width="18.4"
-        height="13.4"
-        rx="1.3"
-        fill="currentColor"
-        fillOpacity="0.09"
-        stroke="none"
-      />
-
-      {/* Central Altar Cross rising above the mensa */}
-      <line x1="12" y1="9.5" x2="12" y2="16.2" strokeWidth="1.5" />
-      <line x1="10.1" y1="11.3" x2="13.9" y2="11.3" strokeWidth="1.5" />
-
-      {/* Left and Right Altar Candles on the mensa */}
-      <line x1="7.5" y1="13.3" x2="7.5" y2="16.2" strokeWidth="1.3" />
-      <circle cx="7.5" cy="11.8" r="0.8" fill="#FEF08A" stroke="currentColor" strokeWidth="0.7" />
-      <line x1="16.5" y1="13.3" x2="16.5" y2="16.2" strokeWidth="1.3" />
-      <circle cx="16.5" cy="11.8" r="0.8" fill="#FEF08A" stroke="currentColor" strokeWidth="0.7" />
-
-      {/* Altar Tabletop (Mensa) overhang */}
-      <line x1="5.0" y1="16.2" x2="19.0" y2="16.2" strokeWidth="1.65" />
-
-      {/* Altar Base & Antependium Frontal Cloth */}
-      <path
-        d="M6.3 16.2v4.2h11.4v-4.2"
-        strokeWidth="1.4"
-        fill="currentColor"
-        fillOpacity="0.18"
-      />
-      <rect
-        x="10.2"
-        y="16.2"
-        width="3.6"
-        height="3.0"
-        fill="currentColor"
-        fillOpacity="0.24"
-        strokeWidth="1.1"
-      />
+      {/* TV Screen Frame */}
+      <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
     </g>
   </svg>
 );

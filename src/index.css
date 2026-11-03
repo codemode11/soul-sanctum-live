@@ -628,23 +628,17 @@ svg:hover .sanctum-podcast-waveform-track {
   opacity: 1;
 }
 
-/* Holy Mass Live Icon: When hovered on, an altar shows in the TV */
-.sanctum-tv-altar {
+/* Holy Mass Live Icon (TV): Slowly turns once when hovered on */
+.sanctum-tv-turn {
   transform-box: view-box;
-  transform-origin: 12px 15px;
-  opacity: 0;
-  transform: scale(0.92) translateY(0.8px);
-  transition:
-    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-  pointer-events: none;
+  transform-origin: 12px 12px;
+  transform: scaleX(1);
+  will-change: transform;
 }
 
-.group:hover .sanctum-tv-altar,
-svg:hover .sanctum-tv-altar {
-  opacity: 1;
-  transform: scale(1) translateY(0px);
+.group:hover .sanctum-tv-turn,
+svg:hover .sanctum-tv-turn {
+  animation: sanctumBasilicaTurnOnce 1.4s ease-in-out 1 forwards;
 }
 
 /* Vatican News Icon (St. Peter's Basilica): Slowly turns once when hovered on */
