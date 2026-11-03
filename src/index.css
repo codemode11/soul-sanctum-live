@@ -752,6 +752,81 @@ svg:hover .sanctum-treasury-praying-hands {
   animation: sanctumTreasuryHandsTurnIn 1.35s linear 1 forwards;
 }
 
+/* Chaplet and Rosary Icon: Front beads successively change color from yellow to dark brown on hover */
+@keyframes sanctumRosaryBeadToDarkBrown {
+  0% {
+    fill: #FFD700;
+    stroke: #FFD700;
+  }
+  100% {
+    fill: #3A1F0D;
+    stroke: #4E2A14;
+  }
+}
+
+.sanctum-rosary-bead {
+  transition:
+    fill 0.3s ease-out,
+    stroke 0.3s ease-out;
+}
+
+.group:hover .sanctum-rosary-bead,
+svg:hover .sanctum-rosary-bead {
+  fill: #FFD700;
+  stroke: #FFD700;
+  animation: sanctumRosaryBeadToDarkBrown 0.28s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-rosary-bead-1,
+svg:hover .sanctum-rosary-bead-1 {
+  animation-delay: 0.08s;
+}
+
+.group:hover .sanctum-rosary-bead-2,
+svg:hover .sanctum-rosary-bead-2 {
+  animation-delay: 0.22s;
+}
+
+.group:hover .sanctum-rosary-bead-3,
+svg:hover .sanctum-rosary-bead-3 {
+  animation-delay: 0.36s;
+}
+
+.group:hover .sanctum-rosary-bead-4,
+svg:hover .sanctum-rosary-bead-4 {
+  animation-delay: 0.50s;
+}
+
+.group:hover .sanctum-rosary-bead-5,
+svg:hover .sanctum-rosary-bead-5 {
+  animation-delay: 0.64s;
+}
+
+.group:hover .sanctum-rosary-bead-6,
+svg:hover .sanctum-rosary-bead-6 {
+  animation-delay: 0.78s;
+}
+
+.group:hover .sanctum-rosary-bead-7,
+svg:hover .sanctum-rosary-bead-7 {
+  animation-delay: 0.92s;
+}
+
+.group:hover .sanctum-rosary-bead-8,
+svg:hover .sanctum-rosary-bead-8 {
+  animation-delay: 1.06s;
+}
+
+.group:hover .sanctum-rosary-bead-9,
+svg:hover .sanctum-rosary-bead-9 {
+  animation-delay: 1.20s;
+}
+
+.group:hover .sanctum-rosary-bead-10,
+svg:hover .sanctum-rosary-bead-10 {
+  animation-delay: 1.34s;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {

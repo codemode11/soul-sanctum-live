@@ -630,6 +630,7 @@ export const PrayingHandsIcon = ThreePrayerBooksIcon;
 
 /**
  * 6. Rosary and Chaplet icon: A ten-bead Rosary. The Chaplet at the left, and the Rosary at the right.
+ * When hovered on, the front beads successively change color from yellow to dark brown.
  */
 export const RosaryAndChapletIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -639,23 +640,10 @@ export const RosaryAndChapletIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
     strokeWidth="1.8" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
+    aria-label="Chaplet and Rosary — Ten-Bead Rosary"
   >
-    {/* Left 5 beads: The Chaplet */}
-    <circle cx="8" cy="4" r="1.2" fill="currentColor" />
-    <circle cx="5.5" cy="7" r="1.2" fill="currentColor" />
-    <circle cx="4.5" cy="11" r="1.2" fill="currentColor" />
-    <circle cx="6" cy="14.5" r="1.2" fill="currentColor" />
-    <circle cx="9" cy="17" r="1.2" fill="currentColor" />
-
-    {/* Right 5 beads: The Holy Rosary */}
-    <circle cx="16" cy="4" r="1.2" fill="currentColor" />
-    <circle cx="18.5" cy="7" r="1.2" fill="currentColor" />
-    <circle cx="19.5" cy="11" r="1.2" fill="currentColor" />
-    <circle cx="18" cy="14.5" r="1.2" fill="currentColor" />
-    <circle cx="15" cy="17" r="1.2" fill="currentColor" />
-
-    {/* Connecting cord loop */}
+    {/* Connecting cord loop (rendered behind the front beads) */}
     <path d="M8 4c2.5-1.5 5.5-1.5 8 0" strokeWidth="1" strokeDasharray="1 1" />
     <path d="M4.5 11c0-2 .5-3 1-4" strokeWidth="1" />
     <path d="M19.5 11c0-2-.5-3-1-4" strokeWidth="1" />
@@ -668,6 +656,21 @@ export const RosaryAndChapletIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
     {/* Crucifix hanging down from centerpiece */}
     <path d="M12 19v4.5" strokeWidth="1.8" />
     <path d="M10 21h4" strokeWidth="1.8" />
+
+    {/* 10 Front Beads around the loop (successively change from yellow to dark brown on hover): */}
+    {/* Left 5 beads: The Chaplet (bottom-left up to top-left) */}
+    <circle cx="9" cy="17" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-1" />
+    <circle cx="6" cy="14.5" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-2" />
+    <circle cx="4.5" cy="11" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-3" />
+    <circle cx="5.5" cy="7" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-4" />
+    <circle cx="8" cy="4" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-5" />
+
+    {/* Right 5 beads: The Holy Rosary (top-right down to bottom-right) */}
+    <circle cx="16" cy="4" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-6" />
+    <circle cx="18.5" cy="7" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-7" />
+    <circle cx="19.5" cy="11" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-8" />
+    <circle cx="18" cy="14.5" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-9" />
+    <circle cx="15" cy="17" r="1.55" fill="currentColor" strokeWidth="0.65" className="sanctum-rosary-bead sanctum-rosary-bead-10" />
   </svg>
 );
 
