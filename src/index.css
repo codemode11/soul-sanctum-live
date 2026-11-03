@@ -528,33 +528,81 @@ svg:hover .sanctum-dove-wing-right {
   animation: sanctumDoveFlapRight 2.4s ease-in-out 1 forwards;
 }
 
-/* Quotations Icon: Morph a mouth (upper & lower lips) into right-facing quotation marks on hover */
-.sanctum-quote-morph-left {
-  d: path("M 2.6 12.2 C 4.5 10.2, 6.6 7.5, 8.6 7.5 C 10.0 7.5, 11.0 9.2, 12.0 9.2 C 13.0 9.2, 14.0 7.5, 15.4 7.5 C 17.4 7.5, 19.5 10.2, 21.4 12.2 C 18.4 12.0, 15.2 11.4, 12.0 11.9 C 8.8 11.4, 5.6 12.0, 2.6 12.2 Z");
-  transition:
-    d 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-    fill-opacity 0.85s ease;
-  will-change: d;
+/* Quotations Icon: Quotation marks first face each other, then the right one joins the left one and faces right */
+@keyframes sanctumQuoteJoinAndFaceRight {
+  0%, 14% {
+    transform: translateX(3.4px) scaleX(-1);
+  }
+  58% {
+    transform: translateX(0.9px) scaleX(-1);
+  }
+  100% {
+    transform: translateX(0px) scaleX(1);
+  }
 }
 
-.sanctum-quote-morph-right {
-  d: path("M 2.6 12.2 C 5.0 12.2, 6.8 12.4, 8.6 12.5 C 10.8 12.7, 13.2 12.7, 15.4 12.5 C 17.2 12.4, 19.0 12.2, 21.4 12.2 C 19.6 14.8, 17.5 16.4, 15.2 16.8 C 14.0 17.0, 13.0 17.1, 12.0 17.1 C 8.0 17.1, 4.6 15.2, 2.6 12.2 Z");
-  transition:
-    d 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-    fill-opacity 0.85s ease;
-  will-change: d;
+.sanctum-quote-left-mark {
+  transform-box: view-box;
+  transform-origin: 6.7px 11.65px;
 }
 
-.group:hover .sanctum-quote-morph-left,
-svg:hover .sanctum-quote-morph-left {
-  d: path("M 5.4 11.5 C 5.4 7.8, 5.9 6.5, 7.1 6.5 C 7.7 6.5, 8.4 6.5, 9.0 6.5 C 10.1 6.5, 10.6 7.4, 10.6 10.4 C 10.6 11.7, 9.6 12.2, 7.8 12.2 C 7.9 14.0, 8.7 15.0, 9.8 16.6 C 7.2 16.6, 5.4 14.8, 5.4 11.5 Z");
-  fill-opacity: 0.16;
+.sanctum-quote-right-mark {
+  transform-box: view-box;
+  transform-origin: 13.9px 11.65px;
+  transform: translateX(3.4px) scaleX(-1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
-.group:hover .sanctum-quote-morph-right,
-svg:hover .sanctum-quote-morph-right {
-  d: path("M 13.6 11.5 C 13.6 7.8, 14.1 6.5, 15.3 6.5 C 15.9 6.5, 16.6 6.5, 17.2 6.5 C 18.3 6.5, 18.8 7.4, 18.8 10.4 C 18.8 11.7, 17.8 12.2, 16.0 12.2 C 16.1 14.0, 16.9 15.0, 18.0 16.6 C 15.4 16.6, 13.6 14.8, 13.6 11.5 Z");
-  fill-opacity: 0.16;
+.group:hover .sanctum-quote-right-mark,
+svg:hover .sanctum-quote-right-mark {
+  animation: sanctumQuoteJoinAndFaceRight 0.95s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
+/* Spiritual Classics Icon: Books stack to the left side, with the last (4th) book leaning on the three books */
+.sanctum-classics-book-1 {
+  transform-box: view-box;
+  transform-origin: 3.8px 21px;
+  transform: translateX(0px);
+}
+
+.sanctum-classics-book-2 {
+  transform-box: view-box;
+  transform-origin: 7.4px 21px;
+  transform: translateX(1.6px);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.sanctum-classics-book-3 {
+  transform-box: view-box;
+  transform-origin: 11.0px 21px;
+  transform: translateX(3.2px);
+  transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+  will-change: transform;
+}
+
+.sanctum-classics-book-4 {
+  transform-box: view-box;
+  transform-origin: 16.7px 21px;
+  transform: translateX(1.8px) rotate(0deg);
+  transition: transform 0.82s cubic-bezier(0.22, 1, 0.36, 1) 0.12s;
+  will-change: transform;
+}
+
+.group:hover .sanctum-classics-book-2,
+svg:hover .sanctum-classics-book-2 {
+  transform: translateX(0px);
+}
+
+.group:hover .sanctum-classics-book-3,
+svg:hover .sanctum-classics-book-3 {
+  transform: translateX(0px);
+}
+
+.group:hover .sanctum-classics-book-4,
+svg:hover .sanctum-classics-book-4 {
+  transform: translateX(0px) rotate(-15deg);
 }
 
 

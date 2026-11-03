@@ -1098,8 +1098,8 @@ export const HolyWaterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) =>
 );
 
 /**
- * 16. Quotations Icon: A mouth (upper and lower lips) at rest that smoothly morphs
- * into right-facing quotation marks when hovered on.
+ * 16. Quotations Icon: The quotation marks first face each other, then on hover
+ * one quotation mark (from the right) joins the one at the left and faces the right side.
  */
 export const QuotationsRightFacingIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -1110,21 +1110,17 @@ export const QuotationsRightFacingIcon: React.FC<IconProps> = ({ className = 'w-
     strokeLinecap="round"
     strokeLinejoin="round"
     className={`${className} overflow-visible`}
-    aria-label="Quotations — Mouth Morphing into Quotation Marks"
+    aria-label="Quotations — Quotation Marks"
   >
-    {/* Upper lip at rest -> Morphs into Left Quotation Mark on hover */}
+    {/* Left quotation mark at the left, facing right */}
     <path
-      d="M 2.6 12.2 C 4.5 10.2, 6.6 7.5, 8.6 7.5 C 10.0 7.5, 11.0 9.2, 12.0 9.2 C 13.0 9.2, 14.0 7.5, 15.4 7.5 C 17.4 7.5, 19.5 10.2, 21.4 12.2 C 18.4 12.0, 15.2 11.4, 12.0 11.9 C 8.8 11.4, 5.6 12.0, 2.6 12.2 Z"
-      fill="currentColor"
-      fillOpacity="0.1"
-      className="sanctum-quote-morph-left"
+      d="M8.1 16.8C5.7 16.5 4.2 14.8 4.2 11.5V8.2c0-1 .7-1.7 1.7-1.7h1.6c1 0 1.7.7 1.7 1.7v2.4c0 .9-.7 1.6-1.6 1.6H6.5c.1 1.6.8 2.5 2.2 2.8v1.8h-.6z"
+      className="sanctum-quote-left-mark"
     />
-    {/* Lower lip at rest -> Morphs into Right Quotation Mark on hover */}
+    {/* Right quotation mark: starts on the right facing left (facing the left mark), then on hover joins the left mark and faces the right side */}
     <path
-      d="M 2.6 12.2 C 5.0 12.2, 6.8 12.4, 8.6 12.5 C 10.8 12.7, 13.2 12.7, 15.4 12.5 C 17.2 12.4, 19.0 12.2, 21.4 12.2 C 19.6 14.8, 17.5 16.4, 15.2 16.8 C 14.0 17.0, 13.0 17.1, 12.0 17.1 C 8.0 17.1, 4.6 15.2, 2.6 12.2 Z"
-      fill="currentColor"
-      fillOpacity="0.1"
-      className="sanctum-quote-morph-right"
+      d="M15.3 16.8c-2.4-.3-3.9-2.0-3.9-5.3V8.2c0-1 .7-1.7 1.7-1.7h1.6c1 0 1.7.7 1.7 1.7v2.4c0 .9-.7 1.6-1.6 1.6h-1.1c.1 1.6.8 2.5 2.2 2.8v1.8h-.6z"
+      className="sanctum-quote-right-mark"
     />
   </svg>
 );
@@ -1279,5 +1275,51 @@ export const BibleFlashcardsIcon: React.FC<IconProps> = ({ className = 'w-5 h-5'
     </g>
   </svg>
 );
+
+/**
+ * 21. Spiritual Classics Icon: Four books on a shelf.
+ * On hover, the first three books stack to the left side, and the fourth (last) book
+ * slides in and tilts left to lean on the three books.
+ */
+export const SpiritualClassicsBooksIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Spiritual Classics — Four Books Stacking to the Left"
+  >
+    {/* Shelf base line */}
+    <line x1="1.5" y1="21" x2="22.5" y2="21" strokeWidth="1.75" />
+
+    {/* Book 1: Leftmost upright book */}
+    <g className="sanctum-classics-book-1">
+      <rect x="2.2" y="5.5" width="3.2" height="15.5" rx="0.55" strokeWidth="1.6" />
+      <line x1="3.8" y1="8.2" x2="3.8" y2="13.5" strokeWidth="1.15" />
+    </g>
+
+    {/* Book 2: Second upright book (stacks to the left against Book 1 on hover) */}
+    <g className="sanctum-classics-book-2">
+      <rect x="5.8" y="4.2" width="3.2" height="16.8" rx="0.55" strokeWidth="1.6" />
+      <line x1="7.4" y1="7.2" x2="7.4" y2="12.8" strokeWidth="1.15" />
+    </g>
+
+    {/* Book 3: Third upright book (stacks to the left against Book 2 on hover) */}
+    <g className="sanctum-classics-book-3">
+      <rect x="9.4" y="5.0" width="3.2" height="16.0" rx="0.55" strokeWidth="1.6" />
+      <line x1="11.0" y1="8.0" x2="11.0" y2="13.2" strokeWidth="1.15" />
+    </g>
+
+    {/* Book 4: Fourth (last) book (slides left and tilts to lean on the three books on hover) */}
+    <g className="sanctum-classics-book-4">
+      <rect x="16.7" y="5.2" width="3.2" height="15.8" rx="0.55" strokeWidth="1.6" />
+      <line x1="18.3" y1="8.2" x2="18.3" y2="13.4" strokeWidth="1.15" />
+    </g>
+  </svg>
+);
+
 
 

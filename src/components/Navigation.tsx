@@ -45,7 +45,8 @@ import {
   MassReadingsBookFlipIcon,
   ChurchTimelineIcon,
   VisioDivinaEyeBlinkIcon,
-  BibleFlashcardsIcon
+  BibleFlashcardsIcon,
+  SpiritualClassicsBooksIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -297,7 +298,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'spiritual-books', 
       label: 'Spiritual Classics', 
-      icon: Library, 
+      icon: SpiritualClassicsBooksIcon, 
       tag: 'Reader', 
       subtext: 'In-App Classics and Lectio' 
     },
