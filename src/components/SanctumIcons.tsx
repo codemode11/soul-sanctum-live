@@ -573,47 +573,54 @@ export const ThreePrayerBooksIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
       </g>
     </g>
 
-    {/* Hover State: Two Hands Joined in Prayer (emerges seamlessly from the 50% midpoint of the single turn) */}
+    {/* Hover State: Two Hands Joined in Prayer with Visible Forearms (emerges seamlessly from the 50% midpoint of the single turn) */}
     <g className="sanctum-treasury-praying-hands">
       {/* Soft warm fill inside the joined hands */}
       <path
-        d="M12 2.8 C10.6 3.0, 9.6 4.2, 8.9 6.4 L7.4 11.8 C7.0 13.4, 7.6 14.8, 8.8 15.8 L12 17.2 L15.2 15.8 C16.4 14.8, 17.0 13.4, 16.6 11.8 L15.1 6.4 C14.4 4.2, 13.4 3.0, 12 2.8 Z"
+        d="M12 2.2 C10.7 2.4, 9.7 3.5, 9.1 5.5 L7.8 10.2 C7.4 11.6, 7.7 12.9, 8.4 13.8 L11.4 14.2 L12 14.2 L12.6 14.2 L15.6 13.8 C16.3 12.9, 16.6 11.6, 16.2 10.2 L14.9 5.5 C14.3 3.5, 13.3 2.4, 12 2.2 Z"
         fill="currentColor"
         fillOpacity="0.12"
         stroke="none"
       />
 
       {/* Center line where the two palms and fingers press together in prayer */}
-      <line x1="12" y1="2.8" x2="12" y2="17.0" strokeWidth="1.55" />
+      <line x1="12" y1="2.2" x2="12" y2="14.2" strokeWidth="1.5" />
 
-      {/* Left Hand: joined fingertips, back of hand, heel of palm, and left wrist */}
+      {/* Left Hand: joined fingertips, back of hand, and thumb */}
       <path
-        d="M12 2.8 C10.6 3.0, 9.6 4.2, 8.9 6.4 L7.4 11.8 C7.0 13.4, 7.6 14.8, 8.8 15.8 L7.0 20.8"
+        d="M12 2.2 C10.7 2.4, 9.7 3.5, 9.1 5.5 L7.8 10.2 C7.4 11.6, 7.7 12.9, 8.4 13.8"
         strokeWidth="1.75"
       />
-      {/* Left Thumb folded reverently over the palm */}
       <path
-        d="M12 8.2 C10.5 8.8, 9.5 10.2, 9.4 12.2 C9.3 13.5, 10.2 14.6, 12 15.2"
-        strokeWidth="1.4"
+        d="M12 6.8 C10.7 7.3, 9.8 8.5, 9.7 10.2 C9.6 11.4, 10.4 12.4, 12 13.0"
+        strokeWidth="1.35"
       />
-      {/* Left Finger contour */}
-      <path d="M10.5 3.6 L9.5 7.8" strokeWidth="1.15" opacity="0.75" />
 
-      {/* Right Hand: joined fingertips, back of hand, heel of palm, and right wrist */}
+      {/* Right Hand: joined fingertips, back of hand, and thumb */}
       <path
-        d="M12 2.8 C13.4 3.0, 14.4 4.2, 15.1 6.4 L16.6 11.8 C17.0 13.4, 16.4 14.8, 15.2 15.8 L17.0 20.8"
+        d="M12 2.2 C13.3 2.4, 14.3 3.5, 14.9 5.5 L16.2 10.2 C16.6 11.6, 16.3 12.9, 15.6 13.8"
         strokeWidth="1.75"
       />
-      {/* Right Thumb folded reverently over the palm */}
       <path
-        d="M12 8.2 C13.5 8.8, 14.5 10.2, 14.6 12.2 C14.7 13.5, 13.8 14.6, 12 15.2"
-        strokeWidth="1.4"
+        d="M12 6.8 C13.3 7.3, 14.2 8.5, 14.3 10.2 C14.4 11.4, 13.6 12.4, 12 13.0"
+        strokeWidth="1.35"
       />
-      {/* Right Finger contour */}
-      <path d="M13.5 3.6 L14.5 7.8" strokeWidth="1.15" opacity="0.75" />
 
-      {/* Inner wrist cuff seam */}
-      <path d="M8.8 15.8 L12 17.2 L15.2 15.8" strokeWidth="1.4" />
+      {/* Left Forearm Outline: distinct outer and inner forearm borders extending down from the left wrist */}
+      <path
+        d="M8.4 13.8 L4.6 21.6 L8.4 21.6 L11.4 14.2 Z"
+        fill="currentColor"
+        fillOpacity="0.1"
+        strokeWidth="1.7"
+      />
+
+      {/* Right Forearm Outline: distinct outer and inner forearm borders extending down from the right wrist */}
+      <path
+        d="M15.6 13.8 L19.4 21.6 L15.6 21.6 L12.6 14.2 Z"
+        fill="currentColor"
+        fillOpacity="0.1"
+        strokeWidth="1.7"
+      />
     </g>
   </svg>
 );
