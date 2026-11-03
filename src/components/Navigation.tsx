@@ -44,7 +44,8 @@ import {
   QuotationsRightFacingIcon,
   MassReadingsBookFlipIcon,
   ChurchTimelineIcon,
-  VisioDivinaEyeBlinkIcon
+  VisioDivinaEyeBlinkIcon,
+  BibleFlashcardsIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -254,7 +255,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'bible-flashcards', 
       label: 'Bible Flashcards', 
-      icon: BookmarkCheck, 
+      icon: BibleFlashcardsIcon, 
       tag: 'Memory', 
       subtext: 'Scripture Memorization and Recall' 
     },

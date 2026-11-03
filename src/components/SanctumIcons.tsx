@@ -1189,3 +1189,67 @@ export const VisioDivinaEyeBlinkIcon: React.FC<IconProps> = ({ className = 'w-5 
   </svg>
 );
 
+/**
+ * 20. Bible Flashcards Icon: Vertical rectangle with a check mark in the middle.
+ * When hovered on, another flashcard from the top goes to the front.
+ */
+export const BibleFlashcardsIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Bible Flashcards"
+  >
+    {/* Base Flashcard (recedes to the back when the top flashcard comes to the front on hover) */}
+    <g className="sanctum-flashcard-base">
+      <rect
+        x="5.5"
+        y="3.5"
+        width="13"
+        height="17"
+        rx="2"
+        strokeWidth="1.8"
+        fill="currentColor"
+        fillOpacity="0.08"
+      />
+      <path
+        d="M9.2 12.2L11.2 14.2L15.0 10.0"
+        strokeWidth="1.95"
+      />
+    </g>
+
+    {/* Top Flashcard that slides down from the top to the front when hovered on */}
+    <g className="sanctum-flashcard-top">
+      {/* Solid dark backing so the incoming flashcard visibly covers the back card as it comes to the front */}
+      <rect
+        x="5.5"
+        y="3.5"
+        width="13"
+        height="17"
+        rx="2"
+        fill="#1c1613"
+        stroke="none"
+      />
+      <rect
+        x="5.5"
+        y="3.5"
+        width="13"
+        height="17"
+        rx="2"
+        strokeWidth="1.85"
+        fill="currentColor"
+        fillOpacity="0.14"
+      />
+      <path
+        d="M9.2 12.2L11.2 14.2L15.0 10.0"
+        strokeWidth="2.0"
+      />
+    </g>
+  </svg>
+);
+
+

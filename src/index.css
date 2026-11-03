@@ -356,6 +356,61 @@ svg:hover .sanctum-saint-halo-inner {
   opacity: 0.95;
 }
 
+/* Bible Flashcards Icon: Vertical rectangle with check mark; on hover, another flashcard from the top goes to the front */
+@keyframes sanctumFlashcardTopToFront {
+  0% {
+    transform: translateY(-8.5px) scale(0.9);
+    opacity: 0;
+  }
+  18% {
+    transform: translateY(-6.8px) scale(0.93);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumFlashcardBaseRecede {
+  0% {
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(2.2px) scale(0.92);
+    opacity: 0.35;
+  }
+}
+
+.sanctum-flashcard-base {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: translateY(0px) scale(1);
+  opacity: 1;
+  transition:
+    transform 0.35s ease-out,
+    opacity 0.35s ease-out;
+}
+
+.sanctum-flashcard-top {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: translateY(-8.5px) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.group:hover .sanctum-flashcard-base,
+svg:hover .sanctum-flashcard-base {
+  animation: sanctumFlashcardBaseRecede 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
+.group:hover .sanctum-flashcard-top,
+svg:hover .sanctum-flashcard-top {
+  animation: sanctumFlashcardTopToFront 0.68s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
