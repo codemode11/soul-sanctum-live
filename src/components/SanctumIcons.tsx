@@ -1325,36 +1325,96 @@ export const MassReadingsBookFlipIcon: React.FC<IconProps> = ({ className = 'w-5
 );
 
 /**
- * 18. Timeline of the Church Icon: "AD 107"
+ * 18. Timeline of the Church Icon: Vertical timeline that scrolls up
+ * from 30 to 49 to 64 and to 107 AD when hovered on.
  */
-export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.6"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={`${className} overflow-visible`}
-    aria-label="Timeline of the Church — AD 107"
-  >
-    <text
-      x="12"
-      y="15.5"
-      textAnchor="middle"
-      fontSize="10.2"
-      fontWeight="900"
-      textLength="30.5"
-      lengthAdjust="spacingAndGlyphs"
-      fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
-      fill="currentColor"
+export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => {
+  const rawId = React.useId();
+  const clipId = `sanctum-timeline-clip-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
       stroke="currentColor"
-      strokeWidth="0.3"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${className} overflow-visible`}
+      aria-label="Timeline of the Church — 30 to 107 AD"
     >
-      AD 107
-    </text>
-  </svg>
-);
+      <defs>
+        <clipPath id={clipId}>
+          <rect x="0" y="1" width="24" height="22" rx="2" />
+        </clipPath>
+      </defs>
+
+      {/* Clipped scrolling timeline container */}
+      <g clipPath={`url(#${clipId})`}>
+        <g className="sanctum-timeline-scroll">
+          {/* Continuous vertical timeline axis */}
+          <line x1="4.0" y1="2" x2="4.0" y2="82" strokeWidth="1.5" stroke="currentColor" opacity="0.65" />
+
+          {/* 1. Milestone 30 AD (Crucifixion, Resurrection & Pentecost) */}
+          <circle cx="4.0" cy="12" r="1.65" fill="currentColor" stroke="none" />
+          <text
+            x="7.8"
+            y="14.6"
+            fontSize="7.4"
+            fontWeight="900"
+            fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
+            fill="currentColor"
+            stroke="none"
+          >
+            30 AD
+          </text>
+
+          {/* 2. Milestone 49 AD (Council of Jerusalem) */}
+          <circle cx="4.0" cy="32" r="1.65" fill="currentColor" stroke="none" />
+          <text
+            x="7.8"
+            y="34.6"
+            fontSize="7.4"
+            fontWeight="900"
+            fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
+            fill="currentColor"
+            stroke="none"
+          >
+            49 AD
+          </text>
+
+          {/* 3. Milestone 64 AD (Nero's Persecution & Peter & Paul) */}
+          <circle cx="4.0" cy="52" r="1.65" fill="currentColor" stroke="none" />
+          <text
+            x="7.8"
+            y="54.6"
+            fontSize="7.4"
+            fontWeight="900"
+            fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
+            fill="currentColor"
+            stroke="none"
+          >
+            64 AD
+          </text>
+
+          {/* 4. Milestone 107 AD (St. Ignatius of Antioch - Katholike Ekklesia) */}
+          <circle cx="4.0" cy="72" r="1.8" fill="#FEF08A" stroke="currentColor" strokeWidth="0.6" />
+          <text
+            x="7.8"
+            y="74.6"
+            fontSize="7.0"
+            fontWeight="900"
+            fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
+            fill="#FEF08A"
+            stroke="none"
+          >
+            107 AD
+          </text>
+        </g>
+      </g>
+    </svg>
+  );
+};
 
 /**
  * 19. Visio Divina Icon: Eye that blinks slowly when hovered on

@@ -959,6 +959,34 @@ svg:hover .sanctum-calendar-front-page {
   animation: sanctumCalendarFlipBack 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
 }
 
+/* Timeline of the Church Icon: Vertical timeline scrolls up from 30 to 49 to 64 and to 107 AD on hover */
+@keyframes sanctumTimelineScrollUp {
+  0%, 14% {
+    transform: translateY(0px);
+  }
+  24%, 43% {
+    transform: translateY(-20px);
+  }
+  53%, 72% {
+    transform: translateY(-40px);
+  }
+  84%, 100% {
+    transform: translateY(-60px);
+  }
+}
+
+.sanctum-timeline-scroll {
+  transform-box: view-box;
+  transform: translateY(0px);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.group:hover .sanctum-timeline-scroll,
+svg:hover .sanctum-timeline-scroll {
+  animation: sanctumTimelineScrollUp 2.4s cubic-bezier(0.45, 0, 0.25, 1) 1 forwards;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
