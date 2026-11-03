@@ -624,7 +624,7 @@ svg:hover .sanctum-classics-book-4 {
 
 .group:hover .sanctum-podcast-waveform-track,
 svg:hover .sanctum-podcast-waveform-track {
-  animation: sanctumPodcastWaveformPass 1.15s linear infinite;
+  animation: sanctumPodcastWaveformPass 1.25s cubic-bezier(0.22, 0.61, 0.36, 1) 1 forwards;
   opacity: 1;
 }
 
