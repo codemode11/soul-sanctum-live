@@ -226,6 +226,28 @@ svg:hover .sanctum-scroll-parchment {
   opacity: 1;
 }
 
+/* Visio Divina Icon: Eye blinks slowly when hovered on */
+@keyframes sanctumEyeSlowBlink {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  42%, 52% {
+    transform: scaleY(0.06);
+  }
+}
+
+.sanctum-eye-blink {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transition: transform 0.35s ease-out;
+}
+
+.group:hover .sanctum-eye-blink,
+svg:hover .sanctum-eye-blink {
+  animation: sanctumEyeSlowBlink 1.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
   transform-origin: 50% 50%;

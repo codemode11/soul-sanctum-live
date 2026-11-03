@@ -1111,3 +1111,25 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
     </text>
   </svg>
 );
+
+/**
+ * 19. Visio Divina Icon: Eye that blinks slowly when hovered on
+ */
+export const VisioDivinaEyeBlinkIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.85"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Visio Divina — Contemplative Eye"
+  >
+    <g className="sanctum-eye-blink">
+      <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+      <circle cx="12" cy="12" r="3" />
+    </g>
+  </svg>
+);
+

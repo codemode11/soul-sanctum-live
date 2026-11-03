@@ -43,7 +43,8 @@ import {
   HolyWaterIcon,
   QuotationsRightFacingIcon,
   MassReadingsBookFlipIcon,
-  ChurchTimelineIcon
+  ChurchTimelineIcon,
+  VisioDivinaEyeBlinkIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -267,7 +268,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'visio-divina', 
       label: 'Visio Divina', 
-      icon: Eye, 
+      icon: VisioDivinaEyeBlinkIcon, 
       tag: 'Prayer', 
       subtext: 'Contemplation of Sacred Art' 
     },
