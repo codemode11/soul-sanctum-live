@@ -46,7 +46,8 @@ import {
   ChurchTimelineIcon,
   VisioDivinaEyeBlinkIcon,
   BibleFlashcardsIcon,
-  SpiritualClassicsBooksIcon
+  SpiritualClassicsBooksIcon,
+  HolyMassLiveTvAltarIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -312,7 +313,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'live-mass', 
       label: 'Holy Mass Live', 
-      icon: Tv, 
+      icon: HolyMassLiveTvAltarIcon, 
       tag: 'Live', 
       subtext: 'St. Peter\'s and Global Sanctuaries' 
     },

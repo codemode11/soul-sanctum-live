@@ -628,6 +628,25 @@ svg:hover .sanctum-podcast-waveform-track {
   opacity: 1;
 }
 
+/* Holy Mass Live Icon: When hovered on, an altar shows in the TV */
+.sanctum-tv-altar {
+  transform-box: view-box;
+  transform-origin: 12px 15px;
+  opacity: 0;
+  transform: scale(0.92) translateY(0.8px);
+  transition:
+    opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+.group:hover .sanctum-tv-altar,
+svg:hover .sanctum-tv-altar {
+  opacity: 1;
+  transform: scale(1) translateY(0px);
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
