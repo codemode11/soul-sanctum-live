@@ -447,6 +447,130 @@ svg:hover .sanctum-thinker-arm {
   d: path("M 11.4 7.6 L 14.6 13.2 L 15.8 7.4");
 }
 
+/* Wisdom of the Saints Icon (Holy Spirit Dove): Descends from above, flaps its wings in mid-air, then fully descends to its current position */
+@keyframes sanctumDoveDescendFlight {
+  0% {
+    transform: translateY(-11px) scale(0.92);
+    opacity: 0.2;
+  }
+  12% {
+    opacity: 1;
+  }
+  30% {
+    transform: translateY(-4.8px) scale(0.97);
+    opacity: 1;
+  }
+  39% {
+    transform: translateY(-4.3px) scale(0.97);
+  }
+  48% {
+    transform: translateY(-5.4px) scale(0.98);
+  }
+  58% {
+    transform: translateY(-4.3px) scale(0.98);
+  }
+  67% {
+    transform: translateY(-5.1px) scale(0.99);
+  }
+  74% {
+    transform: translateY(-4.4px) scale(0.99);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumDoveFlapLeft {
+  0% {
+    transform: rotate(18deg) scaleY(0.94);
+  }
+  30% {
+    transform: rotate(6deg) scaleY(1);
+  }
+  39% {
+    transform: rotate(28deg) scaleY(0.9);
+  }
+  48% {
+    transform: rotate(-22deg) scaleY(1.06);
+  }
+  58% {
+    transform: rotate(28deg) scaleY(0.9);
+  }
+  67% {
+    transform: rotate(-20deg) scaleY(1.05);
+  }
+  76% {
+    transform: rotate(8deg) scaleY(1);
+  }
+  100% {
+    transform: rotate(0deg) scaleY(1);
+  }
+}
+
+@keyframes sanctumDoveFlapRight {
+  0% {
+    transform: rotate(-18deg) scaleY(0.94);
+  }
+  30% {
+    transform: rotate(-6deg) scaleY(1);
+  }
+  39% {
+    transform: rotate(-28deg) scaleY(0.9);
+  }
+  48% {
+    transform: rotate(22deg) scaleY(1.06);
+  }
+  58% {
+    transform: rotate(-28deg) scaleY(0.9);
+  }
+  67% {
+    transform: rotate(20deg) scaleY(1.05);
+  }
+  76% {
+    transform: rotate(-8deg) scaleY(1);
+  }
+  100% {
+    transform: rotate(0deg) scaleY(1);
+  }
+}
+
+.sanctum-dove-body {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: translateY(0px) scale(1);
+  will-change: transform, opacity;
+}
+
+.sanctum-dove-wing-left {
+  transform-box: view-box;
+  transform-origin: 10.8px 10.2px;
+  transform: rotate(0deg) scaleY(1);
+  will-change: transform;
+}
+
+.sanctum-dove-wing-right {
+  transform-box: view-box;
+  transform-origin: 13.2px 10.2px;
+  transform: rotate(0deg) scaleY(1);
+  will-change: transform;
+}
+
+.group:hover .sanctum-dove-body,
+svg:hover .sanctum-dove-body {
+  animation: sanctumDoveDescendFlight 1.6s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
+.group:hover .sanctum-dove-wing-left,
+svg:hover .sanctum-dove-wing-left {
+  animation: sanctumDoveFlapLeft 1.6s ease-in-out 1 forwards;
+}
+
+.group:hover .sanctum-dove-wing-right,
+svg:hover .sanctum-dove-wing-right {
+  animation: sanctumDoveFlapRight 1.6s ease-in-out 1 forwards;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {

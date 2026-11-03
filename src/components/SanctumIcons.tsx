@@ -460,71 +460,77 @@ export const DoveWithHaloIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
     strokeWidth="1.6" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
     aria-label="Holy Spirit Dove — Wisdom of the Saints"
   >
-    {/* Circular radiant halo behind the head */}
-    <circle 
-      cx="12" 
-      cy="7" 
-      r="4.2" 
-      strokeWidth="1.15" 
-      stroke="currentColor" 
-      opacity="0.85" 
-    />
-    {/* Subtle celestial glory rays radiating from halo */}
-    <g stroke="currentColor" strokeWidth="0.85" opacity="0.65">
-      <line x1="12" y1="1.6" x2="12" y2="2.7" />
-      <line x1="8.2" y1="3.2" x2="9.0" y2="4.0" />
-      <line x1="15.8" y1="3.2" x2="15.0" y2="4.0" />
-      <line x1="6.8" y1="7.0" x2="7.7" y2="7.0" />
-      <line x1="17.2" y1="7.0" x2="16.3" y2="7.0" />
+    <g className="sanctum-dove-body">
+      {/* Circular radiant halo behind the head */}
+      <circle 
+        cx="12" 
+        cy="7" 
+        r="4.2" 
+        strokeWidth="1.15" 
+        stroke="currentColor" 
+        opacity="0.85" 
+      />
+      {/* Subtle celestial glory rays radiating from halo */}
+      <g stroke="currentColor" strokeWidth="0.85" opacity="0.65">
+        <line x1="12" y1="1.6" x2="12" y2="2.7" />
+        <line x1="8.2" y1="3.2" x2="9.0" y2="4.0" />
+        <line x1="15.8" y1="3.2" x2="15.0" y2="4.0" />
+        <line x1="6.8" y1="7.0" x2="7.7" y2="7.0" />
+        <line x1="17.2" y1="7.0" x2="16.3" y2="7.0" />
+      </g>
+
+      {/* Left Wing: Extended horizontally with pronounced primary and secondary feathers */}
+      <g className="sanctum-dove-wing-left">
+        <path 
+          d="M10.8 8.4 C7.8 7.5 4.5 7.6 1.2 9.0 c1.1 1.4 2.2 2.3 3.4 2.8-.2.7.2 1.3.8 1.7.8.5 1.7.6 2.6.6.6.6 1.4.9 2.2.9" 
+          strokeWidth="1.6" 
+        />
+        {/* Left wing internal feather contour lines */}
+        <path d="M4.6 11.8 c2.0-.4 4.0-.8 6.0-1.1" strokeWidth="1.0" opacity="0.65" />
+        <path d="M7.4 13.5 c1.1-.3 2.2-.6 3.2-.8" strokeWidth="0.85" opacity="0.5" />
+      </g>
+
+      {/* Right Wing: Extended horizontally with pronounced primary and secondary feathers */}
+      <g className="sanctum-dove-wing-right">
+        <path 
+          d="M13.2 8.4 C16.2 7.5 19.5 7.6 22.8 9.0 c-1.1 1.4-2.2 2.3-3.4 2.8.2.7-.2 1.3-.8 1.7-.8.5-1.7.6-2.6.6-.6.6-1.4.9-2.2.9" 
+          strokeWidth="1.6" 
+        />
+        {/* Right wing internal feather contour lines */}
+        <path d="M19.4 11.8 c-2.0-.4-4.0-.8-6.0-1.1" strokeWidth="1.0" opacity="0.65" />
+        <path d="M16.6 13.5 c-1.1-.3-2.2-.6-3.2-.8" strokeWidth="0.85" opacity="0.5" />
+      </g>
+
+      {/* Front-facing Head and downward beak */}
+      <path 
+        d="M10.8 6.8c0-1.0.5-1.7 1.2-1.7s1.2.7 1.2 1.7c0 .5-.3 1.0-.6 1.3L12 9.5l-.6-1.4c-.4-.3-.6-.8-.6-1.3Z" 
+        strokeWidth="1.5" 
+        fill="currentColor" 
+        fillOpacity="0.12" 
+      />
+      <path d="M11.5 7.6L12 8.9L12.5 7.6" strokeWidth="1.2" />
+
+      {/* Smooth Dove Breast / Torso facing front */}
+      <path 
+        d="M10.2 14.0 c-.1 1.6.7 2.8 1.8 3.2 1.1-.4 1.9-1.6 1.8-3.2" 
+        strokeWidth="1.5" 
+        fill="currentColor" 
+        fillOpacity="0.08" 
+      />
+
+      {/* Fanned Tail Feathers descending beneath the body */}
+      <path 
+        d="M10.8 17.2 L8.8 21.8 c2.0.7 4.4.7 6.4 0 L13.2 17.2" 
+        strokeWidth="1.6" 
+      />
+      {/* Center tail quill and feather splits */}
+      <line x1="12" y1="17.2" x2="12" y2="22.2" strokeWidth="1.2" />
+      <line x1="10.4" y1="19.5" x2="9.6" y2="21.5" strokeWidth="0.9" opacity="0.6" />
+      <line x1="13.6" y1="19.5" x2="14.4" y2="21.5" strokeWidth="0.9" opacity="0.6" />
     </g>
-
-    {/* Front-facing Head and downward beak */}
-    <path 
-      d="M10.8 6.8c0-1.0.5-1.7 1.2-1.7s1.2.7 1.2 1.7c0 .5-.3 1.0-.6 1.3L12 9.5l-.6-1.4c-.4-.3-.6-.8-.6-1.3Z" 
-      strokeWidth="1.5" 
-      fill="currentColor" 
-      fillOpacity="0.12" 
-    />
-    <path d="M11.5 7.6L12 8.9L12.5 7.6" strokeWidth="1.2" />
-
-    {/* Left Wing: Extended horizontally with pronounced primary and secondary feathers */}
-    <path 
-      d="M10.8 8.4 C7.8 7.5 4.5 7.6 1.2 9.0 c1.1 1.4 2.2 2.3 3.4 2.8-.2.7.2 1.3.8 1.7.8.5 1.7.6 2.6.6.6.6 1.4.9 2.2.9" 
-      strokeWidth="1.6" 
-    />
-    {/* Left wing internal feather contour lines */}
-    <path d="M4.6 11.8 c2.0-.4 4.0-.8 6.0-1.1" strokeWidth="1.0" opacity="0.65" />
-    <path d="M7.4 13.5 c1.1-.3 2.2-.6 3.2-.8" strokeWidth="0.85" opacity="0.5" />
-
-    {/* Right Wing: Extended horizontally with pronounced primary and secondary feathers */}
-    <path 
-      d="M13.2 8.4 C16.2 7.5 19.5 7.6 22.8 9.0 c-1.1 1.4-2.2 2.3-3.4 2.8.2.7-.2 1.3-.8 1.7-.8.5-1.7.6-2.6.6-.6.6-1.4.9-2.2.9" 
-      strokeWidth="1.6" 
-    />
-    {/* Right wing internal feather contour lines */}
-    <path d="M19.4 11.8 c-2.0-.4-4.0-.8-6.0-1.1" strokeWidth="1.0" opacity="0.65" />
-    <path d="M16.6 13.5 c-1.1-.3-2.2-.6-3.2-.8" strokeWidth="0.85" opacity="0.5" />
-
-    {/* Smooth Dove Breast / Torso facing front */}
-    <path 
-      d="M10.2 14.0 c-.1 1.6.7 2.8 1.8 3.2 1.1-.4 1.9-1.6 1.8-3.2" 
-      strokeWidth="1.5" 
-      fill="currentColor" 
-      fillOpacity="0.08" 
-    />
-
-    {/* Fanned Tail Feathers descending beneath the body */}
-    <path 
-      d="M10.8 17.2 L8.8 21.8 c2.0.7 4.4.7 6.4 0 L13.2 17.2" 
-      strokeWidth="1.6" 
-    />
-    {/* Center tail quill and feather splits */}
-    <line x1="12" y1="17.2" x2="12" y2="22.2" strokeWidth="1.2" />
-    <line x1="10.4" y1="19.5" x2="9.6" y2="21.5" strokeWidth="0.9" opacity="0.6" />
-    <line x1="13.6" y1="19.5" x2="14.4" y2="21.5" strokeWidth="0.9" opacity="0.6" />
   </svg>
 );
 
