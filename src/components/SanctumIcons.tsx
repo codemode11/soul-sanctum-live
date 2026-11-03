@@ -538,8 +538,8 @@ export const DoveWithHaloIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
 export const BulbWithHaloIcon = DoveWithHaloIcon;
 
 /**
- * 5. Treasury of Prayers icon: Two books standing, and a third book that is leaning ON the second book,
- * not leaning away from the second book.
+ * 5. Treasury of Prayers icon: Two books standing, and a third book leaning ON the second book.
+ * When hovered on, the books turn once and seamlessly become two hands joined in prayer.
  */
 export const ThreePrayerBooksIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -549,25 +549,71 @@ export const ThreePrayerBooksIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
     strokeWidth="1.8" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
+    aria-label="Treasury of Prayers — Books Turning into Hands Joined in Prayer"
   >
-    {/* Shelf line / base */}
-    <line x1="2" y1="21" x2="22" y2="21" strokeWidth="1.8" />
+    {/* Resting State: Three Prayer Books (turns to edge-on at 50% of hover animation) */}
+    <g className="sanctum-treasury-books">
+      {/* Shelf line / base */}
+      <line x1="2" y1="21" x2="22" y2="21" strokeWidth="1.8" />
 
-    {/* Book 1: Standing upright on the left */}
-    <rect x="4" y="5.5" width="3.5" height="15.5" rx="0.6" strokeWidth="1.6" />
-    <line x1="5.7" y1="8.5" x2="5.7" y2="13.5" strokeWidth="1.2" />
+      {/* Book 1: Standing upright on the left */}
+      <rect x="4" y="5.5" width="3.5" height="15.5" rx="0.6" strokeWidth="1.6" />
+      <line x1="5.7" y1="8.5" x2="5.7" y2="13.5" strokeWidth="1.2" />
 
-    {/* Book 2: Standing upright beside Book 1 */}
-    <rect x="8.5" y="4" width="3.5" height="17" rx="0.6" strokeWidth="1.6" />
-    <line x1="10.2" y1="7" x2="10.2" y2="12" strokeWidth="1.2" />
-    <path d="M10.2 14v4l1-1 1 1v-4" strokeWidth="1.1" />
+      {/* Book 2: Standing upright beside Book 1 */}
+      <rect x="8.5" y="4" width="3.5" height="17" rx="0.6" strokeWidth="1.6" />
+      <line x1="10.2" y1="7" x2="10.2" y2="12" strokeWidth="1.2" />
+      <path d="M10.2 14v4l1-1 1 1v-4" strokeWidth="1.1" />
 
-    {/* Book 3: Leaning ON Book 2 (tilted left toward Book 2, resting against it) */}
-    {/* Base anchored to the right, top resting against Book 2's upper spine */}
-    <g transform="rotate(-18 19 21)">
-      <rect x="13.5" y="4.5" width="3.5" height="16.5" rx="0.6" strokeWidth="1.6" />
-      <line x1="15.2" y1="7.5" x2="15.2" y2="12.5" strokeWidth="1.2" />
+      {/* Book 3: Leaning ON Book 2 (tilted left toward Book 2, resting against it) */}
+      <g transform="rotate(-18 19 21)">
+        <rect x="13.5" y="4.5" width="3.5" height="16.5" rx="0.6" strokeWidth="1.6" />
+        <line x1="15.2" y1="7.5" x2="15.2" y2="12.5" strokeWidth="1.2" />
+      </g>
+    </g>
+
+    {/* Hover State: Two Hands Joined in Prayer (emerges seamlessly from the 50% midpoint of the single turn) */}
+    <g className="sanctum-treasury-praying-hands">
+      {/* Soft warm fill inside the joined hands */}
+      <path
+        d="M12 2.8 C10.6 3.0, 9.6 4.2, 8.9 6.4 L7.4 11.8 C7.0 13.4, 7.6 14.8, 8.8 15.8 L12 17.2 L15.2 15.8 C16.4 14.8, 17.0 13.4, 16.6 11.8 L15.1 6.4 C14.4 4.2, 13.4 3.0, 12 2.8 Z"
+        fill="currentColor"
+        fillOpacity="0.12"
+        stroke="none"
+      />
+
+      {/* Center line where the two palms and fingers press together in prayer */}
+      <line x1="12" y1="2.8" x2="12" y2="17.0" strokeWidth="1.55" />
+
+      {/* Left Hand: joined fingertips, back of hand, heel of palm, and left wrist */}
+      <path
+        d="M12 2.8 C10.6 3.0, 9.6 4.2, 8.9 6.4 L7.4 11.8 C7.0 13.4, 7.6 14.8, 8.8 15.8 L7.0 20.8"
+        strokeWidth="1.75"
+      />
+      {/* Left Thumb folded reverently over the palm */}
+      <path
+        d="M12 8.2 C10.5 8.8, 9.5 10.2, 9.4 12.2 C9.3 13.5, 10.2 14.6, 12 15.2"
+        strokeWidth="1.4"
+      />
+      {/* Left Finger contour */}
+      <path d="M10.5 3.6 L9.5 7.8" strokeWidth="1.15" opacity="0.75" />
+
+      {/* Right Hand: joined fingertips, back of hand, heel of palm, and right wrist */}
+      <path
+        d="M12 2.8 C13.4 3.0, 14.4 4.2, 15.1 6.4 L16.6 11.8 C17.0 13.4, 16.4 14.8, 15.2 15.8 L17.0 20.8"
+        strokeWidth="1.75"
+      />
+      {/* Right Thumb folded reverently over the palm */}
+      <path
+        d="M12 8.2 C13.5 8.8, 14.5 10.2, 14.6 12.2 C14.7 13.5, 13.8 14.6, 12 15.2"
+        strokeWidth="1.4"
+      />
+      {/* Right Finger contour */}
+      <path d="M13.5 3.6 L14.5 7.8" strokeWidth="1.15" opacity="0.75" />
+
+      {/* Inner wrist cuff seam */}
+      <path d="M8.8 15.8 L12 17.2 L15.2 15.8" strokeWidth="1.4" />
     </g>
   </svg>
 );

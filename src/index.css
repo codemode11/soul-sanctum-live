@@ -692,6 +692,66 @@ svg:hover .sanctum-glossary-definition-line {
   animation: sanctumGlossaryDefinitionOut 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
+/* Treasury of Prayers Icon: Books turn once and seamlessly become two hands joined in prayer */
+@keyframes sanctumTreasuryBooksTurnOut {
+  0% {
+    transform: scaleX(1);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.42, 0, 1, 1);
+  }
+  49.9% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  50%, 100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumTreasuryHandsTurnIn {
+  0%, 49.9% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(0);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0, 0, 0.58, 1);
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.sanctum-treasury-books {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: scaleX(1);
+  opacity: 1;
+  will-change: transform, opacity;
+}
+
+.sanctum-treasury-praying-hands {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: scaleX(0);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.group:hover .sanctum-treasury-books,
+svg:hover .sanctum-treasury-books {
+  animation: sanctumTreasuryBooksTurnOut 1.35s linear 1 forwards;
+}
+
+.group:hover .sanctum-treasury-praying-hands,
+svg:hover .sanctum-treasury-praying-hands {
+  animation: sanctumTreasuryHandsTurnIn 1.35s linear 1 forwards;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
