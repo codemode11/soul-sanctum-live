@@ -1098,7 +1098,8 @@ export const HolyWaterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) =>
 );
 
 /**
- * 16. Quotations Icon: Quotation marks that are facing right (smaller and sharply defined)
+ * 16. Quotations Icon: A mouth (upper and lower lips) at rest that smoothly morphs
+ * into right-facing quotation marks when hovered on.
  */
 export const QuotationsRightFacingIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -1108,13 +1109,23 @@ export const QuotationsRightFacingIcon: React.FC<IconProps> = ({ className = 'w-
     strokeWidth="1.65"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
-    aria-label="Quotations — Right-Facing Quotation Marks"
+    className={`${className} overflow-visible`}
+    aria-label="Quotations — Mouth Morphing into Quotation Marks"
   >
-    {/* Left quotation mark facing right */}
-    <path d="M9.5 16.8C7.0 16.5 5.4 14.8 5.4 11.5V8.2c0-1 .7-1.7 1.7-1.7h1.8c1 0 1.7.7 1.7 1.7v2.4c0 .9-.7 1.6-1.6 1.6H7.8c.1 1.6.8 2.5 2.3 2.8v1.8h-.6z" />
-    {/* Right quotation mark facing right */}
-    <path d="M17.7 16.8c-2.5-.3-4.1-2.0-4.1-5.3V8.2c0-1 .7-1.7 1.7-1.7h1.8c1 0 1.7.7 1.7 1.7v2.4c0 .9-.7 1.6-1.6 1.6h-1.2c.1 1.6.8 2.5 2.3 2.8v1.8h-.6z" />
+    {/* Upper lip at rest -> Morphs into Left Quotation Mark on hover */}
+    <path
+      d="M 2.6 12.2 C 4.5 10.2, 6.6 7.5, 8.6 7.5 C 10.0 7.5, 11.0 9.2, 12.0 9.2 C 13.0 9.2, 14.0 7.5, 15.4 7.5 C 17.4 7.5, 19.5 10.2, 21.4 12.2 C 18.4 12.0, 15.2 11.4, 12.0 11.9 C 8.8 11.4, 5.6 12.0, 2.6 12.2 Z"
+      fill="currentColor"
+      fillOpacity="0.1"
+      className="sanctum-quote-morph-left"
+    />
+    {/* Lower lip at rest -> Morphs into Right Quotation Mark on hover */}
+    <path
+      d="M 2.6 12.2 C 5.0 12.2, 6.8 12.4, 8.6 12.5 C 10.8 12.7, 13.2 12.7, 15.4 12.5 C 17.2 12.4, 19.0 12.2, 21.4 12.2 C 19.6 14.8, 17.5 16.4, 15.2 16.8 C 14.0 17.0, 13.0 17.1, 12.0 17.1 C 8.0 17.1, 4.6 15.2, 2.6 12.2 Z"
+      fill="currentColor"
+      fillOpacity="0.1"
+      className="sanctum-quote-morph-right"
+    />
   </svg>
 );
 
