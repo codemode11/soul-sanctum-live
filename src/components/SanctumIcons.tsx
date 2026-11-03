@@ -1839,6 +1839,48 @@ export const SacredArtGallerySwapIcon: React.FC<IconProps> = ({ className = 'w-5
   );
 };
 
+/**
+ * 27. Catholic Links Icon:
+ * Distinct interlocking links.
+ * When hovered on, the links tighten inward toward the center,
+ * cinching the connection with a radiant celestial golden junction spark.
+ */
+export const CatholicLinksTightenIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.85"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Catholic Links — Tightening Toward Center"
+  >
+    {/* Left Link Loop: pulls right toward center on hover */}
+    <g className="sanctum-link-left">
+      <path d="M9 17H7A5 5 0 0 1 7 7h2" />
+    </g>
+
+    {/* Center Connecting Bridge: contracts / tightens as links pull together */}
+    <g className="sanctum-link-center-bar">
+      <line x1="8" y1="12" x2="16" y2="12" strokeWidth="2.0" />
+    </g>
+
+    {/* Right Link Loop: pulls left toward center on hover */}
+    <g className="sanctum-link-right">
+      <path d="M15 7h2a5 5 0 1 1 0 10h-2" />
+    </g>
+
+    {/* Celestial Golden Connection Spark at the center when tightened */}
+    <g className="sanctum-link-spark">
+      <circle cx="12" cy="12" r="1.1" fill="#FEF08A" stroke="none" />
+      <line x1="12" y1="9.2" x2="12" y2="14.8" stroke="#FEF08A" strokeWidth="1.15" strokeLinecap="round" />
+      <line x1="9.2" y1="12" x2="14.8" y2="12" stroke="#FEF08A" strokeWidth="1.15" strokeLinecap="round" />
+    </g>
+  </svg>
+);
+
+
 
 
 

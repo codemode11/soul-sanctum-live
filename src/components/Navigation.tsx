@@ -21,8 +21,7 @@ import {
   Tv,
   X,
   BookmarkCheck,
-  Landmark,
-  Link2
+  Landmark
 } from 'lucide-react';
 import { 
   SaintWithHaloIcon,
@@ -51,7 +50,8 @@ import {
   StPetersBasilicaIcon,
   CatholicGlossaryBookIcon,
   ChurchCalendarPageFlipIcon,
-  SacredArtGallerySwapIcon
+  SacredArtGallerySwapIcon,
+  CatholicLinksTightenIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -407,7 +407,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'catholic-links', 
       label: 'Catholic Links', 
-      icon: Link2, 
+      icon: CatholicLinksTightenIcon, 
       tag: 'Websites', 
       subtext: 'Curated Catholic Websites and Reviews' 
     },
