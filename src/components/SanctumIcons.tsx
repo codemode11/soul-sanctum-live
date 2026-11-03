@@ -1051,7 +1051,8 @@ export const CatholicPodcastNavIcon: React.FC<IconProps> = ({ className = 'w-4 h
 };
 
 /**
- * 13. Eucharistic Miracles Nav Icon: Monstrance outline using currentColor so it changes color on hover in the Index
+ * 13. Eucharistic Miracles Nav Icon: Monstrance outline.
+ * When hovered on, a white Host appears in the middle of the monstrance and Blood appears on it.
  */
 export const EucharisticMonstranceNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -1061,16 +1062,49 @@ export const EucharisticMonstranceNavIcon: React.FC<IconProps> = ({ className = 
     strokeWidth="1.75"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
-    aria-label="Eucharistic Monstrance"
+    className={`${className} overflow-visible`}
+    aria-label="Eucharistic Monstrance — Eucharistic Miracle"
   >
     {/* Top Cross */}
     <path d="M12 1.5v2.5M10.8 2.7h2.4" strokeWidth="1.5" />
     {/* Sunburst Rays */}
     <path d="M12 4.5v1M12 14.5v1M7 9.5H6M18 9.5h-1M8.5 6l-.8-.8M16.3 13.8l-.8-.8M15.5 6l.8-.8M7.7 13.8l.8-.8" strokeWidth="1.3" />
-    {/* Outer Lunette and Host */}
+    {/* Outer Lunette Frame */}
     <circle cx="12" cy="9.5" r="4.2" strokeWidth="1.7" />
-    <circle cx="12" cy="9.5" r="2.2" strokeWidth="1.2" fill="currentColor" fillOpacity="0.15" />
+
+    {/* Resting Glass Lunette (subtle inner ring when host is not present) */}
+    <circle cx="12" cy="9.5" r="2.6" strokeWidth="1.0" opacity="0.35" />
+
+    {/* White Sacred Host appearing in the middle of the monstrance on hover */}
+    <circle
+      cx="12"
+      cy="9.5"
+      r="2.65"
+      fill="#FFFFFF"
+      stroke="#E5E7EB"
+      strokeWidth="0.45"
+      className="sanctum-miracle-host"
+    />
+
+    {/* Precious Blood appearing on the white Host on hover */}
+    <g className="sanctum-miracle-blood">
+      {/* Central Eucharistic Blood stain / living tissue */}
+      <path
+        d="M11.1 8.7c-.5.4-.6 1.1-.2 1.6.4.5 1.1.7 1.6.5.6-.2.9-.8.7-1.4-.2-.6-.7-.8-1.2-1-.3-.2-.6-.1-.9.3z"
+        fill="#DC2626"
+        stroke="#991B1B"
+        strokeWidth="0.3"
+      />
+      {/* Bleeding droplet trickling down the Host */}
+      <path
+        d="M12.1 10.6c0 .6.4 1.1.1 1.4-.3.2-.6-.1-.6-.6 0-.4.3-.7.5-.8z"
+        fill="#B91C1C"
+        stroke="none"
+      />
+      {/* Fresh crimson droplet on the Host */}
+      <circle cx="12.9" cy="9.3" r="0.42" fill="#EF4444" stroke="#991B1B" strokeWidth="0.2" />
+    </g>
+
     {/* Stem, Knop and Pedestal Base */}
     <path d="M12 13.7v4.8" strokeWidth="1.8" />
     <circle cx="12" cy="16.2" r="1.1" fill="currentColor" />
