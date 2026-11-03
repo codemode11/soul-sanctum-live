@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Search, Volume2, VolumeX, Copy, Check } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, Volume2, VolumeX, Copy, Check, ChevronDown } from 'lucide-react';
 import {
   QUOTATION_SECTIONS,
   SACRED_QUOTATIONS_DATABASE,
@@ -11,9 +11,30 @@ import { QuotationsRightFacingIcon } from './SanctumIcons';
 
 export const QuotationsView: React.FC = () => {
   const [selectedSection, setSelectedSection] = useState<QuotationSectionId | 'all'>('all');
+  const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsTopicDropdownOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsTopicDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const handleCopy = (item: SacredQuotation) => {
     const prefix = item.subHeading ? `${item.subHeading}\n` : '';
@@ -45,73 +66,138 @@ export const QuotationsView: React.FC = () => {
     sec => selectedSection === 'all' || sec.id === selectedSection
   );
 
+  const selectedSectionObj =
+    selectedSection === 'all'
+      ? null
+      : QUOTATION_SECTIONS.find(sec => sec.id === selectedSection) || null;
+
+  const selectedSectionCount =
+    selectedSection === 'all'
+      ? SACRED_QUOTATIONS_DATABASE.length
+      : SACRED_QUOTATIONS_DATABASE.filter(q => q.sectionId === selectedSection).length;
+
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/75 backdrop-blur-xl backdrop-saturate-150 border border-white/85 ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 animate-fadeIn">
-      {/* Header & Filter Card (Light Frosted Glass) */}
-      <div className="bg-white/85 backdrop-blur-xl rounded-xl p-5 sm:p-7 text-stone-900 shadow-xs border border-amber-900/15 relative overflow-hidden">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#24150B]/90 backdrop-blur-xl border border-[#8B5A2B]/60 ring-1 ring-inset ring-[#8B5A2B]/30 shadow-[0_14px_40px_rgba(0,0,0,0.55)] space-y-6 mb-12 animate-fadeIn">
+      {/* Header & Filter Card (Dark Brown) */}
+      <div className="bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] rounded-xl p-5 sm:p-7 text-amber-50 shadow-[0_12px_32px_rgba(0,0,0,0.45)] border border-[#8B5A2B]/70 relative z-30">
         <div className="relative z-10 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-900/15 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#8B5A2B]/40 pb-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-amber-100/90 border border-amber-300/80 text-amber-900">
-                <QuotationsRightFacingIcon className="w-5 h-5 text-amber-900" />
+              <div className="p-2 rounded-lg bg-[#52341C] border border-[#A67B4E]/70 text-amber-200 shadow-xs">
+                <QuotationsRightFacingIcon className="w-5 h-5 text-amber-200" />
               </div>
               <div>
-                <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-stone-950">
+                <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-white">
                   Quotations
                 </h2>
-                <p className="text-xs sm:text-sm text-stone-700 font-serif italic mt-0.5">
+                <p className="text-xs sm:text-sm text-amber-200/85 font-serif italic mt-0.5">
                   {QUOTATION_SECTIONS.length} Sacred Topics • {SACRED_QUOTATIONS_DATABASE.length} Catholic Quotations
                 </p>
               </div>
             </div>
 
-            <span className="self-start sm:self-auto px-3.5 py-1 rounded-full bg-amber-100/90 text-amber-950 text-xs sm:text-sm font-semibold border border-amber-300/80 uppercase tracking-wider font-cinzel">
+            <span className="self-start sm:self-auto px-3.5 py-1 rounded-full bg-[#52341C]/90 text-amber-100 text-xs sm:text-sm font-semibold border border-[#A67B4E]/60 uppercase tracking-wider font-cinzel">
               {SACRED_QUOTATIONS_DATABASE.length} Quotations
             </span>
           </div>
 
-          {/* Section Filter Tabs & Search */}
-          <div className="flex flex-col gap-3 pt-1">
-            <div className="flex items-center gap-1.5 flex-wrap max-h-44 overflow-y-auto pr-1">
+          {/* Topic Drop-Down System & Search */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+            <div ref={dropdownRef} className="relative w-full sm:w-auto sm:min-w-[300px]">
               <button
-                onClick={() => setSelectedSection('all')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-colors cursor-pointer ${
-                  selectedSection === 'all'
-                    ? 'bg-amber-900 text-amber-50 shadow-xs'
-                    : 'bg-stone-100/90 text-stone-800 hover:bg-amber-100/70 border border-stone-300/80'
-                }`}
+                type="button"
+                onClick={() => setIsTopicDropdownOpen(prev => !prev)}
+                aria-expanded={isTopicDropdownOpen}
+                className="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-lg bg-[#1C110A]/95 hover:bg-[#26170E] text-amber-50 border border-[#8B5A2B]/70 hover:border-amber-400/70 transition-all cursor-pointer shadow-xs"
               >
-                All ({SACRED_QUOTATIONS_DATABASE.length})
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-300/90 shrink-0">
+                    Topic:
+                  </span>
+                  <span className="text-xs sm:text-sm font-cinzel font-bold text-white truncate">
+                    {selectedSectionObj
+                      ? `${selectedSectionObj.title} (${selectedSectionCount})`
+                      : `All Topics (${SACRED_QUOTATIONS_DATABASE.length})`}
+                  </span>
+                </div>
+                <ChevronDown
+                  className={`w-4 h-4 text-amber-300 shrink-0 transition-transform duration-200 ${
+                    isTopicDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
-              {QUOTATION_SECTIONS.map(sec => {
-                const count = SACRED_QUOTATIONS_DATABASE.filter(
-                  q => q.sectionId === sec.id
-                ).length;
-                return (
-                  <button
-                    key={sec.id}
-                    onClick={() => setSelectedSection(sec.id)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold font-cinzel transition-colors cursor-pointer ${
-                      selectedSection === sec.id
-                        ? 'bg-amber-900 text-amber-50 shadow-xs'
-                        : 'bg-stone-100/90 text-stone-800 hover:bg-amber-100/70 border border-stone-300/80'
-                    }`}
-                  >
-                    {sec.title} ({count})
-                  </button>
-                );
-              })}
+
+              {/* Drop-Down Panel Containing All Topic Buttons */}
+              {isTopicDropdownOpen && (
+                <div className="absolute left-0 right-0 sm:right-auto sm:w-[34rem] md:w-[40rem] mt-2 p-3 sm:p-4 rounded-xl bg-[#24150B] border border-[#A67B4E]/80 shadow-[0_20px_50px_rgba(0,0,0,0.85)] z-50">
+                  <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-[#8B5A2B]/40">
+                    <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-200">
+                      Select a Topic ({QUOTATION_SECTIONS.length} Topics)
+                    </span>
+                    {selectedSection !== 'all' && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedSection('all');
+                          setIsTopicDropdownOpen(false);
+                        }}
+                        className="text-xs font-cinzel font-semibold text-amber-300 hover:text-white cursor-pointer"
+                      >
+                        Reset to All
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedSection('all');
+                        setIsTopicDropdownOpen(false);
+                      }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-colors cursor-pointer ${
+                        selectedSection === 'all'
+                          ? 'bg-[#8B5A2B] text-white border border-amber-300/70 shadow-xs'
+                          : 'bg-[#362012] text-amber-100/90 hover:bg-[#4A2E1B] hover:text-white border border-[#8B5A2B]/45'
+                      }`}
+                    >
+                      All ({SACRED_QUOTATIONS_DATABASE.length})
+                    </button>
+                    {QUOTATION_SECTIONS.map(sec => {
+                      const count = SACRED_QUOTATIONS_DATABASE.filter(
+                        q => q.sectionId === sec.id
+                      ).length;
+                      return (
+                        <button
+                          key={sec.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedSection(sec.id);
+                            setIsTopicDropdownOpen(false);
+                          }}
+                          className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-colors cursor-pointer ${
+                            selectedSection === sec.id
+                              ? 'bg-[#8B5A2B] text-white border border-amber-300/70 shadow-xs'
+                              : 'bg-[#362012] text-amber-100/90 hover:bg-[#4A2E1B] hover:text-white border border-[#8B5A2B]/45'
+                          }`}
+                        >
+                          {sec.title} ({count})
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
-            <div className="relative w-full sm:w-96">
+            <div className="relative w-full sm:w-80 md:w-96">
               <input
                 type="text"
                 placeholder="Search quotations, saints, topics, or works..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full text-xs pl-8 pr-3 py-2 rounded-lg bg-white/95 text-stone-900 placeholder:text-stone-500 border border-stone-300 focus:outline-none focus:border-amber-700"
+                className="w-full text-xs pl-8 pr-3 py-2.5 rounded-lg bg-[#1C110A]/95 text-amber-50 placeholder:text-stone-400 border border-[#8B5A2B]/70 focus:outline-none focus:border-amber-400"
               />
-              <Search className="w-3.5 h-3.5 text-stone-500 absolute left-2.5 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-amber-300/80 absolute left-2.5 top-3" />
             </div>
           </div>
         </div>

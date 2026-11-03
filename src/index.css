@@ -244,7 +244,116 @@ svg:hover .sanctum-scroll-parchment {
 
 .group:hover .sanctum-eye-blink,
 svg:hover .sanctum-eye-blink {
-  animation: sanctumEyeSlowBlink 1.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: sanctumEyeSlowBlink 1.15s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+}
+
+/* Bible Commentary Icon: One highlighter makes one line of the left page very bright on hover */
+@keyframes sanctumBibleHighlighterStroke {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  18% {
+    transform: translate(0px, 0px) rotate(-2deg);
+  }
+  75% {
+    transform: translate(5px, 0px) rotate(-2deg);
+  }
+  100% {
+    transform: translate(5.3px, -1.3px) rotate(3deg);
+  }
+}
+
+@keyframes sanctumBibleLineBrighten {
+  0%, 16% {
+    stroke-dashoffset: 10;
+    opacity: 0;
+  }
+  20% {
+    stroke-dashoffset: 9.2;
+    opacity: 1;
+  }
+  75%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.sanctum-bible-highlighter {
+  transform-box: view-box;
+  transform-origin: 4.5px 9.5px;
+  transition: transform 0.3s ease-out;
+}
+
+.sanctum-bible-highlight-glow {
+  stroke-dasharray: 10;
+  stroke-dashoffset: 10;
+  opacity: 0;
+  filter: drop-shadow(0 0 3.5px #FACC15) drop-shadow(0 0 7px #FEF08A);
+}
+
+.sanctum-bible-highlight-core {
+  stroke-dasharray: 10;
+  stroke-dashoffset: 10;
+  opacity: 0;
+  filter: drop-shadow(0 0 2.5px #FFFFFF);
+}
+
+.group:hover .sanctum-bible-highlighter,
+svg:hover .sanctum-bible-highlighter {
+  animation: sanctumBibleHighlighterStroke 0.95s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+}
+
+.group:hover .sanctum-bible-highlight-glow,
+svg:hover .sanctum-bible-highlight-glow,
+.group:hover .sanctum-bible-highlight-core,
+svg:hover .sanctum-bible-highlight-core {
+  animation: sanctumBibleLineBrighten 0.95s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+}
+
+/* Saint of the Day Icon: Halo slowly increases in size and glows once hovered on */
+.sanctum-saint-halo {
+  transform-box: view-box;
+  transform-origin: 12px 9px;
+  transform: scale(1);
+  filter: drop-shadow(0 0 0px rgba(254, 240, 138, 0));
+  transition:
+    transform 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, filter;
+}
+
+.sanctum-saint-halo-aura {
+  opacity: 0;
+  transition: opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sanctum-saint-halo-ring,
+.sanctum-saint-halo-inner {
+  transition:
+    stroke 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .sanctum-saint-halo,
+svg:hover .sanctum-saint-halo {
+  transform: scale(1.22);
+  filter: drop-shadow(0 0 3.5px #FACC15) drop-shadow(0 0 7px rgba(254, 240, 138, 0.95));
+}
+
+.group:hover .sanctum-saint-halo-aura,
+svg:hover .sanctum-saint-halo-aura {
+  opacity: 0.26;
+}
+
+.group:hover .sanctum-saint-halo-ring,
+svg:hover .sanctum-saint-halo-ring {
+  stroke: #FEF08A;
+}
+
+.group:hover .sanctum-saint-halo-inner,
+svg:hover .sanctum-saint-halo-inner {
+  stroke: #FFFFFF;
+  opacity: 0.95;
 }
 
 

@@ -263,6 +263,7 @@ export const GoldenMonstranceIcon: React.FC<IconProps> = ({ className = 'w-7 h-7
 /**
  * Saint of the Day icon: A head and a halo, but without eyes, nose, ears, and mouth.
  * Displays a serene head silhouette in front of a circular halo behind the head.
+ * When hovered on, the halo slowly increases in size and glows.
  */
 export const SaintWithHaloIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -272,25 +273,37 @@ export const SaintWithHaloIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }
     strokeWidth="1.8" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
     aria-label="Saint with Halo"
   >
-    {/* Circular Halo BEHIND the head (extends above and behind the head) */}
-    <circle 
-      cx="12" 
-      cy="9" 
-      r="7" 
-      stroke="currentColor" 
-      strokeWidth="1.6" 
-    />
-    <circle 
-      cx="12" 
-      cy="9" 
-      r="5.6" 
-      stroke="currentColor" 
-      strokeWidth="0.9" 
-      opacity="0.6" 
-    />
+    {/* Circular Halo BEHIND the head (slowly increases in size and glows on hover) */}
+    <g className="sanctum-saint-halo">
+      <circle
+        cx="12"
+        cy="9"
+        r="7.2"
+        fill="#FEF08A"
+        stroke="none"
+        className="sanctum-saint-halo-aura"
+      />
+      <circle 
+        cx="12" 
+        cy="9" 
+        r="7" 
+        stroke="currentColor" 
+        strokeWidth="1.6" 
+        className="sanctum-saint-halo-ring"
+      />
+      <circle 
+        cx="12" 
+        cy="9" 
+        r="5.6" 
+        stroke="currentColor" 
+        strokeWidth="0.9" 
+        opacity="0.6" 
+        className="sanctum-saint-halo-inner"
+      />
+    </g>
     
     {/* Serene Head ONLY in front of the halo - smooth silhouette WITHOUT eyes, nose, ears, or mouth */}
     <path 
@@ -773,7 +786,8 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
 export const NovenaHands1to9Icon = NovenaHands9Icon;
 
 /**
- * 9. Bible study icon: A Bible with three lines on each side representing highlighting
+ * 9. Bible study icon: A Bible with three lines on each side representing highlighting.
+ * When hovered on, one highlighter sweeps across one line of the left page, making it very bright.
  */
 export const BibleStudyHighlightedIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -783,22 +797,64 @@ export const BibleStudyHighlightedIcon: React.FC<IconProps> = ({ className = 'w-
     strokeWidth="1.8" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
+    aria-label="Bible Commentary — Highlighted Scripture"
   >
     {/* Open Bible Pages Outline */}
     <path d="M12 6.5C10 5 6.5 5 2 6v14c4.5-1 8-1 10 .5 2-1.5 5.5-1.5 10-.5V6c-4.5-1-8-1-10 .5z" strokeWidth="1.8" />
     {/* Center Spine */}
     <line x1="12" y1="6.5" x2="12" y2="20.5" strokeWidth="1.8" />
 
-    {/* Three Highlight Lines on Left Page */}
+    {/* Three Base Lines on Left Page */}
     <line x1="4.5" y1="9.5" x2="9.5" y2="9.5" strokeWidth="1.8" />
     <line x1="4.5" y1="12.5" x2="9.5" y2="12.5" strokeWidth="1.8" />
     <line x1="4.5" y1="15.5" x2="8" y2="15.5" strokeWidth="1.8" />
 
-    {/* Three Highlight Lines on Right Page */}
+    {/* Very Bright Highlighted Line on Left Page (drawn by the highlighter on hover) */}
+    <line
+      x1="4.5"
+      y1="9.5"
+      x2="9.5"
+      y2="9.5"
+      pathLength={10}
+      stroke="#FEF08A"
+      strokeWidth="3.1"
+      className="sanctum-bible-highlight-glow"
+    />
+    <line
+      x1="4.5"
+      y1="9.5"
+      x2="9.5"
+      y2="9.5"
+      pathLength={10}
+      stroke="#FFFFFF"
+      strokeWidth="1.9"
+      className="sanctum-bible-highlight-core"
+    />
+
+    {/* Three Base Lines on Right Page */}
     <line x1="14.5" y1="9.5" x2="19.5" y2="9.5" strokeWidth="1.8" />
     <line x1="14.5" y1="12.5" x2="19.5" y2="12.5" strokeWidth="1.8" />
     <line x1="14.5" y1="15.5" x2="18" y2="15.5" strokeWidth="1.8" />
+
+    {/* One Highlighter sweeping across the top line of the left page on hover */}
+    <g className="sanctum-bible-highlighter">
+      {/* Highlighter chisel tip at (4.5, 9.5) */}
+      <path
+        d="M4.2 9.6L5.2 7.5L6.5 8.5L4.9 9.8Z"
+        fill="#FEF08A"
+        stroke="#FDE047"
+        strokeWidth="0.6"
+      />
+      {/* Highlighter barrel angled up-right */}
+      <path
+        d="M5.2 7.5L9.2 2.3a1.15 1.15 0 0 1 1.7 1.4L6.5 8.5Z"
+        fill="currentColor"
+        fillOpacity="0.22"
+        stroke="currentColor"
+        strokeWidth="1.45"
+      />
+    </g>
   </svg>
 );
 
