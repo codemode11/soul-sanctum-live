@@ -675,100 +675,117 @@ export const RosaryAndChapletIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
 );
 
 /**
- * 7. Marian Apparitions icon: The lean figure of Mary standing.
- * When hovered on, Mary elevates with outstretched arms upon a sacred cloud,
- * with clear distance between her and the three children kneeling before her.
+ * 7. Marian Apparitions icon: The exquisitely proportioned figure of Our Lady, Queen of Heaven.
+ * Features an oval head with radiant celestial halo and flowing veil. When hovered on,
+ * Mary elevates upon a sacred apparition cloud with gracefully outstretched arms,
+ * bestowing rays of grace across the sacred distance to the three children kneeling before her.
  */
 export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
     viewBox="0 0 24 24" 
     fill="none" 
     stroke="currentColor" 
-    strokeWidth="1.6" 
+    strokeWidth="1.5" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
     className={`${className} overflow-visible`}
-    aria-label="Marian Apparitions — Our Lady with Outstretched Arms and Three Kneeling Children"
+    aria-label="Marian Apparitions — Our Lady, Queen of Heaven"
   >
-    {/* Mary's head bowed gently (no crown) */}
-    <circle cx="12" cy="3.2" r="1.9" strokeWidth="1.5" />
-    <path d="M11.6 2.8c.3-.4.8-.5 1.3-.3" strokeWidth="1.0" />
+    {/* Celestial Radiant Halo behind Mary's immaculate head */}
+    <circle cx="12" cy="3.6" r="3.3" strokeWidth="0.75" stroke="currentColor" opacity="0.6" />
+    <circle cx="12" cy="3.6" r="4.2" strokeWidth="0.55" stroke="#FEF08A" strokeDasharray="0.8 1.4" opacity="0.75" />
 
-    {/* Long hair flowing gently from her head down past her shoulders */}
-    <path d="M10.4 3.8c-1.1 1.2-1.6 2.6-1.5 4.2.1 1.6.6 2.8.9 4.0" strokeWidth="1.15" />
-    <path d="M13.6 3.8c1.1 1.2 1.6 2.6 1.5 4.2-.1 1.6-.6 2.8-.9 4.0" strokeWidth="1.15" />
-    <path d="M9.4 5.8c-.6 1.6-.8 3.6-.5 5.5" strokeWidth="0.95" opacity="0.7" />
-    <path d="M14.6 5.8c.6 1.6.8 3.6.5 5.5" strokeWidth="0.95" opacity="0.7" />
+    {/* Mary's serene, tenderly bowed oval head */}
+    <path 
+      d="M12 1.8c-1.15 0-1.95.85-1.95 1.95 0 1.25.85 2.15 1.95 2.15s1.95-.9 1.95-2.15c0-1.1-.8-1.95-1.95-1.95z" 
+      strokeWidth="1.25" 
+      fill="currentColor" 
+      fillOpacity="0.12" 
+    />
 
-    {/* Upper torso of Mary */}
-    <path d="M10.4 5.5 L9.6 11.2" strokeWidth="1.3" />
-    <path d="M13.6 5.5 L14.4 11.2" strokeWidth="1.3" />
+    {/* Flowing veil (maforion) draping symmetrically past her shoulders */}
+    <path d="M10.1 2.8C9.0 4.2 8.6 6.0 8.8 8.0c.2 1.8.7 3.2 1.1 4.4" strokeWidth="1.15" />
+    <path d="M13.9 2.8C15.0 4.2 15.4 6.0 15.2 8.0c-.2 1.8-.7 3.2-1.1 4.4" strokeWidth="1.15" />
+    <path d="M9.4 5.8c-.5 1.5-.7 3.4-.4 5.2" strokeWidth="0.85" opacity="0.6" />
+    <path d="M14.6 5.8c.5 1.5.7 3.4.4 5.2" strokeWidth="0.85" opacity="0.6" />
+
+    {/* Slender neck & graceful bodice */}
+    <path d="M11.3 5.8c0 .7.3 1.2.7 1.2s.7-.5.7-1.2" strokeWidth="0.95" />
+    <path d="M9.8 7.0c-.2 1.4.2 2.8.6 4.6" strokeWidth="1.2" />
+    <path d="M14.2 7.0c.2 1.4-.2 2.8-.6 4.6" strokeWidth="1.2" />
+    {/* Delicate sash / cincture at waist */}
+    <path d="M10.3 8.6c1.1.35 2.3.35 3.4 0" strokeWidth="0.85" opacity="0.75" />
 
     {/* Full-length lower gown of Mary at rest (dissolves into apparition cloud on hover) */}
     <g className="sanctum-mary-full-gown">
-      <path d="M9.6 11.2 c-.7 2.8-1.5 6.2-1.6 10.8" strokeWidth="1.35" />
-      <path d="M14.4 11.2 c.7 2.8 1.5 6.2 1.6 10.8" strokeWidth="1.35" />
-      <path d="M8 22c2.6.4 5.4.4 8 0" strokeWidth="1.3" />
+      <path d="M9.8 11.6c-.6 2.8-1.3 6.0-1.5 10.4" strokeWidth="1.3" />
+      <path d="M14.2 11.6c.6 2.8 1.3 6.0 1.5 10.4" strokeWidth="1.3" />
+      <path d="M11.2 12.0c-.3 3.0-.5 6.0-.6 10.0" strokeWidth="0.85" opacity="0.55" />
+      <path d="M12.8 12.0c.3 3.0.5 6.0.6 10.0" strokeWidth="0.85" opacity="0.55" />
+      <path d="M8.2 22c2.4.4 5.2.4 7.6 0" strokeWidth="1.2" />
     </g>
 
     {/* Resting State: Mary's hands joined in prayer at her breast */}
     <g className="sanctum-mary-hands-folded">
-      <path d="M12 7.8v4.2" strokeWidth="1.45" />
-      <path d="M11.0 9.4l1.0-1.6 1.0 1.6" strokeWidth="1.35" />
-      <path d="M10.5 11.2l1.5-1.3 1.5 1.3" strokeWidth="1.15" />
+      <path d="M12 7.2v3.8" strokeWidth="1.35" />
+      <path d="M11.0 8.6l1.0-1.4 1.0 1.4" strokeWidth="1.2" />
+      <path d="M10.5 10.2l1.5-1.2 1.5 1.2" strokeWidth="1.0" />
     </g>
 
-    {/* Hover State 1: Mary's arms gracefully outstretched */}
+    {/* Hover State 1: Outstretched arms of grace with flowing draped sleeves */}
     <g className="sanctum-mary-arms-outstretched">
-      {/* Left arm reaching out and downward with open palm */}
-      <path d="M9.8 6.5 C7.5 7.4, 5.2 8.6, 3.4 10.4" strokeWidth="1.5" />
-      <path d="M3.4 10.4 C3.0 11.0, 3.4 11.6, 4.0 11.4 C4.6 11.2, 5.4 10.6, 6.0 9.8" strokeWidth="1.15" />
-      {/* Right arm reaching out and downward with open palm */}
-      <path d="M14.2 6.5 C16.5 7.4, 18.8 8.6, 20.6 10.4" strokeWidth="1.5" />
-      <path d="M20.6 10.4 C21.0 11.0, 20.6 11.6, 20.0 11.4 C19.4 11.2, 18.6 10.6, 18.0 9.8" strokeWidth="1.15" />
+      {/* Left arm & sleeve sweeping outward and downward */}
+      <path d="M9.6 7.0 C7.8 7.8, 5.8 8.8, 3.8 10.6" strokeWidth="1.35" />
+      <path d="M5.4 10.0 C5.0 11.2, 5.6 12.0, 6.4 11.6 C7.4 11.0, 8.4 9.8, 9.2 8.8" strokeWidth="0.95" opacity="0.75" />
+      <path d="M3.8 10.6 C3.2 11.0, 3.4 11.8, 4.0 11.7 C4.6 11.5, 5.2 11.0, 5.8 10.2" strokeWidth="1.05" />
+
+      {/* Right arm & sleeve sweeping outward and downward */}
+      <path d="M14.4 7.0 C16.2 7.8, 18.2 8.8, 20.2 10.6" strokeWidth="1.35" />
+      <path d="M18.6 10.0 C19.0 11.2, 18.4 12.0, 17.6 11.6 C16.6 11.0, 15.6 9.8, 14.8 8.8" strokeWidth="0.95" opacity="0.75" />
+      <path d="M20.2 10.6 C20.8 11.0, 20.6 11.8, 20.0 11.7 C19.4 11.5, 18.8 11.0, 18.2 10.2" strokeWidth="1.05" />
     </g>
 
-    {/* Hover State 2: Apparition cloud beneath Our Lady's feet, creating elevation and distance */}
+    {/* Hover State 2: Luminous apparition cloud & celestial rays across the distance */}
     <g className="sanctum-mary-cloud">
       <path
-        d="M7.8 11.2 c1.2-.8 2.6-1.2 4.2-1.2 s3.0.4 4.2 1.2 c1.0.8 1.6 1.8 1.2 2.6 c-.5.8-1.8 1.0-3.0.8 c-1.2.6-3.6.6-4.8 0 c-1.2.2-2.5 0-3.0-.8 c-.4-.8.2-1.8 1.2-2.6 z"
+        d="M7.4 11.6 c1.4-.9 2.8-1.2 4.6-1.2 s3.2.3 4.6 1.2 c1.1.7 1.7 1.6 1.3 2.4 c-.5.8-1.8 1.0-3.0.8 c-1.3.6-3.7.6-4.9 0 c-1.2.2-2.5 0-3.0-.8 c-.4-.8.2-1.7 1.3-2.4 z"
         fill="currentColor"
-        fillOpacity="0.14"
-        strokeWidth="1.2"
+        fillOpacity="0.16"
+        strokeWidth="1.15"
       />
-      {/* Subtle descending rays of grace through the distance */}
-      <line x1="8.5" y1="12.8" x2="6.5" y2="17.2" strokeWidth="0.75" stroke="#FEF08A" opacity="0.65" strokeDasharray="1 1.5" />
-      <line x1="12.0" y1="13.2" x2="11.8" y2="17.5" strokeWidth="0.75" stroke="#FEF08A" opacity="0.65" strokeDasharray="1 1.5" />
-      <line x1="15.5" y1="12.8" x2="17.5" y2="17.2" strokeWidth="0.75" stroke="#FEF08A" opacity="0.65" strokeDasharray="1 1.5" />
+      {/* Delicate celestial rays streaming across the distance */}
+      <line x1="8.2" y1="12.6" x2="6.2" y2="17.4" strokeWidth="0.75" stroke="#FEF08A" opacity="0.7" strokeDasharray="1.2 1.4" />
+      <line x1="12.0" y1="13.2" x2="11.8" y2="17.8" strokeWidth="0.75" stroke="#FEF08A" opacity="0.7" strokeDasharray="1.2 1.4" />
+      <line x1="15.8" y1="12.6" x2="17.8" y2="17.4" strokeWidth="0.75" stroke="#FEF08A" opacity="0.7" strokeDasharray="1.2 1.4" />
     </g>
 
-    {/* Hover State 3: Three children kneeling before Our Lady with clear distance */}
+    {/* Hover State 3: Three shepherd children kneeling before Our Lady with respectful distance */}
     <g className="sanctum-mary-children">
       {/* Ground line */}
-      <line x1="2" y1="22.5" x2="22" y2="22.5" strokeWidth="1.2" opacity="0.6" />
+      <line x1="2" y1="22.5" x2="22" y2="22.5" strokeWidth="1.15" opacity="0.6" />
 
-      {/* Child 1 (Left - Lucia kneeling facing Mary) */}
+      {/* Child 1 (Left - Lucia) */}
       <g>
-        <circle cx="5.5" cy="18.2" r="1.1" strokeWidth="1.15" fill="currentColor" fillOpacity="0.18" />
-        <path d="M4.6 19.3c-.2.9.2 1.9.9 2.5l-1.0 1.0" strokeWidth="1.1" />
-        <path d="M5.8 19.8l1.2 1.0l-.8 2.0" strokeWidth="1.1" />
-        <path d="M6.2 19.6l1.0-.4" strokeWidth="0.9" />
+        <circle cx="5.6" cy="18.5" r="1.0" strokeWidth="1.05" fill="currentColor" fillOpacity="0.18" />
+        <path d="M4.8 19.5c-.2.8.2 1.6.8 2.2l-.8.9" strokeWidth="0.95" />
+        <path d="M5.8 20.0l1.0.8l-.6 1.8" strokeWidth="0.95" />
+        <path d="M6.2 19.7l.8-.3" strokeWidth="0.85" />
       </g>
 
-      {/* Child 2 (Center - Jacinta kneeling reverently facing Mary) */}
+      {/* Child 2 (Center - Jacinta) */}
       <g>
-        <circle cx="11.8" cy="18.5" r="1.0" strokeWidth="1.15" fill="currentColor" fillOpacity="0.18" />
-        <path d="M10.8 19.5c-.1.9.3 1.8.8 2.3l-.6.9" strokeWidth="1.1" />
-        <path d="M12.8 19.5c.1.9-.3 1.8-.8 2.3l.6.9" strokeWidth="1.1" />
-        <path d="M11.4 19.8l.4-.7l.4.7" strokeWidth="0.9" />
+        <circle cx="11.8" cy="18.8" r="0.9" strokeWidth="1.05" fill="currentColor" fillOpacity="0.18" />
+        <path d="M11.0 19.6c-.1.8.2 1.5.6 2.0l-.5.8" strokeWidth="0.95" />
+        <path d="M12.6 19.6c.1.8-.2 1.5-.6 2.0l.5.8" strokeWidth="0.95" />
+        <path d="M11.4 19.9l.4-.6l.4.6" strokeWidth="0.85" />
       </g>
 
-      {/* Child 3 (Right - Francisco kneeling facing Mary) */}
+      {/* Child 3 (Right - Francisco) */}
       <g>
-        <circle cx="18.0" cy="18.2" r="1.1" strokeWidth="1.15" fill="currentColor" fillOpacity="0.18" />
-        <path d="M18.9 19.3c.2.9-.2 1.9-.9 2.5l1.0 1.0" strokeWidth="1.1" />
-        <path d="M17.7 19.8l-1.2 1.0l.8 2.0" strokeWidth="1.1" />
-        <path d="M17.3 19.6l-1.0-.4" strokeWidth="0.9" />
+        <circle cx="18.0" cy="18.5" r="1.0" strokeWidth="1.05" fill="currentColor" fillOpacity="0.18" />
+        <path d="M18.8 19.5c.2.8-.2 1.6-.8 2.2l.8.9" strokeWidth="0.95" />
+        <path d="M17.8 20.0l-1.0.8l.6 1.8" strokeWidth="0.95" />
+        <path d="M17.4 19.7l-.8-.3" strokeWidth="0.85" />
       </g>
     </g>
   </svg>
@@ -1038,7 +1055,8 @@ export const KneelingAdorationIcon: React.FC<IconProps> = ({ className = 'w-4 h-
 );
 
 /**
- * 11. Prayer Request icon: Three persons holding hands in prayer
+ * 11. Prayer Requests icon: One person at rest.
+ * When hovered on, two more persons approach from each side toward the center to join in prayer.
  */
 export const ThreePersonsPrayingIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -1048,23 +1066,32 @@ export const ThreePersonsPrayingIcon: React.FC<IconProps> = ({ className = 'w-4 
     strokeWidth="1.8" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
+    aria-label="Prayer Requests — One Person Joined by Two Approaching in Prayer"
   >
-    {/* Person 1 (Left) */}
-    <circle cx="5.5" cy="6" r="2.2" />
-    <path d="M2.5 18v-4a3 3 0 0 1 3-3h.5" />
+    {/* Center Person (Always present at center, praying reverently) */}
+    <g className="sanctum-prayer-person-center">
+      <circle cx="12" cy="5.5" r="2.4" />
+      <path d="M8.5 20v-4.5a3.5 3.5 0 0 1 7 0V20" />
+      {/* Hands folded in prayer */}
+      <path d="M10.8 13.2l1.2-1.6 1.2 1.6" strokeWidth="1.4" />
+    </g>
 
-    {/* Person 2 (Center - slightly elevated in prayer) */}
-    <circle cx="12" cy="5" r="2.5" />
-    <path d="M8.5 18v-4.5a3.5 3.5 0 0 1 7 0V18" />
+    {/* Left Person (approaches from the left toward the center on hover) */}
+    <g className="sanctum-prayer-person-left">
+      <circle cx="5.5" cy="7.2" r="2.0" />
+      <path d="M2.5 20v-3.6a3 3 0 0 1 3-3h.8" />
+      {/* Reaching arm clasping hand with the center person */}
+      <path d="M5.8 14.6c2.0 0.8 3.8 0.6 5.8-0.5" strokeWidth="1.5" />
+    </g>
 
-    {/* Person 3 (Right) */}
-    <circle cx="18.5" cy="6" r="2.2" />
-    <path d="M18 11h.5a3 3 0 0 1 3 3v4" />
-
-    {/* Clasping hands joined between all three persons */}
-    <path d="M5.5 12.5c2.5 1 4 1 6.5 0" strokeWidth="1.5" />
-    <path d="M12 12.5c2.5 1 4 1 6.5 0" strokeWidth="1.5" />
+    {/* Right Person (approaches from the right toward the center on hover) */}
+    <g className="sanctum-prayer-person-right">
+      <circle cx="18.5" cy="7.2" r="2.0" />
+      <path d="M17.7 13.4h.8a3 3 0 0 1 3 3V20" />
+      {/* Reaching arm clasping hand with the center person */}
+      <path d="M18.2 14.6c-2.0 0.8-3.8 0.6-5.8-0.5" strokeWidth="1.5" />
+    </g>
   </svg>
 );
 
