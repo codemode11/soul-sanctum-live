@@ -663,6 +663,35 @@ svg:hover .sanctum-basilica-turn {
   animation: sanctumBasilicaTurnOnce 1.4s ease-in-out 1 forwards;
 }
 
+/* Catholic Glossary Icon: When hovered on, a definition (a line of words) goes out from the book */
+@keyframes sanctumGlossaryDefinitionOut {
+  0% {
+    transform: translateX(-7.8px) scaleX(0.45);
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0px) scaleX(1);
+    opacity: 1;
+  }
+}
+
+.sanctum-glossary-definition-line {
+  transform-box: view-box;
+  transform-origin: 11.6px 12.5px;
+  transform: translateX(-7.8px) scaleX(0.45);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.group:hover .sanctum-glossary-definition-line,
+svg:hover .sanctum-glossary-definition-line {
+  animation: sanctumGlossaryDefinitionOut 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {

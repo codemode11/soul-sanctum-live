@@ -1437,6 +1437,52 @@ export const StPetersBasilicaIcon: React.FC<IconProps> = ({ className = 'w-5 h-5
   </svg>
 );
 
+/**
+ * 24. Catholic Glossary Icon: A book with a bookmark ribbon.
+ * When hovered on, a definition (a horizontal line of words) goes out from the book.
+ */
+export const CatholicGlossaryBookIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Catholic Glossary — Book with Emerging Definition"
+  >
+    {/* Bookmark ribbon at top of glossary book */}
+    <path d="M8.2 2.5v6.5l2.3-2.2 2.3 2.2V2.5" />
+
+    {/* Glossary Book Outline */}
+    <path d="M3.2 19.2V4.8A2.3 2.3 0 0 1 5.5 2.5H16.2a1 1 0 0 1 1 1v17a1 1 0 0 1-1 1H5.5a2.2 2.2 0 0 1 0-4.4H17.2" />
+
+    {/* Definition (a line of words: "term : word word") that goes out from the book on hover */}
+    <g className="sanctum-glossary-definition-line">
+      {/* Subtle dark backing across the book edge so the emerging line of words cleanly passes out of the book */}
+      <rect
+        x="11.0"
+        y="11.1"
+        width="12.8"
+        height="2.8"
+        rx="1.2"
+        fill="#1c1613"
+        stroke="none"
+      />
+      {/* Headword / Term segment */}
+      <line x1="11.6" y1="12.5" x2="14.2" y2="12.5" stroke="#FEF08A" strokeWidth="2.0" />
+      {/* Definition colon separator */}
+      <circle cx="15.6" cy="11.9" r="0.42" fill="#FEF08A" stroke="none" />
+      <circle cx="15.6" cy="13.1" r="0.42" fill="#FEF08A" stroke="none" />
+      {/* Definition word segments going out from the book */}
+      <line x1="17.0" y1="12.5" x2="19.8" y2="12.5" stroke="currentColor" strokeWidth="1.85" />
+      <line x1="21.1" y1="12.5" x2="23.5" y2="12.5" stroke="currentColor" strokeWidth="1.85" />
+    </g>
+  </svg>
+);
+
+
 
 
 

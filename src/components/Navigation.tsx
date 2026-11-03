@@ -48,7 +48,8 @@ import {
   BibleFlashcardsIcon,
   SpiritualClassicsBooksIcon,
   HolyMassLiveTvAltarIcon,
-  StPetersBasilicaIcon
+  StPetersBasilicaIcon,
+  CatholicGlossaryBookIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -328,7 +329,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'catholic-glossary', 
       label: 'Catholic Glossary', 
-      icon: BookMarked, 
+      icon: CatholicGlossaryBookIcon, 
       tag: 'Terms', 
       subtext: 'Theological and Liturgical Terms' 
     },
