@@ -411,6 +411,42 @@ svg:hover .sanctum-flashcard-top {
   animation: sanctumFlashcardTopToFront 0.68s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
+/* Reflection Icon (The Thinker): Sits upright when not hovered, slowly bends forward into contemplation on hover */
+.sanctum-thinker-head {
+  transform-box: view-box;
+  transform-origin: 9.4px 3.8px;
+  transform: translate(0px, 0px);
+  transition: transform 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.sanctum-thinker-spine {
+  d: path("M 8.8 6.2 C 8.4 8.4 8.2 10.8 8.2 13.0 C 8.2 14.4 8.3 15.2 8.6 15.6");
+  transition: d 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: d;
+}
+
+.sanctum-thinker-arm {
+  d: path("M 9.0 7.4 L 10.2 12.6 L 14.4 13.4");
+  transition: d 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: d;
+}
+
+.group:hover .sanctum-thinker-head,
+svg:hover .sanctum-thinker-head {
+  transform: translate(6.2px, 1.4px);
+}
+
+.group:hover .sanctum-thinker-spine,
+svg:hover .sanctum-thinker-spine {
+  d: path("M 13.6 5.6 C 10.4 6.4 7.4 9.2 6.8 13.0 C 6.6 14.4 7.3 15.4 8.6 15.6");
+}
+
+.group:hover .sanctum-thinker-arm,
+svg:hover .sanctum-thinker-arm {
+  d: path("M 11.4 7.6 L 14.6 13.2 L 15.8 7.4");
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {

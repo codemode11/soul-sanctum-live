@@ -318,8 +318,8 @@ export const SaintWithHaloIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }
 
 /**
  * 2. Reflection icon: Outline of Auguste Rodin's "The Thinker" (Le Penseur)
- * Seated figure in deep contemplation: bowed head resting chin on hand,
- * elbow propped upon the knee, arched back, seated on a rock pedestal.
+ * When not hovered on, the figure is sitting upright on the pedestal;
+ * when hovered on, it slowly bends forward into its contemplative Thinker position.
  */
 export const RightFacingQuoteIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -329,17 +329,28 @@ export const RightFacingQuoteIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
     strokeWidth="1.75" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
     aria-label="Rodin's The Thinker — Reflection"
   >
-    {/* Bowed head in contemplation */}
-    <circle cx="15.6" cy="5.2" r="2.1" />
+    {/* Head: upright by default, bows forward in contemplation on hover */}
+    <circle
+      cx="9.4"
+      cy="3.8"
+      r="2.1"
+      className="sanctum-thinker-head"
+    />
 
-    {/* Arched neck, shoulders, and curved spine down to seated hip */}
-    <path d="M13.6 5.6C10.4 6.4 7.4 9.2 6.8 13.0c-.2 1.4.5 2.4 1.8 2.6" />
+    {/* Neck, shoulders, and spine down to seated hip: upright by default, arches forward on hover */}
+    <path
+      d="M 8.8 6.2 C 8.4 8.4 8.2 10.8 8.2 13.0 C 8.2 14.4 8.3 15.2 8.6 15.6"
+      className="sanctum-thinker-spine"
+    />
 
-    {/* Upper arm reaching forward and forearm rising to support the chin */}
-    <path d="M11.4 7.6L14.6 13.2L15.8 7.4" />
+    {/* Upper arm and forearm: resting on lap when upright, propping chin on knee when bent on hover */}
+    <path
+      d="M 9.0 7.4 L 10.2 12.6 L 14.4 13.4"
+      className="sanctum-thinker-arm"
+    />
 
     {/* Seated thigh extending to knee, and lower leg descending to foot on pedestal */}
     <path d="M8.6 15.6L15.4 13.8L14.4 20.4" />
