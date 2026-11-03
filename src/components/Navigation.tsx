@@ -50,7 +50,8 @@ import {
   HolyMassLiveTvAltarIcon,
   StPetersBasilicaIcon,
   CatholicGlossaryBookIcon,
-  ChurchCalendarPageFlipIcon
+  ChurchCalendarPageFlipIcon,
+  SacredArtGallerySwapIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -385,7 +386,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'sacred-art', 
       label: 'Sacred Art Gallery', 
-      icon: ImageIcon, 
+      icon: SacredArtGallerySwapIcon, 
       tag: 'Masters', 
       subtext: 'Caravaggio, Millet and Altar' 
     },

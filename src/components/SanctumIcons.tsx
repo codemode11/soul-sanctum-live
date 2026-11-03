@@ -1730,6 +1730,77 @@ export const ChurchCalendarPageFlipIcon: React.FC<IconProps> = ({ className = 'w
   </svg>
 );
 
+/**
+ * 26. Sacred Art Gallery Icon:
+ * Displays a framed sacred canvas at the center. When hovered on,
+ * another image from the right smoothly replaces the image at the center.
+ */
+export const SacredArtGallerySwapIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => {
+  const rawId = React.useId();
+  const clipId = `sanctum-gallery-clip-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${className} overflow-visible`}
+      aria-label="Sacred Art Gallery — Images Swapping"
+    >
+      <defs>
+        <clipPath id={clipId}>
+          <rect x="0" y="0" width="24" height="24" rx="2.5" />
+        </clipPath>
+      </defs>
+
+      <g clipPath={`url(#${clipId})`}>
+        {/* Image 1: Centered canvas at rest (slides out to the left on hover) */}
+        <g className="sanctum-gallery-image-center">
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="2.2"
+            strokeWidth="1.8"
+            fill="currentColor"
+            fillOpacity="0.08"
+          />
+          {/* Celestial Sun / Halo in Artwork 1 */}
+          <circle cx="8.5" cy="8.5" r="2.2" strokeWidth="1.4" />
+          {/* Sacred Vista / Mountain hills */}
+          <path d="M21 16l-4.5-4.5a2 2 0 0 0-2.8 0L6 19.5" strokeWidth="1.5" />
+          <path d="M3.5 17.5l3.5-3.5a1.8 1.8 0 0 1 2.5 0l2 2" strokeWidth="1.3" opacity="0.75" />
+        </g>
+
+        {/* Image 2: Incoming sacred canvas from the right (slides in to the center on hover) */}
+        <g className="sanctum-gallery-image-right">
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="2.2"
+            strokeWidth="1.8"
+            fill="currentColor"
+            fillOpacity="0.14"
+          />
+          {/* Sacred Altar Cross with Gold Radiant Glory in Artwork 2 */}
+          <circle cx="12" cy="10" r="4.2" strokeWidth="1.15" stroke="#FEF08A" opacity="0.7" />
+          <line x1="12" y1="5.2" x2="12" y2="17.2" strokeWidth="1.65" />
+          <line x1="8.5" y1="8.8" x2="15.5" y2="8.8" strokeWidth="1.65" />
+          {/* Altar Pedestal Base Line */}
+          <line x1="6.5" y1="18.8" x2="17.5" y2="18.8" strokeWidth="1.35" opacity="0.8" />
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+
 
 
 
