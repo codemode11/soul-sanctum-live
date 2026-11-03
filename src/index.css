@@ -1106,6 +1106,19 @@ svg:hover .sanctum-prayer-person-right {
   opacity: 1;
 }
 
+/* In Memoriam Icon (Holy Water Container): Slowly turns once when hovered on */
+.sanctum-holy-water-turn {
+  transform-box: view-box;
+  transform-origin: 12px 13.5px;
+  transform: scaleX(1);
+  will-change: transform;
+}
+
+.group:hover .sanctum-holy-water-turn,
+svg:hover .sanctum-holy-water-turn {
+  animation: sanctumBasilicaTurnOnce 1.4s ease-in-out 1 forwards;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
