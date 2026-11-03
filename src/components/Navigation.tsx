@@ -49,7 +49,8 @@ import {
   SpiritualClassicsBooksIcon,
   HolyMassLiveTvAltarIcon,
   StPetersBasilicaIcon,
-  CatholicGlossaryBookIcon
+  CatholicGlossaryBookIcon,
+  ChurchCalendarPageFlipIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -370,7 +371,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'calendar', 
       label: 'Church Calendar', 
-      icon: CalendarIcon, 
+      icon: ChurchCalendarPageFlipIcon, 
       tag: 'Liturgical', 
       subtext: 'Seasons, Solemnities and Fasts' 
     },

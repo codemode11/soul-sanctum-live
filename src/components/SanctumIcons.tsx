@@ -675,8 +675,8 @@ export const RosaryAndChapletIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
 );
 
 /**
- * 7. Marian Messages icon: The lean figure of Mary with her hands joined in prayer;
- * there is no crown but her hair flows from her head.
+ * 7. Marian Apparitions icon: The lean figure of Mary standing.
+ * When hovered on, Mary's arms become outstretched, and three children kneel before her.
  */
 export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -686,9 +686,10 @@ export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h
     strokeWidth="1.6" 
     strokeLinecap="round" 
     strokeLinejoin="round" 
-    className={className}
+    className={`${className} overflow-visible`}
+    aria-label="Marian Apparitions — Our Lady with Outstretched Arms and Three Kneeling Children"
   >
-    {/* Mary's head bowed gently in prayer (no crown) */}
+    {/* Mary's head bowed gently (no crown) */}
     <circle cx="12" cy="4.2" r="2.2" strokeWidth="1.5" />
     <path d="M11.6 3.8c.3-.4.8-.6 1.3-.4" strokeWidth="1.0" />
 
@@ -703,10 +704,58 @@ export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h
     <path d="M14.2 14.5c.8 2.2 1.6 4.8 1.8 7.5" strokeWidth="1.4" />
     <path d="M8 22c2.6.4 5.4.4 8 0" strokeWidth="1.3" />
 
-    {/* Slender hands joined in prayer at her breast */}
-    <path d="M12 9.8v5" strokeWidth="1.5" />
-    <path d="M10.8 11.6l1.2-1.8 1.2 1.8" strokeWidth="1.4" />
-    <path d="M10.2 13.8l1.8-1.5 1.8 1.5" strokeWidth="1.2" />
+    {/* Resting State: Mary's hands joined in prayer at her breast */}
+    <g className="sanctum-mary-hands-folded">
+      <path d="M12 9.8v5" strokeWidth="1.5" />
+      <path d="M10.8 11.6l1.2-1.8 1.2 1.8" strokeWidth="1.4" />
+      <path d="M10.2 13.8l1.8-1.5 1.8 1.5" strokeWidth="1.2" />
+    </g>
+
+    {/* Hover State 1: Mary's arms gracefully outstretched */}
+    <g className="sanctum-mary-arms-outstretched">
+      {/* Left arm reaching out and downward with open palm */}
+      <path d="M9.8 8.2 C7.5 9.2, 5.2 10.4, 3.2 12.2" strokeWidth="1.6" />
+      <path d="M3.2 12.2 C2.8 12.8, 3.2 13.5, 3.8 13.3 C4.5 13.1, 5.4 12.4, 6.0 11.6" strokeWidth="1.2" />
+      {/* Right arm reaching out and downward with open palm */}
+      <path d="M14.2 8.2 C16.5 9.2, 18.8 10.4, 20.8 12.2" strokeWidth="1.6" />
+      <path d="M20.8 12.2 C21.2 12.8, 20.8 13.5, 20.2 13.3 C19.5 13.1, 18.6 12.4, 18.0 11.6" strokeWidth="1.2" />
+    </g>
+
+    {/* Hover State 2: Three children kneeling before Our Lady */}
+    <g className="sanctum-mary-children">
+      {/* Ground line */}
+      <line x1="2" y1="22" x2="22" y2="22" strokeWidth="1.4" />
+
+      {/* Child 1 (Left - Lucia kneeling facing Mary) */}
+      <g>
+        <circle cx="5.2" cy="16.2" r="1.3" strokeWidth="1.2" fill="currentColor" fillOpacity="0.18" />
+        {/* Bowed back & kneeling posture */}
+        <path d="M4.2 17.5 C3.8 18.6, 4.0 19.8, 4.8 20.8 L3.8 22" strokeWidth="1.2" />
+        <path d="M5.6 18.2 L7.0 19.4 L6.0 22" strokeWidth="1.2" />
+        {/* Hands clasped in prayer toward Mary */}
+        <path d="M6.2 18.2 L7.5 17.6" strokeWidth="1.1" />
+      </g>
+
+      {/* Child 2 (Center - Jacinta kneeling reverently before Mary) */}
+      <g>
+        <circle cx="12.0" cy="16.8" r="1.15" strokeWidth="1.2" fill="currentColor" fillOpacity="0.18" />
+        {/* Kneeling mantle & silhouette */}
+        <path d="M10.8 18.0 C10.6 19.2, 11.0 20.4, 11.6 21.2 L11.0 22" strokeWidth="1.2" />
+        <path d="M13.2 18.0 C13.4 19.2, 13.0 20.4, 12.4 21.2 L13.0 22" strokeWidth="1.2" />
+        {/* Hands folded upward */}
+        <path d="M11.5 18.3 L12.0 17.4 L12.5 18.3" strokeWidth="1.0" />
+      </g>
+
+      {/* Child 3 (Right - Francisco kneeling facing Mary) */}
+      <g>
+        <circle cx="18.8" cy="16.2" r="1.3" strokeWidth="1.2" fill="currentColor" fillOpacity="0.18" />
+        {/* Bowed back & kneeling posture */}
+        <path d="M19.8 17.5 C20.2 18.6, 20.0 19.8, 19.2 20.8 L20.2 22" strokeWidth="1.2" />
+        <path d="M18.4 18.2 L17.0 19.4 L18.0 22" strokeWidth="1.2" />
+        {/* Hands clasped in prayer toward Mary */}
+        <path d="M17.8 18.2 L16.5 17.6" strokeWidth="1.1" />
+      </g>
+    </g>
   </svg>
 );
 
@@ -1571,6 +1620,56 @@ export const CatholicGlossaryBookIcon: React.FC<IconProps> = ({ className = 'w-5
     </g>
   </svg>
 );
+
+/**
+ * 25. Church Calendar Icon: Liturgical calendar with top binding rings.
+ * When hovered on, the front page slowly flips back over the top to reveal the next month/page beneath.
+ */
+export const ChurchCalendarPageFlipIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Church Calendar — Page Flipping Back"
+  >
+    {/* Base plate / Back calendar page (revealed as the front page flips back) */}
+    <rect x="3" y="4" width="18" height="17" rx="2" strokeWidth="1.8" />
+    <line x1="3" y1="9" x2="21" y2="9" strokeWidth="1.6" />
+
+    {/* Liturgical Feast Day Cross on revealed page */}
+    <line x1="12" y1="11.8" x2="12" y2="17.8" stroke="#FEF08A" strokeWidth="1.65" />
+    <line x1="9.6" y1="13.8" x2="14.4" y2="13.8" stroke="#FEF08A" strokeWidth="1.65" />
+
+    {/* Date markers on revealed back page */}
+    <circle cx="6.5" cy="13.8" r="0.8" fill="currentColor" />
+    <circle cx="17.5" cy="13.8" r="0.8" fill="currentColor" />
+    <circle cx="6.5" cy="17.2" r="0.8" fill="currentColor" />
+    <circle cx="17.5" cy="17.2" r="0.8" fill="currentColor" />
+
+    {/* Front Calendar Page (slowly flips back over the top binding on hover) */}
+    <g className="sanctum-calendar-front-page">
+      {/* Solid dark backing so front page covers the back page while resting */}
+      <rect x="3.2" y="4.2" width="17.6" height="16.6" rx="1.8" fill="#1c1613" stroke="none" />
+      {/* Front page outline and header */}
+      <rect x="3" y="4" width="18" height="17" rx="2" strokeWidth="1.8" fill="currentColor" fillOpacity="0.14" />
+      <line x1="3" y1="9" x2="21" y2="9" strokeWidth="1.6" />
+      {/* Front page date grid / text lines */}
+      <line x1="6.2" y1="12.8" x2="10.8" y2="12.8" strokeWidth="1.35" opacity="0.85" />
+      <line x1="13.2" y1="12.8" x2="17.8" y2="12.8" strokeWidth="1.35" opacity="0.85" />
+      <line x1="6.2" y1="16.2" x2="10.8" y2="16.2" strokeWidth="1.35" opacity="0.85" />
+      <line x1="13.2" y1="16.2" x2="17.8" y2="16.2" strokeWidth="1.35" opacity="0.85" />
+    </g>
+
+    {/* Top Binder Rings / Posts (stay on top of both pages) */}
+    <line x1="8" y1="1.8" x2="8" y2="5.8" strokeWidth="2.2" />
+    <line x1="16" y1="1.8" x2="16" y2="5.8" strokeWidth="2.2" />
+  </svg>
+);
+
 
 
 
