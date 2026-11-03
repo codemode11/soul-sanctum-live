@@ -372,6 +372,28 @@ export const MarianApparitionsView: React.FC = () => {
                     </div>
                   </div>
 
+                  {/* Special Featured Holy Card Artwork for Our Lady of Lourdes */}
+                  {app.id === 'our-lady-of-lourdes' && (
+                    <div className="flex flex-col sm:flex-row items-center gap-5 p-4 rounded-xl bg-gradient-to-r from-amber-950/40 via-stone-900/60 to-blue-950/40 border border-amber-500/30">
+                      <div className="relative shrink-0 rounded-lg overflow-hidden border-2 border-amber-400/60 shadow-[0_4px_20px_rgba(0,0,0,0.6)] w-36 sm:w-44">
+                        <img
+                          src="/assets/aistudio/image_32e7c9e2.png"
+                          alt="Our Lady of Lourdes appearing to Saint Bernadette at the Grotto of Massabielle"
+                          className="w-full h-auto object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                      </div>
+                      <div className="space-y-2 text-xs sm:text-sm font-serif text-stone-200">
+                        <span className="font-cinzel text-xs font-bold text-amber-300 uppercase tracking-widest block">
+                          Historic Sacred Holy Card • Massabielle Grotto
+                        </span>
+                        <p className="italic text-amber-100/90 leading-relaxed">
+                          &ldquo;Que Soï Era Immaculada Councepciou&rdquo; (&ldquo;I am the Immaculate Conception&rdquo;). The Blessed Mother stands elevated within the wild rose-clad niche above the Gave river, dressed in immaculate white with her celestial blue sash and golden roses upon her feet, as young Saint Bernadette Soubirous kneels in prayer upon the riverbank.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Summary Text */}
                   <div className="p-4 rounded-xl bg-black/30 border border-white/10 space-y-2">
                     <p className={`font-serif text-stone-200 transition-all duration-200 ${bodyTextClass}`}>
