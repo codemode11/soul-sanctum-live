@@ -876,80 +876,53 @@ svg:hover .sanctum-miracle-blood {
   transform: scale(1);
 }
 
-/* Marian Apparitions Icon: Mary's arms outstretched, and three children kneel before her with distance */
-.sanctum-mary-hands-folded {
+/* Marian Apparitions Icon: Our Lady of Lourdes and Saint Bernadette kneeling across distance */
+.sanctum-lourdes-mary-folded {
   opacity: 1;
   transition: opacity 0.35s ease;
   will-change: opacity;
 }
 
-.sanctum-mary-full-gown {
-  opacity: 1;
-  transition: opacity 0.35s ease;
-  will-change: opacity;
-}
-
-.sanctum-mary-arms-outstretched {
+.sanctum-lourdes-mary-outstretched {
   transform-box: view-box;
-  transform-origin: 12px 6.5px;
+  transform-origin: 15.2px 6.5px;
   opacity: 0;
-  transform: scale(0.88);
+  transform: scale(0.9);
   transition:
     opacity 0.45s ease-out 0.1s,
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
   will-change: opacity, transform;
 }
 
-.sanctum-mary-cloud {
+.sanctum-lourdes-bernadette {
   transform-box: view-box;
-  transform-origin: 12px 11.2px;
+  transform-origin: 5.2px 22px;
   opacity: 0;
-  transform: scale(0.85);
+  transform: translateX(-3.5px) scale(0.92);
   transition:
-    opacity 0.45s ease-out 0.12s,
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.12s;
-  will-change: opacity, transform;
-}
-
-.sanctum-mary-children {
-  transform-box: view-box;
-  transform-origin: 12px 22.5px;
-  opacity: 0;
-  transform: translateY(2.5px);
-  transition:
-    opacity 0.5s ease-out 0.18s,
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.18s;
+    opacity 0.5s ease-out 0.15s,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
   will-change: opacity, transform;
   pointer-events: none;
 }
 
-.group:hover .sanctum-mary-hands-folded,
-svg:hover .sanctum-mary-hands-folded {
+.group:hover .sanctum-lourdes-mary-folded,
+svg:hover .sanctum-lourdes-mary-folded {
   opacity: 0;
 }
 
-.group:hover .sanctum-mary-full-gown,
-svg:hover .sanctum-mary-full-gown {
-  opacity: 0;
-}
-
-.group:hover .sanctum-mary-arms-outstretched,
-svg:hover .sanctum-mary-arms-outstretched {
+.group:hover .sanctum-lourdes-mary-outstretched,
+svg:hover .sanctum-lourdes-mary-outstretched {
   opacity: 1;
   transform: scale(1);
 }
 
-.group:hover .sanctum-mary-cloud,
-svg:hover .sanctum-mary-cloud {
+.group:hover .sanctum-lourdes-bernadette,
+svg:hover .sanctum-lourdes-bernadette {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0px) scale(1);
 }
 
-.group:hover .sanctum-mary-children,
-svg:hover .sanctum-mary-children {
-  opacity: 1;
-  transform: translateY(0px);
-}
 
 /* Church Calendar Icon: Front page slowly flips back over the top on hover */
 @keyframes sanctumCalendarFlipBack {
