@@ -1345,7 +1345,7 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
     >
       <defs>
         <clipPath id={clipId}>
-          <rect x="0" y="1" width="24" height="22" rx="2" />
+          <rect x="-1" y="0.5" width="26" height="23" rx="2" />
         </clipPath>
       </defs>
 
@@ -1353,14 +1353,14 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
       <g clipPath={`url(#${clipId})`}>
         <g className="sanctum-timeline-scroll">
           {/* Continuous vertical timeline axis */}
-          <line x1="4.0" y1="2" x2="4.0" y2="82" strokeWidth="1.5" stroke="currentColor" opacity="0.65" />
+          <line x1="2.8" y1="2" x2="2.8" y2="82" strokeWidth="1.4" stroke="currentColor" opacity="0.65" />
 
           {/* 1. Milestone 30 AD (Crucifixion, Resurrection & Pentecost) */}
-          <circle cx="4.0" cy="12" r="1.65" fill="currentColor" stroke="none" />
+          <circle cx="2.8" cy="12" r="1.5" fill="currentColor" stroke="none" />
           <text
-            x="7.8"
-            y="14.6"
-            fontSize="7.4"
+            x="5.8"
+            y="13.9"
+            fontSize="5.5"
             fontWeight="900"
             fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
             fill="currentColor"
@@ -1370,11 +1370,11 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
           </text>
 
           {/* 2. Milestone 49 AD (Council of Jerusalem) */}
-          <circle cx="4.0" cy="32" r="1.65" fill="currentColor" stroke="none" />
+          <circle cx="2.8" cy="32" r="1.5" fill="currentColor" stroke="none" />
           <text
-            x="7.8"
-            y="34.6"
-            fontSize="7.4"
+            x="5.8"
+            y="33.9"
+            fontSize="5.5"
             fontWeight="900"
             fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
             fill="currentColor"
@@ -1384,11 +1384,11 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
           </text>
 
           {/* 3. Milestone 64 AD (Nero's Persecution & Peter & Paul) */}
-          <circle cx="4.0" cy="52" r="1.65" fill="currentColor" stroke="none" />
+          <circle cx="2.8" cy="52" r="1.5" fill="currentColor" stroke="none" />
           <text
-            x="7.8"
-            y="54.6"
-            fontSize="7.4"
+            x="5.8"
+            y="53.9"
+            fontSize="5.5"
             fontWeight="900"
             fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
             fill="currentColor"
@@ -1398,11 +1398,11 @@ export const ChurchTimelineIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' 
           </text>
 
           {/* 4. Milestone 107 AD (St. Ignatius of Antioch - Katholike Ekklesia) */}
-          <circle cx="4.0" cy="72" r="1.8" fill="#FEF08A" stroke="currentColor" strokeWidth="0.6" />
+          <circle cx="2.8" cy="72" r="1.7" fill="#FEF08A" stroke="currentColor" strokeWidth="0.6" />
           <text
-            x="7.8"
-            y="74.6"
-            fontSize="7.0"
+            x="5.8"
+            y="73.9"
+            fontSize="5.4"
             fontWeight="900"
             fontFamily="'Plus Jakarta Sans', system-ui, sans-serif"
             fill="#FEF08A"
