@@ -949,25 +949,50 @@ export const ThreePersonsPrayingIcon: React.FC<IconProps> = ({ className = 'w-4 
 );
 
 /**
- * 12. Catholic Podcasts icon: Outline of headphones
+ * 12. Catholic Podcasts icon: Outline of headphones with audio waveforms
+ * that pass across the headphones when hovered on.
  */
-export const CatholicPodcastNavIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
-  <svg 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="1.8" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    className={className}
-    aria-label="Catholic Podcasts Headphones"
-  >
-    {/* Headband arch */}
-    <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-    {/* Left and right earcups outline */}
-    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
-  </svg>
-);
+export const CatholicPodcastNavIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => {
+  const rawId = React.useId();
+  const clipId = `sanctum-podcast-wave-clip-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+
+  return (
+    <svg 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="1.8" 
+      strokeLinecap="round" 
+      strokeLinejoin="round" 
+      className={`${className} overflow-visible`}
+      aria-label="Catholic Podcasts Headphones with Waveforms"
+    >
+      <defs>
+        <clipPath id={clipId}>
+          <rect x="3.4" y="4.5" width="17.2" height="16.2" rx="2" />
+        </clipPath>
+      </defs>
+
+      {/* Audio waveforms passing horizontally across the headphones */}
+      <g clipPath={`url(#${clipId})`}>
+        <path
+          d="M -11.0 13.5 L -9.0 13.5 L -7.8 11.5 L -6.5 15.5 L -5.0 8.2 L -3.4 18.8 L -1.8 9.5 L -0.2 17.5 L 1.2 11.5 L 2.5 15.2 L 3.6 13.5 L 5.0 13.5 L 6.2 11.5 L 7.5 15.5 L 9.0 8.2 L 10.6 18.8 L 12.2 9.5 L 13.8 17.5 L 15.2 11.5 L 16.5 15.2 L 17.6 13.5 L 19.0 13.5 L 20.2 11.5 L 21.5 15.5 L 23.0 8.2"
+          strokeWidth="1.45"
+          className="sanctum-podcast-waveform-track"
+        />
+      </g>
+
+      {/* Headband arch */}
+      <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+      {/* Left and right earcups outline */}
+      <path
+        d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"
+        fill="currentColor"
+        fillOpacity="0.16"
+      />
+    </svg>
+  );
+};
 
 /**
  * 13. Eucharistic Miracles Nav Icon: Monstrance outline using currentColor so it changes color on hover in the Index
