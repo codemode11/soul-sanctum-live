@@ -836,27 +836,27 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
       }
       .group:hover .sanctum-flame-1,
       svg:hover .sanctum-flame-1 {
-        animation: sanctumFlameFlicker1 0.9s infinite ease-in-out;
+        animation: sanctumFlameFlicker1 1.2s infinite ease-in-out;
       }
       .group:hover .sanctum-flame-2,
       svg:hover .sanctum-flame-2 {
-        animation: sanctumFlameFlicker2 0.78s infinite ease-in-out;
+        animation: sanctumFlameFlicker2 1.2s infinite ease-in-out;
       }
       .group:hover .sanctum-flame-3,
       svg:hover .sanctum-flame-3 {
-        animation: sanctumFlameFlicker3 1.02s infinite ease-in-out;
+        animation: sanctumFlameFlicker3 1.2s infinite ease-in-out;
       }
       .group:hover .sanctum-halo-1,
       svg:hover .sanctum-halo-1 {
-        animation: sanctumHaloPulse 0.9s infinite ease-in-out;
+        animation: sanctumHaloPulse 1.2s infinite ease-in-out;
       }
       .group:hover .sanctum-halo-2,
       svg:hover .sanctum-halo-2 {
-        animation: sanctumHaloPulse 0.78s infinite ease-in-out 0.15s;
+        animation: sanctumHaloPulse 1.2s infinite ease-in-out;
       }
       .group:hover .sanctum-halo-3,
       svg:hover .sanctum-halo-3 {
-        animation: sanctumHaloPulse 1.02s infinite ease-in-out 0.3s;
+        animation: sanctumHaloPulse 1.2s infinite ease-in-out;
       }
     `}</style>
 

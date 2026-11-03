@@ -11,6 +11,7 @@
     --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
     --font-cinzel: 'Cinzel', serif;
     --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --sanctum-icon-speed: 1.2s;
   }
 
   /* Make all heading elements (h1-h6) use traditional, dignified serif fonts */
@@ -128,7 +129,7 @@
 .sanctum-checklist-pen {
   transform-box: view-box;
   transform-origin: 12.6px 11.2px;
-  transition: transform 0.25s ease-out;
+  transition: transform 1.2s ease-out;
 }
 
 .sanctum-checklist-mark {
@@ -139,12 +140,12 @@
 
 .group:hover .sanctum-checklist-pen,
 svg:hover .sanctum-checklist-pen {
-  animation: sanctumBallpenWriteCheck 0.95s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumBallpenWriteCheck 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
 .group:hover .sanctum-checklist-mark,
 svg:hover .sanctum-checklist-mark {
-  animation: sanctumCheckmarkDraw 0.95s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumCheckmarkDraw 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
 /* Mass Readings Icon: Open Lectionary book flips a page from right to left on hover */
@@ -174,12 +175,12 @@ svg:hover .sanctum-checklist-mark {
 .sanctum-book-flip-page {
   transform-box: view-box;
   transform-origin: 12px 12px;
-  transition: transform 0.3s ease-out;
+  transition: transform 1.2s ease-out;
 }
 
 .group:hover .sanctum-book-flip-page,
 svg:hover .sanctum-book-flip-page {
-  animation: sanctumBookPageFlip 0.78s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumBookPageFlip 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
 /* Catechism Icon: Wooden scroll rollers closed when not hovered, gradually unrolling open on hover */
@@ -187,7 +188,7 @@ svg:hover .sanctum-book-flip-page {
   transform-box: view-box;
   transform-origin: 12px 4.5px;
   transform: translateY(6.3px);
-  transition: transform 1.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
@@ -195,7 +196,7 @@ svg:hover .sanctum-book-flip-page {
   transform-box: view-box;
   transform-origin: 12px 19.5px;
   transform: translateY(-6.3px);
-  transition: transform 1.15s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
 
@@ -205,8 +206,8 @@ svg:hover .sanctum-book-flip-page {
   transform: scaleY(0);
   opacity: 0;
   transition:
-    transform 1.15s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.65s ease-in-out;
+    transform 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 1.2s ease-in-out;
   will-change: transform, opacity;
 }
 
@@ -239,12 +240,12 @@ svg:hover .sanctum-scroll-parchment {
 .sanctum-eye-blink {
   transform-box: view-box;
   transform-origin: 12px 12px;
-  transition: transform 0.35s ease-out;
+  transition: transform 1.2s ease-out;
 }
 
 .group:hover .sanctum-eye-blink,
 svg:hover .sanctum-eye-blink {
-  animation: sanctumEyeSlowBlink 1.15s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumEyeSlowBlink 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
 /* Bible Commentary Icon: One highlighter makes one line of the left page very bright on hover */
@@ -281,7 +282,7 @@ svg:hover .sanctum-eye-blink {
 .sanctum-bible-highlighter {
   transform-box: view-box;
   transform-origin: 4.5px 9.5px;
-  transition: transform 0.3s ease-out;
+  transition: transform 1.2s ease-out;
 }
 
 .sanctum-bible-highlight-glow {
@@ -300,14 +301,14 @@ svg:hover .sanctum-eye-blink {
 
 .group:hover .sanctum-bible-highlighter,
 svg:hover .sanctum-bible-highlighter {
-  animation: sanctumBibleHighlighterStroke 0.95s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumBibleHighlighterStroke 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
 .group:hover .sanctum-bible-highlight-glow,
 svg:hover .sanctum-bible-highlight-glow,
 .group:hover .sanctum-bible-highlight-core,
 svg:hover .sanctum-bible-highlight-core {
-  animation: sanctumBibleLineBrighten 0.95s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumBibleLineBrighten 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
 /* Saint of the Day Icon: Halo slowly increases in size and glows once hovered on */
@@ -317,21 +318,21 @@ svg:hover .sanctum-bible-highlight-core {
   transform: scale(1);
   filter: drop-shadow(0 0 0px rgba(254, 240, 138, 0));
   transition:
-    transform 1.25s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, filter;
 }
 
 .sanctum-saint-halo-aura {
   opacity: 0;
-  transition: opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .sanctum-saint-halo-ring,
 .sanctum-saint-halo-inner {
   transition:
-    stroke 1.25s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+    stroke 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .group:hover .sanctum-saint-halo,
@@ -389,8 +390,8 @@ svg:hover .sanctum-saint-halo-inner {
   transform: translateY(0px) scale(1);
   opacity: 1;
   transition:
-    transform 0.35s ease-out,
-    opacity 0.35s ease-out;
+    transform 1.2s ease-out,
+    opacity 1.2s ease-out;
 }
 
 .sanctum-flashcard-top {
@@ -403,12 +404,12 @@ svg:hover .sanctum-saint-halo-inner {
 
 .group:hover .sanctum-flashcard-base,
 svg:hover .sanctum-flashcard-base {
-  animation: sanctumFlashcardBaseRecede 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+  animation: sanctumFlashcardBaseRecede 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
 .group:hover .sanctum-flashcard-top,
 svg:hover .sanctum-flashcard-top {
-  animation: sanctumFlashcardTopToFront 0.68s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+  animation: sanctumFlashcardTopToFront 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
 /* Reflection Icon (The Thinker): Sits upright when not hovered, slowly bends forward into contemplation on hover */
@@ -416,19 +417,19 @@ svg:hover .sanctum-flashcard-top {
   transform-box: view-box;
   transform-origin: 9.4px 3.8px;
   transform: translate(0px, 0px);
-  transition: transform 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .sanctum-thinker-spine {
   d: path("M 8.8 6.2 C 8.4 8.4 8.2 10.8 8.2 13.0 C 8.2 14.4 8.3 15.2 8.6 15.6");
-  transition: d 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: d 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: d;
 }
 
 .sanctum-thinker-arm {
   d: path("M 9.0 7.4 L 10.2 12.6 L 14.4 13.4");
-  transition: d 1.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: d 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: d;
 }
 
@@ -515,17 +516,17 @@ svg:hover .sanctum-thinker-arm {
 
 .group:hover .sanctum-dove-body,
 svg:hover .sanctum-dove-body {
-  animation: sanctumDoveDescendFlight 2.4s cubic-bezier(0.22, 0.61, 0.36, 1) 1 forwards;
+  animation: sanctumDoveDescendFlight 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) 1 forwards;
 }
 
 .group:hover .sanctum-dove-wing-left,
 svg:hover .sanctum-dove-wing-left {
-  animation: sanctumDoveFlapLeft 2.4s ease-in-out 1 forwards;
+  animation: sanctumDoveFlapLeft 1.2s ease-in-out 1 forwards;
 }
 
 .group:hover .sanctum-dove-wing-right,
 svg:hover .sanctum-dove-wing-right {
-  animation: sanctumDoveFlapRight 2.4s ease-in-out 1 forwards;
+  animation: sanctumDoveFlapRight 1.2s ease-in-out 1 forwards;
 }
 
 /* Quotations Icon: Quotation marks first face each other, then the right one joins the left one and faces right */
@@ -550,13 +551,13 @@ svg:hover .sanctum-dove-wing-right {
   transform-box: view-box;
   transform-origin: 13.9px 11.65px;
   transform: translateX(3.4px) scaleX(-1);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .group:hover .sanctum-quote-right-mark,
 svg:hover .sanctum-quote-right-mark {
-  animation: sanctumQuoteJoinAndFaceRight 0.95s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+  animation: sanctumQuoteJoinAndFaceRight 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
 /* Spiritual Classics Icon: Books stack to the left side, with the last (4th) book leaning on the three books */
@@ -570,7 +571,7 @@ svg:hover .sanctum-quote-right-mark {
   transform-box: view-box;
   transform-origin: 7.4px 21px;
   transform: translateX(1.6px);
-  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
@@ -578,7 +579,7 @@ svg:hover .sanctum-quote-right-mark {
   transform-box: view-box;
   transform-origin: 11.0px 21px;
   transform: translateX(3.2px);
-  transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
@@ -586,7 +587,7 @@ svg:hover .sanctum-quote-right-mark {
   transform-box: view-box;
   transform-origin: 16.7px 21px;
   transform: translateX(1.8px) rotate(0deg);
-  transition: transform 0.82s cubic-bezier(0.22, 1, 0.36, 1) 0.12s;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
@@ -624,7 +625,7 @@ svg:hover .sanctum-classics-book-4 {
 
 .group:hover .sanctum-podcast-waveform-track,
 svg:hover .sanctum-podcast-waveform-track {
-  animation: sanctumPodcastWaveformPass 1.25s cubic-bezier(0.22, 0.61, 0.36, 1) 1 forwards;
+  animation: sanctumPodcastWaveformPass 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) 1 forwards;
   opacity: 1;
 }
 
@@ -638,7 +639,7 @@ svg:hover .sanctum-podcast-waveform-track {
 
 .group:hover .sanctum-tv-turn,
 svg:hover .sanctum-tv-turn {
-  animation: sanctumBasilicaTurnOnce 1.4s ease-in-out 1 forwards;
+  animation: sanctumBasilicaTurnOnce 1.2s ease-in-out 1 forwards;
 }
 
 /* Vatican News Icon (St. Peter's Basilica): Slowly turns once when hovered on */
@@ -660,7 +661,7 @@ svg:hover .sanctum-tv-turn {
 
 .group:hover .sanctum-basilica-turn,
 svg:hover .sanctum-basilica-turn {
-  animation: sanctumBasilicaTurnOnce 1.4s ease-in-out 1 forwards;
+  animation: sanctumBasilicaTurnOnce 1.2s ease-in-out 1 forwards;
 }
 
 /* Catholic Glossary Icon: When hovered on, a definition (a line of words) goes out from the book */
@@ -689,7 +690,7 @@ svg:hover .sanctum-basilica-turn {
 
 .group:hover .sanctum-glossary-definition-line,
 svg:hover .sanctum-glossary-definition-line {
-  animation: sanctumGlossaryDefinitionOut 0.85s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+  animation: sanctumGlossaryDefinitionOut 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
 /* Treasury of Prayers Icon: Books turn once and seamlessly become two hands joined in prayer */
@@ -744,12 +745,12 @@ svg:hover .sanctum-glossary-definition-line {
 
 .group:hover .sanctum-treasury-books,
 svg:hover .sanctum-treasury-books {
-  animation: sanctumTreasuryBooksTurnOut 1.35s linear 1 forwards;
+  animation: sanctumTreasuryBooksTurnOut 1.2s linear 1 forwards;
 }
 
 .group:hover .sanctum-treasury-praying-hands,
 svg:hover .sanctum-treasury-praying-hands {
-  animation: sanctumTreasuryHandsTurnIn 1.35s linear 1 forwards;
+  animation: sanctumTreasuryHandsTurnIn 1.2s linear 1 forwards;
 }
 
 /* Chaplet and Rosary Icon: Front beads successively change color from yellow to dark brown on hover */
@@ -778,15 +779,15 @@ svg:hover .sanctum-treasury-praying-hands {
 
 .sanctum-rosary-bead {
   transition:
-    fill 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    stroke 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    fill 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke 1.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .group:hover .sanctum-rosary-bead,
 svg:hover .sanctum-rosary-bead {
   fill: #FEF08A;
   stroke: #FEF08A;
-  animation: sanctumRosaryBeadToDarkBrown 0.85s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumRosaryBeadToDarkBrown 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
 }
 
 .group:hover .sanctum-rosary-bead-1,
@@ -796,47 +797,47 @@ svg:hover .sanctum-rosary-bead-1 {
 
 .group:hover .sanctum-rosary-bead-2,
 svg:hover .sanctum-rosary-bead-2 {
-  animation-delay: 0.18s;
+  animation-delay: 0.16s;
 }
 
 .group:hover .sanctum-rosary-bead-3,
 svg:hover .sanctum-rosary-bead-3 {
-  animation-delay: 0.32s;
+  animation-delay: 0.28s;
 }
 
 .group:hover .sanctum-rosary-bead-4,
 svg:hover .sanctum-rosary-bead-4 {
-  animation-delay: 0.46s;
+  animation-delay: 0.40s;
 }
 
 .group:hover .sanctum-rosary-bead-5,
 svg:hover .sanctum-rosary-bead-5 {
-  animation-delay: 0.60s;
+  animation-delay: 0.52s;
 }
 
 .group:hover .sanctum-rosary-bead-6,
 svg:hover .sanctum-rosary-bead-6 {
-  animation-delay: 0.74s;
+  animation-delay: 0.64s;
 }
 
 .group:hover .sanctum-rosary-bead-7,
 svg:hover .sanctum-rosary-bead-7 {
-  animation-delay: 0.88s;
+  animation-delay: 0.76s;
 }
 
 .group:hover .sanctum-rosary-bead-8,
 svg:hover .sanctum-rosary-bead-8 {
-  animation-delay: 1.02s;
+  animation-delay: 0.88s;
 }
 
 .group:hover .sanctum-rosary-bead-9,
 svg:hover .sanctum-rosary-bead-9 {
-  animation-delay: 1.16s;
+  animation-delay: 1.00s;
 }
 
 .group:hover .sanctum-rosary-bead-10,
 svg:hover .sanctum-rosary-bead-10 {
-  animation-delay: 1.30s;
+  animation-delay: 1.12s;
 }
 
 /* Eucharistic Miracles Icon: White Host appears in the middle of the monstrance and Blood on it */
@@ -846,8 +847,8 @@ svg:hover .sanctum-rosary-bead-10 {
   opacity: 0;
   transform: scale(0.65);
   transition:
-    opacity 0.45s ease-out,
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1.2s ease-out,
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   filter: drop-shadow(0 0 2.5px rgba(255, 255, 255, 0.9));
   will-change: opacity, transform;
 }
@@ -858,8 +859,8 @@ svg:hover .sanctum-rosary-bead-10 {
   opacity: 0;
   transform: scale(0.5);
   transition:
-    opacity 0.5s ease-out 0.22s,
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.22s;
+    opacity 1.2s ease-out,
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   filter: drop-shadow(0 0 1.5px rgba(220, 38, 38, 0.85));
   will-change: opacity, transform;
 }
@@ -879,7 +880,7 @@ svg:hover .sanctum-miracle-blood {
 /* Marian Apparitions Icon: Our Lady of Lourdes and Saint Bernadette kneeling across distance */
 .sanctum-lourdes-mary-folded {
   opacity: 1;
-  transition: opacity 0.35s ease;
+  transition: opacity 1.2s ease;
   will-change: opacity;
 }
 
@@ -889,8 +890,8 @@ svg:hover .sanctum-miracle-blood {
   opacity: 0;
   transform: scale(0.9);
   transition:
-    opacity 0.45s ease-out 0.1s,
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+    opacity 1.2s ease-out,
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
@@ -900,8 +901,8 @@ svg:hover .sanctum-miracle-blood {
   opacity: 0;
   transform: translateX(-3.5px) scale(0.92);
   transition:
-    opacity 0.5s ease-out 0.15s,
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+    opacity 1.2s ease-out,
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
   pointer-events: none;
 }
@@ -950,14 +951,14 @@ svg:hover .sanctum-lourdes-bernadette {
   transform: perspective(180px) rotateX(0deg);
   opacity: 1;
   transition:
-    transform 0.6s ease-out,
-    opacity 0.45s ease-out;
+    transform 1.2s ease-out,
+    opacity 1.2s ease-out;
   will-change: transform, opacity;
 }
 
 .group:hover .sanctum-calendar-front-page,
 svg:hover .sanctum-calendar-front-page {
-  animation: sanctumCalendarFlipBack 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
+  animation: sanctumCalendarFlipBack 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
 }
 
 /* Timeline of the Church Icon: Vertical timeline scrolls up from 30 to 49 to 64 and to 107 AD on hover */
@@ -979,13 +980,13 @@ svg:hover .sanctum-calendar-front-page {
 .sanctum-timeline-scroll {
   transform-box: view-box;
   transform: translateY(0px);
-  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
 .group:hover .sanctum-timeline-scroll,
 svg:hover .sanctum-timeline-scroll {
-  animation: sanctumTimelineScrollUp 2.4s cubic-bezier(0.45, 0, 0.25, 1) 1 forwards;
+  animation: sanctumTimelineScrollUp 1.2s cubic-bezier(0.45, 0, 0.25, 1) 1 forwards;
 }
 
 /* Sacred Art Gallery Icon: On hover, another image from the right replaces the image at the center */
@@ -1019,8 +1020,8 @@ svg:hover .sanctum-timeline-scroll {
   transform: translateX(0px);
   opacity: 1;
   transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.45s ease-out;
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.2s ease-out;
   will-change: transform, opacity;
 }
 
@@ -1029,19 +1030,19 @@ svg:hover .sanctum-timeline-scroll {
   transform: translateX(25px);
   opacity: 0;
   transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.45s ease-out;
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.2s ease-out;
   will-change: transform, opacity;
 }
 
 .group:hover .sanctum-gallery-image-center,
 svg:hover .sanctum-gallery-image-center {
-  animation: sanctumGalleryImageCenterExit 0.78s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+  animation: sanctumGalleryImageCenterExit 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
 .group:hover .sanctum-gallery-image-right,
 svg:hover .sanctum-gallery-image-right {
-  animation: sanctumGalleryImageRightEnter 0.78s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
+  animation: sanctumGalleryImageRightEnter 1.2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
 /* Prayer Requests Icon: One person at rest; two more persons approach from each side on hover */
@@ -1050,8 +1051,8 @@ svg:hover .sanctum-gallery-image-right {
   transform: translateX(-9px);
   opacity: 0;
   transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.45s ease-out;
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.2s ease-out;
   will-change: transform, opacity;
   pointer-events: none;
 }
@@ -1061,8 +1062,8 @@ svg:hover .sanctum-gallery-image-right {
   transform: translateX(9px);
   opacity: 0;
   transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.45s ease-out;
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 1.2s ease-out;
   will-change: transform, opacity;
   pointer-events: none;
 }
@@ -1089,7 +1090,7 @@ svg:hover .sanctum-prayer-person-right {
 
 .group:hover .sanctum-holy-water-turn,
 svg:hover .sanctum-holy-water-turn {
-  animation: sanctumBasilicaTurnOnce 1.4s ease-in-out 1 forwards;
+  animation: sanctumBasilicaTurnOnce 1.2s ease-in-out 1 forwards;
 }
 
 /* Catholic Links Icon: Turns once when hovered on */
