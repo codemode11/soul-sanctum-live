@@ -647,6 +647,31 @@ svg:hover .sanctum-tv-altar {
   transform: scale(1) translateY(0px);
 }
 
+/* Vatican News Icon (St. Peter's Basilica): Slowly turns once when hovered on */
+@keyframes sanctumBasilicaTurnOnce {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(-1);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.sanctum-basilica-turn {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: scaleX(1);
+  will-change: transform;
+}
+
+.group:hover .sanctum-basilica-turn,
+svg:hover .sanctum-basilica-turn {
+  animation: sanctumBasilicaTurnOnce 2.2s ease-in-out 1 forwards;
+}
+
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {

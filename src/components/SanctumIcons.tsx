@@ -1413,6 +1413,74 @@ export const HolyMassLiveTvAltarIcon: React.FC<IconProps> = ({ className = 'w-5 
   </svg>
 );
 
+/**
+ * 23. Vatican News Icon: Outline of St. Peter's Basilica.
+ * When hovered on, the basilica slowly turns once around its vertical axis.
+ */
+export const StPetersBasilicaIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.65"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Vatican News — St. Peter's Basilica"
+  >
+    <g className="sanctum-basilica-turn">
+      {/* Papal Cross & Lantern atop Michelangelo's Dome */}
+      <line x1="12" y1="1.3" x2="12" y2="3.8" strokeWidth="1.45" />
+      <line x1="10.7" y1="2.2" x2="13.3" y2="2.2" strokeWidth="1.4" />
+      <path d="M10.9 3.8h2.2v1.4h-2.2z" strokeWidth="1.25" />
+
+      {/* Great Ribbed Dome of St. Peter's Basilica */}
+      <path
+        d="M6.2 10.8 C6.2 7.2, 8.6 5.2, 12 5.2 C15.4 5.2, 17.8 7.2, 17.8 10.8"
+        strokeWidth="1.65"
+        fill="currentColor"
+        fillOpacity="0.08"
+      />
+      {/* Dome structural ribs */}
+      <path d="M9.2 10.8 C9.4 8.2, 10.4 6.2, 11.3 5.3" strokeWidth="1.0" opacity="0.7" />
+      <path d="M14.8 10.8 C14.6 8.2, 13.6 6.2, 12.7 5.3" strokeWidth="1.0" opacity="0.7" />
+      {/* Dome drum cornice */}
+      <line x1="5.6" y1="10.8" x2="18.4" y2="10.8" strokeWidth="1.5" />
+
+      {/* Flanking Minor Cupolas on left and right */}
+      <path d="M3.4 13.5 C3.4 11.9, 4.0 11.1, 4.7 11.1 C5.4 11.1, 6.0 11.9, 6.0 13.5" strokeWidth="1.3" />
+      <path d="M18.0 13.5 C18.0 11.9, 18.6 11.1, 19.3 11.1 C20.0 11.1, 20.6 11.9, 20.6 13.5" strokeWidth="1.3" />
+
+      {/* Maderno Facade Entablature & Central Triangular Pediment */}
+      <line x1="2.4" y1="13.5" x2="21.6" y2="13.5" strokeWidth="1.6" />
+      <path
+        d="M8.2 13.5 L12 11.3 L15.8 13.5"
+        strokeWidth="1.45"
+        fill="currentColor"
+        fillOpacity="0.14"
+      />
+
+      {/* Facade Colonnade Pillars & Outer Walls */}
+      <line x1="3.0" y1="13.5" x2="3.0" y2="20.8" strokeWidth="1.6" />
+      <line x1="6.8" y1="13.5" x2="6.8" y2="20.8" strokeWidth="1.35" />
+      <line x1="17.2" y1="13.5" x2="17.2" y2="20.8" strokeWidth="1.35" />
+      <line x1="21.0" y1="13.5" x2="21.0" y2="20.8" strokeWidth="1.6" />
+
+      {/* Central Arched Portal */}
+      <path
+        d="M9.8 20.8v-3.5a2.2 2.2 0 0 1 4.4 0v3.5"
+        strokeWidth="1.5"
+        fill="currentColor"
+        fillOpacity="0.15"
+      />
+
+      {/* Piazza San Pietro Stepped Base */}
+      <line x1="1.8" y1="20.8" x2="22.2" y2="20.8" strokeWidth="1.75" />
+    </g>
+  </svg>
+);
+
+
 
 
 

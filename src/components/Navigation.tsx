@@ -47,7 +47,8 @@ import {
   VisioDivinaEyeBlinkIcon,
   BibleFlashcardsIcon,
   SpiritualClassicsBooksIcon,
-  HolyMassLiveTvAltarIcon
+  HolyMassLiveTvAltarIcon,
+  StPetersBasilicaIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -320,7 +321,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'vatican-news', 
       label: 'Vatican News', 
-      icon: Globe, 
+      icon: StPetersBasilicaIcon, 
       tag: 'Global', 
       subtext: 'Holy See and Church Updates' 
     },
