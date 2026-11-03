@@ -650,9 +650,6 @@ svg:hover .sanctum-tv-altar {
 /* Vatican News Icon (St. Peter's Basilica): Slowly turns once when hovered on */
 @keyframes sanctumBasilicaTurnOnce {
   0% {
-    transform: scaleX(1);
-  }
-  50% {
     transform: scaleX(-1);
   }
   100% {
@@ -669,7 +666,7 @@ svg:hover .sanctum-tv-altar {
 
 .group:hover .sanctum-basilica-turn,
 svg:hover .sanctum-basilica-turn {
-  animation: sanctumBasilicaTurnOnce 2.2s ease-in-out 1 forwards;
+  animation: sanctumBasilicaTurnOnce 1.4s ease-in-out 1 forwards;
 }
 
 
