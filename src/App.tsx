@@ -656,6 +656,7 @@ export default function App() {
                   currentDateStr={currentDateStr}
                   initialArticleId={activeVaticanArticleId}
                   onClearInitialArticle={() => setActiveVaticanArticleId(null)}
+                  onSelectDate={(newDate) => setCurrentDateStr(newDate)}
                 />
               </div>
             )}
