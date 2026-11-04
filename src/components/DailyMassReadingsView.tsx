@@ -120,6 +120,23 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
     lineHeight: '1.5'
   };
 
+  // Formats quotations so they wrap into well-proportioned lines and never leave a single word on the second line
+  const formatBalancedQuotation = (quote: string): string => {
+    if (!quote) return '';
+    const trimmed = quote.trim();
+    const withBoundPhrases = trimmed.replace(
+      /\b(in|to|of|for|with|on|by|from|into|unto|upon|as|a|an|the)\s+/gi,
+      '$1\u00A0'
+    );
+    const tokens = withBoundPhrases.split(' ');
+    if (tokens.length >= 3) {
+      const head = tokens.slice(0, -2).join(' ');
+      const tail = tokens.slice(-2).join('\u00A0');
+      return `${head} ${tail}`;
+    }
+    return withBoundPhrases;
+  };
+
   // Formats First Reading theme quotations into two balanced lines by default
   const formatTwoLineQuotation = (quote: string): [string, string] => {
     if (!quote) return ['', ''];
