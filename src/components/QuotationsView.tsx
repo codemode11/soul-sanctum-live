@@ -254,7 +254,7 @@ export const QuotationsView: React.FC = () => {
                     >
                       <div className="space-y-1.5 flex-1">
                         {item.subHeading && (
-                          <h4 className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-amber-900 pt-1 pb-0.5">
+                          <h4 className="font-cinzel text-base sm:text-lg font-bold text-amber-900 pt-1 pb-0.5">
                             {item.subHeading}
                           </h4>
                         )}
@@ -262,7 +262,7 @@ export const QuotationsView: React.FC = () => {
                           {item.text}
                         </p>
                         {item.attribution && (
-                          <p className="font-serif text-lg sm:text-xl md:text-2xl font-bold text-amber-950 pt-0.5">
+                          <p className="font-serif text-base sm:text-lg font-bold text-amber-950 pt-0.5">
                             {item.attribution}
                           </p>
                         )}
