@@ -120,23 +120,30 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
     lineHeight: '1.5'
   };
 
-  // Formats quotations so they wrap into well-proportioned lines and never leave a single word on the second line
-  const formatBalancedQuotation = (quote: string): string => {
-    if (!quote) return '';
+  // Formats First Reading theme quotations into two balanced lines by default
+  const formatTwoLineQuotation = (quote: string): [string, string] => {
+    if (!quote) return ['', ''];
     const trimmed = quote.trim();
-    // Bind short prepositions and articles to the following word so they don't dangle at the end of a line
-    const withBoundPhrases = trimmed.replace(
-      /\b(in|to|of|for|with|on|by|from|into|unto|upon|as|a|an|the)\s+/gi,
-      '$1\u00A0'
-    );
-    // Ensure at least the final 3 words stay together on the second line so a single word is never stranded
-    const tokens = withBoundPhrases.split(' ');
-    if (tokens.length >= 3) {
-      const head = tokens.slice(0, -2).join(' ');
-      const tail = tokens.slice(-2).join('\u00A0');
-      return `${head} ${tail}`;
+    const withPeriod = /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`;
+    const words = withPeriod.split(/\s+/);
+    if (words.length <= 4) {
+      return [`"${withPeriod}"`, ''];
     }
-    return withBoundPhrases;
+    const targetHalf = withPeriod.length / 2;
+    let bestSplitIndex = Math.floor(words.length / 2);
+    let bestDiff = Infinity;
+    let runningLen = 0;
+    for (let i = 1; i < words.length; i++) {
+      runningLen += words[i - 1].length + (i > 1 ? 1 : 0);
+      const diff = Math.abs(runningLen - targetHalf);
+      if (diff < bestDiff) {
+        bestDiff = diff;
+        bestSplitIndex = i;
+      }
+    }
+    const line1 = `"${words.slice(0, bestSplitIndex).join(' ')}`;
+    const line2 = `${words.slice(bestSplitIndex).join(' ')}"`;
+    return [line1, line2];
   };
 
   const handlePrevDay = () => {
@@ -435,16 +442,20 @@ ${reading.gospel.text}`;
             </p>
           </div>
 
-          {reading.firstReading.theme && (
-            <div className="self-start sm:self-auto sm:ml-auto">
-              <p 
-                className="italic font-serif text-amber-900/95 font-semibold sm:text-right drop-shadow-2xs transition-all duration-200 text-balance"
-                style={{ ...italicVerseStyle, textWrap: 'balance', maxWidth: '19em' }}
-              >
-                "{formatBalancedQuotation(reading.firstReading.theme)}"
-              </p>
-            </div>
-          )}
+          {reading.firstReading.theme && (() => {
+            const [line1, line2] = formatTwoLineQuotation(reading.firstReading.theme);
+            return (
+              <div className="self-start sm:self-auto sm:ml-auto">
+                <p 
+                  className="italic font-serif text-amber-900/95 font-semibold sm:text-right drop-shadow-2xs transition-all duration-200"
+                  style={italicVerseStyle}
+                >
+                  <span className="block">{line1}</span>
+                  {line2 && <span className="block">{line2}</span>}
+                </p>
+              </div>
+            );
+          })()}
         </div>
 
         <div className="font-serif-sacred text-stone-800 whitespace-pre-line" style={scriptureStyle}>
