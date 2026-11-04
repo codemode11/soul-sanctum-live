@@ -241,11 +241,10 @@ ${reading.gospel.text}`;
             {/* Line 1: Liturgical Color/Rank & Season (raised) */}
             <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
               <span 
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
+                className="inline-flex items-center px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
                 style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
-                {colorMeta.name} • {reading.liturgicalRank}
+                {colorMeta.name} | {reading.liturgicalRank}
               </span>
               <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap">
                 {reading.liturgicalSeason}
