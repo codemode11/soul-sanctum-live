@@ -929,11 +929,11 @@ The servant went and reported this to his master. Then the master of the house i
     }
   },
 
-  // November 4, 2026: Memorial of St. Charles Borromeo, Bishop (Wednesday of the 31st Week in Ordinary Time)
+  // November 4, 2026: Memorial of St. Charles Borromeo
   '2026-11-04': {
     id: 'reading-2026-11-04',
     date: '2026-11-04',
-    liturgicalDay: 'Memorial of St. Charles Borromeo, Bishop (Wednesday of the Thirty-First Week in Ordinary Time)',
+    liturgicalDay: 'Memorial of St. Charles Borromeo',
     liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
     liturgicalColor: 'white',
     liturgicalRank: 'Memorial',
