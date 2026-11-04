@@ -265,8 +265,10 @@ export const LiturgicalCalendarPicker: React.FC<LiturgicalCalendarPickerProps> =
               />
               {selectedDayInfo.rank} • {LITURGICAL_COLORS_INFO[selectedDayInfo.color].name}
             </span>
-            <span className="text-[10px] text-[#5D371F] font-serif font-medium">
-              {selectedDayInfo.date}
+            <span className="text-[10px] text-[#5D371F] font-serif font-medium whitespace-nowrap">
+              {selectedDayInfo.date.split('-').length === 3
+                ? `${selectedDayInfo.date.split('-')[1]}-${selectedDayInfo.date.split('-')[2]}-${selectedDayInfo.date.split('-')[0]}`
+                : selectedDayInfo.date}
             </span>
           </div>
           <p className="font-serif text-[#2B170B] text-[11px] font-medium line-clamp-1">
