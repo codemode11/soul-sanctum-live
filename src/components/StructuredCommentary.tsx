@@ -60,14 +60,13 @@ export function parseStructuredCommentary(text: string): StructuredCommentaryDat
       continue;
     }
 
-    // Check if paragraph belongs to Catena Aurea Church Fathers
+    // Check if paragraph belongs to Catena Aurea Church Fathers & Ecclesiastical Writers
     if (
-      currentSection === 'homily' && 
+      currentSection === 'homily' &&
+      i > 0 &&
       (
-        /^ST\.\s+(CYRIL|AMBROSE|AUGUSTINE|JOHN\s+CHRYSOSTOM|JEROME|BASIL|BEDE|CHROMATIUS|LEO|CAESARIUS|EPHREM|GREGORY|GREGORY\s+NAZIANZEN)/i.test(p) ||
-        /^THE\s+VENERABLE\s+BEDE/i.test(p) ||
-        /^POPE\s+ST\.\s+GREGORY/i.test(p) ||
-        /^BLESSED\s+THEOPHYLACT/i.test(p)
+        /^(ST\.|SAINT\s+|THE\s+VENERABLE\s+BEDE|VENERABLE\s+BEDE|POPE\s+ST\.|BLESSED\s+THEOPHYLACT|THEOPHYLACT|TITUS\s+OF\s+BOSTRA|ORIGEN|EUSEBIUS|SEVERUS|ATHANASIUS|HILARY|MAXIMUS|DAMASCENE|RABANUS|ALCUIN|REMIGIUS|ISIDORE|PHOTIUS|ANTIOCHUS|THEODOTUS|THEODORET|PSEUDO-|CHRYSOSTOM|AUGUSTINE|AMBROSE|CYRIL|GREGORY|JEROME|BASIL|BERNARD|GAUDENTIUS|CAESARIUS|CHROMATIUS|LEO|EPHREM|METHODIUS|GLOSS|GREEK\s+EXPOSITOR)/i.test(p) ||
+        /^[A-Z][A-Z0-9\s.,'ÀÈÉ()\-]{2,55}:\s/.test(p)
       )
     ) {
       currentSection = 'catena';

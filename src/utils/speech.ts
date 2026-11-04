@@ -653,6 +653,11 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
        upper.includes('JEROME') || upper.includes('THEOPHYLACT') || upper.includes('LAPIDE') || 
        upper.includes('CHRYSOSTOM') || upper.includes('BASIL') || upper.includes('THOMAS') ||
        upper.includes('BONAVENTURE') || upper.includes('ALPHONSUS') || upper.includes('BELLARMINE') || upper.includes('ALBERT') ||
+       upper.includes('TITUS') || upper.includes('ORIGEN') || upper.includes('EUSEBIUS') || upper.includes('ALCUIN') ||
+       upper.includes('RABANUS') || upper.includes('REMIGIUS') || upper.includes('THEODOTUS') || upper.includes('THEODORET') ||
+       upper.includes('MAXIMUS') || upper.includes('HILARY') || upper.includes('DAMASCENE') || upper.includes('METHODIUS') ||
+       upper.includes('BERNARD') || upper.includes('GAUDENTIUS') || upper.includes('CAESARIUS') || upper.includes('CHROMATIUS') ||
+       upper.includes('EPHREM') || upper.includes('ATHANASIUS') || upper.includes('GLOSS') || upper.includes('EXPOSITOR') ||
        upper.includes('VATICAN') || upper.includes('CATECHISM') || upper.includes('CCC') || upper.includes('MAGISTERIUM') || upper.includes('BENEDICT') || upper.includes('FRANCIS') || upper.includes('PAUL') || upper.includes('LEO') ||
        upper.includes('BLESSED'))
     ) {
