@@ -262,7 +262,7 @@ ${reading.gospel.text}`;
             <div className="flex items-center gap-1.5 shrink-0">
               <button
                 onClick={handlePrevDay}
-                className="p-2 rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
+                className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
                 title="Previous Liturgical Day"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -271,7 +271,7 @@ ${reading.gospel.text}`;
               <div className="relative shrink-0">
                 <button 
                   onClick={() => setIsCalendarPickerOpen(!isCalendarPickerOpen)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer border ${
+                  className={`h-8 flex items-center gap-1.5 px-3 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer border ${
                     isCalendarPickerOpen 
                       ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40' 
                       : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
@@ -279,7 +279,7 @@ ${reading.gospel.text}`;
                   title="Open Liturgical Calendar"
                 >
                   <CalendarIcon className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                  <span className="whitespace-nowrap">
+                  <span className="whitespace-nowrap leading-none">
                     {reading.date.split('-').length === 3
                       ? `${reading.date.split('-')[1]}-${reading.date.split('-')[2]}-${reading.date.split('-')[0]}`
                       : reading.date}
@@ -296,7 +296,7 @@ ${reading.gospel.text}`;
               </div>
               <button
                 onClick={handleNextDay}
-                className="p-2 rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
+                className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
                 title="Next Liturgical Day"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -306,7 +306,7 @@ ${reading.gospel.text}`;
             <button
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`flex items-center gap-1 px-2.5 py-2 rounded-md transition-all cursor-pointer shrink-0 border ${
+              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
