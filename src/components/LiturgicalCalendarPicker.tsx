@@ -136,11 +136,31 @@ export const LiturgicalCalendarPicker: React.FC<LiturgicalCalendarPickerProps> =
     >
       {/* Header: Month / Year Navigation */}
       <div className="px-3.5 py-2.5 border-b border-[#BFA287] bg-[#D2BEAA]/90 backdrop-blur-md flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
-          <CalendarIcon className="w-4 h-4 text-[#5D371F]" />
-          <h3 className="font-cinzel text-xs sm:text-sm font-bold text-[#341D10] tracking-wide">
-            {monthName}
-          </h3>
+        <div className="flex items-center gap-1">
+          <CalendarIcon className="w-3.5 h-3.5 text-[#5D371F] shrink-0" />
+          <select
+            value={viewMonth}
+            onChange={(e) => setViewMonth(Number(e.target.value))}
+            className="font-cinzel text-xs font-bold text-[#341D10] bg-[#DFCEBD] hover:bg-[#EAE0D4] border border-[#BFA287] rounded-md px-1 py-0.5 cursor-pointer focus:outline-none"
+            title="Select Month"
+          >
+            {[
+              'January', 'February', 'March', 'April', 'May', 'June',
+              'July', 'August', 'September', 'October', 'November', 'December'
+            ].map((m, idx) => (
+              <option key={m} value={idx}>{m}</option>
+            ))}
+          </select>
+          <select
+            value={viewYear}
+            onChange={(e) => setViewYear(Number(e.target.value))}
+            className="font-cinzel text-xs font-bold text-[#341D10] bg-[#DFCEBD] hover:bg-[#EAE0D4] border border-[#BFA287] rounded-md px-1 py-0.5 cursor-pointer focus:outline-none"
+            title="Select Year"
+          >
+            {[2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035].map(y => (
+              <option key={y} value={y}>{y}</option>
+            ))}
+          </select>
         </div>
 
         <div className="flex items-center gap-0.5">
