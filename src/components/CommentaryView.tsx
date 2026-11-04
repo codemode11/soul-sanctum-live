@@ -13,13 +13,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Settings,
-  ChevronDown,
-  Calendar as CalendarIcon
+  ChevronDown
 } from 'lucide-react';
-import { BibleCommentary, MassReading, LiturgicalColor } from '../types';
+import { BibleCommentary, MassReading } from '../types';
 import { getDailyGospelCommentaries } from '../data/commentary';
-import { LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
-import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { 
   SacredReader, 
   parseCommentaryBySaints, 
@@ -52,27 +49,6 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(true);
-  const [isCalendarPickerOpen, setIsCalendarPickerOpen] = useState(false);
-
-  const readingDate = currentReading?.date || '';
-  const readingColor: LiturgicalColor = currentReading?.liturgicalColor || 'white';
-  const colorMeta = LITURGICAL_COLORS_INFO[readingColor] || LITURGICAL_COLORS_INFO.white;
-
-  const handlePrevDay = () => {
-    if (onSelectDate && readingDate) {
-      const d = new Date(readingDate + 'T12:00:00Z');
-      d.setDate(d.getDate() - 1);
-      onSelectDate(d.toISOString().split('T')[0]);
-    }
-  };
-
-  const handleNextDay = () => {
-    if (onSelectDate && readingDate) {
-      const d = new Date(readingDate + 'T12:00:00Z');
-      d.setDate(d.getDate() + 1);
-      onSelectDate(d.toISOString().split('T')[0]);
-    }
-  };
   
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -275,109 +251,38 @@ ${selectedCommentary.practicalApplication}`;
       {/* Liturgical Day & Gospel Commentary Banner (Top Two Rectangles Patterned after Mass Readings) */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
-        {/* RECTANGLE 1: Dark Liturgical Banner with Date Navigation & Settings Toggle */}
+        {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
         <div className={`px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-1.5">
-            {/* Line 1: Liturgical Color/Rank & Season (raised) */}
-            <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
-              <span 
-                className="inline-flex items-center px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
-                style={{ backgroundColor: colorMeta.hex, color: readingColor === 'white' ? '#451a03' : '#ffffff' }}
-              >
-                {colorMeta.name} | {currentReading?.liturgicalRank || 'Catena Aurea'}
-              </span>
-              <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap">
-                {currentReading?.liturgicalSeason || 'Universal Church Lectionary'}
-              </span>
-              <span className="inline-flex items-center px-2 py-0.5 rounded-xs text-xs font-semibold tracking-wider uppercase bg-amber-500/20 text-amber-200 border border-amber-500/40 whitespace-nowrap shrink-0">
-                Gospel • {selectedCommentary.scriptureReference}
-              </span>
-            </div>
-            
-            {/* Line 2: Complete Liturgical Day Title / Gospel Title (raised, full width on one line) */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight whitespace-nowrap overflow-x-auto no-scrollbar">
-              {currentReading?.liturgicalDay 
-                ? `${currentReading.liturgicalDay.replace(/,\s*Bishop.*$/, '')}: ${selectedCommentary.scriptureReference}` 
-                : `Holy Gospel Commentary: ${selectedCommentary.scriptureReference}`}
+          <div className="space-y-2 my-auto">
+            {/* Main Title: Commentary on Luke 15:1-10 */}
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight">
+              Commentary on {selectedCommentary.scriptureReference}
             </h2>
+            <p className="text-xs sm:text-sm text-amber-300/80 font-cinzel uppercase tracking-wider">
+              Catena Aurea • Cornelius à Lapide • Magisterium
+            </p>
           </div>
 
-          {/* Line 3: Tradition info on left + Calendar and Settings lowered at the right side */}
-          <div className="flex items-center justify-between gap-5 sm:gap-7 mt-auto pt-4 shrink-0">
-            <div className="hidden md:flex items-center gap-2 text-xs text-amber-300/80 font-cinzel uppercase tracking-wider truncate">
-              <span>Catena Aurea • Cornelius à Lapide • Magisterium</span>
-            </div>
-
-            <div className="flex items-center justify-end gap-5 sm:gap-7 ml-auto shrink-0">
-              {readingDate && onSelectDate && (
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    onClick={handlePrevDay}
-                    className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
-                    title="Previous Liturgical Day"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-
-                  {/* Interactive Theme-Matched Liturgical Calendar Picker */}
-                  <div className="relative shrink-0">
-                    <button 
-                      onClick={() => setIsCalendarPickerOpen(!isCalendarPickerOpen)}
-                      className={`h-8 flex items-center gap-1.5 px-3 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer border ${
-                        isCalendarPickerOpen 
-                          ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40' 
-                          : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
-                      }`}
-                      title="Open Liturgical Calendar"
-                    >
-                      <CalendarIcon className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                      <span className="whitespace-nowrap leading-none">
-                        {readingDate.split('-').length === 3
-                          ? `${readingDate.split('-')[1]}-${readingDate.split('-')[2]}-${readingDate.split('-')[0]}`
-                          : readingDate}
-                      </span>
-                    </button>
-
-                    <LiturgicalCalendarPicker
-                      selectedDateStr={readingDate}
-                      onSelectDate={(newDate) => {
-                        onSelectDate(newDate);
-                        setIsCalendarPickerOpen(false);
-                      }}
-                      isOpen={isCalendarPickerOpen}
-                      onClose={() => setIsCalendarPickerOpen(false)}
-                      align="right"
-                    />
-                  </div>
-
-                  <button
-                    onClick={handleNextDay}
-                    className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
-                    title="Next Liturgical Day"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              )}
-
-              <button
-                onClick={() => setIsTopSettingsOpen(prev => !prev)}
-                aria-expanded={isTopSettingsOpen}
-                className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
-                  isTopSettingsOpen
-                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
-                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+          {/* Lower Row: Settings Toggle Button */}
+          <div className="flex items-center justify-end mt-auto pt-2 shrink-0">
+            <button
+              onClick={() => setIsTopSettingsOpen(prev => !prev)}
+              aria-expanded={isTopSettingsOpen}
+              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border text-xs font-medium ${
+                isTopSettingsOpen
+                  ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                  : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+              }`}
+              title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+            >
+              <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+              <span>Settings</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                  isTopSettingsOpen ? 'rotate-180' : ''
                 }`}
-                title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
-              >
-                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                <ChevronDown
-                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
-                    isTopSettingsOpen ? 'rotate-180' : ''
-                  }`}
-                />
-              </button>
-            </div>
+              />
+            </button>
           </div>
         </div>
 

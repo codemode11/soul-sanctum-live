@@ -2512,13 +2512,36 @@ CATECHISM OF THE CATHOLIC CHURCH (CCC 458, 618, 1235, 2157): The Cross is the un
  * II. COMMENTARIES (Full Catena Aurea Chain of Fathers & Cornelius à Lapide, S.J.)
  * III. NOTES FROM THE MAGISTERIUM (Vatican II, CCC & Sacred Magisterium)
  */
+const GOSPEL_CANONICAL_ORDER: Record<string, number> = {
+  matthew: 1,
+  mark: 2,
+  luke: 3,
+  john: 4
+};
+
+export function getScriptureSortKey(citation: string): number {
+  const match = citation.match(/^(Matthew|Mark|Luke|John)\s+(\d+):?(\d*)/i);
+  if (!match) return 999999;
+  const book = match[1].toLowerCase();
+  const bookIndex = GOSPEL_CANONICAL_ORDER[book] || 9;
+  const chapter = parseInt(match[2], 10) || 0;
+  const verse = parseInt(match[3], 10) || 0;
+  return bookIndex * 100000 + chapter * 1000 + verse;
+}
+
+export function sortCommentariesCanonically(list: BibleCommentary[]): BibleCommentary[] {
+  return [...list].sort(
+    (a, b) => getScriptureSortKey(a.scriptureReference) - getScriptureSortKey(b.scriptureReference)
+  );
+}
+
 export function getDailyGospelCommentaries(
   reading?: MassReading,
   gospelCitation?: string
 ): BibleCommentary[] {
   const targetCitation = (reading?.gospel.citation || gospelCitation || '').trim();
   if (!targetCitation) {
-    return BIBLE_COMMENTARIES_DATABASE;
+    return sortCommentariesCanonically(BIBLE_COMMENTARIES_DATABASE);
   }
 
   const exactMatch = BIBLE_COMMENTARIES_DATABASE.find(
@@ -2537,9 +2560,10 @@ export function getDailyGospelCommentaries(
     });
 
   if (partialMatch) {
+    const remaining = BIBLE_COMMENTARIES_DATABASE.filter(c => c.id !== partialMatch.id);
     return [
       partialMatch,
-      ...BIBLE_COMMENTARIES_DATABASE.filter(c => c.id !== partialMatch.id)
+      ...sortCommentariesCanonically(remaining)
     ];
   }
 
@@ -2587,5 +2611,5 @@ VATICAN MAGISTERIUM (VATICAN II & CATECHISM): As Vatican II teaches in Dei Verbu
     practicalApplication: `Read today's Gospel (${targetCitation}) slowly twice today—once in the morning and once at evening examination of conscience—asking Our Lord through the intercession of the saints to live "${reading?.responsorialPsalm.antiphon || 'His holy will'}" in concrete acts of charity.`
   };
 
-  return [dynamicDailyCommentary, ...BIBLE_COMMENTARIES_DATABASE];
+  return [dynamicDailyCommentary, ...sortCommentariesCanonically(BIBLE_COMMENTARIES_DATABASE)];
 }
