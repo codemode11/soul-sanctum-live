@@ -236,49 +236,40 @@ ${reading.gospel.text}`;
       
       {/* Liturgical Day Banner and Date Bar */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4 ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
+        <div className={`px-3.5 py-2.5 sm:px-5 sm:py-3 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-2 sm:gap-3 ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-0.5 min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-nowrap overflow-hidden">
               <span 
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider"
+                className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
                 style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
                 {colorMeta.name} • {reading.liturgicalRank}
               </span>
-              <span className="text-xs text-stone-300 font-serif-sacred">
+              <span className="text-xs sm:text-sm text-stone-300 font-serif whitespace-nowrap truncate">
                 {reading.liturgicalSeason}
               </span>
             </div>
             
-            {/* Split title: Memorial on the next line with increased font size */}
-            {/* Split title to two lines if it is too long to prevent overlap */}
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-normal text-amber-100 leading-tight">
-              {reading.liturgicalDay.includes(' / ') ? (
-                <>
-                  <span className="block">{reading.liturgicalDay.split(' / ')[0]}</span>
-                  <span className="block text-base sm:text-lg md:text-xl font-semibold text-white not-italic mt-1 font-serif drop-shadow-sm">
-                    {reading.liturgicalDay.split(' / ')[1]}
-                  </span>
-                </>
-              ) : reading.liturgicalDay.length > 35 ? (
-                <>
-                  <span className="block">{reading.liturgicalDay.split(' of ')[0]} of</span>
-                  <span className="block text-xl sm:text-2xl md:text-3xl font-bold text-white not-italic mt-1 font-serif drop-shadow-md">
-                    {reading.liturgicalDay.split(' of ').slice(1).join(' of ')}
-                  </span>
-                </>
-              ) : (
-                reading.liturgicalDay
-              )}
+            <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-bold tracking-normal text-amber-100 leading-snug whitespace-nowrap truncate">
+              {reading.liturgicalDay.endsWith(', Bishop') && reading.liturgicalDay.length > 42
+                ? reading.liturgicalDay.replace(/,\s*Bishop$/, '')
+                : reading.liturgicalDay.endsWith(', Bishop') ? (
+                  <>
+                    {reading.liturgicalDay.replace(/,\s*Bishop$/, '')}
+                    <span className="hidden sm:inline">, Bishop</span>
+                  </>
+                ) : (
+                  reading.liturgicalDay
+                )}
             </h2>
           </div>
 
           {/* Quick Date Switcher Controls & Settings Dropdown Toggle */}
-          <div className="flex items-center gap-2 self-start md:self-auto shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 self-start md:self-auto shrink-0">
             <button
               onClick={handlePrevDay}
-              className="p-2 rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
+              className="p-1.5 rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
               title="Previous Liturgical Day"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -287,7 +278,7 @@ ${reading.gospel.text}`;
             <div className="relative shrink-0">
               <button 
                 onClick={() => setIsCalendarPickerOpen(!isCalendarPickerOpen)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer border ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer border ${
                   isCalendarPickerOpen 
                     ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40' 
                     : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
@@ -312,7 +303,7 @@ ${reading.gospel.text}`;
             </div>
             <button
               onClick={handleNextDay}
-              className="p-2 rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
+              className="p-1.5 rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
               title="Next Liturgical Day"
             >
               <ChevronRight className="w-4 h-4" />
@@ -321,7 +312,7 @@ ${reading.gospel.text}`;
             <button
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`flex items-center gap-1 px-2.5 py-2 rounded-md transition-all cursor-pointer shrink-0 border ${
+              className={`flex items-center gap-1 px-2 py-1.5 rounded-md transition-all cursor-pointer shrink-0 border ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
