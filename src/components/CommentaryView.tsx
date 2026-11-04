@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   BookOpen, 
   Check, 
@@ -11,10 +11,15 @@ import {
   Play,
   Pause,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Settings,
+  ChevronDown,
+  Calendar as CalendarIcon
 } from 'lucide-react';
-import { BibleCommentary, MassReading } from '../types';
+import { BibleCommentary, MassReading, LiturgicalColor } from '../types';
 import { getDailyGospelCommentaries } from '../data/commentary';
+import { LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
+import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { 
   SacredReader, 
   parseCommentaryBySaints, 
@@ -25,11 +30,13 @@ import { StructuredCommentaryDisplay } from './StructuredCommentary';
 export interface CommentaryViewProps {
   currentGospelCitation?: string;
   currentReading?: MassReading;
+  onSelectDate?: (dateStr: string) => void;
 }
 
 export const CommentaryView: React.FC<CommentaryViewProps> = ({
   currentGospelCitation,
-  currentReading
+  currentReading,
+  onSelectDate
 }) => {
   const dailyCommentaries = React.useMemo(
     () => getDailyGospelCommentaries(currentReading, currentGospelCitation),
@@ -44,6 +51,28 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   const [speakingSectionIndex, setSpeakingSectionIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(true);
+  const [isCalendarPickerOpen, setIsCalendarPickerOpen] = useState(false);
+
+  const readingDate = currentReading?.date || '';
+  const readingColor: LiturgicalColor = currentReading?.liturgicalColor || 'white';
+  const colorMeta = LITURGICAL_COLORS_INFO[readingColor] || LITURGICAL_COLORS_INFO.white;
+
+  const handlePrevDay = () => {
+    if (onSelectDate && readingDate) {
+      const d = new Date(readingDate + 'T12:00:00Z');
+      d.setDate(d.getDate() - 1);
+      onSelectDate(d.toISOString().split('T')[0]);
+    }
+  };
+
+  const handleNextDay = () => {
+    if (onSelectDate && readingDate) {
+      const d = new Date(readingDate + 'T12:00:00Z');
+      d.setDate(d.getDate() + 1);
+      onSelectDate(d.toISOString().split('T')[0]);
+    }
+  };
   
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -86,20 +115,33 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   );
 
   // Functional dynamic font size scaling
-  const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
+  const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('sanctum_commentary_font_size');
+      if (saved === 'normal' || saved === 'large' || saved === 'xlarge') return saved;
+    }
+    return 'normal';
+  });
   const fontSizes: Array<'normal' | 'large' | 'xlarge'> = ['normal', 'large', 'xlarge'];
+
+  const handleSetFontSize = (size: 'normal' | 'large' | 'xlarge') => {
+    setFontSize(size);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sanctum_commentary_font_size', size);
+    }
+  };
 
   const increaseFontSize = () => {
     const currentIndex = fontSizes.indexOf(fontSize);
     if (currentIndex < fontSizes.length - 1) {
-      setFontSize(fontSizes[currentIndex + 1]);
+      handleSetFontSize(fontSizes[currentIndex + 1]);
     }
   };
 
   const decreaseFontSize = () => {
     const currentIndex = fontSizes.indexOf(fontSize);
     if (currentIndex > 0) {
-      setFontSize(fontSizes[currentIndex - 1]);
+      handleSetFontSize(fontSizes[currentIndex - 1]);
     }
   };
 
@@ -230,165 +272,266 @@ ${selectedCommentary.practicalApplication}`;
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 mb-10">
       
-      {/* Compact Banner */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl px-4 py-3 text-amber-50 shadow-sm border border-amber-900/40">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-          <div className="flex items-center gap-2.5">
-            <div>
-              <h2 className="font-cinzel text-lg sm:text-xl font-bold text-white tracking-wide leading-tight">
-                Bible Commentary
-              </h2>
-              <p className="text-[11px] text-amber-300/80 font-cinzel uppercase tracking-wider">
-                Catena Aurea • Cornelius à Lapide • Notes from the Magisterium
-              </p>
+      {/* Liturgical Day & Gospel Commentary Banner (Top Two Rectangles Patterned after Mass Readings) */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        
+        {/* RECTANGLE 1: Dark Liturgical Banner with Date Navigation & Settings Toggle */}
+        <div className={`px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-1.5">
+            {/* Line 1: Liturgical Color/Rank & Season (raised) */}
+            <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
+              <span 
+                className="inline-flex items-center px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
+                style={{ backgroundColor: colorMeta.hex, color: readingColor === 'white' ? '#451a03' : '#ffffff' }}
+              >
+                {colorMeta.name} | {currentReading?.liturgicalRank || 'Catena Aurea'}
+              </span>
+              <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap">
+                {currentReading?.liturgicalSeason || 'Universal Church Lectionary'}
+              </span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-xs text-xs font-semibold tracking-wider uppercase bg-amber-500/20 text-amber-200 border border-amber-500/40 whitespace-nowrap shrink-0">
+                Gospel • {selectedCommentary.scriptureReference}
+              </span>
             </div>
+            
+            {/* Line 2: Complete Liturgical Day Title / Gospel Title (raised, full width on one line) */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight whitespace-nowrap overflow-x-auto no-scrollbar">
+              {currentReading?.liturgicalDay 
+                ? `${currentReading.liturgicalDay.replace(/,\s*Bishop.*$/, '')}: ${selectedCommentary.scriptureReference}` 
+                : `Holy Gospel Commentary: ${selectedCommentary.scriptureReference}`}
+            </h2>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1.5 shrink-0">
-            {/* Font Size Stepper */}
-            <div className="flex items-center gap-0.5 bg-black/40 p-0.5 rounded-xl border border-white/20">
-              <button
-                onClick={decreaseFontSize}
-                disabled={fontSize === 'normal'}
-                className="w-6 h-6 flex items-center justify-center rounded-lg text-[11px] font-bold text-amber-200 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
-                title="Decrease font size"
-              >
-                A-
-              </button>
-              <button
-                onClick={() => setFontSize('normal')}
-                className={`px-1.5 py-0.5 text-[11px] rounded-lg font-semibold transition-all cursor-pointer ${
-                  fontSize === 'normal' 
-                    ? 'bg-[#6B4423] text-white shadow-xs font-bold' 
-                    : 'text-amber-200 hover:text-white hover:bg-white/10'
-                }`}
-                title="Default text size (100%)"
-              >
-                A
-              </button>
-              <button
-                onClick={() => setFontSize('large')}
-                className={`px-1.5 py-0.5 text-[11px] rounded-lg font-semibold transition-all cursor-pointer ${
-                  fontSize === 'large' 
-                    ? 'bg-[#6B4423] text-white shadow-xs font-bold' 
-                    : 'text-amber-200 hover:text-white hover:bg-white/10'
-                }`}
-                title="Large text size (125%)"
-              >
-                A+
-              </button>
-              <button
-                onClick={() => setFontSize('xlarge')}
-                className={`px-1.5 py-0.5 text-[11px] rounded-lg font-semibold transition-all cursor-pointer ${
-                  fontSize === 'xlarge' 
-                    ? 'bg-[#6B4423] text-white shadow-xs font-bold' 
-                    : 'text-amber-200 hover:text-white hover:bg-white/10'
-                }`}
-                title="Extra large text size (155%)"
-              >
-                A++
-              </button>
-              <button
-                onClick={increaseFontSize}
-                disabled={fontSize === 'xlarge'}
-                className="w-6 h-6 flex items-center justify-center rounded-lg text-[11px] font-bold text-amber-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
-                title="Increase font size"
-              >
-                +
-              </button>
+          {/* Line 3: Tradition info on left + Calendar and Settings lowered at the right side */}
+          <div className="flex items-center justify-between gap-5 sm:gap-7 mt-auto pt-4 shrink-0">
+            <div className="hidden md:flex items-center gap-2 text-xs text-amber-300/80 font-cinzel uppercase tracking-wider truncate">
+              <span>Catena Aurea • Cornelius à Lapide • Magisterium</span>
             </div>
 
-            {/* Complete Commentary Audio Toggle */}
-            <button
-              onClick={handleToggleSpeak}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-xs ${
-                isReadingAloud
-                  ? 'bg-[#6B4423] text-white animate-pulse'
-                  : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
-              }`}
-              title={`Listen to Commentary in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
-              aria-label="Listen to Commentary"
-            >
-              {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-300" />}
-              <span>{isReadingAloud ? 'Stop' : 'Listen All'}</span>
-            </button>
+            <div className="flex items-center justify-end gap-5 sm:gap-7 ml-auto shrink-0">
+              {readingDate && onSelectDate && (
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={handlePrevDay}
+                    className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
+                    title="Previous Liturgical Day"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
 
-            {/* Recitation Voice Option: Ava Grace vs David */}
-            <div className="flex items-center bg-black/40 border border-stone-700/80 rounded-xl p-0.5 text-xs">
+                  {/* Interactive Theme-Matched Liturgical Calendar Picker */}
+                  <div className="relative shrink-0">
+                    <button 
+                      onClick={() => setIsCalendarPickerOpen(!isCalendarPickerOpen)}
+                      className={`h-8 flex items-center gap-1.5 px-3 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer border ${
+                        isCalendarPickerOpen 
+                          ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40' 
+                          : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+                      }`}
+                      title="Open Liturgical Calendar"
+                    >
+                      <CalendarIcon className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                      <span className="whitespace-nowrap leading-none">
+                        {readingDate.split('-').length === 3
+                          ? `${readingDate.split('-')[1]}-${readingDate.split('-')[2]}-${readingDate.split('-')[0]}`
+                          : readingDate}
+                      </span>
+                    </button>
+
+                    <LiturgicalCalendarPicker
+                      selectedDateStr={readingDate}
+                      onSelectDate={(newDate) => {
+                        onSelectDate(newDate);
+                        setIsCalendarPickerOpen(false);
+                      }}
+                      isOpen={isCalendarPickerOpen}
+                      onClose={() => setIsCalendarPickerOpen(false)}
+                      align="right"
+                    />
+                  </div>
+
+                  <button
+                    onClick={handleNextDay}
+                    className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
+                    title="Next Liturgical Day"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
               <button
-                type="button"
-                onClick={() => handleVoiceSelect('ava-grace')}
-                className={`px-2 py-1 rounded-lg text-xs font-serif font-medium transition-all cursor-pointer ${
-                  recitationVoice === 'ava-grace'
-                    ? 'bg-[#6B4423] text-white font-bold shadow-xs'
-                    : 'text-stone-300 hover:text-amber-200'
+                onClick={() => setIsTopSettingsOpen(prev => !prev)}
+                aria-expanded={isTopSettingsOpen}
+                className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+                  isTopSettingsOpen
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
                 }`}
-                title="Ava Grace (Prioritized Devotional Voice)"
+                title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
               >
-                Ava Grace
-              </button>
-              <button
-                type="button"
-                onClick={() => handleVoiceSelect('david')}
-                className={`px-2 py-1 rounded-lg text-xs font-serif font-medium transition-all cursor-pointer ${
-                  recitationVoice === 'david'
-                    ? 'bg-[#6B4423] text-white font-bold shadow-xs'
-                    : 'text-stone-300 hover:text-amber-200'
-                }`}
-                title="Microsoft David (Traditional Solemn Male Voice)"
-              >
-                David
+                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                    isTopSettingsOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
             </div>
-
-            <button
-              onClick={handleCopy}
-              className="p-1.5 rounded-xl bg-stone-800 text-amber-200 border border-stone-700 hover:bg-stone-700 transition-colors cursor-pointer"
-              title="Copy commentary"
-            >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-            </button>
           </div>
         </div>
-      </div>
 
-      {/* Live Audio Status Bar when listening */}
-      {isReadingAloud && activeSpeakingSection && (
-        <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 rounded-xl px-4 py-2.5 border border-amber-600/50 shadow-md text-amber-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 animate-fadeIn">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-amber-600/30 border border-amber-500/40 flex items-center justify-center shrink-0">
-              <Headphones className="w-4 h-4 text-amber-300 animate-bounce" />
-            </div>
-            <div>
+        {/* RECTANGLE 2: Settings Panel (Same size: min-h-[164px]) */}
+        {isTopSettingsOpen && (
+          <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 rounded-b-xl animate-fadeIn">
+            
+            {/* Lector / Recitation Audio Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded-lg bg-stone-100/90 border border-stone-200 shadow-2xs">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-amber-400 font-cinzel">
-                  Section {speakingSectionIndex + 1} of {parsedSections.length}
-                </span>
+                <button
+                  onClick={handleToggleSpeak}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+                    isReadingAloud
+                      ? 'bg-[#6B4423] text-white animate-pulse'
+                      : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
+                  }`}
+                  title={`Listen to Commentary in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
+                  aria-label="Listen to Commentary"
+                >
+                  {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-300" />}
+                  <span>{isReadingAloud ? 'Stop Audio' : 'Listen to Commentary'}</span>
+                </button>
+
+                {isReadingAloud && (
+                  <button
+                    onClick={handleTogglePause}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold bg-stone-200 hover:bg-stone-300 text-stone-800 transition-colors cursor-pointer"
+                    title={isPaused ? 'Resume Audio' : 'Pause Audio'}
+                  >
+                    {isPaused ? <Play className="w-3.5 h-3.5 text-amber-800" /> : <Pause className="w-3.5 h-3.5 text-amber-800" />}
+                    <span>{isPaused ? 'Resume' : 'Pause'}</span>
+                  </button>
+                )}
+
+                {isReadingAloud && activeSpeakingSection && (
+                  <span className="hidden sm:inline-flex items-center text-xs font-serif italic text-amber-950 font-medium pl-1">
+                    Section {speakingSectionIndex + 1}/{parsedSections.length}: {activeSpeakingSection.saintName}
+                  </span>
+                )}
               </div>
-              <p className="font-serif font-bold text-sm text-white">
-                {activeSpeakingSection.saintName}
-              </p>
+
+              {/* Recitation Voice Option: Ava Grace vs David */}
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-medium text-stone-600">Voice:</span>
+                <div className="flex items-center bg-stone-200/90 border border-stone-300 rounded-md p-0.5 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => handleVoiceSelect('ava-grace')}
+                    className={`px-2.5 py-1 rounded-sm text-xs font-serif font-medium transition-all cursor-pointer ${
+                      recitationVoice === 'ava-grace'
+                        ? 'bg-[#6B4423] text-white font-bold shadow-xs'
+                        : 'text-stone-700 hover:text-stone-950'
+                    }`}
+                    title="Ava Grace (Prioritized Devotional Voice)"
+                  >
+                    Ava Grace
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleVoiceSelect('david')}
+                    className={`px-2.5 py-1 rounded-sm text-xs font-serif font-medium transition-all cursor-pointer ${
+                      recitationVoice === 'david'
+                        ? 'bg-[#6B4423] text-white font-bold shadow-xs'
+                        : 'text-stone-700 hover:text-stone-950'
+                    }`}
+                    title="Microsoft David (Traditional Solemn Male Voice)"
+                  >
+                    David
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Text Size Stepper + Copy (Patterned after Mass Readings) */}
+            <div className="flex items-center justify-between text-xs text-stone-700 pt-1">
+              <div className="flex items-center gap-3">
+                <span className="font-medium text-stone-600 text-xs">Text Size:</span>
+                <div className="flex items-center gap-1 bg-stone-200/90 p-1 rounded-md border border-stone-300 shadow-2xs">
+                  <button
+                    onClick={decreaseFontSize}
+                    disabled={fontSize === 'normal'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-stone-700 hover:text-stone-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Decrease font size"
+                    aria-label="Decrease font size"
+                  >
+                    A-
+                  </button>
+                  <button
+                    onClick={() => handleSetFontSize('normal')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      fontSize === 'normal' 
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                    }`}
+                    title="Default text size (100%)"
+                  >
+                    A
+                  </button>
+                  <button
+                    onClick={() => handleSetFontSize('large')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      fontSize === 'large' 
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                    }`}
+                    title="Large text size (125%)"
+                  >
+                    A+
+                  </button>
+                  <button
+                    onClick={() => handleSetFontSize('xlarge')}
+                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                      fontSize === 'xlarge' 
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                    }`}
+                    title="Extra large text size (155%)"
+                  >
+                    A++
+                  </button>
+                  <button
+                    onClick={increaseFontSize}
+                    disabled={fontSize === 'xlarge'}
+                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-800 hover:text-amber-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Increase font size"
+                    aria-label="Increase font size"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <button
+                onClick={handleCopy}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-200/80 hover:bg-stone-300 text-stone-800 font-medium transition-colors cursor-pointer"
+                title="Copy commentary to clipboard"
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-emerald-700">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5 text-stone-600" />
+                    <span>Copy</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
-
-          <div className="flex items-center gap-2 self-end sm:self-center">
-            <button
-              onClick={handleTogglePause}
-              className="px-2.5 py-1 rounded-xl bg-amber-900/60 hover:bg-amber-900 border border-amber-700/60 text-xs font-semibold text-amber-100 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              {isPaused ? <Play className="w-3 h-3 text-amber-300" /> : <Pause className="w-3 h-3 text-amber-300" />}
-              <span>{isPaused ? 'Resume' : 'Pause'}</span>
-            </button>
-            <button
-              onClick={handleToggleSpeak}
-              className="px-2.5 py-1 rounded-xl bg-red-950/80 hover:bg-red-900 border border-red-800/60 text-xs font-semibold text-red-200 flex items-center gap-1 transition-colors cursor-pointer"
-            >
-              <VolumeX className="w-3 h-3 text-red-300" />
-              <span>Stop</span>
-            </button>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Passage Selector Bar with Navigation Arrows */}
       <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl px-3.5 py-2.5 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-2">

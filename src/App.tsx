@@ -702,6 +702,7 @@ export default function App() {
               <CommentaryView
                 currentGospelCitation={currentMassReading.gospel.citation}
                 currentReading={currentMassReading}
+                onSelectDate={(date) => setCurrentDateStr(date)}
               />
             )}
 

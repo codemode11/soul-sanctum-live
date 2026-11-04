@@ -26,14 +26,14 @@ import {
   RefreshCw,
   Pin
 } from 'lucide-react';
-import { DailyReading } from '../types';
+import { MassReading, LiturgicalColor } from '../types';
 import { getLiturgicalMonth, LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
 import { SacredReader } from '../utils/speech';
 import { bellSynth } from '../utils/audioSynth';
 
 interface PersonalCatholicDashboardViewProps {
   currentDateStr: string;
-  currentReading: DailyReading;
+  currentReading: MassReading;
   onSelectDate: (dateStr: string) => void;
   onNavigateTab?: (tab: any) => void;
 }
@@ -567,9 +567,10 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
     for (let i = 0; i < firstDayOfWeek; i++) {
       cells.push({ day: null, dateStr: '' });
     }
-    for (const dayInfo of monthData.days) {
+    for (const dayInfo of monthData) {
+      const dayNum = parseInt(dayInfo.date.split('-')[2], 10);
       cells.push({
-        day: dayInfo.dayOfMonth,
+        day: dayNum,
         dateStr: dayInfo.date,
         color: dayInfo.color,
         title: dayInfo.saintName || dayInfo.title
@@ -589,7 +590,7 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
     const gospelCite = currentReading.gospel.citation;
     const liturgicalTitle = currentReading.liturgicalDay;
     const reflectionBody =
-      currentReading.reflection ||
+      currentReading.reflection?.content ||
       'In today’s Holy Gospel, Christ invites us to move beyond mere external observance into a living, Eucharistic union of charity and interior conversion.';
 
     return {
@@ -1516,7 +1517,7 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
                       Daily Mass Readings &amp; Catholic Homily
                     </h3>
                     <p className="text-xs sm:text-sm font-serif text-[#5D371F]">
-                      {currentReading.firstReading.citation} · {currentReading.psalm.citation} · {currentReading.gospel.citation}
+                      {currentReading.firstReading.citation} · {currentReading.responsorialPsalm.citation} · {currentReading.gospel.citation}
                     </p>
                   </div>
                 </div>
@@ -1596,7 +1597,7 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
                 {activeReadingPart === 'gospel' && (
                   <div className="space-y-2">
                     <div className="font-cinzel text-sm sm:text-base font-bold text-[#24140B]">
-                      Holy Gospel • {currentReading.gospel.citation} ({currentReading.gospel.title})
+                      Holy Gospel • {currentReading.gospel.citation}
                     </div>
                     <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-relaxed whitespace-pre-line">
                       {currentReading.gospel.text}
@@ -1607,7 +1608,7 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
                 {activeReadingPart === 'first' && (
                   <div className="space-y-2">
                     <div className="font-cinzel text-sm sm:text-base font-bold text-[#24140B]">
-                      First Reading • {currentReading.firstReading.citation} ({currentReading.firstReading.title})
+                      First Reading • {currentReading.firstReading.citation}
                     </div>
                     <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-relaxed whitespace-pre-line">
                       {currentReading.firstReading.text}
@@ -1618,13 +1619,13 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
                 {activeReadingPart === 'psalm' && (
                   <div className="space-y-2">
                     <div className="font-cinzel text-sm sm:text-base font-bold text-[#24140B]">
-                      Responsorial Psalm • {currentReading.psalm.citation}
+                      Responsorial Psalm • {currentReading.responsorialPsalm.citation}
                     </div>
                     <p className="text-sm sm:text-base font-serif font-bold italic text-[#6B3E1E]">
-                      R. {currentReading.psalm.response}
+                      R. {currentReading.responsorialPsalm.antiphon}
                     </p>
                     <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-relaxed whitespace-pre-line">
-                      {currentReading.psalm.text}
+                      {currentReading.responsorialPsalm.verses.join('\n\n')}
                     </p>
                   </div>
                 )}
