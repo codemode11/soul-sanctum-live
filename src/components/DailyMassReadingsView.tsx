@@ -252,16 +252,7 @@ ${reading.gospel.text}`;
             </div>
             
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight whitespace-nowrap truncate">
-              {reading.liturgicalDay.endsWith(', Bishop') && reading.liturgicalDay.length > 42
-                ? reading.liturgicalDay.replace(/,\s*Bishop$/, '')
-                : reading.liturgicalDay.endsWith(', Bishop') ? (
-                  <>
-                    {reading.liturgicalDay.replace(/,\s*Bishop$/, '')}
-                    <span className="hidden sm:inline">, Bishop</span>
-                  </>
-                ) : (
-                  reading.liturgicalDay
-                )}
+              {reading.liturgicalDay.replace(/,\s*Bishop$/, '')}
             </h2>
           </div>
 

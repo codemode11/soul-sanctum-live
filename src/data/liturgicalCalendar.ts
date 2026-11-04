@@ -462,7 +462,7 @@ export const KNOWN_NOVEMBER_DAYS: Record<number, Partial<LiturgicalDayInfo>> = {
     }
   },
   4: {
-    title: 'Memorial of St. Charles Borromeo, Bishop',
+    title: 'Memorial of St. Charles Borromeo',
     rank: 'Memorial',
     color: 'white',
     saintName: 'St. Charles Borromeo',
