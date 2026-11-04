@@ -89,6 +89,7 @@ export interface CatholicNewsItem {
   tags: string[];
   imageUrl?: string;
   imageCaption?: string;
+  sourceUrl?: string;
 }
 
 export interface NovenaDay {
