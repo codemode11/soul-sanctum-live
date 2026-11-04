@@ -236,28 +236,30 @@ ${reading.gospel.text}`;
       
       {/* Liturgical Day Banner and Date Bar */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`px-5 pt-3.5 pb-4 sm:px-7 sm:pt-4 sm:pb-4.5 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between gap-1.5 sm:gap-2 ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Line 1: Liturgical Color/Rank & Season (raised a little) */}
-          <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
-            <span 
-              className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
-              style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
-              {colorMeta.name} • {reading.liturgicalRank}
-            </span>
-            <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap">
-              {reading.liturgicalSeason}
-            </span>
+        <div className={`px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-1.5">
+            {/* Line 1: Liturgical Color/Rank & Season (raised) */}
+            <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
+              <span 
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
+                style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                {colorMeta.name} • {reading.liturgicalRank}
+              </span>
+              <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap">
+                {reading.liturgicalSeason}
+              </span>
+            </div>
+            
+            {/* Line 2: Complete Liturgical Day Title (raised, full width on one line) */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight whitespace-nowrap overflow-x-auto no-scrollbar">
+              {reading.liturgicalDay.replace(/,\s*Bishop.*$/, '')}
+            </h2>
           </div>
-          
-          {/* Line 2: Complete Liturgical Day Title (raised a little, full width on one line) */}
-          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight whitespace-nowrap overflow-x-auto no-scrollbar">
-            {reading.liturgicalDay.replace(/,\s*Bishop.*$/, '')}
-          </h2>
 
-          {/* Line 3: Calendar and Settings placed at the right side */}
-          <div className="flex items-center justify-end gap-2 pt-1 shrink-0">
+          {/* Line 3: Calendar and Settings lowered at the right side */}
+          <div className="flex items-center justify-end gap-2 mt-auto pt-4 shrink-0">
             <button
               onClick={handlePrevDay}
               className="p-2 rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
@@ -322,7 +324,7 @@ ${reading.gospel.text}`;
 
         {/* Lector Audio Controls + Secondary Controls: Font Size and Copy */}
         {isTopSettingsOpen && (
-          <div className="p-4 bg-white/55 backdrop-blur-md border-t border-white/60 space-y-3 rounded-b-xl animate-fadeIn">
+          <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 rounded-b-xl animate-fadeIn">
           <LectorControlsBar
             onPlay={handleToggleReadAloud}
             onStop={() => {
