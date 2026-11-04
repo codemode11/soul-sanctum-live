@@ -475,11 +475,21 @@ ${reading.gospel.text}`;
             return (
               <div className="self-start sm:self-auto sm:ml-auto">
                 <p 
-                  className="italic font-serif text-amber-900/95 font-semibold sm:text-right drop-shadow-2xs transition-all duration-200"
+                  className="italic font-serif text-amber-900/95 font-semibold drop-shadow-2xs transition-all duration-200 inline-flex flex-col"
                   style={italicVerseStyle}
                 >
-                  <span className="block">{line1}</span>
-                  {line2 && <span className="block">{line2}</span>}
+                  <span className="flex justify-between gap-x-[0.28em] whitespace-nowrap w-full">
+                    {line1.split(' ').map((word, i) => (
+                      <span key={i}>{word}</span>
+                    ))}
+                  </span>
+                  {line2 && (
+                    <span className="flex justify-between gap-x-[0.28em] whitespace-nowrap w-full">
+                      {line2.split(' ').map((word, i) => (
+                        <span key={i}>{word}</span>
+                      ))}
+                    </span>
+                  )}
                 </p>
               </div>
             );
