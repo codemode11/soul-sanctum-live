@@ -87,10 +87,10 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-stone-700/60">
             <div>
-              <p className="font-serif font-bold text-amber-200 text-lg sm:text-xl">
+              <p className="font-serif font-bold text-amber-200 text-xl sm:text-2xl md:text-3xl">
                 {spotlightQuote.author}
               </p>
-              <p className="text-xs text-stone-400 font-serif">
+              <p className="text-sm sm:text-base text-stone-300 font-serif">
                 {spotlightQuote.authorTitle} • {spotlightQuote.authorLifespan}
               </p>
             </div>
@@ -208,10 +208,10 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
 
               <div className="pt-3 border-t border-stone-100 flex items-center justify-between">
                 <div>
-                  <h4 className="font-serif text-base sm:text-lg font-bold text-stone-900">
+                  <h4 className="font-serif text-lg sm:text-xl md:text-2xl font-bold text-stone-900">
                     {wisdom.author}
                   </h4>
-                  <p className="text-xs text-stone-500 font-serif">
+                  <p className="text-sm sm:text-base text-stone-600 font-serif">
                     {wisdom.authorTitle}
                   </p>
                 </div>
