@@ -208,7 +208,7 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
 
               <div className="pt-3 border-t border-stone-100 flex items-center justify-between">
                 <div>
-                  <h4 className="font-serif text-base sm:text-lg font-bold text-stone-900">
+                  <h4 className="font-serif-sacred text-lg sm:text-xl md:text-2xl font-bold text-stone-900">
                     {wisdom.author}
                   </h4>
                   <p className="text-xs sm:text-sm text-stone-600 font-serif">
