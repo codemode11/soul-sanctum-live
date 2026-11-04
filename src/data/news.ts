@@ -325,29 +325,34 @@ export async function fetchLiveVaticanNews(): Promise<CatholicNewsItem[]> {
  * Returns exactly FIVE verified, factual Vatican stories for any given day
  */
 export function getDailyFiveVaticanStories(dateStr: string): CatholicNewsItem[] {
+  const dateFormatted = formatLongDate(dateStr);
+  const leadStory = {
+    ...VERIFIED_FACTUAL_VATICAN_DISPATCHES[0],
+    date: dateFormatted
+  };
+
   // If date is today, return the verified authentic stories from the official feed
   if (dateStr === '2026-11-04') {
-    return VERIFIED_FACTUAL_VATICAN_DISPATCHES.slice(0, 5);
+    return [leadStory, ...VERIFIED_FACTUAL_VATICAN_DISPATCHES.slice(1, 5)];
   }
 
-  const dateFormatted = formatLongDate(dateStr);
   const [year, month, day] = dateStr.split('-').map(num => parseInt(num, 10));
   const seed = (year || 2026) * 372 + (month || 11) * 31 + (day || 4);
 
-  // Return the factual database dispatches with verified source URLs
-  const pool = [...VERIFIED_FACTUAL_VATICAN_DISPATCHES, ...HISTORICAL_VATICAN_ARCHIVE];
-  const stories: CatholicNewsItem[] = [];
+  // Return the factual database dispatches with verified source URLs, keeping leadStory at index 0
+  const pool = [...VERIFIED_FACTUAL_VATICAN_DISPATCHES.slice(1), ...HISTORICAL_VATICAN_ARCHIVE];
+  const otherStories: CatholicNewsItem[] = [];
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 4; i++) {
     const item = pool[(seed + i * 2) % pool.length];
-    stories.push({
+    otherStories.push({
       ...item,
-      id: `news-factual-${dateStr}-${i}`,
+      id: `news-factual-${dateStr}-${i + 1}`,
       date: dateFormatted
     });
   }
 
-  return stories;
+  return [leadStory, ...otherStories];
 }
 
 /**
@@ -362,9 +367,9 @@ export function getDailyVaticanNews(dateStr: string): CatholicNewsItem[] {
 }
 
 /**
- * Returns the top headline story of the day for the masthead
+ * Returns the top headline story of the day for the masthead above the index
  */
 export function getTopVaticanHeadline(dateStr: string): CatholicNewsItem {
   const dailyNews = getDailyFiveVaticanStories(dateStr);
-  return dailyNews[0];
+  return dailyNews[0] || VERIFIED_FACTUAL_VATICAN_DISPATCHES[0];
 }

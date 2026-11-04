@@ -517,29 +517,31 @@ export default function App() {
 
           {/* Main Story: Vatican News Masthead Dispatch */}
           <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-48 sm:mt-64 md:mt-72 lg:mt-80">
-            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/80 hover:bg-black/90 border border-amber-500/50 hover:border-amber-400 text-amber-100 backdrop-blur-2xl shadow-[0_12px_50px_rgba(0,0,0,0.92)] transition-all py-3.5 px-5 sm:py-4 sm:px-7 text-center space-y-1.5 sm:space-y-2">
-              <div className="flex items-center justify-center">
+            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/85 hover:bg-black/95 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-2xl shadow-[0_12px_50px_rgba(0,0,0,0.92)] transition-all py-4 px-5 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
+              <div className="flex items-center justify-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300">
                   FROM THE VATICAN
                 </span>
               </div>
               
-              {/* Single-Line Lead Headline */}
+              {/* Full Lead Headline */}
               <h2 
                 onClick={() => {
                   setActiveVaticanArticleId(topVaticanHeadline.id);
                   handleSelectTab('vatican-news');
                 }}
-                className="font-serif text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-full mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] tracking-tight whitespace-nowrap overflow-hidden text-ellipsis cursor-pointer transition-colors -mt-1"
+                className="font-serif text-xl sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] tracking-tight cursor-pointer transition-colors"
               >
                 {topVaticanHeadline.title}
               </h2>
 
-              <p className="text-xs sm:text-base text-stone-200 font-serif italic max-w-3xl mx-auto leading-relaxed line-clamp-2 pt-0.5">
+              {/* Subtitle & Call to Action */}
+              <p className="text-xs sm:text-sm md:text-base text-stone-200 font-serif italic max-w-3xl mx-auto leading-relaxed pt-0.5">
                 {topVaticanHeadline.subtitle || topVaticanHeadline.summary}
               </p>
 
-              <div className="pt-1 flex items-center justify-end">
+              <div className="pt-2 flex items-center justify-center sm:justify-end gap-3">
                 <button
                   onClick={() => {
                     setActiveVaticanArticleId(topVaticanHeadline.id);
