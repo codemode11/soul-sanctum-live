@@ -166,6 +166,10 @@ export interface BibleCommentary {
   author: string;
   commentaryText: string;
   practicalApplication: string;
+  dateKey?: string;
+  dateLabel?: string;
+  monthName?: string;
+  dayNumber?: number;
 }
 
 export interface CatholicTerm {

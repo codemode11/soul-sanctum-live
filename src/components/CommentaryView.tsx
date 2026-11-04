@@ -16,7 +16,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { BibleCommentary, MassReading } from '../types';
-import { getDailyGospelCommentaries } from '../data/commentary';
+import { getThreeMonthDailyCommentaries, getDailyGospelCommentaries } from '../data/commentary';
 import { 
   SacredReader, 
   parseCommentaryBySaints, 
@@ -35,12 +35,24 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   currentReading,
   onSelectDate
 }) => {
-  const dailyCommentaries = React.useMemo(
-    () => getDailyGospelCommentaries(currentReading, currentGospelCitation),
-    [currentReading, currentGospelCitation]
+  const ninetyTwoCommentaries = React.useMemo(
+    () => getThreeMonthDailyCommentaries(),
+    []
   );
 
-  const [selectedCommentary, setSelectedCommentary] = useState<BibleCommentary>(dailyCommentaries[0]);
+  const [selectedMonth, setSelectedMonth] = useState<'All' | 'November' | 'December' | 'January'>('All');
+
+  // Match initial commentary to currentReading date or default to Nov 4 (Luke 15:1-10)
+  const initialCommentary = React.useMemo(() => {
+    if (currentReading?.date) {
+      const match = ninetyTwoCommentaries.find(c => c.dateKey === currentReading.date);
+      if (match) return match;
+    }
+    const nov4 = ninetyTwoCommentaries.find(c => c.dateKey === '2026-11-04');
+    return nov4 || ninetyTwoCommentaries[0];
+  }, [currentReading?.date, ninetyTwoCommentaries]);
+
+  const [selectedCommentary, setSelectedCommentary] = useState<BibleCommentary>(initialCommentary);
   const [copied, setCopied] = useState(false);
   const [isReadingAloud, setIsReadingAloud] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -51,6 +63,7 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(true);
   
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pillRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const handleVoiceSelect = (v: 'ava-grace' | 'david') => {
     setRecitationVoice(v);
@@ -64,13 +77,29 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   };
 
   React.useEffect(() => {
-    setSelectedCommentary(dailyCommentaries[0]);
-    if (isReadingAloud) {
-      SacredReader.stop();
-      setIsReadingAloud(false);
-      setActiveSpeakingSection(null);
+    if (currentReading?.date) {
+      const match = ninetyTwoCommentaries.find(c => c.dateKey === currentReading.date);
+      if (match) {
+        setSelectedCommentary(match);
+        if (isReadingAloud) {
+          SacredReader.stop();
+          setIsReadingAloud(false);
+          setActiveSpeakingSection(null);
+        }
+      }
     }
-  }, [dailyCommentaries]);
+  }, [currentReading?.date, ninetyTwoCommentaries]);
+
+  // Smoothly center selected pill when passage changes
+  React.useEffect(() => {
+    if (selectedCommentary && pillRefs.current[selectedCommentary.id]) {
+      pillRefs.current[selectedCommentary.id]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  }, [selectedCommentary.id]);
 
   // Clean up speech on unmount
   React.useEffect(() => {
@@ -214,26 +243,66 @@ ${selectedCommentary.practicalApplication}`;
     }
   };
 
-  const filteredCommentaries = dailyCommentaries.filter(c => 
-    c.scriptureReference.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.sourceName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    c.commentaryText.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const monthFilteredList = React.useMemo(() => {
+    if (selectedMonth === 'All') return ninetyTwoCommentaries;
+    return ninetyTwoCommentaries.filter(c => c.monthName === selectedMonth);
+  }, [ninetyTwoCommentaries, selectedMonth]);
 
-  const activeList = filteredCommentaries.length > 0 ? filteredCommentaries : dailyCommentaries;
+  const filteredCommentaries = React.useMemo(() => {
+    if (!searchQuery.trim()) return monthFilteredList;
+    const q = searchQuery.toLowerCase();
+    return monthFilteredList.filter(c => 
+      c.scriptureReference.toLowerCase().includes(q) ||
+      (c.dateLabel && c.dateLabel.toLowerCase().includes(q)) ||
+      (c.monthName && c.monthName.toLowerCase().includes(q)) ||
+      (c.dateKey && c.dateKey.toLowerCase().includes(q)) ||
+      c.sourceName.toLowerCase().includes(q) ||
+      c.author.toLowerCase().includes(q) ||
+      c.commentaryText.toLowerCase().includes(q)
+    );
+  }, [monthFilteredList, searchQuery]);
+
+  const activeList = filteredCommentaries.length > 0 ? filteredCommentaries : monthFilteredList;
   const currentIndex = activeList.findIndex(c => c.id === selectedCommentary.id);
+
+  const handleSelectMonth = (month: 'All' | 'November' | 'December' | 'January') => {
+    setSelectedMonth(month);
+    if (month !== 'All') {
+      const firstInMonth = ninetyTwoCommentaries.find(c => c.monthName === month);
+      if (firstInMonth) {
+        setSelectedCommentary(firstInMonth);
+        if (firstInMonth.dateKey && onSelectDate) onSelectDate(firstInMonth.dateKey);
+        if (isReadingAloud) SacredReader.stop();
+      }
+    }
+  };
+
+  const handleSelectPassage = (comm: BibleCommentary) => {
+    setSelectedCommentary(comm);
+    if (comm.dateKey && onSelectDate) {
+      onSelectDate(comm.dateKey);
+    }
+    if (isReadingAloud) {
+      SacredReader.stop();
+      setIsReadingAloud(false);
+      setActiveSpeakingSection(null);
+    }
+  };
 
   const handlePrevPassage = () => {
     if (currentIndex > 0) {
-      setSelectedCommentary(activeList[currentIndex - 1]);
+      const prev = activeList[currentIndex - 1];
+      setSelectedCommentary(prev);
+      if (prev.dateKey && onSelectDate) onSelectDate(prev.dateKey);
       if (isReadingAloud) SacredReader.stop();
     }
   };
 
   const handleNextPassage = () => {
     if (currentIndex >= 0 && currentIndex < activeList.length - 1) {
-      setSelectedCommentary(activeList[currentIndex + 1]);
+      const next = activeList[currentIndex + 1];
+      setSelectedCommentary(next);
+      if (next.dateKey && onSelectDate) onSelectDate(next.dateKey);
       if (isReadingAloud) SacredReader.stop();
     }
   };
@@ -438,19 +507,39 @@ ${selectedCommentary.practicalApplication}`;
         )}
       </div>
 
-      {/* Passage Selector Bar with Navigation Arrows */}
-      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl px-3.5 py-2.5 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-2">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
+      {/* Passage Selector Bar with Month Tabs and Navigation Arrows */}
+      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl px-3.5 py-3 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-2.5">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
-              Scriptural Passages ({activeList.length})
+              Daily Commentary Passages
             </span>
             <span className="text-[11px] font-semibold text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full font-cinzel border border-amber-200/80">
-              Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
+              {selectedCommentary.dateLabel ? `${selectedCommentary.dateLabel} • ` : ''}Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Month Filter Tabs: All 92, November 30, December 31, January 31 */}
+            <div className="flex items-center gap-1 bg-stone-100/90 p-0.5 rounded-lg border border-stone-200 shadow-2xs">
+              {(['All', 'November', 'December', 'January'] as const).map(month => {
+                const count = month === 'All' ? 92 : month === 'November' ? 30 : 31;
+                return (
+                  <button
+                    key={month}
+                    onClick={() => handleSelectMonth(month)}
+                    className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                      selectedMonth === month
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold'
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
+                    }`}
+                  >
+                    {month === 'All' ? `All (${count})` : `${month} (${count})`}
+                  </button>
+                );
+              })}
+            </div>
+
             {/* Quick Prev / Next Passage Arrow Buttons */}
             <div className="flex items-center gap-1 bg-white/70 border border-stone-200/80 rounded-xl p-0.5 shadow-2xs">
               <button
@@ -479,10 +568,10 @@ ${selectedCommentary.practicalApplication}`;
             <div className="relative">
               <input
                 type="text"
-                placeholder="Filter passages or authors..."
+                placeholder="Search date, verse, saint..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-xs pl-7 pr-2.5 py-1 rounded-xl bg-white/60 backdrop-blur-sm border border-white/70 focus:outline-none focus:border-amber-700 w-full sm:w-48"
+                className="text-xs pl-7 pr-2.5 py-1 rounded-xl bg-white/60 backdrop-blur-sm border border-white/70 focus:outline-none focus:border-amber-700 w-full sm:w-44"
               />
               <Search className="w-3 h-3 text-stone-500 absolute left-2.5 top-2" />
             </div>
@@ -509,14 +598,20 @@ ${selectedCommentary.practicalApplication}`;
               return (
                 <button
                   key={comm.id}
-                  onClick={() => setSelectedCommentary(comm)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+                  ref={el => { pillRefs.current[comm.id] = el; }}
+                  onClick={() => handleSelectPassage(comm)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSelected
                       ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold ring-1 ring-amber-700'
-                      : 'bg-white/55 hover:bg-white/80 text-stone-800 border border-white/60'
+                      : 'bg-white/65 hover:bg-white/90 text-stone-800 border border-stone-200/80 hover:border-amber-400'
                   }`}
                 >
-                  {comm.scriptureReference}
+                  {comm.dateLabel && (
+                    <span className={`text-[10px] font-semibold uppercase ${isSelected ? 'text-amber-200' : 'text-amber-900/80 font-cinzel'}`}>
+                      {comm.dateLabel}:
+                    </span>
+                  )}
+                  <span>{comm.scriptureReference}</span>
                 </button>
               );
             })}
@@ -548,7 +643,7 @@ ${selectedCommentary.practicalApplication}`;
             <ChevronLeft className="w-4 h-4 text-amber-800" />
             <span className="truncate max-w-[140px] sm:max-w-none">
               {currentIndex > 0
-                ? activeList[currentIndex - 1].scriptureReference
+                ? `${activeList[currentIndex - 1].dateLabel ? `${activeList[currentIndex - 1].dateLabel}: ` : ''}${activeList[currentIndex - 1].scriptureReference}`
                 : 'Previous Passage'}
             </span>
           </button>
@@ -566,7 +661,7 @@ ${selectedCommentary.practicalApplication}`;
           >
             <span className="truncate max-w-[140px] sm:max-w-none">
               {currentIndex >= 0 && currentIndex < activeList.length - 1
-                ? activeList[currentIndex + 1].scriptureReference
+                ? `${activeList[currentIndex + 1].dateLabel ? `${activeList[currentIndex + 1].dateLabel}: ` : ''}${activeList[currentIndex + 1].scriptureReference}`
                 : 'Next Passage'}
             </span>
             <ChevronRight className="w-4 h-4 text-amber-800" />
@@ -605,12 +700,11 @@ ${selectedCommentary.practicalApplication}`;
           </p>
         </div>
 
-        {/* Patristic Commentary Sections */}
+        {/* Patristic Homily & Commentary Sections */}
         <div className="pt-2">
           <StructuredCommentaryDisplay 
             commentaryText={selectedCommentary.commentaryText} 
             fontSizeStyle={commentaryStyle}
-            hideHomily
           />
         </div>
 
@@ -642,7 +736,7 @@ ${selectedCommentary.practicalApplication}`;
             <ChevronLeft className="w-4 h-4 text-amber-800" />
             <span className="truncate max-w-[140px] sm:max-w-none">
               {currentIndex > 0
-                ? activeList[currentIndex - 1].scriptureReference
+                ? `${activeList[currentIndex - 1].dateLabel ? `${activeList[currentIndex - 1].dateLabel}: ` : ''}${activeList[currentIndex - 1].scriptureReference}`
                 : 'Previous Passage'}
             </span>
           </button>
@@ -660,7 +754,7 @@ ${selectedCommentary.practicalApplication}`;
           >
             <span className="truncate max-w-[140px] sm:max-w-none">
               {currentIndex >= 0 && currentIndex < activeList.length - 1
-                ? activeList[currentIndex + 1].scriptureReference
+                ? `${activeList[currentIndex + 1].dateLabel ? `${activeList[currentIndex + 1].dateLabel}: ` : ''}${activeList[currentIndex + 1].scriptureReference}`
                 : 'Next Passage'}
             </span>
             <ChevronRight className="w-4 h-4 text-amber-800" />

@@ -615,8 +615,14 @@ export default function App() {
               />
             )}
 
-            {/* 5. Catechism (CCC removed) */}
-            {activeTab === 'catechism' && <CatechismView />}
+            {/* 5. Catechism of the Catholic Church & Magisterium */}
+            {activeTab === 'catechism' && (
+              <CatechismView
+                currentReading={currentMassReading}
+                currentDateStr={currentDateStr}
+                onSelectDate={(newDate) => setCurrentDateStr(newDate)}
+              />
+            )}
 
             {/* 6. Wisdom of the Saints */}
             {activeTab === 'wisdom' && <WisdomTreasuryView />}
