@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { 
   BookOpen, 
-  Scroll, 
   Check, 
   Copy, 
   Volume2, 
@@ -235,7 +234,6 @@ ${selectedCommentary.practicalApplication}`;
       <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl px-4 py-3 text-amber-50 shadow-sm border border-amber-900/40">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <div className="flex items-center gap-2.5">
-            <Scroll className="w-4 h-4 text-amber-400 shrink-0" />
             <div>
               <h2 className="font-cinzel text-lg sm:text-xl font-bold text-white tracking-wide leading-tight">
                 Bible Commentary

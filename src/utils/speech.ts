@@ -658,7 +658,8 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
        upper.includes('MAXIMUS') || upper.includes('HILARY') || upper.includes('DAMASCENE') || upper.includes('METHODIUS') ||
        upper.includes('BERNARD') || upper.includes('GAUDENTIUS') || upper.includes('CAESARIUS') || upper.includes('CHROMATIUS') ||
        upper.includes('EPHREM') || upper.includes('ATHANASIUS') || upper.includes('GLOSS') || upper.includes('EXPOSITOR') ||
-       upper.includes('VATICAN') || upper.includes('CATECHISM') || upper.includes('CCC') || upper.includes('MAGISTERIUM') || upper.includes('BENEDICT') || upper.includes('FRANCIS') || upper.includes('PAUL') || upper.includes('LEO') ||
+       upper.includes('THEOPHILUS') || upper.includes('CASSIAN') || upper.includes('CYPRIAN') || upper.includes('FULGENTIUS') || upper.includes('SOPHRONIUS') || upper.includes('IRENAEUS') ||
+       upper.includes('VATICAN') || upper.includes('CATECHISM') || upper.includes('CCC') || upper.includes('MAGISTERIUM') || upper.includes('TRENT') || upper.includes('PIUS') || upper.includes('BENEDICT') || upper.includes('FRANCIS') || upper.includes('PAUL') || upper.includes('LEO') ||
        upper.includes('BLESSED'))
     ) {
       matchesFound++;

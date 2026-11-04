@@ -2093,8 +2093,235 @@ const FIXED_DATE_PROPER_READINGS: Record<string, LectionaryTemplate> = {
       title: 'The Word Was Made Flesh and Laid in the Manger of Bethlehem',
       content: `In Bethlehem ("House of Bread"), the Eternal Word of the Father, born of the Virgin Mary, is laid in a manger so that He may become the Living Bread upon our altars. "Christian, recognize your dignity!"`
     }
+  },
+  '11-30': {
+    firstReading: {
+      citation: 'Romans 10:9-18',
+      theme: 'Faith comes from what is heard, and what is heard comes through the word of Christ',
+      text: `Brothers and sisters: If you confess with your mouth that Jesus is Lord and believe in your heart that God raised him from the dead, you will be saved. For one believes with the heart and so is justified, and one confesses with the mouth and so is saved... Thus faith comes from what is heard, and what is heard comes through the word of Christ.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 19:8, 9, 10, 11',
+      antiphon: 'Their message goes out through all the earth.',
+      verses: [
+        'The law of the LORD is perfect, refreshing the soul; the decree of the LORD is trustworthy, giving wisdom to the simple.',
+        'The precepts of the LORD are right, rejoicing the heart; the command of the LORD is clear, enlightening the eye.',
+        'The fear of the LORD is pure, enduring forever; the ordinances of the LORD are true, all of them just.'
+      ]
+    },
+    alleluia: {
+      verse: 'Come after me, says the Lord, and I will make you fishers of men.'
+    },
+    gospel: {
+      citation: 'Matthew 4:18-22',
+      text: `As Jesus was walking by the Sea of Galilee, he saw two brothers, Simon who is called Peter, and his brother Andrew, casting a net into the sea; they were fishermen. He said to them, "Come after me, and I will make you fishers of men." At once they left their nets and followed him.\n\nHe walked along from there and saw two other brothers, James, the son of Zebedee, and his brother John. They were in a boat, with their father Zebedee, mending their nets. He called them, and immediately they left their boat and their father and followed him.`
+    },
+    reflection: {
+      author: 'Pope St. Gregory the Great and St. John Chrysostom',
+      title: 'At Once They Left Their Nets and Followed Him',
+      content: `At a single command of Our Lord, Andrew and Peter left their nets and boats to follow the Redeemer. As Pope St. Gregory the Great remarks, the Kingdom of Heaven has no fixed price tag: it costs everything you have—whether two nets and a boat, or two copper coins, or a cup of cold water given in charity.`
+    }
+  },
+  '12-26': {
+    firstReading: {
+      citation: 'Acts 6:8-10; 7:54-59',
+      theme: 'Behold, I see the heavens opened and the Son of Man standing at the right hand of God',
+      text: `Stephen, filled with grace and power, was working great wonders and signs among the people... Filled with the Holy Spirit, he looked up intently to heaven and saw the glory of God and Jesus standing at the right hand of God, and he said, "Behold, I see the heavens opened and the Son of Man standing at the right hand of God."... As they were stoning Stephen, he called out, "Lord Jesus, receive my spirit."`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 31:3cd-4, 6 and 8ab, 16bc and 17',
+      antiphon: 'Into your hands, O Lord, I commend my spirit.',
+      verses: [
+        'Be my rock of refuge, a stronghold to give me safety. You are my rock and my fortress; for your name\'s sake you will lead and guide me.',
+        'Into your hands I commend my spirit; you will redeem me, O LORD, O faithful God. I will rejoice and be glad because of your mercy.',
+        'Rescue me from the clutches of my enemies and my persecutors. Let your face shine upon your servant; save me in your kindness.'
+      ]
+    },
+    alleluia: {
+      verse: 'Blessed is he who comes in the name of the Lord: the Lord is God and has given us light.'
+    },
+    gospel: {
+      citation: 'Matthew 10:17-22',
+      text: `Jesus said to his disciples: "Beware of men, for they will hand you over to courts and scourge you in their synagogues, and you will be led before governors and kings for my sake as a witness before them and the pagans. When they hand you over, do not worry about how you are to speak or what you are to say. You will be given at that moment what you are to say. For it will not be you who speak, but the Spirit of your Father speaking through you... You will be hated by all because of my name, but whoever endures to the end will be saved."`
+    },
+    reflection: {
+      author: 'St. Fulgentius of Ruspe',
+      title: 'Yesterday the King Was Born on Earth; Today the Soldier Enters Heaven',
+      content: `Yesterday our Newborn King was wrapped in swaddling clothes in Bethlehem; today His protomartyr St. Stephen is clothed in the robe of immortal glory, praying for his persecutors and winning the conversion of St. Paul.`
+    }
+  },
+  '12-27': {
+    firstReading: {
+      citation: '1 John 1:1-4',
+      theme: 'What we have seen and heard we proclaim now to you',
+      text: `Beloved: What was from the beginning, what we have heard, what we have seen with our eyes, what we looked upon and touched with our hands concerns the Word of life—for the life was made visible; we have seen it and testify to it and proclaim to you the eternal life that was with the Father and was made visible to us.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 97:1-2, 5-6, 11-12',
+      antiphon: 'Rejoice in the Lord, you just!',
+      verses: [
+        'The LORD is king; let the earth rejoice; let the many islands be glad. Clouds and darkness are round about him, justice and judgment are the foundation of his throne.',
+        'The mountains melt like wax before the LORD, before the LORD of all the earth. The heavens proclaim his justice, and all peoples see his glory.',
+        'Light dawns for the just; and gladness, for the upright of heart. Be glad in the LORD, you just, and give thanks to his holy name.'
+      ]
+    },
+    alleluia: {
+      verse: 'We praise you, O God, we acclaim you as Lord; the glorious company of Apostles praise you.'
+    },
+    gospel: {
+      citation: 'John 20:1-9',
+      text: `On the first day of the week, Mary of Magdala ran and went to Simon Peter and to the other disciple whom Jesus loved, and told them, "They have taken the Lord from the tomb, and we don't know where they put him." So Peter and the other disciple went out and came to the tomb. They both ran, but the other disciple ran faster than Peter and arrived at the tomb first... Then the other disciple also went in, the one who had arrived at the tomb first, and he saw and believed.`
+    },
+    reflection: {
+      author: 'St. Augustine of Hippo',
+      title: 'The Beloved Disciple Who Reclined Upon the Sacred Breast of Jesus',
+      content: `Having reclined upon the breast of the Lord at the Last Supper, St. John the Evangelist drank from the hidden fountain of divine wisdom and poured it forth in his Gospel: "In the beginning was the Word."`
+    }
+  },
+  '12-28': {
+    firstReading: {
+      citation: '1 John 1:5–2:2',
+      theme: 'The blood of his Son Jesus cleanses us from all sin',
+      text: `Beloved: This is the message that we have heard from Jesus Christ and proclaim to you: God is light, and in him there is no darkness at all. If we say, "We have fellowship with him," while we continue to walk in darkness, we lie and do not act in truth. But if we walk in the light as he is in the light, then we have fellowship with one another, and the blood of his Son Jesus cleanses us from all sin.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 124:2-3, 4-5, 7b-8',
+      antiphon: 'Our soul has been rescued like a bird from the fowler\'s snare.',
+      verses: [
+        'Had not the LORD been with us, when men rose up against us, then would they have swallowed us alive, when their fury was inflamed against us.',
+        'Then would the waters have overwhelmed us; the torrent would have swept over us; over us then would have swept the raging waters.',
+        'Broken was the snare, and we were freed. Our help is in the name of the LORD, who made heaven and earth.'
+      ]
+    },
+    alleluia: {
+      verse: 'We praise you, O God, we acclaim you as Lord; the white-robed army of martyrs praise you.'
+    },
+    gospel: {
+      citation: 'Matthew 2:13-18',
+      text: `When the magi had departed, behold, the angel of the Lord appeared to Joseph in a dream and said, "Rise, take the child and his mother, flee to Egypt, and stay there until I tell you. Herod is going to search for the child to destroy him." Joseph rose and took the child and his mother by night and departed for Egypt... When Herod realized that he had been deceived by the magi, he became furious. He ordered the massacre of all the boys in Bethlehem and its vicinity two years old and under.`
+    },
+    reflection: {
+      author: 'St. Quodvultdeus and Prudentius',
+      title: 'Salvete, Flores Martyrum — Hail, Flowers of the Martyrs!',
+      content: `Too young to confess Christ with their tongues, the Holy Innocents of Bethlehem confessed Him by the shedding of their blood, crowned at the very threshold of life as the firstfruits of the Lamb.`
+    }
+  },
+  '01-25': {
+    firstReading: {
+      citation: 'Acts 22:3-16',
+      theme: 'Saul, Saul, why are you persecuting me? Get up and be baptized and have your sins washed away',
+      text: `Paul addressed the people in these words: "As I was traveling and Beaching Damascus, about noon a great light from the sky suddenly shone around me. I fell to the ground and heard a voice saying to me, 'Saul, Saul, why are you persecuting me?' I replied, 'Who are you, sir?' And he said to me, 'I am Jesus the Nazorean whom you are persecuting.'"`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 117:1bc, 2',
+      antiphon: 'Go out to all the world and tell the Good News.',
+      verses: [
+        'Praise the LORD, all you nations; glorify him, all you peoples!',
+        'For steadfast is his kindness toward us, and the fidelity of the LORD endures forever.'
+      ]
+    },
+    alleluia: {
+      verse: 'I chose you from the world, to go and bear fruit that will last, says the Lord.'
+    },
+    gospel: {
+      citation: 'Mark 16:15-18',
+      text: `Jesus appeared to the Eleven and said to them: "Go into the whole world and proclaim the Gospel to every creature. Whoever believes and is baptized will be saved; whoever does not believe will be condemned. These signs will accompany those who believe: in my name they will drive out demons, they will speak new languages. They will pick up serpents with their hands, and if they drink any deadly thing, it will not harm them. They will lay hands on the sick, and they will recover."`
+    },
+    reflection: {
+      author: 'St. John Chrysostom and St. Augustine',
+      title: 'Why Are You Persecuting Me? Christ the Head Speaking for His Mystical Body',
+      content: `On the road to Damascus, the Risen Lord cried from heaven not "Why do you persecute My disciples?" but "Why are you persecuting Me?"—teaching us that Christ the Head and the Catholic Church His Body are one.`
+    }
   }
 };
+
+// Christmas Season Pool (Dec 29 – Baptism of the Lord)
+const CHRISTMAS_READINGS_POOL: LectionaryTemplate[] = [
+  {
+    firstReading: {
+      citation: '1 John 2:18-21',
+      theme: 'You have the anointing that comes from the Holy One, and you all have knowledge',
+      text: `Children, it is the last hour... But you have the anointing that comes from the Holy One, and you all have knowledge. I write to you not because you do not know the truth, but because you do, and because every lie is alien to the truth.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 96:1-2, 11-12, 13',
+      antiphon: 'Let the heavens be glad and the earth rejoice!',
+      verses: [
+        'Sing to the LORD a new song; sing to the LORD, all you lands. Sing to the LORD; bless his name; announce his salvation, day after day.',
+        'Let the heavens be glad and the earth rejoice; let the sea and what fills it resound; let the plains be joyful and all that is in them!',
+        'They shall exult before the LORD, for he comes; for he comes to rule the earth.'
+      ]
+    },
+    alleluia: {
+      verse: 'The Word of God became flesh and dwelt among us. To those who accepted him he gave power to become the children of God.'
+    },
+    gospel: {
+      citation: 'John 1:1-18',
+      text: `In the beginning was the Word, and the Word was with God, and the Word was God. He was in the beginning with God. All things came to be through him, and without him nothing came to be. What came to be through him was life, and this life was the light of the human race; the light shines in the darkness, and the darkness has not overcome it... And the Word became flesh and made his dwelling among us, and we saw his glory, the glory as of the Father's only Son, full of grace and truth.`
+    },
+    reflection: {
+      author: 'St. John Chrysostom and St. Augustine',
+      title: 'In Principio Erat Verbum — The Eternal Word Made Flesh',
+      content: `Soaring above the clouds like a spiritual eagle, St. John contemplates the eternal generation of the Divine Word in the bosom of the Father and His humble Incarnation in the womb of the Virgin Mary.`
+    }
+  },
+  {
+    firstReading: {
+      citation: 'Sirach 3:2-6, 12-14',
+      theme: 'Whoever fears the Lord honors his parents',
+      text: `God sets a father in honor over his children; a mother's authority he confirms over her sons. Whoever honors his father atones for sins, and preserves himself from them. When he prays, he is heard; he stores up riches who reveres his mother.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 128:1-2, 3, 4-5',
+      antiphon: 'Blessed are those who fear the Lord and walk in his ways.',
+      verses: [
+        'Blessed is everyone who fears the LORD, who walks in his ways! For you shall eat the fruit of your handiwork; blessed shall you be, and favored.',
+        'Your wife shall be like a fruitful vine in the recesses of your home; your children like olive plants around your table.',
+        'Behold, thus is the man blessed who fears the LORD. The LORD bless you from Zion.'
+      ]
+    },
+    alleluia: {
+      verse: 'Let the peace of Christ control your hearts; let the word of Christ dwell in you richly.'
+    },
+    gospel: {
+      citation: 'Luke 2:41-52',
+      text: `Each year Jesus' parents went to Jerusalem for the feast of Passover, and when he was twelve years old, they went up according to festival custom. After they had completed its days, as they were returning, the boy Jesus remained behind in Jerusalem, but his parents did not know it... After three days they found him in the temple, sitting in the midst of the teachers, listening to them and asking them questions, and all who heard him were astounded at his understanding and his answers... He went down with them and came to Nazareth, and was obedient to them; and his mother kept all these things in her heart. And Jesus advanced in wisdom and age and favor before God and man.`
+    },
+    reflection: {
+      author: 'St. Ambrose and Pope St. Paul VI',
+      title: 'The School of Nazareth: Silence, Family Charity, and Obedience',
+      content: `In the hidden home of Nazareth, the Creator of the universe was obedient to Mary and Joseph for thirty years, sanctifying Christian family life, daily work, and interior prayer.`
+    }
+  },
+  {
+    firstReading: {
+      citation: 'Isaiah 42:1-4, 6-7',
+      theme: 'Here is my servant whom I uphold, my chosen one with whom I am pleased',
+      text: `Thus says the LORD: Here is my servant whom I uphold, my chosen one with whom I am pleased, upon whom I have put my spirit; he shall bring forth justice to the nations, not crying out, not shouting, not making his voice heard in the street. A bruised reed he shall not break, and a smoldering wick he shall not quench.`
+    },
+    responsorialPsalm: {
+      citation: 'Psalm 29:1-2, 3-4, 3, 9-10',
+      antiphon: 'The Lord will bless his people with peace.',
+      verses: [
+        'Give to the LORD, you sons of God, give to the LORD glory and praise, Give to the LORD the glory due his name; adore the LORD in holy attire.',
+        'The voice of the LORD is over the waters, the LORD, over vast waters. The voice of the LORD is mighty; the voice of the LORD is majestic.',
+        'The God of glory thunders, and in his temple all say, "Glory!" The LORD is enthroned above the flood; the LORD is enthroned as king forever.'
+      ]
+    },
+    alleluia: {
+      verse: 'The heavens were opened and the voice of the Father thundered: This is my beloved Son, listen to him.'
+    },
+    gospel: {
+      citation: 'Mark 1:7-11',
+      text: `This is what John the Baptist proclaimed: "One mightier than I is coming after me. I am not worthy to stoop and loosen the thongs of his sandals. I have baptized you with water; he will baptize you with the Holy Spirit."\n\nIt happened in those days that Jesus came from Nazareth of Galilee and was baptized in the Jordan by John. On coming up out of the water he saw the heavens being torn open and the Spirit, like a dove, descending upon him. And a voice came from the heavens, "You are my beloved Son; with you I am well pleased."`
+    },
+    reflection: {
+      author: 'St. Gregory Nazianzen and St. Maximus of Turin',
+      title: 'Christ Descends into the Jordan to Sanctify the Waters of Baptism',
+      content: `Christ is baptized, not that He may be sanctified by the waters, but that He Himself may sanctify all waters and open the heavens to the Newly Baptized, revealing the Most Holy Trinity at the Jordan.`
+    }
+  }
+];
 
 // Seasonal & Lectionary-Cycle Rotating Readings Pool for 2026–2030+
 const ADVENT_READINGS_POOL: LectionaryTemplate[] = [
@@ -2636,7 +2863,11 @@ export function getMassReadingsForDate(dateStr: string): MassReading {
       properTemplate = ADVENT_READINGS_POOL[daySeed % ADVENT_READINGS_POOL.length];
     } else if (dayInfo.season === 'Lent' || dayInfo.season === 'Holy Week' || dayInfo.season === 'Paschal Triduum') {
       properTemplate = LENT_READINGS_POOL[daySeed % LENT_READINGS_POOL.length];
-    } else if (dayInfo.season === 'Easter' || dayInfo.season === 'Christmas' || diffFromBaptism === 0) {
+    } else if (diffFromBaptism === 0) {
+      properTemplate = CHRISTMAS_READINGS_POOL[2];
+    } else if (dayInfo.season === 'Christmas') {
+      properTemplate = CHRISTMAS_READINGS_POOL[daySeed % CHRISTMAS_READINGS_POOL.length];
+    } else if (dayInfo.season === 'Easter') {
       properTemplate = EASTER_READINGS_POOL[daySeed % EASTER_READINGS_POOL.length];
     } else {
       properTemplate = ORDINARY_TIME_READINGS_POOL[daySeed % ORDINARY_TIME_READINGS_POOL.length];
