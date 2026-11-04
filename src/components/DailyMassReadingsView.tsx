@@ -6,6 +6,8 @@ import {
   Check, 
   ChevronLeft, 
   ChevronRight, 
+  ChevronDown,
+  Settings,
   Calendar as CalendarIcon, 
   BookOpen, 
   Sparkles, 
@@ -75,6 +77,7 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
   const [playingPartId, setPlayingPartId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [isCalendarPickerOpen, setIsCalendarPickerOpen] = useState(false);
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
   const [showInlineHomily, setShowInlineHomily] = useState(true);
 
   useEffect(() => {
@@ -233,7 +236,7 @@ ${reading.gospel.text}`;
       
       {/* Liturgical Day Banner and Date Bar */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className="p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-t-xl">
+        <div className={`p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4 ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span 
@@ -271,7 +274,7 @@ ${reading.gospel.text}`;
             </h2>
           </div>
 
-          {/* Quick Date Switcher Controls */}
+          {/* Quick Date Switcher Controls & Settings Dropdown Toggle */}
           <div className="flex items-center gap-2 self-start md:self-auto shrink-0">
             <button
               onClick={handlePrevDay}
@@ -314,11 +317,30 @@ ${reading.gospel.text}`;
             >
               <ChevronRight className="w-4 h-4" />
             </button>
+
+            <button
+              onClick={() => setIsTopSettingsOpen(prev => !prev)}
+              aria-expanded={isTopSettingsOpen}
+              className={`flex items-center gap-1 px-2.5 py-2 rounded-md transition-all cursor-pointer shrink-0 border ${
+                isTopSettingsOpen
+                  ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                  : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+              }`}
+              title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+            >
+              <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                  isTopSettingsOpen ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
           </div>
         </div>
 
         {/* Lector Audio Controls + Secondary Controls: Font Size and Copy */}
-        <div className="p-4 bg-white/55 backdrop-blur-md border-t border-white/60 space-y-3 rounded-b-xl">
+        {isTopSettingsOpen && (
+          <div className="p-4 bg-white/55 backdrop-blur-md border-t border-white/60 space-y-3 rounded-b-xl animate-fadeIn">
           <LectorControlsBar
             onPlay={handleToggleReadAloud}
             onStop={() => {
@@ -407,6 +429,7 @@ ${reading.gospel.text}`;
             </button>
           </div>
         </div>
+        )}
       </div>
 
       {/* FIRST READING — Solid White Background for Lengthy Reading */}
