@@ -120,10 +120,21 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
     lineHeight: '1.5'
   };
 
+  // Converts straight double and single quotation marks into typographic curved quotation marks
+  const toCurvedQuotes = (text: string): string => {
+    if (!text) return '';
+    return text
+      .replace(/(^|[\s([—–-])"/g, '$1\u201C')
+      .replace(/"/g, '\u201D')
+      .replace(/([a-zA-Z0-9])'([a-zA-Z0-9])/g, '$1\u2019$2')
+      .replace(/(^|[\s([\u201C—–-])'/g, '$1\u2018')
+      .replace(/'/g, '\u2019');
+  };
+
   // Formats quotations so they wrap into well-proportioned lines and never leave a single word on the second line
   const formatBalancedQuotation = (quote: string): string => {
     if (!quote) return '';
-    const trimmed = quote.trim();
+    const trimmed = toCurvedQuotes(quote.trim());
     const withBoundPhrases = trimmed.replace(
       /\b(in|to|of|for|with|on|by|from|into|unto|upon|as|a|an|the)\s+/gi,
       '$1\u00A0'
@@ -137,14 +148,14 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
     return withBoundPhrases;
   };
 
-  // Formats First Reading theme quotations into two balanced lines by default
+  // Formats First Reading theme quotations into two balanced lines by default with curved quotation marks
   const formatTwoLineQuotation = (quote: string): [string, string] => {
     if (!quote) return ['', ''];
-    const trimmed = quote.trim();
+    const trimmed = toCurvedQuotes(quote.trim());
     const withPeriod = /[.!?]$/.test(trimmed) ? trimmed : `${trimmed}.`;
     const words = withPeriod.split(/\s+/);
     if (words.length <= 4) {
-      return [`"${withPeriod}"`, ''];
+      return [`\u201C${withPeriod}\u201D`, ''];
     }
     const targetHalf = withPeriod.length / 2;
     let bestSplitIndex = Math.floor(words.length / 2);
@@ -158,8 +169,8 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
         bestSplitIndex = i;
       }
     }
-    const line1 = `"${words.slice(0, bestSplitIndex).join(' ')}`;
-    const line2 = `${words.slice(bestSplitIndex).join(' ')}"`;
+    const line1 = `\u201C${words.slice(0, bestSplitIndex).join(' ')}`;
+    const line2 = `${words.slice(bestSplitIndex).join(' ')}\u201D`;
     return [line1, line2];
   };
 
@@ -476,7 +487,7 @@ ${reading.gospel.text}`;
         </div>
 
         <div className="font-serif-sacred text-stone-800 whitespace-pre-line" style={scriptureStyle}>
-          {reading.firstReading.text}
+          {toCurvedQuotes(reading.firstReading.text)}
         </div>
 
         <div className="pt-2 text-xs font-serif text-stone-600 italic">
@@ -498,7 +509,7 @@ ${reading.gospel.text}`;
         {/* Antiphon response: Increased font size so it is highly readable and dynamically scalable */}
         <div className="p-4 sm:p-5 rounded-md bg-amber-50/80 border border-amber-200/80 font-serif text-amber-950 font-bold italic flex items-start gap-3 shadow-2xs" style={antiphonStyle}>
           <span className="text-amber-800 font-serif font-black text-2xl sm:text-3xl leading-none not-italic">R.</span>
-          <span className="leading-snug">{reading.responsorialPsalm.antiphon}</span>
+          <span className="leading-snug">{toCurvedQuotes(reading.responsorialPsalm.antiphon)}</span>
         </div>
 
         {/* Stanzas */}
@@ -506,10 +517,10 @@ ${reading.gospel.text}`;
           {reading.responsorialPsalm.verses.map((verse, idx) => (
             <div key={idx} className="space-y-1.5">
               <p className="whitespace-pre-line pl-3 border-l-2 border-amber-500/60">
-                {verse}
+                {toCurvedQuotes(verse)}
               </p>
               <p className="font-serif font-semibold text-amber-900 italic" style={{ fontSize: '1.05em' }}>
-                R. {reading.responsorialPsalm.antiphon}
+                R. {toCurvedQuotes(reading.responsorialPsalm.antiphon)}
               </p>
             </div>
           ))}
@@ -537,7 +548,7 @@ ${reading.gospel.text}`;
           </div>
 
           <div className="font-serif-sacred text-stone-800 whitespace-pre-line" style={scriptureStyle}>
-            {reading.secondReading.text}
+            {toCurvedQuotes(reading.secondReading.text)}
           </div>
 
           <div className="pt-2 text-xs font-serif text-stone-600 italic">
@@ -558,7 +569,7 @@ ${reading.gospel.text}`;
           className="text-amber-950 mx-auto font-serif italic font-semibold leading-relaxed transition-all duration-200 text-balance"
           style={{ ...alleluiaStyle, textWrap: 'balance', maxWidth: '25em' }}
         >
-          "{formatBalancedQuotation(reading.alleluia.verse)}"
+          &ldquo;{formatBalancedQuotation(reading.alleluia.verse)}&rdquo;
         </p>
         <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-amber-950 italic font-serif">
           Alleluia, alleluia.
@@ -588,7 +599,7 @@ ${reading.gospel.text}`;
         </div>
 
         <div className="font-serif-sacred text-stone-900 whitespace-pre-line sacred-drop-cap" style={scriptureStyle}>
-          {reading.gospel.text}
+          {toCurvedQuotes(reading.gospel.text)}
         </div>
 
         <div className="pt-2 text-xs font-serif text-stone-600 italic">
@@ -651,7 +662,7 @@ ${reading.gospel.text}`;
                   <div className="pt-2 space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={scriptureStyle}>
                     {dailyHomily.paragraphs.map((para, idx) => (
                       <p key={idx} className="whitespace-pre-line">
-                        {para}
+                        {toCurvedQuotes(para)}
                       </p>
                     ))}
                   </div>
@@ -660,7 +671,7 @@ ${reading.gospel.text}`;
                 {dailyHomily.spiritualApplication && (
                   <div className="p-3.5 rounded-xl bg-[#FAF4EA] border border-[#E5D7C3] text-[#4A3623] text-xs sm:text-sm font-serif italic">
                     <span className="font-bold not-italic text-[#8C6239] block mb-1">Spiritual Application:</span>
-                    "{dailyHomily.spiritualApplication}"
+                    &ldquo;{toCurvedQuotes(dailyHomily.spiritualApplication)}&rdquo;
                   </div>
                 )}
               </>
