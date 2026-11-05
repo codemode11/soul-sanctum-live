@@ -60,7 +60,7 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   const [speakingSectionIndex, setSpeakingSectionIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
-  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(true);
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
   
   const scrollRef = useRef<HTMLDivElement>(null);
   const pillRefs = useRef<Record<string, HTMLButtonElement | null>>({});
