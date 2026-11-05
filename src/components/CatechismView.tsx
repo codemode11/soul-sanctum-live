@@ -240,7 +240,11 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
       <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl p-5 sm:p-7 text-amber-50 shadow-md border border-stone-800">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
           <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-amber-100 tracking-normal leading-tight">
+              Catechism
+            </h2>
+
+            <div className="flex flex-wrap items-center gap-2 pt-0.5">
               <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-950/80 px-2.5 py-0.5 rounded-full border border-amber-600/50">
                 Gospel Topic: {selectedTopic.gospelCitation}
               </span>
@@ -249,9 +253,9 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </span>
             </div>
 
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-amber-100 leading-tight">
+            <h3 className="font-serif text-lg sm:text-xl font-bold text-amber-100/90 leading-snug pt-0.5">
               {selectedTopic.topicTitle}
-            </h2>
+            </h3>
 
             <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
               {selectedTopic.topicSubtitle}
