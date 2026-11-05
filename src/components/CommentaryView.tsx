@@ -358,11 +358,13 @@ ${selectedCommentary.practicalApplication}`;
 
         {/* RECTANGLE 2: Settings Panel (Hidden by default) */}
         {isTopSettingsOpen && (
-          <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 animate-fadeIn">
+          <div className="px-5 py-3.5 sm:px-6 bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-center gap-2 animate-fadeIn">
             
-            {/* Lector / Recitation Audio Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded-lg bg-stone-100/90 border border-stone-200 shadow-2xs">
-              <div className="flex items-center gap-2">
+            {/* Line 1: Listen to Commentary, Voice, Text Size, Copy */}
+            <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-2.5 sm:gap-3 p-2.5 rounded-lg bg-stone-100/90 border border-stone-200 shadow-2xs text-xs text-stone-700">
+              
+              {/* 1. Listen to Commentary */}
+              <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   onClick={handleToggleSpeak}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer shadow-xs ${
@@ -387,16 +389,10 @@ ${selectedCommentary.practicalApplication}`;
                     <span>{isPaused ? 'Resume' : 'Pause'}</span>
                   </button>
                 )}
-
-                {isReadingAloud && activeSpeakingSection && (
-                  <span className="hidden sm:inline-flex items-center text-xs font-serif italic text-amber-950 font-medium pl-1">
-                    Section {speakingSectionIndex + 1}/{parsedSections.length}: {activeSpeakingSection.saintName}
-                  </span>
-                )}
               </div>
 
-              {/* Recitation Voice Option: Ava Grace vs David */}
-              <div className="flex items-center gap-1.5">
+              {/* 2. Voice */}
+              <div className="flex items-center gap-1.5 shrink-0">
                 <span className="text-xs font-medium text-stone-600">Voice:</span>
                 <div className="flex items-center bg-stone-200/90 border border-stone-300 rounded-md p-0.5 text-xs">
                   <button
@@ -425,17 +421,15 @@ ${selectedCommentary.practicalApplication}`;
                   </button>
                 </div>
               </div>
-            </div>
 
-            {/* Text Size Stepper + Copy (Patterned after Mass Readings) */}
-            <div className="flex items-center justify-between text-xs text-stone-700 pt-1">
-              <div className="flex items-center gap-3">
+              {/* 3. Text Size */}
+              <div className="flex items-center gap-2 shrink-0">
                 <span className="font-medium text-stone-600 text-xs">Text Size:</span>
-                <div className="flex items-center gap-1 bg-stone-200/90 p-1 rounded-md border border-stone-300 shadow-2xs">
+                <div className="flex items-center gap-1 bg-stone-200/90 p-0.5 rounded-md border border-stone-300 shadow-2xs">
                   <button
                     onClick={decreaseFontSize}
                     disabled={fontSize === 'normal'}
-                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-stone-700 hover:text-stone-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    className="w-6 h-6 flex items-center justify-center rounded-sm text-xs font-bold text-stone-700 hover:text-stone-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
                     title="Decrease font size"
                     aria-label="Decrease font size"
                   >
@@ -443,7 +437,7 @@ ${selectedCommentary.practicalApplication}`;
                   </button>
                   <button
                     onClick={() => handleSetFontSize('normal')}
-                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                    className={`px-2 py-1 text-xs rounded-sm font-semibold transition-all cursor-pointer ${
                       fontSize === 'normal' 
                         ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
                         : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
@@ -454,7 +448,7 @@ ${selectedCommentary.practicalApplication}`;
                   </button>
                   <button
                     onClick={() => handleSetFontSize('large')}
-                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                    className={`px-2 py-1 text-xs rounded-sm font-semibold transition-all cursor-pointer ${
                       fontSize === 'large' 
                         ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
                         : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
@@ -465,7 +459,7 @@ ${selectedCommentary.practicalApplication}`;
                   </button>
                   <button
                     onClick={() => handleSetFontSize('xlarge')}
-                    className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
+                    className={`px-2 py-1 text-xs rounded-sm font-semibold transition-all cursor-pointer ${
                       fontSize === 'xlarge' 
                         ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
                         : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
@@ -477,7 +471,7 @@ ${selectedCommentary.practicalApplication}`;
                   <button
                     onClick={increaseFontSize}
                     disabled={fontSize === 'xlarge'}
-                    className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-800 hover:text-amber-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    className="w-6 h-6 flex items-center justify-center rounded-sm text-xs font-bold text-amber-800 hover:text-amber-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
                     title="Increase font size"
                     aria-label="Increase font size"
                   >
@@ -486,9 +480,10 @@ ${selectedCommentary.practicalApplication}`;
                 </div>
               </div>
 
+              {/* 4. Copy */}
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-200/80 hover:bg-stone-300 text-stone-800 font-medium transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-200/80 hover:bg-stone-300 border border-stone-300 text-stone-800 font-medium text-xs transition-colors cursor-pointer shrink-0"
                 title="Copy commentary to clipboard"
               >
                 {copied ? (
@@ -504,6 +499,12 @@ ${selectedCommentary.practicalApplication}`;
                 )}
               </button>
             </div>
+
+            {isReadingAloud && activeSpeakingSection && (
+              <div className="text-xs font-serif italic text-amber-950 font-medium px-1">
+                Section {speakingSectionIndex + 1}/{parsedSections.length}: {activeSpeakingSection.saintName}
+              </div>
+            )}
           </div>
         )}
 
