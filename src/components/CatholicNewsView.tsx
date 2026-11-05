@@ -263,7 +263,16 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
       {/* Official Embedded Vatican News Widget */}
       <section className="bg-white rounded-2xl border border-stone-200/90 shadow-md overflow-hidden">
-        <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 px-6 py-5 text-amber-50 border-b border-amber-900/40">
+        <div className="p-3 sm:p-5 bg-[#FAF8F5]">
+          <VaticanNewsWidgetEmbed
+            lang="en"
+            fontSize="14"
+            carouselVideoAuto="true"
+            carouselVideoTime="medium"
+          />
+        </div>
+
+        <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 px-6 py-5 text-amber-50 border-t border-amber-900/40">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <Globe className="w-5 h-5 text-amber-400 shrink-0" />
@@ -281,15 +290,6 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
               — In Christ, Leo XIV
             </footer>
           </blockquote>
-        </div>
-
-        <div className="p-3 sm:p-5 bg-[#FAF8F5]">
-          <VaticanNewsWidgetEmbed
-            lang="en"
-            fontSize="14"
-            carouselVideoAuto="true"
-            carouselVideoTime="medium"
-          />
         </div>
       </section>
       
