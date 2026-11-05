@@ -1216,11 +1216,12 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                     </dd>
                   </div>
 
-                  <div className="py-3 flex items-baseline justify-between gap-2">
-                    <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold whitespace-nowrap">
-                      Liturgical Vestments
+                  <div className="py-3 flex items-end justify-between gap-4">
+                    <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold leading-snug">
+                      <span className="block">Liturgical</span>
+                      <span className="block">Vestments</span>
                     </dt>
-                    <dd className="font-serif text-base text-stone-950 dark:text-stone-100 text-right whitespace-nowrap">
+                    <dd className="font-serif text-base text-stone-950 dark:text-stone-100 text-right whitespace-nowrap leading-none">
                       {colorInfo.name.toLowerCase().includes('white') ? 'white, gold' : colorInfo.name.toLowerCase()}
                     </dd>
                   </div>
