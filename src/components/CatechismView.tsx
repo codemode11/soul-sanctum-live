@@ -26,6 +26,7 @@ import { MarianCatechismView } from './MarianCatechismView';
 import { TrinityCatechismView } from './TrinityCatechismView';
 import { SacramentsCatechismView } from './SacramentsCatechismView';
 import { RessourcementView } from './RessourcementView';
+import { toCurvedQuotes } from '../utils/typography';
 
 type CatechismSubView = 'daily' | 'eucharist' | 'marian' | 'trinity' | 'sacraments' | 'ressourcement';
 
@@ -552,7 +553,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 <span>The Gospel Foundation ({selectedTopic.gospelCitation})</span>
               </div>
               <p className="font-serif text-stone-800 italic text-sm sm:text-base leading-relaxed pl-1">
-                "{selectedTopic.gospelTextSnippet}"
+                &ldquo;{toCurvedQuotes(selectedTopic.gospelTextSnippet)}&rdquo;
               </p>
             </div>
 
@@ -574,13 +575,13 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                       </span>
                       {art.title && (
                         <span className="font-cinzel text-xs font-semibold text-amber-950 uppercase tracking-wider">
-                          {art.title}
+                          {toCurvedQuotes(art.title)}
                         </span>
                       )}
                     </div>
 
                     <p className="font-serif text-stone-900 text-base sm:text-lg leading-relaxed pt-1 pl-3 border-l-2 border-amber-800">
-                      {art.text}
+                      {toCurvedQuotes(art.text)}
                     </p>
                   </div>
                 ))}
@@ -602,13 +603,13 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                     <div className="space-y-1">
                       <div className="flex items-center gap-1.5 text-[11px] font-bold font-cinzel text-amber-900 uppercase tracking-wider">
                         <Sparkles className="w-3.5 h-3.5 text-amber-800" />
-                        <span>{input.authority}</span>
+                        <span>{toCurvedQuotes(input.authority)}</span>
                       </div>
                       <p className="font-cinzel font-semibold text-xs text-stone-800">
-                        {input.documentTitle} ({input.citation})
+                        {toCurvedQuotes(input.documentTitle)} ({toCurvedQuotes(input.citation)})
                       </p>
                       <p className="font-serif text-stone-800 text-sm sm:text-base italic leading-relaxed pt-1">
-                        "{input.insight}"
+                        &ldquo;{toCurvedQuotes(input.insight)}&rdquo;
                       </p>
                     </div>
                   </div>
@@ -626,7 +627,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 {selectedTopic.inBrief.map((brief, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-amber-800 font-bold">•</span>
-                    <span>{brief}</span>
+                    <span>{toCurvedQuotes(brief)}</span>
                   </li>
                 ))}
               </ul>
@@ -641,11 +642,11 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               
               <div className="space-y-2 pl-3 border-l-2 border-amber-800">
                 <p className="text-stone-900 font-serif text-base sm:text-lg italic leading-relaxed">
-                  "{selectedTopic.meditationQuestion}"
+                  &ldquo;{toCurvedQuotes(selectedTopic.meditationQuestion)}&rdquo;
                 </p>
                 <p className="text-amber-950 font-serif text-sm sm:text-base leading-relaxed">
                   <span className="font-semibold text-amber-900 font-cinzel text-xs uppercase tracking-wider block">Practical Application:</span>
-                  {selectedTopic.practicalLiving}
+                  {toCurvedQuotes(selectedTopic.practicalLiving)}
                 </p>
               </div>
 

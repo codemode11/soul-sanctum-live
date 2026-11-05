@@ -23,6 +23,7 @@ import {
   CommentarySaintSection 
 } from '../utils/speech';
 import { StructuredCommentaryDisplay } from './StructuredCommentary';
+import { toCurvedQuotes } from '../utils/typography';
 
 export interface CommentaryViewProps {
   currentGospelCitation?: string;
@@ -40,7 +41,7 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
     []
   );
 
-  const [selectedMonth, setSelectedMonth] = useState<'All' | 'November' | 'December' | 'January'>('All');
+  const [selectedMonth, setSelectedMonth] = useState<'November' | 'December' | 'January'>('November');
 
   // Match initial commentary to currentReading date or default to Nov 4 (Luke 15:1-10)
   const initialCommentary = React.useMemo(() => {
@@ -81,6 +82,9 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
       const match = ninetyTwoCommentaries.find(c => c.dateKey === currentReading.date);
       if (match) {
         setSelectedCommentary(match);
+        if (match.monthName === 'November' || match.monthName === 'December' || match.monthName === 'January') {
+          setSelectedMonth(match.monthName);
+        }
         if (isReadingAloud) {
           SacredReader.stop();
           setIsReadingAloud(false);
@@ -244,7 +248,6 @@ ${selectedCommentary.practicalApplication}`;
   };
 
   const monthFilteredList = React.useMemo(() => {
-    if (selectedMonth === 'All') return ninetyTwoCommentaries;
     return ninetyTwoCommentaries.filter(c => c.monthName === selectedMonth);
   }, [ninetyTwoCommentaries, selectedMonth]);
 
@@ -265,15 +268,13 @@ ${selectedCommentary.practicalApplication}`;
   const activeList = filteredCommentaries.length > 0 ? filteredCommentaries : monthFilteredList;
   const currentIndex = activeList.findIndex(c => c.id === selectedCommentary.id);
 
-  const handleSelectMonth = (month: 'All' | 'November' | 'December' | 'January') => {
+  const handleSelectMonth = (month: 'November' | 'December' | 'January') => {
     setSelectedMonth(month);
-    if (month !== 'All') {
-      const firstInMonth = ninetyTwoCommentaries.find(c => c.monthName === month);
-      if (firstInMonth) {
-        setSelectedCommentary(firstInMonth);
-        if (firstInMonth.dateKey && onSelectDate) onSelectDate(firstInMonth.dateKey);
-        if (isReadingAloud) SacredReader.stop();
-      }
+    const firstInMonth = ninetyTwoCommentaries.find(c => c.monthName === month);
+    if (firstInMonth) {
+      setSelectedCommentary(firstInMonth);
+      if (firstInMonth.dateKey && onSelectDate) onSelectDate(firstInMonth.dateKey);
+      if (isReadingAloud) SacredReader.stop();
     }
   };
 
@@ -355,9 +356,9 @@ ${selectedCommentary.practicalApplication}`;
           </div>
         </div>
 
-        {/* RECTANGLE 2: Settings Panel (Same size: min-h-[164px]) */}
+        {/* RECTANGLE 2: Settings Panel (Hidden by default) */}
         {isTopSettingsOpen && (
-          <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 rounded-b-xl animate-fadeIn">
+          <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 animate-fadeIn">
             
             {/* Lector / Recitation Audio Bar */}
             <div className="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded-lg bg-stone-100/90 border border-stone-200 shadow-2xs">
@@ -505,127 +506,83 @@ ${selectedCommentary.practicalApplication}`;
             </div>
           </div>
         )}
-      </div>
 
-      {/* Passage Selector Bar with Month Tabs and Navigation Arrows */}
-      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl px-3.5 py-3 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-2.5">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
-              Daily Commentary Passages
-            </span>
-            <span className="text-[11px] font-semibold text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full font-cinzel border border-amber-200/80">
-              {selectedCommentary.dateLabel ? `${selectedCommentary.dateLabel} • ` : ''}Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
-            </span>
-          </div>
+        {/* RECTANGLE 3: Daily Commentary Passages (Hidden by default like Rectangle 2) */}
+        {isTopSettingsOpen && (
+          <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/45 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 rounded-b-xl animate-fadeIn">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              {/* Daily Commentary Passages + Month Tabs directly underneath */}
+              <div className="space-y-2.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800">
+                    Daily Commentary Passages
+                  </span>
+                  <span className="text-[11px] font-semibold text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full font-cinzel border border-amber-200/80">
+                    {selectedCommentary.dateLabel ? `${selectedCommentary.dateLabel} • ` : ''}Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
+                  </span>
+                </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Month Filter Tabs: All 92, November 30, December 31, January 31 */}
-            <div className="flex items-center gap-1 bg-stone-100/90 p-0.5 rounded-lg border border-stone-200 shadow-2xs">
-              {(['All', 'November', 'December', 'January'] as const).map(month => {
-                const count = month === 'All' ? 92 : month === 'November' ? 30 : 31;
-                return (
+                {/* November, December, and January directly under "Daily Commentary Passages" */}
+                <div className="inline-flex items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
+                  {(['November', 'December', 'January'] as const).map(month => {
+                    const count = month === 'November' ? 30 : 31;
+                    return (
+                      <button
+                        key={month}
+                        onClick={() => handleSelectMonth(month)}
+                        className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                          selectedMonth === month
+                            ? 'bg-[#6B4423] text-white shadow-xs font-bold'
+                            : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
+                        }`}
+                      >
+                        {month} ({count})
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Search & Quick Prev/Next Controls */}
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="flex items-center gap-1 bg-white/80 border border-stone-200/80 rounded-lg p-0.5 shadow-2xs">
                   <button
-                    key={month}
-                    onClick={() => handleSelectMonth(month)}
-                    className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
-                      selectedMonth === month
-                        ? 'bg-[#6B4423] text-white shadow-xs font-bold'
-                        : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
-                    }`}
+                    onClick={handlePrevPassage}
+                    disabled={currentIndex <= 0}
+                    className="p-1 rounded-md text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
+                    title="Previous Passage"
+                    aria-label="Previous Passage"
                   >
-                    {month === 'All' ? `All (${count})` : `${month} (${count})`}
+                    <ChevronLeft className="w-3.5 h-3.5 text-amber-800" />
+                    <span className="hidden sm:inline">Prev</span>
                   </button>
-                );
-              })}
-            </div>
+                  <span className="w-px h-3.5 bg-stone-300" />
+                  <button
+                    onClick={handleNextPassage}
+                    disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
+                    className="p-1 rounded-md text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
+                    title="Next Passage"
+                    aria-label="Next Passage"
+                  >
+                    <span className="hidden sm:inline">Next</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-amber-800" />
+                  </button>
+                </div>
 
-            {/* Quick Prev / Next Passage Arrow Buttons */}
-            <div className="flex items-center gap-1 bg-white/70 border border-stone-200/80 rounded-xl p-0.5 shadow-2xs">
-              <button
-                onClick={handlePrevPassage}
-                disabled={currentIndex <= 0}
-                className="p-1 rounded-lg text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
-                title="Previous Passage"
-                aria-label="Previous Passage"
-              >
-                <ChevronLeft className="w-4 h-4 text-amber-800" />
-                <span className="hidden sm:inline">Prev</span>
-              </button>
-              <span className="text-stone-300">|</span>
-              <button
-                onClick={handleNextPassage}
-                disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
-                className="p-1 rounded-lg text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
-                title="Next Passage"
-                aria-label="Next Passage"
-              >
-                <span className="hidden sm:inline">Next</span>
-                <ChevronRight className="w-4 h-4 text-amber-800" />
-              </button>
-            </div>
-
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search date, verse, saint..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-xs pl-7 pr-2.5 py-1 rounded-xl bg-white/60 backdrop-blur-sm border border-white/70 focus:outline-none focus:border-amber-700 w-full sm:w-44"
-              />
-              <Search className="w-3 h-3 text-stone-500 absolute left-2.5 top-2" />
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search date, verse, saint..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="text-xs pl-7 pr-2.5 py-1.5 rounded-lg bg-white/80 border border-stone-200/80 focus:outline-none focus:border-amber-700 w-full sm:w-44"
+                  />
+                  <Search className="w-3 h-3 text-stone-500 absolute left-2.5 top-2" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* Scrollable Passage Pills Row with Scroll Arrows */}
-        <div className="relative flex items-center gap-1.5">
-          <button
-            onClick={() => scrollPills('left')}
-            className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
-            title="Scroll left"
-            aria-label="Scroll passage list left"
-          >
-            <ChevronLeft className="w-4 h-4 text-amber-800" />
-          </button>
-
-          <div
-            ref={scrollRef}
-            className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth w-full"
-          >
-            {activeList.map(comm => {
-              const isSelected = comm.id === selectedCommentary.id;
-              return (
-                <button
-                  key={comm.id}
-                  ref={el => { pillRefs.current[comm.id] = el; }}
-                  onClick={() => handleSelectPassage(comm)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
-                    isSelected
-                      ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold ring-1 ring-amber-700'
-                      : 'bg-white/65 hover:bg-white/90 text-stone-800 border border-stone-200/80 hover:border-amber-400'
-                  }`}
-                >
-                  {comm.dateLabel && (
-                    <span className={`text-[10px] font-semibold uppercase ${isSelected ? 'text-amber-200' : 'text-amber-900/80 font-cinzel'}`}>
-                      {comm.dateLabel}:
-                    </span>
-                  )}
-                  <span>{comm.scriptureReference}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <button
-            onClick={() => scrollPills('right')}
-            className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
-            title="Scroll right"
-            aria-label="Scroll passage list right"
-          >
-            <ChevronRight className="w-4 h-4 text-amber-800" />
-          </button>
-        </div>
+        )}
       </div>
 
       {/* Main Commentary Display Card */}
@@ -696,7 +653,7 @@ ${selectedCommentary.practicalApplication}`;
             className="font-serif-sacred text-stone-900 italic transition-all duration-200"
             style={scriptureStyle}
           >
-            {selectedCommentary.scriptureText}
+            {toCurvedQuotes(selectedCommentary.scriptureText)}
           </p>
         </div>
 
@@ -720,7 +677,7 @@ ${selectedCommentary.practicalApplication}`;
             className="font-serif-sacred text-stone-800 italic transition-all duration-200"
             style={applicationStyle}
           >
-            "{selectedCommentary.practicalApplication}"
+            &ldquo;{toCurvedQuotes(selectedCommentary.practicalApplication)}&rdquo;
           </p>
         </div>
 

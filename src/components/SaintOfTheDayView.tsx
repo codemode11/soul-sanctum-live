@@ -15,6 +15,7 @@ import { SAINTS_DATABASE } from '../data/saints';
 import { LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
 import { SacredReader } from '../utils/speech';
 import { SaintWithHaloIcon } from './SanctumIcons';
+import { toCurvedQuotes } from '../utils/typography';
 
 export interface CompanionSaint {
   name: string;
@@ -36,22 +37,24 @@ export interface DailySaintEntry extends Omit<Saint, 'biography' | 'quote' | 'li
 }
 
 function getBiographyParagraphs(bio: string | string[]): string[] {
-  if (Array.isArray(bio)) return bio;
+  if (Array.isArray(bio)) return bio.map(p => toCurvedQuotes(p));
   return String(bio || '')
     .split(/\n\n+/)
-    .map(p => p.trim())
+    .map(p => toCurvedQuotes(p.trim()))
     .filter(Boolean);
 }
 
 function getQuoteText(quote: string | { text: string; source?: string }): string {
-  if (typeof quote === 'string') return quote;
-  return quote?.text || '';
+  if (typeof quote === 'string') return toCurvedQuotes(quote);
+  return toCurvedQuotes(quote?.text || '');
 }
 
 function cleanCompanionDescription(desc: string): string {
-  return String(desc || '')
-    .replace(/^(In|From|Recorded in)\s+(Alban\s+)?Butler's\s+Lives\s+of\s+the\s+Saints(\s*&\s*Roman\s+Martyrology)?(\s+for\s+[A-Za-z]+\s+\d+)?:\s*/i, '')
-    .trim();
+  return toCurvedQuotes(
+    String(desc || '')
+      .replace(/^(In|From|Recorded in)\s+(Alban\s+)?Butler's\s+Lives\s+of\s+the\s+Saints(\s*&\s*Roman\s+Martyrology)?(\s+for\s+[A-Za-z]+\s+\d+)?:\s*/i, '')
+      .trim()
+  );
 }
 
 function normalizeLiturgicalColor(color: string | undefined): LiturgicalColor {

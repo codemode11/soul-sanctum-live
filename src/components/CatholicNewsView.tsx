@@ -34,6 +34,7 @@ import {
   VERIFIED_FACTUAL_VATICAN_DISPATCHES
 } from '../data/news';
 import { SacredReader } from '../utils/speech';
+import { toCurvedQuotes } from '../utils/typography';
 
 interface CatholicNewsViewProps {
   currentDateStr?: string;
@@ -379,13 +380,13 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                   onClick={() => setActiveArticle(item)}
                   className="font-cinzel text-lg sm:text-xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer"
                 >
-                  {item.title}
+                  {toCurvedQuotes(item.title)}
                 </h4>
                 <p className="text-xs text-amber-900 font-serif-sacred italic">
-                  {item.subtitle}
+                  {toCurvedQuotes(item.subtitle)}
                 </p>
                 <p className="text-xs sm:text-sm text-stone-700 font-serif-sacred leading-relaxed pl-3 border-l-2 border-amber-800/60 line-clamp-3">
-                  {item.summary}
+                  {toCurvedQuotes(item.summary)}
                 </p>
               </div>
             </div>
@@ -475,11 +476,11 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                 </div>
 
                 <h4 className="font-cinzel text-base sm:text-lg font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
-                  {item.title}
+                  {toCurvedQuotes(item.title)}
                 </h4>
 
                 <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
-                  {item.summary}
+                  {toCurvedQuotes(item.summary)}
                 </p>
 
                 <div className="flex items-center justify-between pt-1 text-xs text-stone-500">
@@ -512,10 +513,10 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                   </span>
                 </div>
                 <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900 mt-2">
-                  {activeArticle.title}
+                  {toCurvedQuotes(activeArticle.title)}
                 </h3>
                 <p className="text-xs text-amber-950 font-serif italic mt-0.5">
-                  {activeArticle.subtitle}
+                  {toCurvedQuotes(activeArticle.subtitle)}
                 </p>
                 <p className="text-xs text-stone-500 font-serif-sacred pt-1">
                   {activeArticle.date} • By {activeArticle.author} ({activeArticle.source})
@@ -570,7 +571,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                 />
                 {activeArticle.imageCaption && (
                   <p className="p-2 text-center text-xs text-stone-600 font-serif italic bg-stone-50 border-t border-stone-200">
-                    {activeArticle.imageCaption}
+                    {toCurvedQuotes(activeArticle.imageCaption)}
                   </p>
                 )}
               </div>
@@ -578,12 +579,12 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
             {/* Summary Box */}
             <div className="p-4 rounded-xl bg-[#FAF8F5] border-l-4 border-amber-800 text-stone-800 font-serif-sacred text-base italic leading-relaxed">
-              {activeArticle.summary}
+              {toCurvedQuotes(activeArticle.summary)}
             </div>
 
             {/* Full Body Text */}
             <div className="font-serif-sacred text-stone-900 text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-4">
-              {activeArticle.content}
+              {toCurvedQuotes(activeArticle.content)}
             </div>
 
             {/* Official Source Link Banner */}

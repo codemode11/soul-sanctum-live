@@ -1,4 +1,5 @@
 import React from 'react';
+import { toCurvedQuotes } from '../utils/typography';
 
 export interface StructuredCommentaryData {
   homilyTitle: string;
@@ -177,7 +178,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           {data.homilyTitle && (
             <div>
               <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2A1B0E] leading-snug">
-                {data.homilyTitle}
+                {toCurvedQuotes(data.homilyTitle)}
               </h3>
               {/* Separate the homily title from the first paragraph with one line */}
               <div className="h-px bg-[#DBCBB5] my-3" />
@@ -188,7 +189,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
             {data.homilyParagraphs.map((para, idx) => (
               <p key={idx} className="whitespace-pre-line">
-                {para}
+                {toCurvedQuotes(para)}
               </p>
             ))}
           </div>
@@ -208,7 +209,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
             {data.catenaAureaParagraphs.map((para, idx) => (
               <p key={idx} className="whitespace-pre-line p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DEC8]">
-                {para}
+                {toCurvedQuotes(para)}
               </p>
             ))}
           </div>
@@ -224,7 +225,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
             {data.lapideParagraphs.map((para, idx) => (
               <p key={idx} className="whitespace-pre-line p-4 rounded-xl bg-[#F8F3EA] border border-[#E5D8C3] shadow-2xs">
-                {para}
+                {toCurvedQuotes(para)}
               </p>
             ))}
           </div>
@@ -240,7 +241,7 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
             {data.magisteriumParagraphs.map((para, idx) => (
               <p key={idx} className="whitespace-pre-line p-4 rounded-xl bg-[#F3EDE3] border border-[#DDD0BC] shadow-2xs">
-                {para}
+                {toCurvedQuotes(para)}
               </p>
             ))}
           </div>
