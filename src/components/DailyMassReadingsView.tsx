@@ -481,7 +481,7 @@ ${reading.gospel.text}`;
           ? 'border-amber-500 ring-2 ring-amber-400/50 shadow-xl bg-amber-50/95' 
           : 'bg-white border-stone-200/90 shadow-sm'
       }`}>
-        <div className="border-b border-stone-200 pb-3">
+        <div className="border-b border-stone-200 pb-4">
           <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal leading-tight">
             First Reading
           </h3>
@@ -490,7 +490,7 @@ ${reading.gospel.text}`;
           </p>
           {reading.firstReading.theme && (
             <p 
-              className="font-serif text-amber-900/95 font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-snug mt-3"
+              className="font-serif text-amber-900/95 font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-relaxed mt-4.5"
               style={{ fontSize: scriptureStyle.fontSize }}
             >
               {toCurvedQuotes(reading.firstReading.theme.trim().replace(/^["'\u201C\u2018]+|["'\u201D\u2019]+$/g, '').replace(/[.!?]?$/, '.'))}
