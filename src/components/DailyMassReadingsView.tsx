@@ -485,19 +485,17 @@ ${reading.gospel.text}`;
           <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal leading-tight">
             First Reading
           </h3>
-          <div className="flex flex-wrap items-baseline gap-x-6 sm:gap-x-8 gap-y-1 mt-0.5">
-            <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 shrink-0 leading-tight">
-              {reading.firstReading.citation}
+          <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 mt-0.5 leading-tight">
+            {reading.firstReading.citation}
+          </p>
+          {reading.firstReading.theme && (
+            <p 
+              className="font-serif text-amber-900/95 font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-snug mt-3"
+              style={{ fontSize: scriptureStyle.fontSize }}
+            >
+              {toCurvedQuotes(reading.firstReading.theme.trim().replace(/^["'\u201C\u2018]+|["'\u201D\u2019]+$/g, '').replace(/[.!?]?$/, '.'))}
             </p>
-            {reading.firstReading.theme && (
-              <p 
-                className="font-serif text-amber-900/95 font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-tight"
-                style={{ fontSize: scriptureStyle.fontSize }}
-              >
-                {toCurvedQuotes(`\u201C${reading.firstReading.theme.trim().replace(/[.!?]?$/, '.')}\u201D`)}
-              </p>
-            )}
-          </div>
+          )}
         </div>
 
         <div className="font-serif-sacred text-stone-800 whitespace-pre-line" style={scriptureStyle}>
