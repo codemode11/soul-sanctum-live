@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   Globe, 
   Search, 
@@ -50,6 +50,47 @@ const FIVE_STORY_BADGES = [
   'Dispatch 4 of 5 • Universal Church & Eucharistic Revival',
   'Dispatch 5 of 5 • Works of Mercy & Sacred Culture'
 ];
+
+const VaticanNewsWidgetEmbed: React.FC<{
+  lang?: string;
+  fontSize?: string;
+  carouselVideoAuto?: string;
+  carouselVideoTime?: string;
+}> = ({
+  lang = 'en',
+  fontSize = '14',
+  carouselVideoAuto = 'true',
+  carouselVideoTime = 'medium',
+}) => {
+  const hostRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const existingScript = document.querySelector('script[src="https://www.vaticannews.va/widget.js"]');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://www.vaticannews.va/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    const container = hostRef.current;
+    if (!container) return;
+
+    container.innerHTML = '';
+    const widgetEl = document.createElement('vaticannews-widget');
+    widgetEl.setAttribute('lang', lang);
+    widgetEl.setAttribute('fontSize', fontSize);
+    widgetEl.setAttribute('carouselVideoAuto', carouselVideoAuto);
+    widgetEl.setAttribute('carouselVideoTime', carouselVideoTime);
+    container.appendChild(widgetEl);
+
+    return () => {
+      container.innerHTML = '';
+    };
+  }, [lang, fontSize, carouselVideoAuto, carouselVideoTime]);
+
+  return <div ref={hostRef} className="w-full min-h-[420px]" />;
+};
 
 export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
   currentDateStr = '2026-11-04',
@@ -219,6 +260,38 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
+
+      {/* Official Embedded Vatican News Widget */}
+      <section className="bg-white rounded-2xl border border-stone-200/90 shadow-md overflow-hidden">
+        <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 px-6 py-5 text-amber-50 border-b border-amber-900/40">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Globe className="w-5 h-5 text-amber-400 shrink-0" />
+              <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
+                Vatican News Official Live Widget
+              </h2>
+            </div>
+            <span className="text-xs font-serif italic text-amber-200/90">
+              Dicastery for Communication • vaticannews.va
+            </span>
+          </div>
+          <blockquote className="mt-3 text-xs sm:text-sm text-stone-200 font-serif italic leading-relaxed border-l-2 border-amber-400/70 pl-3.5">
+            &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country. It is a way for your parishes and communities to constantly obtain information from the primary source.&rdquo;
+            <footer className="mt-1 not-italic font-semibold text-amber-300">
+              — In Christ, Leo XIV
+            </footer>
+          </blockquote>
+        </div>
+
+        <div className="p-3 sm:p-5 bg-[#FAF8F5]">
+          <VaticanNewsWidgetEmbed
+            lang="en"
+            fontSize="14"
+            carouselVideoAuto="true"
+            carouselVideoTime="medium"
+          />
+        </div>
+      </section>
       
       {/* News Banner */}
       <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40">
