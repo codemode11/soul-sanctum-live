@@ -519,34 +519,7 @@ ${selectedCommentary.practicalApplication}`;
               </span>
             </div>
 
-            {/* Line 2: Seven Months (November, December, January, February, March, April, May) directly under "Daily Commentary Passages" */}
-            <div>
-              <div className="flex flex-wrap items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
-                {[
-                  { name: 'November', count: 30 },
-                  { name: 'December', count: 31 },
-                  { name: 'January', count: 31 },
-                  { name: 'February', count: 28 },
-                  { name: 'March', count: 31 },
-                  { name: 'April', count: 30 },
-                  { name: 'May', count: 31 }
-                ].map(({ name, count }) => (
-                  <button
-                    key={name}
-                    onClick={() => handleSelectMonth(name)}
-                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
-                      selectedMonth === name
-                        ? 'bg-[#6B4423] text-white shadow-xs font-bold'
-                        : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
-                    }`}
-                  >
-                    {name} ({count})
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Line 3: Restored Passage Picker (Scrollable Passage Pills Row with Scroll Arrows) */}
+            {/* Line 2: Passage Picker (Scrollable Passage Pills Row with Scroll Arrows) */}
             <div className="relative flex items-center gap-1.5">
               <button
                 onClick={() => scrollPills('left')}
@@ -593,6 +566,33 @@ ${selectedCommentary.practicalApplication}`;
               >
                 <ChevronRight className="w-4 h-4 text-amber-800" />
               </button>
+            </div>
+
+            {/* Line 3: Commentaries by Month (November, December, January, February, March, April, May) */}
+            <div>
+              <div className="flex flex-wrap items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
+                {[
+                  { name: 'November', count: 30 },
+                  { name: 'December', count: 31 },
+                  { name: 'January', count: 31 },
+                  { name: 'February', count: 28 },
+                  { name: 'March', count: 31 },
+                  { name: 'April', count: 30 },
+                  { name: 'May', count: 31 }
+                ].map(({ name, count }) => (
+                  <button
+                    key={name}
+                    onClick={() => handleSelectMonth(name)}
+                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                      selectedMonth === name
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold'
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
+                    }`}
+                  >
+                    {name} ({count})
+                  </button>
+                ))}
+              </div>
             </div>
 
           </div>
