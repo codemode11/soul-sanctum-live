@@ -624,20 +624,10 @@ ${reading.gospel.text}`;
         const dailyHomily = getDailySaintHomily(reading);
         return (
           <article className="bg-[#F8F4ED] text-[#2C1C0E] rounded-xl p-6 sm:p-8 shadow-sm border border-[#DDD0BE] space-y-5">
-            <div className="border-b border-[#E3D6C5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#8C6239] text-white text-[11px] font-bold uppercase tracking-wider font-serif">
-                    Saints & Doctors of the Church
-                  </span>
-                  <span className="text-xs text-[#6B523B] font-serif font-semibold">
-                    {reading.gospel.citation} • {dailyHomily.yearDelivered}
-                  </span>
-                </div>
-                <h4 className="font-serif text-xl sm:text-2xl font-bold text-[#2A1B0E]">
-                  Homily
-                </h4>
-              </div>
+            <div className="border-b border-[#E3D6C5] pb-3">
+              <h4 className="font-serif text-xl sm:text-2xl font-bold text-[#2A1B0E]">
+                Homily
+              </h4>
             </div>
 
             <div className="pt-2 space-y-4">
