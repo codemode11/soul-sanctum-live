@@ -75,8 +75,9 @@ ${reading.reflection.content}`;
                 className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider"
                 style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                {colorMeta.name} • {reading.liturgicalRank}
+                <span>{colorMeta.name}</span>
+                <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
+                <span>{reading.liturgicalRank}</span>
               </span>
               <span className="text-xs text-stone-300 font-serif-sacred">
                 {reading.liturgicalSeason}
