@@ -296,24 +296,36 @@ ${reading.gospel.text}`;
 
           {/* Line 3: Calendar and Settings lowered at the right side */}
           <div className="flex items-center justify-end gap-5 sm:gap-7 mt-auto pt-4 shrink-0">
-            <div className="flex items-center gap-1.5 shrink-0">
-              <button
-                onClick={handlePrevDay}
-                className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
-                title="Previous Liturgical Day"
+            {/* Unified Single Element: [ < | Calendar Date | > ] with Thin Separators */}
+            <div className="relative shrink-0">
+              <div
+                className={`inline-flex items-center h-8 rounded-md transition-all border overflow-hidden ${
+                  isCalendarPickerOpen
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+                }`}
               >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              {/* Interactive Theme-Matched Liturgical Calendar Picker */}
-              <div className="relative shrink-0">
-                <button 
+                {/* Left Arrow: Previous Day */}
+                <button
+                  type="button"
+                  onClick={handlePrevDay}
+                  className="h-full px-2.5 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  title="Previous Liturgical Day"
+                  aria-label="Previous Liturgical Day"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+
+                {/* Thin Separator 1 */}
+                <span className="w-px h-3.5 bg-[#8B5A2B]/60 self-center shrink-0" aria-hidden="true" />
+
+                {/* Center: Liturgical Calendar Toggle */}
+                <button
+                  type="button"
                   onClick={() => setIsCalendarPickerOpen(!isCalendarPickerOpen)}
-                  className={`h-8 flex items-center gap-1.5 px-3 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer border ${
-                    isCalendarPickerOpen 
-                      ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40' 
-                      : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
-                  }`}
+                  className="h-full flex items-center gap-1.5 px-3 text-xs font-medium hover:text-[#F7EBE1] hover:bg-white/10 transition-colors cursor-pointer select-none"
                   title="Open Liturgical Calendar"
+                  aria-label="Open Liturgical Calendar"
                 >
                   <CalendarIcon className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
                   <span className="whitespace-nowrap leading-none">
@@ -323,21 +335,29 @@ ${reading.gospel.text}`;
                   </span>
                 </button>
 
-                <LiturgicalCalendarPicker
-                  selectedDateStr={reading.date}
-                  onSelectDate={onSelectDate}
-                  isOpen={isCalendarPickerOpen}
-                  onClose={() => setIsCalendarPickerOpen(false)}
-                  align="right"
-                />
+                {/* Thin Separator 2 */}
+                <span className="w-px h-3.5 bg-[#8B5A2B]/60 self-center shrink-0" aria-hidden="true" />
+
+                {/* Right Arrow: Next Day */}
+                <button
+                  type="button"
+                  onClick={handleNextDay}
+                  className="h-full px-2.5 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  title="Next Liturgical Day"
+                  aria-label="Next Liturgical Day"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
               </div>
-              <button
-                onClick={handleNextDay}
-                className="w-8 h-8 flex items-center justify-center rounded-md bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer shrink-0"
-                title="Next Liturgical Day"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+
+              {/* Theme-Matched Liturgical Calendar Picker Dropdown */}
+              <LiturgicalCalendarPicker
+                selectedDateStr={reading.date}
+                onSelectDate={onSelectDate}
+                isOpen={isCalendarPickerOpen}
+                onClose={() => setIsCalendarPickerOpen(false)}
+                align="right"
+              />
             </div>
 
             <button
