@@ -1051,7 +1051,6 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div>
               <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-950 dark:text-amber-300 mb-2">
-                <SaintWithHaloIcon className="w-4 h-4 text-amber-800 dark:text-amber-400" />
                 <span>Alban Butler&apos;s Lives of the Saints</span>
                 <span aria-hidden="true">·</span>
                 <span>Daily Roman Martyrology</span>
