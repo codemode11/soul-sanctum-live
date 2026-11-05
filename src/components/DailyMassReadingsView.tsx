@@ -490,7 +490,10 @@ ${reading.gospel.text}`;
               {reading.firstReading.citation}
             </p>
             {reading.firstReading.theme && (
-              <p className="font-serif text-amber-900/95 text-sm sm:text-base md:text-[17px] font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-tight">
+              <p 
+                className="font-serif text-amber-900/95 font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-tight"
+                style={{ fontSize: scriptureStyle.fontSize }}
+              >
                 {toCurvedQuotes(`\u201C${reading.firstReading.theme.trim().replace(/[.!?]?$/, '.')}\u201D`)}
               </p>
             )}
