@@ -1220,8 +1220,8 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                     <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold">
                       Liturgical Vestments
                     </dt>
-                    <dd className="font-semibold text-stone-950 dark:text-stone-100 text-right capitalize">
-                      {colorInfo.name}
+                    <dd className="font-serif text-base text-stone-950 dark:text-stone-100 text-right">
+                      {colorInfo.name === 'White' ? 'White / Gold' : colorInfo.name}
                     </dd>
                   </div>
 
