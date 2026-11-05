@@ -261,6 +261,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       subtext: 'Feasts, Lives and Patronages' 
     },
     { 
+      id: 'catechism', 
+      label: 'Catechism', 
+      icon: BetterScrollIcon, 
+      tag: 'Doctrine', 
+      subtext: 'Pillars of Catholic Faith' 
+    },
+    { 
       id: 'divine-office', 
       label: 'Divine Office', 
       icon: DivineOfficeBreviaryIcon, 
@@ -287,13 +294,6 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: VisioDivinaEyeBlinkIcon, 
       tag: 'Prayer', 
       subtext: 'Contemplation of Sacred Art' 
-    },
-    { 
-      id: 'catechism', 
-      label: 'Catechism', 
-      icon: BetterScrollIcon, 
-      tag: 'Doctrine', 
-      subtext: 'Pillars of Catholic Faith' 
     },
     { 
       id: 'wisdom', 
