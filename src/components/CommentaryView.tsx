@@ -595,59 +595,6 @@ ${selectedCommentary.practicalApplication}`;
 
       {/* Main Commentary Display Card */}
       <article className="bg-white rounded-xl p-5 sm:p-7 shadow-sm border border-stone-200/90 space-y-4">
-        
-        {/* Top Passage Navigation Arrows & Controls */}
-        <div className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/90 border border-stone-200 text-xs">
-          <button
-            onClick={handlePrevPassage}
-            disabled={currentIndex <= 0}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-white cursor-pointer transition-all shadow-2xs"
-            title="Go to previous passage commentary"
-            aria-label="Previous passage commentary"
-          >
-            <ChevronLeft className="w-4 h-4 text-amber-800" />
-            <span className="truncate max-w-[140px] sm:max-w-none">
-              {currentIndex > 0
-                ? `${activeList[currentIndex - 1].dateLabel ? `${activeList[currentIndex - 1].dateLabel}: ` : ''}${activeList[currentIndex - 1].scriptureReference}`
-                : 'Previous Passage'}
-            </span>
-          </button>
-
-          <span className="font-cinzel text-amber-950 font-bold text-[11px] uppercase tracking-wider bg-amber-100/70 px-2.5 py-1 rounded-full border border-amber-200/80">
-            Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
-          </span>
-
-          <button
-            onClick={handleNextPassage}
-            disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-white cursor-pointer transition-all shadow-2xs"
-            title="Go to next passage commentary"
-            aria-label="Next passage commentary"
-          >
-            <span className="truncate max-w-[140px] sm:max-w-none">
-              {currentIndex >= 0 && currentIndex < activeList.length - 1
-                ? `${activeList[currentIndex + 1].dateLabel ? `${activeList[currentIndex + 1].dateLabel}: ` : ''}${activeList[currentIndex + 1].scriptureReference}`
-                : 'Next Passage'}
-            </span>
-            <ChevronRight className="w-4 h-4 text-amber-800" />
-          </button>
-        </div>
-
-        {/* Header and Source Details */}
-        <div className="border-b border-stone-200 pb-2.5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-          <div>
-            <h3 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
-              {selectedCommentary.sourceName}
-            </h3>
-            <p className="text-xs font-semibold text-amber-900 font-cinzel">
-              Regarding: {selectedCommentary.scriptureReference} • <span className="text-stone-500 font-serif italic font-normal">{selectedCommentary.author.replace(/^.*?\bwith\s+/i, '')}</span>
-            </p>
-          </div>
-          <span className="text-amber-900 text-[11px] font-bold font-cinzel self-start sm:self-auto shrink-0">
-            {selectedCommentary.sourceEra}
-          </span>
-        </div>
-
         {/* The Scripture Text */}
         <div className="relative p-3.5 rounded-xl bg-[#FAF8F5] shadow-2xs space-y-0.5">
           <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-800" />
