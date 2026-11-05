@@ -480,42 +480,22 @@ ${reading.gospel.text}`;
           ? 'border-amber-500 ring-2 ring-amber-400/50 shadow-xl bg-amber-50/95' 
           : 'bg-white border-stone-200/90 shadow-sm'
       }`}>
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-stone-200 pb-3 gap-4">
-          <div className="shrink-0">
-            <div className="flex items-center gap-2.5">
-              <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
-                First Reading
-              </h3>
-            </div>
-            <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 mt-0.5">
+        <div className="border-b border-stone-200 pb-3">
+          <div className="flex items-center gap-2.5">
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
+              First Reading
+            </h3>
+          </div>
+          <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 mt-0.5">
+            <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 shrink-0">
               {reading.firstReading.citation}
             </p>
+            {reading.firstReading.theme && (
+              <p className="font-serif text-amber-900/95 text-xs sm:text-[13px] md:text-sm font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar">
+                {toCurvedQuotes(`\u201C${reading.firstReading.theme.trim().replace(/[.!?]?$/, '.')}\u201D`)}
+              </p>
+            )}
           </div>
-
-          {reading.firstReading.theme && (() => {
-            const [line1, line2] = formatTwoLineQuotation(reading.firstReading.theme);
-            return (
-              <div className="self-start sm:self-auto sm:ml-auto">
-                <p 
-                  className="italic font-serif text-amber-900/95 font-semibold drop-shadow-2xs transition-all duration-200 inline-flex flex-col"
-                  style={italicVerseStyle}
-                >
-                  <span className="flex justify-between gap-x-[0.28em] whitespace-nowrap w-full">
-                    {line1.split(' ').map((word, i) => (
-                      <span key={i}>{word}</span>
-                    ))}
-                  </span>
-                  {line2 && (
-                    <span className="flex justify-between gap-x-[0.28em] whitespace-nowrap w-full">
-                      {line2.split(' ').map((word, i) => (
-                        <span key={i}>{word}</span>
-                      ))}
-                    </span>
-                  )}
-                </p>
-              </div>
-            );
-          })()}
         </div>
 
         <div className="font-serif-sacred text-stone-800 whitespace-pre-line" style={scriptureStyle}>
