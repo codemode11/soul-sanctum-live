@@ -1236,23 +1236,24 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               <div className="pt-6 mt-6 border-t border-stone-900/15 dark:border-stone-700/60 flex items-center gap-2.5">
                 <button
                   onClick={handleReadAloud}
-                  className={`flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
+                  className={`inline-flex items-center justify-center p-2.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                     isReadingAloud
                       ? 'bg-amber-700 text-white'
                       : 'bg-stone-900/90 hover:bg-stone-900 dark:bg-stone-800 dark:hover:bg-stone-700 text-white'
                   }`}
+                  title={isReadingAloud ? 'Stop Reading' : 'Listen to Life & Prayer'}
+                  aria-label={isReadingAloud ? 'Stop Reading' : 'Listen to Life & Prayer'}
                 >
                   {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                  <span>{isReadingAloud ? 'Stop Reading' : 'Listen to Life & Prayer'}</span>
                 </button>
 
                 <button
                   onClick={handleCopy}
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-lg border border-white/70 dark:border-stone-700 bg-white/55 dark:bg-stone-900/60 hover:bg-white/80 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-200 text-xs font-semibold backdrop-blur-md transition-colors"
-                  title="Copy Saint Biography & Martyrology"
+                  className="inline-flex items-center justify-center p-2.5 rounded-lg border border-white/70 dark:border-stone-700 bg-white/55 dark:bg-stone-900/60 hover:bg-white/80 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-200 text-xs font-semibold backdrop-blur-md transition-colors cursor-pointer"
+                  title={copied ? 'Copied' : 'Copy Saint Biography & Martyrology'}
+                  aria-label={copied ? 'Copied' : 'Copy Saint Biography & Martyrology'}
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-                  <span>{copied ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
             </div>
