@@ -4,6 +4,7 @@ import { Navigation, ActiveTab } from './components/Navigation';
 import { DailyMassReadingsView } from './components/DailyMassReadingsView';
 import { CatechismView } from './components/CatechismView';
 import { SaintOfTheDayView } from './components/SaintOfTheDayView';
+import { DivineOfficeView } from './components/DivineOfficeView';
 import { RosaryAndChapletView } from './components/RosaryAndChapletView';
 import { NovenaTrackerView } from './components/NovenaTrackerView';
 import { ChurchCalendarView } from './components/ChurchCalendarView';
@@ -601,6 +602,9 @@ export default function App() {
                 currentDay={parseInt(currentDateStr.split('-')[2], 10)}
               />
             )}
+
+            {/* Divine Office (Liturgy of the Hours) */}
+            {activeTab === 'divine-office' && <DivineOfficeView />}
 
             {/* 3. Reflection (Daily Liturgical Meditation) */}
             {activeTab === 'reflection' && (

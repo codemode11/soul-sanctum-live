@@ -1865,6 +1865,37 @@ export const CatholicLinksTurnIcon: React.FC<IconProps> = ({ className = 'w-5 h-
 
 export const CatholicLinksTightenIcon = CatholicLinksTurnIcon;
 
+/**
+ * 28. Divine Office (Liturgy of the Hours / Breviary) Icon:
+ * Ornate Breviary book with ribbon bookmark and liturgical cross.
+ */
+export const DivineOfficeBreviaryIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Divine Office — Liturgy of the Hours"
+  >
+    {/* Breviary Book Cover */}
+    <path
+      d="M5 3.5h12.5A2.5 2.5 0 0 1 20 6v13.5a1 1 0 0 1-1 1H6.5A2.5 2.5 0 0 1 4 18V4.5a1 1 0 0 1 1-1Z"
+      fill="currentColor"
+      fillOpacity="0.1"
+    />
+    {/* Book Spine & Bottom Page Edge */}
+    <path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20" strokeWidth="1.6" />
+    {/* Sacred Cross on the Breviary Cover */}
+    <line x1="12" y1="6.5" x2="12" y2="12.5" strokeWidth="1.75" />
+    <line x1="9.6" y1="8.7" x2="14.4" y2="8.7" strokeWidth="1.75" />
+    {/* Hanging Breviary Ribbon Bookmark */}
+    <path d="M9.5 15v6.5l2-1.4 2 1.4V15" strokeWidth="1.5" fill="currentColor" fillOpacity="0.2" />
+  </svg>
+);
+
 
 
 

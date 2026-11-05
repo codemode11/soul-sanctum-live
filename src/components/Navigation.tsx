@@ -51,12 +51,14 @@ import {
   CatholicGlossaryBookIcon,
   ChurchCalendarPageFlipIcon,
   SacredArtGallerySwapIcon,
-  CatholicLinksTightenIcon
+  CatholicLinksTightenIcon,
+  DivineOfficeBreviaryIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
   | 'readings'
   | 'saints'
+  | 'divine-office'
   | 'reflection'
   | 'visio-divina'
   | 'catechism'
@@ -257,6 +259,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: SaintWithHaloIcon, 
       tag: 'Hagiography', 
       subtext: 'Feasts, Lives and Patronages' 
+    },
+    { 
+      id: 'divine-office', 
+      label: 'Divine Office', 
+      icon: DivineOfficeBreviaryIcon, 
+      tag: 'Breviary', 
+      subtext: 'Liturgy of the Hours Text and Audio' 
     },
     { 
       id: 'bible-flashcards', 
