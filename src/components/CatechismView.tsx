@@ -270,16 +270,15 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           <div className="flex items-center gap-2 shrink-0 self-start md:self-auto pt-2 md:pt-0">
             <button
               onClick={handleToggleReadAloud}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+              className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs flex items-center justify-center ${
                 isReadingAloud
                   ? 'bg-amber-600 text-white animate-pulse'
                   : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
               }`}
               title={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism Teaching & Magisterium'}
-              aria-label="Listen to Catechism"
+              aria-label={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}
             >
               {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
-              <span>{isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}</span>
             </button>
 
             <button
