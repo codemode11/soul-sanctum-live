@@ -337,15 +337,15 @@ ${selectedCommentary.practicalApplication}`;
             <button
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border text-xs font-medium ${
+              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
               }`}
               title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+              aria-label={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
             >
               <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-              <span>Settings</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
                   isTopSettingsOpen ? 'rotate-180' : ''

@@ -363,15 +363,15 @@ ${reading.gospel.text}`;
             <button
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border text-xs font-medium ${
+              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
               }`}
               title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+              aria-label={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
             >
               <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-              <span>Settings</span>
               <ChevronDown
                 className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
                   isTopSettingsOpen ? 'rotate-180' : ''
@@ -482,17 +482,15 @@ ${reading.gospel.text}`;
           : 'bg-white border-stone-200/90 shadow-sm'
       }`}>
         <div className="border-b border-stone-200 pb-3">
-          <div className="flex items-center gap-2.5">
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
-              First Reading
-            </h3>
-          </div>
-          <div className="flex flex-wrap items-baseline gap-x-6 sm:gap-x-8 gap-y-1.5 mt-1">
-            <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 shrink-0">
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal leading-tight">
+            First Reading
+          </h3>
+          <div className="flex flex-wrap items-baseline gap-x-6 sm:gap-x-8 gap-y-1 mt-0.5">
+            <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 shrink-0 leading-tight">
               {reading.firstReading.citation}
             </p>
             {reading.firstReading.theme && (
-              <p className="font-serif text-amber-900/95 text-sm sm:text-base md:text-[17px] font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar">
+              <p className="font-serif text-amber-900/95 text-sm sm:text-base md:text-[17px] font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-tight">
                 {toCurvedQuotes(`\u201C${reading.firstReading.theme.trim().replace(/[.!?]?$/, '.')}\u201D`)}
               </p>
             )}
