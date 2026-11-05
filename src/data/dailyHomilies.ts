@@ -365,9 +365,9 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of the Church',
     workTitle: 'Exposition of the Holy Gospel According to Luke (Book VII)',
     yearDelivered: 'c. 389 AD',
-    homilyTitle: 'On the Good Shepherd Who Carries the Lost Sheep upon His Shoulders',
+    homilyTitle: 'On the Good Shepherd Who Carries the Lost Sheep\nupon His Shoulders',
     homilyAttribution: 'St. Ambrose of Milan, Doctor of the Church (Exposition of the Holy Gospel According to Luke, Book VII, delivered at Milan, c. 389 AD)',
-    homilyHeading: 'On the Good Shepherd Who Carries the Lost Sheep upon His Shoulders\nSt. Ambrose of Milan, Doctor of the Church (Exposition of the Holy Gospel According to Luke, Book VII, delivered at Milan, c. 389 AD)',
+    homilyHeading: 'On the Good Shepherd Who Carries the Lost Sheep\nupon His Shoulders\nSt. Ambrose of Milan, Doctor of the Church (Exposition of the Holy Gospel According to Luke, Book VII, delivered at Milan, c. 389 AD)',
     paragraphs: [
       'Take courage, O sinner, and never despair of pardon when you behold the three parables by which our Savior heals the wounds of fallen humanity! Who is this Shepherd who leaves the ninety-nine sheep in the heavenly heights to seek the one lost sheep in the wilderness? It is Christ the Lord! Who is the Woman who lights her lamp and sweeps the house to recover the lost silver coin? It is the Church of Christ! And who is the Father who runs out to embrace the returning prodigal? It is God the Father of mercies!',
       'Rich is That Shepherd of whose flock the entire human race is but a single hundredth part, while the ninety-nine are the countless choirs of blessed Angels! When this one sheep strayed into the thorny thickets of sin and was too exhausted to walk back on its own, the Good Shepherd did not beat it or abandon it. He bent down from heaven in the Incarnation and lifted the weary sheep upon His own sacred shoulders.',

@@ -633,7 +633,7 @@ ${reading.gospel.text}`;
             <div className="pt-2 space-y-4">
               <div>
                 <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#2A1B0E] leading-snug">
-                  <span className="block">{dailyHomily.homilyTitle}</span>
+                  <span className="block whitespace-pre-line">{dailyHomily.homilyTitle}</span>
                   <span className="block text-sm sm:text-base font-normal text-[#4A3520] mt-1.5">
                     {dailyHomily.homilyAttribution}
                   </span>
