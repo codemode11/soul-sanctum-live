@@ -872,7 +872,9 @@ BLESSED THEOPHYLACT: Notice that the sheep wanders away through brutish ignoranc
 
 CORNELIUS À LAPIDE, S.J.: "I tell you, there will be rejoicing among the angels of God over one sinner who repents." Lapide observes that nothing gives greater glory to the Heart of Jesus or greater joy to the court of heaven than the contrite confession of a repentant soul, coupled with apostolic zeal to bring wandering souls back to the Sacraments.
 
-CATECHISM OF THE CATHOLIC CHURCH (CCC 545, 1439, 1465): Jesus invites sinners to the table of the Kingdom: "I came not to call the righteous, but sinners." In the Sacrament of Penance, the priest is the sign and the instrument of God's merciful love for the sinner, and the Good Shepherd places the lost sheep back upon His shoulders.`,
+CATECHISM OF THE CATHOLIC CHURCH (CCC 545, 1439, 1465): Jesus invites sinners to the table of the Kingdom: "I came not to call the righteous, but sinners." In the Sacrament of Penance, the priest is the sign and the instrument of God's merciful love for the sinner, and the Good Shepherd places the lost sheep back upon His shoulders.
+
+VATICAN COUNCIL II & MAGISTERIUM (DEI VERBUM & RECONCILIATIO ET PAENITENTIA): The Church, following her Divine Master, never ceases to proclaim the boundless mercy of God offered in the Sacraments. As Saint John Paul II taught in Dives in Misericordia, the tender mercy revealed in Luke's fifteenth chapter is the definitive manifestation of divine love, which is ever greater than sin and opens the gates of eternal reconciliation.`,
     practicalApplication: 'Never despair of God\'s mercy, no matter how far you or a loved one may have wandered; approach the Sacrament of Confession with confidence and pray today for the conversion of sinners.'
   },
 
@@ -2707,7 +2709,9 @@ BLESSED THEOPHYLACT: Let each of us apply the words of this Holy Gospel (${targe
 
 CORNELIUS À LAPIDE, S.J.: Observe the fourfold Catholic depth of this Holy Gospel (${targetCitation}) according to sacred exegesis. Literally, Christ our Divine Master speaks to His disciples on ${reading.liturgicalDay}, summoning us to spiritual watchfulness. Allegorically, He reveals the mystery of His Risen Body and the sacraments of the Church. Morally (tropologically), He instructs each Christian soul to cleanse the conscience from every hidden fault and to abound in secret works of charity. Anagogically, He directs our longing toward the heavenly Jerusalem where the elect shall contemplate the Holy Trinity face to face.
 
-VATICAN MAGISTERIUM (VATICAN II & CATECHISM): As Vatican II teaches in Dei Verbum, the Sacred Liturgy and Scripture nourish the faithful with the bread of life from the single table of God's Word and the Eucharistic Body of Christ. The Catechism of the Catholic Church reminds us that reading Scripture under the guidance of the Magisterium opens the heart to the living voice of the Holy Spirit.`,
+CATECHISM OF THE CATHOLIC CHURCH (CCC 101-104, 2653): In the Sacred Books, the Father Who is in heaven comes lovingly to meet His children and talks with them. The Church has always venerated the divine Scriptures as she venerates the Body of the Lord, presenting to the faithful the Word of God as the constant food of the soul and source of spiritual strength.
+
+VATICAN COUNCIL II & MAGISTERIUM (DEI VERBUM & CATECHISM): As the Second Vatican Council affirms in Dei Verbum, the task of authentically interpreting the Word of God has been entrusted exclusively to the living Magisterium of the Church. Through the guidance of the Magisterium, the Holy Spirit enables every baptized believer to hear the voice of Christ calling the soul to deeper faith, repentance, and fraternal charity.`,
           practicalApplication: `Read today's Gospel (${targetCitation}) slowly twice today—once in the morning and once at evening examination of conscience—asking Our Lord through the intercession of the saints to live "${reading.responsorialPsalm.antiphon}" in concrete acts of charity.`
         };
         result.push(dailyComm);
