@@ -41,7 +41,7 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
     []
   );
 
-  const [selectedMonth, setSelectedMonth] = useState<'November' | 'December' | 'January'>('November');
+  const [selectedMonth, setSelectedMonth] = useState<string>('November');
 
   // Match initial commentary to currentReading date or default to Nov 4 (Luke 15:1-10)
   const initialCommentary = React.useMemo(() => {
@@ -82,7 +82,7 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
       const match = ninetyTwoCommentaries.find(c => c.dateKey === currentReading.date);
       if (match) {
         setSelectedCommentary(match);
-        if (match.monthName === 'November' || match.monthName === 'December' || match.monthName === 'January') {
+        if (match.monthName) {
           setSelectedMonth(match.monthName);
         }
         if (isReadingAloud) {
@@ -268,7 +268,7 @@ ${selectedCommentary.practicalApplication}`;
   const activeList = filteredCommentaries.length > 0 ? filteredCommentaries : monthFilteredList;
   const currentIndex = activeList.findIndex(c => c.id === selectedCommentary.id);
 
-  const handleSelectMonth = (month: 'November' | 'December' | 'January') => {
+  const handleSelectMonth = (month: string) => {
     setSelectedMonth(month);
     const firstInMonth = ninetyTwoCommentaries.find(c => c.monthName === month);
     if (firstInMonth) {
@@ -519,25 +519,30 @@ ${selectedCommentary.practicalApplication}`;
               </span>
             </div>
 
-            {/* Line 2: November, December, and January directly under "Daily Commentary Passages" */}
+            {/* Line 2: Seven Months (November, December, January, February, March, April, May) directly under "Daily Commentary Passages" */}
             <div>
-              <div className="inline-flex items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
-                {(['November', 'December', 'January'] as const).map(month => {
-                  const count = month === 'November' ? 30 : 31;
-                  return (
-                    <button
-                      key={month}
-                      onClick={() => handleSelectMonth(month)}
-                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
-                        selectedMonth === month
-                          ? 'bg-[#6B4423] text-white shadow-xs font-bold'
-                          : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
-                      }`}
-                    >
-                      {month} ({count})
-                    </button>
-                  );
-                })}
+              <div className="flex flex-wrap items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
+                {[
+                  { name: 'November', count: 30 },
+                  { name: 'December', count: 31 },
+                  { name: 'January', count: 31 },
+                  { name: 'February', count: 28 },
+                  { name: 'March', count: 31 },
+                  { name: 'April', count: 30 },
+                  { name: 'May', count: 31 }
+                ].map(({ name, count }) => (
+                  <button
+                    key={name}
+                    onClick={() => handleSelectMonth(name)}
+                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                      selectedMonth === name
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold'
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
+                    }`}
+                  >
+                    {name} ({count})
+                  </button>
+                ))}
               </div>
             </div>
 

@@ -2627,7 +2627,11 @@ export function getThreeMonthDailyCommentaries(): BibleCommentary[] {
   const monthSpecs = [
     { year: 2026, month: 11, days: 30, name: 'November', abbrev: 'Nov' },
     { year: 2026, month: 12, days: 31, name: 'December', abbrev: 'Dec' },
-    { year: 2027, month: 1, days: 31, name: 'January', abbrev: 'Jan' }
+    { year: 2027, month: 1, days: 31, name: 'January', abbrev: 'Jan' },
+    { year: 2027, month: 2, days: 28, name: 'February', abbrev: 'Feb' },
+    { year: 2027, month: 3, days: 31, name: 'March', abbrev: 'Mar' },
+    { year: 2027, month: 4, days: 30, name: 'April', abbrev: 'Apr' },
+    { year: 2027, month: 5, days: 31, name: 'May', abbrev: 'May' }
   ];
 
   for (const spec of monthSpecs) {

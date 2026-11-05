@@ -490,7 +490,7 @@ ${reading.gospel.text}`;
           </p>
           {reading.firstReading.theme && (
             <p 
-              className="font-serif text-amber-900/95 font-normal tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-relaxed mt-4.5"
+              className="font-serif text-amber-900/95 font-bold tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-relaxed mt-4.5"
               style={{ fontSize: scriptureStyle.fontSize }}
             >
               {toCurvedQuotes(reading.firstReading.theme.trim().replace(/^["'\u201C\u2018]+|["'\u201D\u2019]+$/g, '').replace(/[.!?]?$/, '.'))}
