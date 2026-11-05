@@ -1344,20 +1344,20 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-3">
                         <span className="font-serif font-bold text-sm tracking-widest text-red-950 dark:text-amber-300">
-                          {romanNumerals[idx] || idx + 2} · Martyrology
+                          {romanNumerals[idx] || idx + 2}.
                         </span>
 
                         <button
                           onClick={() => handleReadCompanion(companion, idx)}
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors ${
+                          className={`inline-flex items-center justify-center p-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                             isSpeakingThis
                               ? 'bg-amber-700 text-white'
                               : 'bg-white/55 dark:bg-stone-800/70 hover:bg-white/80 dark:hover:bg-stone-700 text-stone-900 dark:text-stone-200 border border-white/60 dark:border-stone-700'
                           }`}
-                          title={`Listen to ${companion.name}`}
+                          title={isSpeakingThis ? `Stop reading ${companion.name}` : `Listen to ${companion.name}`}
+                          aria-label={isSpeakingThis ? `Stop reading ${companion.name}` : `Listen to ${companion.name}`}
                         >
                           {isSpeakingThis ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                          <span>{isSpeakingThis ? 'Stop' : 'Listen'}</span>
                         </button>
                       </div>
 
