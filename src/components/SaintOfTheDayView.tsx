@@ -1053,8 +1053,6 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               <span>Alban Butler&apos;s Lives of the Saints</span>
               <span aria-hidden="true">·</span>
               <span>Daily Roman Martyrology</span>
-              <span aria-hidden="true">·</span>
-              <span>{selectedSaint.feastDate}</span>
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -1265,7 +1263,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 {/* Saint Title Block */}
                 <div className="border-b border-stone-200 dark:border-stone-700/60 pb-6">
                   <div className="text-xs font-semibold uppercase tracking-widest text-red-950 dark:text-amber-300 mb-2">
-                    I · Principal Feast of {selectedSaint.feastDate}
+                    I. Principal Feast
                   </div>
                   <h2 className="font-serif text-3xl sm:text-5xl font-bold text-stone-950 dark:text-stone-100 leading-tight mb-2">
                     {selectedSaint.name}
