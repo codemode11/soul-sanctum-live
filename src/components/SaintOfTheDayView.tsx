@@ -1048,65 +1048,45 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
       <div className="bg-white/45 dark:bg-stone-950/50 backdrop-blur-xl backdrop-saturate-150 rounded-xl border border-white/60 dark:border-stone-700/60 ring-1 ring-inset ring-white/40 dark:ring-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.28)] p-6 sm:p-10 space-y-10">
         {/* Editorial Masthead & Daily Navigation Bar */}
         <header className="border-b border-stone-900/15 dark:border-stone-700/60 pb-6">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-950 dark:text-amber-300 mb-2">
-                <span>Alban Butler&apos;s Lives of the Saints</span>
-                <span aria-hidden="true">·</span>
-                <span>Daily Roman Martyrology</span>
-                <span aria-hidden="true">·</span>
-                <span>{selectedSaint.feastDate}</span>
-              </div>
-              <h1 className="font-serif text-3xl sm:text-5xl font-bold text-stone-950 dark:text-stone-100 tracking-tight drop-shadow-2xs">
-                Saint of the Day
-              </h1>
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-amber-950 dark:text-amber-300">
+              <span>Alban Butler&apos;s Lives of the Saints</span>
+              <span aria-hidden="true">·</span>
+              <span>Daily Roman Martyrology</span>
+              <span aria-hidden="true">·</span>
+              <span>{selectedSaint.feastDate}</span>
             </div>
 
-            {/* Interactive Date Switcher & Directory Toggle */}
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center bg-white/50 dark:bg-stone-900/55 backdrop-blur-md border border-white/70 dark:border-stone-700/70 rounded-xl p-1 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <h1 className="font-serif text-3xl sm:text-5xl font-bold text-stone-950 dark:text-stone-100 tracking-tight drop-shadow-2xs leading-none">
+                Saint of the Day
+              </h1>
+
+              {/* Interactive Date Switcher aligned with Saint of the Day */}
+              <div className="inline-flex items-center bg-white/50 dark:bg-stone-900/55 backdrop-blur-md border border-white/70 dark:border-stone-700/70 rounded-xl p-1 shadow-xs self-start sm:self-end">
                 <button
                   onClick={() => handleShiftDay(-1)}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors cursor-pointer"
                   title="Previous Day"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span className="hidden sm:inline">Previous</span>
                 </button>
 
-                <div className="flex items-center gap-2 px-3.5 py-2 text-stone-950 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-900/15 dark:border-stone-700/60">
+                <div className="flex items-center gap-2 px-3.5 py-1.5 text-stone-950 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-900/15 dark:border-stone-700/60">
                   <Calendar className="w-3.5 h-3.5 text-amber-800 dark:text-amber-400" />
                   <span>{selectedSaint.feastDate}</span>
                 </div>
 
                 <button
                   onClick={() => handleShiftDay(1)}
-                  className="inline-flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors cursor-pointer"
                   title="Next Day"
                 >
                   <span className="hidden sm:inline">Next</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
-
-              <button
-                onClick={handleResetToToday}
-                className="px-3.5 py-2.5 rounded-lg text-xs font-semibold bg-stone-900/85 hover:bg-stone-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white backdrop-blur-md transition-colors shadow-xs"
-              >
-                Today
-              </button>
-
-              <button
-                onClick={() => setIsDirectoryOpen(prev => !prev)}
-                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg text-xs font-semibold border backdrop-blur-md transition-colors ${
-                  isDirectoryOpen
-                    ? 'bg-amber-800 text-white border-amber-700 shadow-xs'
-                    : 'bg-white/50 dark:bg-stone-900/55 text-stone-900 dark:text-stone-200 border-white/70 dark:border-stone-700/70 hover:bg-white/75 dark:hover:bg-stone-800/75'
-                }`}
-              >
-                <Search className="w-3.5 h-3.5" />
-                <span>{isDirectoryOpen ? 'Close Directory' : 'Search All Saints'}</span>
-              </button>
             </div>
           </div>
 
