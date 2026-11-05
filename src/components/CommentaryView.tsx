@@ -510,77 +510,85 @@ ${selectedCommentary.practicalApplication}`;
         {/* RECTANGLE 3: Daily Commentary Passages (Hidden by default like Rectangle 2) */}
         {isTopSettingsOpen && (
           <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/45 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 rounded-b-xl animate-fadeIn">
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-              {/* Daily Commentary Passages + Month Tabs directly underneath */}
-              <div className="space-y-2.5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800">
-                    Daily Commentary Passages
-                  </span>
-                  <span className="text-[11px] font-semibold text-amber-900 bg-amber-100/90 px-2.5 py-0.5 rounded-full font-cinzel border border-amber-200/80">
-                    {selectedCommentary.dateLabel ? `${selectedCommentary.dateLabel} • ` : ''}Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
-                  </span>
-                </div>
+            
+            {/* Line 1: Daily Commentary Passages */}
+            <div className="flex items-center">
+              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-800">
+                Daily Commentary Passages
+              </span>
+            </div>
 
-                {/* November, December, and January directly under "Daily Commentary Passages" */}
-                <div className="inline-flex items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
-                  {(['November', 'December', 'January'] as const).map(month => {
-                    const count = month === 'November' ? 30 : 31;
-                    return (
-                      <button
-                        key={month}
-                        onClick={() => handleSelectMonth(month)}
-                        className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
-                          selectedMonth === month
-                            ? 'bg-[#6B4423] text-white shadow-xs font-bold'
-                            : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
-                        }`}
-                      >
-                        {month} ({count})
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Search & Quick Prev/Next Controls */}
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center gap-1 bg-white/80 border border-stone-200/80 rounded-lg p-0.5 shadow-2xs">
-                  <button
-                    onClick={handlePrevPassage}
-                    disabled={currentIndex <= 0}
-                    className="p-1 rounded-md text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
-                    title="Previous Passage"
-                    aria-label="Previous Passage"
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5 text-amber-800" />
-                    <span className="hidden sm:inline">Prev</span>
-                  </button>
-                  <span className="w-px h-3.5 bg-stone-300" />
-                  <button
-                    onClick={handleNextPassage}
-                    disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
-                    className="p-1 rounded-md text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
-                    title="Next Passage"
-                    aria-label="Next Passage"
-                  >
-                    <span className="hidden sm:inline">Next</span>
-                    <ChevronRight className="w-3.5 h-3.5 text-amber-800" />
-                  </button>
-                </div>
-
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search date, verse, saint..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="text-xs pl-7 pr-2.5 py-1.5 rounded-lg bg-white/80 border border-stone-200/80 focus:outline-none focus:border-amber-700 w-full sm:w-44"
-                  />
-                  <Search className="w-3 h-3 text-stone-500 absolute left-2.5 top-2" />
-                </div>
+            {/* Line 2: November, December, and January directly under "Daily Commentary Passages" */}
+            <div>
+              <div className="inline-flex items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
+                {(['November', 'December', 'January'] as const).map(month => {
+                  const count = month === 'November' ? 30 : 31;
+                  return (
+                    <button
+                      key={month}
+                      onClick={() => handleSelectMonth(month)}
+                      className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                        selectedMonth === month
+                          ? 'bg-[#6B4423] text-white shadow-xs font-bold'
+                          : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
+                      }`}
+                    >
+                      {month} ({count})
+                    </button>
+                  );
+                })}
               </div>
             </div>
+
+            {/* Line 3: Restored Passage Picker (Scrollable Passage Pills Row with Scroll Arrows) */}
+            <div className="relative flex items-center gap-1.5">
+              <button
+                onClick={() => scrollPills('left')}
+                className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
+                title="Scroll left"
+                aria-label="Scroll passage list left"
+              >
+                <ChevronLeft className="w-4 h-4 text-amber-800" />
+              </button>
+
+              <div
+                ref={scrollRef}
+                className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth w-full"
+              >
+                {activeList.map(comm => {
+                  const isSelected = comm.id === selectedCommentary.id;
+                  return (
+                    <button
+                      key={comm.id}
+                      ref={el => { pillRefs.current[comm.id] = el; }}
+                      onClick={() => handleSelectPassage(comm)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold ring-1 ring-amber-700'
+                          : 'bg-white/65 hover:bg-white/90 text-stone-800 border border-stone-200/80 hover:border-amber-400'
+                      }`}
+                    >
+                      {comm.dateLabel && (
+                        <span className={`text-[10px] font-semibold uppercase ${isSelected ? 'text-amber-200' : 'text-amber-900/80 font-cinzel'}`}>
+                          {comm.dateLabel}:
+                        </span>
+                      )}
+                      <span>{comm.scriptureReference}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                onClick={() => scrollPills('right')}
+                className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
+                title="Scroll right"
+                aria-label="Scroll passage list right"
+              >
+                <ChevronRight className="w-4 h-4 text-amber-800" />
+              </button>
+            </div>
+
           </div>
         )}
       </div>
