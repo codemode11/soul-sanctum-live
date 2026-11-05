@@ -253,7 +253,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </span>
             </div>
 
-            <h3 className="font-serif text-lg sm:text-xl font-bold text-amber-100/90 leading-snug pt-0.5">
+            <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 leading-tight pt-0.5">
               {selectedTopic.topicTitle}
             </h3>
 
