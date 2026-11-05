@@ -384,9 +384,9 @@ export const DAILY_SAINT_HOMILIES_DATABASE: DailySaintHomily[] = [
     doctorTitle: 'Doctor of Grace',
     workTitle: 'Sermons on the Liturgical Seasons & New Testament (Sermon 113)',
     yearDelivered: 'c. 410 AD',
-    homilyTitle: 'On Christian Stewardship and Providing for Our Eternal Dwelling',
+    homilyTitle: 'On Christian Stewardship and Providing for\nOur Eternal Dwelling',
     homilyAttribution: 'St. Augustine of Hippo, Doctor of the Church (Sermon 113, On the Words of the Gospel of Luke 16, delivered at Hippo Regius, c. 410 AD)',
-    homilyHeading: 'On Christian Stewardship and Providing for Our Eternal Dwelling\nSt. Augustine of Hippo, Doctor of the Church (Sermon 113, On the Words of the Gospel of Luke 16, delivered at Hippo Regius, c. 410 AD)',
+    homilyHeading: 'On Christian Stewardship and Providing for\nOur Eternal Dwelling\nSt. Augustine of Hippo, Doctor of the Church (Sermon 113, On the Words of the Gospel of Luke 16, delivered at Hippo Regius, c. 410 AD)',
     paragraphs: [
       'Why did our Lord Jesus Christ set before us the parable of the steward who was about to be dismissed from his office? Assuredly not to teach us fraud—far be it from the Truth to praise dishonesty! Rather, He praised the foresight with which that man provided for his future when he knew his present stewardship was coming to an end. For "the children of this world are more prudent in dealing with their own generation than the children of light."',
       'Every one of us in this mortal life is a steward, not an absolute proprietor, of the time, health, talents, and earthly resources entrusted to us by Almighty God. And very soon, at the hour of death, each of us will hear the voice of the Master: "Prepare a full account of your stewardship, for you can no longer be steward here!"',
