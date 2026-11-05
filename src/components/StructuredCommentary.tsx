@@ -169,6 +169,25 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
 }) => {
   const data = parseStructuredCommentary(commentaryText);
 
+  const renderCommentaryParagraph = (para: string, key: React.Key, containerClasses: string) => {
+    const colonIdx = para.indexOf(':');
+    if (colonIdx !== -1 && colonIdx < 90) {
+      const author = para.substring(0, colonIdx).trim();
+      const bodyText = para.substring(colonIdx + 1);
+      return (
+        <p key={key} className={`whitespace-pre-line ${containerClasses}`}>
+          <strong className="font-bold text-[#2A1B0E] font-serif tracking-normal">{toCurvedQuotes(author)}:</strong>
+          {toCurvedQuotes(bodyText)}
+        </p>
+      );
+    }
+    return (
+      <p key={key} className={`whitespace-pre-line ${containerClasses}`}>
+        {toCurvedQuotes(para)}
+      </p>
+    );
+  };
+
   return (
     <div className="space-y-6">
       {/* 1. HOMILY SECTION */}
@@ -207,11 +226,9 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           </div>
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
-            {data.catenaAureaParagraphs.map((para, idx) => (
-              <p key={idx} className="whitespace-pre-line p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DEC8]">
-                {toCurvedQuotes(para)}
-              </p>
-            ))}
+            {data.catenaAureaParagraphs.map((para, idx) =>
+              renderCommentaryParagraph(para, idx, "p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DEC8]")
+            )}
           </div>
         </div>
       )}
@@ -223,11 +240,9 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           <StylizedDivider title="Cornelius à Lapide" />
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
-            {data.lapideParagraphs.map((para, idx) => (
-              <p key={idx} className="whitespace-pre-line p-4 rounded-xl bg-[#F8F3EA] border border-[#E5D8C3] shadow-2xs">
-                {toCurvedQuotes(para)}
-              </p>
-            ))}
+            {data.lapideParagraphs.map((para, idx) =>
+              renderCommentaryParagraph(para, idx, "p-4 rounded-xl bg-[#F8F3EA] border border-[#E5D8C3] shadow-2xs")
+            )}
           </div>
         </div>
       )}
@@ -239,11 +254,9 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           <StylizedDivider title="Notes from the Magisterium" />
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
-            {data.magisteriumParagraphs.map((para, idx) => (
-              <p key={idx} className="whitespace-pre-line p-4 rounded-xl bg-[#F3EDE3] border border-[#DDD0BC] shadow-2xs">
-                {toCurvedQuotes(para)}
-              </p>
-            ))}
+            {data.magisteriumParagraphs.map((para, idx) =>
+              renderCommentaryParagraph(para, idx, "p-4 rounded-xl bg-[#F3EDE3] border border-[#DDD0BC] shadow-2xs")
+            )}
           </div>
         </div>
       )}
