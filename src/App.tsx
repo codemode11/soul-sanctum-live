@@ -603,10 +603,19 @@ export default function App() {
               />
             )}
 
-            {/* Divine Office (Liturgy of the Hours) */}
+            {/* 3. Catechism of the Catholic Church & Magisterium */}
+            {activeTab === 'catechism' && (
+              <CatechismView
+                currentReading={currentMassReading}
+                currentDateStr={currentDateStr}
+                onSelectDate={(newDate) => setCurrentDateStr(newDate)}
+              />
+            )}
+
+            {/* 4. Divine Office (Liturgy of the Hours) */}
             {activeTab === 'divine-office' && <DivineOfficeView />}
 
-            {/* 3. Reflection (Daily Liturgical Meditation) */}
+            {/* 5. Reflection (Daily Liturgical Meditation) */}
             {activeTab === 'reflection' && (
               <ReflectionView
                 reading={currentMassReading}
@@ -614,19 +623,10 @@ export default function App() {
               />
             )}
 
-            {/* 4. Visio Divina */}
+            {/* 6. Visio Divina */}
             {activeTab === 'visio-divina' && (
               <VisioDivinaView
                 onOpenArtViewer={handleOpenArtFromReadings}
-              />
-            )}
-
-            {/* 5. Catechism of the Catholic Church & Magisterium */}
-            {activeTab === 'catechism' && (
-              <CatechismView
-                currentReading={currentMassReading}
-                currentDateStr={currentDateStr}
-                onSelectDate={(newDate) => setCurrentDateStr(newDate)}
               />
             )}
 

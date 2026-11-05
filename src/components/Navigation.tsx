@@ -58,10 +58,10 @@ import {
 export type ActiveTab = 
   | 'readings'
   | 'saints'
+  | 'catechism'
   | 'divine-office'
   | 'reflection'
   | 'visio-divina'
-  | 'catechism'
   | 'wisdom'
   | 'quotations'
   | 'spiritual-books'
