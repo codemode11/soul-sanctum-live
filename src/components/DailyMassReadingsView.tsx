@@ -638,55 +638,32 @@ ${reading.gospel.text}`;
                   Homily
                 </h4>
               </div>
+            </div>
 
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  onClick={() => setShowInlineHomily(!showInlineHomily)}
-                  className="px-3.5 py-2 rounded-xl bg-[#EDE4D6] hover:bg-[#E3D7C5] text-[#3B2818] text-xs font-serif font-bold border border-[#D5C6B1] transition-all cursor-pointer"
-                >
-                  {showInlineHomily ? 'Collapse Homily' : 'Expand Full Homily'}
-                </button>
-                {onSelectTab && (
-                  <button
-                    onClick={() => onSelectTab('bible-study')}
-                    className="px-4 py-2 rounded-xl bg-[#8C6239] hover:bg-[#734F2D] text-white font-serif font-bold text-xs shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
-                  >
-                    <BookOpen className="w-3.5 h-3.5" />
-                    <span>View Bible Commentary</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                )}
+            <div className="pt-2 space-y-4">
+              <div>
+                <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2A1B0E] leading-snug">
+                  <span className="block">{dailyHomily.homilyTitle}</span>
+                  <span className="block text-sm sm:text-base font-normal text-[#4A3520] mt-1">
+                    {dailyHomily.homilyAttribution}
+                  </span>
+                </h3>
+                <div className="h-px bg-[#DBCBB5] mt-3 mb-5" />
+              </div>
+              <div className="pt-2 space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={scriptureStyle}>
+                {dailyHomily.paragraphs.map((para, idx) => (
+                  <p key={idx} className="whitespace-pre-line">
+                    {toCurvedQuotes(para)}
+                  </p>
+                ))}
               </div>
             </div>
 
-            {showInlineHomily && (
-              <>
-                <div className="pt-2 space-y-4">
-                  <div>
-                    <h3 className="font-serif text-lg sm:text-xl font-bold text-[#2A1B0E] leading-snug">
-                      <span className="block">{dailyHomily.homilyTitle}</span>
-                      <span className="block text-sm sm:text-base font-normal text-[#4A3520] mt-1">
-                        {dailyHomily.homilyAttribution}
-                      </span>
-                    </h3>
-                    <div className="h-px bg-[#DBCBB5] mt-3 mb-5" />
-                  </div>
-                  <div className="pt-2 space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={scriptureStyle}>
-                    {dailyHomily.paragraphs.map((para, idx) => (
-                      <p key={idx} className="whitespace-pre-line">
-                        {toCurvedQuotes(para)}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-
-                {dailyHomily.spiritualApplication && (
-                  <div className="p-3.5 rounded-xl bg-[#FAF4EA] border border-[#E5D7C3] text-[#4A3623] text-xs sm:text-sm font-serif italic">
-                    <span className="font-bold not-italic text-[#8C6239] block mb-1">Spiritual Application:</span>
-                    &ldquo;{toCurvedQuotes(dailyHomily.spiritualApplication)}&rdquo;
-                  </div>
-                )}
-              </>
+            {dailyHomily.spiritualApplication && (
+              <div className="p-3.5 rounded-xl bg-[#FAF4EA] border border-[#E5D7C3] text-[#4A3623] text-xs sm:text-sm font-serif italic">
+                <span className="font-bold not-italic text-[#8C6239] block mb-1">Spiritual Application:</span>
+                &ldquo;{toCurvedQuotes(dailyHomily.spiritualApplication)}&rdquo;
+              </div>
             )}
           </article>
         );
