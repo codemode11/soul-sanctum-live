@@ -1292,7 +1292,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                     {biographyParagraphs.map((paragraph, index) => (
                       <p
                         key={index}
-                        className={index === 0 ? 'sacred-drop-cap' : ''}
+                        className={index === 0 ? 'saint-drop-cap' : ''}
                       >
                         {paragraph}
                       </p>

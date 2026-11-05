@@ -58,6 +58,19 @@
   font-weight: 700;
 }
 
+/* Two-line drop-cap (including line spacing) for Saint of the Day biography (leading-[1.8]) */
+.saint-drop-cap::first-letter {
+  font-family: 'Cormorant Garamond', 'Cinzel', Georgia, serif;
+  float: left;
+  font-size: 4.6em;
+  line-height: 0.74;
+  margin-top: 0.05em;
+  margin-bottom: -0.06em;
+  padding-right: 0.55rem;
+  color: #991b1b;
+  font-weight: 700;
+}
+
 /* Illuminated border subtle pattern */
 .parchment-texture {
   background-color: #FAF8F5;
