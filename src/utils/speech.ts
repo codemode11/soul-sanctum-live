@@ -646,6 +646,9 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
     const body = match[2].trim();
     
     const upper = rawSaintName.toUpperCase();
+    if (upper.startsWith('HOMILY')) {
+      continue;
+    }
     if (
       rawSaintName.length > 2 && 
       (upper.includes('ST.') || upper.includes('HOMILY') || upper.includes('BEDE') || upper.includes('POPE') || 

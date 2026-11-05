@@ -618,11 +618,12 @@ ${selectedCommentary.practicalApplication}`;
           </p>
         </div>
 
-        {/* Patristic Homily & Commentary Sections */}
+        {/* Patristic Commentary Sections (Catena Aurea, Cornelius à Lapide, Magisterium) */}
         <div className="pt-2">
           <StructuredCommentaryDisplay 
             commentaryText={selectedCommentary.commentaryText} 
             fontSizeStyle={commentaryStyle}
+            hideHomily={true}
           />
         </div>
 
