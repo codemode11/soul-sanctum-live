@@ -502,7 +502,7 @@ ${reading.gospel.text}`;
           {toCurvedQuotes(reading.firstReading.text)}
         </div>
 
-        <div className="pt-2 text-xs font-serif text-stone-600 italic">
+        <div className="pt-2 font-serif text-stone-600 italic" style={{ fontSize: scriptureStyle.fontSize }}>
           The Word of the Lord. <span className="font-semibold text-stone-800 not-italic">R. Thanks be to God.</span>
         </div>
       </article>
@@ -563,7 +563,7 @@ ${reading.gospel.text}`;
             {toCurvedQuotes(reading.secondReading.text)}
           </div>
 
-          <div className="pt-2 text-xs font-serif text-stone-600 italic">
+          <div className="pt-2 font-serif text-stone-600 italic" style={{ fontSize: scriptureStyle.fontSize }}>
             The Word of the Lord. <span className="font-semibold text-stone-800 not-italic">R. Thanks be to God.</span>
           </div>
         </article>
@@ -614,7 +614,7 @@ ${reading.gospel.text}`;
           {toCurvedQuotes(reading.gospel.text)}
         </div>
 
-        <div className="pt-2 text-xs font-serif text-stone-600 italic">
+        <div className="pt-2 font-serif text-stone-600 italic" style={{ fontSize: scriptureStyle.fontSize }}>
           The Gospel of the Lord. <span className="font-semibold text-stone-800 not-italic">R. Praise to you, Lord Jesus Christ.</span>
         </div>
       </article>
