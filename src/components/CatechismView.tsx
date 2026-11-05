@@ -236,6 +236,64 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
+      {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration (Raised to the Very Top) */}
+      <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl p-5 sm:p-7 text-amber-50 shadow-md border border-stone-800">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-950/80 px-2.5 py-0.5 rounded-full border border-amber-600/50">
+                Gospel Topic: {selectedTopic.gospelCitation}
+              </span>
+              <span className="text-xs text-stone-300 font-serif italic">
+                {selectedTopic.liturgicalDay}
+              </span>
+            </div>
+
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-amber-100 leading-tight">
+              {selectedTopic.topicTitle}
+            </h2>
+
+            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
+              {selectedTopic.topicSubtitle}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-amber-300/90 font-cinzel">
+              <span>{selectedTopic.pillar}</span>
+              <span className="text-stone-500">•</span>
+              <span className="font-bold text-amber-200 bg-amber-950/90 px-2.5 py-0.5 rounded-md border border-amber-700/60">
+                {selectedTopic.paragraphsRange}
+              </span>
+            </div>
+          </div>
+
+          {/* Action Buttons: Audio Narration & Copy Teaching */}
+          <div className="flex items-center gap-2 shrink-0 self-start md:self-auto pt-2 md:pt-0">
+            <button
+              onClick={handleToggleReadAloud}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+                isReadingAloud
+                  ? 'bg-amber-600 text-white animate-pulse'
+                  : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
+              }`}
+              title={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism Teaching & Magisterium'}
+              aria-label="Listen to Catechism"
+            >
+              {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
+              <span>{isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}</span>
+            </button>
+
+            <button
+              onClick={handleCopy}
+              className="p-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center"
+              title={copied ? 'Copied to clipboard' : 'Copy Catechism and Magisterium text'}
+              aria-label="Copy Catechism text"
+            >
+              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Sub-view Navigation Bar: Daily Gospel Catechism first (default) */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-2 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs overflow-x-auto no-scrollbar">
         <div className="flex items-center gap-1.5 min-w-max">
@@ -323,64 +381,6 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
       {/* DEFAULT PAGE: What the Catechism Says About Whatever is the Topic of the Gospel */}
       {activeSubView === 'daily' && (
         <div className="space-y-5">
-          
-          {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
-          <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl p-5 sm:p-7 text-amber-50 shadow-md border border-stone-800">
-            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-950/80 px-2.5 py-0.5 rounded-full border border-amber-600/50">
-                    Gospel Topic: {selectedTopic.gospelCitation}
-                  </span>
-                  <span className="text-xs text-stone-300 font-serif italic">
-                    {selectedTopic.liturgicalDay}
-                  </span>
-                </div>
-
-                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-amber-100 leading-tight">
-                  {selectedTopic.topicTitle}
-                </h2>
-
-                <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
-                  {selectedTopic.topicSubtitle}
-                </p>
-
-                <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-amber-300/90 font-cinzel">
-                  <span>{selectedTopic.pillar}</span>
-                  <span className="text-stone-500">•</span>
-                  <span className="font-bold text-amber-200 bg-amber-950/90 px-2.5 py-0.5 rounded-md border border-amber-700/60">
-                    {selectedTopic.paragraphsRange}
-                  </span>
-                </div>
-              </div>
-
-              {/* Action Buttons: Audio Narration & Copy Teaching */}
-              <div className="flex items-center gap-2 shrink-0 self-start md:self-auto pt-2 md:pt-0">
-                <button
-                  onClick={handleToggleReadAloud}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs ${
-                    isReadingAloud
-                      ? 'bg-amber-600 text-white animate-pulse'
-                      : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
-                  }`}
-                  title={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism Teaching & Magisterium'}
-                  aria-label="Listen to Catechism"
-                >
-                  {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
-                  <span>{isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}</span>
-                </button>
-
-                <button
-                  onClick={handleCopy}
-                  className="p-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center"
-                  title={copied ? 'Copied to clipboard' : 'Copy Catechism and Magisterium text'}
-                  aria-label="Copy Catechism text"
-                >
-                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-          </div>
 
           {/* Daily Gospel Topic Selector Bar (92 Days for November, December, January) */}
           <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl px-3.5 py-3 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-2.5">
