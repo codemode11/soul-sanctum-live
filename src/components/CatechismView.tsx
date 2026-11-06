@@ -570,10 +570,10 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
 
             {/* SECTION 1: GOSPEL SUMMARY */}
             <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs space-y-1.5">
-              <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-800" />
-              <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-800" />
-              <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-800" />
-              <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-800" />
+              <span className="pointer-events-none absolute -top-px -left-px w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-800" />
+              <span className="pointer-events-none absolute -top-px -right-px w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-800" />
+              <span className="pointer-events-none absolute -bottom-px -left-px w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-800" />
+              <span className="pointer-events-none absolute -bottom-px -right-px w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-800" />
               
               <div className="flex items-center gap-1.5 text-amber-900 font-cinzel font-bold text-xs uppercase tracking-wider">
                 <BookOpen className="w-3.5 h-3.5" />
@@ -590,7 +590,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 <ShieldCheck className="w-5 h-5 text-amber-800 mt-0.5 shrink-0" />
                 <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900 uppercase tracking-wide leading-tight">
                   <span className="block">What the Catechism of the Catholic Church Teaches</span>
-                  <span className="block text-stone-800 font-semibold text-sm sm:text-base">About This Topic.</span>
+                  <span className="block">About This Topic</span>
                 </h3>
               </div>
 
