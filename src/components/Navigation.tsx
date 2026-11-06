@@ -68,6 +68,7 @@ export type ActiveTab =
   | 'catholic-podcasts'
   | 'live-mass'
   | 'vatican-news'
+  | 'catholic-articles'
   | 'catholic-glossary'
   | 'treasury-prayers'
   | 'rosary'
@@ -336,6 +337,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: StPetersBasilicaIcon, 
       tag: 'Global', 
       subtext: 'Holy See and Church Updates' 
+    },
+    { 
+      id: 'catholic-articles', 
+      label: 'Catholic Articles', 
+      icon: BookMarked, 
+      tag: 'RSS Feeds', 
+      subtext: 'Aleteia, NC Register, CBCP, Word on Fire and More' 
     },
     { 
       id: 'catholic-glossary', 

@@ -15,6 +15,7 @@ import { SacredArtView } from './components/SacredArtView';
 import { SacredMusicView } from './components/SacredMusicView';
 import { CatholicTermView } from './components/CatholicTermView';
 import { CatholicNewsView } from './components/CatholicNewsView';
+import { CatholicArticlesView } from './components/CatholicArticlesView';
 import { PrayerWallAndTreasuryView } from './components/PrayerWallAndTreasuryView';
 import { NotificationsModal } from './components/NotificationsModal';
 import { AngelusModal } from './components/AngelusModal';
@@ -665,6 +666,11 @@ export default function App() {
                   onSelectDate={(newDate) => setCurrentDateStr(newDate)}
                 />
               </div>
+            )}
+
+            {/* Catholic Articles (9 Catholic RSS Feeds) */}
+            {activeTab === 'catholic-articles' && (
+              <CatholicArticlesView />
             )}
 
             {/* 8. Catholic Glossary */}
