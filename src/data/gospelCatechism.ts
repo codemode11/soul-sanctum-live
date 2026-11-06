@@ -19,6 +19,9 @@ export interface GospelCatechismTopic {
   dateKey: string;
   dateLabel: string;
   monthName: string;
+  monthYearLabel?: string;
+  monthYearKey?: string;
+  year?: number;
   dayNumber: number;
   gospelCitation: string;
   gospelTextSnippet: string;
@@ -362,17 +365,21 @@ export function getGospelCatechismForReading(
   for (const [key, topic] of Object.entries(CURATED_GOSPEL_CATECHISM_TOPICS)) {
     if (citationKey.includes(key) || key.includes(citationKey)) {
       const dateParts = effectiveDate.split('-');
-      const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const fullMonthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const yearNum = parseInt(dateParts[0], 10) || 2026;
       const monthNum = parseInt(dateParts[1], 10) || 11;
       const dayNum = parseInt(dateParts[2], 10) || 4;
+      const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const fullMonthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
       return {
         ...topic,
         id: `ccc-gospel-${effectiveDate}`,
         dateKey: effectiveDate,
-        dateLabel: `${monthNames[monthNum]} ${dayNum}`,
+        dateLabel: `${monthNames[monthNum]} ${dayNum}, ${yearNum}`,
         monthName: fullMonthNames[monthNum],
+        monthYearLabel: `${fullMonthNames[monthNum]} ${yearNum}`,
+        monthYearKey: `${yearNum}-${String(monthNum).padStart(2, '0')}`,
+        year: yearNum,
         dayNumber: dayNum,
         liturgicalDay: effectiveReading.liturgicalDay,
         gospelTextSnippet: effectiveReading.gospel.text.substring(0, 360) + '...'
@@ -382,10 +389,11 @@ export function getGospelCatechismForReading(
 
   // 2. Synthesize authentic Catholic doctrine based on Gospel themes
   const dateParts = effectiveDate.split('-');
-  const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const fullMonthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const yearNum = parseInt(dateParts[0], 10) || 2026;
   const monthNum = parseInt(dateParts[1], 10) || 11;
   const dayNum = parseInt(dateParts[2], 10) || 4;
+  const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const fullMonthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   const titleTopic = effectiveReading.reflection?.title || 'The Saving Truth of the Holy Gospel';
   const patristicAuthor = effectiveReading.reflection?.author || 'The Sacred Magisterium and Doctors of the Church';
@@ -393,8 +401,11 @@ export function getGospelCatechismForReading(
   return {
     id: `ccc-gospel-${effectiveDate}`,
     dateKey: effectiveDate,
-    dateLabel: `${monthNames[monthNum]} ${dayNum}`,
+    dateLabel: `${monthNames[monthNum]} ${dayNum}, ${yearNum}`,
     monthName: fullMonthNames[monthNum],
+    monthYearLabel: `${fullMonthNames[monthNum]} ${yearNum}`,
+    monthYearKey: `${yearNum}-${String(monthNum).padStart(2, '0')}`,
+    year: yearNum,
     dayNumber: dayNum,
     gospelCitation: citation || 'Holy Gospel Proclamation',
     gospelTextSnippet: effectiveReading.gospel.text.substring(0, 360) + '...',
@@ -460,23 +471,40 @@ export function getGospelCatechismForReading(
 }
 
 /**
- * Returns all 92 daily Gospel Catechism Topics for November (30), December (31), and January (31)
+ * All 14 Months from November 2026 through December 2027 (1 year and 1 month: 426 days)
  */
-export function getAllThreeMonthGospelCatechisms(): GospelCatechismTopic[] {
-  const result: GospelCatechismTopic[] = [];
-  const monthSpecs = [
-    { year: 2026, month: 11, days: 30 },
-    { year: 2026, month: 12, days: 31 },
-    { year: 2027, month: 1, days: 31 }
-  ];
+export const CATECHISM_YEAR_AND_MONTH_SPECS = [
+  { year: 2026, month: 11, days: 30, monthName: 'November', shortName: 'Nov', key: '2026-11', label: 'Nov 2026' },
+  { year: 2026, month: 12, days: 31, monthName: 'December', shortName: 'Dec', key: '2026-12', label: 'Dec 2026' },
+  { year: 2027, month: 1, days: 31, monthName: 'January', shortName: 'Jan', key: '2027-01', label: 'Jan 2027' },
+  { year: 2027, month: 2, days: 28, monthName: 'February', shortName: 'Feb', key: '2027-02', label: 'Feb 2027' },
+  { year: 2027, month: 3, days: 31, monthName: 'March', shortName: 'Mar', key: '2027-03', label: 'Mar 2027' },
+  { year: 2027, month: 4, days: 30, monthName: 'April', shortName: 'Apr', key: '2027-04', label: 'Apr 2027' },
+  { year: 2027, month: 5, days: 31, monthName: 'May', shortName: 'May', key: '2027-05', label: 'May 2027' },
+  { year: 2027, month: 6, days: 30, monthName: 'June', shortName: 'Jun', key: '2027-06', label: 'Jun 2027' },
+  { year: 2027, month: 7, days: 31, monthName: 'July', shortName: 'Jul', key: '2027-07', label: 'Jul 2027' },
+  { year: 2027, month: 8, days: 31, monthName: 'August', shortName: 'Aug', key: '2027-08', label: 'Aug 2027' },
+  { year: 2027, month: 9, days: 30, monthName: 'September', shortName: 'Sep', key: '2027-09', label: 'Sep 2027' },
+  { year: 2027, month: 10, days: 31, monthName: 'October', shortName: 'Oct', key: '2027-10', label: 'Oct 2027' },
+  { year: 2027, month: 11, days: 30, monthName: 'November', shortName: 'Nov', key: '2027-11', label: 'Nov 2027' },
+  { year: 2027, month: 12, days: 31, monthName: 'December', shortName: 'Dec', key: '2027-12', label: 'Dec 2027' }
+];
 
-  for (const spec of monthSpecs) {
+/**
+ * Returns all 426 daily Gospel Catechism Topics for 1 year and 1 month:
+ * November 2026 through December 2027
+ */
+export function getAllGospelCatechisms(): GospelCatechismTopic[] {
+  const result: GospelCatechismTopic[] = [];
+  for (const spec of CATECHISM_YEAR_AND_MONTH_SPECS) {
     for (let day = 1; day <= spec.days; day++) {
       const dateStr = `${spec.year}-${String(spec.month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
       const reading = getMassReadingsForDate(dateStr);
       result.push(getGospelCatechismForReading(reading, dateStr));
     }
   }
-
   return result;
 }
+
+// Backward-compatibility alias
+export const getAllThreeMonthGospelCatechisms = getAllGospelCatechisms;

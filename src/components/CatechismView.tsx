@@ -19,7 +19,8 @@ import { MassReading } from '../types';
 import { 
   GospelCatechismTopic, 
   getGospelCatechismForReading, 
-  getAllThreeMonthGospelCatechisms 
+  getAllGospelCatechisms,
+  CATECHISM_YEAR_AND_MONTH_SPECS
 } from '../data/gospelCatechism';
 import { SacredReader } from '../utils/speech';
 import { EucharisticCatechismView } from './EucharisticCatechismView';
@@ -43,7 +44,7 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
   onSelectDate
 }) => {
   const [activeSubView, setActiveSubView] = useState<CatechismSubView>('daily');
-  const [selectedMonth, setSelectedMonth] = useState<'All' | 'November' | 'December' | 'January'>('All');
+  const [selectedMonth, setSelectedMonth] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [isReadingAloud, setIsReadingAloud] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -70,8 +71,8 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
     };
   }, [isTopicDropdownOpen]);
 
-  // All 92 daily Gospel Catechism topics for November, December, and January
-  const allTopics = useMemo(() => getAllThreeMonthGospelCatechisms(), []);
+  // All 426 daily Gospel Catechism topics for 1 year and 1 month: November 2026 through December 2027
+  const allTopics = useMemo(() => getAllGospelCatechisms(), []);
 
   // Compute default topic matching active day's Gospel
   const defaultTopic = useMemo(() => {
@@ -116,10 +117,14 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
     }
   }, [selectedTopic.id]);
 
-  // Month filtering
+  // Month filtering across 14 months (November 2026 to December 2027)
   const monthFilteredList = useMemo(() => {
     if (selectedMonth === 'All') return allTopics;
-    return allTopics.filter(t => t.monthName === selectedMonth);
+    return allTopics.filter(t => 
+      t.monthYearKey === selectedMonth || 
+      t.monthYearLabel === selectedMonth || 
+      t.monthName === selectedMonth
+    );
   }, [allTopics, selectedMonth]);
 
   // Search filtering
@@ -130,6 +135,7 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
       t.topicTitle.toLowerCase().includes(q) ||
       t.gospelCitation.toLowerCase().includes(q) ||
       t.dateLabel.toLowerCase().includes(q) ||
+      t.dateKey.toLowerCase().includes(q) ||
       t.paragraphsRange.toLowerCase().includes(q) ||
       t.catechismArticles.some(a => a.number.toString().includes(q) || a.text.toLowerCase().includes(q)) ||
       t.magisterialInputs.some(m => m.authority.toLowerCase().includes(q) || m.documentTitle.toLowerCase().includes(q) || m.insight.toLowerCase().includes(q))
@@ -147,10 +153,14 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
     if (isReadingAloud) SacredReader.stop();
   };
 
-  const handleSelectMonth = (month: 'All' | 'November' | 'December' | 'January') => {
-    setSelectedMonth(month);
-    if (month !== 'All') {
-      const firstInMonth = allTopics.find(t => t.monthName === month);
+  const handleSelectMonth = (monthKey: string) => {
+    setSelectedMonth(monthKey);
+    if (monthKey !== 'All') {
+      const firstInMonth = allTopics.find(t => 
+        t.monthYearKey === monthKey || 
+        t.monthYearLabel === monthKey || 
+        t.monthName === monthKey
+      );
       if (firstInMonth) {
         setSelectedTopic(firstInMonth);
         if (firstInMonth.dateKey && onSelectDate) onSelectDate(firstInMonth.dateKey);
@@ -336,7 +346,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 <div className="absolute right-0 mt-2 w-80 sm:w-96 max-h-96 bg-[#24150B] border border-[#A67B4E]/80 rounded-xl shadow-2xl p-3 z-50 overflow-hidden flex flex-col gap-2 animate-in fade-in duration-150">
                   <div className="flex items-center justify-between pb-2 border-b border-[#8B5A2B]/40">
                     <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-200">
-                      Pick Gospel Topic ({allTopics.length})
+                      Pick Gospel Topic (Nov 2026 – Dec 2027)
                     </span>
                     <span className="text-[10px] text-amber-300/70 font-cinzel">
                       Topic {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
@@ -533,24 +543,25 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                {/* Month Selector Tabs */}
-                <div className="flex items-center gap-1 bg-stone-100/90 p-0.5 rounded-lg border border-stone-200 shadow-2xs">
-                  {(['All', 'November', 'December', 'January'] as const).map(month => {
-                    const count = month === 'All' ? 92 : month === 'November' ? 30 : 31;
-                    return (
-                      <button
-                        key={month}
-                        onClick={() => handleSelectMonth(month)}
-                        className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
-                          selectedMonth === month
-                            ? 'bg-[#6B4423] text-white shadow-xs font-bold'
-                            : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
-                        }`}
-                      >
-                        {month === 'All' ? `All (${count})` : `${month} (${count})`}
-                      </button>
-                    );
-                  })}
+                {/* Month Selector: Nov 2026 – Dec 2027 (1 Year & 1 Month, 426 Days) */}
+                <div className="flex items-center gap-1.5 bg-stone-100/95 p-1 rounded-xl border border-stone-200 shadow-2xs">
+                  <span className="text-[11px] font-cinzel font-bold text-stone-700 pl-1.5 shrink-0 hidden sm:inline">
+                    Month:
+                  </span>
+                  <select
+                    value={selectedMonth}
+                    onChange={(e) => handleSelectMonth(e.target.value)}
+                    className="text-xs font-semibold py-1 px-2.5 rounded-lg bg-white text-stone-800 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer shadow-2xs font-cinzel"
+                    title="Jump to any month from November 2026 to December 2027"
+                    aria-label="Select Liturgical Month"
+                  >
+                    <option value="All">All 14 Months ({allTopics.length} Days)</option>
+                    {CATECHISM_YEAR_AND_MONTH_SPECS.map(spec => (
+                      <option key={spec.key} value={spec.key}>
+                        {spec.label} ({spec.days} Days)
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* Quick Prev / Next Topic Buttons with Arrows */}
