@@ -176,6 +176,8 @@ Live on Soul Sanctum Catholic Sanctuary.`;
           {[
             { id: 'vatican-st-peters-live', label: "St. Peter's Basilica (Vatican)" },
             { id: 'ewtn-our-lady-angels-chapel', label: 'EWTN Live Mass & Devotions' },
+            { id: 'divine-mercy-vilnius-adoration-live', label: 'Adoracija 24/7 (Dievo Gailestingumo Šventovė)' },
+            { id: 'niepokalanow-poland-live', label: 'EWTN Polska Adoracja z Niepokalanowa' },
             { id: 'santo-nino-cebu-cathedral', label: 'Santo Niño de Cebú' },
             { id: 'lourdes-grotto-live', label: 'Lourdes Grotto' },
             { id: 'fatima-capelinha-live', label: 'Fátima Capelinha' },

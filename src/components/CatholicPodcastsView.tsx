@@ -212,15 +212,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
             Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Bishop Robert Barron, Dr. Scott Hahn, Jimmy Akin, Jeff Cavins, Matt Fradd, and the Holy See.
           </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-3 text-xs text-amber-200/90 font-serif">
-            <span>
-              100% Free and Faithful
-            </span>
-            <span>•</span>
-            <span>Full Study Notes and Scripture</span>
-            <span>•</span>
-            <span>Continuous Background Audio</span>
-          </div>
+
         </div>
 
         {/* Featured Spotlight Card */}
