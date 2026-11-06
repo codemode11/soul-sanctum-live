@@ -531,7 +531,7 @@ ${reading.gospel.text}`;
               <p className="whitespace-pre-line pl-3 border-l-2 border-amber-500/60">
                 {toCurvedQuotes(verse)}
               </p>
-              <p className="font-serif font-semibold text-amber-900 italic" style={{ fontSize: '1.05em' }}>
+              <p className="font-serif font-semibold text-amber-900 italic text-center" style={{ fontSize: '1.05em' }}>
                 R. {toCurvedQuotes(reading.responsorialPsalm.antiphon)}
               </p>
             </div>
