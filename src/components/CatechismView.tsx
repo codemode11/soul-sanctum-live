@@ -44,7 +44,12 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
   onSelectDate
 }) => {
   const [activeSubView, setActiveSubView] = useState<CatechismSubView>('daily');
-  const [selectedMonth, setSelectedMonth] = useState<string>('All');
+  const [selectedMonth, setSelectedMonth] = useState<string>(() => {
+    if (currentDateStr && currentDateStr.length >= 7) {
+      return currentDateStr.slice(0, 7);
+    }
+    return '2026-11';
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [isReadingAloud, setIsReadingAloud] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -170,22 +175,30 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
   };
 
   const handlePrevTopic = () => {
-    if (activeList.length === 0) return;
-    const targetIdx = currentIndex > 0 ? currentIndex - 1 : activeList.length - 1;
-    const prev = activeList[targetIdx];
+    if (allTopics.length === 0) return;
+    const globalIdx = allTopics.findIndex(t => t.id === selectedTopic.id);
+    const targetIdx = globalIdx > 0 ? globalIdx - 1 : allTopics.length - 1;
+    const prev = allTopics[targetIdx];
     if (prev) {
       setSelectedTopic(prev);
+      if (prev.monthYearKey && prev.monthYearKey !== selectedMonth) {
+        setSelectedMonth(prev.monthYearKey);
+      }
       if (prev.dateKey && onSelectDate) onSelectDate(prev.dateKey);
       if (isReadingAloud) SacredReader.stop();
     }
   };
 
   const handleNextTopic = () => {
-    if (activeList.length === 0) return;
-    const targetIdx = (currentIndex >= 0 && currentIndex < activeList.length - 1) ? currentIndex + 1 : 0;
-    const next = activeList[targetIdx];
+    if (allTopics.length === 0) return;
+    const globalIdx = allTopics.findIndex(t => t.id === selectedTopic.id);
+    const targetIdx = (globalIdx >= 0 && globalIdx < allTopics.length - 1) ? globalIdx + 1 : 0;
+    const next = allTopics[targetIdx];
     if (next) {
       setSelectedTopic(next);
+      if (next.monthYearKey && next.monthYearKey !== selectedMonth) {
+        setSelectedMonth(next.monthYearKey);
+      }
       if (next.dateKey && onSelectDate) onSelectDate(next.dateKey);
       if (isReadingAloud) SacredReader.stop();
     }
@@ -350,7 +363,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                       Pick Gospel Topic (Nov 2026 – Dec 2027)
                     </span>
                     <span className="text-[10px] text-amber-300/70 font-cinzel">
-                      Topic {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
+                      {selectedTopic.dateLabel}
                     </span>
                   </div>
 
@@ -511,7 +524,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
-                  Daily Gospel Topics ({activeList.length})
+                  Daily Gospel Topics
                 </span>
                 <div className="inline-flex items-center rounded-lg border border-amber-200/80 bg-amber-100/90 text-amber-950 overflow-hidden shadow-2xs">
                   <button
@@ -524,7 +537,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                     <ChevronLeft className="w-3.5 h-3.5" />
                   </button>
                   <span className="text-[11px] font-semibold px-2.5 py-0.5 font-cinzel border-x border-amber-200/80">
-                    {selectedTopic.dateLabel} • {selectedTopic.gospelCitation} (Topic {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length})
+                    {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
                   </span>
                   <button
                     type="button"
@@ -539,7 +552,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                {/* Month Selector: Nov 2026 – Dec 2027 (1 Year & 1 Month, 426 Days) */}
+                {/* Month Selector: Nov 2026 – Dec 2027 */}
                 <div className="flex items-center gap-1.5 bg-stone-100/95 p-1 rounded-xl border border-stone-200 shadow-2xs">
                   <span className="text-[11px] font-cinzel font-bold text-stone-700 pl-1.5 shrink-0 hidden sm:inline">
                     Month:
@@ -551,7 +564,6 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                     title="Jump to any month from November 2026 to December 2027"
                     aria-label="Select Liturgical Month"
                   >
-                    <option value="All">All 14 Months ({allTopics.length} Days)</option>
                     {CATECHISM_YEAR_AND_MONTH_SPECS.map(spec => (
                       <option key={spec.key} value={spec.key}>
                         {spec.label} ({spec.days} Days)
@@ -581,17 +593,6 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                     <span>Next</span>
                     <ChevronRight className="w-4 h-4 text-amber-800" />
                   </button>
-                </div>
-
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Search CCC, Gospel, Council..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="text-xs pl-7 pr-2.5 py-1 rounded-xl bg-white/60 backdrop-blur-sm border border-white/70 focus:outline-none focus:border-amber-700 w-full sm:w-48"
-                  />
-                  <Search className="w-3 h-3 text-stone-500 absolute left-2.5 top-2" />
                 </div>
               </div>
             </div>
@@ -799,41 +800,48 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             </div>
 
             {/* Bottom Navigation between Topics */}
-            <div className="flex items-center justify-between pt-3 border-t border-stone-200 text-xs">
-              <button
-                onClick={handlePrevTopic}
-                disabled={currentIndex <= 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
-                title="Previous Gospel Topic"
-                aria-label="Previous Gospel Topic"
-              >
-                <ChevronLeft className="w-4 h-4 text-amber-800" />
-                <span className="truncate max-w-[140px] sm:max-w-none">
-                  {currentIndex > 0
-                    ? `${activeList[currentIndex - 1].dateLabel}: ${activeList[currentIndex - 1].gospelCitation}`
-                    : 'Previous Topic'}
-                </span>
-              </button>
+            {(() => {
+              const globalIdx = allTopics.findIndex(t => t.id === selectedTopic.id);
+              const hasPrev = globalIdx > 0;
+              const hasNext = globalIdx >= 0 && globalIdx < allTopics.length - 1;
+              return (
+                <div className="flex items-center justify-between pt-3 border-t border-stone-200 text-xs">
+                  <button
+                    onClick={handlePrevTopic}
+                    disabled={!hasPrev}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+                    title="Previous Gospel Topic"
+                    aria-label="Previous Gospel Topic"
+                  >
+                    <ChevronLeft className="w-4 h-4 text-amber-800" />
+                    <span className="truncate max-w-[140px] sm:max-w-none">
+                      {hasPrev
+                        ? `${allTopics[globalIdx - 1].dateLabel}: ${allTopics[globalIdx - 1].gospelCitation}`
+                        : 'Previous Topic'}
+                    </span>
+                  </button>
 
-              <span className="font-cinzel text-stone-600 font-bold text-[11px] uppercase tracking-wider hidden xs:inline">
-                Topic {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
-              </span>
+                  <span className="font-cinzel text-stone-600 font-bold text-[11px] uppercase tracking-wider hidden xs:inline">
+                    {selectedTopic.dateLabel}
+                  </span>
 
-              <button
-                onClick={handleNextTopic}
-                disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
-                title="Next Gospel Topic"
-                aria-label="Next Gospel Topic"
-              >
-                <span className="truncate max-w-[140px] sm:max-w-none">
-                  {currentIndex >= 0 && currentIndex < activeList.length - 1
-                    ? `${activeList[currentIndex + 1].dateLabel}: ${activeList[currentIndex + 1].gospelCitation}`
-                    : 'Next Topic'}
-                </span>
-                <ChevronRight className="w-4 h-4 text-amber-800" />
-              </button>
-            </div>
+                  <button
+                    onClick={handleNextTopic}
+                    disabled={!hasNext}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+                    title="Next Gospel Topic"
+                    aria-label="Next Gospel Topic"
+                  >
+                    <span className="truncate max-w-[140px] sm:max-w-none">
+                      {hasNext
+                        ? `${allTopics[globalIdx + 1].dateLabel}: ${allTopics[globalIdx + 1].gospelCitation}`
+                        : 'Next Topic'}
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-amber-800" />
+                  </button>
+                </div>
+              );
+            })()}
 
           </article>
         </div>
