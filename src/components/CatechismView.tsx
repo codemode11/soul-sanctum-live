@@ -276,11 +276,11 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             </h2>
 
             <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#D4A373] leading-tight pt-0.5">
-              {selectedTopic.topicTitle}
+              {toCurvedQuotes(selectedTopic.topicTitle)}
             </h3>
 
             <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
-              {selectedTopic.topicSubtitle}
+              {toCurvedQuotes(selectedTopic.topicSubtitle)}
             </p>
 
             <div className="flex flex-wrap items-center gap-2 pt-1 text-xs sm:text-sm text-amber-200/90 font-cinzel">

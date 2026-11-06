@@ -1,5 +1,6 @@
 import { MassReading } from '../types';
 import { getMassReadingsForDate } from './massReadings';
+import { lookupGospelCatechism } from './gospelCatechismDatabase';
 
 export interface CatechismArticle {
   number: number;
@@ -361,16 +362,52 @@ export function getGospelCatechismForReading(
   const citation = (effectiveReading.gospel.citation || '').trim();
   const citationKey = citation.toLowerCase();
 
-  // 1. Direct match in curated topics
+  const dateParts = effectiveDate.split('-');
+  const yearNum = parseInt(dateParts[0], 10) || 2026;
+  const monthNum = parseInt(dateParts[1], 10) || 11;
+  const dayNum = parseInt(dateParts[2], 10) || 4;
+  const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const fullMonthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  // 1. Authoritative registry lookup across all 58 liturgical Gospel pericopes
+  const dbTemplate = lookupGospelCatechism(
+    citation,
+    effectiveReading.reflection?.title,
+    effectiveReading.liturgicalDay
+  );
+
+  if (dbTemplate) {
+    return {
+      id: `ccc-gospel-${effectiveDate}`,
+      dateKey: effectiveDate,
+      dateLabel: `${monthNames[monthNum]} ${dayNum}, ${yearNum}`,
+      monthName: fullMonthNames[monthNum],
+      monthYearLabel: `${fullMonthNames[monthNum]} ${yearNum}`,
+      monthYearKey: `${yearNum}-${String(monthNum).padStart(2, '0')}`,
+      year: yearNum,
+      dayNumber: dayNum,
+      gospelCitation: citation || dbTemplate.gospelCitation,
+      gospelTextSnippet: effectiveReading.gospel.text ? effectiveReading.gospel.text.substring(0, 360) + '...' : '',
+      liturgicalDay: effectiveReading.liturgicalDay,
+      topicTitle: dbTemplate.topicTitle,
+      topicSubtitle: dbTemplate.topicSubtitle,
+      pillar: dbTemplate.pillar,
+      part: dbTemplate.part,
+      section: dbTemplate.section,
+      chapter: dbTemplate.chapter,
+      paragraphsRange: dbTemplate.paragraphsRange,
+      catechismArticles: dbTemplate.catechismArticles,
+      magisterialInputs: dbTemplate.magisterialInputs,
+      inBrief: dbTemplate.inBrief,
+      meditationQuestion: dbTemplate.meditationQuestion,
+      practicalLiving: dbTemplate.practicalLiving,
+      crossReferences: dbTemplate.crossReferences
+    };
+  }
+
+  // 2. Direct match in curated topics
   for (const [key, topic] of Object.entries(CURATED_GOSPEL_CATECHISM_TOPICS)) {
     if (citationKey.includes(key) || key.includes(citationKey)) {
-      const dateParts = effectiveDate.split('-');
-      const yearNum = parseInt(dateParts[0], 10) || 2026;
-      const monthNum = parseInt(dateParts[1], 10) || 11;
-      const dayNum = parseInt(dateParts[2], 10) || 4;
-      const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const fullMonthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
       return {
         ...topic,
         id: `ccc-gospel-${effectiveDate}`,
@@ -382,19 +419,12 @@ export function getGospelCatechismForReading(
         year: yearNum,
         dayNumber: dayNum,
         liturgicalDay: effectiveReading.liturgicalDay,
-        gospelTextSnippet: effectiveReading.gospel.text.substring(0, 360) + '...'
+        gospelTextSnippet: effectiveReading.gospel.text ? effectiveReading.gospel.text.substring(0, 360) + '...' : ''
       };
     }
   }
 
-  // 2. Synthesize authentic Catholic doctrine based on Gospel themes
-  const dateParts = effectiveDate.split('-');
-  const yearNum = parseInt(dateParts[0], 10) || 2026;
-  const monthNum = parseInt(dateParts[1], 10) || 11;
-  const dayNum = parseInt(dateParts[2], 10) || 4;
-  const monthNames = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const fullMonthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+  // 3. Fallback synthesizer
   const titleTopic = effectiveReading.reflection?.title || 'The Saving Truth of the Holy Gospel';
   const patristicAuthor = effectiveReading.reflection?.author || 'The Sacred Magisterium and Doctors of the Church';
 
@@ -408,7 +438,7 @@ export function getGospelCatechismForReading(
     year: yearNum,
     dayNumber: dayNum,
     gospelCitation: citation || 'Holy Gospel Proclamation',
-    gospelTextSnippet: effectiveReading.gospel.text.substring(0, 360) + '...',
+    gospelTextSnippet: effectiveReading.gospel.text ? effectiveReading.gospel.text.substring(0, 360) + '...' : '',
     liturgicalDay: effectiveReading.liturgicalDay,
     topicTitle: `${titleTopic}: What the Church Believes, Celebrates & Lives`,
     topicSubtitle: `Magisterial insights on ${citation} in the light of the Catechism of the Catholic Church`,
@@ -416,7 +446,7 @@ export function getGospelCatechismForReading(
     part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
     section: 'Section Two: The Profession of Christian Faith',
     chapter: 'The Mysteries of the Life of Christ in the Sacred Liturgy',
-    paragraphsRange: 'Catechism of the Catholic Church 514-521, 1074, 1803-1832',
+    paragraphsRange: 'Catechism of the Catholic Church 514, 515, 521, 1074',
     catechismArticles: [
       {
         number: 514,
@@ -426,17 +456,17 @@ export function getGospelCatechismForReading(
       {
         number: 515,
         title: 'The Mysteries of Christ\'s Life as Revelation and Redemption',
-        text: 'The Gospels were written by men who were among the first to have the faith and wanted to share it with others. Having known in faith who Jesus is, they could see and make others see the traces of his mystery in all his earthly life. From the swaddling clothes of his birth to the vinegar of his Passion and the shroud of his Resurrection, everything in Jesus\' life was a sign of his mystery. His deeds, miracles and words all revealed that "in him the whole fullness of deity dwells bodily."'
+        text: 'The Gospels were written by men who were among the first to have the faith and wanted to share it with others. Having known in faith who Jesus is, they could see and make others see the traces of his mystery in all his earthly life.'
       },
       {
         number: 521,
         title: 'Christ Enables Us to Live in Him All That He Himself Lived',
-        text: 'Christ enables us to live in him all that he himself lived, and he lives it in us. "By his Incarnation, he, the Son of God, has in a certain way united himself with each man." We are called only to become one with him, for he enables us as the members of his Body to share in what he lived for us in his flesh as our model: "We must continue to accomplish in ourselves the stages of Jesus\' life and his mysteries and often to beg him to perfect and realize them in us and in his whole Church."'
+        text: 'Christ enables us to live in him all that he himself lived, and he lives it in us. "By his Incarnation, he, the Son of God, has in a certain way united himself with each man."'
       },
       {
         number: 1074,
         title: 'The Liturgy as Privileged Place for Church Catechesis',
-        text: '"The liturgy is the summit toward which the activity of the Church is directed; it is also the font from which all her power flows." It is therefore the privileged place for catechizing the People of God. "Catechesis is intrinsically linked with the whole of liturgical and sacramental activity, for it is in the sacraments, especially in the Eucharist, that Christ Jesus works in fullness for the transformation of human beings."'
+        text: '"The liturgy is the summit toward which the activity of the Church is directed; it is also the font from which all her power flows." It is therefore the privileged place for catechizing the People of God.'
       }
     ],
     magisterialInputs: [
@@ -444,13 +474,7 @@ export function getGospelCatechismForReading(
         authority: 'Second Vatican Ecumenical Council',
         documentTitle: 'Dogmatic Constitution on Divine Revelation (Dei Verbum)',
         citation: 'DV 10, 21',
-        insight: 'Sacred Tradition and Sacred Scripture form one sacred deposit of the word of God, committed to the Church. Holding fast to this deposit the entire holy people united with their shepherds remain always steadfast in the teaching of the Apostles, in the common life, in the breaking of the bread and in prayers... The Church has always venerated the divine Scriptures just as she venerates the body of the Lord.'
-      },
-      {
-        authority: 'Pope St. John Paul II',
-        documentTitle: 'Apostolic Exhortation Catechesi Tradendae (On Catechesis in Our Time)',
-        citation: 'CT 5',
-        insight: 'At the heart of catechesis we find, in essence, a Person, the Person of Jesus of Nazareth, the only Son from the Father... full of grace and truth, who suffered and died for us and who now, after rising, is living with us forever. It is Jesus who is the way, the truth, and the life, and Christian living consists in following Christ.'
+        insight: 'Sacred Tradition and Sacred Scripture form one sacred deposit of the word of God, committed to the Church.'
       },
       {
         authority: patristicAuthor,
