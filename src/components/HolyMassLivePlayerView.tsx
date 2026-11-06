@@ -163,7 +163,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#6B4423]/55 hover:bg-[#6B4423]/80 border border-[#8B5A2B]/80 text-[#F5D7B2] text-xs font-sans font-semibold transition-all cursor-pointer"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Link Copied' : 'Share Altar'}</span>
+              <span>{copied ? 'Link Copied' : 'Share Stream'}</span>
             </button>
           </div>
         </div>
