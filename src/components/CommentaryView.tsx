@@ -329,7 +329,7 @@ ${selectedCommentary.practicalApplication}`;
               Commentary on {selectedCommentary.scriptureReference}
             </h2>
             <p className="text-xs sm:text-sm text-amber-300/80 font-cinzel uppercase tracking-wider">
-              Catena Aurea • Cornelius à Lapide • Magisterium
+              Catena Aurea • Cornelius à Lapide, S.J. • Magisterium
             </p>
           </div>
 

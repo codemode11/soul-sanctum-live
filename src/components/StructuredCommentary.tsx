@@ -236,13 +236,20 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
       {/* 3. CORNELIUS À LAPIDE SECTION */}
       {!homilyOnly && data.lapideParagraphs.length > 0 && (
         <div>
-          {/* Stylized line followed by name "Cornelius à Lapide." */}
-          <StylizedDivider title="Cornelius à Lapide" />
+          {/* Stylized line followed by name "Cornelius à Lapide, S.J." at the center */}
+          <StylizedDivider title="Cornelius à Lapide, S.J." />
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
-            {data.lapideParagraphs.map((para, idx) =>
-              renderCommentaryParagraph(para, idx, "p-4 rounded-xl bg-[#F8F3EA] border border-[#E5D8C3] shadow-2xs")
-            )}
+            {data.lapideParagraphs.map((para, idx) => {
+              const cleanPara = para
+                .replace(/^(?:CORNELIUS\s+[ÀA]\s+LAPIDE|FR\.\s+LAPIDE|LAPIDE)(?:,\s*S\.?J\.?)?:\s*/i, '')
+                .trim();
+              return (
+                <p key={idx} className="whitespace-pre-line p-4 rounded-xl bg-[#F8F3EA] border border-[#E5D8C3] shadow-2xs">
+                  {toCurvedQuotes(cleanPara)}
+                </p>
+              );
+            })}
           </div>
         </div>
       )}
