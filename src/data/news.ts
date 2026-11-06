@@ -42,8 +42,6 @@ Concluding his apostolic exhortation, the Pontiff challenged the faithful to bre
     readTime: '4 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-luke-15-boundless-joy-heaven-repentance.html',
-    imageUrl: '/images/sacred-art/return_prodigal_son.jpg',
-    imageCaption: 'The Return of the Prodigal Son — Meditation on Luke 15 and Divine Mercy',
     tags: ['Luke 15:1-10', 'Pope', 'Eucharistic Adoration', 'Fraternal Charity', 'Good Shepherd', 'Mercy', 'Vatican News']
   },
   {
@@ -104,8 +102,6 @@ The Pope invited all Catholic public servants and citizens to examine their cons
     readTime: '4 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-general-audience-social-economic-life-social-doctrine.html',
-    imageUrl: '/images/saints/saint-charles-borromeo.jpg',
-    imageCaption: 'St. Charles Borromeo, cited by Pope Leo XIV during the Wednesday General Audience',
     tags: ['General Audience', 'Gaudium et Spes', 'St. Charles Borromeo', 'Vatican', 'St. Peter\'s Square']
   },
   {
@@ -174,8 +170,6 @@ Concluding the audience, the Pope led pilgrims in chanting the Pater Noster and 
     readTime: '3 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
-    imageUrl: '/images/sacred-art/eucharistic_adoration_altar.jpg',
-    imageCaption: 'Eucharistic Adoration at the Altar',
     tags: ['Vatican', 'Pope', 'Eucharist', 'Hope', 'St. Peter\'s Square']
   },
   {
@@ -194,8 +188,6 @@ As recorded in the ancient Liber Pontificalis, Saint Evaristus—born at Bethleh
     readTime: '4 min read',
     source: 'Pontifical Committee for Historical Sciences (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
-    imageUrl: '/images/saints/pope-saint-evaristus.jpg',
-    imageCaption: 'Pope Saint Evaristus, Fifth Bishop of Rome and Martyr',
     tags: ['Pope St. Evaristus', 'Vatican Grottoes', 'Early Church', 'Roman Parishes', 'Martyrs']
   },
   {
@@ -214,8 +206,6 @@ The Vatican Dicastery for the Causes of Saints also highlighted how Saint John P
     readTime: '4 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
-    imageUrl: '/images/saints/saint-john-paul-ii.jpg',
-    imageCaption: 'Pope Saint John Paul II',
     tags: ['Vatican', 'St. John Paul II', 'Eucharist', 'St. Peter\'s Basilica', 'Totus Tuus']
   },
   {
@@ -234,8 +224,6 @@ Recalling the centuries-old tradition of the Church, the document underscores ho
     readTime: '4 min read',
     source: 'Dicastery for Divine Worship (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
-    imageUrl: '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg',
-    imageCaption: 'Solemn Eucharistic Exposition and Adoration',
     tags: ['Eucharistic Adoration', 'Benediction', 'Monstrance', 'Liturgy', 'Divine Praises']
   }
 ];

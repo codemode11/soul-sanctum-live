@@ -143,23 +143,20 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
 
   // Retrieve exactly 5 fresh daily Vatican stories for the selected date
   const fiveDailyStories = useMemo(() => {
-    // If today or Nov 5 is selected, ensure the lead story is our requested Papal meditation on Luke 15:1-10
-    if ((selectedDate === '2026-11-04' || selectedDate === '2026-11-05')) {
-      const leadStory = VERIFIED_FACTUAL_VATICAN_DISPATCHES[0];
-      if (liveStories && liveStories.length >= 4) {
-        // Dispatch 1 is the Luke 15:1-10 Papal meditation; Dispatches 2-5 are live Vatican feed dispatches
-        return [leadStory, ...liveStories.slice(0, 4)];
-      }
-      return VERIFIED_FACTUAL_VATICAN_DISPATCHES.slice(0, 5);
+    const baseFive = getDailyFiveVaticanStories(selectedDate);
+    if (liveStories && liveStories.length >= 4) {
+      return [baseFive[0], ...liveStories.slice(0, 4)];
     }
-    return getDailyFiveVaticanStories(selectedDate);
+    return baseFive;
   }, [selectedDate, liveStories]);
 
   // Full news list including the 5 daily stories and broader archive
   const allDailyNews = useMemo(() => {
     const base = getDailyVaticanNews(selectedDate);
-    if ((selectedDate === '2026-11-04' || selectedDate === '2026-11-05') && liveStories && liveStories.length > 4) {
-      return [VERIFIED_FACTUAL_VATICAN_DISPATCHES[0], ...liveStories, ...base.slice(5)];
+    if (liveStories && liveStories.length > 0) {
+      const baseFive = getDailyFiveVaticanStories(selectedDate);
+      const usedIds = new Set([baseFive[0].id, ...liveStories.map(s => s.id)]);
+      return [baseFive[0], ...liveStories, ...base.filter(b => !usedIds.has(b.id))];
     }
     return base;
   }, [selectedDate, liveStories]);
