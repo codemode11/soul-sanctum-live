@@ -206,8 +206,7 @@ ${selectedTopic.meditationQuestion}`;
     const copyText = `CATECHISM OF THE CATHOLIC CHURCH & MAGISTERIUM
 Gospel Topic: ${selectedTopic.topicTitle}
 Passage: ${selectedTopic.gospelCitation} (${selectedTopic.liturgicalDay})
-Paragraphs: ${selectedTopic.paragraphsRange}
-Pillar: ${selectedTopic.pillar}
+Paragraphs: ${selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church') ? selectedTopic.paragraphsRange : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}${selectedTopic.pillar ? `\nPillar: ${selectedTopic.pillar}` : ''}
 
 WHAT THE CATECHISM SAYS ABOUT THIS TOPIC:
 ${cccArticlesText}
@@ -253,10 +252,10 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             </p>
 
             <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-amber-300/90 font-cinzel">
-              <span>{selectedTopic.pillar}</span>
-              <span className="text-stone-500">•</span>
               <span className="font-bold text-amber-200 bg-amber-950/90 px-2.5 py-0.5 rounded-md border border-amber-700/60">
-                {selectedTopic.paragraphsRange}
+                {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
+                  ? selectedTopic.paragraphsRange
+                  : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
               </span>
             </div>
           </div>

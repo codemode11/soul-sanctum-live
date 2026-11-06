@@ -401,11 +401,11 @@ export function getGospelCatechismForReading(
     liturgicalDay: effectiveReading.liturgicalDay,
     topicTitle: `${titleTopic}: What the Church Believes, Celebrates & Lives`,
     topicSubtitle: `Magisterial insights on ${citation} in the light of the Catechism of the Catholic Church`,
-    pillar: 'Pillar I & Pillar III: The Profession of Faith and Life in Christ',
+    pillar: '',
     part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
     section: 'Section Two: The Profession of Christian Faith',
     chapter: 'The Mysteries of the Life of Christ in the Sacred Liturgy',
-    paragraphsRange: 'CCC 514-521, 1074, 1803-1832',
+    paragraphsRange: 'Catechism of the Catholic Church 514-521, 1074, 1803-1832',
     catechismArticles: [
       {
         number: 514,
