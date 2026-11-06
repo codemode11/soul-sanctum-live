@@ -1853,12 +1853,16 @@ export const CatholicLinksTurnIcon: React.FC<IconProps> = ({ className = 'w-5 h-
     strokeLinecap="round"
     strokeLinejoin="round"
     className={`${className} overflow-visible`}
-    aria-label="Catholic Links — Turns Once"
+    aria-label="Catholic Links — Interlocking Click"
   >
-    <g className="sanctum-links-turn">
-      <path d="M9 17H7A5 5 0 0 1 7 7h2" />
-      <path d="M15 7h2a5 5 0 1 1 0 10h-2" />
-      <line x1="8" y1="12" x2="16" y2="12" strokeWidth="2.0" />
+    {/* Left Hook Part */}
+    <path d="M9 17H7A5 5 0 0 1 7 7h2" className="sanctum-links-left" />
+    {/* Right Hook Part */}
+    <path d="M15 7h2a5 5 0 1 1 0 10h-2" className="sanctum-links-right" />
+    {/* Central Connecting Link with Locking Node */}
+    <g className="sanctum-links-center">
+      <line x1="8" y1="12" x2="16" y2="12" strokeWidth="2.2" />
+      <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none" />
     </g>
   </svg>
 );

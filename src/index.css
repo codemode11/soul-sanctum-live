@@ -1106,26 +1106,106 @@ svg:hover .sanctum-holy-water-turn {
   animation: sanctumBasilicaTurnOnce 1.2s ease-in-out 1 forwards;
 }
 
-/* Catholic Links Icon: Turns once when hovered on */
-@keyframes sanctumLinksTurnOnce {
+/* Catholic Links Icon: Left and right parts slowly move towards the center, then make a clicking motion with the central link */
+@keyframes sanctumLinksLeftMoveIn {
   0% {
-    transform: rotate(0deg);
+    transform: translateX(-3.5px);
   }
-  100% {
-    transform: rotate(360deg);
+  62% {
+    transform: translateX(0px);
+  }
+  70% {
+    transform: translateX(0.9px);
+  }
+  78% {
+    transform: translateX(-0.3px);
+  }
+  86%, 100% {
+    transform: translateX(0px);
   }
 }
 
-.sanctum-links-turn {
+@keyframes sanctumLinksRightMoveIn {
+  0% {
+    transform: translateX(3.5px);
+  }
+  62% {
+    transform: translateX(0px);
+  }
+  70% {
+    transform: translateX(-0.9px);
+  }
+  78% {
+    transform: translateX(0.3px);
+  }
+  86%, 100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes sanctumLinksCenterClick {
+  0%, 52% {
+    opacity: 0.35;
+    transform: scaleX(0.6) scaleY(0.8);
+  }
+  62% {
+    opacity: 1;
+    transform: scaleX(1) scaleY(1);
+  }
+  70% {
+    opacity: 1;
+    transform: scaleX(1.25) scaleY(1.5);
+  }
+  78% {
+    opacity: 1;
+    transform: scaleX(0.92) scaleY(0.85);
+  }
+  86%, 100% {
+    opacity: 1;
+    transform: scaleX(1) scaleY(1);
+  }
+}
+
+.sanctum-links-left {
   transform-box: view-box;
-  transform-origin: 12px 12px;
-  transform: rotate(0deg);
+  transform-origin: 7px 12px;
+  transform: translateX(-3.5px);
+  transition: transform 2.6s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
 }
 
-.group:hover .sanctum-links-turn,
-svg:hover .sanctum-links-turn {
-  animation: sanctumLinksTurnOnce 1.2s cubic-bezier(0.25, 1, 0.5, 1) 1 forwards;
+.sanctum-links-right {
+  transform-box: view-box;
+  transform-origin: 17px 12px;
+  transform: translateX(3.5px);
+  transition: transform 2.6s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.sanctum-links-center {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  opacity: 0.35;
+  transform: scaleX(0.6) scaleY(0.8);
+  transition:
+    opacity 2.6s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 2.6s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform, opacity;
+}
+
+.group:hover .sanctum-links-left,
+svg:hover .sanctum-links-left {
+  animation: sanctumLinksLeftMoveIn 2.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
+}
+
+.group:hover .sanctum-links-right,
+svg:hover .sanctum-links-right {
+  animation: sanctumLinksRightMoveIn 2.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
+}
+
+.group:hover .sanctum-links-center,
+svg:hover .sanctum-links-center {
+  animation: sanctumLinksCenterClick 2.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
 }
 
 
