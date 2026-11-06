@@ -762,18 +762,18 @@ export const SpiritualBooksReaderView: React.FC = () => {
   // RENDER: SPIRITUAL BOOKS LIBRARY CATALOG
   // ==========================================
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-16">
+    <div className="max-w-5xl mx-auto space-y-5 sm:space-y-6 pb-16">
       
       {/* Sacred Masthead Banner */}
-      <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#2B1B10] via-[#4A2E1B] to-[#1A0F08] border border-[#C89F72]/50 shadow-2xl text-stone-100 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="space-y-1.5">
+      <div className="p-4 sm:p-5 md:p-6 rounded-xl bg-gradient-to-br from-[#2B1B10] via-[#4A2E1B] to-[#1A0F08] border border-[#C89F72]/50 shadow-xl text-stone-100 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] uppercase font-cinzel tracking-[0.25em] text-[#D4A373] font-bold">
+              <span className="text-[10px] sm:text-[11px] uppercase font-cinzel tracking-[0.2em] text-[#D4A373] font-bold">
                 Sancta Lectio • In-App Spiritual Library
               </span>
             </div>
-            <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white">
+            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold tracking-wider text-white">
               Spiritual Classics
             </h2>
             <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
@@ -784,7 +784,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           {/* Quick Lectio Divina Guide Button */}
           <button
             onClick={() => setIsLectioGuideOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#8B5A2B]/60 to-[#5C3A21]/70 hover:from-[#9C6B3B] hover:to-[#6B4423] border border-[#D4A373]/60 text-amber-100 text-xs font-cinzel font-bold transition-all shadow-md shrink-0 cursor-pointer self-start sm:self-center"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gradient-to-r from-[#8B5A2B]/60 to-[#5C3A21]/70 hover:from-[#9C6B3B] hover:to-[#6B4423] border border-[#D4A373]/60 text-amber-100 text-xs font-cinzel font-bold transition-all shadow-md shrink-0 cursor-pointer self-start sm:self-center"
           >
             <Compass className="w-4 h-4 text-[#D4A373]" />
             <span>How to Pray with Spiritual Reading</span>
@@ -792,7 +792,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
         </div>
 
         {/* Search Bar and Stats */}
-        <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+        <div className="pt-1 flex flex-col sm:flex-row items-center gap-2.5">
           <div className="relative flex-1 w-full">
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
             <input
@@ -800,7 +800,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
               value={librarySearch}
               onChange={(e) => setLibrarySearch(e.target.value)}
               placeholder="Search books, authors, or spiritual themes (e.g. Kempis, Teresa, Humility, Mary, Carmel)..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs sm:text-sm text-stone-200 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 transition-all"
+              className="w-full pl-10 pr-4 py-2 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs sm:text-sm text-stone-200 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 transition-all"
             />
             {librarySearch && (
               <button 
@@ -813,7 +813,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           </div>
 
           {bookmarks.length > 0 && (
-            <div className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-gradient-to-r from-[#3A2313] to-[#24160E] border border-[#C89F72]/50 text-xs text-[#F5D7B2] font-cinzel shrink-0">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#3A2313] to-[#24160E] border border-[#C89F72]/50 text-xs text-[#F5D7B2] font-cinzel shrink-0">
               <BookmarkCheck className="w-4 h-4 text-amber-400 fill-amber-400" />
               <span>{bookmarks.length} Active {bookmarks.length === 1 ? 'Bookmark' : 'Bookmarks'}</span>
             </div>
@@ -822,7 +822,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
       </div>
 
       {/* Category Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1.5 no-scrollbar">
         {[
           { id: 'all', label: `All Spiritual Classics (${SPIRITUAL_BOOKS.length})` },
           { id: 'devotion', label: 'Devotio and Daily Life' },
@@ -836,7 +836,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           <button
             key={cat.id}
             onClick={() => setSelectedCategory(cat.id as BookCategory)}
-            className={`px-4 py-2 rounded-lg text-xs font-cinzel font-bold whitespace-nowrap transition-all cursor-pointer ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold whitespace-nowrap transition-all cursor-pointer ${
               selectedCategory === cat.id
                 ? 'bg-gradient-to-r from-[#8B5A2B] via-[#6B4423] to-[#4A2E1B] text-white shadow-md border border-[#D4A373]/60'
                 : 'bg-gradient-to-b from-[#3A2415]/90 to-[#24160C]/90 hover:from-[#4A2E1B] hover:to-[#2E1C10] text-stone-200 border border-[#8B5A2B]/40'
