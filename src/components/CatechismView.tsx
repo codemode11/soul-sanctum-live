@@ -265,35 +265,35 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-5 md:p-6 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 sm:space-y-5 mb-12">
       
-      {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration (Raised to the Very Top) */}
-      <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl p-5 sm:p-7 text-amber-50 shadow-md border border-stone-800">
-        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-          <div className="space-y-2">
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-amber-100 tracking-normal leading-tight">
-              Catechism
-            </h2>
-
-            <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#D4A373] leading-tight pt-0.5">
-              {toCurvedQuotes(selectedTopic.topicTitle)}
-            </h3>
-
-            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
-              {toCurvedQuotes(selectedTopic.topicSubtitle)}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs sm:text-sm text-amber-200/90 font-cinzel">
-              <span className="font-semibold text-amber-200">
+      {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration (Compact & Elegant) */}
+      <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl px-4 py-3 sm:px-5 sm:py-3.5 text-amber-50 shadow-md border border-stone-800">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div className="space-y-1 min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+              <h2 className="font-serif text-lg sm:text-xl font-bold text-amber-100 tracking-normal leading-tight">
+                Catechism
+              </h2>
+              <span className="text-stone-600 hidden sm:inline" aria-hidden="true">•</span>
+              <span className="text-xs sm:text-[13px] font-semibold text-amber-200/90 font-cinzel">
                 {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
                   ? selectedTopic.paragraphsRange
                   : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
               </span>
             </div>
+
+            <h3 className="font-serif text-base sm:text-lg md:text-xl font-bold text-[#D4A373] leading-snug">
+              {toCurvedQuotes(selectedTopic.topicTitle)}
+            </h3>
+
+            <p className="text-xs sm:text-[13px] text-stone-300 font-serif-sacred max-w-3xl leading-snug">
+              {toCurvedQuotes(selectedTopic.topicSubtitle)}
+            </p>
           </div>
 
           {/* Action Buttons: Topic Picker with Arrows, Audio Narration & Copy Teaching */}
-          <div className="flex flex-wrap items-center gap-2 shrink-0 self-start md:self-auto pt-2 md:pt-0">
+          <div className="flex flex-wrap items-center gap-1.5 shrink-0 self-start md:self-center pt-1 md:pt-0">
             {/* Interactive Topic Picker with Arrows */}
             <div className="relative shrink-0" ref={topicDropdownRef}>
               <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs">
