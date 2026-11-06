@@ -244,15 +244,6 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               Catechism
             </h2>
 
-            <div className="flex flex-wrap items-center gap-2 pt-0.5">
-              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-950/80 px-2.5 py-0.5 rounded-full border border-amber-600/50">
-                Gospel Topic: {selectedTopic.gospelCitation}
-              </span>
-              <span className="text-xs text-stone-300 font-serif italic">
-                {selectedTopic.liturgicalDay}
-              </span>
-            </div>
-
             <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#D4A373] leading-tight pt-0.5">
               {selectedTopic.topicTitle}
             </h3>
