@@ -23,7 +23,9 @@ import {
   Radio,
   Info,
   RefreshCw,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Settings,
+  ChevronDown
 } from 'lucide-react';
 import { CatholicNewsItem } from '../types';
 import { 
@@ -107,6 +109,7 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
   const [isFetchingLive, setIsFetchingLive] = useState(false);
   const [showFactCheckModal, setShowFactCheckModal] = useState(false);
   const [lastLiveSync, setLastLiveSync] = useState<string>('Connected to Holy See Feed');
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
 
   // Sync when parent date changes
   useEffect(() => {
@@ -261,86 +264,145 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
 
-      {/* Official Embedded Vatican News Widget */}
-      <section className="bg-white rounded-2xl border border-stone-200/90 shadow-md overflow-hidden">
-        <div className="p-3 sm:p-5 bg-[#FAF8F5]">
-          <VaticanNewsWidgetEmbed
-            lang="en"
-            fontSize="14"
-            carouselVideoAuto="true"
-            carouselVideoTime="medium"
-          />
-        </div>
-
-        <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 px-6 py-5 text-amber-50 border-t border-amber-900/40">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Globe className="w-5 h-5 text-amber-400 shrink-0" />
-              <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
-                Vatican News Official Live Widget
+      {/* 1. TOP BANNER: Vatican News and Church Dispatches + Settings Toggle for Archive */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-md border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
+        <div className={`bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 p-6 sm:p-8 text-amber-50 border-b border-amber-900/40 ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2">
+                <Globe className="w-5 h-5 text-amber-400" />
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+                  Acta Apostolicae Sedis & Vatican News
+                </span>
+              </div>
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+                Vatican News and Church Dispatches
               </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
+                Updated daily with reports covering the Holy Father&apos;s homily, Dicastery directives, Saint of the Day, Eucharistic renewal, and works of mercy.
+              </p>
             </div>
-            <span className="text-xs font-serif italic text-amber-200/90">
-              Dicastery for Communication • vaticannews.va
-            </span>
+
+            {/* Settings Toggle Button */}
+            <div className="flex items-center justify-end self-end sm:self-start shrink-0">
+              <button
+                onClick={() => setIsTopSettingsOpen(prev => !prev)}
+                aria-expanded={isTopSettingsOpen}
+                className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+                  isTopSettingsOpen
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+                }`}
+                title={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
+                aria-label={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
+              >
+                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                    isTopSettingsOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+            </div>
           </div>
-          <blockquote className="mt-3 text-xs sm:text-sm text-stone-200 font-serif italic leading-relaxed border-l-2 border-amber-400/70 pl-3.5">
-            &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country. It is a way for your parishes and communities to constantly obtain information from the primary source.&rdquo;
-            <footer className="mt-1 not-italic font-semibold text-amber-300">
-              — In Christ, Leo XIV
-            </footer>
-          </blockquote>
-        </div>
-      </section>
-      
-      {/* News Banner */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <Globe className="w-5 h-5 text-amber-400" />
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-              Acta Apostolicae Sedis & Vatican News
-            </span>
+
+          {/* Categories Filter Bar */}
+          <div className="flex flex-wrap gap-2 mt-4">
+            {categories.map(c => (
+              <button
+                key={c}
+                onClick={() => setSelectedCategory(c)}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-cinzel transition-all cursor-pointer ${
+                  selectedCategory === c
+                    ? 'bg-amber-400 text-amber-950 font-bold shadow-xs'
+                    : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                }`}
+              >
+                {c}
+              </button>
+            ))}
           </div>
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-            Vatican News and Church Dispatches
-          </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
-            Updated daily with reports covering the Holy Father's homily, Dicastery directives, Saint of the Day, Eucharistic renewal, and works of mercy.
-          </p>
         </div>
 
+        {/* Collapsible Panel: Holy See Archive & Global Church Reports */}
+        {isTopSettingsOpen && (
+          <div className="p-5 sm:p-6 bg-white/75 backdrop-blur-md border-t border-stone-200/80 space-y-4 animate-fadeIn">
+            <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
+              <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-800 uppercase tracking-wide">
+                Holy See Archive & Global Church Reports
+              </h3>
+              <span className="text-xs text-stone-500 font-serif">
+                {archiveStories.length} archived articles
+              </span>
+            </div>
 
+            {archiveStories.length > 0 ? (
+              <div className="space-y-3">
+                {archiveStories.map(item => (
+                  <article
+                    key={item.id}
+                    onClick={() => setActiveArticle(item)}
+                    className="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-stone-200 hover:bg-white transition-all cursor-pointer space-y-2.5 group shadow-2xs"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <span className="px-2 py-0.5 rounded-full bg-stone-200 text-stone-800 font-semibold font-cinzel text-[10px]">
+                        {item.category}
+                      </span>
+                      <span className="text-stone-500 text-xs">{item.date} • {item.readTime}</span>
+                    </div>
 
+                    <div className="flex flex-col sm:flex-row gap-3.5 items-start">
+                      {item.imageUrl && (
+                        <div className="w-full sm:w-36 h-24 shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative">
+                          <img
+                            src={item.imageUrl}
+                            alt={item.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                            onError={(e) => {
+                              const container = e.currentTarget.parentElement;
+                              if (container) container.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+                      <div className="space-y-1 flex-1">
+                        <h4 className="font-cinzel text-base sm:text-lg font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
+                          {toCurvedQuotes(item.title)}
+                        </h4>
 
+                        <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
+                          {toCurvedQuotes(item.summary)}
+                        </p>
+                      </div>
+                    </div>
 
-        {/* Categories Filter Bar */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          {categories.map(c => (
-            <button
-              key={c}
-              onClick={() => setSelectedCategory(c)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-cinzel transition-all cursor-pointer ${
-                selectedCategory === c
-                  ? 'bg-amber-400 text-amber-950 font-bold shadow-xs'
-                  : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
+                    <div className="flex items-center justify-between pt-1 text-xs text-stone-500">
+                      <span>Source: {item.source}</span>
+                      <span className="text-amber-800 font-semibold flex items-center gap-1">
+                        <span>Read Article</span>
+                        <BookOpen className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-stone-500 font-serif italic">
+                No archived articles match the selected category filter.
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
-
-
-      {/* SECTION 1: TODAY'S FIVE VATICAN STORIES */}
+      {/* 2. TODAY'S FIVE VATICAN STORIES */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
             <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900 uppercase tracking-wide">
-              Today's Vatican Dispatches ({dateFormatted})
+              Today&apos;s Vatican Dispatches ({dateFormatted})
             </h3>
           </div>
           <span className="text-xs font-serif italic text-amber-950">
@@ -376,7 +438,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                     src={item.imageUrl}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
+                    loading="lazy"
                     onError={(e) => {
                       const container = e.currentTarget.parentElement;
                       if (container) container.style.display = 'none';
@@ -448,70 +510,37 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         ))}
       </div>
 
-      {/* SECTION 2: VATICAN ARCHIVE & GLOBAL CHURCH REPORTS */}
-      {archiveStories.length > 0 && (
-        <div className="space-y-4 pt-6">
-          <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
-            <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-800 uppercase tracking-wide">
-              Holy See Archive & Global Church Reports
-            </h3>
-            <span className="text-xs text-stone-500 font-serif">
-              {archiveStories.length} archived articles
+      {/* 3. OFFICIAL EMBEDDED VATICAN NEWS WIDGET */}
+      <section className="bg-white rounded-2xl border border-stone-200/90 shadow-md overflow-hidden">
+        <div className="p-3 sm:p-5 bg-[#FAF8F5]">
+          <VaticanNewsWidgetEmbed
+            lang="en"
+            fontSize="14"
+            carouselVideoAuto="true"
+            carouselVideoTime="medium"
+          />
+        </div>
+
+        <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 px-6 py-5 text-amber-50 border-t border-amber-900/40">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Globe className="w-5 h-5 text-amber-400 shrink-0" />
+              <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
+                Vatican News Official Live Widget
+              </h2>
+            </div>
+            <span className="text-xs font-serif italic text-amber-200/90">
+              Dicastery for Communication • vaticannews.va
             </span>
           </div>
-
-          <div className="space-y-3">
-            {archiveStories.map(item => (
-              <article
-                key={item.id}
-                onClick={() => setActiveArticle(item)}
-                className="bg-white/40 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/60 hover:bg-white/65 transition-all cursor-pointer space-y-2.5 group"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                  <span className="px-2 py-0.5 rounded-full bg-stone-200 text-stone-800 font-semibold font-cinzel text-[10px]">
-                    {item.category}
-                  </span>
-                  <span className="text-stone-500 text-xs">{item.date} • {item.readTime}</span>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3.5 items-start">
-                  {item.imageUrl && (
-                    <div className="w-full sm:w-36 h-24 shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative">
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        loading="lazy"
-                        onError={(e) => {
-                          const container = e.currentTarget.parentElement;
-                          if (container) container.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
-                  <div className="space-y-1 flex-1">
-                    <h4 className="font-cinzel text-base sm:text-lg font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
-                      {toCurvedQuotes(item.title)}
-                    </h4>
-
-                    <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
-                      {toCurvedQuotes(item.summary)}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between pt-1 text-xs text-stone-500">
-                  <span>Source: {item.source}</span>
-                  <span className="text-amber-800 font-semibold flex items-center gap-1">
-                    <span>Read Article</span>
-                    <BookOpen className="w-3 h-3" />
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
+          <blockquote className="mt-3 text-xs sm:text-sm text-stone-200 font-serif italic leading-relaxed border-l-2 border-amber-400/70 pl-3.5">
+            &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country. It is a way for your parishes and communities to constantly obtain information from the primary source.&rdquo;
+            <footer className="mt-1 not-italic font-semibold text-amber-300">
+              — In Christ, Leo XIV
+            </footer>
+          </blockquote>
         </div>
-      )}
+      </section>
 
       {/* Full Article Reader Modal with Audio Narration, Image, and Official Verification Link */}
       {activeArticle && (
