@@ -3,19 +3,20 @@ import {
   Clock,
   Copy,
   Check,
-  ExternalLink,
   RefreshCw,
   Volume2,
   VolumeX,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  BookOpen
 } from 'lucide-react';
 import { CatholicArticlesRssIcon } from './SanctumIcons';
 import {
   CATHOLIC_RSS_SOURCES,
   CURATED_CATHOLIC_ARTICLES,
   CatholicArticleItem,
-  fetchCatholicRssArticlesForSource
+  fetchCatholicRssArticlesForSource,
+  fetchFullCatholicArticleContent
 } from '../data/catholicRssArticles';
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
@@ -34,6 +35,7 @@ export const CatholicArticlesView: React.FC = () => {
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFetchingFullText, setIsFetchingFullText] = useState<boolean>(false);
   const [isReadingAloud, setIsReadingAloud] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
@@ -79,6 +81,53 @@ export const CatholicArticlesView: React.FC = () => {
   const currentArticle: CatholicArticleItem | undefined =
     sourceArticles[selectedArticleIndex] || sourceArticles[0];
 
+  // Automatically fetch the complete article text whenever the active RSS item only has a short feed excerpt
+  useEffect(() => {
+    if (!currentArticle || currentArticle.isFullContentLoaded || !currentArticle.link) {
+      return;
+    }
+
+    let cancelled = false;
+    setIsFetchingFullText(true);
+
+    fetchFullCatholicArticleContent(currentArticle.link)
+      .then(fullData => {
+        if (cancelled) return;
+        setArticlesBySource(prev => {
+          const list = prev[selectedSourceId] || [];
+          const updated = list.map(item => {
+            if (item.id !== currentArticle.id) return item;
+            if (fullData && fullData.content.length > item.content.length) {
+              return {
+                ...item,
+                content: fullData.content,
+                imageUrl: item.imageUrl || fullData.imageUrl,
+                readTime: fullData.readTime || item.readTime,
+                isFullContentLoaded: true
+              };
+            }
+            return {
+              ...item,
+              isFullContentLoaded: true
+            };
+          });
+          return {
+            ...prev,
+            [selectedSourceId]: updated
+          };
+        });
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsFetchingFullText(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentArticle?.id, currentArticle?.isFullContentLoaded, currentArticle?.link, selectedSourceId]);
+
   const handleSelectSource = (sourceId: string) => {
     if (isReadingAloud) SacredReader.stop();
     setSelectedSourceId(sourceId);
@@ -109,11 +158,20 @@ export const CatholicArticlesView: React.FC = () => {
   };
 
   const handleCopyArticle = (article: CatholicArticleItem) => {
-    const copyText = `${article.title}\nSource: ${article.sourceName} | By ${article.author} (${article.publishedDate})\n\n${article.content || article.summary}\n\nLink: ${article.link}`;
+    const copyText = `${article.title}\nSource: ${article.sourceName} | By ${article.author} (${article.publishedDate})\n\n${article.content || article.summary}`;
     navigator.clipboard.writeText(copyText);
     setCopiedId(article.id);
     setTimeout(() => setCopiedId(null), 2000);
   };
+
+  const formattedParagraphs = useMemo(() => {
+    if (!currentArticle) return [];
+    const rawText = currentArticle.content || currentArticle.summary || '';
+    return rawText
+      .split(/\n{2,}/)
+      .map(p => p.trim())
+      .filter(Boolean);
+  }, [currentArticle]);
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
@@ -131,7 +189,7 @@ export const CatholicArticlesView: React.FC = () => {
               Catholic Articles
             </h2>
             <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl">
-              Select a publication below to read its latest RSS article one at a time.
+              Select a publication below to read its complete articles in their entirety right within the website.
             </p>
           </div>
 
@@ -146,7 +204,7 @@ export const CatholicArticlesView: React.FC = () => {
           </button>
         </div>
 
-        {/* 9 Catholic Publications Filter Bar (Individual Sources Only) */}
+        {/* 10 Catholic Publications Filter Bar (Individual Sources Only) */}
         <div className="flex flex-wrap gap-2 mt-5">
           {CATHOLIC_RSS_SOURCES.map(src => {
             const isSelected = selectedSourceId === src.id;
@@ -172,23 +230,18 @@ export const CatholicArticlesView: React.FC = () => {
             <strong className="not-italic font-cinzel text-amber-300">{activeSourceMeta.name}: </strong>
             {activeSourceMeta.tagline}
           </div>
-          <a
-            href={activeSourceMeta.websiteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-amber-300 hover:text-amber-200 font-cinzel text-[11px] font-bold shrink-0"
-          >
-            <span>Visit {activeSourceMeta.shortName}</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+          <span className="inline-flex items-center gap-1.5 text-amber-300/90 font-cinzel text-[11px] font-semibold shrink-0">
+            <BookOpen className="w-3.5 h-3.5" />
+            <span>Full In-App Reader</span>
+          </span>
         </div>
       </div>
 
-      {/* Single Article Reader Card (One RSS Article at a Time) */}
+      {/* Single Full-Article Reader Card (One RSS Article at a Time) */}
       {currentArticle && (
-        <article className="bg-white/85 backdrop-blur-xl backdrop-saturate-150 p-6 sm:p-8 rounded-2xl border border-white/80 ring-1 ring-inset ring-white/50 shadow-[0_8px_32px_0_rgba(120,90,50,0.14)] space-y-5">
+        <article className="bg-white/85 backdrop-blur-xl backdrop-saturate-150 p-6 sm:p-8 md:p-10 rounded-2xl border border-white/80 ring-1 ring-inset ring-white/50 shadow-[0_8px_32px_0_rgba(120,90,50,0.14)] space-y-6">
           {/* Top Navigation & Article Counter Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3.5">
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-md bg-amber-900 text-amber-50 font-bold font-cinzel text-xs shadow-2xs">
                 {currentArticle.sourceName}
@@ -196,6 +249,11 @@ export const CatholicArticlesView: React.FC = () => {
               {sourceArticles.length > 1 && (
                 <span className="text-xs font-cinzel font-semibold text-stone-500">
                   • Article {selectedArticleIndex + 1} of {sourceArticles.length}
+                </span>
+              )}
+              {isFetchingFullText && (
+                <span className="text-xs font-serif italic text-amber-800 animate-pulse ml-1">
+                  • Loading complete article text…
                 </span>
               )}
             </div>
@@ -226,7 +284,7 @@ export const CatholicArticlesView: React.FC = () => {
           </div>
 
           {/* Article Title, Author & Date */}
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 leading-snug">
               {toCurvedQuotes(currentArticle.title)}
             </h3>
@@ -254,7 +312,7 @@ export const CatholicArticlesView: React.FC = () => {
                       ? 'bg-amber-800 text-white animate-pulse'
                       : 'bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300'
                   }`}
-                  title={isReadingAloud ? 'Stop Audio' : 'Listen to this article'}
+                  title={isReadingAloud ? 'Stop Audio' : 'Listen to this full article'}
                 >
                   {isReadingAloud ? (
                     <VolumeX className="w-3.5 h-3.5" />
@@ -267,7 +325,7 @@ export const CatholicArticlesView: React.FC = () => {
                 <button
                   onClick={() => handleCopyArticle(currentArticle)}
                   className="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
-                  title="Copy article text"
+                  title="Copy full article text"
                 >
                   {copiedId === currentArticle.id ? (
                     <>
@@ -285,14 +343,14 @@ export const CatholicArticlesView: React.FC = () => {
             </div>
           </div>
 
-          {/* Optional Article Image (Only shown if provided by the RSS item and loads cleanly) */}
+          {/* Optional Article Image (Only shown if provided by the article and loads cleanly) */}
           {currentArticle.imageUrl && (
             <div className="rounded-xl overflow-hidden border border-stone-300 bg-stone-100">
               <img
                 key={currentArticle.imageUrl}
                 src={currentArticle.imageUrl}
                 alt={currentArticle.title}
-                className="w-full max-h-80 object-cover"
+                className="w-full max-h-96 object-cover"
                 loading="lazy"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
@@ -303,27 +361,25 @@ export const CatholicArticlesView: React.FC = () => {
             </div>
           )}
 
-          {/* Full Article Content */}
-          <div className="font-serif-sacred text-stone-900 text-base sm:text-lg leading-relaxed whitespace-pre-line space-y-4 pt-1 border-t border-stone-200/70">
-            {toCurvedQuotes(currentArticle.content || currentArticle.summary)}
+          {/* Complete In-App Article Body */}
+          <div className="font-serif-sacred text-stone-900 text-base sm:text-lg leading-relaxed space-y-5 pt-3 border-t border-stone-200/70">
+            {formattedParagraphs.map((para, idx) => (
+              <p
+                key={idx}
+                className={idx === 0 ? 'sacred-drop-cap' : ''}
+              >
+                {toCurvedQuotes(para)}
+              </p>
+            ))}
           </div>
 
-          {/* Bottom Bar: Original Source Link & Article Stepping */}
-          <div className="pt-4 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3">
-            {currentArticle.link && (
-              <a
-                href={currentArticle.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-50 text-xs font-cinzel font-bold inline-flex items-center gap-1.5 transition-colors shadow-xs"
-              >
-                <span>Read Original on {currentArticle.sourceName}</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            )}
-
-            {sourceArticles.length > 1 && (
-              <div className="flex items-center gap-2 ml-auto">
+          {/* Bottom Article Stepping Bar */}
+          {sourceArticles.length > 1 && (
+            <div className="pt-4 border-t border-stone-200 flex items-center justify-between gap-3">
+              <span className="text-xs font-cinzel text-stone-500">
+                {currentArticle.sourceName} • Article {selectedArticleIndex + 1} of {sourceArticles.length}
+              </span>
+              <div className="flex items-center gap-2">
                 <button
                   onClick={handlePrevArticle}
                   disabled={selectedArticleIndex === 0}
@@ -341,10 +397,11 @@ export const CatholicArticlesView: React.FC = () => {
                   <ChevronRight className="w-4 h-4 text-amber-800" />
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </article>
       )}
     </div>
   );
 };
+
