@@ -598,12 +598,9 @@ ${reading.gospel.text}`;
         
         <div className="border-b border-stone-200 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="text-red-700 font-serif font-bold text-xl">✠</span>
-              <h3 className="font-serif text-xl sm:text-2xl font-bold text-red-950 tracking-normal">
-                The Holy Gospel
-              </h3>
-            </div>
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-red-950 tracking-normal">
+              The Holy Gospel
+            </h3>
             <p className="font-serif text-base sm:text-lg font-semibold text-stone-800 mt-0.5">
               {reading.gospel.citation}
             </p>
