@@ -570,17 +570,17 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
 
             {/* SECTION 1: GOSPEL SUMMARY */}
             <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs space-y-1.5 overflow-hidden">
-              <svg className="pointer-events-none absolute top-0 left-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
-                <path d="M 1,12 V 4 C 1,2.343 2.343,1 4,1 H 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <svg className="pointer-events-none absolute top-0 left-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
+                <path d="M 20,1 H 12 A 11,11 0 0,0 1,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
               </svg>
-              <svg className="pointer-events-none absolute top-0 right-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
-                <path d="M 4,1 H 12 C 13.657,1 15,2.343 15,4 V 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <svg className="pointer-events-none absolute top-0 right-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
+                <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
               </svg>
-              <svg className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
-                <path d="M 1,4 V 12 C 1,13.657 2.343,15 4,15 H 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
+                <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
               </svg>
-              <svg className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
-                <path d="M 4,15 H 12 C 13.657,15 15,13.657 15,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
+                <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
               </svg>
               
               <div className="flex items-center gap-1.5 text-amber-900 font-cinzel font-bold text-xs uppercase tracking-wider">
