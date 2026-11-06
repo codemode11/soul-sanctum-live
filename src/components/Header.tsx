@@ -56,9 +56,10 @@ export const Header: React.FC<HeaderProps> = ({
     year: 'numeric'
   });
 
-  const hasMemorialSplit = liturgicalTitle.includes(' / ');
-  const mainTitlePart = hasMemorialSplit ? liturgicalTitle.split(' / ')[0] : liturgicalTitle;
-  const memorialPart = hasMemorialSplit ? liturgicalTitle.split(' / ')[1] : null;
+  const cleanLiturgicalTitle = liturgicalTitle.replace(/\s*\(Blessed Virgin Mary on Saturday\)/gi, '').trim();
+  const hasMemorialSplit = cleanLiturgicalTitle.includes(' / ');
+  const mainTitlePart = hasMemorialSplit ? cleanLiturgicalTitle.split(' / ')[0] : cleanLiturgicalTitle;
+  const memorialPart = hasMemorialSplit ? cleanLiturgicalTitle.split(' / ')[1] : null;
 
   const activeImg =
     NIEPOKALANOW_HIGH_RES_IMAGES.find((img) => img.id === activeEstablishingImageId) ||
@@ -300,16 +301,16 @@ export const Header: React.FC<HeaderProps> = ({
                   </span>
                 </div>
 
-                <div className="flex flex-col gap-1 mt-3 sm:mt-4 text-left">
+                <div className="flex flex-col gap-1 mt-3 sm:mt-4 text-left max-w-[230px] sm:max-w-[270px]">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-white tracking-wide text-xs sm:text-sm drop-shadow-sm font-serif">
+                    <span className="font-semibold text-white tracking-wide text-xs sm:text-sm drop-shadow-sm font-serif leading-snug break-words">
                       {mainTitlePart}
                     </span>
                   </div>
 
                   {memorialPart && (
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs sm:text-sm text-white font-semibold not-italic font-serif drop-shadow-sm">
+                      <span className="text-xs sm:text-sm text-white font-semibold not-italic font-serif drop-shadow-sm leading-snug break-words">
                         {memorialPart}
                       </span>
                     </div>

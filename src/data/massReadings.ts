@@ -733,7 +733,7 @@ Then he said to them, "Who among you, if your son or ox falls into a cistern, wo
   '2026-10-31': {
     id: 'reading-2026-10-31',
     date: '2026-10-31',
-    liturgicalDay: 'Saturday of the Thirtieth Week in Ordinary Time (Blessed Virgin Mary on Saturday)',
+    liturgicalDay: 'Saturday of the Thirtieth Week in Ordinary Time',
     liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
     liturgicalColor: 'green',
     liturgicalRank: 'Weekday',
@@ -1061,7 +1061,7 @@ And the master commended that dishonest steward for acting prudently. For the ch
   '2026-11-07': {
     id: 'reading-2026-11-07',
     date: '2026-11-07',
-    liturgicalDay: 'Saturday of the Thirty-First Week in Ordinary Time (Blessed Virgin Mary on Saturday)',
+    liturgicalDay: 'Saturday of the Thirty-First Week in Ordinary Time',
     liturgicalSeason: 'Ordinary Time (Year II / Cycle B)',
     liturgicalColor: 'green',
     liturgicalRank: 'Weekday',
