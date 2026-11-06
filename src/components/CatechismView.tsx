@@ -251,8 +251,8 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               {selectedTopic.topicSubtitle}
             </p>
 
-            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-amber-300/90 font-cinzel">
-              <span className="font-bold text-amber-200 bg-amber-950/90 px-2.5 py-0.5 rounded-md border border-amber-700/60">
+            <div className="flex flex-wrap items-center gap-2 pt-1 text-xs sm:text-sm text-amber-200/90 font-cinzel">
+              <span className="font-semibold text-amber-200">
                 {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
                   ? selectedTopic.paragraphsRange
                   : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
