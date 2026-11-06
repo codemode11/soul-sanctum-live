@@ -351,6 +351,58 @@ const CURATED_GOSPEL_CATECHISM_TOPICS: Record<string, Omit<GospelCatechismTopic,
 };
 
 /**
+ * Cleanly extracts a complete Gospel reading or passage summary.
+ * NEVER cuts a word in half and ALWAYS completes the full sentence.
+ */
+export function extractGospelSnippet(rawText: string): string {
+  if (!rawText) return '';
+  const text = rawText.trim();
+
+  // If the Gospel reading is under 1,200 characters (such as Luke 16:1-8),
+  // return the entire proclamation so every sentence is completely intact.
+  if (text.length <= 1200) {
+    return text;
+  }
+
+  // For longer proclamations, find a natural sentence boundary after 550 characters,
+  // guaranteeing no partial words or chopped sentences.
+  const targetMin = 550;
+  const sentenceEndPattern = /([.?!]['"”’]?)\s+/g;
+  let match: RegExpExecArray | null;
+  let bestCut = -1;
+
+  while ((match = sentenceEndPattern.exec(text)) !== null) {
+    const endPos = match.index + match[1].length;
+    if (endPos >= targetMin) {
+      bestCut = endPos;
+      break;
+    }
+  }
+
+  if (bestCut !== -1) {
+    return text.substring(0, bestCut).trim();
+  }
+
+  // Fallback: search for last complete sentence within first 800 characters
+  const fallbackPattern = /([.?!]['"”’]?)\s+/g;
+  let lastEnd = -1;
+  while ((match = fallbackPattern.exec(text.substring(0, 800))) !== null) {
+    lastEnd = match.index + match[1].length;
+  }
+  if (lastEnd > 200) {
+    return text.substring(0, lastEnd).trim();
+  }
+
+  // Word boundary fallback
+  const lastSpace = text.lastIndexOf(' ', 600);
+  if (lastSpace > 0) {
+    return text.substring(0, lastSpace).trim() + '.';
+  }
+
+  return text;
+}
+
+/**
  * Intelligent Fallback Generator for any Gospel reading
  */
 export function getGospelCatechismForReading(
@@ -387,7 +439,7 @@ export function getGospelCatechismForReading(
       year: yearNum,
       dayNumber: dayNum,
       gospelCitation: citation || dbTemplate.gospelCitation,
-      gospelTextSnippet: effectiveReading.gospel.text ? effectiveReading.gospel.text.substring(0, 360) + '...' : '',
+      gospelTextSnippet: effectiveReading.gospel.text ? extractGospelSnippet(effectiveReading.gospel.text) : '',
       liturgicalDay: effectiveReading.liturgicalDay,
       topicTitle: dbTemplate.topicTitle,
       topicSubtitle: dbTemplate.topicSubtitle,
@@ -419,7 +471,7 @@ export function getGospelCatechismForReading(
         year: yearNum,
         dayNumber: dayNum,
         liturgicalDay: effectiveReading.liturgicalDay,
-        gospelTextSnippet: effectiveReading.gospel.text ? effectiveReading.gospel.text.substring(0, 360) + '...' : ''
+        gospelTextSnippet: effectiveReading.gospel.text ? extractGospelSnippet(effectiveReading.gospel.text) : ''
       };
     }
   }
@@ -438,7 +490,7 @@ export function getGospelCatechismForReading(
     year: yearNum,
     dayNumber: dayNum,
     gospelCitation: citation || 'Holy Gospel Proclamation',
-    gospelTextSnippet: effectiveReading.gospel.text ? effectiveReading.gospel.text.substring(0, 360) + '...' : '',
+    gospelTextSnippet: effectiveReading.gospel.text ? extractGospelSnippet(effectiveReading.gospel.text) : '',
     liturgicalDay: effectiveReading.liturgicalDay,
     topicTitle: `${titleTopic}: What the Church Believes, Celebrates & Lives`,
     topicSubtitle: `Magisterial insights on ${citation} in the light of the Catechism of the Catholic Church`,

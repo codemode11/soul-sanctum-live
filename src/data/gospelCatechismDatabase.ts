@@ -841,7 +841,7 @@ export const GOSPEL_CATECHISM_REGISTRY: Record<string, GospelCatechismTemplate> 
   'luke 16:1-8':   {
     gospelCitation: 'Luke 16:1-8',
     topicTitle: 'Children of Light Preparing for Our Heavenly Dwelling: Prudence, Stewardship & Eternity',
-    topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven',
+    topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven.',
     pillar: '',
     part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
     section: 'Section Two: The Profession of Christian Faith',
@@ -889,7 +889,7 @@ export const GOSPEL_CATECHISM_REGISTRY: Record<string, GospelCatechismTemplate> 
   'lk 16:1-8':   {
     gospelCitation: 'Luke 16:1-8',
     topicTitle: 'Children of Light Preparing for Our Heavenly Dwelling: Prudence, Stewardship & Eternity',
-    topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven',
+    topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven.',
     pillar: '',
     part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
     section: 'Section Two: The Profession of Christian Faith',
@@ -937,7 +937,7 @@ export const GOSPEL_CATECHISM_REGISTRY: Record<string, GospelCatechismTemplate> 
   'luke 16:1':   {
     gospelCitation: 'Luke 16:1-8',
     topicTitle: 'Children of Light Preparing for Our Heavenly Dwelling: Prudence, Stewardship & Eternity',
-    topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven',
+    topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven.',
     pillar: '',
     part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
     section: 'Section Two: The Profession of Christian Faith',

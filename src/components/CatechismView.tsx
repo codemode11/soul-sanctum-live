@@ -605,8 +605,8 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 <BookOpen className="w-3.5 h-3.5" />
                 <span>Gospel Summary ({selectedTopic.gospelCitation})</span>
               </div>
-              <p className="font-serif text-stone-800 italic text-sm sm:text-base leading-relaxed pl-1">
-                &ldquo;{toCurvedQuotes(selectedTopic.gospelTextSnippet)}&rdquo;
+              <p className="font-serif text-stone-800 italic text-sm sm:text-base leading-relaxed pl-1 whitespace-pre-line">
+                {toCurvedQuotes(selectedTopic.gospelTextSnippet)}
               </p>
             </div>
 
