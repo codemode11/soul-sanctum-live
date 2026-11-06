@@ -345,7 +345,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: 'Catholic Articles', 
       icon: CatholicArticlesRssIcon, 
       tag: 'RSS Feeds', 
-      subtext: 'Aleteia, NC Register, CBCP, Word on Fire and More' 
+      subtext: 'St. Paul Center, Catholic Answers, Word on Fire and More' 
     },
     { 
       id: 'catholic-glossary', 

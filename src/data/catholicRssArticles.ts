@@ -26,49 +26,13 @@ export interface CatholicArticleItem {
 
 export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
   {
-    id: 'aleteia',
-    name: 'Aleteia',
-    shortName: 'Aleteia',
-    rssUrl: 'https://aleteia.org/feed/',
-    websiteUrl: 'https://aleteia.org',
-    tagline: 'Catholic spirituality, lifestyle, saints, and global Church stories',
-    location: 'Rome / International'
-  },
-  {
-    id: 'ncregister',
-    name: 'National Catholic Register',
-    shortName: 'NC Register',
-    rssUrl: 'https://www.ncregister.com/feeds/general-news.xml',
-    websiteUrl: 'https://www.ncregister.com',
-    tagline: 'Fidelity to the Magisterium — EWTN Catholic News & Analysis',
-    location: 'United States'
-  },
-  {
-    id: 'cbcp',
-    name: 'CBCP News',
-    shortName: 'CBCP',
-    rssUrl: 'https://cbcpnews.net/cbcpnews/feed/',
-    websiteUrl: 'https://cbcpnews.net/cbcpnews/',
-    tagline: 'Official News Service of the Catholic Bishops\' Conference of the Philippines',
-    location: 'Manila, Philippines'
-  },
-  {
-    id: 'catholic-digest',
-    name: 'Catholic Digest',
-    shortName: 'Catholic Digest',
-    rssUrl: 'https://www.catholicdigest.com/feed/',
-    websiteUrl: 'https://www.catholicdigest.com',
-    tagline: 'Trusted Catholic family living, faith stories, and devotion since 1936',
-    location: 'United States'
-  },
-  {
-    id: 'catholic-insight',
-    name: 'Catholic Insight',
-    shortName: 'Catholic Insight',
-    rssUrl: 'https://catholicinsight.com/feed/',
-    websiteUrl: 'https://catholicinsight.com',
-    tagline: 'Cultural commentary, Catholic theology, and fidelity to Church teaching',
-    location: 'Canada'
+    id: 'st-paul-center',
+    name: 'St. Paul Center',
+    shortName: 'St. Paul Center',
+    rssUrl: 'https://feed.podbean.com/stpaulcenter/feed.xml',
+    websiteUrl: 'https://stpaulcenter.com',
+    tagline: 'Biblical theology for the Church — Dr. Scott Hahn & fellow scholars',
+    location: 'Steubenville, USA'
   },
   {
     id: 'catholic-answers',
@@ -89,22 +53,22 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     location: 'Winona-Rochester, USA'
   },
   {
-    id: 'st-paul-center',
-    name: 'St. Paul Center',
-    shortName: 'St. Paul Center',
-    rssUrl: 'https://feed.podbean.com/stpaulcenter/feed.xml',
-    websiteUrl: 'https://stpaulcenter.com',
-    tagline: 'Biblical theology for the Church — Dr. Scott Hahn & fellow scholars',
-    location: 'Steubenville, USA'
+    id: 'catholic-insight',
+    name: 'Catholic Insight',
+    shortName: 'Catholic Insight',
+    rssUrl: 'https://catholicinsight.com/feed/',
+    websiteUrl: 'https://catholicinsight.com',
+    tagline: 'Cultural commentary, Catholic theology, and fidelity to Church teaching',
+    location: 'Canada'
   },
   {
-    id: 'cerc',
-    name: 'Catholic Education Resource Center',
-    shortName: 'CERC',
-    rssUrl: 'https://catholiceducation.org/feed/',
-    websiteUrl: 'https://www.catholiceducation.org',
-    tagline: 'In-depth scholarship on Catholic history, philosophy, bioethics, and apologetics',
-    location: 'Vancouver / International'
+    id: 'aleteia',
+    name: 'Aleteia',
+    shortName: 'Aleteia',
+    rssUrl: 'https://aleteia.org/feed/',
+    websiteUrl: 'https://aleteia.org',
+    tagline: 'Catholic spirituality, lifestyle, saints, and global Church stories',
+    location: 'Rome / International'
   },
   {
     id: 'sign-org',
@@ -114,6 +78,33 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     websiteUrl: 'https://sign.org',
     tagline: 'Marian devotion, Eucharistic miracles, and Signs & Wonders for Our Times',
     location: 'United States'
+  },
+  {
+    id: 'ncregister',
+    name: 'National Catholic Register',
+    shortName: 'National Catholic Register',
+    rssUrl: 'https://www.ncregister.com/feeds/general-news.xml',
+    websiteUrl: 'https://www.ncregister.com',
+    tagline: 'Fidelity to the Magisterium — EWTN Catholic News & Analysis',
+    location: 'United States'
+  },
+  {
+    id: 'catholic-digest',
+    name: 'Catholic Digest',
+    shortName: 'Catholic Digest',
+    rssUrl: 'https://www.catholicdigest.com/feed/',
+    websiteUrl: 'https://www.catholicdigest.com',
+    tagline: 'Trusted Catholic family living, faith stories, and devotion since 1936',
+    location: 'United States'
+  },
+  {
+    id: 'cerc',
+    name: 'Catholic Education Resource Center',
+    shortName: 'CERC',
+    rssUrl: 'https://catholiceducation.org/feed/',
+    websiteUrl: 'https://www.catholiceducation.org',
+    tagline: 'In-depth scholarship on Catholic history, philosophy, bioethics, and apologetics',
+    location: 'Vancouver / International'
   }
 ];
 
