@@ -569,11 +569,19 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-8">
 
             {/* SECTION 1: GOSPEL SUMMARY */}
-            <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs space-y-1.5">
-              <span className="pointer-events-none absolute -top-px -left-px w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-800" />
-              <span className="pointer-events-none absolute -top-px -right-px w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-800" />
-              <span className="pointer-events-none absolute -bottom-px -left-px w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-800" />
-              <span className="pointer-events-none absolute -bottom-px -right-px w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-800" />
+            <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs space-y-1.5 overflow-hidden">
+              <svg className="pointer-events-none absolute top-0 left-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+                <path d="M 1,12 V 4 C 1,2.343 2.343,1 4,1 H 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
+              <svg className="pointer-events-none absolute top-0 right-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+                <path d="M 4,1 H 12 C 13.657,1 15,2.343 15,4 V 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
+              <svg className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+                <path d="M 1,4 V 12 C 1,13.657 2.343,15 4,15 H 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
+              <svg className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+                <path d="M 4,15 H 12 C 13.657,15 15,13.657 15,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
               
               <div className="flex items-center gap-1.5 text-amber-900 font-cinzel font-bold text-xs uppercase tracking-wider">
                 <BookOpen className="w-3.5 h-3.5" />

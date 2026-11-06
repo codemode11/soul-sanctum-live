@@ -602,11 +602,19 @@ ${selectedCommentary.practicalApplication}`;
       {/* Main Commentary Display Card */}
       <article className="bg-white rounded-xl p-5 sm:p-7 shadow-sm border border-stone-200/90 space-y-4">
         {/* The Scripture Text */}
-        <div className="relative p-3.5 rounded-xl bg-[#FAF8F5] shadow-2xs space-y-0.5">
-          <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-800" />
-          <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-800" />
-          <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-800" />
-          <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-800" />
+        <div className="relative p-3.5 rounded-xl bg-[#FAF8F5] shadow-2xs space-y-0.5 overflow-hidden">
+          <svg className="pointer-events-none absolute top-0 left-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+            <path d="M 1,12 V 4 C 1,2.343 2.343,1 4,1 H 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+          <svg className="pointer-events-none absolute top-0 right-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+            <path d="M 4,1 H 12 C 13.657,1 15,2.343 15,4 V 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+          <svg className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+            <path d="M 1,4 V 12 C 1,13.657 2.343,15 4,15 H 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+          <svg className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 text-amber-800" viewBox="0 0 16 16" fill="none">
+            <path d="M 4,15 H 12 C 13.657,15 15,13.657 15,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel">
             Sacred Scripture ({selectedCommentary.scriptureReference})
           </span>
