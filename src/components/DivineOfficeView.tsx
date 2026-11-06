@@ -170,14 +170,14 @@ export const DivineOfficeView: React.FC = () => {
             </p>
           </div>
 
-          {/* Lower Row: Mode Switcher & Settings Toggle Button */}
-          <div className="flex items-center justify-between gap-3 mt-auto pt-2 shrink-0">
+          {/* Lower Row: Mode Switcher & Settings Toggle Button placed at the right */}
+          <div className="flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0">
             {/* View Mode Switcher */}
-            <div className="inline-flex items-center rounded-lg border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-amber-100 p-0.5 shadow-xs">
+            <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-amber-100 p-0.5 shadow-xs">
               <button
                 type="button"
                 onClick={() => setViewMode('native')}
-                className={`px-3 py-1 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`h-full px-3 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                   viewMode === 'native'
                     ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                     : 'text-stone-300 hover:text-white hover:bg-white/10'
@@ -190,7 +190,7 @@ export const DivineOfficeView: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setViewMode('widget')}
-                className={`px-3 py-1 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`h-full px-3 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
                   viewMode === 'widget'
                     ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                     : 'text-stone-300 hover:text-white hover:bg-white/10'
@@ -198,7 +198,7 @@ export const DivineOfficeView: React.FC = () => {
                 title="DivineOffice.org Live Widget Embed"
               >
                 <ExternalLink className="w-3.5 h-3.5 text-amber-300" />
-                <span>Live Widget</span>
+                <span>Widget</span>
               </button>
             </div>
 

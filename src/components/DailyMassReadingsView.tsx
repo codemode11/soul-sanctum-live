@@ -288,8 +288,8 @@ ${reading.gospel.text}`;
               </span>
             </div>
             
-            {/* Line 2: Complete Liturgical Day Title (raised, full width on one line) */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight whitespace-nowrap overflow-x-auto no-scrollbar">
+            {/* Line 2: Complete Liturgical Day Title (wraps onto a second line when needed) */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
               {reading.liturgicalDay.replace(/,\s*Bishop.*$/, '')}
             </h2>
           </div>
