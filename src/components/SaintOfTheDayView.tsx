@@ -1303,13 +1303,13 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
 
               {/* Traditional Missal Collect Prayer */}
               <div className="pt-8 border-t border-stone-200 dark:border-stone-700/60">
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-red-950 dark:text-amber-300">
+                <div className="space-y-1 mb-3">
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-red-950 dark:text-amber-300">
                     Collect
-                  </span>
-                  <span className="font-serif italic text-sm text-red-950/85 dark:text-amber-300/85">
+                  </h3>
+                  <p className="font-serif italic text-sm text-red-950/85 dark:text-amber-300/85">
                     Let us pray
-                  </span>
+                  </p>
                 </div>
                 <p className="font-serif italic text-stone-950 dark:text-stone-100 text-lg sm:text-xl leading-relaxed">
                   {selectedSaint.prayer}
