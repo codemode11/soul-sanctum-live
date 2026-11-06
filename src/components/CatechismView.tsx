@@ -586,10 +586,11 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
 
             {/* SECTION 2: WHAT THE CATECHISM OF THE CATHOLIC CHURCH TEACHES */}
             <div className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-stone-200 pb-2.5">
-                <ShieldCheck className="w-5 h-5 text-amber-800" />
-                <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900 uppercase tracking-wide">
-                  What the Catechism of the Catholic Church Teaches About This Topic
+              <div className="flex items-start gap-2 border-b border-stone-200 pb-2.5">
+                <ShieldCheck className="w-5 h-5 text-amber-800 mt-0.5 shrink-0" />
+                <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900 uppercase tracking-wide leading-tight">
+                  <span className="block">What the Catechism of the Catholic Church Teaches</span>
+                  <span className="block text-stone-800 font-semibold text-sm sm:text-base">About This Topic.</span>
                 </h3>
               </div>
 
