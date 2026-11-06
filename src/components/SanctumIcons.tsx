@@ -1228,24 +1228,24 @@ export const NotebookWithBallpenIcon: React.FC<IconProps> = ({ className = 'w-5 
     {/* Checkmark drawn on the notebook by the ballpen when hovered */}
     <path
       d="M8.8 13.8L10.6 15.8L14.4 11.2"
-      pathLength={10}
+      pathLength={9}
       strokeWidth="1.95"
       className="sanctum-checklist-mark"
     />
 
-    {/* Ballpen angled on the right side (animates across checkmark on hover) */}
+    {/* Ballpen resting directly at the start of the checkmark (8.8, 13.8) */}
     <g className="sanctum-checklist-pen">
       {/* Pen body and cone tip */}
       <path 
-        d="M19.8 2.2a1.3 1.3 0 0 1 1.8 1.8L15.3 10.3l-2.6.9.9-2.6L19.8 2.2z" 
+        d="M16.0 4.8a1.3 1.3 0 0 1 1.8 1.8L11.5 12.9l-2.7 0.9 0.9-2.7L16.0 4.8z" 
         strokeWidth="1.6" 
         fill="currentColor" 
         fillOpacity="0.12" 
       />
-      {/* Ballpen tip ballpoint */}
-      <circle cx="12.6" cy="11.2" r="0.45" fill="currentColor" stroke="none" />
+      {/* Ballpen tip ballpoint (rests directly at start point 8.8, 13.8) */}
+      <circle cx="8.8" cy="13.8" r="0.45" fill="currentColor" stroke="none" />
       {/* Ballpen clip */}
-      <path d="M18.8 3.2l-1.3 1.3" strokeWidth="1.3" />
+      <path d="M15.0 5.8l-1.3 1.3" strokeWidth="1.3" />
     </g>
   </svg>
 );

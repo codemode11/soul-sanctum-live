@@ -97,43 +97,34 @@
   background: transparent !important;
 }
 
-/* Spiritual Checklist Icon: Ballpen writes a checkmark once on the notebook on hover */
-@keyframes sanctumBallpenWriteCheck {
+/* Spiritual Checklist Icon: Ballpen makes strictly two movements (1: lower check stroke, 2: upper check stroke) */
+@keyframes sanctumBallpenTwoMovements {
   0% {
+    /* Resting tip directly at checkmark start (8.8, 13.8) */
     transform: translate(0px, 0px) rotate(0deg);
   }
-  22% {
-    /* Ballpen tip (12.6, 11.2) moves to checkmark start (8.8, 13.8) */
-    transform: translate(-3.8px, 2.6px) rotate(4deg);
-  }
-  50% {
-    /* Ballpen strokes down-right to checkmark vertex (10.6, 15.8) */
-    transform: translate(-2.0px, 4.6px) rotate(-3deg);
-  }
-  82% {
-    /* Ballpen strokes up-right to checkmark end (14.4, 11.2) */
-    transform: translate(1.8px, 0px) rotate(5deg);
+  42% {
+    /* Movement 1: Down-right stroke to write lower part of check mark at vertex (10.6, 15.8) */
+    transform: translate(1.8px, 2.0px) rotate(-4deg);
   }
   100% {
-    /* Ballpen returns to resting position after writing the checkmark once */
-    transform: translate(0px, 0px) rotate(0deg);
+    /* Movement 2: Up-right stroke to write upper part of check mark at end point (14.4, 11.2) */
+    transform: translate(5.6px, -2.6px) rotate(6deg);
   }
 }
 
-@keyframes sanctumCheckmarkDraw {
-  0%, 22% {
-    stroke-dashoffset: 10;
-    opacity: 0;
-  }
-  24% {
-    stroke-dashoffset: 10;
+@keyframes sanctumCheckmarkDrawTwoMovements {
+  0% {
+    stroke-dashoffset: 9;
     opacity: 1;
   }
-  50% {
-    stroke-dashoffset: 6.9;
+  42% {
+    /* Lower part drawn as pen completes Movement 1 */
+    stroke-dashoffset: 6.2;
     opacity: 1;
   }
-  82%, 100% {
+  100% {
+    /* Upper part drawn as pen completes Movement 2 */
     stroke-dashoffset: 0;
     opacity: 1;
   }
@@ -141,24 +132,27 @@
 
 .sanctum-checklist-pen {
   transform-box: view-box;
-  transform-origin: 12.6px 11.2px;
-  transition: transform 1.2s ease-out;
+  transform-origin: 8.8px 13.8px;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
 }
 
 .sanctum-checklist-mark {
-  stroke-dasharray: 10;
-  stroke-dashoffset: 10;
+  stroke-dasharray: 9;
+  stroke-dashoffset: 9;
   opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .group:hover .sanctum-checklist-pen,
 svg:hover .sanctum-checklist-pen {
-  animation: sanctumBallpenWriteCheck 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumBallpenTwoMovements 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
 }
 
 .group:hover .sanctum-checklist-mark,
 svg:hover .sanctum-checklist-mark {
-  animation: sanctumCheckmarkDraw 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 forwards;
+  animation: sanctumCheckmarkDrawTwoMovements 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
+  opacity: 1;
 }
 
 /* Mass Readings Icon: Open Lectionary book flips a page from right to left on hover */
