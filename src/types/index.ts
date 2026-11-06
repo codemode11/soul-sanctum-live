@@ -336,7 +336,10 @@ export interface CatholicPodcastShow {
   episodes: PodcastEpisode[];
 }
 
+export type LiveStreamCategory = 'mass' | 'adoration' | 'apparition';
+
 export type LiveStreamRegion = 
+  | 'adoration'
   | 'vatican' 
   | 'europe' 
   | 'north-america' 
@@ -352,6 +355,7 @@ export interface HolyMassLiveStream {
   location: string;
   country: string;
   region: LiveStreamRegion;
+  category: LiveStreamCategory;
   videoEmbedUrl: string;
   youtubeLiveUrl?: string;
   fallbackStreamUrl?: string;

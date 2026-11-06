@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   Tv, 
-  Play, 
-  Pause, 
-  Volume2, 
-  VolumeX, 
-  Maximize2, 
   Globe, 
   Clock, 
   MapPin, 
   Flame, 
   Sparkles, 
-  BookOpen, 
   ExternalLink, 
   RefreshCw, 
   Heart, 
@@ -19,10 +13,11 @@ import {
   Check, 
   Share2, 
   ChevronRight,
-  Info
+  Info,
+  Volume2
 } from 'lucide-react';
-import { HolyMassLiveStream, LiveStreamRegion, MassReading } from '../types';
-import { HOLY_MASS_LIVESTREAMS, getStreamsByRegion } from '../data/holyMassLiveStreams';
+import { HolyMassLiveStream, LiveStreamRegion, LiveStreamCategory, MassReading } from '../types';
+import { HOLY_MASS_LIVESTREAMS } from '../data/holyMassLiveStreams';
 import { SacredReader } from '../utils/speech';
 
 interface HolyMassLivePlayerViewProps {
@@ -42,6 +37,7 @@ export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
     return HOLY_MASS_LIVESTREAMS[0]; // Vatican by default
   });
 
+  const [selectedCategory, setSelectedCategory] = useState<LiveStreamCategory | 'all'>('all');
   const [selectedRegion, setSelectedRegion] = useState<LiveStreamRegion>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeSideTab, setActiveSideTab] = useState<'communion' | 'readings' | 'candle'>('communion');
@@ -50,17 +46,19 @@ export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
   const [candleIntention, setCandleIntention] = useState('');
   const [savedIntentions, setSavedIntentions] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
-  const [isTheaterMode, setIsTheaterMode] = useState(false);
   const [streamKey, setStreamKey] = useState(Date.now());
 
   // Filter streams
   const filteredStreams = HOLY_MASS_LIVESTREAMS.filter(stream => {
+    const matchesCategory = selectedCategory === 'all' || stream.category === selectedCategory;
     const matchesRegion = 
       selectedRegion === 'all' 
         ? true 
-        : selectedRegion === 'anticipated'
-          ? !!stream.isAnticipatedMass
-          : stream.region === selectedRegion;
+        : selectedRegion === 'adoration'
+          ? !!stream.hasAdoration
+          : selectedRegion === 'anticipated'
+            ? !!stream.isAnticipatedMass
+            : stream.region === selectedRegion;
     const q = searchQuery.toLowerCase();
     const matchesSearch = 
       !searchQuery.trim() ||
@@ -68,7 +66,7 @@ export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
       stream.sanctuary.toLowerCase().includes(q) ||
       stream.location.toLowerCase().includes(q) ||
       stream.country.toLowerCase().includes(q);
-    return matchesRegion && matchesSearch;
+    return matchesCategory && matchesRegion && matchesSearch;
   });
 
   const spiritualCommunionPrayer = `My Jesus, 
@@ -115,15 +113,73 @@ Live on Soul Sanctum Catholic Sanctuary.`;
     setTimeout(() => setCopied(false), 2200);
   };
 
+  const categories: { id: LiveStreamCategory | 'all'; label: string; icon: React.ReactNode; count: number; desc: string }[] = [
+    {
+      id: 'all',
+      label: 'All Livestreams',
+      icon: <Globe className="w-4 h-4 text-amber-700" />,
+      count: HOLY_MASS_LIVESTREAMS.length,
+      desc: 'All Catholic sanctuaries & shrines'
+    },
+    {
+      id: 'mass',
+      label: 'Holy Mass',
+      icon: <Sparkles className="w-4 h-4 text-amber-600" />,
+      count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'mass').length,
+      desc: 'Papal, Cathedral & Parish TV Masses'
+    },
+    {
+      id: 'adoration',
+      label: 'Eucharistic Adoration',
+      icon: <Flame className="w-4 h-4 text-red-600" />,
+      count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'adoration').length,
+      desc: '24/7 Perpetual Adoration Chapels'
+    },
+    {
+      id: 'apparition',
+      label: 'Apparition Sites',
+      icon: <Heart className="w-4 h-4 text-blue-600" />,
+      count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'apparition').length,
+      desc: 'Lourdes, Fátima, Knock & Holy Sepulchre'
+    }
+  ];
+
   const regions: { id: LiveStreamRegion; label: string }[] = [
-    { id: 'all', label: 'All Sanctuaries' },
+    { id: 'all', label: 'All Regions' },
+    { id: 'adoration', label: '✝️ Eucharistic Adoration' },
     { id: 'anticipated', label: '✨ Anticipated Sunday Masses' },
-    { id: 'vatican', label: 'Vatican and Rome' },
-    { id: 'europe', label: 'Europe and Shrines' },
+    { id: 'vatican', label: 'Vatican & Rome' },
+    { id: 'europe', label: 'Europe & Shrines' },
     { id: 'north-america', label: 'North America' },
     { id: 'holy-land', label: 'Holy Land (Jerusalem)' },
-    { id: 'asia-latam', label: 'Asia and Philippines' }
+    { id: 'asia-latam', label: 'Asia & Philippines' }
   ];
+
+  const getCategoryBadge = (cat: LiveStreamCategory) => {
+    switch (cat) {
+      case 'mass':
+        return (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-800 text-[10px] font-bold font-cinzel">
+            <Sparkles className="w-2.5 h-2.5 text-amber-600" />
+            <span>Holy Mass</span>
+          </span>
+        );
+      case 'adoration':
+        return (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/15 border border-red-500/30 text-red-800 text-[10px] font-bold font-cinzel">
+            <Flame className="w-2.5 h-2.5 text-red-600" />
+            <span>Eucharistic Adoration</span>
+          </span>
+        );
+      case 'apparition':
+        return (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-800 text-[10px] font-bold font-cinzel">
+            <Heart className="w-2.5 h-2.5 text-blue-600" />
+            <span>Apparition Site</span>
+          </span>
+        );
+    }
+  };
 
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-6">
@@ -144,7 +200,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             </h2>
 
             <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-              Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, <strong>EWTN Live Mass &amp; Devotions</strong>, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, Basilica Minore del Santo Niño de Cebú, and sanctuaries worldwide.
+              Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, <strong>EWTN Live Mass &amp; Devotions</strong>, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, Basilica Minore del Santo Niño de Cebú, and perpetual adoration sanctuaries worldwide.
             </p>
           </div>
 
@@ -167,8 +223,6 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             </button>
           </div>
         </div>
-
-
 
         {/* Full-Width 16:9 Livestream Video Player */}
         <div className="relative aspect-video w-full bg-black border-b border-amber-500/30">
@@ -255,7 +309,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             <div className="flex items-start sm:items-center gap-2">
               <Clock className="w-4 h-4 text-amber-400 shrink-0 mt-0.5 sm:mt-0" />
               <span>
-                <strong className="text-amber-200">Liturgical Mass Schedule: </strong>
+                <strong className="text-amber-200">Liturgical Schedule: </strong>
                 {selectedStream.scheduleDescription}
               </span>
             </div>
@@ -267,7 +321,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
         </div>
       </div>
 
-      {/* 2. Liturgical Companion & Altar Devotions Card (Full-Width Spacious Layout) */}
+      {/* 2. Liturgical Companion & Devotions Card */}
       <div className="rounded-xl bg-white/85 backdrop-blur-xl border border-stone-200/90 shadow-lg p-5 sm:p-6 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3.5">
           <div className="text-left">
@@ -450,16 +504,18 @@ Live on Soul Sanctum Catholic Sanctuary.`;
         )}
       </div>
 
-      {/* 3. Worldwide Sanctuaries Catalog Selector */}
-      <div className="rounded-xl bg-white/85 backdrop-blur-xl border border-stone-200/90 shadow-lg p-5 sm:p-6 space-y-5">
+      {/* 3. Worldwide Sanctuaries & Category Selection */}
+      <div className="rounded-xl bg-white/85 backdrop-blur-xl border border-stone-200/90 shadow-lg p-5 sm:p-6 space-y-6">
+        
+        {/* Top Header & Search */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
           <div className="space-y-0.5 text-left">
             <h3 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900 tracking-wide flex items-center gap-2">
               <Globe className="w-5 h-5 text-amber-800" />
-              <span>Worldwide Catholic Sanctuary Channels ({filteredStreams.length})</span>
+              <span>Worldwide Livestreams ({filteredStreams.length})</span>
             </h3>
             <p className="text-xs text-stone-600 font-serif">
-              Select any papal basilica, Marian shrine, or cathedral below to switch the live altar broadcast.
+              Browse Holy Mass, 24/7 Eucharistic Adoration, and Marian Apparition Site streams.
             </p>
           </div>
 
@@ -475,13 +531,54 @@ Live on Soul Sanctum Catholic Sanctuary.`;
           </div>
         </div>
 
+        {/* Primary Category Selector Cards (Holy Mass, Eucharistic Adoration, Apparition Sites) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {categories.map(cat => {
+            const isActive = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2.5 group ${
+                  isActive
+                    ? 'bg-amber-900/95 text-amber-50 border-amber-700 ring-2 ring-amber-600/40 shadow-md'
+                    : 'bg-stone-50/90 hover:bg-stone-100/90 border-stone-200 text-stone-800'
+                }`}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className={`p-2 rounded-lg ${isActive ? 'bg-amber-800/80 text-amber-200' : 'bg-white text-stone-700 shadow-2xs'}`}>
+                    {cat.icon}
+                  </div>
+                  <span className={`text-xs font-bold font-cinzel px-2 py-0.5 rounded-full ${
+                    isActive ? 'bg-amber-800 text-amber-100' : 'bg-stone-200 text-stone-700'
+                  }`}>
+                    {cat.count}
+                  </span>
+                </div>
+
+                <div>
+                  <h4 className={`font-cinzel text-xs sm:text-sm font-bold leading-snug ${isActive ? 'text-white' : 'text-stone-900'}`}>
+                    {cat.label}
+                  </h4>
+                  <p className={`text-[11px] font-serif leading-tight mt-0.5 ${isActive ? 'text-amber-200/90' : 'text-stone-500'}`}>
+                    {cat.desc}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Region Filter Chips */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-stone-100">
+          <span className="text-[11px] font-cinzel font-bold text-stone-500 uppercase tracking-wider mr-1">
+            Region:
+          </span>
           {regions.map(r => (
             <button
               key={r.id}
               onClick={() => setSelectedRegion(r.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer ${
+              className={`px-3 py-1 rounded-lg text-xs font-cinzel transition-all cursor-pointer ${
                 selectedRegion === r.id
                   ? 'bg-[#6B4423] text-amber-50 font-bold shadow-xs border border-[#8B5A2B]'
                   : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'
@@ -515,38 +612,43 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                     : 'bg-white hover:bg-stone-50/90 border-stone-200 shadow-2xs hover:shadow-sm'
                 }`}
               >
-                <div className="flex items-start gap-3">
-                  <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-stone-200 shadow-xs">
-                    <img 
-                      src={stream.thumbnailUrl} 
-                      alt={stream.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                    />
-                    <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
-                      <Tv className="w-4 h-4 text-white drop-shadow-md" />
-                    </div>
-                  </div>
-
-                  <div className="min-w-0 space-y-0.5">
-                    <div className="flex items-center gap-1.5 text-[10px] font-bold font-cinzel text-amber-800 uppercase tracking-wider">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1 text-[10px] font-bold font-cinzel text-amber-800 uppercase tracking-wider">
                       <MapPin className="w-2.5 h-2.5" />
                       <span>{stream.country}</span>
                     </div>
+                    {getCategoryBadge(stream.category)}
+                  </div>
 
-                    <h4 className="font-serif text-sm font-bold text-stone-900 group-hover:text-amber-900 transition-colors line-clamp-1">
-                      {stream.name}
-                    </h4>
+                  <div className="flex items-start gap-3">
+                    <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-stone-200 shadow-xs">
+                      <img 
+                        src={stream.thumbnailUrl} 
+                        alt={stream.name} 
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                      />
+                      <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
+                        <Tv className="w-4 h-4 text-white drop-shadow-md" />
+                      </div>
+                    </div>
 
-                    <p className="text-[11px] text-stone-500 font-serif line-clamp-1">
-                      {stream.sanctuary}
-                    </p>
+                    <div className="min-w-0 space-y-0.5">
+                      <h4 className="font-serif text-sm font-bold text-stone-900 group-hover:text-amber-900 transition-colors line-clamp-2 leading-snug">
+                        {stream.name}
+                      </h4>
+
+                      <p className="text-[11px] text-stone-500 font-serif line-clamp-1">
+                        {stream.sanctuary}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
                   <span className="font-medium text-stone-700">{stream.language}</span>
                   <span className="inline-flex items-center gap-1 text-[#6B4423] font-cinzel font-bold group-hover:translate-x-0.5 transition-transform">
-                    <span>{isSelected ? 'Playing Now' : 'Watch Altar'}</span>
+                    <span>{isSelected ? 'Playing Now' : 'Watch Stream'}</span>
                     <ChevronRight className="w-3 h-3" />
                   </span>
                 </div>
@@ -554,8 +656,21 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             );
           })}
         </div>
+
+        {filteredStreams.length === 0 && (
+          <div className="p-8 text-center text-stone-500 font-serif space-y-2">
+            <p>No livestreams match your current search and filter criteria.</p>
+            <button
+              onClick={() => { setSelectedCategory('all'); setSelectedRegion('all'); setSearchQuery(''); }}
+              className="text-xs text-amber-800 font-cinzel font-bold underline cursor-pointer"
+            >
+              Reset all filters
+            </button>
+          </div>
+        )}
       </div>
 
     </div>
   );
 };
+
