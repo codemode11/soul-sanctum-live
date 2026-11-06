@@ -20,7 +20,7 @@ export interface IntercessionPetition {
 export interface DivineOfficeHourData {
   hourKey: OfficeHourKey;
   englishTitle: string;
-  latinTitle: string;
+  latinTitle?: string;
   timeHint: string;
   openingVerse: string;
   openingResponse: string;
@@ -91,7 +91,6 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'invitatory',
         englishTitle: 'Invitatory Prayer',
-        latinTitle: 'Ad Invitatorium',
         timeHint: 'First prayer upon waking before any other Hour',
         openingVerse: 'Lord, open my lips.',
         openingResponse: 'And my mouth will proclaim your praise.',
@@ -128,7 +127,6 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'readings',
         englishTitle: 'Office of Readings',
-        latinTitle: 'Officium Lectionis',
         timeHint: 'Prayed at night, early morning, or any quiet hour of the day',
         openingVerse: 'O God, come to my assistance.',
         openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
@@ -191,7 +189,6 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'lauds',
         englishTitle: 'Morning Prayer (Lauds)',
-        latinTitle: 'Ad Laudes Matutinas',
         timeHint: 'Prayed at dawn to consecrate the first hours of the day to the Risen Christ',
         openingVerse: 'O God, come to my assistance.',
         openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
@@ -280,7 +277,6 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'daytime',
         englishTitle: 'Daytime Prayer (Terce • Sext • None)',
-        latinTitle: 'Ad Horam Mediam',
         timeHint: 'Prayed at mid-morning (9 AM), mid-day (12 PM), or mid-afternoon (3 PM)',
         openingVerse: 'O God, come to my assistance.',
         openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
@@ -320,7 +316,6 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'vespers',
         englishTitle: 'Evening Prayer (Vespers)',
-        latinTitle: 'Ad Vesperas',
         timeHint: 'Prayed at sunset to offer thanksgiving for the day and commemorate the Last Supper & Cross',
         openingVerse: 'O God, come to my assistance.',
         openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
@@ -396,7 +391,6 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'compline',
         englishTitle: 'Night Prayer (Compline)',
-        latinTitle: 'Ad Completorium',
         timeHint: 'Prayed immediately before going to sleep at night',
         openingVerse: 'May the Lord almighty grant us a quiet night and a perfect end.',
         openingResponse: 'Amen. Our help is in the name of the Lord, who made heaven and earth.',

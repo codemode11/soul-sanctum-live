@@ -59,7 +59,7 @@ export const DivineOfficeView: React.FC = () => {
       SacredReader.stop();
       setIsReadingAloud(false);
     } else {
-      let script = `${hourData.englishTitle}, ${hourData.latinTitle}. ${hourData.timeHint}. `;
+      let script = `${hourData.englishTitle}. ${hourData.timeHint}. `;
       script += `Verse: ${hourData.openingVerse}. Response: ${hourData.openingResponse}. `;
       script += `Hymn: ${hourData.hymnTitle}. `;
       
@@ -90,7 +90,7 @@ export const DivineOfficeView: React.FC = () => {
   };
 
   const handleCopy = () => {
-    let copyText = `${hourData.englishTitle.toUpperCase()} (${hourData.latinTitle.toUpperCase()})\n`;
+    let copyText = `${hourData.englishTitle.toUpperCase()}\n`;
     copyText += `Liturgy of the Hours • ${hourData.timeHint}\n\n`;
     copyText += `VERSICLE & RESPONSE:\nV. ${hourData.openingVerse}\nR. ${hourData.openingResponse}\n\n`;
     copyText += `HYMN: ${hourData.hymnTitle}\n${hourData.hymnStanzas.join('\n\n')}\n\n`;
@@ -155,7 +155,7 @@ export const DivineOfficeView: React.FC = () => {
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-amber-400 shrink-0" />
               <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-200/90">
-                Liturgia Horarum • Universal Prayer of the Catholic Church
+                Universal Prayer of the Catholic Church
               </span>
             </div>
 
@@ -166,7 +166,7 @@ export const DivineOfficeView: React.FC = () => {
 
             {/* Line 3: Hour & Time Hint Kicker */}
             <p className="text-xs sm:text-sm text-stone-300 font-serif italic">
-              {hourData.englishTitle} ({hourData.latinTitle}) • {hourData.timeHint}
+              {hourData.englishTitle} • {hourData.timeHint}
             </p>
           </div>
 
@@ -425,7 +425,7 @@ export const DivineOfficeView: React.FC = () => {
             </svg>
 
             <div className="font-cinzel text-xs font-bold text-amber-800 uppercase tracking-wider">
-              Invitatorium et Introductio
+              Invitatory &amp; Introduction
             </div>
             <div className={`font-serif text-stone-900 space-y-1 ${getTextSizeClass()}`}>
               <p>
@@ -442,7 +442,7 @@ export const DivineOfficeView: React.FC = () => {
             <div className="flex items-center justify-between border-b border-stone-200 pb-2">
               <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-800" />
-                <span>Hymnus • Hymn</span>
+                <span>Hymn</span>
               </div>
               {hourData.hymnAuthor && (
                 <span className="text-xs text-stone-500 font-serif italic">
@@ -466,7 +466,7 @@ export const DivineOfficeView: React.FC = () => {
           <div className="space-y-6 border-b border-stone-200 pb-6">
             <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-stone-200 pb-2">
               <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-              <span>Psalmodia • Psalms &amp; Canticles</span>
+              <span>Psalms &amp; Canticles</span>
             </div>
 
             {hourData.psalms.map((psalm, idx) => (
@@ -512,7 +512,7 @@ export const DivineOfficeView: React.FC = () => {
           <div className="space-y-3 border-b border-stone-200 pb-6">
             <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-stone-200 pb-2">
               <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-              <span>Lectio Brevis • Short Reading ({hourData.shortReadingCitation})</span>
+              <span>Short Reading ({hourData.shortReadingCitation})</span>
             </div>
             <div className={`p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 font-serif text-stone-900 italic shadow-2xs ${getTextSizeClass()}`}>
               &ldquo;{toCurvedQuotes(hourData.shortReadingText)}&rdquo;
@@ -530,7 +530,7 @@ export const DivineOfficeView: React.FC = () => {
             <div className="space-y-4 border-b border-stone-200 pb-6">
               <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-stone-200 pb-2">
                 <Sparkles className="w-3.5 h-3.5 text-amber-800" />
-                <span>Canticum Evangelicum • Gospel Canticle</span>
+                <span>Gospel Canticle</span>
               </div>
 
               <div className="bg-amber-100/80 border-l-4 border-amber-800 p-3 rounded-r-lg shadow-2xs font-serif italic text-amber-950 text-xs sm:text-sm">
@@ -562,7 +562,7 @@ export const DivineOfficeView: React.FC = () => {
             <div className="space-y-4 border-b border-stone-200 pb-6">
               <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-stone-200 pb-2">
                 <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-                <span>Lectio Altera • Patristic Reading ({hourData.patristicReading.author})</span>
+                <span>Patristic Reading ({hourData.patristicReading.author})</span>
               </div>
 
               <div className="space-y-1">
@@ -584,14 +584,14 @@ export const DivineOfficeView: React.FC = () => {
             </div>
           )}
 
-          {/* 7. INTERCESSIONS (PRECES) */}
+          {/* 7. INTERCESSIONS */}
           {hourData.intercessions && (() => {
             const preces = hourData.intercessions;
             return (
               <div className="space-y-4 border-b border-stone-200 pb-6">
                 <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-stone-200 pb-2">
                   <Sparkles className="w-3.5 h-3.5 text-amber-800" />
-                  <span>Preces • Intercessions</span>
+                  <span>Intercessions</span>
                 </div>
 
                 <p className={`font-serif text-stone-850 italic ${getTextSizeClass()}`}>
@@ -616,7 +616,7 @@ export const DivineOfficeView: React.FC = () => {
                 {/* The Lord's Prayer */}
                 <div className="pt-3 space-y-1.5 bg-[#FAF7F2] p-4 rounded-xl border border-[#E8DEC8]">
                   <div className="font-cinzel font-bold text-xs text-amber-900 uppercase tracking-wide">
-                    Pater Noster • The Lord's Prayer
+                    The Lord's Prayer
                   </div>
                   <p className={`font-serif text-stone-900 italic ${getTextSizeClass()}`}>
                     Our Father, who art in heaven, hallowed be thy name; thy kingdom come, thy will be done on earth as it is in heaven. Give us this day our daily bread, and forgive us our trespasses, as we forgive those who trespass against us; and lead us not into temptation, but deliver us from evil. Amen.
@@ -630,7 +630,7 @@ export const DivineOfficeView: React.FC = () => {
           <div className="space-y-3 pt-2">
             <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5 border-b border-stone-200 pb-2">
               <ShieldCheck className="w-3.5 h-3.5 text-amber-800" />
-              <span>Oratio Conclusiva • Concluding Collect</span>
+              <span>Concluding Collect</span>
             </div>
             <p className={`font-serif text-stone-900 font-semibold leading-relaxed bg-[#FAF8F5] p-4 rounded-xl border border-amber-200/60 shadow-2xs ${getTextSizeClass()}`}>
               {toCurvedQuotes(hourData.collect)}
@@ -645,7 +645,7 @@ export const DivineOfficeView: React.FC = () => {
             <div className="mt-8 pt-6 border-t-2 border-amber-200/80 space-y-3 bg-[#FAF7F2] p-5 rounded-xl border border-[#E8DEC8]">
               <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-amber-800" />
-                <span>Antiphona Finalis B.M.V. • {hourData.marianAntiphon.title}</span>
+                <span>Marian Antiphon • {hourData.marianAntiphon.title}</span>
               </div>
               <p className={`font-serif text-stone-900 italic leading-relaxed ${getTextSizeClass()}`}>
                 &ldquo;{toCurvedQuotes(hourData.marianAntiphon.text)}&rdquo;
