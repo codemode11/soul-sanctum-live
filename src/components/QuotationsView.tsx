@@ -7,7 +7,6 @@ import {
   SacredQuotation
 } from '../data/quotations';
 import { SacredReader } from '../utils/speech';
-import { QuotationsRightFacingIcon } from './SanctumIcons';
 
 export const QuotationsView: React.FC = () => {
   const [selectedSection, setSelectedSection] = useState<QuotationSectionId | 'all'>('all');
@@ -81,24 +80,10 @@ export const QuotationsView: React.FC = () => {
       {/* Header & Filter Card (Dark Brown) */}
       <div className="bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] rounded-xl p-5 sm:p-7 text-amber-50 shadow-[0_12px_32px_rgba(0,0,0,0.45)] border border-[#8B5A2B]/70 relative z-30">
         <div className="relative z-10 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#8B5A2B]/40 pb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[#52341C] border border-[#A67B4E]/70 text-amber-200 shadow-xs">
-                <QuotationsRightFacingIcon className="w-5 h-5 text-amber-200" />
-              </div>
-              <div>
-                <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-white">
-                  Quotations
-                </h2>
-                <p className="text-xs sm:text-sm text-amber-200/85 font-serif italic mt-0.5">
-                  {QUOTATION_SECTIONS.length} Sacred Topics • {SACRED_QUOTATIONS_DATABASE.length} Catholic Quotations
-                </p>
-              </div>
-            </div>
-
-            <span className="self-start sm:self-auto px-3.5 py-1 rounded-full bg-[#52341C]/90 text-amber-100 text-xs sm:text-sm font-semibold border border-[#A67B4E]/60 uppercase tracking-wider font-cinzel">
-              {SACRED_QUOTATIONS_DATABASE.length} Quotations
-            </span>
+          <div className="border-b border-[#8B5A2B]/40 pb-4">
+            <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-white">
+              Quotations
+            </h2>
           </div>
 
           {/* Topic Drop-Down System & Search */}
