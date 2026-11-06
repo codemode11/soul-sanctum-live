@@ -519,7 +519,7 @@ ${reading.gospel.text}`;
         </div>
 
         {/* Antiphon response: Increased font size so it is highly readable and dynamically scalable */}
-        <div className="p-4 sm:p-5 rounded-md bg-[#EADACA] border border-[#C8AD8D] font-serif text-[#2C1A0E] font-bold italic flex items-start gap-3 shadow-2xs" style={antiphonStyle}>
+        <div className="p-4 sm:p-5 rounded-md bg-[#EADACA] border border-[#C8AD8D] font-serif text-[#2C1A0E] font-bold italic flex items-center justify-center text-center gap-3 shadow-2xs" style={antiphonStyle}>
           <span className="text-[#6B4423] font-serif font-black text-2xl sm:text-3xl leading-none not-italic">R.</span>
           <span className="leading-snug">{toCurvedQuotes(reading.responsorialPsalm.antiphon)}</span>
         </div>
