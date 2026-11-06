@@ -57,9 +57,7 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
   const [savedNote, setSavedNote] = useState(false);
   const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
 
-  const scrollRef = useRef<HTMLDivElement>(null);
   const topicDropdownRef = useRef<HTMLDivElement>(null);
-  const pillRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   // Close topic picker dropdown when clicking outside
   useEffect(() => {
@@ -111,16 +109,6 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
     };
   }, []);
 
-  // Smooth scroll selected topic into view in carousel
-  useEffect(() => {
-    if (selectedTopic && pillRefs.current[selectedTopic.id]) {
-      pillRefs.current[selectedTopic.id]?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
-    }
-  }, [selectedTopic.id]);
 
   // Month filtering across 14 months (November 2026 to December 2027)
   const monthFilteredList = useMemo(() => {
@@ -201,13 +189,6 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
       }
       if (next.dateKey && onSelectDate) onSelectDate(next.dateKey);
       if (isReadingAloud) SacredReader.stop();
-    }
-  };
-
-  const scrollPills = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -280 : 280;
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
@@ -595,53 +576,6 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                   </button>
                 </div>
               </div>
-            </div>
-
-            {/* Carousel Pills Row with Scroll Arrows */}
-            <div className="relative flex items-center gap-1.5">
-              <button
-                onClick={() => scrollPills('left')}
-                className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
-                title="Scroll left"
-                aria-label="Scroll left"
-              >
-                <ChevronLeft className="w-4 h-4 text-amber-800" />
-              </button>
-
-              <div
-                ref={scrollRef}
-                className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth w-full"
-              >
-                {activeList.map(topic => {
-                  const isSelected = topic.id === selectedTopic.id;
-                  return (
-                    <button
-                      key={topic.id}
-                      ref={el => { pillRefs.current[topic.id] = el; }}
-                      onClick={() => handleSelectTopic(topic)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
-                        isSelected
-                          ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold ring-1 ring-amber-700'
-                          : 'bg-white/65 hover:bg-white/90 text-stone-800 border border-stone-200/80 hover:border-amber-400'
-                      }`}
-                    >
-                      <span className={`text-[10px] font-semibold uppercase ${isSelected ? 'text-amber-200' : 'text-amber-900/80 font-cinzel'}`}>
-                        {topic.dateLabel}:
-                      </span>
-                      <span>{topic.gospelCitation}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <button
-                onClick={() => scrollPills('right')}
-                className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
-                title="Scroll right"
-                aria-label="Scroll right"
-              >
-                <ChevronRight className="w-4 h-4 text-amber-800" />
-              </button>
             </div>
           </div>
         )}
