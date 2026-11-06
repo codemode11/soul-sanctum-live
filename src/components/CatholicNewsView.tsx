@@ -44,11 +44,11 @@ interface CatholicNewsViewProps {
 }
 
 const FIVE_STORY_BADGES = [
-  'Dispatch 1 of 5 • Papal Teaching & Gospel Meditation',
-  'Dispatch 2 of 5 • Holy See Pastoral Directive',
-  'Dispatch 3 of 5 • Saint of the Day & Living Tradition',
-  'Dispatch 4 of 5 • Global Church & Eucharistic Revival',
-  'Dispatch 5 of 5 • Works of Mercy & Sacred Culture'
+  'Papal Teaching & Gospel Meditation',
+  'Holy See Pastoral Directive',
+  'Saint of the Day & Living Tradition',
+  'Global Church & Eucharistic Revival',
+  'Works of Mercy & Sacred Culture'
 ];
 
 const VaticanNewsWidgetEmbed: React.FC<{
@@ -353,10 +353,10 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
             key={item.id}
             className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-5 sm:p-6 rounded-2xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/75 transition-all space-y-3 group flex flex-col gap-3 relative"
           >
-            {/* Numbered Dispatch Badge */}
+            {/* Dispatch Badge */}
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-              <span className="px-2.5 py-0.5 rounded-md bg-[#6B4423] text-white font-bold font-cinzel text-[11px] shadow-2xs">
-                {FIVE_STORY_BADGES[index] || `Dispatch ${index + 1} of 5`}
+              <span className="px-2.5 py-0.5 rounded-md bg-amber-900 text-amber-50 font-bold font-cinzel text-[11px] shadow-2xs">
+                {FIVE_STORY_BADGES[index] || item.category}
               </span>
               <div className="flex items-center gap-3 text-stone-500">
                 <span className="font-serif italic">{item.date}</span>
