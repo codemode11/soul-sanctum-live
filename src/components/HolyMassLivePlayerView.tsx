@@ -136,7 +136,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
           <div className="space-y-1.5 max-w-2xl text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[11px] font-cinzel font-bold tracking-wider uppercase">
               <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
-              <span>Worldwide Catholic Livestream Altar</span>
+              <span>Worldwide Catholic Livestream</span>
             </div>
 
             <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
@@ -186,7 +186,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
           <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2 pointer-events-none z-10">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-600/90 text-white font-sans text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-md">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              LIVE ALTAR
+              LIVE
             </span>
             <span className="px-2.5 py-1 rounded-full bg-black/75 text-amber-200 text-[11px] font-serif border border-white/20 backdrop-blur-md">
               {selectedStream.sanctuary}
