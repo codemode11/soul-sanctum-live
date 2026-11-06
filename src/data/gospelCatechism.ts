@@ -476,9 +476,55 @@ export function getGospelCatechismForReading(
     }
   }
 
-  // 3. Fallback synthesizer
+  // 3. Fallback synthesizer with direct thematic Catechism connection
   const titleTopic = effectiveReading.reflection?.title || 'The Saving Truth of the Holy Gospel';
   const patristicAuthor = effectiveReading.reflection?.author || 'The Sacred Magisterium and Doctors of the Church';
+  const fullText = (effectiveReading.gospel.text + ' ' + (effectiveReading.reflection?.content || '')).toLowerCase();
+
+  let resolvedArticles = [
+    {
+      number: 546,
+      title: 'The Parables of the Kingdom and Supreme Vigilance',
+      text: 'Jesus\' invitation to enter his Kingdom comes in the form of parables, a characteristic feature of his teaching. Through his parables he invites people to the feast of the Kingdom, but he also asks for a radical choice: to gain the kingdom, one must give everything; words are not enough, deeds are required. Man must act with urgent vigilance.'
+    },
+    {
+      number: 543,
+      title: 'The Proclamation of the Kingdom of God to All Men',
+      text: 'Everyone is called to enter the Kingdom. First announced to the children of Israel, this messianic kingdom is intended to accept men of all nations. To enter it, one must accept Jesus\' word: "The word of the Lord is compared to a seed which is sown in a field; those who hear it with faith and are part of the little flock of Christ have received the Kingdom itself."'
+    },
+    {
+      number: 1803,
+      title: 'Life in the Spirit and the Cultivation of Virtue',
+      text: '"Whatever is true, whatever is honorable, whatever is just, whatever is pure, whatever is lovely, whatever is gracious, if there is any excellence, if there is anything worthy of praise, think about these things." A virtue is an habitual and firm disposition to do the good. It allows the person not only to perform good acts, but to give the best of himself.'
+    },
+    {
+      number: 2447,
+      title: 'The Works of Mercy and Almsgiving',
+      text: 'The works of mercy are charitable actions by which we come to the aid of our neighbor in his spiritual and bodily necessities. Among all these, giving alms to the poor is one of the chief witnesses to fraternal charity: it is also a work of justice pleasing to God.'
+    }
+  ];
+
+  if (fullText.includes('pray') || fullText.includes('father') || fullText.includes('ask')) {
+    resolvedArticles[0] = {
+      number: 2600,
+      title: 'Jesus Prays Before Decisive Moments of His Mission',
+      text: 'The Gospel tells us how Jesus prays at decisive moments in his ministry: before his Father gives witness to him at his baptism and Transfiguration, and before his passion he fulfills the Father\'s plan of love; he also prays before the decisive moments in the mission of his apostles.'
+    };
+  } else if (fullText.includes('beatitude') || fullText.includes('blessed')) {
+    resolvedArticles[0] = {
+      number: 1716,
+      title: 'The Beatitudes at the Heart of Jesus\' Preaching',
+      text: 'The Beatitudes are at the heart of Jesus\' preaching. They take up the promises made to the chosen people since Abraham. The Beatitudes fulfill the promises by ordering them no longer merely to the possession of a territory, but to the Kingdom of heaven.'
+    };
+  } else if (fullText.includes('eucharist') || fullText.includes('bread') || fullText.includes('blood') || fullText.includes('supper')) {
+    resolvedArticles[0] = {
+      number: 1324,
+      title: 'The Eucharist as Source and Summit of Ecclesial Life',
+      text: 'The Eucharist is "the source and summit of the Christian life." The other sacraments, and indeed all ecclesiastical ministries and works of the apostolate, are bound up with the Eucharist and are oriented toward it. For in the blessed Eucharist is contained the whole spiritual good of the Church, namely Christ himself.'
+    };
+  }
+
+  const paragraphNumbers = resolvedArticles.map(a => a.number).join(', ');
 
   return {
     id: `ccc-gospel-${effectiveDate}`,
@@ -495,32 +541,11 @@ export function getGospelCatechismForReading(
     topicTitle: `${titleTopic}: What the Church Believes, Celebrates & Lives`,
     topicSubtitle: `Magisterial insights on ${citation} in the light of the Catechism of the Catholic Church`,
     pillar: '',
-    part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
+    part: 'Part Three: Life in Christ & Part One: The Profession of Faith',
     section: 'Section Two: The Profession of Christian Faith',
     chapter: 'The Mysteries of the Life of Christ in the Sacred Liturgy',
-    paragraphsRange: 'Catechism of the Catholic Church 514, 515, 521, 1074',
-    catechismArticles: [
-      {
-        number: 514,
-        title: 'Many Things About Jesus are Written So That You May Believe',
-        text: 'Many things about Jesus of interest to human curiosity do not figure in the Gospels. Almost nothing is said about his hidden life at Nazareth, and even a great part of his public life is not recounted. What is written in the Gospels was set down there "so that you may believe that Jesus is the Christ, the Son of God, and that believing you may have life in his name."'
-      },
-      {
-        number: 515,
-        title: 'The Mysteries of Christ\'s Life as Revelation and Redemption',
-        text: 'The Gospels were written by men who were among the first to have the faith and wanted to share it with others. Having known in faith who Jesus is, they could see and make others see the traces of his mystery in all his earthly life.'
-      },
-      {
-        number: 521,
-        title: 'Christ Enables Us to Live in Him All That He Himself Lived',
-        text: 'Christ enables us to live in him all that he himself lived, and he lives it in us. "By his Incarnation, he, the Son of God, has in a certain way united himself with each man."'
-      },
-      {
-        number: 1074,
-        title: 'The Liturgy as Privileged Place for Church Catechesis',
-        text: '"The liturgy is the summit toward which the activity of the Church is directed; it is also the font from which all her power flows." It is therefore the privileged place for catechizing the People of God.'
-      }
-    ],
+    paragraphsRange: `Catechism of the Catholic Church ${paragraphNumbers}`,
+    catechismArticles: resolvedArticles,
     magisterialInputs: [
       {
         authority: 'Second Vatican Ecumenical Council',

@@ -584,12 +584,12 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </p>
             </div>
 
-            {/* SECTION 2: WHAT THE CATECHISM OF THE CATHOLIC CHURCH SAYS */}
+            {/* SECTION 2: WHAT THE CATECHISM OF THE CATHOLIC CHURCH TEACHES */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 border-b border-stone-200 pb-2.5">
                 <ShieldCheck className="w-5 h-5 text-amber-800" />
                 <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900 uppercase tracking-wide">
-                  What the Catechism of the Catholic Church Says About This Topic
+                  What the Catechism of the Catholic Church Teaches About This Topic
                 </h3>
               </div>
 
