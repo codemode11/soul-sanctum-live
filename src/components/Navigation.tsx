@@ -21,7 +21,8 @@ import {
   Tv,
   X,
   BookmarkCheck,
-  Landmark
+  Landmark,
+  Rss
 } from 'lucide-react';
 import { 
   SaintWithHaloIcon,
@@ -341,7 +342,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'catholic-articles', 
       label: 'Catholic Articles', 
-      icon: BookMarked, 
+      icon: Rss, 
       tag: 'RSS Feeds', 
       subtext: 'Aleteia, NC Register, CBCP, Word on Fire and More' 
     },
