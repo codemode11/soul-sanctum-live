@@ -13,7 +13,9 @@ import {
   ShieldCheck,
   ScrollText,
   Church,
-  Sparkles
+  Sparkles,
+  Settings,
+  X
 } from 'lucide-react';
 import { MassReading } from '../types';
 import { 
@@ -56,6 +58,7 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
   const [personalReflection, setPersonalReflection] = useState('');
   const [savedNote, setSavedNote] = useState(false);
   const [isTopicDropdownOpen, setIsTopicDropdownOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const topicDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -287,115 +290,64 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
           </div>
 
-          {/* Settings at the bottom (right side) */}
+          {/* Settings & actions at the bottom (right side) */}
           <div className="flex flex-wrap items-center gap-2 shrink-0 sm:self-auto">
-            {/* Interactive Topic Picker with Arrows */}
-            <div className="relative shrink-0" ref={topicDropdownRef}>
-              <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs">
-                {/* Left Arrow: Previous Topic */}
-                <button
-                  type="button"
-                  onClick={handlePrevTopic}
-                  className="h-full px-2.5 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                  title="Previous Gospel Topic"
-                  aria-label="Previous Gospel Topic"
-                >
-                  <ChevronLeft className="w-3.5 h-3.5" />
-                </button>
-
-                {/* Thin Separator 1 */}
-                <span className="w-px h-3.5 bg-[#8B5A2B]/60 self-center shrink-0" aria-hidden="true" />
-
-                {/* Center: Topic Picker Dropdown Toggle */}
-                <button
-                  type="button"
-                  onClick={() => setIsTopicDropdownOpen(prev => !prev)}
-                  className="h-full flex items-center gap-1.5 px-3 text-xs font-medium hover:text-[#F7EBE1] hover:bg-white/10 transition-colors cursor-pointer select-none"
-                  title="Open Gospel Topics Directory"
-                  aria-label="Open Gospel Topics Directory"
-                >
-                  <BookOpen className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                  <span className="whitespace-nowrap leading-none font-cinzel text-amber-200">
-                    {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
-                  </span>
-                  <ChevronDown className={`w-3 h-3 text-[#D4A373] shrink-0 transition-transform duration-150 ${isTopicDropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {/* Thin Separator 2 */}
-                <span className="w-px h-3.5 bg-[#8B5A2B]/60 self-center shrink-0" aria-hidden="true" />
-
-                {/* Right Arrow: Next Topic */}
-                <button
-                  type="button"
-                  onClick={handleNextTopic}
-                  className="h-full px-2.5 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-                  title="Next Gospel Topic"
-                  aria-label="Next Gospel Topic"
-                >
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              {/* Topic Dropdown Popover */}
-              {isTopicDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-h-96 bg-[#24150B] border border-[#A67B4E]/80 rounded-xl shadow-2xl p-3 z-50 overflow-hidden flex flex-col gap-2 animate-in fade-in duration-150">
-                  <div className="flex items-center justify-between pb-2 border-b border-[#8B5A2B]/40">
-                    <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-200">
-                      Pick Gospel Topic (Nov 2026 – Dec 2027)
-                    </span>
-                    <span className="text-[10px] text-amber-300/70 font-cinzel">
-                      {selectedTopic.dateLabel}
-                    </span>
-                  </div>
-
-                  {/* Quick Search */}
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="Search Gospel citation, date, theme..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full text-xs pl-7 pr-2.5 py-1.5 rounded-lg bg-stone-900/90 text-amber-100 placeholder-stone-400 border border-amber-700/50 focus:outline-none focus:border-amber-400"
-                    />
-                    <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2 top-2" />
-                  </div>
-
-                  {/* Scrollable list of topics */}
-                  <div className="overflow-y-auto max-h-64 space-y-1 pr-1 custom-scrollbar">
-                    {activeList.map(topic => {
-                      const isSelected = topic.id === selectedTopic.id;
-                      return (
-                        <button
-                          key={topic.id}
-                          onClick={() => {
-                            handleSelectTopic(topic);
-                            setIsTopicDropdownOpen(false);
-                          }}
-                          className={`w-full text-left px-2.5 py-2 rounded-lg text-xs transition-colors flex items-start gap-2 cursor-pointer ${
-                            isSelected
-                              ? 'bg-amber-900/90 text-amber-100 font-bold border border-amber-600/60'
-                              : 'text-stone-300 hover:text-amber-100 hover:bg-stone-800/80'
-                          }`}
-                        >
-                          <span className="font-cinzel text-amber-300 font-bold shrink-0 text-[11px] pt-0.5">
-                            {topic.dateLabel}:
-                          </span>
-                          <div className="min-w-0 flex-1">
-                            <div className="font-semibold truncate">{topic.gospelCitation}</div>
-                            <div className="text-[10px] text-stone-400 truncate font-serif">{topic.topicTitle}</div>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
+            {/* Quick Topic Date Navigation with Arrows */}
+            <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs">
+              <button
+                type="button"
+                onClick={handlePrevTopic}
+                className="h-full px-2 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                title="Previous Gospel Topic"
+                aria-label="Previous Gospel Topic"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <span className="w-px h-3.5 bg-[#8B5A2B]/60 self-center shrink-0" aria-hidden="true" />
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(prev => !prev)}
+                className="h-full flex items-center gap-1.5 px-2.5 text-xs font-medium hover:text-[#F7EBE1] hover:bg-white/10 transition-colors cursor-pointer select-none"
+                title="Open Settings to view Topics and Daily Gospel Topics"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                <span className="whitespace-nowrap leading-none font-cinzel text-amber-200">
+                  {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
+                </span>
+              </button>
+              <span className="w-px h-3.5 bg-[#8B5A2B]/60 self-center shrink-0" aria-hidden="true" />
+              <button
+                type="button"
+                onClick={handleNextTopic}
+                className="h-full px-2 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                title="Next Gospel Topic"
+                aria-label="Next Gospel Topic"
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
+
+            {/* Dedicated Settings Button */}
+            <button
+              type="button"
+              onClick={() => setIsSettingsOpen(prev => !prev)}
+              className={`h-8 px-3 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs border ${
+                isSettingsOpen
+                  ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
+                  : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border-[#8B5A2B]/70 hover:border-amber-400/60'
+              }`}
+              title={isSettingsOpen ? 'Close Settings' : 'Open Settings (Topics & Daily Gospel Topics)'}
+              aria-label="Settings"
+            >
+              <Settings className={`w-3.5 h-3.5 text-amber-300 transition-transform duration-200 ${isSettingsOpen ? 'rotate-90 text-white' : ''}`} />
+              <span>Settings</span>
+              <ChevronDown className={`w-3 h-3 text-amber-300/80 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
+            </button>
 
             {/* Audio Narration */}
             <button
               onClick={handleToggleReadAloud}
-              className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs flex items-center justify-center ${
+              className={`h-8 p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs flex items-center justify-center ${
                 isReadingAloud
                   ? 'bg-amber-600 text-white animate-pulse'
                   : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
@@ -409,7 +361,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             {/* Copy Teaching */}
             <button
               onClick={handleCopy}
-              className="p-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center"
+              className="h-8 p-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center"
               title={copied ? 'Copied to clipboard' : 'Copy Catechism and Magisterium text'}
               aria-label="Copy Catechism text"
             >
@@ -417,163 +369,185 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             </button>
           </div>
         </div>
-      </div>
 
-      {/* UNIFIED TOPICS RECTANGLE: Special Topics & Daily Gospel Topics in One Rectangle */}
-      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-3">
-        {/* ROW 1: Special Topics Navigation Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
-          <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700 pl-1 shrink-0 hidden md:inline">
-            Topics:
-          </span>
-          {/* 1. Daily Gospel Catechism (Default Page) */}
-          <button
-            onClick={() => setActiveSubView('daily')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeSubView === 'daily'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
-            }`}
-          >
-            <span>Gospel Topic & CCC</span>
-          </button>
-
-          {/* 2. Holy Trinity */}
-          <button
-            onClick={() => setActiveSubView('trinity')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeSubView === 'trinity'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
-            }`}
-          >
-            <span>Holy Trinity</span>
-          </button>
-
-          {/* 3. Holy Eucharist */}
-          <button
-            onClick={() => setActiveSubView('eucharist')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeSubView === 'eucharist'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
-            }`}
-          >
-            <span>Holy Eucharist</span>
-          </button>
-
-          {/* 4. Seven Sacraments */}
-          <button
-            onClick={() => setActiveSubView('sacraments')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeSubView === 'sacraments'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
-            }`}
-          >
-            <span>Seven Sacraments</span>
-          </button>
-
-          {/* 5. Mary and Her Apparitions */}
-          <button
-            onClick={() => setActiveSubView('marian')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeSubView === 'marian'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
-            }`}
-          >
-            <span>Mary and Her Apparitions</span>
-          </button>
-
-          {/* 6. Ressourcement */}
-          <button
-            onClick={() => setActiveSubView('ressourcement')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-              activeSubView === 'ressourcement'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
-            }`}
-          >
-            <span>Ressourcement</span>
-          </button>
-        </div>
-
-        {/* ROW 2: Daily Gospel Topics Controls & Carousel (within the same rectangle when in Daily Gospel mode) */}
-        {activeSubView === 'daily' && (
-          <div className="pt-2.5 border-t border-stone-200/70 space-y-2.5">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
-                  Daily Gospel Topics
+        {/* SETTINGS PANEL IN THE FIRST RECTANGLE */}
+        {isSettingsOpen && (
+          <div className="mt-3.5 pt-3.5 border-t border-[#8B5A2B]/50 bg-[#140C08]/95 rounded-xl p-3.5 sm:p-4 border border-[#8B5A2B]/60 shadow-inner space-y-3.5 animate-in fade-in duration-150">
+            {/* Settings Header */}
+            <div className="flex items-center justify-between pb-2 border-b border-[#8B5A2B]/40">
+              <div className="flex items-center gap-2 text-amber-300">
+                <Settings className="w-4 h-4 text-amber-400" />
+                <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider">
+                  Settings: Topics & Daily Gospel Topics
                 </span>
-                <div className="inline-flex items-center rounded-lg border border-amber-200/80 bg-amber-100/90 text-amber-950 overflow-hidden shadow-2xs">
-                  <button
-                    type="button"
-                    onClick={handlePrevTopic}
-                    className="px-2 py-1 hover:bg-amber-200/70 text-amber-900 transition-colors cursor-pointer flex items-center justify-center"
-                    title="Previous Gospel Topic"
-                    aria-label="Previous Gospel Topic"
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="text-[11px] font-semibold px-2.5 py-0.5 font-cinzel border-x border-amber-200/80">
-                    {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleNextTopic}
-                    className="px-2 py-1 hover:bg-amber-200/70 text-amber-900 transition-colors cursor-pointer flex items-center justify-center"
-                    title="Next Gospel Topic"
-                    aria-label="Next Gospel Topic"
-                  >
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
               </div>
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(false)}
+                className="p-1 rounded-md text-stone-400 hover:text-amber-200 hover:bg-white/10 transition-colors cursor-pointer text-xs flex items-center gap-1"
+                title="Close Settings"
+                aria-label="Close Settings"
+              >
+                <X className="w-4 h-4 text-amber-400" />
+                <span className="text-[11px] font-cinzel text-stone-300">Close</span>
+              </button>
+            </div>
 
-              <div className="flex flex-wrap items-center gap-2">
-                {/* Month Selector: Nov 2026 – Dec 2027 */}
-                <div className="flex items-center gap-1.5 bg-stone-100/95 p-1 rounded-xl border border-stone-200 shadow-2xs">
-                  <span className="text-[11px] font-cinzel font-bold text-stone-700 pl-1.5 shrink-0 hidden sm:inline">
-                    Month:
+            {/* 1. Topics */}
+            <div className="space-y-1.5">
+              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300/80 block">
+                Topics
+              </span>
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1">
+                {/* 1. Gospel Topic & CCC */}
+                <button
+                  onClick={() => setActiveSubView('daily')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    activeSubView === 'daily'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold border border-amber-500'
+                      : 'bg-stone-850/90 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-700/60'
+                  }`}
+                >
+                  <span>Gospel Topic & CCC</span>
+                </button>
+
+                {/* 2. Holy Trinity */}
+                <button
+                  onClick={() => setActiveSubView('trinity')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    activeSubView === 'trinity'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold border border-amber-500'
+                      : 'bg-stone-850/90 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-700/60'
+                  }`}
+                >
+                  <span>Holy Trinity</span>
+                </button>
+
+                {/* 3. Holy Eucharist */}
+                <button
+                  onClick={() => setActiveSubView('eucharist')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    activeSubView === 'eucharist'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold border border-amber-500'
+                      : 'bg-stone-850/90 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-700/60'
+                  }`}
+                >
+                  <span>Holy Eucharist</span>
+                </button>
+
+                {/* 4. Seven Sacraments */}
+                <button
+                  onClick={() => setActiveSubView('sacraments')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    activeSubView === 'sacraments'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold border border-amber-500'
+                      : 'bg-stone-850/90 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-700/60'
+                  }`}
+                >
+                  <span>Seven Sacraments</span>
+                </button>
+
+                {/* 5. Mary and Her Apparitions */}
+                <button
+                  onClick={() => setActiveSubView('marian')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    activeSubView === 'marian'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold border border-amber-500'
+                      : 'bg-stone-850/90 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-700/60'
+                  }`}
+                >
+                  <span>Mary and Her Apparitions</span>
+                </button>
+
+                {/* 6. Ressourcement */}
+                <button
+                  onClick={() => setActiveSubView('ressourcement')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    activeSubView === 'ressourcement'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold border border-amber-500'
+                      : 'bg-stone-850/90 text-stone-300 hover:text-white hover:bg-stone-800 border border-stone-700/60'
+                  }`}
+                >
+                  <span>Ressourcement</span>
+                </button>
+              </div>
+            </div>
+
+            {/* 2. Daily Gospel Topics */}
+            <div className="pt-2 border-t border-[#8B5A2B]/40 space-y-2">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300/80">
+                    Daily Gospel Topics
                   </span>
-                  <select
-                    value={selectedMonth}
-                    onChange={(e) => handleSelectMonth(e.target.value)}
-                    className="text-xs font-semibold py-1 px-2.5 rounded-lg bg-white text-stone-800 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer shadow-2xs font-cinzel"
-                    title="Jump to any month from November 2026 to December 2027"
-                    aria-label="Select Liturgical Month"
-                  >
-                    {CATECHISM_YEAR_AND_MONTH_SPECS.map(spec => (
-                      <option key={spec.key} value={spec.key}>
-                        {spec.label}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="inline-flex items-center rounded-lg border border-[#8B5A2B]/80 bg-[#251710] text-amber-200 overflow-hidden shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={handlePrevTopic}
+                      className="px-2 py-1 hover:bg-white/10 text-amber-300 transition-colors cursor-pointer flex items-center justify-center"
+                      title="Previous Gospel Topic"
+                      aria-label="Previous Gospel Topic"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="text-[11px] font-semibold px-2.5 py-0.5 font-cinzel border-x border-[#8B5A2B]/60 text-amber-100">
+                      {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleNextTopic}
+                      className="px-2 py-1 hover:bg-white/10 text-amber-300 transition-colors cursor-pointer flex items-center justify-center"
+                      title="Next Gospel Topic"
+                      aria-label="Next Gospel Topic"
+                    >
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
-                {/* Quick Prev / Next Topic Buttons with Arrows */}
-                <div className="flex items-center gap-1 bg-white/80 border border-stone-200/90 rounded-xl p-0.5 shadow-2xs">
-                  <button
-                    onClick={handlePrevTopic}
-                    className="p-1 rounded-lg text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
-                    title="Previous Gospel Topic"
-                    aria-label="Previous Gospel Topic"
-                  >
-                    <ChevronLeft className="w-4 h-4 text-amber-800" />
-                    <span>Prev</span>
-                  </button>
-                  <span className="text-stone-300">|</span>
-                  <button
-                    onClick={handleNextTopic}
-                    className="p-1 rounded-lg text-stone-800 hover:text-amber-950 hover:bg-amber-100/80 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2"
-                    title="Next Gospel Topic"
-                    aria-label="Next Gospel Topic"
-                  >
-                    <span>Next</span>
-                    <ChevronRight className="w-4 h-4 text-amber-800" />
-                  </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* Month Selector: Nov 2026 – Dec 2027 */}
+                  <div className="flex items-center gap-1.5 bg-[#251710] p-1 rounded-lg border border-[#8B5A2B]/60 shadow-2xs">
+                    <span className="text-[11px] font-cinzel font-bold text-amber-300/80 pl-1 shrink-0 hidden sm:inline">
+                      Month:
+                    </span>
+                    <select
+                      value={selectedMonth}
+                      onChange={(e) => handleSelectMonth(e.target.value)}
+                      className="text-xs font-semibold py-1 px-2.5 rounded-md bg-stone-900 text-amber-100 border border-amber-800/60 focus:outline-none focus:border-amber-400 cursor-pointer shadow-2xs font-cinzel"
+                      title="Jump to any month from November 2026 to December 2027"
+                      aria-label="Select Liturgical Month"
+                    >
+                      {CATECHISM_YEAR_AND_MONTH_SPECS.map(spec => (
+                        <option key={spec.key} value={spec.key}>
+                          {spec.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Quick Prev / Next Topic Buttons with Arrows */}
+                  <div className="flex items-center gap-1 bg-[#251710] border border-[#8B5A2B]/60 rounded-lg p-0.5 shadow-2xs">
+                    <button
+                      onClick={handlePrevTopic}
+                      className="p-1 rounded-md text-amber-200 hover:text-white hover:bg-white/10 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2 font-cinzel"
+                      title="Previous Gospel Topic"
+                      aria-label="Previous Gospel Topic"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Prev</span>
+                    </button>
+                    <span className="text-amber-700/60">|</span>
+                    <button
+                      onClick={handleNextTopic}
+                      className="p-1 rounded-md text-amber-200 hover:text-white hover:bg-white/10 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2 font-cinzel"
+                      title="Next Gospel Topic"
+                      aria-label="Next Gospel Topic"
+                    >
+                      <span>Next</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-amber-400" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

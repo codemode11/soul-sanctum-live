@@ -843,144 +843,183 @@ export const GOSPEL_CATECHISM_REGISTRY: Record<string, GospelCatechismTemplate> 
     topicTitle: 'Children of Light Preparing for Our Heavenly Dwelling: Prudence, Stewardship & Eternity',
     topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven.',
     pillar: '',
-    part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
-    section: 'Section Two: The Profession of Christian Faith',
-    chapter: 'The Mysteries of the Life of Christ in the Sacred Liturgy',
-    paragraphsRange: 'Catechism of the Catholic Church 514, 515, 521, 1806',
+    part: 'Part Three: Life in Christ & Part One: The Profession of Faith',
+    section: 'Section One: Man\'s Vocation — Life in the Spirit',
+    chapter: 'The Virtues: Prudence and the Seventh Commandment on Stewardship',
+    paragraphsRange: 'Catechism of the Catholic Church 546, 1806, 2404, 2447',
     catechismArticles: [
       {
-            "number": 514,
-            "title": "Many Things About Jesus are Written So That You May Believe",
-            "text": "Many things about Jesus of interest to human curiosity do not figure in the Gospels. Almost nothing is said about his hidden life at Nazareth, and even a great part of his public life is not recounted. What is written in the Gospels was set down there \"so that you may believe that Jesus is the Christ, the Son of God, and that believing you may have life in his name.\""
+        number: 1806,
+        title: 'Prudence as Auriga Virtutum (Charioteer of the Virtues)',
+        text: 'Prudence is the virtue that disposes practical reason to discern our true good in every circumstance and to choose the right means of achieving it; "the prudent man looks where he is going." Prudence guides the other virtues by pointing out their rule and measure. It is prudence that immediately guides the judgment of conscience.'
       },
       {
-            "number": 515,
-            "title": "The Mysteries of Christ's Life as Revelation and Redemption",
-            "text": "The Gospels were written by men who were among the first to have the faith and wanted to share it with others. Having known in faith who Jesus is, they could see and make others see the traces of his mystery in all his earthly life."
+        number: 546,
+        title: 'The Parables of the Kingdom and Supreme Vigilance',
+        text: 'Jesus\' invitation to enter his Kingdom comes in the form of parables, a characteristic feature of his teaching. Through his parables he invites people to the feast of the Kingdom, but he also asks for a radical choice: to gain the kingdom, one must give everything; words are not enough, deeds are required. The parables are like a mirror for man: will he be like the hard ground or the good soil? Man must act with urgent vigilance.'
       },
       {
-            "number": 1806,
-            "title": "Prudence as Auriga Virtutum (Charioteer of the Virtues)",
-            "text": "Prudence is the virtue that disposes practical reason to discern our true good in every circumstance and to choose the right means of achieving it; \"the prudent man looks where he is going.\" Prudence guides the other virtues by pointing out their rule and measure."
+        number: 2404,
+        title: 'Christian Stewardship: Man as Administrator of God\'s Goods',
+        text: 'In his use of things man should regard the external goods he legitimately owns not merely as exclusive to himself but common to others also, in the sense that they can benefit others as well as himself. The ownership of any property makes its holder a steward of Providence, with the task of making it fruitful and communicating its benefits to others, first of all his family.'
+      },
+      {
+        number: 2447,
+        title: 'Works of Mercy and Eternal Friendship',
+        text: 'The works of mercy are charitable actions by which we come to the aid of our neighbor in his spiritual and bodily necessities. Instructing, advising, consoling, comforting are spiritual works of mercy, as are forgiving and bearing wrongs patiently. The corporal works of mercy consist especially in feeding the hungry, sheltering the homeless, clothing the naked, visiting the sick and imprisoned, and burying the dead. Among all these, giving alms to the poor is one of the chief witnesses to fraternal charity: it is also a work of justice pleasing to God.'
       }
-],
+    ],
     magisterialInputs: [
       {
-            "authority": "Pope St. John Paul II",
-            "documentTitle": "Catechesi Tradendae",
-            "citation": "CT 5",
-            "insight": "At the heart of catechesis we find, in essence, a Person, the Person of Jesus of Nazareth, the only Son from the Father."
+        authority: 'Pope St. Gregory the Great',
+        documentTitle: 'Homiliae in Evangelia',
+        citation: 'Hom. 39',
+        insight: 'If the sons of this world display such intense foresight and ingenuity to secure a passing shelter for their mortal bodies, with what tireless vigilance, prayer, and almsgiving ought the children of light to prepare their eternal dwelling in the Kingdom of Heaven!'
+      },
+      {
+        authority: 'Pope Benedict XVI',
+        documentTitle: 'Angelus Address',
+        citation: 'Sept 23, 2007',
+        insight: 'Jesus does not set up the dishonest steward as a model to be imitated in his fraud, but as an example of foresight and promptness. We are all stewards of the goods God has given us: life, energy, intelligence, and material resources. True wisdom consists in making these goods serve eternal life through charity toward the needy.'
       }
-],
+    ],
     inBrief: [
       "The master commended the dishonest steward because he had dealt prudently (Luke 16:8).",
       "The children of light are called to apply greater vigilance for heavenly treasures than worldlings do for passing wealth.",
       "Holy prudence disposes the Christian conscience to direct all temporal goods toward eternal beatitude."
-],
+    ],
     meditationQuestion: 'Do I exercise as much energy and ingenuity for my eternal salvation as I do for my worldly success?',
     practicalLiving: 'Make one prudent decision today regarding the use of your time or money that directly promotes the Kingdom of God.',
     crossReferences: [
       "Luke 16:1-8",
       "Proverbs 14:15",
-      "CCC 515",
-      "CCC 1806"
-]
+      "CCC 546",
+      "CCC 1806",
+      "CCC 2404",
+      "CCC 2447"
+    ]
   },
   'lk 16:1-8':   {
     gospelCitation: 'Luke 16:1-8',
     topicTitle: 'Children of Light Preparing for Our Heavenly Dwelling: Prudence, Stewardship & Eternity',
     topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven.',
     pillar: '',
-    part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
-    section: 'Section Two: The Profession of Christian Faith',
-    chapter: 'The Mysteries of the Life of Christ in the Sacred Liturgy',
-    paragraphsRange: 'Catechism of the Catholic Church 514, 515, 521, 1806',
+    part: 'Part Three: Life in Christ & Part One: The Profession of Faith',
+    section: 'Section One: Man\'s Vocation — Life in the Spirit',
+    chapter: 'The Virtues: Prudence and the Seventh Commandment on Stewardship',
+    paragraphsRange: 'Catechism of the Catholic Church 546, 1806, 2404, 2447',
     catechismArticles: [
       {
-            "number": 514,
-            "title": "Many Things About Jesus are Written So That You May Believe",
-            "text": "Many things about Jesus of interest to human curiosity do not figure in the Gospels. Almost nothing is said about his hidden life at Nazareth, and even a great part of his public life is not recounted. What is written in the Gospels was set down there \"so that you may believe that Jesus is the Christ, the Son of God, and that believing you may have life in his name.\""
+        number: 1806,
+        title: 'Prudence as Auriga Virtutum (Charioteer of the Virtues)',
+        text: 'Prudence is the virtue that disposes practical reason to discern our true good in every circumstance and to choose the right means of achieving it; "the prudent man looks where he is going." Prudence guides the other virtues by pointing out their rule and measure. It is prudence that immediately guides the judgment of conscience.'
       },
       {
-            "number": 515,
-            "title": "The Mysteries of Christ's Life as Revelation and Redemption",
-            "text": "The Gospels were written by men who were among the first to have the faith and wanted to share it with others. Having known in faith who Jesus is, they could see and make others see the traces of his mystery in all his earthly life."
+        number: 546,
+        title: 'The Parables of the Kingdom and Supreme Vigilance',
+        text: 'Jesus\' invitation to enter his Kingdom comes in the form of parables, a characteristic feature of his teaching. Through his parables he invites people to the feast of the Kingdom, but he also asks for a radical choice: to gain the kingdom, one must give everything; words are not enough, deeds are required. The parables are like a mirror for man: will he be like the hard ground or the good soil? Man must act with urgent vigilance.'
       },
       {
-            "number": 1806,
-            "title": "Prudence as Auriga Virtutum (Charioteer of the Virtues)",
-            "text": "Prudence is the virtue that disposes practical reason to discern our true good in every circumstance and to choose the right means of achieving it; \"the prudent man looks where he is going.\" Prudence guides the other virtues by pointing out their rule and measure."
+        number: 2404,
+        title: 'Christian Stewardship: Man as Administrator of God\'s Goods',
+        text: 'In his use of things man should regard the external goods he legitimately owns not merely as exclusive to himself but common to others also, in the sense that they can benefit others as well as himself. The ownership of any property makes its holder a steward of Providence, with the task of making it fruitful and communicating its benefits to others, first of all his family.'
+      },
+      {
+        number: 2447,
+        title: 'Works of Mercy and Eternal Friendship',
+        text: 'The works of mercy are charitable actions by which we come to the aid of our neighbor in his spiritual and bodily necessities. Instructing, advising, consoling, comforting are spiritual works of mercy, as are forgiving and bearing wrongs patiently. The corporal works of mercy consist especially in feeding the hungry, sheltering the homeless, clothing the naked, visiting the sick and imprisoned, and burying the dead. Among all these, giving alms to the poor is one of the chief witnesses to fraternal charity: it is also a work of justice pleasing to God.'
       }
-],
+    ],
     magisterialInputs: [
       {
-            "authority": "Pope St. John Paul II",
-            "documentTitle": "Catechesi Tradendae",
-            "citation": "CT 5",
-            "insight": "At the heart of catechesis we find, in essence, a Person, the Person of Jesus of Nazareth, the only Son from the Father."
+        authority: 'Pope St. Gregory the Great',
+        documentTitle: 'Homiliae in Evangelia',
+        citation: 'Hom. 39',
+        insight: 'If the sons of this world display such intense foresight and ingenuity to secure a passing shelter for their mortal bodies, with what tireless vigilance, prayer, and almsgiving ought the children of light to prepare their eternal dwelling in the Kingdom of Heaven!'
+      },
+      {
+        authority: 'Pope Benedict XVI',
+        documentTitle: 'Angelus Address',
+        citation: 'Sept 23, 2007',
+        insight: 'Jesus does not set up the dishonest steward as a model to be imitated in his fraud, but as an example of foresight and promptness. We are all stewards of the goods God has given us: life, energy, intelligence, and material resources. True wisdom consists in making these goods serve eternal life through charity toward the needy.'
       }
-],
+    ],
     inBrief: [
       "The master commended the dishonest steward because he had dealt prudently (Luke 16:8).",
       "The children of light are called to apply greater vigilance for heavenly treasures than worldlings do for passing wealth.",
       "Holy prudence disposes the Christian conscience to direct all temporal goods toward eternal beatitude."
-],
+    ],
     meditationQuestion: 'Do I exercise as much energy and ingenuity for my eternal salvation as I do for my worldly success?',
     practicalLiving: 'Make one prudent decision today regarding the use of your time or money that directly promotes the Kingdom of God.',
     crossReferences: [
       "Luke 16:1-8",
       "Proverbs 14:15",
-      "CCC 515",
-      "CCC 1806"
-]
+      "CCC 546",
+      "CCC 1806",
+      "CCC 2404",
+      "CCC 2447"
+    ]
   },
   'luke 16:1':   {
     gospelCitation: 'Luke 16:1-8',
     topicTitle: 'Children of Light Preparing for Our Heavenly Dwelling: Prudence, Stewardship & Eternity',
     topicSubtitle: 'Christ uses the shrewdness of the worldly manager to teach disciples supreme vigilance for the Kingdom of Heaven.',
     pillar: '',
-    part: 'Part One: The Profession of Faith & Part Three: Life in Christ',
-    section: 'Section Two: The Profession of Christian Faith',
-    chapter: 'The Mysteries of the Life of Christ in the Sacred Liturgy',
-    paragraphsRange: 'Catechism of the Catholic Church 514, 515, 521, 1806',
+    part: 'Part Three: Life in Christ & Part One: The Profession of Faith',
+    section: 'Section One: Man\'s Vocation — Life in the Spirit',
+    chapter: 'The Virtues: Prudence and the Seventh Commandment on Stewardship',
+    paragraphsRange: 'Catechism of the Catholic Church 546, 1806, 2404, 2447',
     catechismArticles: [
       {
-            "number": 514,
-            "title": "Many Things About Jesus are Written So That You May Believe",
-            "text": "Many things about Jesus of interest to human curiosity do not figure in the Gospels. Almost nothing is said about his hidden life at Nazareth, and even a great part of his public life is not recounted. What is written in the Gospels was set down there \"so that you may believe that Jesus is the Christ, the Son of God, and that believing you may have life in his name.\""
+        number: 1806,
+        title: 'Prudence as Auriga Virtutum (Charioteer of the Virtues)',
+        text: 'Prudence is the virtue that disposes practical reason to discern our true good in every circumstance and to choose the right means of achieving it; "the prudent man looks where he is going." Prudence guides the other virtues by pointing out their rule and measure. It is prudence that immediately guides the judgment of conscience.'
       },
       {
-            "number": 515,
-            "title": "The Mysteries of Christ's Life as Revelation and Redemption",
-            "text": "The Gospels were written by men who were among the first to have the faith and wanted to share it with others. Having known in faith who Jesus is, they could see and make others see the traces of his mystery in all his earthly life."
+        number: 546,
+        title: 'The Parables of the Kingdom and Supreme Vigilance',
+        text: 'Jesus\' invitation to enter his Kingdom comes in the form of parables, a characteristic feature of his teaching. Through his parables he invites people to the feast of the Kingdom, but he also asks for a radical choice: to gain the kingdom, one must give everything; words are not enough, deeds are required. The parables are like a mirror for man: will he be like the hard ground or the good soil? Man must act with urgent vigilance.'
       },
       {
-            "number": 1806,
-            "title": "Prudence as Auriga Virtutum (Charioteer of the Virtues)",
-            "text": "Prudence is the virtue that disposes practical reason to discern our true good in every circumstance and to choose the right means of achieving it; \"the prudent man looks where he is going.\" Prudence guides the other virtues by pointing out their rule and measure."
+        number: 2404,
+        title: 'Christian Stewardship: Man as Administrator of God\'s Goods',
+        text: 'In his use of things man should regard the external goods he legitimately owns not merely as exclusive to himself but common to others also, in the sense that they can benefit others as well as himself. The ownership of any property makes its holder a steward of Providence, with the task of making it fruitful and communicating its benefits to others, first of all his family.'
+      },
+      {
+        number: 2447,
+        title: 'Works of Mercy and Eternal Friendship',
+        text: 'The works of mercy are charitable actions by which we come to the aid of our neighbor in his spiritual and bodily necessities. Instructing, advising, consoling, comforting are spiritual works of mercy, as are forgiving and bearing wrongs patiently. The corporal works of mercy consist especially in feeding the hungry, sheltering the homeless, clothing the naked, visiting the sick and imprisoned, and burying the dead. Among all these, giving alms to the poor is one of the chief witnesses to fraternal charity: it is also a work of justice pleasing to God.'
       }
-],
+    ],
     magisterialInputs: [
       {
-            "authority": "Pope St. John Paul II",
-            "documentTitle": "Catechesi Tradendae",
-            "citation": "CT 5",
-            "insight": "At the heart of catechesis we find, in essence, a Person, the Person of Jesus of Nazareth, the only Son from the Father."
+        authority: 'Pope St. Gregory the Great',
+        documentTitle: 'Homiliae in Evangelia',
+        citation: 'Hom. 39',
+        insight: 'If the sons of this world display such intense foresight and ingenuity to secure a passing shelter for their mortal bodies, with what tireless vigilance, prayer, and almsgiving ought the children of light to prepare their eternal dwelling in the Kingdom of Heaven!'
+      },
+      {
+        authority: 'Pope Benedict XVI',
+        documentTitle: 'Angelus Address',
+        citation: 'Sept 23, 2007',
+        insight: 'Jesus does not set up the dishonest steward as a model to be imitated in his fraud, but as an example of foresight and promptness. We are all stewards of the goods God has given us: life, energy, intelligence, and material resources. True wisdom consists in making these goods serve eternal life through charity toward the needy.'
       }
-],
+    ],
     inBrief: [
       "The master commended the dishonest steward because he had dealt prudently (Luke 16:8).",
       "The children of light are called to apply greater vigilance for heavenly treasures than worldlings do for passing wealth.",
       "Holy prudence disposes the Christian conscience to direct all temporal goods toward eternal beatitude."
-],
+    ],
     meditationQuestion: 'Do I exercise as much energy and ingenuity for my eternal salvation as I do for my worldly success?',
     practicalLiving: 'Make one prudent decision today regarding the use of your time or money that directly promotes the Kingdom of God.',
     crossReferences: [
       "Luke 16:1-8",
       "Proverbs 14:15",
-      "CCC 515",
-      "CCC 1806"
-]
+      "CCC 546",
+      "CCC 1806",
+      "CCC 2404",
+      "CCC 2447"
+    ]
   },
   'luke 16:9-15':   {
     gospelCitation: 'Luke 16:9-15',
