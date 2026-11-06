@@ -53,7 +53,8 @@ import {
   ChurchCalendarPageFlipIcon,
   SacredArtGallerySwapIcon,
   CatholicLinksTightenIcon,
-  DivineOfficeBreviaryIcon
+  DivineOfficeBreviaryIcon,
+  CatholicArticlesRssIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -342,7 +343,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { 
       id: 'catholic-articles', 
       label: 'Catholic Articles', 
-      icon: Rss, 
+      icon: CatholicArticlesRssIcon, 
       tag: 'RSS Feeds', 
       subtext: 'Aleteia, NC Register, CBCP, Word on Fire and More' 
     },

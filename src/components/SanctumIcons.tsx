@@ -1900,12 +1900,27 @@ export const DivineOfficeBreviaryIcon: React.FC<IconProps> = ({ className = 'w-5
   </svg>
 );
 
-
-
-
-
-
-
-
-
+/**
+ * 29. Catholic Articles (RSS Feed) Icon:
+ * Classic RSS broadcast icon whose signal waves slowly radiate outward once when hovered on.
+ */
+export const CatholicArticlesRssIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Catholic Articles — RSS Feed"
+  >
+    {/* Origin Broadcast Dot */}
+    <circle cx="5" cy="19" r="1.5" fill="currentColor" stroke="none" className="sanctum-rss-dot" />
+    {/* Inner Signal Wave */}
+    <path d="M4 11a9 9 0 0 1 9 9" className="sanctum-rss-wave-1" />
+    {/* Outer Signal Wave */}
+    <path d="M4 4a16 16 0 0 1 16 16" className="sanctum-rss-wave-2" />
+  </svg>
+);
 

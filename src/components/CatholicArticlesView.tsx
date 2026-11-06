@@ -7,10 +7,10 @@ import {
   RefreshCw,
   Volume2,
   VolumeX,
-  Rss,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
+import { CatholicArticlesRssIcon } from './SanctumIcons';
 import {
   CATHOLIC_RSS_SOURCES,
   CURATED_CATHOLIC_ARTICLES,
@@ -121,8 +121,8 @@ export const CatholicArticlesView: React.FC = () => {
       <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <Rss className="w-4 h-4 text-amber-400" />
+            <div className="flex items-center gap-2 group">
+              <CatholicArticlesRssIcon className="w-4 h-4 text-amber-400" />
               <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
                 Catholic Press & Theological Journals
               </span>
