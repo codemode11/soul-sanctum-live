@@ -104,6 +104,15 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     websiteUrl: 'https://www.catholiceducation.org',
     tagline: 'In-depth scholarship on Catholic history, philosophy, bioethics, and apologetics',
     location: 'Vancouver / International'
+  },
+  {
+    id: 'sign-org',
+    name: 'Signs & Wonders for Our Times (sign.org)',
+    shortName: 'sign.org',
+    rssUrl: 'https://sign.org/feed/',
+    websiteUrl: 'https://sign.org',
+    tagline: 'Marian devotion, Eucharistic miracles, and Signs & Wonders for Our Times',
+    location: 'United States'
   }
 ];
 
@@ -391,6 +400,24 @@ Following the fall of the Western Roman Empire, Benedictine monks preserved clas
 Moreover, because Christians believed that the universe was created by an intelligible Logos ("In the beginning was the Word"), Catholic clerics—from Nicolaus Copernicus and Roger Bacon to Gregor Mendel and Msgr. Georges Lemaître (proposer of the Big Bang theory)—laid the foundations of modern empirical science.`,
     link: 'https://www.catholiceducation.org',
     categories: ['Church History', 'Faith & Reason', 'Education']
+  },
+  // 10. Signs & Wonders for Our Times (sign.org)
+  {
+    id: 'sign-org-curated-1',
+    sourceId: 'sign-org',
+    sourceName: 'Signs & Wonders for Our Times (sign.org)',
+    title: 'Our Lady\'s Call to Prayer, Penance, and Devotion to the Most Blessed Sacrament',
+    author: 'Signs & Wonders for Our Times',
+    publishedDate: 'November 6, 2026',
+    readTime: '5 min read',
+    summary: 'Exploring the perennial message of the Blessed Virgin Mary across approved apparitions: a maternal summons to return to Jesus in the Eucharist, pray the daily Rosary, and live in sanctifying grace.',
+    content: `Across the centuries, whenever the Blessed Virgin Mary has appeared to her children—from Guadalupe and Rue du Bac to Lourdes and Fátima—her maternal message has always pointed directly to her Divine Son, Jesus Christ.
+
+At the heart of every authentic Marian appeal are the timeless pillars of Catholic conversion: fervent recitation of the Most Holy Rosary, reparation for sinners, frequent sacramental Confession, and profound adoration of Our Lord truly present in the Most Blessed Sacrament of the Altar.
+
+As Signs & Wonders for Our Times highlights in its apostolate, the graces given through Eucharistic miracles and Marian sanctuaries are not meant to satisfy mere curiosity, but to awaken lukewarm souls, console the afflicted, and anchor families in unshakeable fidelity to the Catholic Church.`,
+    link: 'https://sign.org',
+    categories: ['Marian Devotion', 'Eucharistic Miracles', 'Prayer']
   }
 ];
 

@@ -16,7 +16,8 @@ const CATHOLIC_RSS_FEEDS: Record<string, string> = {
   'catholic-answers': 'https://www.catholic.com/feeds/magazine/rss',
   'word-on-fire': 'https://www.wordonfire.org/articles/feed/',
   'st-paul-center': 'https://feed.podbean.com/stpaulcenter/feed.xml',
-  'cerc': 'https://catholiceducation.org/feed/'
+  'cerc': 'https://catholiceducation.org/feed/',
+  'sign-org': 'https://sign.org/feed/'
 };
 
 function vaticanNewsPlugin() {
