@@ -85,14 +85,20 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
             </p>
           )}
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-stone-700/60">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-amber-900/60">
             <div>
-              <p className="font-serif font-bold text-amber-200 text-lg sm:text-xl">
+              <p className="font-serif font-bold text-amber-100 text-lg sm:text-xl">
                 {spotlightQuote.author}
               </p>
               <p className="text-xs sm:text-sm text-stone-300 font-serif">
                 {spotlightQuote.authorTitle} • {spotlightQuote.authorLifespan}
               </p>
+              {spotlightQuote.sourceWork && (
+                <p className="text-xs font-semibold text-amber-300 font-serif not-italic mt-1 leading-normal">
+                  <span className="text-amber-400 uppercase font-cinzel text-[10px] tracking-wider mr-1">Source:</span>
+                  <span>{spotlightQuote.sourceWork}</span>
+                </p>
+              )}
             </div>
 
             <div className="flex items-center gap-2">
@@ -181,18 +187,13 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
             <div
               key={wisdom.id}
               onClick={() => setSpotlightQuote(wisdom)}
-              className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-6 rounded-xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/55 transition-all space-y-4 flex flex-col justify-between cursor-pointer group"
+              className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 p-5 sm:p-6 rounded-xl border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/60 transition-all space-y-4 flex flex-col justify-between cursor-pointer group"
             >
               <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel bg-amber-100/90 px-2.5 py-0.5 rounded-md border border-amber-300/60 shadow-2xs">
                     {wisdom.category} • {wisdom.theme}
                   </span>
-                  {wisdom.sourceWork && (
-                    <span className="text-[11px] text-stone-400 font-serif-sacred line-clamp-1 italic max-w-[180px]">
-                      {wisdom.sourceWork}
-                    </span>
-                  )}
                 </div>
 
                 <blockquote className="font-serif-sacred text-stone-900 text-lg sm:text-xl md:text-2xl not-italic leading-relaxed group-hover:text-amber-950 transition-colors">
@@ -200,27 +201,37 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
                 </blockquote>
 
                 {wisdom.reflection && (
-                  <p className="text-sm sm:text-base text-stone-700 font-serif-sacred italic border-l-2 border-stone-200 pl-3 leading-relaxed">
+                  <p className="text-sm sm:text-base text-stone-700 font-serif-sacred italic border-l-2 border-amber-800/40 pl-3 leading-relaxed">
                     {wisdom.reflection}
                   </p>
                 )}
               </div>
 
-              <div className="pt-3 border-t border-stone-100 flex items-center justify-between">
-                <div>
-                  <h4 className="font-serif-sacred text-lg sm:text-xl md:text-2xl font-bold text-stone-900">
+              <div className="pt-3 border-t border-stone-200/80 flex items-end justify-between gap-3">
+                <div className="space-y-0.5 min-w-0 flex-1">
+                  <h4 className="font-serif-sacred text-lg sm:text-xl font-bold text-stone-900 leading-snug">
                     {wisdom.author}
                   </h4>
-                  <p className="text-xs sm:text-sm text-stone-600 font-serif">
+                  <p className="text-xs sm:text-sm text-stone-700 font-serif font-medium leading-snug">
                     {wisdom.authorTitle}
                   </p>
+                  {wisdom.sourceWork && (
+                    <div className="pt-1.5 mt-1.5 border-t border-amber-200/70">
+                      <p className="text-xs font-semibold text-amber-950 font-serif not-italic leading-normal break-words">
+                        <span className="text-[10px] font-bold uppercase font-cinzel tracking-wider text-amber-800/90 mr-1.5 shrink-0">
+                          Source:
+                        </span>
+                        <span>{wisdom.sourceWork}</span>
+                      </p>
+                    </div>
+                  )}
                 </div>
 
-                <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center gap-1.5 shrink-0 self-end pb-0.5" onClick={(e) => e.stopPropagation()}>
                   <button
                     onClick={() => handleToggleSpeak(wisdom)}
                     className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
-                      isSpeaking ? 'bg-[#6B4423] text-white border-[#5A381C]' : 'text-stone-500 hover:text-stone-900 hover:bg-stone-100 border-stone-200'
+                      isSpeaking ? 'bg-[#6B4423] text-white border-[#5A381C]' : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100 border-stone-300/80'
                     }`}
                     title="Read aloud"
                   >
@@ -229,7 +240,7 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
 
                   <button
                     onClick={() => handleCopy(wisdom)}
-                    className="p-1.5 rounded-lg text-stone-500 hover:text-stone-900 hover:bg-stone-100 border border-stone-200 transition-colors cursor-pointer"
+                    className="p-1.5 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 border border-stone-300/80 transition-colors cursor-pointer"
                     title="Copy quote"
                   >
                     {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
