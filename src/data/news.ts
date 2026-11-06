@@ -42,8 +42,8 @@ Concluding his apostolic exhortation, the Pontiff challenged the faithful to bre
     readTime: '4 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-luke-15-boundless-joy-heaven-repentance.html',
-      imageUrl: '/images/sacred-art/return_prodigal_son.jpg',
-    imageCaption: 'The Holy Father meditating on the Parables of Mercy and Eucharistic Adoration at the Vatican (Photo: Vatican Media)',
+    imageUrl: '/images/sacred-art/return_prodigal_son.jpg',
+    imageCaption: 'The Return of the Prodigal Son — Meditation on Luke 15 and Divine Mercy',
     tags: ['Luke 15:1-10', 'Pope', 'Eucharistic Adoration', 'Fraternal Charity', 'Good Shepherd', 'Mercy', 'Vatican News']
   },
   {
@@ -64,8 +64,6 @@ Vatican observers recalled Dylan's historic performance before Pope Saint John P
     readTime: '3 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-receives-bob-dylan-at-the-vatican.html',
-    imageUrl: '/images/sacred-art/raphael_disputa.jpg',
-    imageCaption: 'Apostolic Palace in the Vatican (Photo: Vatican Media)',
     tags: ['Pope', 'Vatican', 'Culture', 'Peace', 'Apostolic Palace', 'Official']
   },
   {
@@ -86,8 +84,6 @@ The meeting concluded with the traditional exchange of diplomatic gifts, includi
     readTime: '3 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-receives-president-of-chile-at-the-vatican.html',
-    imageUrl: 'https://images.unsplash.com/photo-1531572753322-ad063cecc140?q=80&w=1200&auto=format&fit=crop',
-    imageCaption: 'Official bilateral audience at the Vatican Secretariat of State (Photo: Vatican Media)',
     tags: ['Holy See', 'Diplomacy', 'Chile', 'Secretariat of State', 'Vatican']
   },
   {
@@ -109,7 +105,7 @@ The Pope invited all Catholic public servants and citizens to examine their cons
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-general-audience-social-economic-life-social-doctrine.html',
     imageUrl: '/images/saints/saint-charles-borromeo.jpg',
-    imageCaption: 'Pope Leo XIV reflecting on St. Charles Borromeo during the General Audience (Photo: Vatican Media)',
+    imageCaption: 'St. Charles Borromeo, cited by Pope Leo XIV during the Wednesday General Audience',
     tags: ['General Audience', 'Gaudium et Spes', 'St. Charles Borromeo', 'Vatican', 'St. Peter\'s Square']
   },
   {
@@ -130,8 +126,6 @@ The Holy See Press Office confirmed that the Holy Father will also preside over 
     readTime: '3 min read',
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-xiv-invites-pray-for-apostolic-journey-to-latin-america.html',
-    imageUrl: '/images/saints/saint-martin-de-porres.jpg',
-    imageCaption: 'The Holy Father addressing pilgrims regarding the upcoming pastoral journey to Latin America (Photo: Vatican Media)',
     tags: ['Apostolic Journey', 'Latin America', 'Argentina', 'Peru', 'Uruguay', 'Vatican']
   },
   {
@@ -150,8 +144,6 @@ The new portal documents concrete initiatives undertaken by religious orders, Ca
     readTime: '3 min read',
     source: 'Dicastery for Promoting Integral Human Development (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en/vatican-city/news/2026-11/laudato-si-platform-5-year-report-digital-atlas-press-conference.html',
-    imageUrl: '/images/sacred-art/millet_angelus.jpg',
-    imageCaption: 'Press conference at the Holy See Press Office presenting the Digital Atlas (Photo: Vatican Media)',
     tags: ['Laudato Si', 'Charity', 'Holy See Press Office', 'Digital Atlas', 'Vatican']
   }
 ];
@@ -183,7 +175,7 @@ Concluding the audience, the Pope led pilgrims in chanting the Pater Noster and 
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
     imageUrl: '/images/sacred-art/eucharistic_adoration_altar.jpg',
-    imageCaption: 'Eucharistic Adoration and Catechesis at the Vatican (Photo: Vatican Media)',
+    imageCaption: 'Eucharistic Adoration at the Altar',
     tags: ['Vatican', 'Pope', 'Eucharist', 'Hope', 'St. Peter\'s Square']
   },
   {
@@ -203,7 +195,7 @@ As recorded in the ancient Liber Pontificalis, Saint Evaristus—born at Bethleh
     source: 'Pontifical Committee for Historical Sciences (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
     imageUrl: '/images/saints/pope-saint-evaristus.jpg',
-    imageCaption: 'Commemoration of Pope Saint Evaristus near the Tomb of St. Peter (Photo: Vatican Media)',
+    imageCaption: 'Pope Saint Evaristus, Fifth Bishop of Rome and Martyr',
     tags: ['Pope St. Evaristus', 'Vatican Grottoes', 'Early Church', 'Roman Parishes', 'Martyrs']
   },
   {
@@ -223,7 +215,7 @@ The Vatican Dicastery for the Causes of Saints also highlighted how Saint John P
     source: 'Vatican Media (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
     imageUrl: '/images/saints/saint-john-paul-ii.jpg',
-    imageCaption: 'Solemn Mass honoring Pope Saint John Paul II in St. Peter\'s Basilica (Photo: Vatican Media)',
+    imageCaption: 'Pope Saint John Paul II',
     tags: ['Vatican', 'St. John Paul II', 'Eucharist', 'St. Peter\'s Basilica', 'Totus Tuus']
   },
   {
@@ -243,7 +235,7 @@ Recalling the centuries-old tradition of the Church, the document underscores ho
     source: 'Dicastery for Divine Worship (vaticannews.va)',
     sourceUrl: 'https://www.vaticannews.va/en.html',
     imageUrl: '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg',
-    imageCaption: 'Solemn Eucharistic Exposition and Benediction (Photo: Vatican Media)',
+    imageCaption: 'Solemn Eucharistic Exposition and Adoration',
     tags: ['Eucharistic Adoration', 'Benediction', 'Monstrance', 'Liturgy', 'Divine Praises']
   }
 ];
@@ -277,14 +269,7 @@ export function parseVaticanNewsXml(xmlText: string): CatholicNewsItem[] {
       .replace(/&nbsp;/g, ' ')
       .trim();
     const pubDate = pubDateMatch ? pubDateMatch[1].trim() : '';
-    const fallbackImages = [
-      '/images/sacred-art/return_prodigal_son.jpg',
-      '/images/sacred-art/raphael_disputa.jpg',
-      'https://images.unsplash.com/photo-1531572753322-ad063cecc140?q=80&w=1200&auto=format&fit=crop',
-      '/images/saints/saint-charles-borromeo.jpg',
-      '/images/saints/saint-martin-de-porres.jpg'
-    ];
-    const imageUrl = imageMatch ? imageMatch[1].trim() : fallbackImages[i % fallbackImages.length];
+    const imageUrl = imageMatch ? imageMatch[1].trim() : undefined;
 
     if (title) {
       let category: CatholicNewsItem['category'] = 'Vatican';

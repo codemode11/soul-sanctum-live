@@ -378,10 +378,8 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                     onError={(e) => {
-                      const target = e.currentTarget;
-                      if (!target.src.includes('eucharistic_adoration_altar.jpg')) {
-                        target.src = '/images/sacred-art/eucharistic_adoration_altar.jpg';
-                      }
+                      const container = e.currentTarget.parentElement;
+                      if (container) container.style.display = 'none';
                     }}
                   />
                   <div className="absolute bottom-1 right-1 bg-stone-900/80 text-[10px] text-amber-200 px-1.5 py-0.5 rounded backdrop-blur-xs">
@@ -485,10 +483,8 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         loading="lazy"
                         onError={(e) => {
-                          const target = e.currentTarget;
-                          if (!target.src.includes('eucharistic_adoration_altar.jpg')) {
-                            target.src = '/images/sacred-art/eucharistic_adoration_altar.jpg';
-                          }
+                          const container = e.currentTarget.parentElement;
+                          if (container) container.style.display = 'none';
                         }}
                       />
                     </div>
