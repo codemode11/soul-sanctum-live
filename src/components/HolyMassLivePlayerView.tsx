@@ -376,18 +376,19 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
               
               {/* Left Column (2/3): Prayer Text */}
-              <div className="md:col-span-2 space-y-2 border-r-0 md:border-r border-amber-200/70 md:pr-4">
-                <div className="flex items-center justify-between gap-2">
-                  <h4 className="font-serif text-base sm:text-lg font-bold text-stone-900">
-                    Act of Spiritual Communion
-                  </h4>
-                  <span className="text-[11px] font-bold font-cinzel text-amber-900 uppercase">
-                    St. Alphonsus Liguori
-                  </span>
+              <div className="md:col-span-2 space-y-2.5 border-r-0 md:border-r border-amber-200/70 md:pr-4">
+                <h4 className="font-serif text-base sm:text-lg font-bold text-stone-900 text-center">
+                  Act of Spiritual Communion
+                </h4>
+
+                <div className="text-sm sm:text-base font-serif italic text-stone-900 leading-snug whitespace-pre-line text-center px-2">
+                  {spiritualCommunionPrayer}
                 </div>
 
-                <div className="text-sm sm:text-base font-serif italic text-stone-900 leading-snug whitespace-pre-line pl-3 border-l-2 border-amber-700">
-                  {spiritualCommunionPrayer}
+                <div className="text-right pt-1">
+                  <span className="text-[11px] font-bold font-cinzel text-amber-900 uppercase">
+                    — St. Alphonsus Liguori
+                  </span>
                 </div>
               </div>
 
