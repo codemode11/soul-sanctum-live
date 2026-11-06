@@ -217,7 +217,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
             <button
               onClick={handleShareStream}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#6B4423]/55 hover:bg-[#6B4423]/80 border border-[#8B5A2B]/80 text-[#F5D7B2] text-xs font-sans font-semibold transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-900/60 hover:bg-amber-800/80 border border-amber-600/70 text-amber-100 text-xs font-sans font-semibold transition-all cursor-pointer"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
               <span>{copied ? 'Link Copied' : 'Share Stream'}</span>
@@ -296,7 +296,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                   href={selectedStream.fallbackStreamUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#6B4423] hover:bg-[#7D502A] border border-[#9E6B3B] text-amber-50 text-xs font-sans font-semibold transition-all shadow-md"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 border border-amber-600 text-amber-50 text-xs font-sans font-semibold transition-all shadow-md"
                   title="Watch high-definition broadcast directly on the official sanctuary streaming portal"
                 >
                   <Tv className="w-3.5 h-3.5 text-amber-200" />
@@ -310,7 +310,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                   href={selectedStream.youtubeLiveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-red-700/80 hover:bg-red-600 border border-red-400/50 text-white text-xs font-sans font-semibold transition-all shadow-md"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-red-800/80 hover:bg-red-700 border border-red-500/50 text-white text-xs font-sans font-semibold transition-all shadow-md"
                   title="Watch official livestream directly on YouTube"
                 >
                   <span>YouTube Live Channel</span>
@@ -355,7 +355,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               onClick={() => setActiveSideTab('communion')}
               className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
                 activeSideTab === 'communion'
-                  ? 'bg-[#6B4423] text-amber-50 shadow-2xs font-bold'
+                  ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
                   : 'text-stone-700 hover:text-stone-900'
               }`}
             >
@@ -365,7 +365,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               onClick={() => setActiveSideTab('readings')}
               className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
                 activeSideTab === 'readings'
-                  ? 'bg-[#6B4423] text-amber-50 shadow-2xs font-bold'
+                  ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
                   : 'text-stone-700 hover:text-stone-900'
               }`}
             >
@@ -375,7 +375,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               onClick={() => setActiveSideTab('candle')}
               className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
                 activeSideTab === 'candle'
-                  ? 'bg-[#6B4423] text-amber-50 shadow-2xs font-bold'
+                  ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
                   : 'text-stone-700 hover:text-stone-900'
               }`}
             >
@@ -415,7 +415,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                     onClick={handleToggleSpiritualCommunionAudio}
                     className={`w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
                       isPrayingSpiritualCommunion
-                        ? 'bg-[#6B4423] border-[#5A381C] text-white shadow-xs'
+                        ? 'bg-amber-900 border-amber-700 text-white shadow-xs'
                         : 'bg-stone-50 hover:bg-white border-stone-300 text-stone-800'
                     }`}
                   >
@@ -508,7 +508,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               <button
                 type="submit"
                 disabled={!candleIntention.trim()}
-                className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#8B5A2B]/70 disabled:opacity-40 text-amber-50 font-cinzel text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md shrink-0"
+                className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border border-amber-600/70 disabled:opacity-40 text-amber-50 font-cinzel text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md shrink-0"
               >
                 <Flame className="w-3.5 h-3.5 fill-current" />
                 <span>Offer Petition</span>
@@ -609,7 +609,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               onClick={() => setSelectedRegion(r.id)}
               className={`px-3 py-1 rounded-lg text-xs font-cinzel transition-all cursor-pointer ${
                 selectedRegion === r.id
-                  ? 'bg-[#6B4423] text-amber-50 font-bold shadow-xs border border-[#8B5A2B]'
+                  ? 'bg-amber-900 text-amber-50 font-bold shadow-xs border border-amber-600'
                   : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'
               }`}
             >
@@ -637,7 +637,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                 }}
                 className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between gap-3 text-left group ${
                   isSelected
-                    ? 'bg-amber-50/95 border-[#8B5A2B] ring-2 ring-[#8B5A2B]/35 shadow-md'
+                    ? 'bg-amber-50/95 border-amber-600 ring-2 ring-amber-600/35 shadow-md'
                     : 'bg-white hover:bg-stone-50/90 border-stone-200 shadow-2xs hover:shadow-sm'
                 }`}
               >
@@ -676,7 +676,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
                 <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-500">
                   <span className="font-medium text-stone-700">{stream.language}</span>
-                  <span className="inline-flex items-center gap-1 text-[#6B4423] font-cinzel font-bold group-hover:translate-x-0.5 transition-transform">
+                  <span className="inline-flex items-center gap-1 text-amber-800 font-cinzel font-bold group-hover:translate-x-0.5 transition-transform">
                     <span>{isSelected ? 'Playing Now' : 'Watch Stream'}</span>
                     <ChevronRight className="w-3 h-3" />
                   </span>

@@ -23,9 +23,9 @@ export const VaticanNewsLiveWidget: React.FC<VaticanNewsLiveWidgetProps> = ({
   ];
 
   return (
-    <div className="rounded-xl overflow-hidden bg-gradient-to-b from-[#1C140E] via-[#241A13] to-[#160F0A] border border-amber-600/40 shadow-xl text-stone-100 p-4 sm:p-5 text-left relative">
+    <div className="rounded-xl overflow-hidden bg-gradient-to-b from-stone-900 via-[#1C1712] to-stone-950 border border-amber-600/40 shadow-xl text-stone-100 p-4 sm:p-5 text-left relative">
       
-      {/* Soft Refined Warm Bronze Header Strip */}
+      {/* Soft Refined Gold Header Strip */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-700 via-amber-400 to-amber-700 opacity-90" />
 
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -34,7 +34,7 @@ export const VaticanNewsLiveWidget: React.FC<VaticanNewsLiveWidgetProps> = ({
         <div className="flex items-start gap-3.5 min-w-0">
           
           {/* Papal Emblem Badge */}
-          <div className="w-11 h-11 rounded-xl bg-gradient-to-b from-[#6B4423] to-[#4A2E1B] border border-amber-500/50 shadow-md flex items-center justify-center shrink-0 text-amber-100 font-bold">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-b from-amber-900 to-amber-950 border border-amber-500/50 shadow-md flex items-center justify-center shrink-0 text-amber-100 font-bold">
             <div className="flex flex-col items-center justify-center leading-none">
               <span className="text-lg">🔑</span>
               <span className="text-[9px] font-cinzel font-bold tracking-widest text-amber-200/90 uppercase mt-0.5">ROMA</span>
@@ -43,8 +43,8 @@ export const VaticanNewsLiveWidget: React.FC<VaticanNewsLiveWidgetProps> = ({
 
           <div className="space-y-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-red-900/80 border border-red-700/60 text-red-100 font-sans text-[10px] font-bold uppercase tracking-wider shadow-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-950/90 border border-amber-600/50 text-amber-200 font-sans text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
                 OFFICIAL TRANSMISSION
               </span>
 
@@ -69,7 +69,7 @@ export const VaticanNewsLiveWidget: React.FC<VaticanNewsLiveWidgetProps> = ({
           {!isCurrentlySelected && onSelectVaticanStream && (
             <button
               onClick={onSelectVaticanStream}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#6B4423] hover:bg-[#7D502A] border border-[#8B5A2B] text-amber-100 font-cinzel text-xs font-bold transition-all shadow-md cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 border border-amber-600 text-amber-100 font-cinzel text-xs font-bold transition-all shadow-md cursor-pointer"
             >
               <Radio className="w-3.5 h-3.5 text-amber-300" />
               <span>Switch Player to Vatican Live</span>
@@ -91,7 +91,7 @@ export const VaticanNewsLiveWidget: React.FC<VaticanNewsLiveWidgetProps> = ({
             href="https://www.vaticannews.va/en/epaper.html#live"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-red-950/80 hover:bg-red-900 border border-red-700/60 text-stone-100 text-xs font-sans font-semibold transition-all shadow-md"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 border border-amber-600/40 text-stone-100 text-xs font-sans font-semibold transition-all shadow-md"
           >
             <Globe2 className="w-3.5 h-3.5 text-amber-300" />
             <span>VaticanNews.va Portal</span>
@@ -115,7 +115,7 @@ export const VaticanNewsLiveWidget: React.FC<VaticanNewsLiveWidgetProps> = ({
               onClick={() => setSelectedLanguage(lang.code as any)}
               className={`px-2.5 py-0.5 rounded text-[10px] font-cinzel font-bold transition-all cursor-pointer ${
                 selectedLanguage === lang.code
-                  ? 'bg-[#6B4423] text-amber-100 border border-[#8B5A2B] shadow-xs'
+                  ? 'bg-amber-900 text-amber-100 border border-amber-600 shadow-xs'
                   : 'bg-stone-800/70 hover:bg-stone-700 text-stone-300 border border-stone-700/70'
               }`}
               title={lang.desc}
