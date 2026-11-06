@@ -376,10 +376,12 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                     src={item.imageUrl}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    loading="lazy"
+                  loading="lazy"
                     onError={(e) => {
-                      // Fallback if image fails
-                      (e.target as HTMLElement).style.display = 'none';
+                      const target = e.currentTarget;
+                      if (!target.src.includes('eucharistic_adoration_altar.jpg')) {
+                        target.src = '/images/sacred-art/eucharistic_adoration_altar.jpg';
+                      }
                     }}
                   />
                   <div className="absolute bottom-1 right-1 bg-stone-900/80 text-[10px] text-amber-200 px-1.5 py-0.5 rounded backdrop-blur-xs">
@@ -404,24 +406,10 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
               </div>
             </div>
 
-            {/* Actions Bar: Verify Link, Audio, Copy, Read More */}
+            {/* Actions Bar: Audio, Copy, Read More */}
             <div className="flex flex-wrap items-center justify-between pt-2 border-t border-stone-200/60 text-xs text-stone-500 gap-2">
               <div className="flex items-center gap-2">
                 <span className="font-medium text-stone-600">Source: {item.source}</span>
-                {item.sourceUrl && (
-                  <a
-                    href={item.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300 transition-colors"
-                    title="Verify directly on VaticanNews.va"
-                  >
-                    <ShieldCheck className="w-3 h-3 text-emerald-600" />
-                    <span>Verify at VaticanNews.va</span>
-                    <ExternalLink className="w-2.5 h-2.5" />
-                  </a>
-                )}
               </div>
 
               <div className="flex items-center gap-2">
@@ -479,7 +467,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
               <article
                 key={item.id}
                 onClick={() => setActiveArticle(item)}
-                className="bg-white/40 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/60 hover:bg-white/65 transition-all cursor-pointer space-y-2 group"
+                className="bg-white/40 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-white/60 hover:bg-white/65 transition-all cursor-pointer space-y-2.5 group"
               >
                 <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
                   <span className="px-2 py-0.5 rounded-full bg-stone-200 text-stone-800 font-semibold font-cinzel text-[10px]">
@@ -488,13 +476,33 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                   <span className="text-stone-500 text-xs">{item.date} • {item.readTime}</span>
                 </div>
 
-                <h4 className="font-cinzel text-base sm:text-lg font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
-                  {toCurvedQuotes(item.title)}
-                </h4>
+                <div className="flex flex-col sm:flex-row gap-3.5 items-start">
+                  {item.imageUrl && (
+                    <div className="w-full sm:w-36 h-24 shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (!target.src.includes('eucharistic_adoration_altar.jpg')) {
+                            target.src = '/images/sacred-art/eucharistic_adoration_altar.jpg';
+                          }
+                        }}
+                      />
+                    </div>
+                  )}
+                  <div className="space-y-1 flex-1">
+                    <h4 className="font-cinzel text-base sm:text-lg font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
+                      {toCurvedQuotes(item.title)}
+                    </h4>
 
-                <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
-                  {toCurvedQuotes(item.summary)}
-                </p>
+                    <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
+                      {toCurvedQuotes(item.summary)}
+                    </p>
+                  </div>
+                </div>
 
                 <div className="flex items-center justify-between pt-1 text-xs text-stone-500">
                   <span>Source: {item.source}</span>
