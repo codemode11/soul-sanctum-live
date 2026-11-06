@@ -47,7 +47,7 @@ const FIVE_STORY_BADGES = [
   'Dispatch 1 of 5 • Papal Teaching & Gospel Meditation',
   'Dispatch 2 of 5 • Holy See Pastoral Directive',
   'Dispatch 3 of 5 • Saint of the Day & Living Tradition',
-  'Dispatch 4 of 5 • Universal Church & Eucharistic Revival',
+  'Dispatch 4 of 5 • Global Church & Eucharistic Revival',
   'Dispatch 5 of 5 • Works of Mercy & Sacred Culture'
 ];
 
@@ -303,59 +303,16 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
             </span>
           </div>
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-            Vatican News and Universal Church Dispatches
+            Vatican News and Church Dispatches
           </h2>
           <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
-            Updated daily with five authentic reports covering the Holy Father's homily, Dicastery directives, Saint of the Day, Eucharistic renewal, and works of mercy.
+            Updated daily with reports covering the Holy Father's homily, Dicastery directives, Saint of the Day, Eucharistic renewal, and works of mercy.
           </p>
         </div>
 
-        {/* Fact-Check & Provenance Guarantee Banner */}
-        <div className="mt-4 p-3 bg-amber-900/40 border border-amber-500/30 rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span className="text-stone-200">
-              <strong className="text-emerald-300 font-semibold">100% Factual & Verified:</strong> Direct from Holy See Official Feed (vaticannews.va)
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] text-amber-300/80 hidden md:inline">
-              {lastLiveSync}
-            </span>
-            <button
-              onClick={() => setShowFactCheckModal(true)}
-              className="px-2.5 py-1 rounded bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 hover:text-white border border-amber-400/40 text-[11px] font-medium transition-colors flex items-center gap-1 cursor-pointer"
-            >
-              <Info className="w-3 h-3" />
-              <span>Verify Sources</span>
-            </button>
-          </div>
-        </div>
 
-        {/* Date Selector Navigation Bar */}
-        <div className="mt-5 pt-4 border-t border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs font-cinzel text-amber-300">
-            <Calendar className="w-4 h-4 text-amber-400" />
-            <span className="font-bold">Active Date: {dateFormatted}</span>
-          </div>
 
-          {/* Quick Date Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-            {quickDates.map(qd => (
-              <button
-                key={qd.date}
-                onClick={() => handleSelectDate(qd.date)}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                  selectedDate === qd.date
-                    ? 'bg-amber-400 text-amber-950 font-bold shadow-xs'
-                    : 'bg-stone-800/80 text-stone-300 hover:text-white hover:bg-stone-700'
-                }`}
-              >
-                {qd.label}
-              </button>
-            ))}
-          </div>
-        </div>
+
 
         {/* Categories Filter Bar */}
         <div className="flex flex-wrap gap-2 mt-4">
@@ -375,24 +332,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         </div>
       </div>
 
-      {/* Search Bar */}
-      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2 font-cinzel text-xs font-bold text-stone-700">
-          <Sparkles className="w-4 h-4 text-amber-700" />
-          <span>5 Daily Stories for {dateFormatted}</span>
-        </div>
 
-        <div className="relative w-full sm:w-72">
-          <input
-            type="text"
-            placeholder="Search stories, Pope, dicasteries..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full text-xs pl-8 pr-3 py-2 rounded-lg bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-700"
-          />
-          <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-3" />
-        </div>
-      </div>
 
       {/* SECTION 1: TODAY'S FIVE VATICAN STORIES */}
       <div className="space-y-4">
@@ -400,11 +340,11 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
             <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900 uppercase tracking-wide">
-              Today's 5 Vatican Dispatches ({dateFormatted})
+              Today's Vatican Dispatches ({dateFormatted})
             </h3>
           </div>
           <span className="text-xs font-serif italic text-amber-950">
-            Factual & Verified Official Dispatches
+            Official Vatican Dispatches
           </span>
         </div>
 

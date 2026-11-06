@@ -19,6 +19,7 @@ import {
 import { HolyMassLiveStream, LiveStreamRegion, LiveStreamCategory, MassReading } from '../types';
 import { HOLY_MASS_LIVESTREAMS } from '../data/holyMassLiveStreams';
 import { SacredReader } from '../utils/speech';
+import { VaticanNewsLiveWidget } from './VaticanNewsLiveWidget';
 
 interface HolyMassLivePlayerViewProps {
   currentReading?: MassReading;
@@ -184,6 +185,19 @@ Live on Soul Sanctum Catholic Sanctuary.`;
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-6">
       
+      {/* Official Vatican News Live Widget Banner */}
+      <VaticanNewsLiveWidget
+        isCurrentlySelected={selectedStream.id === 'vatican-st-peters-live'}
+        onReloadStream={() => setStreamKey(Date.now())}
+        onSelectVaticanStream={() => {
+          const vaticanStream = HOLY_MASS_LIVESTREAMS.find(s => s.id === 'vatican-st-peters-live');
+          if (vaticanStream) {
+            setSelectedStream(vaticanStream);
+            setStreamKey(Date.now());
+          }
+        }}
+      />
+
       {/* 1. Top Masthead & Active Sanctuary Stage Card */}
       <div className="rounded-xl overflow-hidden bg-gradient-to-b from-stone-900 via-[#1A110B] to-stone-950 border border-amber-500/35 shadow-2xl text-stone-100">
         
