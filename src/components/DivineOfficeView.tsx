@@ -118,24 +118,24 @@ export const DivineOfficeView: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Font size class mapper
+  // Font size class mapper with larger, highly legible prayer typography
   const getTextSizeClass = () => {
     switch (textSize) {
-      case 'normal': return 'text-sm sm:text-base leading-relaxed';
-      case 'large': return 'text-base sm:text-lg leading-relaxed';
-      case 'xlarge': return 'text-lg sm:text-xl leading-relaxed';
+      case 'normal': return 'text-base sm:text-lg leading-relaxed';
+      case 'large': return 'text-xl sm:text-2xl leading-relaxed';
+      case 'xlarge': return 'text-2xl sm:text-3xl leading-relaxed';
       case 'medium':
-      default: return 'text-sm sm:text-base leading-relaxed';
+      default: return 'text-lg sm:text-xl leading-relaxed';
     }
   };
 
   const getHeadingSizeClass = () => {
     switch (textSize) {
-      case 'normal': return 'text-base sm:text-lg';
-      case 'large': return 'text-lg sm:text-xl';
-      case 'xlarge': return 'text-xl sm:text-2xl';
+      case 'normal': return 'text-lg sm:text-xl font-bold';
+      case 'large': return 'text-2xl sm:text-3xl font-bold';
+      case 'xlarge': return 'text-3xl sm:text-4xl font-bold';
       case 'medium':
-      default: return 'text-base sm:text-lg';
+      default: return 'text-xl sm:text-2xl font-bold';
     }
   };
 
@@ -172,10 +172,10 @@ export const DivineOfficeView: React.FC = () => {
                     ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                     : 'text-stone-300 hover:text-white hover:bg-white/10'
                 }`}
-                title="Sacred Reader View (App Design & Typography)"
+                title="Reader View (App Design & Typography)"
               >
                 <Layers className="w-3.5 h-3.5 text-amber-300" />
-                <span>Sacred Reader</span>
+                <span>Reader</span>
               </button>
               <button
                 type="button"
