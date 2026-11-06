@@ -267,33 +267,34 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-5 md:p-6 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 sm:space-y-5 mb-12">
       
-      {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration (Compact & Elegant) */}
-      <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl px-4 py-3 sm:px-5 sm:py-3.5 text-amber-50 shadow-md border border-stone-800">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="space-y-1 min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-              <h2 className="font-serif text-lg sm:text-xl font-bold text-amber-100 tracking-normal leading-tight">
-                Catechism
-              </h2>
-              <span className="text-stone-600 hidden sm:inline" aria-hidden="true">•</span>
-              <span className="text-xs sm:text-[13px] font-semibold text-amber-200/90 font-cinzel">
-                {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
-                  ? selectedTopic.paragraphsRange
-                  : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
-              </span>
-            </div>
+      {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
+      <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl p-5 sm:p-6 text-amber-50 shadow-md border border-stone-800 space-y-3 sm:space-y-4">
+        {/* Large "Catechism" Heading */}
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-amber-100 tracking-normal leading-tight">
+          Catechism
+        </h2>
 
-            <h3 className="font-serif text-base sm:text-lg md:text-xl font-bold text-[#D4A373] leading-snug">
-              {toCurvedQuotes(selectedTopic.topicTitle)}
-            </h3>
+        {/* Large Topic Title with Subtitle below it */}
+        <div className="space-y-1.5">
+          <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#D4A373] leading-tight">
+            {toCurvedQuotes(selectedTopic.topicTitle)}
+          </h3>
 
-            <p className="text-xs sm:text-[13px] text-stone-300 font-serif-sacred max-w-3xl leading-snug">
-              {toCurvedQuotes(selectedTopic.topicSubtitle)}
-            </p>
+          <p className="text-sm sm:text-base text-stone-300 font-serif-sacred max-w-3xl leading-relaxed">
+            {toCurvedQuotes(selectedTopic.topicSubtitle)}
+          </p>
+        </div>
+
+        {/* Bottom Bar: Paragraphs Range at bottom-left, Settings/Actions at bottom-right */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-stone-800/80">
+          <div className="text-xs sm:text-sm font-semibold text-amber-200/90 font-cinzel">
+            {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
+              ? selectedTopic.paragraphsRange
+              : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
           </div>
 
-          {/* Action Buttons: Topic Picker with Arrows, Audio Narration & Copy Teaching */}
-          <div className="flex flex-wrap items-center gap-1.5 shrink-0 self-start md:self-center pt-1 md:pt-0">
+          {/* Settings at the bottom (right side) */}
+          <div className="flex flex-wrap items-center gap-2 shrink-0 sm:self-auto">
             {/* Interactive Topic Picker with Arrows */}
             <div className="relative shrink-0" ref={topicDropdownRef}>
               <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs">
@@ -343,7 +344,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
 
               {/* Topic Dropdown Popover */}
               {isTopicDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 max-h-96 bg-[#24150B] border border-[#A67B4E]/80 rounded-xl shadow-2xl p-3 z-50 overflow-hidden flex flex-col gap-2 animate-in fade-in duration-150">
+                <div className="absolute right-0 top-full mt-2 w-80 sm:w-96 max-h-96 bg-[#24150B] border border-[#A67B4E]/80 rounded-xl shadow-2xl p-3 z-50 overflow-hidden flex flex-col gap-2 animate-in fade-in duration-150">
                   <div className="flex items-center justify-between pb-2 border-b border-[#8B5A2B]/40">
                     <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-200">
                       Pick Gospel Topic (Nov 2026 – Dec 2027)
@@ -397,6 +398,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               )}
             </div>
 
+            {/* Audio Narration */}
             <button
               onClick={handleToggleReadAloud}
               className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs flex items-center justify-center ${
@@ -410,6 +412,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
             </button>
 
+            {/* Copy Teaching */}
             <button
               onClick={handleCopy}
               className="p-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center"
