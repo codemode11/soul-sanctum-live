@@ -425,13 +425,17 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
         </div>
       </div>
 
-      {/* Sub-view Navigation Bar: Daily Gospel Catechism first (default) */}
-      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-2 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs overflow-x-auto no-scrollbar">
-        <div className="flex items-center gap-1.5 min-w-max">
+      {/* UNIFIED TOPICS RECTANGLE: Special Topics & Daily Gospel Topics in One Rectangle */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-3">
+        {/* ROW 1: Special Topics Navigation Tabs */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5">
+          <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700 pl-1 shrink-0 hidden md:inline">
+            Topics:
+          </span>
           {/* 1. Daily Gospel Catechism (Default Page) */}
           <button
             onClick={() => setActiveSubView('daily')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               activeSubView === 'daily'
                 ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                 : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
@@ -443,7 +447,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           {/* 2. Holy Trinity */}
           <button
             onClick={() => setActiveSubView('trinity')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               activeSubView === 'trinity'
                 ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                 : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
@@ -455,7 +459,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           {/* 3. Holy Eucharist */}
           <button
             onClick={() => setActiveSubView('eucharist')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               activeSubView === 'eucharist'
                 ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                 : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
@@ -467,7 +471,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           {/* 4. Seven Sacraments */}
           <button
             onClick={() => setActiveSubView('sacraments')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               activeSubView === 'sacraments'
                 ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                 : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
@@ -479,7 +483,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           {/* 5. Mary and Her Apparitions */}
           <button
             onClick={() => setActiveSubView('marian')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               activeSubView === 'marian'
                 ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                 : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
@@ -491,7 +495,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           {/* 6. Ressourcement */}
           <button
             onClick={() => setActiveSubView('ressourcement')}
-            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               activeSubView === 'ressourcement'
                 ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                 : 'text-stone-700 hover:text-amber-950 hover:bg-stone-200/60'
@@ -500,21 +504,10 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             <span>Ressourcement</span>
           </button>
         </div>
-      </div>
 
-      {/* Render Selected View */}
-      {activeSubView === 'eucharist' && <EucharisticCatechismView />}
-      {activeSubView === 'marian' && <MarianCatechismView />}
-      {activeSubView === 'trinity' && <TrinityCatechismView />}
-      {activeSubView === 'sacraments' && <SacramentsCatechismView />}
-      {activeSubView === 'ressourcement' && <RessourcementView />}
-
-      {/* DEFAULT PAGE: What the Catechism Says About Whatever is the Topic of the Gospel */}
-      {activeSubView === 'daily' && (
-        <div className="space-y-5">
-
-          {/* Daily Gospel Topic Selector Bar (92 Days for November, December, January) */}
-          <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl px-3.5 py-3 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-2.5">
+        {/* ROW 2: Daily Gospel Topics Controls & Carousel (within the same rectangle when in Daily Gospel mode) */}
+        {activeSubView === 'daily' && (
+          <div className="pt-2.5 border-t border-stone-200/70 space-y-2.5">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
@@ -650,48 +643,23 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </button>
             </div>
           </div>
+        )}
+      </div>
 
+      {/* Render Selected View */}
+      {activeSubView === 'eucharist' && <EucharisticCatechismView />}
+      {activeSubView === 'marian' && <MarianCatechismView />}
+      {activeSubView === 'trinity' && <TrinityCatechismView />}
+      {activeSubView === 'sacraments' && <SacramentsCatechismView />}
+      {activeSubView === 'ressourcement' && <RessourcementView />}
+
+      {/* DEFAULT PAGE: What the Catechism Says About Whatever is the Topic of the Gospel */}
+      {activeSubView === 'daily' && (
+        <div className="space-y-5">
           {/* Main Article Display Card */}
           <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-8">
-            
-            {/* Top Navigation between Topics */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-stone-50/90 border border-stone-200 text-xs">
-              <button
-                onClick={handlePrevTopic}
-                disabled={currentIndex <= 0}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-white cursor-pointer transition-all shadow-2xs"
-                title="Previous Gospel Topic"
-                aria-label="Previous Gospel Topic"
-              >
-                <ChevronLeft className="w-4 h-4 text-amber-800" />
-                <span className="truncate max-w-[140px] sm:max-w-none">
-                  {currentIndex > 0
-                    ? `${activeList[currentIndex - 1].dateLabel}: ${activeList[currentIndex - 1].gospelCitation}`
-                    : 'Previous Topic'}
-                </span>
-              </button>
 
-              <span className="font-cinzel text-amber-950 font-bold text-[11px] uppercase tracking-wider bg-amber-100/70 px-2.5 py-1 rounded-full border border-amber-200/80">
-                {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
-              </span>
-
-              <button
-                onClick={handleNextTopic}
-                disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-white cursor-pointer transition-all shadow-2xs"
-                title="Next Gospel Topic"
-                aria-label="Next Gospel Topic"
-              >
-                <span className="truncate max-w-[140px] sm:max-w-none">
-                  {currentIndex >= 0 && currentIndex < activeList.length - 1
-                    ? `${activeList[currentIndex + 1].dateLabel}: ${activeList[currentIndex + 1].gospelCitation}`
-                    : 'Next Topic'}
-                </span>
-                <ChevronRight className="w-4 h-4 text-amber-800" />
-              </button>
-            </div>
-
-            {/* SECTION 1: THE GOSPEL FOUNDATION */}
+            {/* SECTION 1: GOSPEL SUMMARY */}
             <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs space-y-1.5">
               <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-800" />
               <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-800" />
@@ -700,7 +668,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               
               <div className="flex items-center gap-1.5 text-amber-900 font-cinzel font-bold text-xs uppercase tracking-wider">
                 <BookOpen className="w-3.5 h-3.5" />
-                <span>The Gospel Foundation ({selectedTopic.gospelCitation})</span>
+                <span>Gospel Summary ({selectedTopic.gospelCitation})</span>
               </div>
               <p className="font-serif text-stone-800 italic text-sm sm:text-base leading-relaxed pl-1">
                 &ldquo;{toCurvedQuotes(selectedTopic.gospelTextSnippet)}&rdquo;
