@@ -547,7 +547,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                   >
                     {CATECHISM_YEAR_AND_MONTH_SPECS.map(spec => (
                       <option key={spec.key} value={spec.key}>
-                        {spec.label} ({spec.days} Days)
+                        {spec.label}
                       </option>
                     ))}
                   </select>
