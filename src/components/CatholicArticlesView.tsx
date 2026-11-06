@@ -7,8 +7,7 @@ import {
   Volume2,
   VolumeX,
   ChevronLeft,
-  ChevronRight,
-  BookOpen
+  ChevronRight
 } from 'lucide-react';
 import { CatholicArticlesRssIcon } from './SanctumIcons';
 import {
@@ -230,10 +229,6 @@ export const CatholicArticlesView: React.FC = () => {
             <strong className="not-italic font-cinzel text-amber-300">{activeSourceMeta.name}: </strong>
             {activeSourceMeta.tagline}
           </div>
-          <span className="inline-flex items-center gap-1.5 text-amber-300/90 font-cinzel text-[11px] font-semibold shrink-0">
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Full In-App Reader</span>
-          </span>
         </div>
       </div>
 
