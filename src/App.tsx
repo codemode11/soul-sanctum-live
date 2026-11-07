@@ -445,6 +445,7 @@ export default function App() {
                 src={activeEstablishingImage.imageUrl}
                 alt={activeEstablishingImage.title}
                 decoding="async"
+                referrerPolicy="no-referrer"
                 className="w-full h-auto block brightness-[1.02] contrast-[1.04] transform-gpu shrink-0"
               />
               {/* Subtle bottom edge feathering into the page background */}

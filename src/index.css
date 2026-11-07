@@ -3,6 +3,8 @@
 @theme {
   --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   --font-cinzel: 'Cinzel', serif;
+  --font-trajan: 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
+  --font-calluna: 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
@@ -10,6 +12,8 @@
   :root {
     --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
     --font-cinzel: 'Cinzel', serif;
+    --font-trajan: 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
+    --font-calluna: 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
     --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
     --sanctum-icon-speed: 1.2s;
   }
@@ -32,6 +36,14 @@
 
 .font-cinzel {
   font-family: 'Cinzel', serif;
+}
+
+.font-trajan {
+  font-family: 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
+}
+
+.font-calluna {
+  font-family: 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
 }
 
 .font-serif-heading {

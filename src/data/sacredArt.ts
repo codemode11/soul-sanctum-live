@@ -19,7 +19,7 @@ export const NIEPOKALANOW_HIGH_RES_IMAGES: NiepokalanowHighResImage[] = [
     title: 'How the Catholic Church Built Western Civilization — Faith, Scholarship, and Scientific Discovery',
     shortLabel: '1. Faith, Scholarship & Scientific Discovery',
     resolution: 'High-Res Masthead Illustration',
-    imageUrl: '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png',
+    imageUrl: '/src/assets/images/peaceful_sky_restored_masthead_1794060181600.jpg',
     description: 'Catholic monasteries, universities, hospitals, and priest-scientists shaping the foundations of Western civilization.',
     attributionText: 'Soul Sanctum Editorial Illustration',
     creditShort: 'Soul Sanctum',

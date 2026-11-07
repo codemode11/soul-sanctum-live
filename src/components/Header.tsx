@@ -142,17 +142,16 @@ export const Header: React.FC<HeaderProps> = ({
 
               <div className="relative">
                 <div
-                  className="absolute -inset-x-12 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.55)_0%,rgba(245,158,11,0.30)_40%,rgba(217,119,6,0.12)_65%,transparent_80%)] blur-lg pointer-events-none -z-10"
+                  className="absolute -inset-x-12 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(253,224,71,0.65)_0%,rgba(251,191,36,0.38)_42%,rgba(245,158,11,0.16)_68%,transparent_82%)] blur-lg pointer-events-none -z-10"
                   aria-hidden="true"
                 />
                 <h1
-                  className="relative font-cinzel select-none font-black text-3xl sm:text-4xl md:text-5xl tracking-[0.26em] text-center"
+                  className="relative font-cinzel select-none font-semibold text-3xl sm:text-4xl md:text-5xl tracking-[0.26em] text-center"
                   style={{
                     fontFamily: "'Cinzel', serif",
+                    fontWeight: 600,
                     color: '#FFFDF7',
-                    WebkitTextStroke: '1.2px #3E2415',
-                    textShadow: '0 0 14px rgba(253, 224, 71, 0.95), 0 0 28px rgba(251, 191, 36, 0.85), 0 0 50px rgba(217, 119, 6, 0.65), 0 2px 8px rgba(0, 0, 0, 0.85)',
-                    filter: 'drop-shadow(0 0 16px rgba(251, 191, 36, 0.75))',
+                    textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                   }}
                 >
                   SOUL SANCTUM
@@ -194,11 +193,12 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
               <div>
                 <h1
-                  className="font-cinzel font-black text-xl sm:text-2xl md:text-3xl tracking-[0.22em]"
+                  className="font-cinzel font-semibold text-xl sm:text-2xl md:text-3xl tracking-[0.22em]"
                   style={{
                     fontFamily: "'Cinzel', serif",
+                    fontWeight: 600,
                     color: '#FFFDF7',
-                    textShadow: '0 0 12px rgba(253, 224, 71, 0.9), 0 0 24px rgba(251, 191, 36, 0.75)',
+                    textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                   }}
                 >
                   SOUL SANCTUM
@@ -256,35 +256,33 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="space-y-1 text-left">
                 <div className="relative flex items-center gap-2.5 sm:gap-3">
                   <div 
-                    className="absolute -inset-x-8 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.55)_0%,rgba(245,158,11,0.30)_40%,rgba(217,119,6,0.12)_65%,transparent_80%)] blur-lg pointer-events-none -z-10" 
+                    className="absolute -inset-x-8 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(253,224,71,0.65)_0%,rgba(251,191,36,0.38)_42%,rgba(245,158,11,0.16)_68%,transparent_82%)] blur-lg pointer-events-none -z-10" 
                     aria-hidden="true"
                   />
 
                   <h1 
                     className="relative font-cinzel select-none transition-all duration-300 flex flex-col items-start text-left leading-[0.92]"
-                    style={{ fontFamily: "'Cinzel', serif" }}
+                    style={{ fontFamily: "'Cinzel', serif", fontWeight: 600 }}
                     title="Soul Sanctum — Catholic Sanctuary"
                   >
                     <span
-                      className="font-black text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left"
+                      className="font-semibold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left"
                       style={{
                         fontFamily: "'Cinzel', serif",
+                        fontWeight: 600,
                         color: '#FFFDF7',
-                        WebkitTextStroke: '1.2px #3E2415',
-                        textShadow: '0 0 14px rgba(253, 224, 71, 0.95), 0 0 28px rgba(251, 191, 36, 0.85), 0 0 50px rgba(217, 119, 6, 0.65), 0 2px 8px rgba(0, 0, 0, 0.85)',
-                        filter: 'drop-shadow(0 0 16px rgba(251, 191, 36, 0.75))',
+                        textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                       }}
                     >
                       SOUL
                     </span>
                     <span
-                      className="font-black text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left mt-0.5"
+                      className="font-semibold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left mt-0.5"
                       style={{
                         fontFamily: "'Cinzel', serif",
+                        fontWeight: 600,
                         color: '#FFFDF7',
-                        WebkitTextStroke: '1.2px #3E2415',
-                        textShadow: '0 0 14px rgba(253, 224, 71, 0.95), 0 0 28px rgba(251, 191, 36, 0.85), 0 0 50px rgba(217, 119, 6, 0.65), 0 2px 8px rgba(0, 0, 0, 0.85)',
-                        filter: 'drop-shadow(0 0 16px rgba(251, 191, 36, 0.75))',
+                        textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                       }}
                     >
                       SANCTUM

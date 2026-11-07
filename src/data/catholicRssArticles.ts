@@ -466,7 +466,7 @@ Little wonder that the pioneers of modern science were devout Catholics and freq
 
 Equally transformative was the Church’s invention of the hospital and organized charitable healthcare. Inspired by Christ’s command to care for the sick and see His face in the suffering, bishops and religious orders established permanent hospitals (xenodochia), leprosaria, orphanages, and pharmacies across Christendom—affirming that every human life, from conception to natural death, possesses inviolable dignity in the eyes of God.`,
     link: 'https://www.catholiceducation.org',
-    imageUrl: '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png',
+    imageUrl: '/src/assets/images/peaceful_sky_restored_masthead_1794060181600.jpg',
     categories: ['Church History', 'Faith & Reason', 'Education'],
     isFullContentLoaded: true
   },

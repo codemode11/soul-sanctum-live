@@ -115,44 +115,41 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
   const categories: { id: LiveStreamCategory | 'all'; label: string; icon: React.ReactNode; count: number; desc: string }[] = [
     {
-      id: 'all',
+      id: 'all' as const,
       label: 'All Livestreams',
       icon: <Globe className="w-4 h-4 text-amber-700" />,
       count: HOLY_MASS_LIVESTREAMS.length,
-      desc: 'All Catholic sanctuaries & shrines'
+      desc: 'All active Catholic sanctuaries & shrines'
     },
     {
-      id: 'mass',
-      label: 'Holy Mass',
-      icon: <Sparkles className="w-4 h-4 text-amber-600" />,
-      count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'mass').length,
-      desc: 'Papal, Cathedral & Parish TV Masses'
-    },
-    {
-      id: 'adoration',
+      id: 'adoration' as const,
       label: 'Eucharistic Adoration',
       icon: <Flame className="w-4 h-4 text-red-600" />,
       count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'adoration').length,
       desc: '24/7 Perpetual Adoration Chapels'
     },
     {
-      id: 'apparition',
+      id: 'apparition' as const,
       label: 'Apparition Sites',
       icon: <Heart className="w-4 h-4 text-blue-600" />,
       count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'apparition').length,
-      desc: 'Lourdes, Fátima, Knock & Holy Sepulchre'
+      desc: 'Lourdes & Fátima 24/7 Livestreams'
+    },
+    {
+      id: 'mass' as const,
+      label: 'Holy Mass',
+      icon: <Sparkles className="w-4 h-4 text-amber-600" />,
+      count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'mass').length,
+      desc: 'Papal, Cathedral & Parish TV Masses'
     }
-  ];
+  ].filter(c => c.id === 'all' || c.count > 0);
 
   const regions: { id: LiveStreamRegion; label: string }[] = [
     { id: 'all', label: 'All Regions' },
     { id: 'adoration', label: '✝️ Eucharistic Adoration' },
-    { id: 'anticipated', label: '✨ Anticipated Sunday Masses' },
-    { id: 'vatican', label: 'Vatican & Rome' },
-    { id: 'europe', label: 'Europe & Shrines' },
     { id: 'north-america', label: 'North America' },
-    { id: 'holy-land', label: 'Holy Land (Jerusalem)' },
-    { id: 'asia-latam', label: 'Asia & Philippines' }
+    { id: 'europe', label: 'Europe & Shrines' },
+    { id: 'asia-latam', label: 'Australia & Asia-Pacific' }
   ];
 
   const getCategoryBadge = (cat: LiveStreamCategory) => {
