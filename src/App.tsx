@@ -532,10 +532,10 @@ export default function App() {
 
           {/* Main Story: Featured Catholic Article Masthead Dispatch */}
           <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-48 sm:mt-64 md:mt-72 lg:mt-80">
-            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/85 hover:bg-black/95 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-2xl shadow-[0_12px_50px_rgba(0,0,0,0.92)] transition-all py-4 px-5 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
+            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/45 hover:bg-black/55 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.65)] transition-all py-4 px-5 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300">
+                <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
                   CATHOLIC ARTICLES
                 </span>
               </div>
@@ -547,13 +547,13 @@ export default function App() {
                   setActiveCatholicArticleId('cerc-curated-1');
                   handleSelectTab('catholic-articles');
                 }}
-                className="font-serif text-xl sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] tracking-tight cursor-pointer transition-colors"
+                className="font-serif text-xl sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.98)] tracking-tight cursor-pointer transition-colors"
               >
                 How the Catholic Church Built Western Civilization
               </h2>
 
               {/* Subtitle & Call to Action */}
-              <p className="text-xs sm:text-sm md:text-base text-stone-200 font-serif italic max-w-3xl mx-auto leading-relaxed pt-0.5">
+              <p className="text-xs sm:text-sm md:text-base text-stone-100 font-serif italic max-w-3xl mx-auto leading-relaxed pt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                 A historical survey of how Catholic monasteries, cathedral schools, and papal charters gave birth to the university system, modern charitable healthcare, and the scientific method.
               </p>
 
