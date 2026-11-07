@@ -1,11 +1,7 @@
 export interface FaustinaDiaryExcerpt {
   id: string;
-  diaryNumber: number;
   title: string;
-  theme: string;
-  quote: string;
-  reflection: string;
-  spokenBy: 'Jesus' | 'St. Faustina' | 'Our Lady';
+  paragraphs: string[];
 }
 
 export interface DivineMercyPromise {
@@ -119,57 +115,38 @@ export const DIVINE_MERCY_PROMISES: DivineMercyPromise[] = [
 
 export const FAUSTINA_DIARY_EXCERPTS: FaustinaDiaryExcerpt[] = [
   {
-    id: 'diary-47',
-    diaryNumber: 47,
-    title: 'The Painting of the Divine Mercy Image',
-    theme: 'The Divine Mercy Image and Signature',
-    spokenBy: 'Jesus',
-    quote: 'In the evening, when I was in my cell, I saw the Lord Jesus clothed in a white garment. One hand was raised in the gesture of blessing, the other was touching the garment at the breast. From beneath the garment, slightly drawn aside at the breast, there were emanating two large rays, one red, the other pale... Jesus said to me: "Paint an image according to the pattern you see, with the signature: Jesus, I trust in You. I desire that this image be venerated, first in your chapel, and throughout the world."',
-    reflection: 'The image of Divine Mercy depicts the Risen Lord bearing the marks of the crucifixion. The pale ray represents the Water of Baptism and the Holy Spirit; the red ray represents the Holy Eucharist and the Blood of the Covenant.'
+    id: 'hour-of-great-mercy',
+    title: 'The Hour of Great Mercy',
+    paragraphs: [
+      'At three o’clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion, particularly in My abandonment at the moment of agony. This is the hour of great mercy. In this hour, I will refuse nothing to the soul that makes a request of Me in virtue of My Passion (Diary, 1320).'
+    ]
   },
   {
-    id: 'diary-299',
-    diaryNumber: 299,
-    title: 'The Meaning of the Pale and Red Rays',
-    theme: 'The Fountain of Blood and Water',
-    spokenBy: 'Jesus',
-    quote: '"The two rays denote Blood and Water. The pale ray stands for the Water which makes souls righteous. The red ray stands for the Blood which is the life of souls. These two rays issued forth from the very depths of My tender mercy when My agonized Heart was opened by a lance on the Cross. Happy is the one who will dwell in their shelter, for the just hand of God shall not lay hold of him."',
-    reflection: 'The lance of Longinus on Calvary pierced the physical Sacred Heart of Jesus. From this sacred opening, the Sacraments of the Church were born.'
+    id: 'image-of-divine-mercy',
+    title: 'The Image of The Divine Mercy',
+    paragraphs: [
+      'In a vision, St. Faustina saw Jesus in a white garment and His right hand raised in blessing. This was in 1931.',
+      'Paint an image according to the pattern you see, with the signature: Jesus, I trust in You. I promise that the soul that will venerate this image will not perish. I also promise victory over [its] enemies already here on earth, especially at the hour of death. I Myself will defend it as My own glory (Diary, 47, 48). I am offering people a vessel with which they are to keep coming for graces to the fountain of mercy. That vessel is this image with the signature: Jesus, I trust in You (327). I desire that this image be venerated, first in your chapel, and [then] throughout the world (47).'
+    ]
   },
   {
-    id: 'diary-476',
-    diaryNumber: 476,
-    title: 'The Origin of the Chaplet of Divine Mercy',
-    theme: 'Angel of Wrath and the Words of Atonement',
-    spokenBy: 'Jesus',
-    quote: 'I saw an Angel, the executor of divine wrath... I began to plead with God for the world with words heard interiorly: "Eternal Father, I offer you the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world; for the sake of His sorrowful Passion, have mercy on us and on the whole world." As I was praying in this manner, I saw the Angel\'s helplessness; he could not carry out the just punishment.',
-    reflection: 'On September 13, 1935, Sister Faustina was taught the Chaplet in her cell in Vilnius. The Chaplet is an extension of the Holy Sacrifice of the Mass.'
+    id: 'chaplet-of-divine-mercy',
+    title: 'The Chaplet of The Divine Mercy',
+    paragraphs: [
+      'Four years later, St. Faustina had a vision of an angel sent by God to chastise a certain city. She started to pray for mercy, but her prayers were of no avail. Then she saw the Holy Trinity and felt the power of Jesus’ grace inside of her. She also found herself pleading with God for mercy with words she heard interiorly:',
+      'Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world; for the sake of His sorrowful Passion, have mercy on us. (Diary, 475)',
+      'While she kept on saying this inspired prayer, the angel became helpless and could not carry out the deserved punishment (see 474). The following day, as she was entering the chapel, she heard this interior voice once more, teaching her how to recite the prayer that our Lord later called “the Chaplet.” But after “have mercy on us,” the words “and on the whole world” (476) were added. Faustina would recite this form of prayer almost constantly, offering it especially for the dying.',
+      'The Lord attached great promises to the recitation of the Chaplet. Encourage souls to say the Chaplet which I have given you (1541). Whoever will recite it will receive great mercy at the hour of death (687). When they say this Chaplet in the presence of the dying, I will stand between My Father and the dying person, not as the just Judge but as the Merciful Savior (1541). Priests will recommend it to sinners as their last hope of salvation. Even if there were a sinner most hardened, if he were to recite this Chaplet only once, he would receive grace from My infinite mercy (687). Through the Chaplet you will obtain everything, if what you ask for is compatible with My will. (1731)',
+      'The next morning, when I entered chapel, I heard these words interiorly: Every time you enter the chapel, immediately recite the prayer which I taught you yesterday. When I had said the prayer, in my soul I heard these words: This prayer will serve to appease My wrath. You will recite it for nine days, on the beads of the rosary, in the following manner: First of all, you will say one OUR FATHER and HAIL MARY and the I BELIEVE IN GOD. Then on the OUR FATHER beads you will say the following words: “Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world.” On the HAIL MARY beads you will say the following words: “For the sake of His sorrowful Passion have mercy on us and on the whole world.” In conclusion, three times you will recite these words: “Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world” (Diary, 476).'
+    ]
   },
   {
-    id: 'diary-1541',
-    diaryNumber: 1541,
-    title: 'The Three O\'Clock Hour of Mercy',
-    theme: 'Hour of Christ\'s Death on Calvary',
-    spokenBy: 'Jesus',
-    quote: '"At three o\'clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion, particularly in My abandonment at the moment of agony. This is the hour of great mercy for the whole world. In this hour, I will refuse nothing to the soul that makes a request of Me in virtue of My Passion."',
-    reflection: 'At 3:00 PM, Catholics unite their hearts to the moment Jesus breathed His last upon the Cross, entering into the silence of His victory over death.'
-  },
-  {
-    id: 'diary-1485',
-    diaryNumber: 1485,
-    title: 'Conversation of the Merciful God with a Sinful Soul',
-    theme: 'Inexhaustible Divine Compassion',
-    spokenBy: 'Jesus',
-    quote: '"Be not afraid of your Savior, O sinful soul. I make the first approach to come to you, for I know that by yourself you cannot lift yourself to Me. Sinner, do not run away from your Father; be willing to talk openly with your God of mercy who wants to speak words of pardon and lavish His graces on you. My mercy is greater than your sins and those of the entire world."',
-    reflection: 'No sin is too grave, no soul too wounded to be healed by the inexhaustible mercy of Christ. His Sacred Heart seeks the lost sheep with yearning love.'
-  },
-  {
-    id: 'diary-1731',
-    diaryNumber: 1731,
-    title: 'The Ocean of Mercy and the Secret of Trust',
-    theme: 'Trust as the Golden Vessel',
-    spokenBy: 'Jesus',
-    quote: '"My Heart overflows with great mercy for souls, and especially for poor sinners... Oh, that they would understand that I am the best of Fathers to them and that it is for them that the Blood and Water flowed from My Heart as from a fount overflowing with mercy. The graces of My mercy are drawn by means of one vessel only, and that is—trust. The more a soul trusts, the more it will receive."',
-    reflection: 'Jesus told St. Faustina that distrust pierces His Sacred Heart more than the cruelty of His torturers. Surrender with childlike confidence: "Jesus, I trust in You."'
+    id: 'feast-of-mercy',
+    title: 'The Feast of Mercy',
+    paragraphs: [
+      'On one occasion, I heard these words: My daughter, tell the whole world about My inconceivable mercy. I desire that the Feast of Mercy be a refuge and a shelter for all souls, and especially for poor sinners. On that day the very depths of My tender mercy are open. I pour out a whole ocean of graces upon those souls who approach the fount of My mercy. The soul that will go to Confession and receive Holy Communion shall obtain complete forgiveness of sins and punishment. On that day are opened all the divine floodgates through which graces flow. Let no soul fear to draw near to Me, even though its sins be as scarlet. My mercy is so great that no mind, be it of man or of angel, will be able to fathom it throughout all eternity. Everything that exists has come from the very depths of My most tender mercy. Every soul in its relation to Me will contemplate My love and mercy throughout eternity. The Feast of Mercy emerged from My very depths of tenderness. It is My desire that it be solemnly celebrated on the first Sunday after Easter. Mankind will not have peace until it turns to the Fount of My mercy (Diary, 699).',
+      'God’s mercy sometimes touches the sinner at the last moment in a wondrous and mysterious way. Outwardly, it seems as if everything were lost, but it is not so. The soul, illumined by a ray of God’s powerful final grace, turns to God in the last moment with such a power of love that, in an instant, it receives from God forgiveness of sin and punishment … (Diary, 1698).'
+    ]
   }
 ];
+
