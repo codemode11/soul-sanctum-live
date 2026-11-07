@@ -119,7 +119,14 @@ Live on Soul Sanctum Catholic Sanctuary.`;
       label: 'All Livestreams',
       icon: <Globe className="w-4 h-4 text-amber-700" />,
       count: HOLY_MASS_LIVESTREAMS.length,
-      desc: 'All active Catholic sanctuaries & shrines'
+      desc: 'All active Catholic Masses, Adoration & Shrines'
+    },
+    {
+      id: 'mass' as const,
+      label: 'Holy Mass',
+      icon: <Sparkles className="w-4 h-4 text-amber-600" />,
+      count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'mass').length,
+      desc: 'Papal, Cathedral & Daily TV Masses'
     },
     {
       id: 'adoration' as const,
@@ -134,22 +141,16 @@ Live on Soul Sanctum Catholic Sanctuary.`;
       icon: <Heart className="w-4 h-4 text-blue-600" />,
       count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'apparition').length,
       desc: 'Lourdes & Fátima 24/7 Livestreams'
-    },
-    {
-      id: 'mass' as const,
-      label: 'Holy Mass',
-      icon: <Sparkles className="w-4 h-4 text-amber-600" />,
-      count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'mass').length,
-      desc: 'Papal, Cathedral & Parish TV Masses'
     }
   ].filter(c => c.id === 'all' || c.count > 0);
 
   const regions: { id: LiveStreamRegion; label: string }[] = [
     { id: 'all', label: 'All Regions' },
+    { id: 'vatican', label: '🇻🇦 Vatican & Papal' },
     { id: 'adoration', label: '✝️ Eucharistic Adoration' },
     { id: 'north-america', label: 'North America' },
     { id: 'europe', label: 'Europe & Shrines' },
-    { id: 'asia-latam', label: 'Australia & Asia-Pacific' }
+    { id: 'asia-latam', label: 'Asia-Pacific & Australia' }
   ];
 
   const getCategoryBadge = (cat: LiveStreamCategory) => {
