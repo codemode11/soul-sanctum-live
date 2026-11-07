@@ -20,9 +20,21 @@ import {
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
 
-export const CatholicArticlesView: React.FC = () => {
-  // Default to the first source (Aleteia) so the user reads one RSS source at a time
-  const [selectedSourceId, setSelectedSourceId] = useState<string>(CATHOLIC_RSS_SOURCES[0].id);
+interface CatholicArticlesViewProps {
+  initialSourceId?: string | null;
+  initialArticleId?: string | null;
+  onClearInitialArticle?: () => void;
+}
+
+export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
+  initialSourceId,
+  initialArticleId,
+  onClearInitialArticle
+}) => {
+  // Default to initialSourceId if passed from Masthead, otherwise the first source (St. Paul Center)
+  const [selectedSourceId, setSelectedSourceId] = useState<string>(
+    initialSourceId || CATHOLIC_RSS_SOURCES[0].id
+  );
   const [selectedArticleIndex, setSelectedArticleIndex] = useState<number>(0);
 
   const [articlesBySource, setArticlesBySource] = useState<Record<string, CatholicArticleItem[]>>(() => {
@@ -37,6 +49,22 @@ export const CatholicArticlesView: React.FC = () => {
   const [isFetchingFullText, setIsFetchingFullText] = useState<boolean>(false);
   const [isReadingAloud, setIsReadingAloud] = useState<boolean>(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialSourceId) {
+      setSelectedSourceId(initialSourceId);
+      const list = articlesBySource[initialSourceId] || [];
+      if (initialArticleId) {
+        const idx = list.findIndex(a => a.id === initialArticleId);
+        setSelectedArticleIndex(idx >= 0 ? idx : 0);
+      } else {
+        setSelectedArticleIndex(0);
+      }
+      if (onClearInitialArticle) {
+        onClearInitialArticle();
+      }
+    }
+  }, [initialSourceId, initialArticleId]);
 
   const loadSourceFeed = async (sourceId: string) => {
     setIsLoading(true);
@@ -340,12 +368,12 @@ export const CatholicArticlesView: React.FC = () => {
 
           {/* Optional Article Image (Only shown if provided by the article and loads cleanly) */}
           {currentArticle.imageUrl && (
-            <div className="rounded-xl overflow-hidden border border-stone-300 bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-stone-300 bg-stone-950/5 shadow-sm">
               <img
                 key={currentArticle.imageUrl}
                 src={currentArticle.imageUrl}
                 alt={currentArticle.title}
-                className="w-full max-h-96 object-cover"
+                className="w-full h-auto max-h-[520px] object-contain mx-auto block"
                 loading="lazy"
                 referrerPolicy="no-referrer"
                 onError={(e) => {

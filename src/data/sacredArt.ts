@@ -15,6 +15,17 @@ export interface NiepokalanowHighResImage {
 
 export const NIEPOKALANOW_HIGH_RES_IMAGES: NiepokalanowHighResImage[] = [
   {
+    id: 'faith-scholarship-science',
+    title: 'How the Catholic Church Built Western Civilization — Faith, Scholarship, and Scientific Discovery',
+    shortLabel: '1. Faith, Scholarship & Scientific Discovery',
+    resolution: 'High-Res Masthead Illustration',
+    imageUrl: '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png',
+    description: 'Catholic monasteries, universities, hospitals, and priest-scientists shaping the foundations of Western civilization.',
+    attributionText: 'Soul Sanctum Editorial Illustration',
+    creditShort: 'Soul Sanctum',
+    objectPosition: 'center top'
+  },
+  {
     id: 'star-of-the-immaculate',
     title: 'Star of the Immaculate Altar of Perpetual Adoration (Niepokalanów)',
     shortLabel: '1. Star of the Immaculate Altar',

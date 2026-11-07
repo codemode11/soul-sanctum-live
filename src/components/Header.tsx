@@ -39,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
   activeEmblem,
   iconStyleConfig = DEFAULT_STYLE_CONFIG,
   onOpenAdoration,
-  activeEstablishingImageId = 'unsplash-eucharistic-adoration',
+  activeEstablishingImageId = 'faith-scholarship-science',
   scheduledMasthead,
 }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -358,7 +358,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               )}
 
-              {onOpenAdoration && (
+              {onOpenAdoration && activeEstablishingImageId !== 'faith-scholarship-science' && (
                 <div className="flex flex-col items-end mt-6 lg:mt-10 max-w-[195px] sm:max-w-[210px] md:max-w-[220px]">
                   <div
                     className="flex flex-col items-end text-right px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-xl bg-black/65 text-amber-200 backdrop-blur-md shadow-2xl w-full border border-white/15"

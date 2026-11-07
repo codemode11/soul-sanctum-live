@@ -449,7 +449,7 @@ On Calvary, as His lifeblood was poured out as the true Lamb of God, Jesus refus
     id: 'cerc-curated-1',
     sourceId: 'cerc',
     sourceName: 'Catholic Education Resource Center',
-    title: 'How the Catholic Church Built Western Civilization: Universities, Hospitals, and Natural Science',
+    title: 'How the Catholic Church Built Western Civilization',
     author: 'Catholic Education Resource Center',
     publishedDate: 'November 6, 2026',
     readTime: '7 min read',
@@ -466,6 +466,7 @@ Little wonder that the pioneers of modern science were devout Catholics and freq
 
 Equally transformative was the Church’s invention of the hospital and organized charitable healthcare. Inspired by Christ’s command to care for the sick and see His face in the suffering, bishops and religious orders established permanent hospitals (xenodochia), leprosaria, orphanages, and pharmacies across Christendom—affirming that every human life, from conception to natural death, possesses inviolable dignity in the eyes of God.`,
     link: 'https://www.catholiceducation.org',
+    imageUrl: '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png',
     categories: ['Church History', 'Faith & Reason', 'Education'],
     isFullContentLoaded: true
   },
@@ -537,6 +538,8 @@ export async function fetchCatholicRssArticlesForSource(
   const source = CATHOLIC_RSS_SOURCES.find(s => s.id === sourceId);
   if (!source) return [];
 
+  const curatedForSource = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId);
+
   try {
     const res = await fetch(`/api/catholic-rss?source=${encodeURIComponent(sourceId)}`, {
       signal: AbortSignal.timeout(6500)
@@ -545,12 +548,18 @@ export async function fetchCatholicRssArticlesForSource(
     const xml = await res.text();
     const parsed = parseRssXmlToArticles(xml, source);
     if (parsed.length > 0) {
+      if (sourceId === 'cerc') {
+        const filteredParsed = parsed.filter(
+          p => !p.title.toLowerCase().includes('how the catholic church built western civilization')
+        );
+        return [...curatedForSource, ...filteredParsed];
+      }
       return parsed;
     }
   } catch {
     // Fall back to curated articles for this source
   }
 
-  return CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId);
+  return curatedForSource;
 }
 

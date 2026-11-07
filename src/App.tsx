@@ -83,14 +83,14 @@ export default function App() {
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
-      const stored = localStorage.getItem('sanctum_establishing_image_v3');
-      if (!stored || stored === 'supper-at-emmaus' || stored === 'star-of-the-immaculate' || stored === 'cathedral-sanctum-adoration') {
-        localStorage.setItem('sanctum_establishing_image_v3', 'unsplash-eucharistic-adoration');
-        return 'unsplash-eucharistic-adoration';
+      const stored = localStorage.getItem('sanctum_establishing_image_v4');
+      if (!stored) {
+        localStorage.setItem('sanctum_establishing_image_v4', 'faith-scholarship-science');
+        return 'faith-scholarship-science';
       }
       return stored;
     } catch {
-      return 'unsplash-eucharistic-adoration';
+      return 'faith-scholarship-science';
     }
   });
 
@@ -139,7 +139,7 @@ export default function App() {
   const handleSelectEstablishingImage = (img: NiepokalanowHighResImage) => {
     setActiveEstablishingImageId(img.id);
     try {
-      localStorage.setItem('sanctum_establishing_image_v3', img.id);
+      localStorage.setItem('sanctum_establishing_image_v4', img.id);
     } catch {
       // ignore storage errors
     }
@@ -275,9 +275,11 @@ export default function App() {
   const activeColorTheme = ICON_COLOR_THEMES.find(t => t.id === iconStyleConfig.colorTheme) || ICON_COLOR_THEMES[0];
   const activeFrame = ICON_FRAME_STYLES.find(f => f.id === iconStyleConfig.frameStyle) || ICON_FRAME_STYLES[0];
 
-  // Top Vatican Headline for the masthead
+  // Top Vatican Headline & Featured Catholic Article state
   const topVaticanHeadline = getTopVaticanHeadline(currentDateStr);
   const [activeVaticanArticleId, setActiveVaticanArticleId] = useState<string | null>(null);
+  const [activeCatholicArticleSourceId, setActiveCatholicArticleSourceId] = useState<string | null>(null);
+  const [activeCatholicArticleId, setActiveCatholicArticleId] = useState<string | null>(null);
 
   // Audio state for Catholic Podcasts
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
@@ -437,7 +439,18 @@ export default function App() {
           ref={imageParallaxRef}
           className="relative w-full max-w-7xl mx-auto flex items-start justify-center overflow-hidden will-change-transform backface-hidden"
         >
-          {activeEstablishingImage.id === 'unsplash-eucharistic-adoration' ? (
+          {activeEstablishingImage.id === 'faith-scholarship-science' ? (
+            <div className="relative w-full overflow-hidden transform-gpu flex justify-center">
+              <img
+                src={activeEstablishingImage.imageUrl}
+                alt={activeEstablishingImage.title}
+                decoding="async"
+                className="w-full h-auto block brightness-[1.02] contrast-[1.04] transform-gpu shrink-0"
+              />
+              {/* Subtle bottom edge feathering into the page background */}
+              <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-stone-950/80 to-transparent pointer-events-none" />
+            </div>
+          ) : activeEstablishingImage.id === 'unsplash-eucharistic-adoration' ? (
             <div className="relative w-full overflow-hidden transform-gpu flex justify-center">
               <img
                 src={activeEstablishingImage.imageUrl}
@@ -517,40 +530,42 @@ export default function App() {
             scheduledMasthead={activeScheduledMasthead}
           />
 
-          {/* Main Story: Vatican News Masthead Dispatch */}
+          {/* Main Story: Featured Catholic Article Masthead Dispatch */}
           <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-48 sm:mt-64 md:mt-72 lg:mt-80">
             <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/85 hover:bg-black/95 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-2xl shadow-[0_12px_50px_rgba(0,0,0,0.92)] transition-all py-4 px-5 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300">
-                  FROM THE VATICAN
+                  CATHOLIC ARTICLES
                 </span>
               </div>
               
               {/* Full Lead Headline */}
               <h2 
                 onClick={() => {
-                  setActiveVaticanArticleId(topVaticanHeadline.id);
-                  handleSelectTab('vatican-news');
+                  setActiveCatholicArticleSourceId('cerc');
+                  setActiveCatholicArticleId('cerc-curated-1');
+                  handleSelectTab('catholic-articles');
                 }}
                 className="font-serif text-xl sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] tracking-tight cursor-pointer transition-colors"
               >
-                {topVaticanHeadline.title}
+                How the Catholic Church Built Western Civilization
               </h2>
 
               {/* Subtitle & Call to Action */}
               <p className="text-xs sm:text-sm md:text-base text-stone-200 font-serif italic max-w-3xl mx-auto leading-relaxed pt-0.5">
-                {topVaticanHeadline.subtitle || topVaticanHeadline.summary}
+                A historical survey of how Catholic monasteries, cathedral schools, and papal charters gave birth to the university system, modern charitable healthcare, and the scientific method.
               </p>
 
               <div className="pt-2 flex items-center justify-center sm:justify-end gap-3">
                 <button
                   onClick={() => {
-                    setActiveVaticanArticleId(topVaticanHeadline.id);
-                    handleSelectTab('vatican-news');
+                    setActiveCatholicArticleSourceId('cerc');
+                    setActiveCatholicArticleId('cerc-curated-1');
+                    handleSelectTab('catholic-articles');
                   }}
                   className="inline-flex items-center px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
-                  title="Read this full Vatican News report"
+                  title="Read this full story in Catholic Articles"
                 >
                   <span>Read Full Story</span>
                 </button>
@@ -670,7 +685,14 @@ export default function App() {
 
             {/* Catholic Articles (9 Catholic RSS Feeds) */}
             {activeTab === 'catholic-articles' && (
-              <CatholicArticlesView />
+              <CatholicArticlesView
+                initialSourceId={activeCatholicArticleSourceId}
+                initialArticleId={activeCatholicArticleId}
+                onClearInitialArticle={() => {
+                  setActiveCatholicArticleSourceId(null);
+                  setActiveCatholicArticleId(null);
+                }}
+              />
             )}
 
             {/* 8. Catholic Glossary */}
