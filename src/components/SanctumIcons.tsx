@@ -1871,14 +1871,15 @@ export const CatholicLinksTightenIcon = CatholicLinksTurnIcon;
 
 /**
  * 28. Divine Office (Liturgy of the Hours / Breviary) Icon:
- * Ornate Breviary book with ribbon bookmark and liturgical cross.
+ * Ornate Breviary book with a clock in the middle showing three o'clock (the Hour of Great Mercy / None)
+ * and a continuously moving second hand.
  */
 export const DivineOfficeBreviaryIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.8"
+    strokeWidth="1.75"
     strokeLinecap="round"
     strokeLinejoin="round"
     className={`${className} overflow-visible`}
@@ -1886,17 +1887,40 @@ export const DivineOfficeBreviaryIcon: React.FC<IconProps> = ({ className = 'w-5
   >
     {/* Breviary Book Cover */}
     <path
-      d="M5 3.5h12.5A2.5 2.5 0 0 1 20 6v13.5a1 1 0 0 1-1 1H6.5A2.5 2.5 0 0 1 4 18V4.5a1 1 0 0 1 1-1Z"
+      d="M5 2.8h12.5A2.5 2.5 0 0 1 20 5.3v13.7a1 1 0 0 1-1 1H6.5A2.5 2.5 0 0 1 4 17.5V3.8a1 1 0 0 1 1-1Z"
       fill="currentColor"
       fillOpacity="0.1"
     />
     {/* Book Spine & Bottom Page Edge */}
-    <path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20" strokeWidth="1.6" />
-    {/* Sacred Cross on the Breviary Cover */}
-    <line x1="12" y1="6.5" x2="12" y2="12.5" strokeWidth="1.75" />
-    <line x1="9.6" y1="8.7" x2="14.4" y2="8.7" strokeWidth="1.75" />
+    <path d="M4 17.5A2.5 2.5 0 0 1 6.5 15.5H20" strokeWidth="1.55" />
+
+    {/* Clock in the Middle of the Breviary (Showing 3:00 with Moving Second Hand) */}
+    <circle
+      cx="12"
+      cy="9.4"
+      r="4.6"
+      strokeWidth="1.5"
+      fill="currentColor"
+      fillOpacity="0.06"
+    />
+    {/* Minute Hand pointing to 12 o'clock */}
+    <line x1="12" y1="9.4" x2="12" y2="5.8" strokeWidth="1.55" />
+    {/* Hour Hand pointing to 3 o'clock */}
+    <line x1="12" y1="9.4" x2="14.8" y2="9.4" strokeWidth="1.7" />
+    {/* Moving Second Hand */}
+    <line
+      x1="12"
+      y1="10.2"
+      x2="12"
+      y2="5.5"
+      strokeWidth="1.05"
+      className="sanctum-divine-office-second-hand"
+    />
+    {/* Clock Center Pivot Pin */}
+    <circle cx="12" cy="9.4" r="0.7" fill="currentColor" stroke="none" />
+
     {/* Hanging Breviary Ribbon Bookmark */}
-    <path d="M9.5 15v6.5l2-1.4 2 1.4V15" strokeWidth="1.5" fill="currentColor" fillOpacity="0.2" />
+    <path d="M9.5 15.5v6.2l2-1.4 2 1.4v-6.2" strokeWidth="1.45" fill="currentColor" fillOpacity="0.2" />
   </svg>
 );
 

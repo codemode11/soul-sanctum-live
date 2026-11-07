@@ -1277,6 +1277,23 @@ svg:hover .sanctum-rss-wave-2 {
   animation: sanctumRssWave2RadiateOnce 1.8s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
+/* Divine Office Icon: Clock in the middle showing 3:00 with moving second hand */
+@keyframes sanctumDivineOfficeSecondSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.sanctum-divine-office-second-hand {
+  transform-box: view-box;
+  transform-origin: 12px 9.4px;
+  animation: sanctumDivineOfficeSecondSweep 6s linear infinite;
+  will-change: transform;
+}
+
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */
 .sanctum-nav-item-icon-box {
   transform-origin: 50% 50%;
