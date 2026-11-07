@@ -337,8 +337,8 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               {/* Liturgical Day Title Below Current Date */}
-              <div className="flex flex-col items-end gap-0.5 text-right">
-                <span className="font-serif font-bold text-xs sm:text-sm text-[#241307] tracking-wide leading-snug whitespace-nowrap [text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
+              <div className="flex flex-col items-end gap-0.5 text-right pr-6">
+                <span className="font-serif font-bold text-xs sm:text-sm text-[#241307] leading-snug whitespace-nowrap [text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
                   {mainTitlePart}
                 </span>
 
