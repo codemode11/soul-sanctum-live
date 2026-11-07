@@ -146,10 +146,10 @@ export const Header: React.FC<HeaderProps> = ({
                   aria-hidden="true"
                 />
                 <h1
-                  className="relative font-cinzel select-none font-semibold text-3xl sm:text-4xl md:text-5xl tracking-[0.26em] text-center"
+                  className="relative font-cinzel select-none font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-[0.26em] text-center"
                   style={{
                     fontFamily: "'Cinzel', serif",
-                    fontWeight: 600,
+                    fontWeight: 800,
                     color: '#FFFDF7',
                     textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                   }}
@@ -193,10 +193,10 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
               <div>
                 <h1
-                  className="font-cinzel font-semibold text-xl sm:text-2xl md:text-3xl tracking-[0.22em]"
+                  className="font-cinzel font-extrabold text-xl sm:text-2xl md:text-3xl tracking-[0.22em]"
                   style={{
                     fontFamily: "'Cinzel', serif",
-                    fontWeight: 600,
+                    fontWeight: 800,
                     color: '#FFFDF7',
                     textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                   }}
@@ -262,14 +262,14 @@ export const Header: React.FC<HeaderProps> = ({
 
                   <h1 
                     className="relative font-cinzel select-none transition-all duration-300 flex flex-col items-start text-left leading-[0.92]"
-                    style={{ fontFamily: "'Cinzel', serif", fontWeight: 600 }}
+                    style={{ fontFamily: "'Cinzel', serif", fontWeight: 800 }}
                     title="Soul Sanctum — Catholic Sanctuary"
                   >
                     <span
-                      className="font-semibold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left"
+                      className="font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left"
                       style={{
                         fontFamily: "'Cinzel', serif",
-                        fontWeight: 600,
+                        fontWeight: 800,
                         color: '#FFFDF7',
                         textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                       }}
@@ -277,10 +277,10 @@ export const Header: React.FC<HeaderProps> = ({
                       SOUL
                     </span>
                     <span
-                      className="font-semibold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left mt-0.5"
+                      className="font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left mt-0.5"
                       style={{
                         fontFamily: "'Cinzel', serif",
-                        fontWeight: 600,
+                        fontWeight: 800,
                         color: '#FFFDF7',
                         textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
                       }}
