@@ -326,7 +326,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <div className="relative">
                   <div 
                     onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-                    className="flex items-center gap-1.5 text-stone-100 hover:text-amber-200 cursor-pointer transition-colors group select-none py-1 px-0.5"
+                    className="flex items-center gap-1.5 text-[#241307] hover:text-[#5C2E0E] cursor-pointer transition-colors group select-none py-1 px-0.5"
                     title="Open Catholic Liturgical Calendar (Feasts, Colors and Memorials)"
                     role="button"
                     tabIndex={0}
@@ -336,11 +336,11 @@ export const Header: React.FC<HeaderProps> = ({
                       }
                     }}
                   >
-                    <CalendarIcon className="w-3.5 h-3.5 text-amber-400/90 group-hover:scale-110 transition-transform" />
-                    <span className="font-serif font-medium text-sm sm:text-base text-amber-100/95 group-hover:text-amber-200 drop-shadow-sm">
+                    <CalendarIcon className="w-4 h-4 text-[#3B1E08] group-hover:text-[#5C2E0E] group-hover:scale-110 transition-transform drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]" />
+                    <span className="font-serif font-bold text-sm sm:text-base text-[#241307] group-hover:text-[#5C2E0E] [text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
                       {formattedDate}
                     </span>
-                    <ChevronDown className={`w-3.5 h-3.5 text-amber-400/80 transition-transform duration-200 ${isCalendarOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-[#3B1E08] group-hover:text-[#5C2E0E] transition-transform duration-200 drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] ${isCalendarOpen ? 'rotate-180' : ''}`} />
                   </div>
 
                   <LiturgicalCalendarPicker
