@@ -1894,30 +1894,23 @@ export const DivineOfficeBreviaryIcon: React.FC<IconProps> = ({ className = 'w-5
     {/* Book Spine & Bottom Page Edge */}
     <path d="M4 17.5A2.5 2.5 0 0 1 6.5 15.5H20" strokeWidth="1.55" />
 
-    {/* Clock in the Middle of the Breviary (Showing 3:00 with Moving Second Hand) */}
-    <circle
-      cx="12"
-      cy="9.4"
-      r="4.6"
-      strokeWidth="1.5"
-      fill="currentColor"
-      fillOpacity="0.06"
-    />
+    {/* Clock Hands in the Middle of the Breviary (No Outer Circle, Showing 3:00 with Bright Moving Second Hand) */}
     {/* Minute Hand pointing to 12 o'clock */}
-    <line x1="12" y1="9.4" x2="12" y2="5.8" strokeWidth="1.55" />
+    <line x1="12" y1="9.4" x2="12" y2="5.0" strokeWidth="1.75" />
     {/* Hour Hand pointing to 3 o'clock */}
-    <line x1="12" y1="9.4" x2="14.8" y2="9.4" strokeWidth="1.7" />
-    {/* Moving Second Hand */}
+    <line x1="12" y1="9.4" x2="15.5" y2="9.4" strokeWidth="1.85" />
+    {/* Bright Moving Second Hand */}
     <line
       x1="12"
-      y1="10.2"
+      y1="10.6"
       x2="12"
-      y2="5.5"
-      strokeWidth="1.05"
+      y2="4.8"
+      stroke="#FDE047"
+      strokeWidth="1.5"
       className="sanctum-divine-office-second-hand"
     />
     {/* Clock Center Pivot Pin */}
-    <circle cx="12" cy="9.4" r="0.7" fill="currentColor" stroke="none" />
+    <circle cx="12" cy="9.4" r="0.95" fill="#FDE047" stroke="none" />
 
     {/* Hanging Breviary Ribbon Bookmark */}
     <path d="M9.5 15.5v6.2l2-1.4 2 1.4v-6.2" strokeWidth="1.45" fill="currentColor" fillOpacity="0.2" />
