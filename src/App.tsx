@@ -83,9 +83,9 @@ export default function App() {
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
-      const stored = localStorage.getItem('sanctum_establishing_image_v4');
+      const stored = localStorage.getItem('sanctum_establishing_image_v5');
       if (!stored) {
-        localStorage.setItem('sanctum_establishing_image_v4', 'faith-scholarship-science');
+        localStorage.setItem('sanctum_establishing_image_v5', 'faith-scholarship-science');
         return 'faith-scholarship-science';
       }
       return stored;
@@ -139,7 +139,7 @@ export default function App() {
   const handleSelectEstablishingImage = (img: NiepokalanowHighResImage) => {
     setActiveEstablishingImageId(img.id);
     try {
-      localStorage.setItem('sanctum_establishing_image_v4', img.id);
+      localStorage.setItem('sanctum_establishing_image_v5', img.id);
     } catch {
       // ignore storage errors
     }
@@ -445,7 +445,14 @@ export default function App() {
                 src={activeEstablishingImage.imageUrl}
                 alt={activeEstablishingImage.title}
                 decoding="async"
-                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('peaceful_sky_restored_masthead.jpg')) {
+                    target.src = '/assets/aistudio/peaceful_sky_restored_masthead.jpg';
+                  } else if (!target.src.includes('Faith__Scholarship__and_Scientific_Discovery_c472d047.png')) {
+                    target.src = '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png';
+                  }
+                }}
                 className="w-full h-auto block brightness-[1.02] contrast-[1.04] transform-gpu shrink-0"
               />
               {/* Subtle bottom edge feathering into the page background */}
