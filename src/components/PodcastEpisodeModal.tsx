@@ -217,53 +217,43 @@ KEY QUOTE:
           )}
 
           {/* External Links */}
-          <div className="pt-2 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3 text-xs text-stone-600">
-            <span className="font-serif">Listen & Stream On:</span>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <a 
-                href={episode.externalLinks?.fio || episode.externalLinks?.playFio || 'https://play.fio.fm'} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-2.5 py-1 rounded-md bg-amber-600/15 hover:bg-amber-600/25 border border-amber-500/40 text-amber-950 font-cinzel font-bold text-[11px] flex items-center gap-1.5 transition-colors shadow-2xs"
-                title="Stream on Fio Catholic Audio Platform"
-              >
-                <Headphones className="w-3.5 h-3.5 text-amber-800" />
-                <span>Fio.fm Player</span>
-                <ExternalLink className="w-3 h-3 text-amber-800" />
-              </a>
-
-              {episode.externalLinks?.apple && (
-                <a 
-                  href={episode.externalLinks.apple} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-stone-700 hover:text-amber-900 hover:underline flex items-center gap-1"
-                >
-                  Apple Podcasts <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
-              {episode.externalLinks?.spotify && (
-                <a 
-                  href={episode.externalLinks.spotify} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-stone-700 hover:text-amber-900 hover:underline flex items-center gap-1"
-                >
-                  Spotify <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
-              {episode.externalLinks?.youtube && (
-                <a 
-                  href={episode.externalLinks.youtube} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-stone-700 hover:text-amber-900 hover:underline flex items-center gap-1"
-                >
-                  YouTube <ExternalLink className="w-3 h-3" />
-                </a>
-              )}
+          {episode.externalLinks && (
+            <div className="pt-2 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3 text-xs text-stone-600">
+              <span className="font-serif">Official Show Links:</span>
+              <div className="flex items-center gap-3">
+                {episode.externalLinks.apple && (
+                  <a 
+                    href={episode.externalLinks.apple} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-amber-800 hover:underline flex items-center gap-1"
+                  >
+                    Apple Podcasts <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+                {episode.externalLinks.spotify && (
+                  <a 
+                    href={episode.externalLinks.spotify} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-amber-800 hover:underline flex items-center gap-1"
+                  >
+                    Spotify <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+                {episode.externalLinks.youtube && (
+                  <a 
+                    href={episode.externalLinks.youtube} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-amber-800 hover:underline flex items-center gap-1"
+                  >
+                    YouTube <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
 

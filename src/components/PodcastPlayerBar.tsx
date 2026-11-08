@@ -235,18 +235,6 @@ export const PodcastPlayerBar: React.FC<PodcastPlayerBarProps> = ({
         {/* Right: Rate, Sleep, Fullscreen, and Dismiss */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
-          {/* Fio.fm Streaming Quick Link */}
-          <a
-            href={episode.externalLinks?.fio || episode.externalLinks?.playFio || 'https://play.fio.fm'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-cinzel font-semibold text-amber-300 hover:text-white bg-amber-500/15 hover:bg-amber-500/30 border border-amber-500/30 transition-all cursor-pointer"
-            title="Stream on Fio.fm Catholic Web Player"
-          >
-            <span>Fio.fm</span>
-            <ExternalLink className="w-2.5 h-2.5" />
-          </a>
-
           {/* Speed Selector */}
           <div className="relative">
             <button
