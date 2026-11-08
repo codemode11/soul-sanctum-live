@@ -54,7 +54,8 @@ import {
   SacredArtGallerySwapIcon,
   CatholicLinksTightenIcon,
   DivineOfficeBreviaryIcon,
-  CatholicArticlesRssIcon
+  CatholicArticlesRssIcon,
+  CatholicSocialShareIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -71,6 +72,7 @@ export type ActiveTab =
   | 'live-mass'
   | 'vatican-news'
   | 'catholic-articles'
+  | 'catholic-social'
   | 'catholic-glossary'
   | 'treasury-prayers'
   | 'rosary'
@@ -346,6 +348,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: CatholicArticlesRssIcon, 
       tag: 'RSS Feeds', 
       subtext: 'St. Paul Center, Catholic Answers, Word on Fire and More' 
+    },
+    { 
+      id: 'catholic-social', 
+      label: 'Catholic Social', 
+      icon: CatholicSocialShareIcon, 
+      tag: 'Social', 
+      subtext: 'Instagram, Facebook and Pinterest Feeds' 
     },
     { 
       id: 'catholic-glossary', 

@@ -16,6 +16,7 @@ import { SacredMusicView } from './components/SacredMusicView';
 import { CatholicTermView } from './components/CatholicTermView';
 import { CatholicNewsView } from './components/CatholicNewsView';
 import { CatholicArticlesView } from './components/CatholicArticlesView';
+import { CatholicSocialView } from './components/CatholicSocialView';
 import { PrayerWallAndTreasuryView } from './components/PrayerWallAndTreasuryView';
 import { NotificationsModal } from './components/NotificationsModal';
 import { AngelusModal } from './components/AngelusModal';
@@ -702,6 +703,9 @@ export default function App() {
                 }}
               />
             )}
+
+            {/* Catholic Social (Instagram, Facebook & Pinterest) */}
+            {activeTab === 'catholic-social' && <CatholicSocialView />}
 
             {/* 8. Catholic Glossary */}
             {activeTab === 'catholic-glossary' && (

@@ -1941,3 +1941,30 @@ export const CatholicArticlesRssIcon: React.FC<IconProps> = ({ className = 'w-5 
   </svg>
 );
 
+/**
+ * 30. Catholic Social Icon:
+ * Depicts a sacred social media card/frame with a camera lens & radiant share nodes.
+ */
+export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Catholic Social — Instagram, Facebook and Pinterest"
+  >
+    {/* Rounded Social Frame */}
+    <rect x="3" y="3" width="18" height="18" rx="5" fill="currentColor" fillOpacity="0.1" />
+    {/* Center Lens / Sacred Circle */}
+    <circle cx="12" cy="12" r="4" strokeWidth="1.8" />
+    {/* Small Cross inside center circle */}
+    <path d="M12 10.1v3.8M10.4 11.7h3.2" strokeWidth="1.4" />
+    {/* Corner Spark / Flash Dot */}
+    <circle cx="17.2" cy="6.8" r="1.1" fill="#FDE047" stroke="none" />
+  </svg>
+);
+
+

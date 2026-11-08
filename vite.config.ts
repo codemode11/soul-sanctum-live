@@ -217,6 +217,109 @@ function vaticanNewsPlugin() {
           res.end(JSON.stringify({ error: err.message }));
         }
       });
+
+      server.middlewares.use('/api/catholic-pinterest', async (req: any, res: any) => {
+        try {
+          const urlObj = new URL(req.url || '', 'http://localhost');
+          const rawUser = (urlObj.searchParams.get('username') || 'catholicanswers').replace(/[^a-zA-Z0-9_-]/g, '');
+          const rawBoard = (urlObj.searchParams.get('board') || '').replace(/[^a-zA-Z0-9_-]/g, '');
+          const feedUrl = rawBoard
+            ? `https://www.pinterest.com/${rawUser}/${rawBoard}.rss`
+            : `https://www.pinterest.com/${rawUser}/feed.rss`;
+
+          const response = await fetch(feedUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+              'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+            },
+            signal: AbortSignal.timeout(7000)
+          });
+
+          if (!response.ok) {
+            throw new Error(`Pinterest RSS HTTP ${response.status}`);
+          }
+
+          const xml = await response.text();
+          const decodeHtml = (s: string) =>
+            s
+              .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+              .replace(/&quot;/g, '"')
+              .replace(/&apos;|&#039;|&#8217;/g, "'")
+              .replace(/&amp;/g, '&')
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/&nbsp;/g, ' ');
+
+          const itemBlocks = Array.from(xml.matchAll(/<item>([\s\S]*?)<\/item>/gi));
+          const items = itemBlocks.map((match, idx) => {
+            const block = match[1];
+            const rawTitle = (block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '';
+            const link = ((block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || '').trim();
+            const pubDate = ((block.match(/<pubDate>([\s\S]*?)<\/pubDate>/i) || [])[1] || '').trim();
+            const rawDesc = decodeHtml((block.match(/<description>([\s\S]*?)<\/description>/i) || [])[1] || '');
+            const imgMatch = rawDesc.match(/<img[^>]+src=["']([^"']+)["']/i);
+            const thumbUrl = imgMatch ? imgMatch[1].trim() : '';
+            const highResUrl = thumbUrl ? thumbUrl.replace('/236x/', '/736x/') : '';
+            const cleanText = rawDesc
+              .replace(/<[^>]+>/g, ' ')
+              .replace(/\s+/g, ' ')
+              .trim();
+            const cleanTitle = decodeHtml(rawTitle).replace(/\s+/g, ' ').trim();
+
+            return {
+              id: link || `${rawUser}-pin-${idx}`,
+              username: rawUser,
+              title: cleanTitle || cleanText.slice(0, 90) || `Sacred Pin from @${rawUser}`,
+              description: cleanText || cleanTitle,
+              link: link || `https://www.pinterest.com/${rawUser}/`,
+              pubDate,
+              imageUrl: highResUrl || thumbUrl,
+              thumbnailUrl: thumbUrl
+            };
+          }).filter(item => !!item.imageUrl);
+
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.end(JSON.stringify({ username: rawUser, items }));
+        } catch (err: any) {
+          res.statusCode = 502;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: err.message, items: [] }));
+        }
+      });
+
+      server.middlewares.use('/api/catholic-instagram', async (req: any, res: any) => {
+        try {
+          const urlObj = new URL(req.url || '', 'http://localhost');
+          const rawUser = (urlObj.searchParams.get('username') || 'vaticannews').replace(/[^a-zA-Z0-9._]/g, '');
+          const embedUrl = `https://www.instagram.com/${rawUser}/embed/`;
+
+          const response = await fetch(embedUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+              'Accept-Language': 'en-US,en;q=0.9'
+            },
+            signal: AbortSignal.timeout(7500)
+          });
+
+          if (!response.ok) {
+            throw new Error(`Instagram Embed HTTP ${response.status}`);
+          }
+
+          const html = await response.text();
+          const matches = Array.from(html.matchAll(/shortcode\\?":\\?"([A-Za-z0-9_-]{11})\\?"/g)).map(m => m[1]);
+          const shortcodes = Array.from(new Set(matches)).slice(0, 9);
+
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.end(JSON.stringify({ username: rawUser, shortcodes }));
+        } catch (err: any) {
+          res.statusCode = 502;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: err.message, shortcodes: [] }));
+        }
+      });
     }
   };
 }
