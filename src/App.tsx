@@ -704,7 +704,7 @@ export default function App() {
               />
             )}
 
-            {/* Catholic Social (Instagram, Facebook & Pinterest) */}
+            {/* Catholic Social (Instagram) */}
             {activeTab === 'catholic-social' && <CatholicSocialView />}
 
             {/* 8. Catholic Glossary */}
