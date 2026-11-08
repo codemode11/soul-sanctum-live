@@ -415,13 +415,21 @@ export const CatholicSocialView: React.FC = () => {
                     <button
                       key={ch.id}
                       onClick={() => setSelectedChannelId(ch.id)}
-                      className={`px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
+                      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
                         isSelected
                           ? 'bg-[#241307] text-amber-200 border-amber-700 shadow-xs font-semibold'
                           : 'bg-white text-stone-700 border-stone-200 hover:border-amber-600/50 hover:bg-stone-50'
                       }`}
                     >
-                      {shortName}
+                      <img
+                        src={ch.avatarUrl}
+                        alt=""
+                        className="w-3.5 h-3.5 rounded-full object-cover shrink-0"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                      <span>{shortName}</span>
                     </button>
                   );
                 })}
@@ -495,6 +503,15 @@ export const CatholicSocialView: React.FC = () => {
                           src={video.thumbnailUrl}
                           alt={video.title}
                           loading="lazy"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            const hq = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                            if (target.src !== hq && !target.src.includes('hqdefault.jpg')) {
+                              target.src = hq;
+                            } else if (video.fallbackImageUrl && target.src !== video.fallbackImageUrl) {
+                              target.src = video.fallbackImageUrl;
+                            }
+                          }}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                         {/* Dark Gradient Overlay */}
@@ -524,6 +541,13 @@ export const CatholicSocialView: React.FC = () => {
                           <img
                             src={video.channelAvatar}
                             alt={video.channelName}
+                            onError={(e) => {
+                              const target = e.currentTarget;
+                              const fallback = 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=160&q=80';
+                              if (target.src !== fallback) {
+                                target.src = fallback;
+                              }
+                            }}
                             className="w-8 h-8 rounded-full object-cover border border-amber-500/40 shrink-0 mt-0.5"
                           />
                           <div className="min-w-0 flex-1">
@@ -656,6 +680,13 @@ export const CatholicSocialView: React.FC = () => {
                   <img
                     src={activeVideo.channelAvatar}
                     alt={activeVideo.channelName}
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      const fallback = 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=160&q=80';
+                      if (target.src !== fallback) {
+                        target.src = fallback;
+                      }
+                    }}
                     className="w-10 h-10 rounded-full object-cover border border-amber-500/40 shrink-0"
                   />
                   <div className="min-w-0">
