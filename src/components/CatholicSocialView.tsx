@@ -38,7 +38,7 @@ export const CatholicSocialView: React.FC = () => {
   const [customIgInput, setCustomIgInput] = useState<string>('');
   const [igRefreshKey, setIgRefreshKey] = useState<number>(0);
 
-  // Christendom Media state
+  // Christendom.com state
   const [selectedChannelId, setSelectedChannelId] = useState<string>('all');
   const [selectedVideoCategory, setSelectedVideoCategory] = useState<string>('All');
   const [videoSearchQuery, setVideoSearchQuery] = useState<string>('');
@@ -166,7 +166,7 @@ export const CatholicSocialView: React.FC = () => {
 
             {/* Line 2: Main Title */}
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
-              Catholic Instagram &amp; Christendom Media
+              Catholic Instagram &amp; Christendom.com
             </h2>
           </div>
 
@@ -356,7 +356,7 @@ export const CatholicSocialView: React.FC = () => {
                     </span>
                   </>
                 ) : (
-                  'Christendom Media'
+                  'Christendom.com'
                 )}
               </h3>
               <p className="text-xs text-stone-300 font-serif">
@@ -619,7 +619,7 @@ export const CatholicSocialView: React.FC = () => {
             <div className="px-4 py-3 bg-[#241307] border-b border-amber-500/30 flex items-center justify-between gap-3 shrink-0">
               <div className="flex items-center gap-2 min-w-0">
                 <span className="px-2 py-0.5 rounded bg-red-600 text-white font-cinzel text-[10px] font-bold tracking-wider uppercase shrink-0">
-                  Christendom Media
+                  Christendom.com
                 </span>
                 <span className="font-serif text-xs sm:text-sm text-amber-200 truncate">
                   {activeVideo.title}
