@@ -204,60 +204,66 @@ export const CatholicSocialView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-20">
-      {/* Compact Hero Banner */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-stone-900 via-[#1E130B] to-stone-950 border border-amber-500/35 px-4 py-3.5 sm:px-5 sm:py-4 shadow-xl text-stone-100">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="space-y-0.5 min-w-0">
-            <div className="flex items-center gap-2">
-              <Share2 className="w-4 h-4 text-amber-400 shrink-0" />
-              <h2 className="font-cinzel text-lg sm:text-xl font-bold text-white tracking-wide truncate">
-                Catholic Social — Instagram, Facebook &amp; Pinterest
-              </h2>
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+      {/* Top Banner Rectangle — Exact Same Size & Proportions as Daily Mass Readings */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        <div className="px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between rounded-xl">
+          <div className="space-y-1.5">
+            {/* Line 1: Badge & Subtitle */}
+            <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
+                <Share2 className="w-3 h-3" />
+                <span>CATHOLIC SOCIAL</span>
+              </span>
+              <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap truncate">
+                Live Posts, Reels, Timelines &amp; Sacred Art Boards
+              </span>
             </div>
-            <p className="text-xs sm:text-sm text-stone-300 font-serif truncate">
-              Live social posts, Reels, ministry timelines, and sacred art boards from Catholic apostolates.
-            </p>
+
+            {/* Line 2: Main Title */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
+              Catholic Instagram, Facebook &amp; Pinterest Feeds
+            </h2>
           </div>
 
-          {/* Platform Quick Badges */}
-          <div className="flex flex-wrap items-center gap-1.5 shrink-0">
+          {/* Line 3: Platform Filter Controls Lowered at the Right Side */}
+          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
             <button
               onClick={() => setActivePlatform('all')}
-              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'all'
-                  ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-md'
-                  : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
+                  ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-sm'
+                  : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
               }`}
             >
               All 3 Platforms
             </button>
             <button
               onClick={() => setActivePlatform('instagram')}
-              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'instagram'
-                  ? 'bg-gradient-to-r from-pink-600 to-amber-500 text-white border-pink-300 shadow-md'
-                  : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
+                  ? 'bg-gradient-to-r from-pink-600 to-amber-500 text-white border-pink-300 shadow-sm'
+                  : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
               }`}
             >
               Instagram
             </button>
             <button
               onClick={() => setActivePlatform('facebook')}
-              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'facebook'
-                  ? 'bg-blue-600 text-white border-blue-300 shadow-md'
-                  : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
+                  ? 'bg-blue-600 text-white border-blue-300 shadow-sm'
+                  : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
               }`}
             >
               Facebook
             </button>
             <button
               onClick={() => setActivePlatform('pinterest')}
-              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'pinterest'
-                  ? 'bg-red-700 text-white border-red-300 shadow-md'
-                  : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
+                  ? 'bg-red-700 text-white border-red-300 shadow-sm'
+                  : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
               }`}
             >
               Pinterest
