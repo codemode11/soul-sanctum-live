@@ -22,6 +22,30 @@ export interface CatholicStaticSocialPost {
   commentsCount: number;
 }
 
+export interface CatholicFacebookArticlePost {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  handle: string;
+  pageUrl: string;
+  verified: boolean;
+  avatarUrl?: string;
+  postDate: string;
+  postCaption: string;
+  articleTitle: string;
+  articleSummary: string;
+  articleDomain: string;
+  articleUrl: string;
+  articleImageUrl: string;
+  readTime: string;
+  author: string;
+  category: string;
+  likesCount: number;
+  commentsCount: number;
+  sharesCount: number;
+  fullArticleText: string;
+}
+
 export interface CatholicFacebookSource {
   id: string;
   name: string;
@@ -31,6 +55,7 @@ export interface CatholicFacebookSource {
   category: string;
   description: string;
   staticPosts?: CatholicStaticSocialPost[];
+  articles?: CatholicFacebookArticlePost[];
 }
 
 export interface CatholicPinterestSource {
@@ -529,6 +554,193 @@ export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
         commentsCount: 480
       }
     ]
+  }
+];
+
+export const CATHOLIC_FACEBOOK_ARTICLES: CatholicFacebookArticlePost[] = [
+  {
+    id: 'fb-art-ncr-1',
+    sourceId: 'fb-ncregister',
+    sourceName: 'National Catholic Register',
+    handle: '@NCRegister',
+    pageUrl: 'https://www.facebook.com/NCRegister',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=120&q=80',
+    postDate: 'Yesterday at 3:15 PM',
+    postCaption: 'Across parishes and campus ministries, young Catholics are returning to the source and summit of the faith. Why Eucharistic adoration, sacred silence, and traditional reverence are inspiring a new generation of believers.\n\nRead our comprehensive special report below: 👇',
+    articleTitle: 'Returning to the Sources: Why Eucharistic Reverence Is Drawing Young Adults to the Church',
+    articleSummary: 'From university chapels to inner-city parishes, young adults are discovering that sacred reverence, prolonged Eucharistic silence, and traditional liturgy speak with extraordinary power to a generation exhausted by secular noise.',
+    articleDomain: 'ncregister.com',
+    articleUrl: 'https://www.ncregister.com/daily-news/returning-to-the-sources-eucharistic-reverence',
+    articleImageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
+    readTime: '6 min read',
+    author: 'Joseph Pronechen',
+    category: 'Eucharist & Liturgy',
+    likesCount: 5820,
+    commentsCount: 412,
+    sharesCount: 1640,
+    fullArticleText: `A striking spiritual phenomenon is unfolding in parishes and university Newman Centers across the country: young Catholic adults are turning in droves toward Eucharistic adoration, traditional sacred music, and deep liturgical reverence.\n\nWhere conventional wisdom once assumed that youth sought casual, trend-driven worship, pastors report that millennials and Gen Z are thirsting for transcendence. "Young people today are inundated 24/7 with digital noise, algorithmic polarization, and relentless commercial demands," notes Fr. Julian Carron. "When they walk into a sanctuary lit only by vigil lamps, with the Blessed Sacrament exposed in a gold monstrance and the silence of eternity resting over the nave, they recognize something real."\n\nSociological surveys conducted during the National Eucharistic Congress confirmed this trend. Over 62% of attendees under thirty cited Eucharistic adoration as the single most transformative element of their prayer life.\n\nAs one university senior put it: "I don't need the Church to look like a coffee shop or a concert hall. I need the Church to bring me into the presence of the living God." For pastors and diocesan leaders, the message is clear: authentic renewal will not come from diluting the sacred, but from plunging fearlessly into its depths.`
+  },
+  {
+    id: 'fb-art-barron-1',
+    sourceId: 'fb-wordonfire',
+    sourceName: 'Word on Fire (Bishop Robert Barron)',
+    handle: '@BishopRobertBarron',
+    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
+    postDate: '2 days ago',
+    postCaption: 'Friends, we live in a culture deeply confused about truth, freedom, and the purpose of human life. In this new essay, I explore why Saint Thomas Aquinas remains our greatest guide through the modern intellectual labyrinth.\n\nGrace does not destroy nature; it elevates and perfects it.',
+    articleTitle: 'Bishop Robert Barron: Why Saint Thomas Aquinas Is the Doctor of Wonder and Realism',
+    articleSummary: 'Saint Thomas Aquinas refused both hyper-rationalism and anti-intellectual fideism. His masterly synthesis of faith and reason provides the antidote to modern cynicism and restores wonder before created being.',
+    articleDomain: 'wordonfire.org',
+    articleUrl: 'https://www.wordonfire.org/articles/barron/why-thomas-aquinas-matters-today/',
+    articleImageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+    readTime: '7 min read',
+    author: 'Bishop Robert Barron',
+    category: 'Theology & Philosophy',
+    likesCount: 7940,
+    commentsCount: 630,
+    sharesCount: 2310,
+    fullArticleText: `Pope Leo XIII famously wrote that Saint Thomas Aquinas gathered together the scattered philosophical insights of antiquity and harmonized them with Divine Revelation into an invincible citadel of truth.\n\nWhat makes Aquinas so perennial is his radical intellectual honesty. In every article of the Summa Theologiae, Thomas begins not by dismissing his opponents, but by formulating their objections with greater clarity and force than they themselves could muster. Only after giving full weight to the difficulty does he offer his famous "Sed Contra" (On the contrary) and his luminous "Respondeo" (I answer that).\n\nThomas teaches us that all truth, wherever it is found, comes from the Holy Spirit. He was not afraid of pagan philosophy, secular science, or challenging counterarguments, because he possessed unshakeable confidence in Christ as the Logos—the divine Word through whom all things were made.\n\nIf we wish to evangelize our modern culture, we must recover the Thomistic habit of mind: charity toward opponents, rigorous clarity of definition, and profound humility before the mystery of God who is ipsum esse subsistens—the very act of Being itself.`
+  },
+  {
+    id: 'fb-art-ca-1',
+    sourceId: 'fb-catholicanswers',
+    sourceName: 'Catholic Answers',
+    handle: '@catholicanswers',
+    pageUrl: 'https://www.facebook.com/catholicanswers',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
+    postDate: '3 days ago',
+    postCaption: 'Did the first Christians believe the bread and wine at Mass were merely symbols? The historical evidence from the Apostolic Fathers is overwhelming and unanimous.\n\nRead our full apologetics breakdown from Catholic Answers Magazine:',
+    articleTitle: 'Did the Early Church Believe in the Real Presence? The Irrefutable Patristic Evidence',
+    articleSummary: 'From Saint Ignatius of Antioch in 110 AD to Saint Justin Martyr and Saint Irenaeus, the earliest Christian disciples taught unequivocally that the Eucharist is the real Flesh and Blood of the Incarnate Jesus.',
+    articleDomain: 'catholic.com',
+    articleUrl: 'https://www.catholic.com/magazine/online-edition/the-early-church-and-the-real-presence',
+    articleImageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
+    readTime: '8 min read',
+    author: 'Joe Heschmeyer',
+    category: 'Apologetics & History',
+    likesCount: 9120,
+    commentsCount: 840,
+    sharesCount: 3450,
+    fullArticleText: `Non-Catholic historians often claim that the doctrine of transubstantiation and the Real Presence of Christ in the Eucharist were late medieval corruptions invented by the Roman Catholic hierarchy. But what do the earliest historical documents actually reveal?\n\nConsider Saint Ignatius of Antioch, a direct disciple of the Apostle John. Writing around 110 AD on his way to be martyred by lions in Rome, Ignatius warned the Church about Gnostic heretics: "They abstain from the Eucharist and from prayer because they do not confess that the Eucharist is the flesh of our Savior Jesus Christ, flesh which suffered for our sins and which that Father in His goodness raised up again." (Letter to the Smyrnaeans, 7:1).\n\nForty years later, around 150 AD, Saint Justin Martyr explained Christian liturgy to the Roman Emperor Antoninus Pius: "Not as common bread and common drink do we receive these; but in like manner as Jesus Christ our Savior, having been made flesh by the Word of God, had both flesh and blood for our salvation, so likewise have we been taught that the food which is blessed by the prayer of His word is the flesh and blood of that Jesus who was made flesh." (First Apology, 66).\n\nThere is not a single Church Father who interpreted John 6 as a mere metaphor. From the Roman catacombs to the desert fathers, the witness of apostolic Christianity is unanimous: Jesus Christ is truly, really, and substantially present on our altars.`
+  },
+  {
+    id: 'fb-art-vatican-1',
+    sourceId: 'fb-vaticannews',
+    sourceName: 'Vatican News (English)',
+    handle: '@vaticannews',
+    pageUrl: 'https://www.facebook.com/vaticannews',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
+    postDate: 'Nov 6 at 11:20 AM',
+    postCaption: 'Pope at the Solemn Mass: "The Eucharist is not a badge of honor for the righteous, but the bread that nourishes weary pilgrims on the road to eternal life."\n\nFull papal homily reflection and video dispatch from the Dicastery for Communication:',
+    articleTitle: 'Pope at Corpus Christi: The Eucharist Is Bread for Pilgrims, Not a Reward for the Perfect',
+    articleSummary: 'Celebrating the Solemnity of the Most Holy Body and Blood of Christ, the Holy Father urged believers never to reduce the Mass to a routine ritual, but to approach Christ with humility and open hearts.',
+    articleDomain: 'vaticannews.va',
+    articleUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-homily-corpus-christi-bread-pilgrims.html',
+    articleImageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
+    readTime: '5 min read',
+    author: 'Vatican News Editorial',
+    category: 'Holy See & Magisterium',
+    likesCount: 14200,
+    commentsCount: 920,
+    sharesCount: 4180,
+    fullArticleText: `In his homily delivered from the steps of the Archbasilica of St. John Lateran, the Holy Father reflected on the fragility of human life and the infinite condescension of Christ in the Blessed Sacrament.\n\n"When Jesus took bread into His hands on the night before He died," the Pope noted, "He did not wait for the Apostles to understand His mystery. He knew Peter would deny Him, Judas would betray Him, and the others would scatter in fear. Yet He broke Himself for them."\n\nThe Eucharist, the Holy Father emphasized, is the medicine of immortality for souls wounded by sin and grief. When we receive Holy Communion, we allow Christ to heal our selfishness and unite us to the sufferings of the poor.\n\n"Let us kneel before the Lord of glory with adoration," the Pope concluded, "and let us rise up from our knees to run with haste toward our brothers and sisters who need love, bread, and hope."`
+  },
+  {
+    id: 'fb-art-ewtn-1',
+    sourceId: 'fb-ewtn',
+    sourceName: 'EWTN Global Catholic Network',
+    handle: '@ewtnonline',
+    pageUrl: 'https://www.facebook.com/ewtnonline',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
+    postDate: '4 days ago',
+    postCaption: 'Mother Angelica: "Faith is having one foot on the ground, one foot in the air, and a queasy feeling in your stomach!"\n\nHow Mother Angelica learned radical abandonment to God’s holy will when all worldly resources ran dry:',
+    articleTitle: 'Mother Angelica’s Five Rules for Trusting God When Everything Seems to Fail',
+    articleSummary: 'With only two hundred dollars in her bank account and zero broadcast experience, a cloistered Poor Clare nun built the world’s largest religious media network. Her secret: radical trust in divine Providence.',
+    articleDomain: 'ewtn.com',
+    articleUrl: 'https://www.ewtn.com/catholicism/library/mother-angelica-radical-trust-in-providence',
+    articleImageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
+    readTime: '5 min read',
+    author: 'Raymond Arroyo',
+    category: 'Spiritual Life & Wisdom',
+    likesCount: 11500,
+    commentsCount: 780,
+    sharesCount: 3920,
+    fullArticleText: `When Rita Rizzo entered the Poor Clares of Perpetual Adoration in Cleveland, Ohio, in 1944, she could never have anticipated that decades later she would stand before satellite dishes in Alabama broadcasting Christ’s Gospel to hundreds of millions of people.\n\nHer spiritual philosophy was disarmingly simple, rooted entirely in the Little Way of Saint Thérèse of Lisieux and the radical poverty of Saint Francis. "Unless you are willing to look ridiculous for Jesus," she famously told her sisters, "God cannot do the miraculous through you."\n\nRule 1: Pray as if everything depends on God; work as if everything depends on you.\nRule 2: Never let financial scarcity dictate what God can accomplish through obedience.\nRule 3: Keep your eyes fixed on the tabernacle, not on television ratings or worldly approval.\nRule 4: Laugh at yourself often—pride is the great enemy of grace.\nRule 5: When you suffer, offer it up in union with the Crucified Lord for the salvation of souls.\n\nToday, Mother Angelica’s legacy continues to shine across every continent as a living monument to what one woman wholly surrendered to God can achieve.`
+  },
+  {
+    id: 'fb-art-aleteia-1',
+    sourceId: 'fb-aleteia',
+    sourceName: 'Aleteia (English)',
+    handle: '@aleteia_en',
+    pageUrl: 'https://www.facebook.com/aleteia.en',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
+    postDate: 'Nov 5 at 8:45 AM',
+    postCaption: 'Feeling mentally drained, anxious, or overwhelmed by your daily routine? The Saints discovered that five minutes of quiet adoration before the Blessed Sacrament can reorder the entire interior life.\n\nRead how silent Eucharistic presence heals the soul:',
+    articleTitle: 'How Five Minutes of Silent Adoration Before the Tabernacle Transforms the Weary Soul',
+    articleSummary: 'You do not need to memorize complicated prayers or read dense spiritual treatises. Simply sitting in the quiet gaze of Jesus in the tabernacle restores emotional balance, peace of mind, and supernatural hope.',
+    articleDomain: 'aleteia.org',
+    articleUrl: 'https://aleteia.org/2026/11/05/five-minutes-of-silent-adoration-transforms-soul/',
+    articleImageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
+    readTime: '4 min read',
+    author: 'Cerith Gardiner',
+    category: 'Prayer & Spirituality',
+    likesCount: 8640,
+    commentsCount: 520,
+    sharesCount: 2890,
+    fullArticleText: `A parish priest in Ars, France, noticed a local farmer sitting alone in the village church for hours every afternoon. The farmer had no prayer book, no beads in hand, and his lips did not move.\n\nCurious, Saint John Vianney approached him and asked: "My friend, what do you do here for so long?" The peasant looked up with serenity and replied: "Nothing, Monsieur le Curé. I look at Him, and He looks at me."\n\nThat peasant had unlocked the sublime secret of contemplation. Modern psychology affirms that constant sensory overstimulation creates chronic nervous exhaustion. But when a soul steps into the sacred stillness of a Catholic church, breathing in the quiet presence of Jesus Christ residing in the golden tabernacle, the soul undergoes spiritual decompression.\n\nSaint Alphonsus Liguori wrote: "Know that of all devotions, that of adoring Jesus in the Blessed Sacrament is the greatest after the sacraments, the one dearest to God and the one most helpful to us." Even five minutes spent on the way to work or on your lunch break will anchor your spirit in divine eternity.`
+  },
+  {
+    id: 'fb-art-stpaul-1',
+    sourceId: 'fb-stpaulcenter',
+    sourceName: 'St. Paul Center',
+    handle: '@stpaulcenter',
+    pageUrl: 'https://www.facebook.com/stpaulcenter',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
+    postDate: '5 days ago',
+    postCaption: 'Why did the Book of Revelation take center stage in the early Church’s liturgy? Dr. Scott Hahn unpacks the astonishing truth that the Holy Sacrifice of the Mass is heaven touching earth.\n\nDive into our biblical theology study below:',
+    articleTitle: 'Dr. Scott Hahn: The Lamb’s Supper — How the Apocalypse Unlocks the Holy Mass',
+    articleSummary: 'When we read the Book of Revelation through Catholic eyes, we discover not an incomprehensible code about the end of the world, but the heavenly liturgy that we enter every time we step into the Mass.',
+    articleDomain: 'stpaulcenter.com',
+    articleUrl: 'https://stpaulcenter.com/studies-and-resources/the-lambs-supper-the-mass-as-heaven-on-earth/',
+    articleImageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
+    readTime: '7 min read',
+    author: 'Dr. Scott Hahn',
+    category: 'Biblical Theology',
+    likesCount: 10400,
+    commentsCount: 670,
+    sharesCount: 3510,
+    fullArticleText: `When I was a Protestant pastor and biblical scholar, the Book of Revelation was an enigma of dragons, beasts, and apocalyptic trumpets. But on the morning I quietly slipped into the back of a Catholic chapel for daily Mass, scales fell from my eyes.\n\nSuddenly, the entire Apocalypse made coherent sense. In the Mass, I heard the words of Revelation: "Holy, holy, holy is the Lord God Almighty." I saw the altar, the golden chalice, the incense rising before the throne, the seven candles, the white-robed presbyters, and the chanting of the Lamb of God who takes away the sin of the world.\n\nSaint John was not writing a science fiction novel; he was giving the early persecuted Church a vision of the heavenly Eucharistic banquet. In the Mass, time collapses. Heaven opens. We stand at the foot of Mount Zion alongside the angels, archangels, and the triumphant company of the saints.\n\nWhen the priest raises the Host and proclaims, "Behold the Lamb of God," we are participating in the marriage supper of the Lamb. To miss Mass is to turn down an invitation to the court of the King of Kings.`
+  },
+  {
+    id: 'fb-art-ascension-1',
+    sourceId: 'fb-ascension',
+    sourceName: 'Ascension',
+    handle: '@AscensionPress',
+    pageUrl: 'https://www.facebook.com/AscensionPress',
+    verified: true,
+    avatarUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=120&q=80',
+    postDate: '6 days ago',
+    postCaption: 'Fr. Mike Schmitz: "God doesn’t measure prayer by how good you feel during it. He measures prayer by your faithfulness when you’d rather do anything else."\n\nHow to persevere in prayer when dryness hits your soul:',
+    articleTitle: 'Fr. Mike Schmitz: What to Do When You Feel Absolutely Nothing in Prayer',
+    articleSummary: 'Feelings are the weather of the soul; faith is the rock upon which we stand. When prayers feel empty and God seems silent, that is often the precise moment your love is being purified of self-seeking.',
+    articleDomain: 'media.ascensionpress.com',
+    articleUrl: 'https://media.ascensionpress.com/2026/11/02/fr-mike-schmitz-dryness-in-prayer/',
+    articleImageUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80',
+    readTime: '5 min read',
+    author: 'Fr. Mike Schmitz',
+    category: 'Faith & Pastoral',
+    likesCount: 13200,
+    commentsCount: 890,
+    sharesCount: 4620,
+    fullArticleText: `Almost every Catholic has experienced that heartbreaking moment: you sit down in your prayer corner or kneel before the tabernacle, and... nothing. No warm emotions, no profound insights, no spiritual goosebumps. Just boredom, distraction, and the persistent clock ticking on the wall.\n\nIt is tempting to think: "I must be doing this wrong," or worse, "God has abandoned me."\n\nFr. Mike Schmitz offers a profound corrective: "If you only pray when you feel like praying, you aren't loving God—you're loving the consolation God gives you."\n\nSaint John of the Cross called this the dark night of the senses. When God withdraws emotional candy from our spiritual diet, He is treating us as adults. He is asking: "Will you love Me for who I am, even when I give you no emotional payback?"\n\nWhen you show up to prayer tired and dry, and you stay for the full fifteen minutes purely out of love for Jesus, that prayer is often infinitely more pleasing to God than tears of joy. Fidelity in the desert is the crucible of sanctity.`
   }
 ];
 
