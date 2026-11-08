@@ -1860,6 +1860,158 @@ export const CATHOLIC_PODCASTS_DATABASE: CatholicPodcastShow[] = [
         tags: ['Vatican Radio', 'Mission Sunday', 'Evangelization', 'Catechists']
       }
     ]
+  },
+  {
+    id: 'saint-faustinas-diary-in-a-year',
+    title: 'Saint Faustina’s Diary in a Year',
+    host: 'Fr. Joseph Roesch, MIC',
+    organization: 'The Marian Fathers / Marian Press',
+    category: 'spiritual-prayer',
+    categoryLabel: 'Spiritual Life and Prayer',
+    coverUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
+    description: 'Walk through the entire spiritual classic Diary of Saint Maria Faustina Kowalska: Divine Mercy in My Soul in 365 daily episodes with Fr. Joseph Roesch, MIC, Superior General of the Marian Fathers of the Immaculate Conception.',
+    frequency: 'Daily',
+    rating: 4.9,
+    episodesCount: 365,
+    badgeTag: 'Divine Mercy Classic',
+    externalLinks: {
+      website: 'https://www.thedivinemercy.org/podcast',
+      apple: 'https://podcasts.apple.com/us/podcast/saint-faustinas-diary-in-a-year/id1559732547',
+      spotify: 'https://open.spotify.com/show/3cdV9I6R0T4v2pD3G2Q0Z5',
+      youtube: 'https://www.youtube.com/@DivineMercyOfficial'
+    },
+    episodes: [
+      {
+        id: 'sfdiy-day-311',
+        podcastId: 'saint-faustinas-diary-in-a-year',
+        podcastTitle: 'Saint Faustina’s Diary in a Year',
+        podcastHost: 'Fr. Joseph Roesch, MIC',
+        podcastCoverUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
+        category: 'spiritual-prayer',
+        title: 'Day 311: Diary Entries 1748–1751 — The Ocean of Divine Mercy and Trust in Suffering',
+        episodeNumber: 311,
+        releaseDate: 'November 7, 2026',
+        durationSeconds: 494,
+        durationFormatted: '8 min',
+        audioUrl: 'https://media.transistor.fm/6d7028e5/eacdf287.mp3',
+        summary: 'Fr. Joseph Roesch, MIC reads and reflects on Diary entries 1748–1751, where St. Faustina contemplates how God’s mercy shields the trusting soul in every interior trial.',
+        description: 'In these luminous closing pages of her Sixth Notebook, St. Faustina records how total abandonment to the Divine Will turns every cross into a fountain of grace for sinners.',
+        scriptureReferences: ['Psalm 103:8-12', 'Lamentations 3:22-23'],
+        catechismReferences: ['CCC 1846-1848', 'CCC 2709'],
+        keyQuote: '"O my Jesus, You know that from my earliest years I have desired to become a great saint; that is to say, I have desired to love You with a love so great that there would be no soul who has hitherto loved You so." — Diary, 1749',
+        keyTakeaways: [
+          'True sanctity consists in uniting our will completely with the merciful Will of God.',
+          'Even when physical weakness prevents exterior activity, hidden prayer and suffering possess immense apostolic power.',
+          'Jesus delights in souls who approach His Heart with childlike confidence.'
+        ],
+        reflectionPrompt: 'How can you offer a small inconvenience or hidden trial today in union with Jesus for the conversion of souls?',
+        tags: ['Divine Mercy', 'St. Faustina', 'Fr. Joseph Roesch', 'Marian Fathers', 'Trust']
+      },
+      {
+        id: 'sfdiy-day-147',
+        podcastId: 'saint-faustinas-diary-in-a-year',
+        podcastTitle: 'Saint Faustina’s Diary in a Year',
+        podcastHost: 'Fr. Joseph Roesch, MIC',
+        podcastCoverUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
+        category: 'spiritual-prayer',
+        title: 'Day 147: Diary Entries 701–708 — The Feast of Mercy and Refuge for All Souls',
+        episodeNumber: 147,
+        releaseDate: 'November 6, 2026',
+        durationSeconds: 513,
+        durationFormatted: '9 min',
+        audioUrl: 'https://media.transistor.fm/a0582237/bad895d6.mp3',
+        summary: 'Fr. Joseph Roesch, MIC explores Diary entries 701–708 following Our Lord’s great promise for the Feast of Divine Mercy (Diary 699) and St. Faustina’s deep Eucharistic union.',
+        description: 'Jesus reveals the unfathomable depths of His tender mercy poured out through the Sacraments of Confession and the Most Holy Eucharist.',
+        scriptureReferences: ['John 20:19-23', 'Hebrews 4:16'],
+        catechismReferences: ['CCC 1441-1442', 'CCC 1391'],
+        keyQuote: '"The soul that will go to Confession and receive Holy Communion shall obtain complete forgiveness of sins and punishment." — Diary, 699',
+        keyTakeaways: [
+          'The Feast of Divine Mercy is a supreme refuge and shelter for all souls, especially poor sinners.',
+          'The Sacrament of Reconciliation and the Eucharist are the living floodgates through which Divine Mercy flows.',
+          'No sin is too great to be consumed in the flame of Christ’s merciful love when a soul repents.'
+        ],
+        reflectionPrompt: 'When will you next make a devout Confession to immerse your soul in the ocean of Christ’s mercy?',
+        tags: ['Feast of Mercy', 'Confession', 'Eucharist', 'Diary of St. Faustina', 'Marian Press']
+      },
+      {
+        id: 'sfdiy-day-106',
+        podcastId: 'saint-faustinas-diary-in-a-year',
+        podcastTitle: 'Saint Faustina’s Diary in a Year',
+        podcastHost: 'Fr. Joseph Roesch, MIC',
+        podcastCoverUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
+        category: 'spiritual-prayer',
+        title: 'Day 106: Diary Entries 474–478 — The Revelation of the Chaplet of Divine Mercy',
+        episodeNumber: 106,
+        releaseDate: 'November 5, 2026',
+        durationSeconds: 521,
+        durationFormatted: '9 min',
+        audioUrl: 'https://media.transistor.fm/9b9c5b84/4805f774.mp3',
+        summary: 'Fr. Joseph Roesch, MIC reads the historic Vilno entries (474–478) in which Our Lord dictates the Chaplet of Divine Mercy to St. Faustina to appease divine wrath and save the dying.',
+        description: 'In September 1935 at Vilnius, St. Faustina sees an angel sent to chastise the earth and hears the interior words with which she begs God for mercy upon the world.',
+        scriptureReferences: ['1 Timothy 2:1-6', 'Hebrews 9:14'],
+        catechismReferences: ['CCC 618', 'CCC 2634-2636'],
+        keyQuote: '"Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world." — Diary, 476',
+        keyTakeaways: [
+          'The Chaplet of Divine Mercy is a liturgical-priestly prayer in which the baptized offer the Eternal Father the very Sacrifice of His Beloved Son.',
+          'Jesus promises special graces of conversion and peaceful death to those who pray the Chaplet and when it is prayed beside the dying.',
+          'Through the sorrowful Passion of Christ, we intercede not only for ourselves but for the whole world.'
+        ],
+        reflectionPrompt: 'Pray the Chaplet of Divine Mercy today at 3:00 PM for someone in need of conversion or for the dying.',
+        tags: ['Chaplet of Divine Mercy', 'Vilnius', 'Intercession', 'Passion of Christ', 'Fr. Joseph Roesch']
+      },
+      {
+        id: 'sfdiy-day-10',
+        podcastId: 'saint-faustinas-diary-in-a-year',
+        podcastTitle: 'Saint Faustina’s Diary in a Year',
+        podcastHost: 'Fr. Joseph Roesch, MIC',
+        podcastCoverUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
+        category: 'spiritual-prayer',
+        title: 'Day 10: Diary Entries 47–53 — Paint an Image: Jesus, I Trust in You',
+        episodeNumber: 10,
+        releaseDate: 'November 4, 2026',
+        durationSeconds: 478,
+        durationFormatted: '8 min',
+        audioUrl: 'https://media.transistor.fm/e7da2451/bc503f73.mp3',
+        summary: 'Fr. Joseph Roesch, MIC unpacks the foundational February 22, 1931 vision in Płock (Diary 47–53), where Jesus appears clothed in a white garment with red and pale rays streaming from His Heart.',
+        description: 'Our Lord commands St. Faustina to have the Image of Divine Mercy painted with the signature "Jesus, I trust in You" and promises victory over spiritual enemies and grace at the hour of death to those who venerate it.',
+        scriptureReferences: ['John 19:34', 'Psalm 56:3'],
+        catechismReferences: ['CCC 766', 'CCC 1159-1162'],
+        keyQuote: '"Paint an image according to the pattern you see, with the signature: Jesus, I trust in You. I desire that this image be venerated, first in your chapel, and throughout the world." — Diary, 47',
+        keyTakeaways: [
+          'The pale ray stands for the Water which makes souls righteous (Baptism and Confession); the red ray stands for the Blood which is the life of souls (the Eucharist).',
+          'Venerating the Image of Divine Mercy with living faith and deeds of mercy draws the soul into the shelter of Christ’s pierced Heart.',
+          'The signature "Jesus, I trust in You" is the essential response of the human heart to God’s merciful love.'
+        ],
+        reflectionPrompt: 'Place the ejaculatory prayer "Jesus, I trust in You" on your lips whenever anxiety or fear arises today.',
+        tags: ['Divine Mercy Image', 'Jesus I Trust in You', 'Plock Vision', 'Blood and Water', 'St. Faustina']
+      },
+      {
+        id: 'sfdiy-day-1',
+        podcastId: 'saint-faustinas-diary-in-a-year',
+        podcastTitle: 'Saint Faustina’s Diary in a Year',
+        podcastHost: 'Fr. Joseph Roesch, MIC',
+        podcastCoverUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
+        category: 'spiritual-prayer',
+        title: 'Day 1: Diary Entries 1–6 — The Call of Mercy and Beginning the Journey',
+        episodeNumber: 1,
+        releaseDate: 'November 3, 2026',
+        durationSeconds: 314,
+        durationFormatted: '5 min',
+        audioUrl: 'https://media.transistor.fm/7056bc90/ecf79d75.mp3',
+        summary: 'Fr. Joseph Roesch, MIC begins the 365-day journey through St. Faustina’s Diary with Entries 1–6, introducing Helen Kowalska’s childhood call and the suffering Christ’s summons in Łódź.',
+        description: 'Discover how God chose a humble, uneducated Polish religious sister to become the Secretary and Apostle of His Divine Mercy for the entire modern world.',
+        scriptureReferences: ['1 Corinthians 1:27-29', 'Ephesians 2:4-5'],
+        catechismReferences: ['CCC 430-431', 'CCC 2013-2014'],
+        keyQuote: '"Mankind will not have peace until it turns with trust to My mercy." — Diary, 300',
+        keyTakeaways: [
+          'God chooses the humble and weak to manifest the infinite power of His Divine Mercy.',
+          'St. Faustina wrote her Diary under obedience to Jesus and to her spiritual director, Blessed Fr. Michał Sopoćko.',
+          'Walking daily with St. Faustina trains the soul to recognize God’s merciful presence in every moment.'
+        ],
+        reflectionPrompt: 'How has God’s merciful providence guided your own life up to this present day?',
+        tags: ['Day 1', 'Diary of St. Faustina', 'Secretary of Mercy', 'Marian Fathers', 'Fr. Joseph Roesch']
+      }
+    ]
   }
 ];
 

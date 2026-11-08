@@ -52,6 +52,7 @@ const PODCAST_ORIGINAL_COVERS: Record<string, string> = {
   'counsel-of-trent': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/bd/3a/73/bd3a73cd-8e36-c9f8-3fdc-867b9b16c877/mza_109888266879698107.jpg/600x600bb.jpg',
   'thomistic-institute': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts126/v4/ab/78/90/ab78906c-c98e-b3ab-48eb-b4e536754dfa/mza_12049456275401586219.jpg/600x600bb.jpg',
   'vatican-radio-podcast': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/53/59/ae/5359aec5-b049-5dce-e3df-be0985fc9f03/mza_14565055678223969088.jpeg/600x600bb.jpg',
+  'saint-faustinas-diary-in-a-year': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
 };
 
 const ORDERED_PODCAST_IDS: string[] = [
@@ -60,14 +61,15 @@ const ORDERED_PODCAST_IDS: string[] = [
   'bible-in-a-year',
   'word-on-fire-show',
   'catechism-in-a-year',
-  'jeff-cavins-show',
+  'saint-faustinas-diary-in-a-year',
   // Second row
+  'jeff-cavins-show',
   'counsel-of-trent',
   'thomistic-institute',
   'catholic-answers-live',
   'vatican-radio-podcast',
-  'fr-mike-schmitz-podcast',
   // Third row
+  'fr-mike-schmitz-podcast',
   'jimmy-akins-mysterious-world',
   'abiding-together',
   'pints-with-aquinas',
@@ -209,7 +211,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
           </h2>
 
           <p className="text-sm sm:text-base text-stone-300 font-serif leading-relaxed">
-            Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Bishop Robert Barron, Dr. Scott Hahn, Jimmy Akin, Jeff Cavins, Matt Fradd, and the Holy See.
+            Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Fr. Joseph Roesch MIC, Bishop Robert Barron, Dr. Scott Hahn, Jimmy Akin, Jeff Cavins, Matt Fradd, and the Holy See.
           </p>
 
 
