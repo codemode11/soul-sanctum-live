@@ -1954,7 +1954,7 @@ export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 
     strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={`${className} overflow-visible`}
+    className={`${className} sanctum-social-icon overflow-visible`}
     aria-label="Catholic Social"
   >
     {/* Rounded Social Frame */}
@@ -1962,6 +1962,9 @@ export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 
 
     {/* Center Sacred Lens / Camera Aperture Circle */}
     <circle cx="12" cy="12" r="3.6" strokeWidth="1.8" fill="currentColor" fillOpacity="0.1" />
+
+    {/* Interactive Center Hover Trigger */}
+    <circle cx="12" cy="12" r="6" fill="transparent" stroke="none" className="sanctum-social-center-trigger pointer-events-auto cursor-pointer" />
 
     {/* Animated Cross: The little cross in the middle slowly and gradually extends to the borders of the icon */}
     <g className="sanctum-social-extending-cross">
