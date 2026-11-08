@@ -222,6 +222,7 @@ export const FioPlayerModal: React.FC<FioPlayerModalProps> = ({ isOpen, onClose 
                 src={currentTrack.coverUrl} 
                 alt={currentTrack.title}
                 className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover border border-amber-500/40 shadow-md shrink-0"
+                referrerPolicy="no-referrer"
               />
               <div className="min-w-0 space-y-0.5">
                 <div className="flex items-center gap-2">
@@ -379,6 +380,7 @@ export const FioPlayerModal: React.FC<FioPlayerModalProps> = ({ isOpen, onClose 
                       alt={track.title} 
                       className="w-full h-full object-cover"
                       loading="lazy"
+                      referrerPolicy="no-referrer"
                     />
                     <div className={`absolute inset-0 flex items-center justify-center transition-all ${
                       isThisTrackPlaying ? 'bg-amber-500/90 text-stone-950' : 'bg-black/40 text-white hover:bg-amber-500/80 hover:text-stone-950'
