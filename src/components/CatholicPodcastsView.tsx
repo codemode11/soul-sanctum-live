@@ -53,24 +53,32 @@ const PODCAST_ORIGINAL_COVERS: Record<string, string> = {
   'thomistic-institute': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts126/v4/ab/78/90/ab78906c-c98e-b3ab-48eb-b4e536754dfa/mza_12049456275401586219.jpg/600x600bb.jpg',
   'vatican-radio-podcast': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/53/59/ae/5359aec5-b049-5dce-e3df-be0985fc9f03/mza_14565055678223969088.jpeg/600x600bb.jpg',
   'saint-faustinas-diary-in-a-year': 'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/3b/4b/af/3b4baf2e-2095-59f0-a55c-e2f17492f5ba/mza_1190494370604153024.jpg/600x600bb.jpg',
+  // Fio Originals & Audiobooks
+  'fio-further-up': 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&h=600&fit=crop&q=80',
+  'fio-anti-depressing': 'https://images.unsplash.com/photo-1507692049790-de58290a4334?w=600&h=600&fit=crop&q=80',
+  'fio-sacred-chant-audiobooks': 'https://images.unsplash.com/photo-1548625361-16a7f9273c59?w=600&h=600&fit=crop&q=80',
 };
 
 const ORDERED_PODCAST_IDS: string[] = [
-  // First row
+  // First row: Flagship Scripture & Catechism
   'road-to-emmaus-scott-hahn',
   'bible-in-a-year',
   'saint-faustinas-diary-in-a-year',
   'catechism-in-a-year',
   'jeff-cavins-show',
-  // Second row
-  'counsel-of-trent',
+  // Second row: Fio Originals & Sacred Audio
+  'fio-further-up',
+  'fio-anti-depressing',
+  'fio-sacred-chant-audiobooks',
   'word-on-fire-show',
+  'counsel-of-trent',
+  // Third row: Deep Apologetics & Scholars
   'thomistic-institute',
   'catholic-answers-live',
   'vatican-radio-podcast',
-  // Third row
   'fr-mike-schmitz-podcast',
   'jimmy-akins-mysterious-world',
+  // Fourth row: Culture & Spiritual Life
   'abiding-together',
   'pints-with-aquinas',
   'catholic-talk-show',
@@ -166,6 +174,11 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
     // Category or Saved filter
     if (selectedCategory === 'saved') {
       if (!savedEpisodeIds.includes(ep.id)) return false;
+    } else if (selectedCategory === 'fio-originals') {
+      const isFio = ep.category === 'fio-originals' || 
+                    ep.podcastId.startsWith('fio-') || 
+                    Boolean(ep.externalLinks?.fio);
+      if (!isFio) return false;
     } else if (selectedCategory !== 'all') {
       if (ep.category !== selectedCategory) return false;
     }
@@ -186,6 +199,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
 
   const categories: { id: CatholicPodcastCategory | 'saved'; label: string }[] = [
     { id: 'all', label: 'All Podcasts' },
+    { id: 'fio-originals', label: 'Fio Originals & Catalog' },
     { id: 'scripture-catechism', label: 'Scripture and Catechism' },
     { id: 'theology-apologetics', label: 'Theology and Apologetics' },
     { id: 'spiritual-prayer', label: 'Spiritual Life and Prayer' },
@@ -266,31 +280,85 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
           </div>
         )}
 
-        {/* Fio Catholic Audio and Music Integration Card */}
-        <div className="relative z-10 mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-950/60 via-stone-900/80 to-amber-950/60 border border-amber-500/40 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-400/30 shrink-0">
-              <Headphones className="w-4 h-4 text-amber-300" />
-            </span>
-            <div>
-              <span className="font-cinzel text-xs font-bold text-amber-200 block">
-                Fio Catholic Podcasts and Music Platform
+        {/* Fio Catholic Audio and Streaming Platform Hub */}
+        <div className="relative z-10 mt-5 p-5 rounded-xl bg-gradient-to-r from-amber-950/70 via-stone-900/90 to-[#22130c] border border-amber-500/50 backdrop-blur-md space-y-3.5 shadow-xl">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5">
+              <span className="p-2.5 rounded-xl bg-amber-500/25 text-amber-300 border border-amber-400/40 shrink-0 mt-0.5 shadow-inner">
+                <Headphones className="w-5 h-5 text-amber-300" />
               </span>
-              <p className="text-stone-300 font-serif text-[11px] leading-relaxed">
-                Explore 100,000+ hours of Catholic podcasts, sacred music, Gregorian chant, and audiobooks on Fio.
-              </p>
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-cinzel text-sm sm:text-base font-bold text-amber-200">
+                    Fio.fm • The Catholic Audio & Music Platform
+                  </span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-cinzel font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 uppercase tracking-wider">
+                    Official Catholic Alternative to Spotify
+                  </span>
+                </div>
+                <p className="text-stone-300 font-serif text-xs leading-relaxed mt-1 max-w-2xl">
+                  Stream over 1,000 vetted Catholic creators, 60+ Catholic audio categories, monastic Gregorian chant, and classic audiobooks (from TAN Books, Sophia Institute & Pauline Books) with fair creator royalties.
+                </p>
+              </div>
+            </div>
+
+            {/* Fio Quick Launch Actions */}
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                onClick={() => {
+                  setSelectedCategory('fio-originals');
+                  setSelectedShowId(null);
+                }}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border font-cinzel font-bold text-xs transition-all cursor-pointer ${
+                  selectedCategory === 'fio-originals'
+                    ? 'bg-amber-500 text-stone-950 border-amber-400 shadow-md'
+                    : 'bg-stone-800/90 hover:bg-stone-800 border-amber-500/40 text-amber-200 hover:text-white'
+                }`}
+                title="Filter by Fio Originals and Audiobooks"
+              >
+                <Filter className="w-3.5 h-3.5" />
+                <span>Fio Originals</span>
+              </button>
+
+              <a
+                href="https://play.fio.fm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-cinzel font-bold text-xs transition-all shadow-md hover:scale-102 cursor-pointer"
+                title="Launch Fio Web Player"
+              >
+                <span>Fio Web Player</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
+              <a
+                href="https://fio.fm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-stone-600 text-stone-300 hover:text-white font-cinzel text-xs transition-all cursor-pointer"
+                title="Learn more about Fio.fm"
+              >
+                <span>Fio.fm</span>
+                <ExternalLink className="w-3 h-3 text-stone-400" />
+              </a>
             </div>
           </div>
 
-          <a
-            href="https://fio.fm"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 hover:text-white font-cinzel font-bold text-xs transition-all shrink-0 cursor-pointer"
-          >
-            <span>Explore Fio.fm</span>
-            <ExternalLink className="w-3.5 h-3.5 text-amber-300" />
-          </a>
+          {/* Value Badges */}
+          <div className="pt-2 border-t border-amber-500/20 flex flex-wrap items-center gap-2 text-[11px] text-amber-200/90 font-serif">
+            <span className="px-2 py-0.5 rounded-full bg-black/40 border border-amber-500/30 flex items-center gap-1">
+              <Check className="w-3 h-3 text-amber-400" /> 1,000+ Faithful Catholic Creators
+            </span>
+            <span className="px-2 py-0.5 rounded-full bg-black/40 border border-amber-500/30 flex items-center gap-1">
+              <Check className="w-3 h-3 text-amber-400" /> 60+ Catholic Categories
+            </span>
+            <span className="px-2 py-0.5 rounded-full bg-black/40 border border-amber-500/30 flex items-center gap-1">
+              <Check className="w-3 h-3 text-amber-400" /> Fair Streaming Royalties
+            </span>
+            <span className="px-2 py-0.5 rounded-full bg-black/40 border border-amber-500/30 flex items-center gap-1">
+              <Check className="w-3 h-3 text-amber-400" /> Monastic Chant & Audiobooks
+            </span>
+          </div>
         </div>
       </div>
 
@@ -339,6 +407,11 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
                       <Star className="w-2.5 h-2.5 fill-current" />
                       <span>{show.rating}</span>
                     </div>
+                    {(show.category === 'fio-originals' || show.id.startsWith('fio-')) && (
+                      <div className="absolute bottom-1.5 left-1.5 px-1.5 py-0.5 rounded bg-amber-500/95 text-stone-950 text-[9px] font-bold font-cinzel tracking-wider shadow-xs">
+                        Fio Original
+                      </div>
+                    )}
                   </div>
                   <div>
                     <h4 className="font-cinzel text-xs font-bold text-stone-900 group-hover:text-amber-800 transition-colors line-clamp-1">
@@ -570,13 +643,27 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
                     ))}
                   </div>
 
-                  <button
-                    onClick={() => onOpenDetailsModal(episode)}
-                    className="inline-flex items-center gap-1 text-amber-800 hover:text-amber-950 font-cinzel text-xs font-semibold hover:underline cursor-pointer"
-                  >
-                    <span>View Study Notes and Transcripts</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={episode.externalLinks?.fio || episode.externalLinks?.playFio || 'https://play.fio.fm'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-amber-50 hover:bg-amber-100 border border-amber-300/80 text-amber-900 font-cinzel text-[11px] font-bold transition-all shadow-2xs"
+                      title="Stream on Fio.fm Catholic Web Player"
+                    >
+                      <Headphones className="w-3 h-3 text-amber-700" />
+                      <span>Stream on Fio</span>
+                      <ExternalLink className="w-2.5 h-2.5 text-amber-700" />
+                    </a>
+
+                    <button
+                      onClick={() => onOpenDetailsModal(episode)}
+                      className="inline-flex items-center gap-1 text-amber-800 hover:text-amber-950 font-cinzel text-xs font-semibold hover:underline cursor-pointer"
+                    >
+                      <span>Study Notes</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
               </div>
