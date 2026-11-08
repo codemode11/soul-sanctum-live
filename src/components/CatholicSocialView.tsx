@@ -394,17 +394,17 @@ export const CatholicSocialView: React.FC = () => {
           </div>
 
           <div className="p-3 sm:p-4 space-y-3.5">
-            {/* Account Selector Pills + Custom Account Input (More compact container, but not very compact) */}
-            <div className="rounded-xl bg-[#241307]/[0.03] border border-amber-900/10 p-2 sm:p-2.5 flex flex-col md:flex-row md:items-center justify-between gap-2 shadow-xs">
-              <div className="flex flex-wrap items-center gap-1.5">
+            {/* Account Selector Bar (Compact arranged buttons) */}
+            <div className="rounded-lg bg-[#241307]/[0.025] border border-amber-900/10 p-1.5 sm:p-2 flex flex-col xl:flex-row xl:items-center justify-between gap-1.5 shadow-xs">
+              <div className="flex flex-wrap items-center gap-1">
                 {CATHOLIC_INSTAGRAM_SOURCES.map(src => (
                   <button
                     key={src.id}
                     onClick={() => setSelectedIgSource(src)}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-serif font-semibold transition-all cursor-pointer border ${
+                    className={`px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
                       selectedIgSource.username === src.username
-                        ? 'bg-[#241307] text-amber-200 border-amber-600 shadow-xs'
-                        : 'bg-white text-stone-800 border-stone-300 hover:border-amber-600/60'
+                        ? 'bg-[#241307] text-amber-200 border-amber-700 shadow-xs font-semibold'
+                        : 'bg-white text-stone-700 border-stone-200 hover:border-amber-600/50 hover:bg-stone-50'
                     }`}
                   >
                     {src.name}
@@ -412,19 +412,19 @@ export const CatholicSocialView: React.FC = () => {
                 ))}
               </div>
 
-              <form onSubmit={handleCustomInstagramSubmit} className="flex items-center gap-1.5 shrink-0 pt-0.5 md:pt-0">
+              <form onSubmit={handleCustomInstagramSubmit} className="flex items-center gap-1 shrink-0">
                 <input
                   type="text"
                   value={customIgInput}
                   onChange={e => setCustomIgInput(e.target.value)}
                   placeholder="Add @username or Post URL..."
-                  className="px-2.5 py-1 rounded-lg bg-white border border-stone-300 text-xs font-serif text-stone-800 focus:outline-none focus:border-amber-700 w-44 sm:w-52"
+                  className="px-2 py-0.5 rounded-md bg-white border border-stone-300 text-[11px] sm:text-xs font-serif text-stone-800 focus:outline-none focus:border-amber-700 w-36 sm:w-48 placeholder:text-stone-400"
                 />
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-800 hover:bg-amber-900 text-amber-50 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-800 hover:bg-amber-900 text-amber-50 text-[11px] font-cinzel font-semibold cursor-pointer transition-colors"
                 >
-                  <Plus className="w-3.5 h-3.5" />
+                  <Plus className="w-3 h-3" />
                   <span>Load</span>
                 </button>
               </form>
