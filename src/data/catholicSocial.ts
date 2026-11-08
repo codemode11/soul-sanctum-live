@@ -8,10 +8,24 @@ export interface CatholicInstagramSource {
   defaultShortcodes: string[];
 }
 
+export interface CatholicStaticSocialPost {
+  id: string;
+  shortcode: string;
+  typename: string;
+  isVideo: boolean;
+  imageUrl: string;
+  carouselImages: string[];
+  caption: string;
+  timestamp: number;
+  likesCount: number;
+  commentsCount: number;
+}
+
 export interface CatholicFacebookSource {
   id: string;
   name: string;
   handle: string;
+  socialUsername: string;
   pageUrl: string;
   category: string;
   description: string;
@@ -45,7 +59,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     category: 'Holy See & Papal Ministry',
     description: 'Official Instagram feed of Vatican News from the Dicastery for Communication of the Holy See.',
     profileUrl: 'https://www.instagram.com/vaticannews/',
-    defaultShortcodes: ['Dfdc1NsEXy7', 'DfdaAiRCkCC', 'DfdZ_wKCuqc', 'DfdZ_yJCoEf', 'DfdZ_zgiiCe', 'DfdZ_uCCsYl']
+    defaultShortcodes: ['Dfdc1NsEXy7', 'DfdaAiRCkCC', 'DfdZ_wKCuqc', 'DfdWKDjFGCF', 'DfdSmtQglJJ', 'DfdSIURARsW']
   },
   {
     id: 'ig-ewtnmedia',
@@ -54,7 +68,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     category: 'Global Catholic Television',
     description: 'Daily Catholic prayers, Papal updates, Saint feast days, and Eucharistic devotion from EWTN.',
     profileUrl: 'https://www.instagram.com/ewtnmedia/',
-    defaultShortcodes: ['DfcLS5sjHof', 'Dfa4WLVlY2G', 'Dfaik3BjOpq', 'DfZeeyUFJ2u']
+    defaultShortcodes: ['DfcLS5sjHof', 'Dfa4WLVlY2G', 'Dfaik3BjOpq', 'DfZeeyUFJ2u', 'DfYS9wkF3c9', 'DfXt3irk4nO']
   },
   {
     id: 'ig-ascensionpress',
@@ -63,34 +77,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     category: 'Scripture & Catechism',
     description: 'Featured Reels, Scripture reflections, and Catechism insights with Fr. Mike Schmitz, Jeff Cavins, and Ascension.',
     profileUrl: 'https://www.instagram.com/ascensionpress/',
-    defaultShortcodes: ['Dfc_a6dh9l6', 'DfaM3dOSo2T', 'DfZzi7zNWJZ', 'DfXhaCjF0jf']
-  },
-  {
-    id: 'ig-catholicanswers',
-    name: 'Catholic Answers',
-    username: 'catholicanswers',
-    category: 'Apologetics & Evangelization',
-    description: 'Clear explanations of Catholic doctrine, apologetics Q&As, and feast day reflections from Catholic.com.',
-    profileUrl: 'https://www.instagram.com/catholicanswers/',
-    defaultShortcodes: ['DfazpyEgaIa', 'DfagCq8D3sp', 'DfZsT64CpxV', 'DfYQhEYAB8J']
-  },
-  {
-    id: 'ig-thedivinemercy',
-    name: 'The Divine Mercy (Marian Fathers)',
-    username: 'thedivinemercy',
-    category: 'Divine Mercy & St. Faustina',
-    description: 'Daily Diary quotes of St. Faustina, National Shrine of The Divine Mercy updates, and Marian Fathers reflections.',
-    profileUrl: 'https://www.instagram.com/thedivinemercy/',
-    defaultShortcodes: ['DfWKM5HAS9l', 'DfSY0XCjT3B', 'DfOnweij1aj', 'DfM7kDkj3fJ']
-  },
-  {
-    id: 'ig-ncregister',
-    name: 'National Catholic Register',
-    username: 'ncregister',
-    category: 'Catholic Journalism',
-    description: 'Fidelity to the Magisterium — visual stories, sacred liturgy, and news from the National Catholic Register.',
-    profileUrl: 'https://www.instagram.com/ncregister/',
-    defaultShortcodes: ['DfdmmVmNqN1', 'DfdkvpDuHz0', 'DfdiiN7Rm7h', 'Dfdd6VFO4To']
+    defaultShortcodes: ['Dfc_a6dh9l6', 'DfaM3dOSo2T', 'DfZzi7zNWJZ', 'DfXhaCjF0jf', 'DfVRF4HOLZK', 'DfU9j_ADepK']
   },
   {
     id: 'ig-wordonfire',
@@ -99,74 +86,100 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     category: 'Theology & Culture',
     description: 'Bishop Robert Barron and Word on Fire proclaiming Christ in the culture through beauty, truth, and goodness.',
     profileUrl: 'https://www.instagram.com/bishopbarron/',
-    defaultShortcodes: ['DfaO1PQFaLj', 'DfaOzPLle89', 'DfaOzuQFUts', 'DfaO0SgFRq7']
+    defaultShortcodes: ['DfaO1PQFaLj', 'DfTUkWNkSBB', 'DfSwL9Hmo7s', 'DfPsQBNl7NE', 'DfN0eTWjKoU', 'DfM53G4CF5z']
+  },
+  {
+    id: 'ig-catholicanswers',
+    name: 'Catholic Answers',
+    username: 'catholicanswers',
+    category: 'Apologetics & Evangelization',
+    description: 'Clear explanations of Catholic doctrine, apologetics Q&As, and feast day reflections from Catholic.com.',
+    profileUrl: 'https://www.instagram.com/catholicanswers/',
+    defaultShortcodes: ['DfazpyEgaIa', 'DfagCq8D3sp', 'DfZsT64CpxV', 'DfYQhEYAB8J', 'DfXqqsiPUPV']
+  },
+  {
+    id: 'ig-thedivinemercy',
+    name: 'The Divine Mercy (Marian Fathers)',
+    username: 'thedivinemercy',
+    category: 'Divine Mercy & St. Faustina',
+    description: 'Daily Diary quotes of St. Faustina, National Shrine of The Divine Mercy updates, and Marian Fathers reflections.',
+    profileUrl: 'https://www.instagram.com/thedivinemercy/',
+    defaultShortcodes: ['DfWKM5HAS9l', 'DfSY0XCjT3B', 'DfOnweij1aj', 'DfM7kDkj3fJ', 'DfI4HJoDd2r', 'DfI1UvtDtqT']
+  },
+  {
+    id: 'ig-ncregister',
+    name: 'National Catholic Register',
+    username: 'ncregister',
+    category: 'Catholic Journalism',
+    description: 'Fidelity to the Magisterium — visual stories, sacred liturgy, and news from the National Catholic Register.',
+    profileUrl: 'https://www.instagram.com/ncregister/',
+    defaultShortcodes: ['DfdmmVmNqN1', 'DfdkvpDuHz0', 'DfdiiN7Rm7h', 'Dfdd6VFO4To', 'DfdUMg_xeso', 'DfdQeAaF7cK']
   }
 ];
 
 export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
   {
+    id: 'fb-wordonfire',
+    name: 'Word on Fire (Bishop Robert Barron)',
+    handle: '@BishopRobertBarron',
+    socialUsername: 'bishopbarron',
+    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
+    category: 'Theology & Evangelization',
+    description: 'Static posts, homily reflections, theological commentary, and conference dispatches from Bishop Robert Barron and Word on Fire.'
+  },
+  {
     id: 'fb-vaticannews',
     name: 'Vatican News (English)',
     handle: '@vaticannews',
+    socialUsername: 'vaticannews',
     pageUrl: 'https://www.facebook.com/vaticannews',
     category: 'Holy See & Papal Ministry',
-    description: 'Official English Facebook timeline of Vatican News covering the Holy Father, Roman Curia, and Universal Church.'
+    description: 'Official English static posts and photo dispatches from Vatican News covering Pope Leo XIV and the Universal Church.'
   },
   {
     id: 'fb-ewtn',
     name: 'EWTN Global Catholic Network',
     handle: '@ewtnonline',
+    socialUsername: 'ewtnmedia',
     pageUrl: 'https://www.facebook.com/ewtnonline',
     category: 'Global Catholic Television',
-    description: 'Live Mass broadcasts, devotions, Catholic news, and daily spiritual encouragement from EWTN.'
+    description: 'Static devotion cards, Mother Angelica quotes, Catholic news, and daily spiritual encouragement from EWTN.'
   },
   {
     id: 'fb-ascension',
     name: 'Ascension (Fr. Mike Schmitz & Jeff Cavins)',
     handle: '@AscensionPress',
+    socialUsername: 'ascensionpress',
     pageUrl: 'https://www.facebook.com/AscensionPress',
     category: 'Scripture & Catechism',
-    description: 'Daily Catholic videos, Bible in a Year & Catechism in a Year community posts, and faith formation.'
-  },
-  {
-    id: 'fb-wordonfire',
-    name: 'Word on Fire (Bishop Robert Barron)',
-    handle: '@BishopRobertBarron',
-    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
-    category: 'Theology & Evangelization',
-    description: 'Homilies, cultural commentary, theological articles, and sacred art reflections from Bishop Robert Barron and Word on Fire.'
-  },
-  {
-    id: 'fb-catholicanswers',
-    name: 'Catholic Answers',
-    handle: '@catholicanswers',
-    pageUrl: 'https://www.facebook.com/catholicanswers',
-    category: 'Apologetics & Doctrine',
-    description: 'Explaining and defending the Catholic Faith with daily apologetics clips, articles, and live Q&A.'
+    description: 'Static Scripture & Catechism graphics, Advent/Lent invitations, and faith formation posts from Ascension.'
   },
   {
     id: 'fb-divinemercy',
     name: 'The Divine Mercy (Marian Fathers)',
     handle: '@DivineMercyOfficial',
+    socialUsername: 'thedivinemercy',
     pageUrl: 'https://www.facebook.com/DivineMercyOfficial',
     category: 'Divine Mercy & Marian Devotion',
-    description: 'Official Facebook page of the Marian Fathers of the Immaculate Conception at the National Shrine of The Divine Mercy.'
+    description: 'Official static posts, St. Faustina quote cards, and shrine updates from the Marian Fathers of the Immaculate Conception.'
   },
   {
     id: 'fb-ncregister',
     name: 'National Catholic Register',
     handle: '@NCRegister',
+    socialUsername: 'ncregister',
     pageUrl: 'https://www.facebook.com/NCRegister',
     category: 'Catholic News & Analysis',
-    description: 'Breaking Catholic news, Vatican dispatches, saint features, and liturgical reflections.'
+    description: 'Static photo dispatches, Vatican coverage, saint features, and liturgical reflections from the National Catholic Register.'
   },
   {
-    id: 'fb-cna',
-    name: 'Catholic News Agency (CNA)',
-    handle: '@catholicnewsagency',
-    pageUrl: 'https://www.facebook.com/catholicnewsagency',
-    category: 'Global Catholic News',
-    description: 'Up-to-the-minute global news and photography from the universal Catholic Church.'
+    id: 'fb-catholicanswers',
+    name: 'Catholic Answers',
+    handle: '@catholicanswers',
+    socialUsername: 'catholicanswers',
+    pageUrl: 'https://www.facebook.com/catholicanswers',
+    category: 'Apologetics & Doctrine',
+    description: 'Static apologetics posts, doctrinal graphics, and Catholic Q&A highlights from Catholic Answers.'
   }
 ];
 

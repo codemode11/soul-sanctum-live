@@ -288,6 +288,44 @@ function vaticanNewsPlugin() {
         }
       });
 
+      server.middlewares.use('/api/catholic-social-image', async (req: any, res: any) => {
+        try {
+          const urlObj = new URL(req.url || '', 'http://localhost');
+          const imageUrl = urlObj.searchParams.get('url') || '';
+          if (!imageUrl || !/^https?:\/\//i.test(imageUrl)) {
+            res.statusCode = 400;
+            res.end('Invalid image URL');
+            return;
+          }
+
+          const response = await fetch(imageUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+              'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+              'Referer': 'https://www.instagram.com/'
+            },
+            signal: AbortSignal.timeout(8000)
+          });
+
+          if (!response.ok) {
+            res.statusCode = response.status;
+            res.end('Failed to load image');
+            return;
+          }
+
+          const contentType = response.headers.get('content-type') || 'image/jpeg';
+          const buffer = Buffer.from(await response.arrayBuffer());
+          res.setHeader('Content-Type', contentType);
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+          res.setHeader('Cache-Control', 'public, max-age=3600');
+          res.end(buffer);
+        } catch (err: any) {
+          res.statusCode = 502;
+          res.end('Image proxy error');
+        }
+      });
+
       server.middlewares.use('/api/catholic-instagram', async (req: any, res: any) => {
         try {
           const urlObj = new URL(req.url || '', 'http://localhost');
@@ -308,16 +346,87 @@ function vaticanNewsPlugin() {
           }
 
           const html = await response.text();
-          const matches = Array.from(html.matchAll(/shortcode\\?":\\?"([A-Za-z0-9_-]{11})\\?"/g)).map(m => m[1]);
-          const shortcodes = Array.from(new Set(matches)).slice(0, 9);
+          let shortcodes: string[] = [];
+          let profilePicUrl: string | undefined;
+          let followersCount: number | undefined;
+          let fullName: string | undefined;
+          const posts: any[] = [];
+
+          const rawMatch = html.match(/"contextJSON":"((?:\\.|[^"\\])*)"/);
+          if (rawMatch) {
+            try {
+              const unescaped = JSON.parse('"' + rawMatch[1] + '"');
+              const parsed = JSON.parse(unescaped);
+              const ctx = parsed?.context || {};
+              if (ctx.profile_pic_url) {
+                profilePicUrl = `/api/catholic-social-image?url=${encodeURIComponent(ctx.profile_pic_url)}`;
+              }
+              if (typeof ctx.followers_count === 'number') {
+                followersCount = ctx.followers_count;
+              }
+              if (typeof ctx.full_name === 'string') {
+                fullName = ctx.full_name;
+              }
+
+              const mediaList = Array.isArray(ctx.graphql_media) ? ctx.graphql_media : [];
+              for (const item of mediaList) {
+                const sm = item?.shortcode_media;
+                if (!sm || !sm.shortcode) continue;
+                shortcodes.push(sm.shortcode);
+
+                const caption =
+                  sm.edge_media_to_caption?.edges?.[0]?.node?.text ||
+                  '';
+                const rawDisplayUrl = sm.display_url || '';
+                const proxiedImageUrl = rawDisplayUrl
+                  ? `/api/catholic-social-image?url=${encodeURIComponent(rawDisplayUrl)}`
+                  : '';
+
+                const sidecarEdges = sm.edge_sidecar_to_children?.edges || [];
+                const carouselImages = sidecarEdges
+                  .map((e: any) => e?.node?.display_url)
+                  .filter(Boolean)
+                  .map((u: string) => `/api/catholic-social-image?url=${encodeURIComponent(u)}`);
+
+                posts.push({
+                  id: sm.id || sm.shortcode,
+                  shortcode: sm.shortcode,
+                  typename: sm.__typename || 'GraphImage',
+                  isVideo: !!sm.is_video,
+                  imageUrl: proxiedImageUrl,
+                  carouselImages: carouselImages.length > 0 ? carouselImages : [proxiedImageUrl].filter(Boolean),
+                  caption,
+                  timestamp: sm.taken_at_timestamp ? sm.taken_at_timestamp * 1000 : Date.now(),
+                  likesCount: sm.edge_liked_by?.count || sm.edge_media_preview_like?.count || 0,
+                  commentsCount: sm.commenter_count || sm.edge_media_to_comment?.count || 0
+                });
+              }
+            } catch {
+              // Fall back to regex extraction if contextJSON parsing fails
+            }
+          }
+
+          if (shortcodes.length === 0) {
+            const matches = Array.from(html.matchAll(/shortcode\\?":\\?"([A-Za-z0-9_-]{11})\\?"/g)).map(m => m[1]);
+            shortcodes = Array.from(new Set(matches)).slice(0, 6);
+          }
 
           res.setHeader('Content-Type', 'application/json; charset=utf-8');
           res.setHeader('Access-Control-Allow-Origin', '*');
-          res.end(JSON.stringify({ username: rawUser, shortcodes }));
+          res.end(
+            JSON.stringify({
+              username: rawUser,
+              fullName,
+              profilePicUrl,
+              followersCount,
+              shortcodes,
+              posts
+            })
+          );
         } catch (err: any) {
           res.statusCode = 502;
           res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ error: err.message, shortcodes: [] }));
+          res.end(JSON.stringify({ error: err.message, shortcodes: [], posts: [] }));
         }
       });
     }

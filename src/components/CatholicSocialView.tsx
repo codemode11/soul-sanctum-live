@@ -12,7 +12,11 @@ import {
   Globe,
   Camera,
   BookOpen,
-  ZoomIn
+  ZoomIn,
+  Heart,
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import {
   CATHOLIC_INSTAGRAM_SOURCES,
@@ -22,6 +26,7 @@ import {
   CatholicInstagramSource,
   CatholicFacebookSource,
   CatholicPinterestSource,
+  CatholicStaticSocialPost,
   PinterestPinItem
 } from '../data/catholicSocial';
 
@@ -38,12 +43,23 @@ export const CatholicSocialView: React.FC = () => {
   const [customIgInput, setCustomIgInput] = useState<string>('');
   const [igRefreshKey, setIgRefreshKey] = useState<number>(0);
 
-  // Facebook state
+  // Facebook Static Posts state
   const [selectedFbSource, setSelectedFbSource] = useState<CatholicFacebookSource>(CATHOLIC_FACEBOOK_SOURCES[0]);
-  const [secondaryFbSource, setSecondaryFbSource] = useState<CatholicFacebookSource>(CATHOLIC_FACEBOOK_SOURCES[1]);
-  const [fbLayoutMode, setFbLayoutMode] = useState<'single' | 'dual'>('dual');
-  const [customFbUrl, setCustomFbUrl] = useState<string>('');
-  const [fbRefreshKey, setFbRefreshKey] = useState<number>(0);
+  const [fbPosts, setFbPosts] = useState<CatholicStaticSocialPost[]>([]);
+  const [fbProfilePic, setFbProfilePic] = useState<string>('');
+  const [isLoadingFbPosts, setIsLoadingFbPosts] = useState<boolean>(false);
+  const [fbFilterStaticOnly, setFbFilterStaticOnly] = useState<boolean>(true);
+  const [fbCarouselIndexMap, setFbCarouselIndexMap] = useState<Record<string, number>>({});
+  const [expandedPostIds, setExpandedPostIds] = useState<Record<string, boolean>>({});
+  const [customFbInput, setCustomFbInput] = useState<string>('');
+  const [activeLightboxPost, setActiveLightboxPost] = useState<{
+    title: string;
+    subtitle: string;
+    description: string;
+    imageUrl: string;
+    externalUrl: string;
+    externalLabel: string;
+  } | null>(null);
 
   // Pinterest state
   const [selectedPinSource, setSelectedPinSource] = useState<CatholicPinterestSource>(CATHOLIC_PINTEREST_SOURCES[0]);
@@ -51,7 +67,6 @@ export const CatholicSocialView: React.FC = () => {
   const [isLoadingPins, setIsLoadingPins] = useState<boolean>(false);
   const [pinSearchQuery, setPinSearchQuery] = useState<string>('');
   const [customPinUser, setCustomPinUser] = useState<string>('');
-  const [activeLightboxPin, setActiveLightboxPin] = useState<PinterestPinItem | null>(null);
 
   // Fetch live Instagram shortcodes for selected account
   const fetchInstagramShortcodes = useCallback(async (source: CatholicInstagramSource) => {
@@ -75,6 +90,31 @@ export const CatholicSocialView: React.FC = () => {
   useEffect(() => {
     fetchInstagramShortcodes(selectedIgSource);
   }, [selectedIgSource, fetchInstagramShortcodes]);
+
+  // Fetch live Static Posts for selected Facebook Catholic source
+  const fetchFacebookStaticPosts = useCallback(async (source: CatholicFacebookSource) => {
+    setIsLoadingFbPosts(true);
+    try {
+      const res = await fetch(`/api/catholic-instagram?username=${encodeURIComponent(source.socialUsername)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (typeof data.profilePicUrl === 'string') {
+          setFbProfilePic(data.profilePicUrl);
+        }
+        if (Array.isArray(data.posts) && data.posts.length > 0) {
+          setFbPosts(data.posts);
+        }
+      }
+    } catch {
+      // ignore network error
+    } finally {
+      setIsLoadingFbPosts(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchFacebookStaticPosts(selectedFbSource);
+  }, [selectedFbSource, fetchFacebookStaticPosts]);
 
   // Fetch live Pinterest RSS pins for selected account
   const fetchPinterestFeed = useCallback(async (username: string) => {
@@ -103,7 +143,6 @@ export const CatholicSocialView: React.FC = () => {
     const trimmed = customIgInput.trim();
     if (!trimmed) return;
 
-    // Check if user pasted a direct Instagram post/reel link
     const postMatch = trimmed.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/i);
     if (postMatch && postMatch[1]) {
       const code = postMatch[1];
@@ -113,7 +152,6 @@ export const CatholicSocialView: React.FC = () => {
       return;
     }
 
-    // Otherwise treat as an Instagram username or profile URL
     const cleanUser = trimmed
       .replace(/^https?:\/\/(www\.)?instagram\.com\//i, '')
       .replace(/^@/, '')
@@ -138,28 +176,28 @@ export const CatholicSocialView: React.FC = () => {
 
   const handleCustomFacebookSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = customFbUrl.trim();
+    const trimmed = customFbInput.trim();
     if (!trimmed) return;
 
-    const fullUrl = trimmed.startsWith('http')
-      ? trimmed
-      : `https://www.facebook.com/${trimmed.replace(/^@/, '')}`;
+    const cleanHandle = trimmed
+      .replace(/^https?:\/\/(www\.)?(facebook|instagram)\.com\//i, '')
+      .replace(/^@/, '')
+      .split(/[/?#]/)[0]
+      .replace(/[^a-zA-Z0-9._-]/g, '');
 
-    const handleName = fullUrl
-      .replace(/^https?:\/\/(www\.)?facebook\.com\//i, '')
-      .split(/[/?#]/)[0];
-
-    const customSource: CatholicFacebookSource = {
-      id: `fb-custom-${handleName}`,
-      name: handleName || 'Custom Catholic Page',
-      handle: `@${handleName}`,
-      pageUrl: fullUrl,
-      category: 'Custom Facebook Page',
-      description: `Live Facebook Page timeline for ${fullUrl}`
-    };
-    setSelectedFbSource(customSource);
-    setFbLayoutMode('single');
-    setCustomFbUrl('');
+    if (cleanHandle) {
+      const customSource: CatholicFacebookSource = {
+        id: `fb-custom-${cleanHandle}`,
+        name: `@${cleanHandle}`,
+        handle: `@${cleanHandle}`,
+        socialUsername: cleanHandle.toLowerCase(),
+        pageUrl: `https://www.facebook.com/${cleanHandle}`,
+        category: 'Custom Catholic Source',
+        description: `Static posts from @${cleanHandle}`
+      };
+      setSelectedFbSource(customSource);
+      setCustomFbInput('');
+    }
   };
 
   const handleCustomPinterestSubmit = (e: React.FormEvent) => {
@@ -197,11 +235,10 @@ export const CatholicSocialView: React.FC = () => {
     );
   });
 
-  const buildFacebookPluginUrl = (pageUrl: string, width = 500, height = 680) => {
-    return `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
-      pageUrl
-    )}&tabs=timeline&width=${width}&height=${height}&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true`;
-  };
+  // For Facebook Static Posts: if static-only filter is active and there are static image/carousel posts, show them; otherwise show all posts with static images
+  const staticOnlyFbPosts = fbPosts.filter(p => !p.isVideo);
+  const displayedFbPosts =
+    fbFilterStaticOnly && staticOnlyFbPosts.length > 0 ? staticOnlyFbPosts : fbPosts;
 
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
@@ -216,7 +253,7 @@ export const CatholicSocialView: React.FC = () => {
                 <span>CATHOLIC SOCIAL</span>
               </span>
               <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap truncate">
-                Live Posts, Reels, Timelines &amp; Sacred Art Boards
+                Live Posts, Reels, Static Dispatches &amp; Sacred Art Boards
               </span>
             </div>
 
@@ -427,7 +464,319 @@ export const CatholicSocialView: React.FC = () => {
       )}
 
       {/* =====================================================================
-          2. PINTEREST SACRED ART & QUOTE BOARDS (LIVE RSS)
+          2. FACEBOOK STATIC POSTS OF CATHOLIC SOURCES
+          ===================================================================== */}
+      {(activePlatform === 'all' || activePlatform === 'facebook') && (
+        <section className="rounded-2xl bg-[#FBF9F5] border border-amber-900/20 shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-[#241307] via-[#132647] to-[#241307] px-5 py-4 sm:px-6 sm:py-5 border-b border-amber-500/30 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4 text-amber-400" />
+                <span className="font-cinzel text-xs font-bold tracking-[0.2em] uppercase text-amber-300">
+                  CATHOLIC FACEBOOK STATIC POSTS
+                </span>
+              </div>
+              <h3 className="font-cinzel text-lg sm:text-xl font-bold text-white">
+                {selectedFbSource.name} <span className="text-amber-300 font-serif text-sm font-normal">({selectedFbSource.handle})</span>
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-300 font-serif">
+                {selectedFbSource.description}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="inline-flex rounded-xl bg-black/40 p-1 border border-white/15">
+                <button
+                  onClick={() => setFbFilterStaticOnly(true)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
+                    fbFilterStaticOnly
+                      ? 'bg-amber-500 text-stone-950'
+                      : 'text-stone-200 hover:text-white'
+                  }`}
+                >
+                  Static Photo Posts
+                </button>
+                <button
+                  onClick={() => setFbFilterStaticOnly(false)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
+                    !fbFilterStaticOnly
+                      ? 'bg-amber-500 text-stone-950'
+                      : 'text-stone-200 hover:text-white'
+                  }`}
+                >
+                  All Posts
+                </button>
+              </div>
+
+              <button
+                onClick={() => fetchFacebookStaticPosts(selectedFbSource)}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/15 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isLoadingFbPosts ? 'animate-spin' : ''}`} />
+                <span>Refresh Posts</span>
+              </button>
+
+              <a
+                href={selectedFbSource.pageUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-cinzel font-semibold transition-colors"
+              >
+                <span>Open Facebook Page</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-6 space-y-5">
+            {/* Facebook Catholic Source Selector + Custom Handle Input */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-stone-200">
+              <div className="flex flex-wrap items-center gap-2">
+                {CATHOLIC_FACEBOOK_SOURCES.map(src => (
+                  <button
+                    key={src.id}
+                    onClick={() => setSelectedFbSource(src)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-serif font-semibold transition-all cursor-pointer border ${
+                      selectedFbSource.id === src.id
+                        ? 'bg-[#241307] text-amber-200 border-amber-600 shadow-sm'
+                        : 'bg-white text-stone-800 border-stone-300 hover:border-amber-600/60'
+                    }`}
+                  >
+                    {src.name}
+                  </button>
+                ))}
+              </div>
+
+              <form onSubmit={handleCustomFacebookSubmit} className="flex items-center gap-2 shrink-0">
+                <input
+                  type="text"
+                  value={customFbInput}
+                  onChange={e => setCustomFbInput(e.target.value)}
+                  placeholder="Enter Catholic source handle..."
+                  className="px-3 py-1.5 rounded-xl bg-white border border-stone-300 text-xs font-serif text-stone-800 focus:outline-none focus:border-amber-700 w-52 sm:w-60"
+                />
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-800 hover:bg-amber-900 text-amber-50 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Load</span>
+                </button>
+              </form>
+            </div>
+
+            {/* Facebook Static Posts Grid */}
+            {isLoadingFbPosts && displayedFbPosts.length === 0 ? (
+              <div className="py-16 text-center space-y-3">
+                <RefreshCw className="w-7 h-7 text-amber-700 animate-spin mx-auto" />
+                <p className="text-sm font-serif text-stone-600">
+                  Loading static posts from {selectedFbSource.name}...
+                </p>
+              </div>
+            ) : displayedFbPosts.length === 0 ? (
+              <div className="py-12 text-center space-y-2">
+                <p className="text-sm font-serif text-stone-600">
+                  No static posts found for this source right now.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {displayedFbPosts.slice(0, activePlatform === 'all' ? 4 : 6).map(post => {
+                  const images =
+                    post.carouselImages && post.carouselImages.length > 0
+                      ? post.carouselImages
+                      : [post.imageUrl].filter(Boolean);
+                  const currentSlideIdx = fbCarouselIndexMap[post.id] || 0;
+                  const activeImg = images[currentSlideIdx] || post.imageUrl;
+                  const isExpanded = !!expandedPostIds[post.id];
+                  const formattedDate = new Date(post.timestamp).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  });
+
+                  return (
+                    <article
+                      key={post.id}
+                      className="rounded-xl bg-white border border-stone-200/90 hover:border-amber-600/50 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between"
+                    >
+                      <div>
+                        {/* Static Post Author Header */}
+                        <div className="p-4 flex items-center justify-between border-b border-stone-100">
+                          <div className="flex items-center gap-3 min-w-0">
+                            {fbProfilePic ? (
+                              <img
+                                src={fbProfilePic}
+                                alt={selectedFbSource.name}
+                                className="w-10 h-10 rounded-full object-cover border border-amber-500/40 shrink-0"
+                              />
+                            ) : (
+                              <div className="w-10 h-10 rounded-full bg-[#241307] text-amber-200 flex items-center justify-center font-cinzel font-bold text-sm shrink-0">
+                                {selectedFbSource.name.charAt(0)}
+                              </div>
+                            )}
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1.5">
+                                <h4 className="font-cinzel font-bold text-sm text-stone-900 truncate">
+                                  {selectedFbSource.name}
+                                </h4>
+                                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white text-[9px] font-bold shrink-0" title="Verified Catholic Ministry">
+                                  ✓
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1.5 text-xs font-serif text-stone-500">
+                                <span>{selectedFbSource.handle}</span>
+                                <span>•</span>
+                                <span>{formattedDate}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <span className="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-cinzel font-bold uppercase tracking-wider shrink-0">
+                            Static Post
+                          </span>
+                        </div>
+
+                        {/* Static Post Text / Message */}
+                        {post.caption && (
+                          <div className="px-4 pt-3.5 pb-3">
+                            <p
+                              className={`text-sm font-serif text-stone-800 whitespace-pre-line leading-relaxed ${
+                                !isExpanded && post.caption.length > 260 ? 'line-clamp-4' : ''
+                              }`}
+                            >
+                              {post.caption}
+                            </p>
+                            {post.caption.length > 260 && (
+                              <button
+                                onClick={() =>
+                                  setExpandedPostIds(prev => ({
+                                    ...prev,
+                                    [post.id]: !prev[post.id]
+                                  }))
+                                }
+                                className="mt-1 text-xs font-serif font-bold text-amber-800 hover:text-amber-950 cursor-pointer"
+                              >
+                                {isExpanded ? 'Show less' : 'See more...'}
+                              </button>
+                            )}
+                          </div>
+                        )}
+
+                        {/* High-Res Static Post Photo (with Multi-Photo Carousel Controls if Sidecar) */}
+                        {activeImg && (
+                          <div className="relative bg-stone-950 group overflow-hidden">
+                            <img
+                              src={activeImg}
+                              alt={post.caption?.slice(0, 80) || selectedFbSource.name}
+                              loading="lazy"
+                              onClick={() =>
+                                setActiveLightboxPost({
+                                  title: selectedFbSource.name,
+                                  subtitle: `${selectedFbSource.handle} • ${formattedDate}`,
+                                  description: post.caption || selectedFbSource.description,
+                                  imageUrl: activeImg,
+                                  externalUrl: selectedFbSource.pageUrl,
+                                  externalLabel: 'View on Facebook'
+                                })
+                              }
+                              className="w-full max-h-[440px] object-contain mx-auto cursor-pointer transition-transform duration-300 group-hover:scale-[1.01]"
+                            />
+
+                            {/* Carousel Prev/Next Arrows when Post has multiple static images */}
+                            {images.length > 1 && (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    setFbCarouselIndexMap(prev => ({
+                                      ...prev,
+                                      [post.id]: (currentSlideIdx - 1 + images.length) % images.length
+                                    }));
+                                  }}
+                                  className="absolute left-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 text-white hover:bg-black cursor-pointer shadow-md"
+                                  title="Previous Photo"
+                                >
+                                  <ChevronLeft className="w-4 h-4" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    setFbCarouselIndexMap(prev => ({
+                                      ...prev,
+                                      [post.id]: (currentSlideIdx + 1) % images.length
+                                    }));
+                                  }}
+                                  className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 text-white hover:bg-black cursor-pointer shadow-md"
+                                  title="Next Photo"
+                                >
+                                  <ChevronRight className="w-4 h-4" />
+                                </button>
+                                <div className="absolute top-3 right-3 px-2.5 py-0.5 rounded-full bg-black/75 text-amber-200 text-[11px] font-cinzel font-bold">
+                                  {currentSlideIdx + 1} / {images.length}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Static Post Footer: Engagement Counts & Direct Link */}
+                      <div className="px-4 py-3 bg-stone-50 border-t border-stone-200/80 flex items-center justify-between text-xs font-serif text-stone-600">
+                        <div className="flex items-center gap-4">
+                          {post.likesCount > 0 && (
+                            <span className="inline-flex items-center gap-1 text-stone-700 font-semibold">
+                              <Heart className="w-3.5 h-3.5 text-red-600 fill-red-600" />
+                              <span>{post.likesCount.toLocaleString()}</span>
+                            </span>
+                          )}
+                          {post.commentsCount > 0 && (
+                            <span className="inline-flex items-center gap-1 text-stone-700 font-semibold">
+                              <MessageCircle className="w-3.5 h-3.5 text-stone-500" />
+                              <span>{post.commentsCount.toLocaleString()}</span>
+                            </span>
+                          )}
+                          <button
+                            onClick={() =>
+                              setActiveLightboxPost({
+                                title: selectedFbSource.name,
+                                subtitle: `${selectedFbSource.handle} • ${formattedDate}`,
+                                description: post.caption || selectedFbSource.description,
+                                imageUrl: activeImg,
+                                externalUrl: selectedFbSource.pageUrl,
+                                externalLabel: 'View on Facebook'
+                              })
+                            }
+                            className="inline-flex items-center gap-1 text-stone-700 hover:text-amber-900 font-semibold cursor-pointer"
+                          >
+                            <ZoomIn className="w-3.5 h-3.5" />
+                            <span>Full View</span>
+                          </button>
+                        </div>
+
+                        <a
+                          href={selectedFbSource.pageUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-900 font-semibold"
+                        >
+                          <span>Facebook Page</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* =====================================================================
+          3. PINTEREST SACRED ART & QUOTE BOARDS (LIVE RSS)
           ===================================================================== */}
       {(activePlatform === 'all' || activePlatform === 'pinterest') && (
         <section className="rounded-2xl bg-[#FBF9F5] border border-amber-900/20 shadow-xl overflow-hidden">
@@ -541,7 +890,16 @@ export const CatholicSocialView: React.FC = () => {
                   >
                     <div>
                       <div
-                        onClick={() => setActiveLightboxPin(pin)}
+                        onClick={() =>
+                          setActiveLightboxPost({
+                            title: pin.title,
+                            subtitle: `@${pin.username}`,
+                            description: pin.description,
+                            imageUrl: pin.imageUrl,
+                            externalUrl: pin.link,
+                            externalLabel: 'View Pin on Pinterest'
+                          })
+                        }
                         className="relative overflow-hidden bg-stone-100 cursor-pointer aspect-[4/5]"
                       >
                         <img
@@ -591,7 +949,16 @@ export const CatholicSocialView: React.FC = () => {
 
                     <div className="px-3.5 py-2.5 bg-stone-50 border-t border-stone-200/80 flex items-center justify-between text-xs font-serif">
                       <button
-                        onClick={() => setActiveLightboxPin(pin)}
+                        onClick={() =>
+                          setActiveLightboxPost({
+                            title: pin.title,
+                            subtitle: `@${pin.username}`,
+                            description: pin.description,
+                            imageUrl: pin.imageUrl,
+                            externalUrl: pin.link,
+                            externalLabel: 'View Pin on Pinterest'
+                          })
+                        }
                         className="text-stone-700 hover:text-amber-900 font-semibold cursor-pointer"
                       >
                         Full View
@@ -614,207 +981,18 @@ export const CatholicSocialView: React.FC = () => {
         </section>
       )}
 
-      {/* =====================================================================
-          3. FACEBOOK PAGE TIMELINES SECTION
-          ===================================================================== */}
-      {(activePlatform === 'all' || activePlatform === 'facebook') && (
-        <section className="rounded-2xl bg-[#FBF9F5] border border-amber-900/20 shadow-xl overflow-hidden">
-          <div className="bg-gradient-to-r from-[#241307] via-[#132647] to-[#241307] px-5 py-4 sm:px-6 sm:py-5 border-b border-amber-500/30 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-amber-400" />
-                <span className="font-cinzel text-xs font-bold tracking-[0.2em] uppercase text-amber-300">
-                  CATHOLIC FACEBOOK TIMELINES
-                </span>
-              </div>
-              <h3 className="font-cinzel text-lg sm:text-xl font-bold text-white">
-                {selectedFbSource.name} <span className="text-amber-300 font-serif text-sm font-normal">({selectedFbSource.handle})</span>
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-300 font-serif">
-                {selectedFbSource.description}
-              </p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex rounded-xl bg-black/40 p-1 border border-white/15">
-                <button
-                  onClick={() => setFbLayoutMode('dual')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
-                    fbLayoutMode === 'dual'
-                      ? 'bg-amber-500 text-stone-950'
-                      : 'text-stone-200 hover:text-white'
-                  }`}
-                >
-                  Dual Timelines
-                </button>
-                <button
-                  onClick={() => setFbLayoutMode('single')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
-                    fbLayoutMode === 'single'
-                      ? 'bg-amber-500 text-stone-950'
-                      : 'text-stone-200 hover:text-white'
-                  }`}
-                >
-                  Single Timeline
-                </button>
-              </div>
-
-              <button
-                onClick={() => setFbRefreshKey(prev => prev + 1)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-amber-200 border border-white/15 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
-              >
-                <RefreshCw className="w-3.5 h-3.5" />
-                <span>Reload</span>
-              </button>
-
-              <a
-                href={selectedFbSource.pageUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/40 text-xs font-cinzel font-semibold transition-colors"
-              >
-                <span>Open on Facebook</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-
-          <div className="p-4 sm:p-6 space-y-5">
-            {/* Facebook Page Selector + Custom Page Input */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-stone-200">
-              <div className="flex flex-wrap items-center gap-2">
-                {CATHOLIC_FACEBOOK_SOURCES.map(src => (
-                  <button
-                    key={src.id}
-                    onClick={() => {
-                      if (selectedFbSource.id !== src.id) {
-                        setSecondaryFbSource(selectedFbSource);
-                        setSelectedFbSource(src);
-                      }
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-serif font-semibold transition-all cursor-pointer border ${
-                      selectedFbSource.id === src.id
-                        ? 'bg-[#241307] text-amber-200 border-amber-600 shadow-sm'
-                        : 'bg-white text-stone-800 border-stone-300 hover:border-amber-600/60'
-                    }`}
-                  >
-                    {src.name}
-                  </button>
-                ))}
-              </div>
-
-              <form onSubmit={handleCustomFacebookSubmit} className="flex items-center gap-2 shrink-0">
-                <input
-                  type="text"
-                  value={customFbUrl}
-                  onChange={e => setCustomFbUrl(e.target.value)}
-                  placeholder="Enter Facebook Page URL or handle..."
-                  className="px-3 py-1.5 rounded-xl bg-white border border-stone-300 text-xs font-serif text-stone-800 focus:outline-none focus:border-amber-700 w-52 sm:w-60"
-                />
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-800 hover:bg-amber-900 text-amber-50 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Load Page</span>
-                </button>
-              </form>
-            </div>
-
-            {/* Embedded Facebook Timelines */}
-            <div
-              className={`grid gap-6 ${
-                fbLayoutMode === 'dual' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1 max-w-xl mx-auto'
-              }`}
-            >
-              {/* Primary Timeline */}
-              <div className="rounded-xl bg-white border border-stone-200 p-3 sm:p-4 shadow-md flex flex-col items-center">
-                <div className="w-full flex items-center justify-between pb-3 mb-3 border-b border-stone-100">
-                  <div>
-                    <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-800 block">
-                      {selectedFbSource.category}
-                    </span>
-                    <h4 className="font-cinzel font-bold text-sm sm:text-base text-stone-900">
-                      {selectedFbSource.name}
-                    </h4>
-                  </div>
-                  <a
-                    href={selectedFbSource.pageUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-serif font-semibold text-amber-800 hover:text-amber-950"
-                  >
-                    <span>Facebook Page</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-                <iframe
-                  key={`fb-primary-${selectedFbSource.pageUrl}-${fbRefreshKey}`}
-                  src={buildFacebookPluginUrl(selectedFbSource.pageUrl, 500, 680)}
-                  width="500"
-                  height="680"
-                  className="max-w-full border-0 overflow-hidden rounded-lg"
-                  scrolling="no"
-                  frameBorder="0"
-                  allowFullScreen={true}
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title={`${selectedFbSource.name} Facebook Timeline`}
-                />
-              </div>
-
-              {/* Secondary Timeline in Dual Mode */}
-              {fbLayoutMode === 'dual' && (
-                <div className="rounded-xl bg-white border border-stone-200 p-3 sm:p-4 shadow-md flex flex-col items-center">
-                  <div className="w-full flex items-center justify-between pb-3 mb-3 border-b border-stone-100">
-                    <div>
-                      <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-800 block">
-                        {secondaryFbSource.category}
-                      </span>
-                      <h4 className="font-cinzel font-bold text-sm sm:text-base text-stone-900">
-                        {secondaryFbSource.name}
-                      </h4>
-                    </div>
-                    <a
-                      href={secondaryFbSource.pageUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-serif font-semibold text-amber-800 hover:text-amber-950"
-                    >
-                      <span>Facebook Page</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                  <iframe
-                    key={`fb-secondary-${secondaryFbSource.pageUrl}-${fbRefreshKey}`}
-                    src={buildFacebookPluginUrl(secondaryFbSource.pageUrl, 500, 680)}
-                    width="500"
-                    height="680"
-                    className="max-w-full border-0 overflow-hidden rounded-lg"
-                    scrolling="no"
-                    frameBorder="0"
-                    allowFullScreen={true}
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                    title={`${secondaryFbSource.name} Facebook Timeline`}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Lightbox Modal for Pinterest Pins */}
-      {activeLightboxPin && (
+      {/* Lightbox Modal for Static Posts & Pinterest Pins */}
+      {activeLightboxPost && (
         <div
           className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setActiveLightboxPin(null)}
+          onClick={() => setActiveLightboxPost(null)}
         >
           <div
-            className="relative max-w-3xl w-full bg-[#FBF9F5] rounded-2xl border border-amber-500/40 shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+            className="relative max-w-4xl w-full bg-[#FBF9F5] rounded-2xl border border-amber-500/40 shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
             onClick={e => e.stopPropagation()}
           >
             <button
-              onClick={() => setActiveLightboxPin(null)}
+              onClick={() => setActiveLightboxPost(null)}
               className="absolute top-3 right-3 z-10 p-2 rounded-full bg-black/70 text-amber-200 hover:bg-black cursor-pointer"
               title="Close preview"
             >
@@ -823,16 +1001,10 @@ export const CatholicSocialView: React.FC = () => {
 
             <div className="md:w-3/5 bg-stone-950 flex items-center justify-center overflow-hidden">
               <img
-                src={activeLightboxPin.imageUrl}
-                alt={activeLightboxPin.title}
+                src={activeLightboxPost.imageUrl}
+                alt={activeLightboxPost.title}
                 referrerPolicy="no-referrer"
-                onError={e => {
-                  const target = e.currentTarget;
-                  if (activeLightboxPin.thumbnailUrl && target.src !== activeLightboxPin.thumbnailUrl) {
-                    target.src = activeLightboxPin.thumbnailUrl;
-                  }
-                }}
-                className="max-h-[80vh] w-auto object-contain"
+                className="max-h-[82vh] w-auto object-contain"
               />
             </div>
 
@@ -840,26 +1012,26 @@ export const CatholicSocialView: React.FC = () => {
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-900/10 text-amber-900 text-xs font-cinzel font-bold">
                   <BookOpen className="w-3.5 h-3.5" />
-                  <span>@{activeLightboxPin.username}</span>
+                  <span>{activeLightboxPost.subtitle}</span>
                 </div>
 
                 <h3 className="font-cinzel text-lg font-bold text-stone-900 leading-snug">
-                  {activeLightboxPin.title}
+                  {activeLightboxPost.title}
                 </h3>
 
-                <p className="text-sm font-serif text-stone-700 leading-relaxed">
-                  {activeLightboxPin.description}
+                <p className="text-sm font-serif text-stone-700 whitespace-pre-line leading-relaxed">
+                  {activeLightboxPost.description}
                 </p>
               </div>
 
               <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
                 <a
-                  href={activeLightboxPin.link}
+                  href={activeLightboxPost.externalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#241307] hover:bg-[#3A1D0D] text-amber-200 text-xs font-cinzel font-bold tracking-wider uppercase transition-colors"
                 >
-                  <span>View Pin on Pinterest</span>
+                  <span>{activeLightboxPost.externalLabel}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
