@@ -45,7 +45,7 @@ export const CatholicSocialView: React.FC = () => {
 
   // Instagram state
   const [selectedIgSource, setSelectedIgSource] = useState<CatholicInstagramSource>(CATHOLIC_INSTAGRAM_SOURCES[0]);
-  const [igViewMode, setIgViewMode] = useState<'profile' | 'posts' | 'embed'>('profile');
+  const [igViewMode, setIgViewMode] = useState<'embed' | 'posts'>('embed');
   const [igShortcodes, setIgShortcodes] = useState<string[]>(CATHOLIC_INSTAGRAM_SOURCES[0].defaultShortcodes);
   const [igPosts, setIgPosts] = useState<CatholicStaticSocialPost[]>([]);
   const [igProfilePic, setIgProfilePic] = useState<string>('');
@@ -97,7 +97,8 @@ export const CatholicSocialView: React.FC = () => {
           setIgPosts(data.posts);
         }
         if (Array.isArray(data.shortcodes) && data.shortcodes.length > 0) {
-          setIgShortcodes(data.shortcodes);
+          const merged = Array.from(new Set([...data.shortcodes, ...source.defaultShortcodes]));
+          setIgShortcodes(merged);
         }
       }
     } catch {
@@ -111,44 +112,6 @@ export const CatholicSocialView: React.FC = () => {
     setIgPosts([]);
     fetchInstagramShortcodes(selectedIgSource);
   }, [selectedIgSource, fetchInstagramShortcodes]);
-
-  // Ensure the 3-row profile grid always displays exactly 9 posts (3 columns x 3 rows)
-  const displayedProfilePosts = React.useMemo(() => {
-    const list: CatholicStaticSocialPost[] = [...igPosts];
-    const existingShortcodes = new Set(list.map(p => p.shortcode));
-    const codes = selectedIgSource.defaultShortcodes || [];
-    const sampleImages = [
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=600&q=80',
-      'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80'
-    ];
-
-    for (let i = 0; i < codes.length && list.length < 9; i++) {
-      const code = codes[i];
-      if (!existingShortcodes.has(code)) {
-        list.push({
-          id: `ig-grid-${selectedIgSource.username}-${code}`,
-          shortcode: code,
-          typename: 'GraphImage',
-          isVideo: i % 4 === 1,
-          imageUrl: sampleImages[i % sampleImages.length],
-          carouselImages: [sampleImages[i % sampleImages.length]],
-          caption: `Post from @${selectedIgSource.username}. Click to view on Instagram.`,
-          timestamp: Date.now() - (i + 1) * 86400000,
-          likesCount: 1800 + i * 290,
-          commentsCount: 75 + i * 19
-        });
-        existingShortcodes.add(code);
-      }
-    }
-    return list.slice(0, 9);
-  }, [igPosts, selectedIgSource]);
 
   // Filter genuine Facebook articles by publisher and search term
   const filteredFbArticles = React.useMemo(() => {
@@ -247,7 +210,7 @@ export const CatholicSocialView: React.FC = () => {
         defaultShortcodes: []
       };
       setSelectedIgSource(customSource);
-      setIgViewMode('profile');
+      setIgViewMode('embed');
       setCustomIgInput('');
     }
   };
@@ -411,16 +374,16 @@ export const CatholicSocialView: React.FC = () => {
             <div className="flex flex-wrap items-center gap-2">
               <div className="inline-flex rounded-lg bg-black/40 p-1 border border-white/15">
                 <button
-                  onClick={() => setIgViewMode('profile')}
+                  onClick={() => setIgViewMode('embed')}
                   className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
-                    igViewMode === 'profile'
+                    igViewMode === 'embed'
                       ? 'bg-amber-500 text-stone-950 shadow-xs'
                       : 'text-stone-200 hover:text-white'
                   }`}
-                  title="3 Rows Profile Grid"
+                  title="Official Instagram Embed (Three Rows)"
                 >
-                  <Layout className="w-3.5 h-3.5" />
-                  <span>3-Row Profile Grid</span>
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>Official Embed (3 Rows)</span>
                 </button>
                 <button
                   onClick={() => setIgViewMode('posts')}
@@ -429,22 +392,10 @@ export const CatholicSocialView: React.FC = () => {
                       ? 'bg-amber-500 text-stone-950 shadow-xs'
                       : 'text-stone-200 hover:text-white'
                   }`}
-                  title="Captioned Posts Feed"
+                  title="Captioned Posts Feed (Three Rows)"
                 >
                   <Grid className="w-3.5 h-3.5" />
-                  <span>Captioned Posts</span>
-                </button>
-                <button
-                  onClick={() => setIgViewMode('embed')}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
-                    igViewMode === 'embed'
-                      ? 'bg-amber-500 text-stone-950 shadow-xs'
-                      : 'text-stone-200 hover:text-white'
-                  }`}
-                  title="Official Instagram Embed"
-                >
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>Official Embed</span>
+                  <span>Captioned Posts (3 Rows)</span>
                 </button>
               </div>
 
@@ -472,9 +423,9 @@ export const CatholicSocialView: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-3.5 sm:p-5 space-y-4">
-            {/* Account Selector Pills + Custom Account Input (More compact, but not very compact) */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2.5 pb-2.5 border-b border-stone-200">
+          <div className="p-3 sm:p-4 space-y-3.5">
+            {/* Account Selector Pills + Custom Account Input (More compact container, but not very compact) */}
+            <div className="rounded-xl bg-[#241307]/[0.03] border border-amber-900/10 p-2 sm:p-2.5 flex flex-col md:flex-row md:items-center justify-between gap-2 shadow-xs">
               <div className="flex flex-wrap items-center gap-1.5">
                 {CATHOLIC_INSTAGRAM_SOURCES.map(src => (
                   <button
@@ -491,7 +442,7 @@ export const CatholicSocialView: React.FC = () => {
                 ))}
               </div>
 
-              <form onSubmit={handleCustomInstagramSubmit} className="flex items-center gap-1.5 shrink-0 pt-1 md:pt-0">
+              <form onSubmit={handleCustomInstagramSubmit} className="flex items-center gap-1.5 shrink-0 pt-0.5 md:pt-0">
                 <input
                   type="text"
                   value={customIgInput}
@@ -509,136 +460,60 @@ export const CatholicSocialView: React.FC = () => {
               </form>
             </div>
 
-            {/* Instagram Content Area */}
-            {igViewMode === 'profile' ? (
-              <div className="w-full rounded-xl overflow-hidden border border-stone-200 bg-white shadow-inner flex flex-col justify-between">
-                {/* Compact Profile Header Bar (~50px) */}
-                <div className="px-3.5 py-2.5 bg-stone-50 border-b border-stone-200 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    {igProfilePic ? (
-                      <img
-                        src={igProfilePic}
-                        alt={selectedIgSource.name}
-                        className="w-9 h-9 rounded-full object-cover border border-amber-500/40 shrink-0"
-                      />
-                    ) : (
-                      <div className="w-9 h-9 rounded-full bg-[#241307] text-amber-200 flex items-center justify-center font-cinzel font-bold text-xs shrink-0">
-                        {selectedIgSource.name.charAt(0)}
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <h4 className="font-cinzel font-bold text-sm text-stone-900 truncate">
-                          {selectedIgSource.name}
-                        </h4>
-                        <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-blue-600 text-white text-[9px] font-bold shrink-0" title="Verified Catholic Ministry">
-                          ✓
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-xs font-serif text-stone-500 truncate">
-                        <span>@{selectedIgSource.username}</span>
-                        <span>•</span>
-                        <span className="text-amber-800 font-semibold shrink-0">Three Rows (9 Posts)</span>
-                      </div>
-                    </div>
+            {/* Instagram Content Area: Official Embed (3 Rows) or Captioned Posts (3 Rows) */}
+            {igViewMode === 'embed' ? (
+              <div className="w-full rounded-xl overflow-hidden border border-stone-200 bg-white shadow-inner space-y-3.5 p-3 sm:p-4">
+                {/* Official Profile Embed: Header + Rows 1 & 2 (6 Posts) */}
+                <div className="rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-white">
+                  <iframe
+                    key={`ig-profile-${selectedIgSource.username}-${igRefreshKey}`}
+                    src={`https://www.instagram.com/${selectedIgSource.username}/embed/`}
+                    title={`${selectedIgSource.name} Official Instagram Feed`}
+                    className="w-full h-[620px] border-0"
+                    loading="lazy"
+                    allowTransparency={true}
+                  />
+                </div>
+
+                {/* Official Row 3 Embeds (Posts 7–9) to complete the 3 full rows */}
+                <div className="space-y-2 pt-1 border-t border-stone-200">
+                  <div className="flex items-center justify-between px-1 text-xs font-serif text-stone-600">
+                    <span className="font-semibold text-stone-800 font-cinzel">
+                      Official Row 3 • Posts 7–9 from @{selectedIgSource.username}
+                    </span>
+                    <a
+                      href={selectedIgSource.profileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-amber-800 hover:text-amber-950 font-semibold"
+                    >
+                      <span>View All on Instagram</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
                   </div>
 
-                  <a
-                    href={selectedIgSource.profileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#241307] hover:bg-[#3A1D0D] text-amber-200 text-xs font-cinzel font-semibold shrink-0 transition-colors"
-                  >
-                    <span>Follow</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-
-                {/* 3 Full Rows of Instagram Posts in Same Short Height */}
-                <div className="p-3 sm:p-3.5 grid grid-cols-3 gap-2 sm:gap-2.5 flex-1">
-                  {displayedProfilePosts.map((post, idx) => (
-                    <div
-                      key={post.id || post.shortcode || idx}
-                      onClick={() =>
-                        setActiveLightboxPost({
-                          title: selectedIgSource.name,
-                          subtitle: `@${selectedIgSource.username}`,
-                          description: post.caption || selectedIgSource.description,
-                          imageUrl: post.imageUrl,
-                          externalUrl: `https://www.instagram.com/p/${post.shortcode}/`,
-                          externalLabel: 'View on Instagram'
-                        })
-                      }
-                      className="group relative rounded-lg overflow-hidden bg-stone-900 border border-stone-200 hover:border-amber-600/70 shadow-xs cursor-pointer h-[155px] sm:h-[165px] md:h-[175px] transition-all"
-                    >
-                      <img
-                        src={post.imageUrl}
-                        alt={post.caption?.slice(0, 50) || selectedIgSource.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-
-                      {/* Top-Right Badge (Multi-photo carousel or Reel) */}
-                      {post.carouselImages && post.carouselImages.length > 1 && (
-                        <div className="absolute top-1.5 right-1.5 p-1 rounded-md bg-black/60 text-white shadow-xs" title="Multiple photos">
-                          <Layers className="w-3 h-3" />
-                        </div>
-                      )}
-                      {post.isVideo && (
-                        <div className="absolute top-1.5 right-1.5 p-1 rounded-md bg-black/60 text-white shadow-xs" title="Video reel">
-                          <Play className="w-3 h-3 fill-white" />
-                        </div>
-                      )}
-
-                      {/* Hover Overlay with Likes, Comments, and Inspect button */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 p-2 text-white">
-                        <div className="flex items-center gap-3 text-xs font-bold">
-                          <span className="inline-flex items-center gap-1">
-                            <Heart className="w-3.5 h-3.5 fill-red-500 text-red-500" />
-                            <span>{post.likesCount ? post.likesCount.toLocaleString() : 'Liked'}</span>
-                          </span>
-                          <span className="inline-flex items-center gap-1">
-                            <MessageCircle className="w-3.5 h-3.5 fill-white text-white" />
-                            <span>{post.commentsCount ? post.commentsCount.toLocaleString() : ''}</span>
-                          </span>
-                        </div>
-                        <span className="inline-flex items-center gap-1 text-[11px] font-cinzel font-semibold text-amber-300">
-                          <ZoomIn className="w-3 h-3" />
-                          <span>Inspect</span>
-                        </span>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    {igShortcodes.slice(6, 9).map((code, idx) => (
+                      <div
+                        key={`ig-row3-${code}-${idx}-${igRefreshKey}`}
+                        className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-xs"
+                      >
+                        <iframe
+                          src={`https://www.instagram.com/p/${code}/embed/`}
+                          title={`Official Instagram Post ${code} from @${selectedIgSource.username}`}
+                          className="w-full h-[380px] border-0"
+                          loading="lazy"
+                          allowTransparency={true}
+                        />
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-
-                {/* Footer Bar (~32px) */}
-                <div className="px-3.5 py-1.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
-                  <span>3 rows (9 posts) from @{selectedIgSource.username} • Click to inspect</span>
-                  <a
-                    href={selectedIgSource.profileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-amber-800 hover:text-amber-950 font-semibold"
-                  >
-                    <span>View on Instagram</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            ) : igViewMode === 'embed' ? (
-              <div className="w-full rounded-xl overflow-hidden border border-stone-200 bg-white shadow-inner">
-                <iframe
-                  key={`ig-profile-${selectedIgSource.username}-${igRefreshKey}`}
-                  src={`https://www.instagram.com/${selectedIgSource.username}/embed/`}
-                  title={`${selectedIgSource.name} Instagram Profile Feed`}
-                  className="w-full h-[640px] border-0"
-                  loading="lazy"
-                  allowTransparency={true}
-                />
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {igShortcodes.slice(0, activePlatform === 'all' ? 3 : 6).map(code => (
+              /* Captioned Posts Mode (Three Rows = 9 Captioned Posts) */
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                {igShortcodes.slice(0, 9).map(code => (
                   <div
                     key={`ig-post-${code}-${igRefreshKey}`}
                     className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-md flex flex-col"
@@ -650,7 +525,7 @@ export const CatholicSocialView: React.FC = () => {
                       loading="lazy"
                       allowTransparency={true}
                     />
-                    <div className="px-4 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
+                    <div className="px-4 py-2 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
                       <span>@{selectedIgSource.username}</span>
                       <a
                         href={`https://www.instagram.com/p/${code}/`}
