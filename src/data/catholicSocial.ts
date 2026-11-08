@@ -53,13 +53,13 @@ export interface PinterestPinItem {
 
 export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
   {
-    id: 'ig-vaticannews',
-    name: 'Vatican News',
-    username: 'vaticannews',
-    category: 'Holy See & Papal Ministry',
-    description: 'Official Instagram feed of Vatican News from the Dicastery for Communication of the Holy See.',
-    profileUrl: 'https://www.instagram.com/vaticannews/',
-    defaultShortcodes: ['Dfdc1NsEXy7', 'DfdaAiRCkCC', 'DfdZ_wKCuqc', 'DfdWKDjFGCF', 'DfdSmtQglJJ', 'DfdSIURARsW']
+    id: 'ig-aleteia',
+    name: 'Aleteia',
+    username: 'aleteia_en',
+    category: 'Catholic Spirituality & Culture',
+    description: 'Catholic spirituality, saint stories, sacred art, and global Church news from Aleteia English.',
+    profileUrl: 'https://www.instagram.com/aleteia_en/',
+    defaultShortcodes: ['DfcTTagRM-x', 'DfafIKssdp4', 'DfZl4NnxPXg', 'DfXKc2DRKe4', 'DfUwwrKxbBo', 'DfUdUnZREdb']
   },
   {
     id: 'ig-ewtnmedia',
@@ -71,13 +71,67 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     defaultShortcodes: ['DfcLS5sjHof', 'Dfa4WLVlY2G', 'Dfaik3BjOpq', 'DfZeeyUFJ2u', 'DfYS9wkF3c9', 'DfXt3irk4nO']
   },
   {
-    id: 'ig-ascensionpress',
-    name: 'Ascension',
-    username: 'ascensionpress',
-    category: 'Scripture & Catechism',
-    description: 'Featured Reels, Scripture reflections, and Catechism insights with Fr. Mike Schmitz, Jeff Cavins, and Ascension.',
-    profileUrl: 'https://www.instagram.com/ascensionpress/',
-    defaultShortcodes: ['Dfc_a6dh9l6', 'DfaM3dOSo2T', 'DfZzi7zNWJZ', 'DfXhaCjF0jf', 'DfVRF4HOLZK', 'DfU9j_ADepK']
+    id: 'ig-stpaulcenter',
+    name: 'St. Paul Center',
+    username: 'stpaulcenter',
+    category: 'Biblical Theology',
+    description: 'Dr. Scott Hahn and the St. Paul Center reading Sacred Scripture from the heart of the Church.',
+    profileUrl: 'https://www.instagram.com/stpaulcenter/',
+    defaultShortcodes: ['DfdcESGCvQn', 'DfapmAaCUPe', 'DfaTK9hEWFC', 'DfZ4SHSCUgL', 'DfS9kGilc3j', 'DfP1A9FDSbj']
+  },
+  {
+    id: 'ig-augustine-institute',
+    name: 'Augustine Institute',
+    username: 'augustine_institute',
+    category: 'Theology & Evangelization',
+    description: 'Graduate Catholic theology, Sacred Scripture study, and Catholic formation from the Augustine Institute.',
+    profileUrl: 'https://www.instagram.com/augustine_institute/',
+    defaultShortcodes: ['DfceIbOAmI9', 'DfXTjQ7DFU6', 'DfTEQESl5s_', 'DfQkH0XDMGD', 'DfKUnvWl2YL', 'DfCtqTbPJE3']
+  },
+  {
+    id: 'ig-formedcatholic',
+    name: 'FORMED',
+    username: 'formedcatholic',
+    category: 'Catholic Faith On Demand',
+    description: 'Sacred films, liturgical living, saint documentaries, and Bible studies from FORMED.',
+    profileUrl: 'https://www.instagram.com/formedcatholic/',
+    defaultShortcodes: ['DfceIbOAmI9', 'DfTQI4NjvCS', 'DfQkH0XDMGD', 'DfIEdAbjJat', 'DfBGG9ijkSk', 'De-d6KuAMR1']
+  },
+  {
+    id: 'ig-vaticannews',
+    name: 'Vatican News',
+    username: 'vaticannews',
+    category: 'Holy See & Papal Ministry',
+    description: 'Official Instagram feed of Vatican News from the Dicastery for Communication of the Holy See.',
+    profileUrl: 'https://www.instagram.com/vaticannews/',
+    defaultShortcodes: ['Dfdc1NsEXy7', 'DfdaAiRCkCC', 'DfdWKDjFGCF', 'DfdSmtQglJJ', 'DfdSIURARsW', 'DfdNR4QAQKC']
+  },
+  {
+    id: 'ig-usccb',
+    name: 'U.S. Conference of Catholic Bishops (USCCB)',
+    username: 'usccb',
+    category: 'Episcopal Ministry & Liturgy',
+    description: 'Official Instagram of the United States Conference of Catholic Bishops — daily readings, prayers, and pastoral teaching.',
+    profileUrl: 'https://www.instagram.com/usccb/',
+    defaultShortcodes: ['DfXiNmdCIKN', 'DfUtgl3ju0o', 'DfUhCHSF4ea', 'DfShAinlwx8', 'DfSErQgFwg0', 'DfQAXstiZS3']
+  },
+  {
+    id: 'ig-icc',
+    name: 'Institute of Catholic Culture',
+    username: 'instituteofcatholicculture',
+    category: 'Catechesis & Patristics',
+    description: 'Orthodox Catholic adult catechesis in Sacred Scripture, Church history, philosophy, and patristics.',
+    profileUrl: 'https://www.instagram.com/instituteofcatholicculture/',
+    defaultShortcodes: ['DfXs4C3Gzvn', 'DfVI5B6m-fC', 'DfTKen8F78Y', 'DfS9UiAF9SP', 'DfQPZbPm2a7', 'DfLnJc1OX1i']
+  },
+  {
+    id: 'ig-spiritualdirection',
+    name: 'SpiritualDirection.com',
+    username: 'catholicspiritualdirection',
+    category: 'Contemplative Prayer & Interior Life',
+    description: ' Faithful Catholic spiritual direction, mental prayer, mystical theology, and wisdom of the Saints.',
+    profileUrl: 'https://www.instagram.com/catholicspiritualdirection/',
+    defaultShortcodes: ['Dfc_Wwiildx', 'DfX1znejFBR', 'DfVQ9IjDAjV', 'DfUlBvQkfvQ', 'DfQHW31l1NW', 'DfNAPJwF7yw']
   },
   {
     id: 'ig-wordonfire',
@@ -96,15 +150,6 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Clear explanations of Catholic doctrine, apologetics Q&As, and feast day reflections from Catholic.com.',
     profileUrl: 'https://www.instagram.com/catholicanswers/',
     defaultShortcodes: ['DfazpyEgaIa', 'DfagCq8D3sp', 'DfZsT64CpxV', 'DfYQhEYAB8J', 'DfXqqsiPUPV']
-  },
-  {
-    id: 'ig-thedivinemercy',
-    name: 'The Divine Mercy (Marian Fathers)',
-    username: 'thedivinemercy',
-    category: 'Divine Mercy & St. Faustina',
-    description: 'Daily Diary quotes of St. Faustina, National Shrine of The Divine Mercy updates, and Marian Fathers reflections.',
-    profileUrl: 'https://www.instagram.com/thedivinemercy/',
-    defaultShortcodes: ['DfWKM5HAS9l', 'DfSY0XCjT3B', 'DfOnweij1aj', 'DfM7kDkj3fJ', 'DfI4HJoDd2r', 'DfI1UvtDtqT']
   },
   {
     id: 'ig-ncregister',
