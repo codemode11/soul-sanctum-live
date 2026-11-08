@@ -22,6 +22,24 @@ export interface CatholicStaticSocialPost {
   commentsCount: number;
 }
 
+export interface CatholicFacebookPost {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  handle: string;
+  pageUrl: string;
+  avatarUrl?: string;
+  postDate: string;
+  category: string;
+  text: string;
+  imageUrl: string;
+  imageAlt: string;
+  likesCount: number;
+  commentsCount: number;
+  sharesCount: number;
+  verified: boolean;
+}
+
 export interface CatholicFacebookArticlePost {
   id: string;
   sourceId: string;
@@ -55,6 +73,7 @@ export interface CatholicFacebookSource {
   category: string;
   description: string;
   staticPosts?: CatholicStaticSocialPost[];
+  posts?: CatholicFacebookPost[];
   articles?: CatholicFacebookArticlePost[];
 }
 
@@ -230,330 +249,22 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
 
 export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
   {
-    id: 'fb-wordonfire',
-    name: 'Word on Fire (Bishop Robert Barron)',
-    handle: '@BishopRobertBarron',
-    socialUsername: 'bishopbarron',
-    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
-    category: 'Theology & Evangelization',
-    description: 'Static posts, homily reflections, theological commentary, and conference dispatches from Bishop Robert Barron and Word on Fire.',
-    staticPosts: [
-      {
-        id: 'fb-barron-1',
-        shortcode: 'DfaO1PQFaLj',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-          'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Friends, I was delighted to attend Word on Fire’s annual New Ressourcement Conference yesterday in Rochester, Minnesota. Scholars, theologians, and pastors gathered to explore how the great Catholic tradition can speak afresh to our contemporary world.\n\nThrough beauty, truth, and goodness, Christ continues to renew His Church. Let us never be afraid to bring the light of the Gospel into the public square.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 18,
-        likesCount: 5240,
-        commentsCount: 384
-      },
-      {
-        id: 'fb-barron-2',
-        shortcode: 'DfTUkWNkSBB',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'The Holy Eucharist is the source and summit of the Christian life. When we adore Christ present in the Blessed Sacrament, our minds and hearts are re-ordered toward God.\n\nSaint Thomas Aquinas reminds us: "O sacred banquet in which Christ is received, the memory of His Passion is renewed, the mind is filled with grace, and a pledge of future glory is given to us." May our adoration bear fruit in genuine charity for the poor and marginalized.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 42,
-        likesCount: 6810,
-        commentsCount: 495
-      },
-      {
-        id: 'fb-barron-3',
-        shortcode: 'DfSwL9Hmo7s',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Sunday Gospel Reflection: "You shall love the Lord your God with all your heart, with all your soul, and with all your mind."\n\nTo love God with your whole being means that nothing else—no wealth, pleasure, power, or honor—takes the sovereign place of Christ in your heart. When God is given the primary place, everything else in your life falls into radiant harmony.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 70,
-        likesCount: 4720,
-        commentsCount: 290
-      },
-      {
-        id: 'fb-barron-4',
-        shortcode: 'DfPsQBNl7NE',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Saint Augustine wrote in the Confessions: "You have made us for yourself, O Lord, and our heart is restless until it rests in you." Notice he did not say our heart is satisfied by worldly triumphs or political achievements. That holy restlessness is God’s divine hook within the soul, beckoning us home.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 96,
-        likesCount: 5930,
-        commentsCount: 412
-      }
-    ]
-  },
-  {
-    id: 'fb-vaticannews',
-    name: 'Vatican News (English)',
-    handle: '@vaticannews',
-    socialUsername: 'vaticannews',
-    pageUrl: 'https://www.facebook.com/vaticannews',
-    category: 'Holy See & Papal Ministry',
-    description: 'Official English static posts and photo dispatches from Vatican News covering Pope Leo XIV and the Universal Church.',
-    staticPosts: [
-      {
-        id: 'fb-vatican-1',
-        shortcode: 'Dfdc1NsEXy7',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
-          'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Pope at the Angelus: "Peace is not merely the absence of conflict; it is the gift of Christ’s presence in our hearts, working through justice, mutual respect, and maternal forgiveness."\n\nAddressing thousands gathered in St. Peter’s Square, the Holy Father urged the faithful worldwide to pray without ceasing for victims of violence and for peace across the Holy Land and Ukraine.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 12,
-        likesCount: 12400,
-        commentsCount: 890
-      },
-      {
-        id: 'fb-vatican-2',
-        shortcode: 'DfdaAiRCkCC',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'St. Peter’s Basilica in morning light: Pilgrims from every continent gather at the Tomb of the Prince of the Apostles to profess the one, holy, catholic, and apostolic faith. "And I tell you, you are Peter, and on this rock I will build my Church, and the gates of hell shall not prevail against it." (Matthew 16:18)',
-        timestamp: Date.now() - 1000 * 60 * 60 * 36,
-        likesCount: 9600,
-        commentsCount: 410
-      },
-      {
-        id: 'fb-vatican-3',
-        shortcode: 'DfdWKDjFGCF',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Vatican Museums restore historic fresco of the Annunciation. Master conservators unveil the glowing lapis lazuli mantle of the Blessed Virgin Mary, depicting the moment the Word became Flesh and dwelt among us. "Behold the handmaid of the Lord; be it done unto me according to thy word."',
-        timestamp: Date.now() - 1000 * 60 * 60 * 60,
-        likesCount: 8350,
-        commentsCount: 320
-      }
-    ]
+    id: 'fb-aleteia',
+    name: 'Aleteia',
+    handle: '@aleteia_en',
+    socialUsername: 'aleteia_en',
+    pageUrl: 'https://www.facebook.com/aleteia.en',
+    category: 'Catholic Spirituality & Culture',
+    description: 'Catholic spirituality, saint stories, sacred art, and global Church news from Aleteia English on Facebook.'
   },
   {
     id: 'fb-ewtn',
     name: 'EWTN Global Catholic Network',
     handle: '@ewtnonline',
-    socialUsername: 'ewtnmedia',
+    socialUsername: 'ewtnonline',
     pageUrl: 'https://www.facebook.com/ewtnonline',
     category: 'Global Catholic Television',
-    description: 'Static devotion cards, Mother Angelica quotes, Catholic news, and daily spiritual encouragement from EWTN.',
-    staticPosts: [
-      {
-        id: 'fb-ewtn-1',
-        shortcode: 'DfcLS5sjHof',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Mother Angelica reminds us: "Unless you are willing to do the ridiculous, God cannot do the miraculous. When you step out in faith for Jesus, do not look at your own smallness—look at His boundless majesty!"\n\nPray for our global mission today as we broadcast Holy Mass, Eucharistic adoration, and the Rosary to over 145 nations.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 14,
-        likesCount: 8900,
-        commentsCount: 620
-      },
-      {
-        id: 'fb-ewtn-2',
-        shortcode: 'Dfa4WLVlY2G',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Daily Holy Hour before the Most Blessed Sacrament: "Come to me, all who labor and are heavy laden, and I will give you rest." Take a few quiet moments today to place all your anxieties, family needs, and burdens into the Pierced Heart of Jesus Christ.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 38,
-        likesCount: 7420,
-        commentsCount: 510
-      }
-    ]
-  },
-  {
-    id: 'fb-ascension',
-    name: 'Ascension (Fr. Mike Schmitz & Jeff Cavins)',
-    handle: '@AscensionPress',
-    socialUsername: 'ascensionpress',
-    pageUrl: 'https://www.facebook.com/AscensionPress',
-    category: 'Scripture & Catechism',
-    description: 'Static Scripture & Catechism graphics, Advent/Lent invitations, and faith formation posts from Ascension.',
-    staticPosts: [
-      {
-        id: 'fb-asc-1',
-        shortcode: 'DfaTK9hEWFC',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Fr. Mike Schmitz: "God does not call the equipped; He equips the called. Whatever trial you are facing right now, remember that God’s grace is not only sufficient—it is abundant. He is right beside you in the boat."\n\nTag a friend who needs this reminder of God’s steadfast fidelity today.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 20,
-        likesCount: 11200,
-        commentsCount: 740
-      },
-      {
-        id: 'fb-asc-2',
-        shortcode: 'DfS9kGilc3j',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'The Great Adventure Bible Timeline: In Sacred Scripture, God reveals Himself through a series of covenants—from Adam to Noah, Abraham, Moses, David, and finally fulfilled in Jesus Christ and the Catholic Church.\n\nOpen your Bible today and encounter the living Word who died for you.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 48,
-        likesCount: 9150,
-        commentsCount: 520
-      }
-    ]
-  },
-  {
-    id: 'fb-divinemercy',
-    name: 'The Divine Mercy (Marian Fathers)',
-    handle: '@DivineMercyOfficial',
-    socialUsername: 'thedivinemercy',
-    pageUrl: 'https://www.facebook.com/DivineMercyOfficial',
-    category: 'Divine Mercy & Marian Devotion',
-    description: 'Official static posts, St. Faustina quote cards, and shrine updates from the Marian Fathers of the Immaculate Conception.',
-    staticPosts: [
-      {
-        id: 'fb-dm-1',
-        shortcode: 'Dfc_Wwiildx',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Saint Faustina’s Diary (Entry 1448): "My Heart overflows with great mercy for souls, and especially for poor sinners. If only they could understand that I am the best of Fathers to them and that it is for them that the Blood and Water flowed from My Heart as from a fount overflowing with mercy."\n\nJesus, I Trust in You!',
-        timestamp: Date.now() - 1000 * 60 * 60 * 16,
-        likesCount: 15300,
-        commentsCount: 1250
-      },
-      {
-        id: 'fb-dm-2',
-        shortcode: 'DfX1znejFBR',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'The 3:00 PM Hour of Great Mercy: "At three o’clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion, particularly in My abandonment at the moment of agony." Immerse yourself in Christ’s loving mercy right now.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 40,
-        likesCount: 13800,
-        commentsCount: 980
-      }
-    ]
-  },
-  {
-    id: 'fb-ncregister',
-    name: 'National Catholic Register',
-    handle: '@NCRegister',
-    socialUsername: 'ncregister',
-    pageUrl: 'https://www.facebook.com/NCRegister',
-    category: 'Catholic News & Analysis',
-    description: 'Static photo dispatches, Vatican coverage, saint features, and liturgical reflections from the National Catholic Register.',
-    staticPosts: [
-      {
-        id: 'fb-ncr-1',
-        shortcode: 'DfdmmVmNqN1',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Liturgical Reflection: The Holy Sacrifice of the Mass transcends time and space, re-presenting on our altars the once-for-all sacrifice of Calvary. In the words of Saint John Chrysostom, "When the sacrifice is offered, angels stand by the priest and the whole sanctuary is filled with heavenly powers."',
-        timestamp: Date.now() - 1000 * 60 * 60 * 22,
-        likesCount: 4620,
-        commentsCount: 310
-      },
-      {
-        id: 'fb-ncr-2',
-        shortcode: 'DfdkvpDuHz0',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Saint of the Day: Today the Church honors martyrs who willingly poured out their lives rather than compromise their fidelity to Christ. "The blood of the martyrs is the seed of the Church," wrote Tertullian in the second century. Holy Martyrs, pray for our steadfast faith!',
-        timestamp: Date.now() - 1000 * 60 * 60 * 50,
-        likesCount: 5120,
-        commentsCount: 260
-      }
-    ]
-  },
-  {
-    id: 'fb-catholicanswers',
-    name: 'Catholic Answers',
-    handle: '@catholicanswers',
-    socialUsername: 'catholicanswers',
-    pageUrl: 'https://www.facebook.com/catholicanswers',
-    category: 'Apologetics & Doctrine',
-    description: 'Static apologetics posts, doctrinal graphics, and Catholic Q&A highlights from Catholic Answers.',
-    staticPosts: [
-      {
-        id: 'fb-ca-1',
-        shortcode: 'DfazpyEgaIa',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Why do Catholics pray to the Saints? Saint Paul asks the faithful on earth to intercede for one another (1 Tim 2:1). In Revelation 5:8, the 24 elders in heaven hold golden bowls full of incense, which are the prayers of the saints. The Saints before the throne of the Lamb are alive in Christ and pray with us!\n\nRead the full apologetics guide on Catholic.com.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 24,
-        likesCount: 7850,
-        commentsCount: 610
-      },
-      {
-        id: 'fb-ca-2',
-        shortcode: 'DfagCq8D3sp',
-        typename: 'GraphImage',
-        isVideo: false,
-        imageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
-        carouselImages: [
-          'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80'
-        ],
-        caption: 'Did Jesus establish a visible Church? "You are Peter, and on this rock I will build my Church" (Matt 16:18). Jesus promised that the Holy Spirit would lead the Apostles into all truth (John 16:13). Through apostolic succession and the guidance of the Magisterium, the deposit of faith is preserved intact.',
-        timestamp: Date.now() - 1000 * 60 * 60 * 56,
-        likesCount: 6920,
-        commentsCount: 480
-      }
-    ]
-  },
-  {
-    id: 'fb-aleteia',
-    name: 'Aleteia (English)',
-    handle: '@aleteia_en',
-    socialUsername: 'aleteia_en',
-    pageUrl: 'https://www.facebook.com/aleteia.en',
-    category: 'Catholic Spirituality & Culture',
-    description: 'Catholic spirituality, saint stories, sacred art, and global Church reflections from Aleteia English on Facebook.'
+    description: 'Daily Catholic prayers, Papal updates, Saint feast days, and Eucharistic devotion from EWTN.'
   },
   {
     id: 'fb-stpaulcenter',
@@ -562,380 +273,468 @@ export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
     socialUsername: 'stpaulcenter',
     pageUrl: 'https://www.facebook.com/stpaulcenter',
     category: 'Biblical Theology',
-    description: 'Dr. Scott Hahn, biblical theology, Emmaus Road Publishing, and liturgical studies from the St. Paul Center on Facebook.'
+    description: 'Dr. Scott Hahn and the St. Paul Center reading Sacred Scripture from the heart of the Church.'
+  },
+  {
+    id: 'fb-augustine-institute',
+    name: 'Augustine Institute',
+    handle: '@AugustineInstitute',
+    socialUsername: 'AugustineInstitute',
+    pageUrl: 'https://www.facebook.com/AugustineInstitute',
+    category: 'Theology & Evangelization',
+    description: 'Graduate Catholic theology, Sacred Scripture study, and Catholic formation from the Augustine Institute.'
+  },
+  {
+    id: 'fb-formedcatholic',
+    name: 'FORMED',
+    handle: '@FORMEDCatholic',
+    socialUsername: 'FORMEDCatholic',
+    pageUrl: 'https://www.facebook.com/FORMEDCatholic',
+    category: 'Catholic Faith On Demand',
+    description: 'Sacred films, liturgical living, saint documentaries, and Bible studies from FORMED.'
+  },
+  {
+    id: 'fb-vaticannews',
+    name: 'Vatican News',
+    handle: '@vaticannews',
+    socialUsername: 'vaticannews',
+    pageUrl: 'https://www.facebook.com/vaticannews',
+    category: 'Holy See & Papal Ministry',
+    description: 'Official Facebook feed of Vatican News from the Dicastery for Communication of the Holy See.'
+  },
+  {
+    id: 'fb-usccb',
+    name: 'U.S. Conference of Catholic Bishops (USCCB)',
+    handle: '@usccb',
+    socialUsername: 'usccb',
+    pageUrl: 'https://www.facebook.com/usccb',
+    category: 'Episcopal Ministry & Liturgy',
+    description: 'Official Facebook of the United States Conference of Catholic Bishops — daily readings, prayers, and pastoral teaching.'
+  },
+  {
+    id: 'fb-icc',
+    name: 'Institute of Catholic Culture',
+    handle: '@InstituteofCatholicCulture',
+    socialUsername: 'InstituteofCatholicCulture',
+    pageUrl: 'https://www.facebook.com/InstituteofCatholicCulture',
+    category: 'Catechesis & Patristics',
+    description: 'Orthodox Catholic adult catechesis in Sacred Scripture, Church history, philosophy, and patristics.'
+  },
+  {
+    id: 'fb-spiritualdirection',
+    name: 'SpiritualDirection.com',
+    handle: '@CatholicSpiritualDirection',
+    socialUsername: 'CatholicSpiritualDirection',
+    pageUrl: 'https://www.facebook.com/CatholicSpiritualDirection',
+    category: 'Contemplative Prayer & Interior Life',
+    description: 'Faithful Catholic spiritual direction, mental prayer, mystical theology, and wisdom of the Saints.'
   }
 ];
 
-export const CATHOLIC_FACEBOOK_ARTICLES: CatholicFacebookArticlePost[] = [
+export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
+  // 1. Aleteia
   {
-    id: 'fb-art-ncr-1',
-    sourceId: 'fb-ncregister',
-    sourceName: 'National Catholic Register',
-    handle: '@NCRegister',
-    pageUrl: 'https://www.facebook.com/NCRegister',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=120&q=80',
-    postDate: 'Yesterday at 3:15 PM',
-    postCaption: 'Across parishes and campus ministries, young Catholics are returning to the source and summit of the faith. Why Eucharistic adoration, sacred silence, and traditional reverence are inspiring a new generation of believers.\n\nRead our comprehensive special report below: 👇',
-    articleTitle: 'Returning to the Sources: Why Eucharistic Reverence Is Drawing Young Adults to the Church',
-    articleSummary: 'From university chapels to inner-city parishes, young adults are discovering that sacred reverence, prolonged Eucharistic silence, and traditional liturgy speak with extraordinary power to a generation exhausted by secular noise.',
-    articleDomain: 'ncregister.com',
-    articleUrl: 'https://www.ncregister.com/daily-news/returning-to-the-sources-eucharistic-reverence',
-    articleImageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-    readTime: '6 min read',
-    author: 'Joseph Pronechen',
-    category: 'Eucharist & Liturgy',
-    likesCount: 5820,
-    commentsCount: 412,
-    sharesCount: 1640,
-    fullArticleText: `A striking spiritual phenomenon is unfolding in parishes and university Newman Centers across the country: young Catholic adults are turning in droves toward Eucharistic adoration, traditional sacred music, and deep liturgical reverence.\n\nWhere conventional wisdom once assumed that youth sought casual, trend-driven worship, pastors report that millennials and Gen Z are thirsting for transcendence. "Young people today are inundated 24/7 with digital noise, algorithmic polarization, and relentless commercial demands," notes Fr. Julian Carron. "When they walk into a sanctuary lit only by vigil lamps, with the Blessed Sacrament exposed in a gold monstrance and the silence of eternity resting over the nave, they recognize something real."\n\nSociological surveys conducted during the National Eucharistic Congress confirmed this trend. Over 62% of attendees under thirty cited Eucharistic adoration as the single most transformative element of their prayer life.\n\nAs one university senior put it: "I don't need the Church to look like a coffee shop or a concert hall. I need the Church to bring me into the presence of the living God." For pastors and diocesan leaders, the message is clear: authentic renewal will not come from diluting the sacred, but from plunging fearlessly into its depths.`
-  },
-  {
-    id: 'fb-art-barron-1',
-    sourceId: 'fb-wordonfire',
-    sourceName: 'Word on Fire (Bishop Robert Barron)',
-    handle: '@BishopRobertBarron',
-    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
-    postDate: '2 days ago',
-    postCaption: 'Friends, we live in a culture deeply confused about truth, freedom, and the purpose of human life. In this new essay, I explore why Saint Thomas Aquinas remains our greatest guide through the modern intellectual labyrinth.\n\nGrace does not destroy nature; it elevates and perfects it.',
-    articleTitle: 'Bishop Robert Barron: Why Saint Thomas Aquinas Is the Doctor of Wonder and Realism',
-    articleSummary: 'Saint Thomas Aquinas refused both hyper-rationalism and anti-intellectual fideism. His masterly synthesis of faith and reason provides the antidote to modern cynicism and restores wonder before created being.',
-    articleDomain: 'wordonfire.org',
-    articleUrl: 'https://www.wordonfire.org/articles/barron/why-thomas-aquinas-matters-today/',
-    articleImageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-    readTime: '7 min read',
-    author: 'Bishop Robert Barron',
-    category: 'Theology & Philosophy',
-    likesCount: 7940,
-    commentsCount: 630,
-    sharesCount: 2310,
-    fullArticleText: `Pope Leo XIII famously wrote that Saint Thomas Aquinas gathered together the scattered philosophical insights of antiquity and harmonized them with Divine Revelation into an invincible citadel of truth.\n\nWhat makes Aquinas so perennial is his radical intellectual honesty. In every article of the Summa Theologiae, Thomas begins not by dismissing his opponents, but by formulating their objections with greater clarity and force than they themselves could muster. Only after giving full weight to the difficulty does he offer his famous "Sed Contra" (On the contrary) and his luminous "Respondeo" (I answer that).\n\nThomas teaches us that all truth, wherever it is found, comes from the Holy Spirit. He was not afraid of pagan philosophy, secular science, or challenging counterarguments, because he possessed unshakeable confidence in Christ as the Logos—the divine Word through whom all things were made.\n\nIf we wish to evangelize our modern culture, we must recover the Thomistic habit of mind: charity toward opponents, rigorous clarity of definition, and profound humility before the mystery of God who is ipsum esse subsistens—the very act of Being itself.`
-  },
-  {
-    id: 'fb-art-ca-1',
-    sourceId: 'fb-catholicanswers',
-    sourceName: 'Catholic Answers',
-    handle: '@catholicanswers',
-    pageUrl: 'https://www.facebook.com/catholicanswers',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
-    postDate: '3 days ago',
-    postCaption: 'Did the first Christians believe the bread and wine at Mass were merely symbols? The historical evidence from the Apostolic Fathers is overwhelming and unanimous.\n\nRead our full apologetics breakdown from Catholic Answers Magazine:',
-    articleTitle: 'Did the Early Church Believe in the Real Presence? The Irrefutable Patristic Evidence',
-    articleSummary: 'From Saint Ignatius of Antioch in 110 AD to Saint Justin Martyr and Saint Irenaeus, the earliest Christian disciples taught unequivocally that the Eucharist is the real Flesh and Blood of the Incarnate Jesus.',
-    articleDomain: 'catholic.com',
-    articleUrl: 'https://www.catholic.com/magazine/online-edition/the-early-church-and-the-real-presence',
-    articleImageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
-    readTime: '8 min read',
-    author: 'Joe Heschmeyer',
-    category: 'Apologetics & History',
-    likesCount: 9120,
-    commentsCount: 840,
-    sharesCount: 3450,
-    fullArticleText: `Non-Catholic historians often claim that the doctrine of transubstantiation and the Real Presence of Christ in the Eucharist were late medieval corruptions invented by the Roman Catholic hierarchy. But what do the earliest historical documents actually reveal?\n\nConsider Saint Ignatius of Antioch, a direct disciple of the Apostle John. Writing around 110 AD on his way to be martyred by lions in Rome, Ignatius warned the Church about Gnostic heretics: "They abstain from the Eucharist and from prayer because they do not confess that the Eucharist is the flesh of our Savior Jesus Christ, flesh which suffered for our sins and which that Father in His goodness raised up again." (Letter to the Smyrnaeans, 7:1).\n\nForty years later, around 150 AD, Saint Justin Martyr explained Christian liturgy to the Roman Emperor Antoninus Pius: "Not as common bread and common drink do we receive these; but in like manner as Jesus Christ our Savior, having been made flesh by the Word of God, had both flesh and blood for our salvation, so likewise have we been taught that the food which is blessed by the prayer of His word is the flesh and blood of that Jesus who was made flesh." (First Apology, 66).\n\nThere is not a single Church Father who interpreted John 6 as a mere metaphor. From the Roman catacombs to the desert fathers, the witness of apostolic Christianity is unanimous: Jesus Christ is truly, really, and substantially present on our altars.`
-  },
-  {
-    id: 'fb-art-vatican-1',
-    sourceId: 'fb-vaticannews',
-    sourceName: 'Vatican News (English)',
-    handle: '@vaticannews',
-    pageUrl: 'https://www.facebook.com/vaticannews',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
-    postDate: 'Nov 6 at 11:20 AM',
-    postCaption: 'Pope at the Solemn Mass: "The Eucharist is not a badge of honor for the righteous, but the bread that nourishes weary pilgrims on the road to eternal life."\n\nFull papal homily reflection and video dispatch from the Dicastery for Communication:',
-    articleTitle: 'Pope at Corpus Christi: The Eucharist Is Bread for Pilgrims, Not a Reward for the Perfect',
-    articleSummary: 'Celebrating the Solemnity of the Most Holy Body and Blood of Christ, the Holy Father urged believers never to reduce the Mass to a routine ritual, but to approach Christ with humility and open hearts.',
-    articleDomain: 'vaticannews.va',
-    articleUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-homily-corpus-christi-bread-pilgrims.html',
-    articleImageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
-    readTime: '5 min read',
-    author: 'Vatican News Editorial',
-    category: 'Holy See & Magisterium',
-    likesCount: 14200,
-    commentsCount: 920,
-    sharesCount: 4180,
-    fullArticleText: `In his homily delivered from the steps of the Archbasilica of St. John Lateran, the Holy Father reflected on the fragility of human life and the infinite condescension of Christ in the Blessed Sacrament.\n\n"When Jesus took bread into His hands on the night before He died," the Pope noted, "He did not wait for the Apostles to understand His mystery. He knew Peter would deny Him, Judas would betray Him, and the others would scatter in fear. Yet He broke Himself for them."\n\nThe Eucharist, the Holy Father emphasized, is the medicine of immortality for souls wounded by sin and grief. When we receive Holy Communion, we allow Christ to heal our selfishness and unite us to the sufferings of the poor.\n\n"Let us kneel before the Lord of glory with adoration," the Pope concluded, "and let us rise up from our knees to run with haste toward our brothers and sisters who need love, bread, and hope."`
-  },
-  {
-    id: 'fb-art-ewtn-1',
-    sourceId: 'fb-ewtn',
-    sourceName: 'EWTN Global Catholic Network',
-    handle: '@ewtnonline',
-    pageUrl: 'https://www.facebook.com/ewtnonline',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
-    postDate: '4 days ago',
-    postCaption: 'Mother Angelica: "Faith is having one foot on the ground, one foot in the air, and a queasy feeling in your stomach!"\n\nHow Mother Angelica learned radical abandonment to God’s holy will when all worldly resources ran dry:',
-    articleTitle: 'Mother Angelica’s Five Rules for Trusting God When Everything Seems to Fail',
-    articleSummary: 'With only two hundred dollars in her bank account and zero broadcast experience, a cloistered Poor Clare nun built the world’s largest religious media network. Her secret: radical trust in divine Providence.',
-    articleDomain: 'ewtn.com',
-    articleUrl: 'https://www.ewtn.com/catholicism/library/mother-angelica-radical-trust-in-providence',
-    articleImageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
-    readTime: '5 min read',
-    author: 'Raymond Arroyo',
-    category: 'Spiritual Life & Wisdom',
-    likesCount: 11500,
-    commentsCount: 780,
-    sharesCount: 3920,
-    fullArticleText: `When Rita Rizzo entered the Poor Clares of Perpetual Adoration in Cleveland, Ohio, in 1944, she could never have anticipated that decades later she would stand before satellite dishes in Alabama broadcasting Christ’s Gospel to hundreds of millions of people.\n\nHer spiritual philosophy was disarmingly simple, rooted entirely in the Little Way of Saint Thérèse of Lisieux and the radical poverty of Saint Francis. "Unless you are willing to look ridiculous for Jesus," she famously told her sisters, "God cannot do the miraculous through you."\n\nRule 1: Pray as if everything depends on God; work as if everything depends on you.\nRule 2: Never let financial scarcity dictate what God can accomplish through obedience.\nRule 3: Keep your eyes fixed on the tabernacle, not on television ratings or worldly approval.\nRule 4: Laugh at yourself often—pride is the great enemy of grace.\nRule 5: When you suffer, offer it up in union with the Crucified Lord for the salvation of souls.\n\nToday, Mother Angelica’s legacy continues to shine across every continent as a living monument to what one woman wholly surrendered to God can achieve.`
-  },
-  {
-    id: 'fb-art-aleteia-1',
+    id: 'fb-post-aleteia-1',
     sourceId: 'fb-aleteia',
-    sourceName: 'Aleteia (English)',
+    sourceName: 'Aleteia',
     handle: '@aleteia_en',
     pageUrl: 'https://www.facebook.com/aleteia.en',
-    verified: true,
     avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
-    postDate: 'Nov 5 at 8:45 AM',
-    postCaption: 'Feeling mentally drained, anxious, or overwhelmed by your daily routine? The Saints discovered that five minutes of quiet adoration before the Blessed Sacrament can reorder the entire interior life.\n\nRead how silent Eucharistic presence heals the soul:',
-    articleTitle: 'How Five Minutes of Silent Adoration Before the Tabernacle Transforms the Weary Soul',
-    articleSummary: 'You do not need to memorize complicated prayers or read dense spiritual treatises. Simply sitting in the quiet gaze of Jesus in the tabernacle restores emotional balance, peace of mind, and supernatural hope.',
-    articleDomain: 'aleteia.org',
-    articleUrl: 'https://aleteia.org/2026/11/05/five-minutes-of-silent-adoration-transforms-soul/',
-    articleImageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-    readTime: '4 min read',
-    author: 'Cerith Gardiner',
-    category: 'Prayer & Spirituality',
+    verified: true,
+    postDate: 'Yesterday at 2:30 PM',
+    category: 'Sacred Silence & Prayer',
+    text: `Feeling mentally drained or anxious? A parish priest in Ars, France, noticed a local farmer sitting alone in the village church for hours every afternoon.
+
+Saint John Vianney approached him and asked: "My friend, what do you do here for so long?"
+
+The peasant looked up with serenity and replied: "Nothing, Monsieur le Curé. I look at Him, and He looks at me."
+
+Take five minutes today to sit quietly before the Blessed Sacrament. Sacred silence heals what the noise of the world fractures.`,
+    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Quiet sanctuary pew bathed in soft morning sunlight for contemplative prayer',
     likesCount: 8640,
     commentsCount: 520,
-    sharesCount: 2890,
-    fullArticleText: `A parish priest in Ars, France, noticed a local farmer sitting alone in the village church for hours every afternoon. The farmer had no prayer book, no beads in hand, and his lips did not move.\n\nCurious, Saint John Vianney approached him and asked: "My friend, what do you do here for so long?" The peasant looked up with serenity and replied: "Nothing, Monsieur le Curé. I look at Him, and He looks at me."\n\nThat peasant had unlocked the sublime secret of contemplation. Modern psychology affirms that constant sensory overstimulation creates chronic nervous exhaustion. But when a soul steps into the sacred stillness of a Catholic church, breathing in the quiet presence of Jesus Christ residing in the golden tabernacle, the soul undergoes spiritual decompression.\n\nSaint Alphonsus Liguori wrote: "Know that of all devotions, that of adoring Jesus in the Blessed Sacrament is the greatest after the sacraments, the one dearest to God and the one most helpful to us." Even five minutes spent on the way to work or on your lunch break will anchor your spirit in divine eternity.`
+    sharesCount: 2890
   },
   {
-    id: 'fb-art-stpaul-1',
-    sourceId: 'fb-stpaulcenter',
-    sourceName: 'St. Paul Center',
-    handle: '@stpaulcenter',
-    pageUrl: 'https://www.facebook.com/stpaulcenter',
+    id: 'fb-post-aleteia-2',
+    sourceId: 'fb-aleteia',
+    sourceName: 'Aleteia',
+    handle: '@aleteia_en',
+    pageUrl: 'https://www.facebook.com/aleteia.en',
+    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
     verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
-    postDate: '5 days ago',
-    postCaption: 'Why did the Book of Revelation take center stage in the early Church’s liturgy? Dr. Scott Hahn unpacks the astonishing truth that the Holy Sacrifice of the Mass is heaven touching earth.\n\nDive into our biblical theology study below:',
-    articleTitle: 'Dr. Scott Hahn: The Lamb’s Supper — How the Apocalypse Unlocks the Holy Mass',
-    articleSummary: 'When we read the Book of Revelation through Catholic eyes, we discover not an incomprehensible code about the end of the world, but the heavenly liturgy that we enter every time we step into the Mass.',
-    articleDomain: 'stpaulcenter.com',
-    articleUrl: 'https://stpaulcenter.com/studies-and-resources/the-lambs-supper-the-mass-as-heaven-on-earth/',
-    articleImageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
-    readTime: '7 min read',
-    author: 'Dr. Scott Hahn',
-    category: 'Biblical Theology',
-    likesCount: 10400,
-    commentsCount: 670,
-    sharesCount: 3510,
-    fullArticleText: `When I was a Protestant pastor and biblical scholar, the Book of Revelation was an enigma of dragons, beasts, and apocalyptic trumpets. But on the morning I quietly slipped into the back of a Catholic chapel for daily Mass, scales fell from my eyes.\n\nSuddenly, the entire Apocalypse made coherent sense. In the Mass, I heard the words of Revelation: "Holy, holy, holy is the Lord God Almighty." I saw the altar, the golden chalice, the incense rising before the throne, the seven candles, the white-robed presbyters, and the chanting of the Lamb of God who takes away the sin of the world.\n\nSaint John was not writing a science fiction novel; he was giving the early persecuted Church a vision of the heavenly Eucharistic banquet. In the Mass, time collapses. Heaven opens. We stand at the foot of Mount Zion alongside the angels, archangels, and the triumphant company of the saints.\n\nWhen the priest raises the Host and proclaims, "Behold the Lamb of God," we are participating in the marriage supper of the Lamb. To miss Mass is to turn down an invitation to the court of the King of Kings.`
-  },
-  {
-    id: 'fb-art-ascension-1',
-    sourceId: 'fb-ascension',
-    sourceName: 'Ascension',
-    handle: '@AscensionPress',
-    pageUrl: 'https://www.facebook.com/AscensionPress',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=120&q=80',
-    postDate: '6 days ago',
-    postCaption: 'Fr. Mike Schmitz: "God doesn’t measure prayer by how good you feel during it. He measures prayer by your faithfulness when you’d rather do anything else."\n\nHow to persevere in prayer when dryness hits your soul:',
-    articleTitle: 'Fr. Mike Schmitz: What to Do When You Feel Absolutely Nothing in Prayer',
-    articleSummary: 'Feelings are the weather of the soul; faith is the rock upon which we stand. When prayers feel empty and God seems silent, that is often the precise moment your love is being purified of self-seeking.',
-    articleDomain: 'media.ascensionpress.com',
-    articleUrl: 'https://media.ascensionpress.com/2026/11/02/fr-mike-schmitz-dryness-in-prayer/',
-    articleImageUrl: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80',
-    readTime: '5 min read',
-    author: 'Fr. Mike Schmitz',
-    category: 'Faith & Pastoral',
-    likesCount: 13200,
-    commentsCount: 890,
-    sharesCount: 4620,
-    fullArticleText: `Almost every Catholic has experienced that heartbreaking moment: you sit down in your prayer corner or kneel before the tabernacle, and... nothing. No warm emotions, no profound insights, no spiritual goosebumps. Just boredom, distraction, and the persistent clock ticking on the wall.\n\nIt is tempting to think: "I must be doing this wrong," or worse, "God has abandoned me."\n\nFr. Mike Schmitz offers a profound corrective: "If you only pray when you feel like praying, you aren't loving God—you're loving the consolation God gives you."\n\nSaint John of the Cross called this the dark night of the senses. When God withdraws emotional candy from our spiritual diet, He is treating us as adults. He is asking: "Will you love Me for who I am, even when I give you no emotional payback?"\n\nWhen you show up to prayer tired and dry, and you stay for the full fifteen minutes purely out of love for Jesus, that prayer is often infinitely more pleasing to God than tears of joy. Fidelity in the desert is the crucible of sanctity.`
-  },
-  {
-    id: 'fb-art-ncr-2',
-    sourceId: 'fb-ncregister',
-    sourceName: 'National Catholic Register',
-    handle: '@NCRegister',
-    pageUrl: 'https://www.facebook.com/NCRegister',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=120&q=80',
     postDate: '3 days ago',
-    postCaption: 'Why did the Second Vatican Council declare that Gregorian chant holds "pride of place" in Catholic liturgy? A deep exploration into the musical heritage of the Church that calms the racing heart and lifts the soul to eternity.\n\nRead our liturgical feature:',
-    articleTitle: 'The Celestial Architecture of Gregorian Chant: Why Ancient Melody Still Speaks to the Modern Soul',
-    articleSummary: 'Unmetered, pure, and woven entirely from the words of Sacred Scripture, Gregorian chant is not an aesthetic relic of medieval Europe—it is the liturgical prayer song of the Mystical Body of Christ.',
-    articleDomain: 'ncregister.com',
-    articleUrl: 'https://www.ncregister.com/features/the-celestial-architecture-of-gregorian-chant',
-    articleImageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-    readTime: '6 min read',
-    author: 'Peter Kwasniewski',
-    category: 'Sacred Liturgy & Music',
-    likesCount: 6420,
-    commentsCount: 388,
-    sharesCount: 1890,
-    fullArticleText: `In an era defined by syncopated beats, electronic manipulation, and relentless auditory noise, Gregorian chant enters the human sanctuary like a cool breeze over desert sand.\n\nUnlike secular music, which seeks to stimulate the nervous system or arouse emotional sentimentality, Gregorian chant was crafted for one solitary purpose: adoration. The melodic line follows the natural rhythm of Latin sacred prose, breathing with the text of the Psalms.\n\nSt. Augustine confessed in the Confessions: "How I wept at Thy hymns and canticles, deeply moved by the voices that sweetly sounded in Thy Church! Those voices flowed into my ears and the truth was distilled into my heart."\n\nWhen parishes reintroduce the chant of the Church, young people and seekers often experience a profound sense of the numinous. The unhurried melodies create sacred space, reminding modern worshipers that they have stepped across the threshold of the earthly city into the eternal banquet of heaven.`
+    category: 'Saints & Interior Peace',
+    text: `Saint Teresa of Ávila carried this bookmark in her breviary her entire life:
+
+"Let nothing disturb you,
+Let nothing frighten you,
+All things are passing away:
+God never changes.
+Patience obtains all things.
+Whoever has God lacks nothing;
+God alone suffices."
+
+Whatever trial or cross you are carrying today, hold fast to Jesus Christ. His grace is more than enough for you.`,
+    imageUrl: 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Glowing Gothic stained glass window filling a sacred Catholic chapel with warm light',
+    likesCount: 11200,
+    commentsCount: 780,
+    sharesCount: 4320
   },
+
+  // 2. EWTN Global Catholic Network
   {
-    id: 'fb-art-barron-2',
-    sourceId: 'fb-wordonfire',
-    sourceName: 'Word on Fire (Bishop Robert Barron)',
-    handle: '@BishopRobertBarron',
-    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
-    postDate: '4 days ago',
-    postCaption: 'Friends, when you begin an evangelizing conversation with moral rules or doctrinal arguments, minds frequently slam shut. But begin with beauty—with the Sistine Chapel, Bach, or the radiant life of Mother Teresa—and you awaken the heart.\n\nWhy beauty is the great opening wedge for Christ in our secular culture:',
-    articleTitle: 'Bishop Robert Barron: Evangelizing Through Beauty — The Great Wedge for Faith',
-    articleSummary: 'Before you tell people what is right and what is true, show them what is beautiful. Beauty disarms ideological suspicion and creates the longing for the transcendent that only God can satisfy.',
-    articleDomain: 'wordonfire.org',
-    articleUrl: 'https://www.wordonfire.org/articles/barron/evangelizing-through-beauty/',
-    articleImageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
-    readTime: '6 min read',
-    author: 'Bishop Robert Barron',
-    category: 'Evangelization & Culture',
-    likesCount: 9480,
-    commentsCount: 712,
-    sharesCount: 3120,
-    fullArticleText: `Hans Urs von Balthasar, the great Swiss theologian, lamented that the modern world has largely abandoned the transcendentals of Being: Truth, Goodness, and Beauty. In our postmodern context, if you declare something is "true," people respond with cynical relativism: "That may be true for you, but not for me." If you tell them what is "good," they suspect authoritarian moralizing.\n\nBeauty, however, possesses an arresting, non-coercive power. No one looks at Chartres Cathedral or the Pieta and argues; rather, one is stopped in one's tracks by astonishment. Beauty arrests the mind, suspends cynical judgment, and draws the beholder outside of the narrow ego.\n\nOnce a soul has tasted authentic beauty, it naturally asks: "Who made this possible? What kind of vision of reality gave birth to such grandeur?" And suddenly, the door to the Good and the True swings wide open.\n\nThis is why Word on Fire invests so deeply in filmmaking, sacred architecture, high-caliber book production, and sacred art. We do not beautify the faith to make it palatable; we show its beauty because Christ is the radiance of the Father's glory.`
-  },
-  {
-    id: 'fb-art-ca-2',
-    sourceId: 'fb-catholicanswers',
-    sourceName: 'Catholic Answers',
-    handle: '@catholicanswers',
-    pageUrl: 'https://www.facebook.com/catholicanswers',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
-    postDate: '5 days ago',
-    postCaption: 'Is the doctrine of Purgatory an insult to the finished sacrifice of Jesus on the Cross, or is it the ultimate triumph of His sanctifying grace? Trent Horn provides a clear, biblical roadmap for discussing the state of purification with non-Catholic Christians.\n\nSave and share this apologetics reference:',
-    articleTitle: 'How to Explain Purgatory from Sacred Scripture: A Biblical Guide for Catholics',
-    articleSummary: 'Purgatory is not a second chance, nor is it a payment for the guilt of sin. It is God’s divine washing machine, completing the work of holiness so that no stain remains when we behold the face of God.',
-    articleDomain: 'catholic.com',
-    articleUrl: 'https://www.catholic.com/magazine/online-edition/explaining-purgatory-scripture-guide',
-    articleImageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
-    readTime: '7 min read',
-    author: 'Trent Horn',
-    category: 'Apologetics & Scripture',
-    likesCount: 8430,
-    commentsCount: 915,
-    sharesCount: 2980,
-    fullArticleText: `One of the most persistent misconceptions among non-Catholic Christians is that Catholics believe Purgatory is an alternative to the Cross. In reality, every single soul in Purgatory is already saved, washed in the Blood of the Lamb, and guaranteed eternal bliss in Heaven.\n\nRevelation 21:27 teaches that "nothing unclean shall enter" the presence of God. When believers die with venial imperfections or selfish attachments, are they immediately fit to stand before the uncreated holiness of Almighty God?\n\nSaint Paul explains in 1 Corinthians 3:13-15 that on the Last Day, each man’s work will be tested by fire. "If any man’s work is burned up, he will suffer loss, though he himself will be saved, but only as through fire." Notice: this cannot refer to Hell, because the person is saved. Nor can it refer to Heaven, because there is suffering and loss. It describes an intermediate purification.\n\nC.S. Lewis, though an Anglican, understood this intuitively: "Our souls demand Purgatory, don’t they? Would it not break the heart if God said to us, 'It is true, your breath smells and your rags are dripping with mud, but we are polite here and nobody will mind'? Should we not reply, 'With submission, sir, and if there is no objection, I’d rather be cleansed first'?"\n\nPurgatory is God's fiery mercy, ensuring that when we look upon Christ in glory, our joy is unalloyed and whole.`
-  },
-  {
-    id: 'fb-art-vatican-2',
-    sourceId: 'fb-vaticannews',
-    sourceName: 'Vatican News (English)',
-    handle: '@vaticannews',
-    pageUrl: 'https://www.facebook.com/vaticannews',
-    verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
-    postDate: '6 days ago',
-    postCaption: 'Holy See calls on international leaders and faith communities to address the rising epidemic of loneliness among youth: "Our young people do not need more algorithms; they need authentic fraternal accompaniment, community, and the assurance that their lives have eternal purpose."\n\nFull dispatch from Vatican City:',
-    articleTitle: 'Vatican Dispatches: Overcoming the Epidemic of Loneliness Through Christian Fraternity',
-    articleSummary: 'Addressing delegates at the Vatican Dicastery for the Laity, Family, and Life, papal representatives urged parishes worldwide to become spiritual oases for isolated young people seeking community and authentic hope.',
-    articleDomain: 'vaticannews.va',
-    articleUrl: 'https://www.vaticannews.va/en/vatican-city/news/2026-11/holy-see-youth-loneliness-epidemic.html',
-    articleImageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-    readTime: '5 min read',
-    author: 'Vatican News Editorial',
-    category: 'Holy See & Global Church',
-    likesCount: 11800,
-    commentsCount: 640,
-    sharesCount: 3240,
-    fullArticleText: `A landmark symposium at the Holy See brought together sociologists, psychiatrists, and youth ministers to tackle what mental health professionals term the modern "epidemic of isolation."\n\nDespite unprecedented hyper-connectivity through social networks, studies show that over 40% of young adults report feeling chronically lonely. Cardinal Kevin Farrell noted that virtual connectivity often exacerbates alienation by replacing face-to-face vulnerability with curated performance.\n\n"The Christian parish must rediscover its vocation as an oasis of brotherhood," the Vatican document states. "Christ did not save us as isolated individuals, but called us into a communion—the Church."\n\nThe Holy See encouraged dioceses to foster intergenerational mentorship, Eucharistic adoration groups, and charitable outreach where youth can direct their energies toward alleviating the poverty of others, finding that in giving themselves away, their own souls find healing.`
-  },
-  {
-    id: 'fb-art-ewtn-2',
+    id: 'fb-post-ewtn-1',
     sourceId: 'fb-ewtn',
     sourceName: 'EWTN Global Catholic Network',
     handle: '@ewtnonline',
     pageUrl: 'https://www.facebook.com/ewtnonline',
-    verified: true,
     avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
-    postDate: 'Nov 3 at 2:00 PM',
-    postCaption: 'Saint Padre Pio called it "the weapon for our times." Pope Saint John Paul II said it was his favorite prayer. Why the Holy Rosary remains the spiritual lifeline for millions of families fighting spiritual battles today.\n\nFive remarkable fruits of praying the daily Rosary:',
-    articleTitle: 'The Rosary as Spiritual Armor: Why Families Who Pray Together Still Stand Strong',
-    articleSummary: 'In the Rosary, we do not merely repeat vocal prayers; we contemplate the face of Jesus Christ through the immaculate eyes and maternal heart of the Virgin Mary, transforming everyday anxieties into divine peace.',
-    articleDomain: 'ewtn.com',
-    articleUrl: 'https://www.ewtn.com/catholicism/library/the-rosary-spiritual-armor-for-families',
-    articleImageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-    readTime: '5 min read',
-    author: 'EWTN Spiritual Writers',
-    category: 'Marian Devotion & Prayer',
+    verified: true,
+    postDate: 'Yesterday at 4:15 PM',
+    category: 'The Holy Rosary & Prayer',
+    text: `Saint Padre Pio called the Rosary "the weapon for our times." In the Holy Rosary, we do not simply repeat words; we contemplate the face of Jesus Christ through the immaculate eyes and maternal heart of the Virgin Mary.
+
+Take fifteen minutes today to pray five decades of the Rosary for your family, your priests, and for peace in the world.
+
+Our Lady promised: "Whoever shall faithfully serve me by the recitation of the Rosary, shall receive signal graces."`,
+    imageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Traditional wooden Catholic Rosary beads with sacred crucifix',
     likesCount: 14700,
     commentsCount: 1040,
-    sharesCount: 5210,
-    fullArticleText: `When Our Lady appeared to the three shepherd children in Fatima, Portugal, in 1917, her simple, urgent request was repeated in every single apparition: "Pray the Rosary every day to obtain peace for the world."\n\nMany Catholics struggle with the Rosary because they view it as dry repetition. But Saint Louis de Montfort and Pope Saint John Paul II remind us that the vocal prayers are merely the rhythm that accompanies contemplation of the Mysteries of the life of Christ.\n\nAs our fingers move over the beads, our imagination enters the Annunciation, the Nativity, the agony in the Garden of Gethsemane, the glory of the Resurrection, and the descent of the Holy Spirit. We look at Jesus with Mary's maternal gaze.\n\nFamilies who establish the holy habit of the daily Rosary report extraordinary fruits: healing of marital friction, protection of children from spiritual confusion, and deep interior serenity amid economic or health hardships. Take up your beads today and experience the maternal protection of the Queen of Heaven.`
+    sharesCount: 5210
   },
   {
-    id: 'fb-art-aleteia-2',
-    sourceId: 'fb-aleteia',
-    sourceName: 'Aleteia (English)',
-    handle: '@aleteia_en',
-    pageUrl: 'https://www.facebook.com/aleteia.en',
+    id: 'fb-post-ewtn-2',
+    sourceId: 'fb-ewtn',
+    sourceName: 'EWTN Global Catholic Network',
+    handle: '@ewtnonline',
+    pageUrl: 'https://www.facebook.com/ewtnonline',
+    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
     verified: true,
-    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
-    postDate: 'Nov 2 at 10:30 AM',
-    postCaption: 'In a world that measures your worth by productivity and social standing, the Sacred Heart of Jesus reminds you that you are loved unconditionally and infinitely. How to enthrone the Sacred Heart in your home and reclaim peace:\n\nRead our guide on Catholic home enthronement:',
-    articleTitle: 'The 12 Promises of the Sacred Heart: Reclaiming Your Home as a Fortress of Grace',
-    articleSummary: 'When Jesus appeared to Saint Margaret Mary Alacoque in Paray-le-Monial, He revealed His Heart burning with love for mankind and promised extraordinary blessings to homes that honor His Pierced Heart.',
-    articleDomain: 'aleteia.org',
-    articleUrl: 'https://aleteia.org/2026/11/02/12-promises-sacred-heart-home-enthronement/',
-    articleImageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
-    readTime: '5 min read',
-    author: 'Cerith Gardiner',
-    category: 'Sacred Heart & Family',
-    likesCount: 9320,
-    commentsCount: 580,
-    sharesCount: 3410,
-    fullArticleText: `In the 17th century, when cold Jansenism led many Catholics to view God as a harsh, distant judge, Christ appeared to a humble French Visitation nun, revealing His burning, thorn-crowned Heart: "Behold this Heart which has loved men so much that it has spared nothing to exhaust and consume itself to prove its love."\n\nAmong the twelve promises given to Saint Margaret Mary are assurances that Christ will give families all the graces necessary for their state of life, establish peace in their homes, comfort them in all their afflictions, and be their secure refuge during life and at the hour of death.\n\nEnthroning the Sacred Heart in the living room is a public declaration of the sovereignty of Christ over the domestic church. When parents and children gather before His image, family conflicts lose their venom in the radiant light of divine mercy.`
+    postDate: '4 days ago',
+    category: 'Mother Angelica Wisdom',
+    text: `Mother Angelica reminds us: "Unless you are willing to do the ridiculous, God cannot do the miraculous. When you step out in faith for Jesus, do not look at your own smallness—look at His boundless majesty!"
+
+Never let human fear, worldly doubt, or smallness of spirit stop you from responding to God’s call. He is faithful to the very end.`,
+    imageUrl: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'The Holy Cross of Christ rising against the radiant morning sky',
+    likesCount: 12500,
+    commentsCount: 890,
+    sharesCount: 4190
   },
+
+  // 3. St. Paul Center
   {
-    id: 'fb-art-stpaul-2',
+    id: 'fb-post-stpaul-1',
     sourceId: 'fb-stpaulcenter',
     sourceName: 'St. Paul Center',
     handle: '@stpaulcenter',
     pageUrl: 'https://www.facebook.com/stpaulcenter',
-    verified: true,
     avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
-    postDate: 'Oct 31 at 4:15 PM',
-    postCaption: 'Did Jesus invent the Sacraments out of nowhere, or was He fulfilling ancient prophecies hidden throughout the Old Testament? Dr. John Bergsma explores how the Dead Sea Scrolls and Hebrew Scriptures illuminated early Catholic sacramental theology.\n\nRead the biblical theology summary:',
-    articleTitle: 'Dr. John Bergsma: Jesus and the Old Testament Roots of Catholic Sacraments',
-    articleSummary: 'From the Passover Lamb to the Todah thanksgiving sacrifice and the water from the rock, the Seven Sacraments are the organic fulfillment of God’s ancient covenant promises to Israel.',
-    articleDomain: 'stpaulcenter.com',
-    articleUrl: 'https://stpaulcenter.com/studies-and-resources/jesus-and-old-testament-sacraments/',
-    articleImageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
-    readTime: '7 min read',
-    author: 'Dr. John Bergsma',
-    category: 'Biblical Studies',
-    likesCount: 7890,
-    commentsCount: 460,
-    sharesCount: 2680,
-    fullArticleText: `When critics claim that the Catholic sacramental system was invented by medieval popes, they display complete unfamiliarity with Hebrew Scripture. Every single Catholic Sacrament has deep biblical roots in the covenants of the Old Testament.\n\nTake the Todah sacrifice in the Temple: the only sacrifice that rabbis taught would endure into the Messianic Age was the Todah—a sacrifice of unleavened bread and wine offered in thanksgiving for deliverance from death. The Hebrew word Todah translates directly into Greek as Eucharistia.\n\nWhen Jesus gathered with His disciples in the Upper Room on Holy Thursday, He took bread, gave thanks (eucharistēsas), and gave it to them saying, "This is My Body." The early Jewish-Christian Church understood immediately that Jesus was inaugurating the eternal Todah.\n\nStudying Scripture with Catholic lenses unlocks the unity of the Old and New Testaments, revealing God's coherent plan of salvation.`
+    verified: true,
+    postDate: '2 days ago',
+    category: 'Biblical Theology & Holy Mass',
+    text: `Dr. Scott Hahn: "When I was a Protestant pastor, the Book of Revelation was an enigma of dragons, beasts, and trumpets. But on the morning I quietly slipped into the back of a Catholic chapel for daily Mass, scales fell from my eyes."
+
+In the Mass, we hear: "Holy, Holy, Holy is the Lord God Almighty." We see the altar, the golden chalice, the incense, the candles, and the chant of the Lamb of God.
+
+Saint John was revealing the heavenly liturgy. In the Holy Mass, heaven touches earth.`,
+    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Reverent Catholic sanctuary with the high altar and golden tabernacle',
+    likesCount: 10400,
+    commentsCount: 670,
+    sharesCount: 3510
   },
   {
-    id: 'fb-art-dm-1',
-    sourceId: 'fb-divinemercy',
-    sourceName: 'The Divine Mercy (Marian Fathers)',
-    handle: '@DivineMercyOfficial',
-    pageUrl: 'https://www.facebook.com/DivineMercyOfficial',
+    id: 'fb-post-stpaul-2',
+    sourceId: 'fb-stpaulcenter',
+    sourceName: 'St. Paul Center',
+    handle: '@stpaulcenter',
+    pageUrl: 'https://www.facebook.com/stpaulcenter',
+    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
     verified: true,
+    postDate: '5 days ago',
+    category: 'Sacred Scripture & The Word of God',
+    text: `Ignorance of Scripture is ignorance of Christ, wrote Saint Jerome. When you open your Catholic Bible, God is not communicating distant memories from the ancient past—He is speaking directly into your life today.
+
+"For the word of God is living and active, sharper than any two-edged sword." (Hebrews 4:12)
+
+Make a commitment to read the daily Mass readings each morning before opening emails or social media. Let God's Word shape your soul.`,
+    imageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Open Catholic Holy Bible bathed in warm morning light',
+    likesCount: 8900,
+    commentsCount: 540,
+    sharesCount: 3100
+  },
+
+  // 4. Augustine Institute
+  {
+    id: 'fb-post-augustine-1',
+    sourceId: 'fb-augustine-institute',
+    sourceName: 'Augustine Institute',
+    handle: '@AugustineInstitute',
+    pageUrl: 'https://www.facebook.com/AugustineInstitute',
+    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'Yesterday at 1:00 PM',
+    category: 'Saint Augustine & Catholic Wisdom',
+    text: `Saint Augustine in his Confessions: "You were within me, but I was in the world outside myself. I sought You there, and in my unlovely state I plunged into those lovely created things which You made. You were with me, and I was not with You."
+
+"Late have I loved You, O Beauty ever ancient, ever new! Late have I loved You!"
+
+God is closer to us than we are to ourselves. Turn inward in silent prayer today and listen to the voice of the divine Physician.`,
+    imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Historic theological manuscripts and Catholic scholarly library bathed in candlelight',
+    likesCount: 9340,
+    commentsCount: 620,
+    sharesCount: 3280
+  },
+  {
+    id: 'fb-post-augustine-2',
+    sourceId: 'fb-augustine-institute',
+    sourceName: 'Augustine Institute',
+    handle: '@AugustineInstitute',
+    pageUrl: 'https://www.facebook.com/AugustineInstitute',
+    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: '4 days ago',
+    category: 'Theological Formation & Grace',
+    text: `Faith seeks understanding (fides quaerens intellectum). The Catholic faith is not a blind leap into the dark; it is a radiant leap into the Light of Christ that illuminates every corner of reality.
+
+When we study theology from the heart of the Church, our love for Jesus Christ deepens from mere sentiment into unbreakable conviction.
+
+"You have made us for Yourself, O Lord, and our hearts are restless until they rest in You."`,
+    imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Majestic cathedral arches with morning light pouring down upon the sanctuary',
+    likesCount: 7820,
+    commentsCount: 490,
+    sharesCount: 2650
+  },
+
+  // 5. FORMED
+  {
+    id: 'fb-post-formed-1',
+    sourceId: 'fb-formedcatholic',
+    sourceName: 'FORMED',
+    handle: '@FORMEDCatholic',
+    pageUrl: 'https://www.facebook.com/FORMEDCatholic',
     avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
-    postDate: 'Oct 30 at 3:00 PM',
-    postCaption: 'Father Chris Alar, MIC: "No sin is greater than God’s capacity to forgive—except the sin of refusing His mercy." Why Saint Faustina’s message of Divine Mercy is the urgent message for our troubled 21st-century world.\n\nRead our theological overview of the message and devotion:',
-    articleTitle: 'Fr. Chris Alar: The Unfathomable Ocean of Divine Mercy for Sinners and Seekers',
-    articleSummary: 'Saint Faustina Kowalska recorded Jesus’ words: "The greater the sinner, the greater the right he has to My mercy." Learn how the Chaplet, the Image, and the 3:00 PM Hour of Mercy unlock extraordinary graces for souls.',
-    articleDomain: 'thedivinemercy.org',
-    articleUrl: 'https://www.thedivinemercy.org/articles/ocean-of-divine-mercy-fr-chris-alar',
-    articleImageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-    readTime: '6 min read',
-    author: 'Fr. Chris Alar, MIC',
-    category: 'Divine Mercy Devotion',
-    likesCount: 16200,
-    commentsCount: 1420,
-    sharesCount: 6890,
-    fullArticleText: `In the 1930s, in an obscure convent in Poland, Jesus appeared to Sister Faustina Kowalska, a young woman with only three years of elementary education, and charged her with delivering His message of mercy to the world.\n\nJesus instructed her to paint an image according to the pattern she saw, with the signature: "Jesus, I trust in You." The two rays emanating from His Pierced Heart denote Blood and Water—the Blood which is the life of souls, and the Water which makes souls righteous in Baptism and Confession.\n\n"Tell souls," Jesus said, "that from this fount of mercy souls draw graces solely with the vessel of trust. If their trust is great, there is no limit to My generosity."\n\nWhen we pray the Chaplet of Divine Mercy, offering the Body and Blood, Soul and Divinity of our Lord Jesus Christ in atonement for our sins and those of the whole world, we are invoking the infinite merits of Calvary. No matter how deep our wounds or how dark our past, Christ stands ready to heal and forgive.`
+    verified: true,
+    postDate: '2 days ago',
+    category: 'Liturgical Living & Catholic Culture',
+    text: `How do we cultivate a truly Catholic home? By filling the domestic church with the rhythm of the liturgical seasons, the beauty of sacred art, and regular family prayer.
+
+Hang a crucifix in every room. Keep holy water by the front door. Gather at the dinner table to share the story of the Saint of the Day.
+
+"As for me and my house, we will serve the Lord." (Joshua 24:15)`,
+    imageUrl: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Sacred image of Jesus Christ revealing His Sacred Heart to all families',
+    likesCount: 8940,
+    commentsCount: 512,
+    sharesCount: 3180
+  },
+  {
+    id: 'fb-post-formed-2',
+    sourceId: 'fb-formedcatholic',
+    sourceName: 'FORMED',
+    handle: '@FORMEDCatholic',
+    pageUrl: 'https://www.facebook.com/FORMEDCatholic',
+    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: '5 days ago',
+    category: 'Saint of the Day & Evangelization',
+    text: `Saint Francis of Assisi did not merely talk about the Gospel; he became the living Gospel for everyone who crossed his path.
+
+When the world is fractured by cynicism, anger, and despair, the holiness of one Christian can ignite a revival across the entire Church.
+
+Lord, make me an instrument of Your peace: where there is hatred, let me sow love; where there is injury, pardon; where there is despair, hope.`,
+    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Peaceful Franciscan cloister stone walkway illuminated by peaceful sunlight',
+    likesCount: 9780,
+    commentsCount: 630,
+    sharesCount: 3410
+  },
+
+  // 6. Vatican News
+  {
+    id: 'fb-post-vatican-1',
+    sourceId: 'fb-vaticannews',
+    sourceName: 'Vatican News',
+    handle: '@vaticannews',
+    pageUrl: 'https://www.facebook.com/vaticannews',
+    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'Yesterday at 11:30 AM',
+    category: 'Papal Angelus & Global Peace',
+    text: `Pope at the Angelus: "Peace is not merely the absence of conflict; it is the gift of Christ’s presence in our hearts, working through justice, mutual respect, and maternal forgiveness."
+
+Addressing thousands of pilgrims gathered in St. Peter’s Square, the Holy Father urged the faithful worldwide to pray without ceasing for victims of violence and for peace across our troubled world.
+
+"Let us place all our brothers and sisters under the loving protection of Mary, Queen of Peace."`,
+    imageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'St. Peter’s Basilica and thousands of pilgrims gathered in St. Peter’s Square at the Vatican',
+    likesCount: 14200,
+    commentsCount: 920,
+    sharesCount: 4180
+  },
+  {
+    id: 'fb-post-vatican-2',
+    sourceId: 'fb-vaticannews',
+    sourceName: 'Vatican News',
+    handle: '@vaticannews',
+    pageUrl: 'https://www.facebook.com/vaticannews',
+    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: '3 days ago',
+    category: 'Holy See & Papal Ministry',
+    text: `"The Eucharist is not a prize for the perfect, but a powerful medicine and nourishment for the weak."
+
+At morning Mass in the Vatican, the Holy Father reminded pastors and the faithful that the heart of Jesus Christ beats with infinite mercy for every weary soul who walks through the doors of the Church. Come to Him with trust.`,
+    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'High altar and sanctuary illuminated within St. Peter’s Basilica',
+    likesCount: 11800,
+    commentsCount: 640,
+    sharesCount: 3240
+  },
+
+  // 7. USCCB
+  {
+    id: 'fb-post-usccb-1',
+    sourceId: 'fb-usccb',
+    sourceName: 'U.S. Conference of Catholic Bishops (USCCB)',
+    handle: '@usccb',
+    pageUrl: 'https://www.facebook.com/usccb',
+    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'Yesterday at 9:00 AM',
+    category: 'Daily Gospel Reflection',
+    text: `Daily Gospel Reflection (Matthew 5:1-12): "Blessed are the poor in spirit, for theirs is the kingdom of heaven."
+
+Jesus turns worldly values upside down. True blessedness does not come from wealth, fame, or self-sufficiency, but from total dependence upon God's merciful fatherhood.
+
+Today, ask the Holy Spirit to teach you humility of heart so you may recognize Christ in the hungry, the stranger, and the forgotten.`,
+    imageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Holy Gospel book and liturgical candles illuminated on the lectern',
+    likesCount: 9800,
+    commentsCount: 610,
+    sharesCount: 3200
+  },
+  {
+    id: 'fb-post-usccb-2',
+    sourceId: 'fb-usccb',
+    sourceName: 'U.S. Conference of Catholic Bishops (USCCB)',
+    handle: '@usccb',
+    pageUrl: 'https://www.facebook.com/usccb',
+    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: '4 days ago',
+    category: 'National Eucharistic Revival',
+    text: `National Eucharistic Revival: "My flesh is true food, and my blood is true drink. Whoever feeds on my flesh and drinks my blood abides in me, and I in him." (John 6:55-56)
+
+The greatest gift Jesus left us is Himself in the Blessed Sacrament. When you receive Holy Communion, you are united to the living God.
+
+Spend an hour in Eucharistic adoration this week. Kneel before the King of Kings and let His Eucharistic love heal your soul.`,
+    imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'The Blessed Sacrament exposed in a golden monstrance during parish Eucharistic adoration',
+    likesCount: 12900,
+    commentsCount: 940,
+    sharesCount: 4890
+  },
+
+  // 8. Institute of Catholic Culture
+  {
+    id: 'fb-post-icc-1',
+    sourceId: 'fb-icc',
+    sourceName: 'Institute of Catholic Culture',
+    handle: '@InstituteofCatholicCulture',
+    pageUrl: 'https://www.facebook.com/InstituteofCatholicCulture',
+    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: '2 days ago',
+    category: 'The Early Church Fathers & Patristics',
+    text: `Saint Irenaeus of Lyons (c. 130–202 AD): "The glory of God is a human being fully alive; and the life of man consists in beholding God."
+
+The Early Church Fathers did not see theology as dry academic theory, but as the pathway to theosis—divinization through participation in the life of the Holy Trinity.
+
+Rediscover the ancient beauty of Patristic wisdom. As the Fathers proclaimed: What Christ has not assumed, He has not redeemed!`,
+    imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Illuminated Patristic Greek manuscripts and sacred icons in a monastery scriptorium',
+    likesCount: 7650,
+    commentsCount: 480,
+    sharesCount: 2940
+  },
+  {
+    id: 'fb-post-icc-2',
+    sourceId: 'fb-icc',
+    sourceName: 'Institute of Catholic Culture',
+    handle: '@InstituteofCatholicCulture',
+    pageUrl: 'https://www.facebook.com/InstituteofCatholicCulture',
+    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: '6 days ago',
+    category: 'Sacred Liturgy & Sacred Music',
+    text: `Why is the Sacred Liturgy adorned with Gregorian chant, incense, and sacred vestments? Because worship on earth is a participation in the eternal heavenly liturgy before the throne of the Lamb.
+
+When the bells toll and incense rises at the consecration, time stops. We stand at the foot of Mount Calvary, and we enter the heavenly Jerusalem.
+
+"Let all mortal flesh keep silence, and with fear and trembling stand."`,
+    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Incense smoke rising gently before the altar during the solemn Catholic Mass',
+    likesCount: 8420,
+    commentsCount: 530,
+    sharesCount: 3120
+  },
+
+  // 9. SpiritualDirection.com
+  {
+    id: 'fb-post-sd-1',
+    sourceId: 'fb-spiritualdirection',
+    sourceName: 'SpiritualDirection.com',
+    handle: '@CatholicSpiritualDirection',
+    pageUrl: 'https://www.facebook.com/CatholicSpiritualDirection',
+    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'Yesterday at 5:00 PM',
+    category: 'Contemplative Prayer & Interior Life',
+    text: `Saint Teresa of Jesus writes: "Mental prayer, in my opinion, is nothing else than an intimate sharing between friends; it means taking time frequently to be alone with Him who we know loves us."
+
+Many souls abandon prayer when distractions come or feelings fade. But true prayer is an act of the will, not an emotional surge.
+
+Stay with Jesus in the chapel or your prayer corner. Even five minutes of faithful presence draws down boundless graces.`,
+    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Solitary Catholic prayer chapel bathed in peaceful morning light',
+    likesCount: 9140,
+    commentsCount: 670,
+    sharesCount: 3620
+  },
+  {
+    id: 'fb-post-sd-2',
+    sourceId: 'fb-spiritualdirection',
+    sourceName: 'SpiritualDirection.com',
+    handle: '@CatholicSpiritualDirection',
+    pageUrl: 'https://www.facebook.com/CatholicSpiritualDirection',
+    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: '4 days ago',
+    category: 'Saint John of the Cross & The Dark Night',
+    text: `Saint John of the Cross teaches that when God withholds sensible consolations, He is not abandoning the soul—He is weaning it from spiritual infancy to mature divine love.
+
+In the dark night, the soul learns to love God for His own sake, rather than for the spiritual sweetness He gives.
+
+"In the evening of life, we will be judged on love alone." Persevere in prayer through the dry seasons!`,
+    imageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Crucifix with quiet candle glow illuminating sacred prayer in the dark night',
+    likesCount: 8850,
+    commentsCount: 590,
+    sharesCount: 3340
   }
 ];
+
+// Backwards-compatibility alias
+export const CATHOLIC_FACEBOOK_ARTICLES: CatholicFacebookArticlePost[] = [];
 
 export const CATHOLIC_PINTEREST_SOURCES: CatholicPinterestSource[] = [
   {
