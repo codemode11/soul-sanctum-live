@@ -45,7 +45,6 @@ export const CatholicSocialView: React.FC = () => {
 
   // Instagram state
   const [selectedIgSource, setSelectedIgSource] = useState<CatholicInstagramSource>(CATHOLIC_INSTAGRAM_SOURCES[0]);
-  const [igViewMode, setIgViewMode] = useState<'embed' | 'posts'>('embed');
   const [igShortcodes, setIgShortcodes] = useState<string[]>(CATHOLIC_INSTAGRAM_SOURCES[0].defaultShortcodes);
   const [igPosts, setIgPosts] = useState<CatholicStaticSocialPost[]>([]);
   const [igProfilePic, setIgProfilePic] = useState<string>('');
@@ -188,7 +187,6 @@ export const CatholicSocialView: React.FC = () => {
     if (postMatch && postMatch[1]) {
       const code = postMatch[1];
       setIgShortcodes(prev => [code, ...prev.filter(c => c !== code)]);
-      setIgViewMode('posts');
       setCustomIgInput('');
       return;
     }
@@ -210,7 +208,6 @@ export const CatholicSocialView: React.FC = () => {
         defaultShortcodes: []
       };
       setSelectedIgSource(customSource);
-      setIgViewMode('embed');
       setCustomIgInput('');
     }
   };
@@ -372,33 +369,6 @@ export const CatholicSocialView: React.FC = () => {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex rounded-lg bg-black/40 p-1 border border-white/15">
-                <button
-                  onClick={() => setIgViewMode('embed')}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
-                    igViewMode === 'embed'
-                      ? 'bg-amber-500 text-stone-950 shadow-xs'
-                      : 'text-stone-200 hover:text-white'
-                  }`}
-                  title="Official Instagram Embed (Three Rows)"
-                >
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>Official Embed (3 Rows)</span>
-                </button>
-                <button
-                  onClick={() => setIgViewMode('posts')}
-                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-cinzel font-semibold cursor-pointer transition-colors ${
-                    igViewMode === 'posts'
-                      ? 'bg-amber-500 text-stone-950 shadow-xs'
-                      : 'text-stone-200 hover:text-white'
-                  }`}
-                  title="Captioned Posts Feed (Three Rows)"
-                >
-                  <Grid className="w-3.5 h-3.5" />
-                  <span>Captioned Posts (3 Rows)</span>
-                </button>
-              </div>
-
               <button
                 onClick={() => {
                   setIgRefreshKey(prev => prev + 1);
@@ -460,87 +430,37 @@ export const CatholicSocialView: React.FC = () => {
               </form>
             </div>
 
-            {/* Instagram Content Area: Official Embed (3 Rows) or Captioned Posts (3 Rows) */}
-            {igViewMode === 'embed' ? (
-              <div className="w-full rounded-xl overflow-hidden border border-stone-200 bg-white shadow-inner space-y-3.5 p-3 sm:p-4">
-                {/* Official Profile Embed: Header + Rows 1 & 2 (6 Posts) */}
-                <div className="rounded-xl overflow-hidden border border-stone-200 shadow-xs bg-white">
+            {/* Single Unified Catholic Instagram Viewer (Three Full Rows = 9 Posts) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              {igShortcodes.slice(0, 9).map((code, idx) => (
+                <div
+                  key={`ig-post-${code}-${igRefreshKey}`}
+                  className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between"
+                >
                   <iframe
-                    key={`ig-profile-${selectedIgSource.username}-${igRefreshKey}`}
-                    src={`https://www.instagram.com/${selectedIgSource.username}/embed/`}
-                    title={`${selectedIgSource.name} Official Instagram Feed`}
-                    className="w-full h-[620px] border-0"
+                    src={`https://www.instagram.com/p/${code}/embed/captioned/`}
+                    title={`Instagram Post ${idx + 1} from @${selectedIgSource.username}`}
+                    className="w-full h-[580px] border-0"
                     loading="lazy"
                     allowTransparency={true}
                   />
-                </div>
-
-                {/* Official Row 3 Embeds (Posts 7–9) to complete the 3 full rows */}
-                <div className="space-y-2 pt-1 border-t border-stone-200">
-                  <div className="flex items-center justify-between px-1 text-xs font-serif text-stone-600">
-                    <span className="font-semibold text-stone-800 font-cinzel">
-                      Official Row 3 • Posts 7–9 from @{selectedIgSource.username}
+                  <div className="px-4 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
+                    <span className="font-semibold text-stone-700">
+                      @{selectedIgSource.username} • <span className="text-amber-800 font-cinzel text-[11px]">Post {idx + 1} of 9</span>
                     </span>
                     <a
-                      href={selectedIgSource.profileUrl}
+                      href={`https://www.instagram.com/p/${code}/`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-amber-800 hover:text-amber-950 font-semibold"
                     >
-                      <span>View All on Instagram</span>
+                      <span>View on Instagram</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {igShortcodes.slice(6, 9).map((code, idx) => (
-                      <div
-                        key={`ig-row3-${code}-${idx}-${igRefreshKey}`}
-                        className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-xs"
-                      >
-                        <iframe
-                          src={`https://www.instagram.com/p/${code}/embed/`}
-                          title={`Official Instagram Post ${code} from @${selectedIgSource.username}`}
-                          className="w-full h-[380px] border-0"
-                          loading="lazy"
-                          allowTransparency={true}
-                        />
-                      </div>
-                    ))}
-                  </div>
                 </div>
-              </div>
-            ) : (
-              /* Captioned Posts Mode (Three Rows = 9 Captioned Posts) */
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                {igShortcodes.slice(0, 9).map(code => (
-                  <div
-                    key={`ig-post-${code}-${igRefreshKey}`}
-                    className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-md flex flex-col"
-                  >
-                    <iframe
-                      src={`https://www.instagram.com/p/${code}/embed/captioned/`}
-                      title={`Instagram Post ${code} from @${selectedIgSource.username}`}
-                      className="w-full h-[580px] border-0"
-                      loading="lazy"
-                      allowTransparency={true}
-                    />
-                    <div className="px-4 py-2 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
-                      <span>@{selectedIgSource.username}</span>
-                      <a
-                        href={`https://www.instagram.com/p/${code}/`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-amber-800 hover:text-amber-950 font-semibold"
-                      >
-                        <span>View on Instagram</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
           </div>
         </section>
       )}
