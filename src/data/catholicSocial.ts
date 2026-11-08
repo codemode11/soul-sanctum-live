@@ -94,12 +94,12 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
   },
   {
     id: 'ig-wordonfire',
-    name: 'Word on Fire',
-    username: 'wordonfire',
+    name: 'Word on Fire (Bishop Robert Barron)',
+    username: 'bishopbarron',
     category: 'Theology & Culture',
     description: 'Bishop Robert Barron and Word on Fire proclaiming Christ in the culture through beauty, truth, and goodness.',
-    profileUrl: 'https://www.instagram.com/wordonfire/',
-    defaultShortcodes: ['BYS0FWqF7hG', 'BYDZHvMA95e', 'BXUqbQYlkPZ', 'BWumymgFaPg']
+    profileUrl: 'https://www.instagram.com/bishopbarron/',
+    defaultShortcodes: ['DfaO1PQFaLj', 'DfaOzPLle89', 'DfaOzuQFUts', 'DfaO0SgFRq7']
   }
 ];
 
@@ -130,11 +130,11 @@ export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
   },
   {
     id: 'fb-wordonfire',
-    name: 'Bishop Robert Barron / Word on Fire',
-    handle: '@WordOnFire',
-    pageUrl: 'https://www.facebook.com/WordOnFire',
+    name: 'Word on Fire (Bishop Robert Barron)',
+    handle: '@BishopRobertBarron',
+    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
     category: 'Theology & Evangelization',
-    description: 'Homilies, cultural commentary, theological articles, and sacred art reflections from Word on Fire.'
+    description: 'Homilies, cultural commentary, theological articles, and sacred art reflections from Bishop Robert Barron and Word on Fire.'
   },
   {
     id: 'fb-catholicanswers',
