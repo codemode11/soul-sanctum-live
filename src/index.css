@@ -1306,23 +1306,12 @@ svg:hover .sanctum-rss-wave-2 {
   will-change: transform;
 }
 
-/* Catholic Social Icon: The little cross in the middle rests quietly, and on hover extends gradually and smoothly to the borders ONLY ONCE (not repeatedly) */
+/* Catholic Social Icon: The little cross in the middle rests quietly, and on hover extends smoothly in ONE single continuous motion to the borders */
 .sanctum-social-extending-cross {
   transform-box: view-box;
   transform-origin: 12px 12px;
   transform: scale(0.24);
-  opacity: 0.75;
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease-out;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
-.sanctum-social-center-core {
-  transform-box: view-box;
-  transform-origin: 12px 12px;
-  transform: scale(1);
-  opacity: 0.9;
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0.8;
   will-change: transform, opacity;
   pointer-events: none;
 }
@@ -1330,19 +1319,7 @@ svg:hover .sanctum-rss-wave-2 {
 @keyframes sanctumSocialCrossExtendOnce {
   0% {
     transform: scale(0.24);
-    opacity: 0.75;
-  }
-  25% {
-    transform: scale(0.46);
-    opacity: 0.85;
-  }
-  55% {
-    transform: scale(0.72);
-    opacity: 0.93;
-  }
-  80% {
-    transform: scale(0.90);
-    opacity: 0.98;
+    opacity: 0.8;
   }
   100% {
     transform: scale(1);
@@ -1350,32 +1327,11 @@ svg:hover .sanctum-rss-wave-2 {
   }
 }
 
-@keyframes sanctumSocialCoreGlowOnce {
-  0% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.22);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Hover trigger: when hovering at the center or over the icon/button, extends gradually only once (2.2s) */
+/* Hover trigger: Exactly one smooth, continuous, unified motion extending to the borders only once */
 .group:hover .sanctum-social-extending-cross,
 svg.sanctum-social-icon:hover .sanctum-social-extending-cross,
 .sanctum-social-icon:hover .sanctum-social-extending-cross {
-  animation: sanctumSocialCrossExtendOnce 2.2s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
-}
-
-.group:hover .sanctum-social-center-core,
-svg.sanctum-social-icon:hover .sanctum-social-center-core,
-.sanctum-social-icon:hover .sanctum-social-center-core {
-  animation: sanctumSocialCoreGlowOnce 2.2s ease 1 forwards;
+  animation: sanctumSocialCrossExtendOnce 1.35s cubic-bezier(0.22, 1, 0.36, 1) 1 forwards;
 }
 
 /* Unified Index Item Hover Sizing: Jitter-free GPU scale3d (<= 1.0) so Chromium never re-rasterizes or reflows */

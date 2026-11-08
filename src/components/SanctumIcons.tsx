@@ -1966,7 +1966,7 @@ export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 
     {/* Interactive Center Hover Trigger */}
     <circle cx="12" cy="12" r="6" fill="transparent" stroke="none" className="sanctum-social-center-trigger pointer-events-auto cursor-pointer" />
 
-    {/* Animated Cross: The little cross in the middle slowly and gradually extends to the borders of the icon */}
+    {/* Animated Cross: The single little cross in the middle extends smoothly in one single motion to the borders */}
     <g className="sanctum-social-extending-cross">
       {/* Flared Outer Arms that touch the borders (y=3, y=21, x=3, x=21) */}
       <path
@@ -1992,10 +1992,8 @@ export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 
 
       {/* Main Spine Beams reaching from border to border */}
       <path d="M12 3v18M3 12h18" strokeWidth="1.7" strokeLinecap="round" />
-    </g>
 
-    {/* Little Golden Cross at the Center Core (The sacred center origin) */}
-    <g className="sanctum-social-center-core">
+      {/* Center Golden Accent Core - moving as one single unified motion with the cross */}
       <path d="M12 10.2v3.6M10.2 12h3.6" strokeWidth="1.6" stroke="#FDE047" strokeLinecap="round" />
       <circle cx="12" cy="12" r="0.75" fill="#FDE047" stroke="none" />
     </g>
