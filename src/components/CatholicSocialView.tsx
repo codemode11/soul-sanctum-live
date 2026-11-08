@@ -45,7 +45,7 @@ export const CatholicSocialView: React.FC = () => {
 
   // Facebook Static Posts state
   const [selectedFbSource, setSelectedFbSource] = useState<CatholicFacebookSource>(CATHOLIC_FACEBOOK_SOURCES[0]);
-  const [fbPosts, setFbPosts] = useState<CatholicStaticSocialPost[]>([]);
+  const [fbPosts, setFbPosts] = useState<CatholicStaticSocialPost[]>(CATHOLIC_FACEBOOK_SOURCES[0].staticPosts || []);
   const [fbProfilePic, setFbProfilePic] = useState<string>('');
   const [isLoadingFbPosts, setIsLoadingFbPosts] = useState<boolean>(false);
   const [fbFilterStaticOnly, setFbFilterStaticOnly] = useState<boolean>(true);
@@ -113,6 +113,7 @@ export const CatholicSocialView: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    setFbPosts(selectedFbSource.staticPosts || []);
     fetchFacebookStaticPosts(selectedFbSource);
   }, [selectedFbSource, fetchFacebookStaticPosts]);
 
@@ -424,14 +425,14 @@ export const CatholicSocialView: React.FC = () => {
                   key={`ig-profile-${selectedIgSource.username}-${igRefreshKey}`}
                   src={`https://www.instagram.com/${selectedIgSource.username}/embed/`}
                   title={`${selectedIgSource.name} Instagram Profile Feed`}
-                  className="w-full h-[640px] border-0"
+                  className="w-full h-[920px] sm:h-[940px] md:h-[960px] border-0"
                   loading="lazy"
                   allowTransparency={true}
                 />
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {igShortcodes.slice(0, activePlatform === 'all' ? 3 : 6).map(code => (
+                {igShortcodes.slice(0, 9).map(code => (
                   <div
                     key={`ig-post-${code}-${igRefreshKey}`}
                     className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-md flex flex-col"
@@ -883,7 +884,7 @@ export const CatholicSocialView: React.FC = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filteredPins.slice(0, activePlatform === 'all' ? 8 : 24).map(pin => (
+                {filteredPins.slice(0, activePlatform === 'all' ? 12 : 24).map(pin => (
                   <div
                     key={pin.id}
                     className="group rounded-xl bg-white border border-stone-200/90 hover:border-amber-600/60 overflow-hidden shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
