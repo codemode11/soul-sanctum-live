@@ -353,8 +353,8 @@ export const Navigation: React.FC<NavigationProps> = ({
       id: 'catholic-social', 
       label: 'Catholic Social', 
       icon: CatholicSocialShareIcon, 
-      tag: 'Social & Video', 
-      subtext: 'Instagram & Christendom (YouTube for Catholics)' 
+      tag: 'Instagram Feeds', 
+      subtext: 'Catholic Instagram Posts & Apostolic Feeds' 
     },
     { 
       id: 'catholic-glossary', 
