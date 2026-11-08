@@ -204,34 +204,29 @@ export const CatholicSocialView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 pb-20">
-      {/* Hero Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-stone-900 via-[#1E130B] to-stone-950 border border-amber-500/35 p-6 sm:p-8 shadow-2xl text-stone-100">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.18)_0%,transparent_70%)] pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2.5 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-cinzel font-semibold tracking-wider uppercase">
-              <Share2 className="w-3.5 h-3.5 text-amber-400" />
-              <span>Catholic Social Media Hub</span>
+    <div className="max-w-6xl mx-auto space-y-6 pb-20">
+      {/* Compact Hero Banner */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-stone-900 via-[#1E130B] to-stone-950 border border-amber-500/35 px-4 py-3.5 sm:px-5 sm:py-4 shadow-xl text-stone-100">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div className="space-y-0.5 min-w-0">
+            <div className="flex items-center gap-2">
+              <Share2 className="w-4 h-4 text-amber-400 shrink-0" />
+              <h2 className="font-cinzel text-lg sm:text-xl font-bold text-white tracking-wide truncate">
+                Catholic Social — Instagram, Facebook &amp; Pinterest
+              </h2>
             </div>
-
-            <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-wide">
-              Catholic Instagram, Facebook &amp; Pinterest Feeds
-            </h2>
-
-            <p className="text-sm sm:text-base text-stone-300 font-serif leading-relaxed">
-              Explore live social posts, Reels, ministry timelines, sacred art boards, and feast day graphics pulled directly from Vatican News, EWTN, Ascension, Word on Fire, Catholic Answers, The Divine Mercy, Franciscan Media, and more.
+            <p className="text-xs sm:text-sm text-stone-300 font-serif truncate">
+              Live social posts, Reels, ministry timelines, and sacred art boards from Catholic apostolates.
             </p>
           </div>
 
           {/* Platform Quick Badges */}
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <div className="flex flex-wrap items-center gap-1.5 shrink-0">
             <button
               onClick={() => setActivePlatform('all')}
-              className={`px-3.5 py-2 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'all'
-                  ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-lg'
+                  ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-md'
                   : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
               }`}
             >
@@ -239,9 +234,9 @@ export const CatholicSocialView: React.FC = () => {
             </button>
             <button
               onClick={() => setActivePlatform('instagram')}
-              className={`px-3.5 py-2 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'instagram'
-                  ? 'bg-gradient-to-r from-pink-600 to-amber-500 text-white border-pink-300 shadow-lg'
+                  ? 'bg-gradient-to-r from-pink-600 to-amber-500 text-white border-pink-300 shadow-md'
                   : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
               }`}
             >
@@ -249,9 +244,9 @@ export const CatholicSocialView: React.FC = () => {
             </button>
             <button
               onClick={() => setActivePlatform('facebook')}
-              className={`px-3.5 py-2 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'facebook'
-                  ? 'bg-blue-600 text-white border-blue-300 shadow-lg'
+                  ? 'bg-blue-600 text-white border-blue-300 shadow-md'
                   : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
               }`}
             >
@@ -259,9 +254,9 @@ export const CatholicSocialView: React.FC = () => {
             </button>
             <button
               onClick={() => setActivePlatform('pinterest')}
-              className={`px-3.5 py-2 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+              className={`px-3 py-1.5 rounded-lg font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border ${
                 activePlatform === 'pinterest'
-                  ? 'bg-red-700 text-white border-red-300 shadow-lg'
+                  ? 'bg-red-700 text-white border-red-300 shadow-md'
                   : 'bg-white/10 text-amber-100 border-white/15 hover:bg-white/20'
               }`}
             >
