@@ -1943,8 +1943,8 @@ export const CatholicArticlesRssIcon: React.FC<IconProps> = ({ className = 'w-5 
 
 /**
  * 30. Catholic Social Icon:
- * Depicts a sacred social media card/frame where the cross in the middle
- * gradually extends outward up to the borders and margins of the icon.
+ * Depicts a sacred social media card/frame where the little cross in the middle
+ * slowly and gradually extends outward up to the borders and margins of the icon.
  */
 export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -1960,42 +1960,44 @@ export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 
     {/* Rounded Social Frame */}
     <rect x="3" y="3" width="18" height="18" rx="5" fill="currentColor" fillOpacity="0.08" />
 
-    {/* Flared / Gradually Extending Cross Arms reaching outer margins */}
-    {/* Top Arm: gradually widens from center (12, 8.5) up to top margin (10.5, 3) - (13.5, 3) */}
-    <path
-      d="M10.5 3 C11 6.5, 11.2 8, 12 8.5 C12.8 8, 13 6.5, 13.5 3"
-      strokeWidth="1.3"
-      strokeOpacity="0.85"
-    />
-    {/* Bottom Arm: gradually widens from center (12, 15.5) down to bottom margin (10.5, 21) - (13.5, 21) */}
-    <path
-      d="M10.5 21 C11 17.5, 11.2 16, 12 15.5 C12.8 16, 13 17.5, 13.5 21"
-      strokeWidth="1.3"
-      strokeOpacity="0.85"
-    />
-    {/* Left Arm: gradually widens from center (8.5, 12) out to left margin (3, 10.5) - (3, 13.5) */}
-    <path
-      d="M3 10.5 C6.5 11, 8 11.2, 8.5 12 C8 12.8, 6.5 13, 3 13.5"
-      strokeWidth="1.3"
-      strokeOpacity="0.85"
-    />
-    {/* Right Arm: gradually widens from center (15.5, 12) out to right margin (21, 10.5) - (21, 13.5) */}
-    <path
-      d="M21 10.5 C17.5 11, 16 11.2, 15.5 12 C16 12.8, 17.5 13, 21 13.5"
-      strokeWidth="1.3"
-      strokeOpacity="0.85"
-    />
+    {/* Center Sacred Lens / Camera Aperture Circle */}
+    <circle cx="12" cy="12" r="3.6" strokeWidth="1.8" fill="currentColor" fillOpacity="0.1" />
 
-    {/* Central Cross Axis: Strong vertical and horizontal spine beams extending up to the borders */}
-    <path d="M12 3v18M3 12h18" strokeWidth="1.7" strokeLinecap="round" />
+    {/* Animated Cross: The little cross in the middle slowly and gradually extends to the borders of the icon */}
+    <g className="sanctum-social-extending-cross">
+      {/* Flared Outer Arms that touch the borders (y=3, y=21, x=3, x=21) */}
+      <path
+        d="M10.5 3 C11 6.5, 11.2 8, 12 8.5 C12.8 8, 13 6.5, 13.5 3"
+        strokeWidth="1.3"
+        strokeOpacity="0.85"
+      />
+      <path
+        d="M10.5 21 C11 17.5, 11.2 16, 12 15.5 C12.8 16, 13 17.5, 13.5 21"
+        strokeWidth="1.3"
+        strokeOpacity="0.85"
+      />
+      <path
+        d="M3 10.5 C6.5 11, 8 11.2, 8.5 12 C8 12.8, 6.5 13, 3 13.5"
+        strokeWidth="1.3"
+        strokeOpacity="0.85"
+      />
+      <path
+        d="M21 10.5 C17.5 11, 16 11.2, 15.5 12 C16 12.8, 17.5 13, 21 13.5"
+        strokeWidth="1.3"
+        strokeOpacity="0.85"
+      />
 
-    {/* Center Sacred Lens / Nimbus Circle */}
-    <circle cx="12" cy="12" r="3.6" strokeWidth="1.8" fill="currentColor" fillOpacity="0.12" />
+      {/* Main Spine Beams reaching from border to border */}
+      <path d="M12 3v18M3 12h18" strokeWidth="1.7" strokeLinecap="round" />
+    </g>
 
-    {/* Center Radiant Core Cross Accent */}
-    <path d="M12 10.2v3.6M10.2 12h3.6" strokeWidth="1.5" stroke="#FDE047" />
+    {/* Little Golden Cross at the Center Core (The sacred center origin) */}
+    <g className="sanctum-social-center-core">
+      <path d="M12 10.2v3.6M10.2 12h3.6" strokeWidth="1.6" stroke="#FDE047" strokeLinecap="round" />
+      <circle cx="12" cy="12" r="0.75" fill="#FDE047" stroke="none" />
+    </g>
 
-    {/* Corner Camera Flash Dot */}
+    {/* Corner Camera Flash / Sacred Radiance Dot */}
     <circle cx="17.2" cy="6.8" r="1.1" fill="#FDE047" stroke="none" />
   </svg>
 );
