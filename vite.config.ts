@@ -368,10 +368,11 @@ function vaticanNewsPlugin() {
                 fullName = ctx.full_name;
               }
 
+              const brokenShortcodes = new Set(['DfagCq8D3sp', 'DfYQhEYAB8J', 'DfWDi7HDNuW', 'DfPX9L3D8mF']);
               const mediaList = Array.isArray(ctx.graphql_media) ? ctx.graphql_media : [];
               for (const item of mediaList) {
                 const sm = item?.shortcode_media;
-                if (!sm || !sm.shortcode) continue;
+                if (!sm || !sm.shortcode || brokenShortcodes.has(sm.shortcode)) continue;
                 shortcodes.push(sm.shortcode);
 
                 const caption =

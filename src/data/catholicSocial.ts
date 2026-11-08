@@ -227,9 +227,9 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Clear explanations of Catholic doctrine, apologetics Q&As, and feast day reflections from Catholic.com.',
     profileUrl: 'https://www.instagram.com/catholicanswers/',
     defaultShortcodes: [
-      'DfazpyEgaIa', 'DfagCq8D3sp', 'DfZsT64CpxV',
-      'DfYQhEYAB8J', 'DfXqqsiPUPV', 'DfWDi7HDNuW',
-      'DfU15qBD_wN', 'DfSD2a_DT9K', 'DfPX9L3D8mF'
+      'DfazpyEgaIa', 'DfZsT64CpxV', 'DfXqqsiPUPV',
+      'DeSnw6_lH9p', 'DBxAS6lSs_y', 'DbWIP8YEQ-v',
+      'DZfp_gcoPmp', 'DZa-waoDhl7', 'C_1fKOdSZ7g'
     ]
   },
   {

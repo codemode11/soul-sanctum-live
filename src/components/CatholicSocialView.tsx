@@ -59,7 +59,8 @@ export const CatholicSocialView: React.FC = () => {
           setIgPosts(data.posts);
         }
         if (Array.isArray(data.shortcodes) && data.shortcodes.length > 0) {
-          const merged = Array.from(new Set([...data.shortcodes, ...source.defaultShortcodes]));
+          const brokenSet = new Set(['DfagCq8D3sp', 'DfYQhEYAB8J', 'DfWDi7HDNuW', 'DfPX9L3D8mF']);
+          const merged = Array.from(new Set([...data.shortcodes, ...source.defaultShortcodes])).filter(c => !brokenSet.has(c));
           setIgShortcodes(merged.slice(0, 6));
         }
       }
@@ -480,7 +481,7 @@ export const CatholicSocialView: React.FC = () => {
                   }}
                   className="px-3 py-1 rounded-md bg-[#241307] text-amber-200 text-xs font-cinzel cursor-pointer"
                 >
-                  Show All Presentations
+                  Show All Videos
                 </button>
               </div>
             ) : (
@@ -582,7 +583,7 @@ export const CatholicSocialView: React.FC = () => {
                         className="inline-flex items-center gap-1 text-red-700 hover:text-red-900 font-cinzel font-bold cursor-pointer"
                       >
                         <Play className="w-3 h-3 fill-red-700" />
-                        <span>Watch Presentation</span>
+                        <span>Watch Video</span>
                       </button>
 
                       <a
