@@ -283,8 +283,7 @@ export type CatholicPodcastCategory =
   | 'scripture-catechism'
   | 'theology-apologetics'
   | 'spiritual-prayer'
-  | 'culture-interviews'
-  | 'fio-originals';
+  | 'culture-interviews';
 
 export interface PodcastEpisode {
   id: string;
