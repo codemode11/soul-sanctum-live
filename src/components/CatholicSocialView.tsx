@@ -438,10 +438,11 @@ export const CatholicSocialView: React.FC = () => {
                   className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between"
                 >
                   <iframe
-                    src={`https://www.instagram.com/p/${code}/embed/captioned/`}
+                    src={`https://www.instagram.com/p/${code.trim()}/embed/captioned/`}
                     title={`Instagram Post ${idx + 1} from @${selectedIgSource.username}`}
                     className="w-full h-[580px] border-0"
-                    loading="lazy"
+                    loading="eager"
+                    allow="encrypted-media"
                     allowTransparency={true}
                   />
                   <div className="px-4 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
