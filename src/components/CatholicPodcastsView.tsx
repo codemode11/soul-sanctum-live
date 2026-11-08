@@ -59,12 +59,12 @@ const ORDERED_PODCAST_IDS: string[] = [
   // First row
   'road-to-emmaus-scott-hahn',
   'bible-in-a-year',
-  'word-on-fire-show',
-  'catechism-in-a-year',
   'saint-faustinas-diary-in-a-year',
-  // Second row
+  'catechism-in-a-year',
   'jeff-cavins-show',
+  // Second row
   'counsel-of-trent',
+  'word-on-fire-show',
   'thomistic-institute',
   'catholic-answers-live',
   'vatican-radio-podcast',
