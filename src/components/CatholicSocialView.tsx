@@ -425,14 +425,14 @@ export const CatholicSocialView: React.FC = () => {
                   key={`ig-profile-${selectedIgSource.username}-${igRefreshKey}`}
                   src={`https://www.instagram.com/${selectedIgSource.username}/embed/`}
                   title={`${selectedIgSource.name} Instagram Profile Feed`}
-                  className="w-full h-[920px] sm:h-[940px] md:h-[960px] border-0"
+                  className="w-full h-[640px] border-0"
                   loading="lazy"
                   allowTransparency={true}
                 />
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {igShortcodes.slice(0, 9).map(code => (
+                {igShortcodes.slice(0, activePlatform === 'all' ? 3 : 6).map(code => (
                   <div
                     key={`ig-post-${code}-${igRefreshKey}`}
                     className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-md flex flex-col"
