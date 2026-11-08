@@ -97,7 +97,7 @@ export const CatholicSocialView: React.FC = () => {
         }
         if (Array.isArray(data.shortcodes) && data.shortcodes.length > 0) {
           const merged = Array.from(new Set([...data.shortcodes, ...source.defaultShortcodes]));
-          setIgShortcodes(merged);
+          setIgShortcodes(merged.slice(0, 6));
         }
       }
     } catch {
@@ -430,9 +430,9 @@ export const CatholicSocialView: React.FC = () => {
               </form>
             </div>
 
-            {/* Single Unified Catholic Instagram Viewer (Three Full Rows = 9 Posts) */}
+            {/* Single Unified Catholic Instagram Viewer (Two Rows × Three Columns = 6 Posts) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {igShortcodes.slice(0, 9).map((code, idx) => (
+              {igShortcodes.slice(0, 6).map((code, idx) => (
                 <div
                   key={`ig-post-${code}-${igRefreshKey}`}
                   className="rounded-xl overflow-hidden border border-stone-200 bg-white shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between"
@@ -447,7 +447,7 @@ export const CatholicSocialView: React.FC = () => {
                   />
                   <div className="px-4 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
                     <span className="font-semibold text-stone-700">
-                      @{selectedIgSource.username} • <span className="text-amber-800 font-cinzel text-[11px]">Post {idx + 1} of 9</span>
+                      @{selectedIgSource.username} • <span className="text-amber-800 font-cinzel text-[11px]">Post {idx + 1} of 6</span>
                     </span>
                     <a
                       href={`https://www.instagram.com/p/${code}/`}

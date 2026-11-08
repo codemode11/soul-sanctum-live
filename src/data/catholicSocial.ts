@@ -88,8 +88,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/aleteia_en/',
     defaultShortcodes: [
       'DfcTTagRM-x', 'DfafIKssdp4', 'DfZl4NnxPXg',
-      'DfXKc2DRKe4', 'DfUwwrKxbBo', 'DfUdUnZREdb',
-      'DfeK41aCXrY', 'Dfdc1NsEXy7', 'DfdaAiRCkCC'
+      'DfXKc2DRKe4', 'DfUwwrKxbBo', 'DfUdUnZREdb'
     ]
   },
   {
@@ -101,8 +100,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/ewtnmedia/',
     defaultShortcodes: [
       'DfcLS5sjHof', 'Dfa4WLVlY2G', 'Dfaik3BjOpq',
-      'DfZeeyUFJ2u', 'DfYS9wkF3c9', 'DfXt3irk4nO',
-      'DfdmmVmNqN1', 'DfdkvpDuHz0', 'DfdiiN7Rm7h'
+      'DfZeeyUFJ2u', 'DfYS9wkF3c9', 'DfXt3irk4nO'
     ]
   },
   {
@@ -114,8 +112,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/stpaulcenter/',
     defaultShortcodes: [
       'DfdcESGCvQn', 'DfapmAaCUPe', 'DfaTK9hEWFC',
-      'DfZ4SHSCUgL', 'DfS9kGilc3j', 'DfP1A9FDSbj',
-      'DfaO1PQFaLj', 'DfTUkWNkSBB', 'DfSwL9Hmo7s'
+      'DfZ4SHSCUgL', 'DfS9kGilc3j', 'DfP1A9FDSbj'
     ]
   },
   {
@@ -127,8 +124,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/augustine_institute/',
     defaultShortcodes: [
       'DfceIbOAmI9', 'DfXTjQ7DFU6', 'DfTEQESl5s_',
-      'DfQkH0XDMGD', 'DfKUnvWl2YL', 'DfCtqTbPJE3',
-      'DfXiNmdCIKN', 'DfUtgl3ju0o', 'DfUhCHSF4ea'
+      'DfQkH0XDMGD', 'DfKUnvWl2YL', 'DfCtqTbPJE3'
     ]
   },
   {
@@ -140,8 +136,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/formedcatholic/',
     defaultShortcodes: [
       'DfceIbOAmI9', 'DfTQI4NjvCS', 'DfQkH0XDMGD',
-      'DfIEdAbjJat', 'DfBGG9ijkSk', 'De-d6KuAMR1',
-      'DfdWKDjFGCF', 'DfdSmtQglJJ', 'DfdSIURARsW'
+      'DfIEdAbjJat', 'DfBGG9ijkSk', 'De-d6KuAMR1'
     ]
   },
   {
@@ -153,8 +148,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/vaticannews/',
     defaultShortcodes: [
       'DfeK41aCXrY', 'Dfdc1NsEXy7', 'DfdaAiRCkCC',
-      'DfdWKDjFGCF', 'DfdSmtQglJJ', 'DfdSIURARsW',
-      'DfcTTagRM-x', 'DfafIKssdp4', 'DfZl4NnxPXg'
+      'DfdWKDjFGCF', 'DfdSmtQglJJ', 'DfdSIURARsW'
     ]
   },
   {
@@ -166,8 +160,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/usccb/',
     defaultShortcodes: [
       'DfXiNmdCIKN', 'DfUtgl3ju0o', 'DfUhCHSF4ea',
-      'DfShAinlwx8', 'DfSErQgFwg0', 'DfQAXstiZS3',
-      'DfcLS5sjHof', 'Dfa4WLVlY2G', 'Dfaik3BjOpq'
+      'DfShAinlwx8', 'DfSErQgFwg0', 'DfQAXstiZS3'
     ]
   },
   {
@@ -179,8 +172,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/instituteofcatholicculture/',
     defaultShortcodes: [
       'DfXs4C3Gzvn', 'DfVI5B6m-fC', 'DfTKen8F78Y',
-      'DfS9UiAF9SP', 'DfQPZbPm2a7', 'DfLnJc1OX1i',
-      'DfdcESGCvQn', 'DfapmAaCUPe', 'DfaTK9hEWFC'
+      'DfS9UiAF9SP', 'DfQPZbPm2a7', 'DfLnJc1OX1i'
     ]
   },
   {
@@ -192,8 +184,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     profileUrl: 'https://www.instagram.com/catholicspiritualdirection/',
     defaultShortcodes: [
       'Dfc_Wwiildx', 'DfX1znejFBR', 'DfVQ9IjDAjV',
-      'DfUlBvQkfvQ', 'DfQHW31l1NW', 'DfNAPJwF7yw',
-      'DfPsQBNl7NE', 'DfN0eTWjKoU', 'DfM53G4CF5z'
+      'DfUlBvQkfvQ', 'DfQHW31l1NW', 'DfNAPJwF7yw'
     ]
   },
   {
