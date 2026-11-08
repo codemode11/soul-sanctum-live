@@ -23,6 +23,7 @@ import {
   CHRISTENDOM_VIDEOS,
   ChristendomVideo
 } from '../data/christendomData';
+import { CatholicSocialShareIcon } from './SanctumIcons';
 
 type SocialPlatformTab = 'all' | 'instagram' | 'christendom';
 
@@ -157,7 +158,7 @@ export const CatholicSocialView: React.FC = () => {
             {/* Line 1: Badge & Subtitle */}
             <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
-                <Share2 className="w-3 h-3" />
+                <CatholicSocialShareIcon className="w-3.5 h-3.5" />
                 <span>CATHOLIC SOCIAL &amp; MEDIA</span>
               </span>
               <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap truncate">
