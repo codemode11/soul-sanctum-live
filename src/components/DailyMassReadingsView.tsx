@@ -397,12 +397,12 @@ ${reading.gospel.text}`;
           />
           <div className="flex items-center justify-between text-xs text-stone-700 pt-1">
             <div className="flex items-center gap-3">
-              <span className="font-medium text-stone-600 text-xs">Text Size:</span>
-              <div className="flex items-center gap-1 bg-stone-200/90 p-1 rounded-md border border-stone-300 shadow-2xs">
+              <span className="font-medium text-stone-700 font-serif text-xs">Text Size:</span>
+              <div className="flex items-center gap-1 bg-[#4A2D15] p-1.5 rounded-md border border-[#38210E] shadow-2xs">
                 <button
                   onClick={decreaseFontSize}
                   disabled={fontSize === 'normal'}
-                  className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-stone-700 hover:text-stone-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                  className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-100 hover:text-white bg-[#6B4423] hover:bg-[#7D522B] disabled:opacity-35 disabled:hover:bg-[#6B4423] cursor-pointer transition-all border border-[#5C381A]"
                   title="Decrease font size"
                   aria-label="Decrease font size"
                 >
@@ -412,8 +412,8 @@ ${reading.gospel.text}`;
                   onClick={() => handleSetFontSize('normal')}
                   className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                     fontSize === 'normal' 
-                      ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
-                      : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                      ? 'bg-amber-900 text-amber-50 shadow-md font-bold ring-2 ring-amber-400 border border-amber-300' 
+                      : 'bg-[#6B4423] text-amber-100 hover:bg-[#7D522B] border border-[#5C381A]'
                   }`}
                   title="Default text size (100%)"
                 >
@@ -423,8 +423,8 @@ ${reading.gospel.text}`;
                   onClick={() => handleSetFontSize('large')}
                   className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                     fontSize === 'large' 
-                      ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
-                      : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                      ? 'bg-amber-900 text-amber-50 shadow-md font-bold ring-2 ring-amber-400 border border-amber-300' 
+                      : 'bg-[#6B4423] text-amber-100 hover:bg-[#7D522B] border border-[#5C381A]'
                   }`}
                   title="Large text size (125%)"
                 >
@@ -434,8 +434,8 @@ ${reading.gospel.text}`;
                   onClick={() => handleSetFontSize('xlarge')}
                   className={`px-2.5 py-1 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                     fontSize === 'xlarge' 
-                      ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]' 
-                      : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                      ? 'bg-amber-900 text-amber-50 shadow-md font-bold ring-2 ring-amber-400 border border-amber-300' 
+                      : 'bg-[#6B4423] text-amber-100 hover:bg-[#7D522B] border border-[#5C381A]'
                   }`}
                   title="Extra large text size (155%)"
                 >
@@ -444,7 +444,7 @@ ${reading.gospel.text}`;
                 <button
                   onClick={increaseFontSize}
                   disabled={fontSize === 'xlarge'}
-                  className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-800 hover:text-amber-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                  className="w-7 h-7 flex items-center justify-center rounded-md text-xs font-bold text-amber-100 hover:text-white bg-[#6B4423] hover:bg-[#7D522B] disabled:opacity-35 disabled:hover:bg-[#6B4423] cursor-pointer transition-all border border-[#5C381A]"
                   title="Increase font size"
                   aria-label="Increase font size"
                 >
@@ -455,18 +455,18 @@ ${reading.gospel.text}`;
 
             <button
               onClick={handleCopyReadings}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-stone-200/80 hover:bg-stone-300 text-stone-800 font-medium transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-md bg-[#5A381C] hover:bg-[#6B4423] border border-[#8B5A2B]/80 text-amber-100 font-semibold text-xs transition-colors cursor-pointer shadow-2xs"
               title="Copy readings to clipboard"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="text-emerald-700">Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="text-emerald-300">Copied!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-stone-600" />
-                  <span>Copy</span>
+                  <Copy className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Copy Readings</span>
                 </>
               )}
             </button>

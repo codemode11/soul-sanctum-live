@@ -543,12 +543,12 @@ ${selectedCommentary.practicalApplication}`;
                       onClick={() => handleSelectPassage(comm)}
                       className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
                         isSelected
-                          ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold ring-1 ring-amber-700'
-                          : 'bg-white/65 hover:bg-white/90 text-stone-800 border border-stone-200/80 hover:border-amber-400'
+                          ? 'bg-amber-900 text-amber-50 shadow-md font-extrabold ring-2 ring-amber-400 border border-amber-300 scale-102'
+                          : 'bg-[#7A502C] text-amber-50 hover:bg-[#8C5E35] border border-[#5C3A1E] shadow-2xs font-semibold'
                       }`}
                     >
                       {comm.dateLabel && (
-                        <span className={`text-[10px] font-semibold uppercase ${isSelected ? 'text-amber-200' : 'text-amber-900/80 font-cinzel'}`}>
+                        <span className={`text-[10px] font-semibold uppercase ${isSelected ? 'text-amber-200' : 'text-amber-200/90 font-cinzel'}`}>
                           {comm.dateLabel}:
                         </span>
                       )}
@@ -560,17 +560,17 @@ ${selectedCommentary.practicalApplication}`;
 
               <button
                 onClick={() => scrollPills('right')}
-                className="p-1.5 rounded-xl bg-white/90 hover:bg-white text-stone-800 hover:text-amber-950 border border-stone-200 shadow-2xs shrink-0 cursor-pointer transition-colors"
+                className="p-1.5 rounded-xl bg-amber-900 hover:bg-amber-800 text-amber-100 border border-amber-700 shadow-2xs shrink-0 cursor-pointer transition-colors"
                 title="Scroll right"
                 aria-label="Scroll passage list right"
               >
-                <ChevronRight className="w-4 h-4 text-amber-800" />
+                <ChevronRight className="w-4 h-4 text-amber-200" />
               </button>
             </div>
 
             {/* Line 3: Commentaries by Month (November, December, January, February, March, April, May) */}
             <div>
-              <div className="flex flex-wrap items-center gap-1.5 bg-stone-100/90 p-1 rounded-lg border border-stone-200 shadow-2xs">
+              <div className="flex flex-wrap items-center gap-1.5 bg-[#4A2D15] p-1.5 rounded-lg border border-[#38210E] shadow-2xs">
                 {[
                   { name: 'November', count: 30 },
                   { name: 'December', count: 31 },
@@ -583,10 +583,10 @@ ${selectedCommentary.practicalApplication}`;
                   <button
                     key={name}
                     onClick={() => handleSelectMonth(name)}
-                    className={`px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all cursor-pointer ${
                       selectedMonth === name
-                        ? 'bg-[#6B4423] text-white shadow-xs font-bold'
-                        : 'text-stone-700 hover:text-stone-900 hover:bg-white/70'
+                        ? 'bg-amber-900 text-amber-50 shadow-md font-bold ring-2 ring-amber-400 border border-amber-300'
+                        : 'bg-[#7D522B] text-amber-50 hover:bg-[#8F5F34] border border-[#5C381A] shadow-2xs font-semibold'
                     }`}
                   >
                     {name} ({count})
