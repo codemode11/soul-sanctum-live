@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   ExternalLink,
   RefreshCw,
@@ -6,7 +6,12 @@ import {
   X,
   Camera,
   Play,
+  Pause,
   Tv,
+  Radio,
+  Flame,
+  Volume2,
+  VolumeX,
   Search,
   ThumbsUp,
   Eye,
@@ -24,10 +29,166 @@ import {
 } from '../data/christendomData';
 import { CatholicSocialShareIcon } from './SanctumIcons';
 
-type SocialPlatformTab = 'all' | 'instagram' | 'christendom';
+type SocialPlatformTab = 'all' | 'ewtn' | 'instagram' | 'christendom';
 
 export const CatholicSocialView: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<SocialPlatformTab>('all');
+
+  // =========================================================================
+  // EWTN HUB STATE (TELEVISION, RADIO & 24/7 EUCHARISTIC ADORATION)
+  // =========================================================================
+  const [ewtnHubTab, setEwtnHubTab] = useState<'tv' | 'radio' | 'adoration'>('tv');
+  const [ewtnStageVideo, setEwtnStageVideo] = useState<{
+    id: string;
+    title: string;
+    subtitle: string;
+    embedUrl: string;
+    portalUrl: string;
+    youtubeUrl: string;
+  }>({
+    id: 'ewtn-tv-live',
+    title: 'EWTN Global Catholic Television Network • Live Broadcast',
+    subtitle: 'Our Lady of the Angels • Irondale, Alabama & Worldwide',
+    embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
+    portalUrl: 'https://www.ewtn.com/tv/watch-live',
+    youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0'
+  });
+  const [ewtnStageKey, setEwtnStageKey] = useState<number>(0);
+
+  const [selectedRadioId, setSelectedRadioId] = useState<'english' | 'classics' | 'spanish'>('english');
+  const [isRadioPlaying, setIsRadioPlaying] = useState(false);
+  const [isRadioMuted, setIsRadioMuted] = useState(false);
+  const [radioVolume, setRadioVolume] = useState(0.85);
+  const [radioError, setRadioError] = useState(false);
+  const radioAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const ewtnRadioStations = [
+    {
+      id: 'english' as const,
+      name: 'EWTN Global Catholic Radio (English 24/7)',
+      subtitle: 'Live Catholic Talk, Daily Mass, Morning Glory, Called to Communion & Papal Coverage',
+      streamUrl: 'https://ewtn-ice.streamguys1.com/english-mp3',
+      portalUrl: 'https://www.ewtn.com/radio/listen-live'
+    },
+    {
+      id: 'classics' as const,
+      name: 'EWTN Radio Classics & Archbishop Sheen',
+      subtitle: '24/7 Ven. Fulton J. Sheen, Mother Angelica Classics, Sacred Retreats & Devotions',
+      streamUrl: 'https://ewtn-ice.streamguys1.com/classics-mp3',
+      portalUrl: 'https://www.ewtn.com/radio/listen-live'
+    },
+    {
+      id: 'spanish' as const,
+      name: 'EWTN Radio Católica Mundial (Español 24/7)',
+      subtitle: 'Transmisión en vivo las 24 horas: Santa Misa, Santo Rosario y formación católica',
+      streamUrl: 'https://ewtn-ice.streamguys1.com/spanish-mp3',
+      portalUrl: 'https://www.ewtn.com/es/radio/escuchar-en-vivo'
+    }
+  ];
+
+  const ewtnTvChannels = [
+    {
+      id: 'ewtn-us-global',
+      label: 'EWTN US & Global English',
+      location: 'Irondale, Alabama • Worldwide',
+      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
+      portalUrl: 'https://www.ewtn.com/tv/watch-live/united-states',
+      schedule: 'Daily Mass at 8:00 AM, 12:00 PM & 7:00 PM ET • The World Over • EWTN News Nightly'
+    },
+    {
+      id: 'ewtn-asia-pacific',
+      label: 'EWTN Asia-Pacific',
+      location: 'Manila / Sydney / Irondale',
+      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
+      portalUrl: 'https://www.ewtn.com/tv/watch-live/asia-pacific',
+      schedule: '24/7 Catholic Television tailored for the Philippines, Asia & Oceania time zones'
+    },
+    {
+      id: 'ewtn-uk-europe',
+      label: 'EWTN Great Britain & Europe',
+      location: 'London / Walsingham / Rome',
+      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
+      portalUrl: 'https://www.ewtn.com/tv/watch-live/uk',
+      schedule: 'Live Masses from European Shrines, Vatican Coverage & UK/Ireland Programming'
+    },
+    {
+      id: 'ewtn-africa',
+      label: 'EWTN Africa',
+      location: 'Nairobi / Rome / Irondale',
+      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
+      portalUrl: 'https://www.ewtn.com/tv/watch-live/africa',
+      schedule: 'Pan-African Catholic broadcasts, Papal liturgies & daily devotions'
+    }
+  ];
+
+  const ewtnAdorationChapels = [
+    {
+      id: 'ewtn-adoration-irondale',
+      label: 'Our Lady of the Angels Chapel • EWTN',
+      location: 'Irondale, Alabama • 24/7 Perpetual Adoration',
+      embedUrl: 'https://www.youtube.com/embed/GBns1m4S1Xk',
+      youtubeUrl: 'https://www.youtube.com/watch?v=GBns1m4S1Xk',
+      portalUrl: 'https://www.ewtn.com/tv/watch-live',
+      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration livestream before the Most Blessed Sacrament exposed in the monstrance at EWTN.'
+    },
+    {
+      id: 'ewtn-adoration-hanceville',
+      label: 'Shrine of the Most Blessed Sacrament',
+      location: 'Hanceville, Alabama • Poor Clares of Perpetual Adoration',
+      embedUrl: 'https://www.youtube.com/embed/E5PdqveWGQI',
+      youtubeUrl: 'https://www.youtube.com/watch?v=E5PdqveWGQI',
+      portalUrl: 'https://www.olamshrine.com/',
+      description: 'Unite in silent prayer before the 8-foot gilded monstrance at Mother Angelica\'s Temple in Hanceville, Alabama.'
+    }
+  ];
+
+  const currentRadioStation = ewtnRadioStations.find(s => s.id === selectedRadioId) || ewtnRadioStations[0];
+
+  useEffect(() => {
+    if (radioAudioRef.current) {
+      radioAudioRef.current.volume = isRadioMuted ? 0 : radioVolume;
+    }
+  }, [radioVolume, isRadioMuted]);
+
+  const handleToggleRadio = (stationId?: 'english' | 'classics' | 'spanish') => {
+    const targetId = stationId || selectedRadioId;
+    const targetStation = ewtnRadioStations.find(s => s.id === targetId) || ewtnRadioStations[0];
+
+    if (stationId && stationId !== selectedRadioId) {
+      setSelectedRadioId(stationId);
+      setRadioError(false);
+      if (radioAudioRef.current) {
+        radioAudioRef.current.src = targetStation.streamUrl;
+        radioAudioRef.current.play().then(() => {
+          setIsRadioPlaying(true);
+        }).catch(() => {
+          setRadioError(true);
+          setIsRadioPlaying(false);
+        });
+      }
+      return;
+    }
+
+    if (!radioAudioRef.current) return;
+
+    if (isRadioPlaying) {
+      radioAudioRef.current.pause();
+      setIsRadioPlaying(false);
+    } else {
+      setRadioError(false);
+      radioAudioRef.current.src = targetStation.streamUrl;
+      radioAudioRef.current.play().then(() => {
+        setIsRadioPlaying(true);
+      }).catch(() => {
+        setRadioError(true);
+        setIsRadioPlaying(false);
+      });
+    }
+  };
 
   // =========================================================================
   // INSTAGRAM STATE
@@ -169,7 +330,7 @@ export const CatholicSocialView: React.FC = () => {
 
             {/* Line 2: Main Title */}
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
-              Catholic Instagram &amp; Christendom.com
+              EWTN, Catholic Instagram &amp; Christendom.com
             </h2>
           </div>
 
@@ -178,10 +339,10 @@ export const CatholicSocialView: React.FC = () => {
             <span className="text-xs font-serif text-stone-300 hidden sm:inline">
               Filter Media Channels:
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => setActivePlatform('all')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'all'
                     ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
@@ -190,8 +351,18 @@ export const CatholicSocialView: React.FC = () => {
                 All Feeds
               </button>
               <button
+                onClick={() => setActivePlatform('ewtn')}
+                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
+                  activePlatform === 'ewtn'
+                    ? 'bg-amber-600 text-stone-950 border-amber-300 shadow-sm'
+                    : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
+                }`}
+              >
+                EWTN Hub
+              </button>
+              <button
                 onClick={() => setActivePlatform('instagram')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'instagram'
                     ? 'bg-gradient-to-r from-pink-600 to-amber-500 text-white border-pink-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
@@ -201,7 +372,7 @@ export const CatholicSocialView: React.FC = () => {
               </button>
               <button
                 onClick={() => setActivePlatform('christendom')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'christendom'
                     ? 'bg-gradient-to-r from-red-700 to-amber-600 text-white border-red-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
@@ -213,6 +384,405 @@ export const CatholicSocialView: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Hidden HTML5 Audio Element for EWTN 24/7 Live Radio */}
+      <audio
+        ref={radioAudioRef}
+        preload="none"
+        onEnded={() => setIsRadioPlaying(false)}
+        onError={() => {
+          if (isRadioPlaying) setRadioError(true);
+          setIsRadioPlaying(false);
+        }}
+      />
+
+      {/* =====================================================================
+          0. EWTN GLOBAL CATHOLIC NETWORK HUB (TV • RADIO • 24/7 ADORATION)
+          ===================================================================== */}
+      {(activePlatform === 'all' || activePlatform === 'ewtn') && (
+        <section className="rounded-2xl overflow-hidden bg-gradient-to-br from-[#17120E] via-[#1F1610] to-[#120D0A] border border-amber-500/40 shadow-xl text-stone-100">
+          {/* Header Bar */}
+          <div className="px-4 py-3.5 sm:px-6 sm:py-4 bg-gradient-to-r from-[#241307] via-[#3A1D0D] to-[#241307] border-b border-amber-500/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1 text-left">
+              <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-widest text-amber-300">
+                <span>Eternal Word Television Network</span>
+                <span aria-hidden="true">·</span>
+                <span>Founded by Mother Angelica</span>
+              </div>
+              <h3 className="font-cinzel text-base sm:text-xl font-bold text-white">
+                EWTN Live Television, Global Catholic Radio &amp; 24/7 Eucharistic Adoration
+              </h3>
+            </div>
+
+            {/* 3-Mode EWTN Switcher */}
+            <div className="flex items-center gap-1 bg-black/50 p-1 rounded-lg border border-amber-500/30 self-start md:self-center shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setEwtnHubTab('tv');
+                  setEwtnStageVideo({
+                    id: 'ewtn-tv-live',
+                    title: 'EWTN Global Catholic Television Network • Live Broadcast',
+                    subtitle: 'Our Lady of the Angels • Irondale, Alabama & Worldwide',
+                    embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
+                    portalUrl: 'https://www.ewtn.com/tv/watch-live',
+                    youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0'
+                  });
+                }}
+                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                  ewtnHubTab === 'tv'
+                    ? 'bg-amber-600 text-stone-950 shadow-xs'
+                    : 'text-stone-300 hover:text-white'
+                }`}
+              >
+                <Tv className="w-3.5 h-3.5" />
+                <span>EWTN Television</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setEwtnHubTab('radio')}
+                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                  ewtnHubTab === 'radio'
+                    ? 'bg-amber-600 text-stone-950 shadow-xs'
+                    : 'text-stone-300 hover:text-white'
+                }`}
+              >
+                <Radio className="w-3.5 h-3.5" />
+                <span>EWTN Radio</span>
+                {isRadioPlaying && <span className="text-[10px] font-mono uppercase">(Playing)</span>}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setEwtnHubTab('adoration');
+                  setEwtnStageVideo({
+                    id: 'ewtn-adoration-irondale',
+                    title: 'Our Lady of the Angels Chapel • EWTN 24/7 Eucharistic Adoration',
+                    subtitle: 'Irondale, Alabama • 24/7 Perpetual Adoration',
+                    embedUrl: 'https://www.youtube.com/embed/GBns1m4S1Xk',
+                    portalUrl: 'https://www.ewtn.com/tv/watch-live',
+                    youtubeUrl: 'https://www.youtube.com/watch?v=GBns1m4S1Xk'
+                  });
+                }}
+                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                  ewtnHubTab === 'adoration'
+                    ? 'bg-amber-600 text-stone-950 shadow-xs'
+                    : 'text-stone-300 hover:text-white'
+                }`}
+              >
+                <Flame className="w-3.5 h-3.5" />
+                <span>24/7 Adoration</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="p-4 sm:p-6 space-y-5">
+            {/* Embedded 16:9 Live Video Player for EWTN Television & EWTN 24/7 Adoration */}
+            {(ewtnHubTab === 'tv' || ewtnHubTab === 'adoration') && (
+              <div className="rounded-xl overflow-hidden border border-amber-500/35 bg-black shadow-lg">
+                <div className="relative aspect-video w-full bg-black">
+                  <iframe
+                    key={`${ewtnStageVideo.id}-${ewtnStageKey}`}
+                    src={ewtnStageVideo.embedUrl}
+                    title={ewtnStageVideo.title}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="p-3.5 sm:p-4 bg-stone-950/95 border-t border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="space-y-0.5 text-left">
+                    <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block">
+                      {ewtnStageVideo.subtitle}
+                    </span>
+                    <h4 className="font-cinzel text-sm sm:text-base font-bold text-white">
+                      {ewtnStageVideo.title}
+                    </h4>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setEwtnStageKey(prev => prev + 1)}
+                      className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Reload</span>
+                    </button>
+                    <a
+                      href={ewtnStageVideo.portalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-amber-900/80 hover:bg-amber-800 text-amber-100 border border-amber-500/50 text-xs font-cinzel font-bold flex items-center gap-1.5 whitespace-nowrap"
+                    >
+                      <Tv className="w-3.5 h-3.5 text-amber-300" />
+                      <span>EWTN HD Portal</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                    <a
+                      href={ewtnStageVideo.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-lg bg-red-800/80 hover:bg-red-700 text-white border border-red-500/50 text-xs font-sans font-semibold flex items-center gap-1.5 whitespace-nowrap"
+                    >
+                      <span>YouTube Live</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 1: EWTN LIVE TELEVISION REGIONAL CHANNELS */}
+            {ewtnHubTab === 'tv' && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+                {ewtnTvChannels.map(channel => {
+                  const isActiveChannel = ewtnStageVideo.id === channel.id;
+                  return (
+                    <div
+                      key={channel.id}
+                      className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
+                        isActiveChannel
+                          ? 'bg-amber-950/55 border-amber-400 shadow-md'
+                          : 'bg-black/45 border-amber-500/25 hover:border-amber-400/60'
+                      }`}
+                    >
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block">
+                          {channel.location}
+                        </span>
+                        <h4 className="font-cinzel text-sm font-bold text-white">
+                          {channel.label}
+                        </h4>
+                        <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                          {channel.schedule}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2 pt-2 border-t border-white/10">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setEwtnStageVideo({
+                              id: channel.id,
+                              title: `${channel.label} • Live Broadcast`,
+                              subtitle: channel.location,
+                              embedUrl: channel.embedUrl,
+                              portalUrl: channel.portalUrl,
+                              youtubeUrl: channel.youtubeUrl
+                            })
+                          }
+                          className={`flex-1 px-2.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center justify-center gap-1 whitespace-nowrap ${
+                            isActiveChannel
+                              ? 'bg-amber-600 text-stone-950'
+                              : 'bg-amber-900/60 hover:bg-amber-800 text-amber-100 border border-amber-500/40'
+                          }`}
+                        >
+                          <Tv className="w-3 h-3" />
+                          <span>{isActiveChannel ? 'Playing' : 'Watch Live'}</span>
+                        </button>
+                        <a
+                          href={channel.portalUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1 whitespace-nowrap"
+                          title={`Open ${channel.label} official stream`}
+                        >
+                          <span>Portal</span>
+                          <ExternalLink className="w-3 h-3 text-amber-400" />
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* TAB 2: EWTN GLOBAL CATHOLIC RADIO (LIVE 24/7 AUDIO PLAYER) */}
+            {ewtnHubTab === 'radio' && (
+              <div className="space-y-4 text-left">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {ewtnRadioStations.map(station => {
+                    const isSelected = selectedRadioId === station.id;
+                    const isThisPlaying = isSelected && isRadioPlaying;
+                    return (
+                      <div
+                        key={station.id}
+                        onClick={() => handleToggleRadio(station.id)}
+                        className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between gap-3 ${
+                          isSelected
+                            ? 'bg-amber-950/60 border-amber-400 shadow-md'
+                            : 'bg-black/40 hover:bg-black/60 border-white/15'
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400">
+                              24/7 Live Radio Stream
+                            </span>
+                            <span className="text-[11px] font-mono text-amber-200">
+                              {isThisPlaying ? 'ON AIR' : 'READY'}
+                            </span>
+                          </div>
+                          <h4 className="font-cinzel text-sm font-bold text-white">
+                            {station.name}
+                          </h4>
+                          <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                            {station.subtitle}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                          <span className="inline-flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-300">
+                            {isThisPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                            <span>{isThisPlaying ? 'Pause Radio' : 'Listen Live'}</span>
+                          </span>
+                          <a
+                            href={station.portalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            className="text-[11px] font-sans text-stone-300 hover:text-amber-200 flex items-center gap-1"
+                          >
+                            <span>Official Player</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Active Radio Controls Deck */}
+                <div className="p-4 rounded-xl bg-black/60 border border-amber-500/35 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleToggleRadio()}
+                      className="w-11 h-11 rounded-xl bg-amber-600 hover:bg-amber-500 text-stone-950 flex items-center justify-center shadow-md transition-all cursor-pointer shrink-0"
+                      aria-label={isRadioPlaying ? 'Pause EWTN Radio' : 'Play EWTN Radio'}
+                    >
+                      {isRadioPlaying ? <Pause className="w-5 h-5 fill-current" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
+                    </button>
+                    <div className="space-y-0.5">
+                      <div className="text-xs font-cinzel font-bold text-amber-300">
+                        {currentRadioStation.name}
+                      </div>
+                      <p className="text-xs font-serif text-stone-300">
+                        {radioError
+                          ? 'Browser blocked direct audio stream — click Official EWTN Radio Player on the right.'
+                          : isRadioPlaying
+                            ? 'Streaming live EWTN Catholic Radio audio (plays while you browse Catholic Socials).'
+                            : 'Click Play to start the live 24/7 EWTN Catholic Radio broadcast.'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 shrink-0">
+                    <div className="flex items-center gap-2 bg-stone-900 px-3 py-1.5 rounded-lg border border-white/10">
+                      <button
+                        type="button"
+                        onClick={() => setIsRadioMuted(prev => !prev)}
+                        className="text-amber-300 hover:text-white cursor-pointer"
+                        aria-label={isRadioMuted ? 'Unmute radio' : 'Mute radio'}
+                      >
+                        {isRadioMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                      </button>
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        value={isRadioMuted ? 0 : radioVolume}
+                        onChange={e => {
+                          setIsRadioMuted(false);
+                          setRadioVolume(parseFloat(e.target.value));
+                        }}
+                        className="w-20 accent-amber-500 cursor-pointer"
+                        aria-label="EWTN Radio Volume"
+                      />
+                    </div>
+
+                    <a
+                      href={currentRadioStation.portalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3.5 py-2 rounded-lg bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40 text-xs font-cinzel font-bold flex items-center gap-1.5 whitespace-nowrap"
+                    >
+                      <Radio className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Official EWTN Radio Player</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: EWTN 24/7 PERPETUAL EUCHARISTIC ADORATION */}
+            {ewtnHubTab === 'adoration' && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                {ewtnAdorationChapels.map(chapel => {
+                  const isActiveChapel = ewtnStageVideo.id === chapel.id;
+                  return (
+                    <div
+                      key={chapel.id}
+                      className={`p-4 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
+                        isActiveChapel
+                          ? 'bg-amber-950/55 border-amber-400 shadow-md'
+                          : 'bg-black/50 border-amber-500/35 hover:border-amber-400/60'
+                      }`}
+                    >
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400">
+                          {chapel.location}
+                        </span>
+                        <h4 className="font-cinzel text-base font-bold text-white">
+                          {chapel.label}
+                        </h4>
+                        <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                          {chapel.description}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setEwtnStageVideo({
+                              id: chapel.id,
+                              title: `${chapel.label} • 24/7 Eucharistic Adoration`,
+                              subtitle: chapel.location,
+                              embedUrl: chapel.embedUrl,
+                              portalUrl: chapel.portalUrl,
+                              youtubeUrl: chapel.youtubeUrl
+                            })
+                          }
+                          className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                            isActiveChapel
+                              ? 'bg-amber-600 text-stone-950'
+                              : 'bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40'
+                          }`}
+                        >
+                          <Flame className="w-3.5 h-3.5" />
+                          <span>{isActiveChapel ? 'Playing Above' : 'Watch Live Adoration'}</span>
+                        </button>
+                        <a
+                          href={chapel.youtubeUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1.5 whitespace-nowrap"
+                        >
+                          <span>YouTube 24/7 Feed</span>
+                          <ExternalLink className="w-3 h-3 text-amber-400" />
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* =====================================================================
           1. CATHOLIC INSTAGRAM SECTION
