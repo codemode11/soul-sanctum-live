@@ -329,88 +329,88 @@ export const DivineOfficeView: React.FC = () => {
             Canonical Hours:
           </span>
 
-          {/* 1. Invitatory */}
+          {/* 1. Invitatory (Lightest Blue) */}
           <button
             type="button"
             onClick={() => handleHourSelect('invitatory')}
             className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               selectedHourKey === 'invitatory'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold ring-1 ring-amber-700'
-                : 'bg-stone-100/80 text-stone-700 hover:text-amber-950 hover:bg-stone-200/80 border border-stone-200/70'
+                ? 'bg-sky-500 text-white shadow-md font-bold ring-2 ring-sky-300'
+                : 'bg-sky-100 text-sky-950 hover:bg-sky-200 border border-sky-300/80'
             }`}
           >
-            <Sunrise className="w-3.5 h-3.5 text-amber-500" />
+            <Sunrise className="w-3.5 h-3.5 text-white stroke-[2.2]" />
             <span>Invitatory</span>
           </button>
 
-          {/* 2. Office of Readings */}
+          {/* 2. Office of Readings (Light-Medium Blue) */}
           <button
             type="button"
             onClick={() => handleHourSelect('readings')}
             className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               selectedHourKey === 'readings'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold ring-1 ring-amber-700'
-                : 'bg-stone-100/80 text-stone-700 hover:text-amber-950 hover:bg-stone-200/80 border border-stone-200/70'
+                ? 'bg-sky-600 text-white shadow-md font-bold ring-2 ring-sky-400'
+                : 'bg-sky-200 text-sky-950 hover:bg-sky-300 border border-sky-400/80'
             }`}
           >
-            <BookOpen className="w-3.5 h-3.5 text-amber-500" />
+            <BookOpen className="w-3.5 h-3.5 text-white stroke-[2.2]" />
             <span>Office of Readings</span>
           </button>
 
-          {/* 3. Morning Prayer (Lauds) */}
+          {/* 3. Morning Prayer - Lauds (Medium Sky Blue) */}
           <button
             type="button"
             onClick={() => handleHourSelect('lauds')}
             className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               selectedHourKey === 'lauds'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold ring-1 ring-amber-700'
-                : 'bg-stone-100/80 text-stone-700 hover:text-amber-950 hover:bg-stone-200/80 border border-stone-200/70'
+                ? 'bg-blue-600 text-white shadow-md font-bold ring-2 ring-blue-400'
+                : 'bg-blue-200 text-blue-950 hover:bg-blue-300 border border-blue-300/80'
             }`}
           >
-            <Sun className="w-3.5 h-3.5 text-amber-500" />
+            <Sun className="w-3.5 h-3.5 text-white stroke-[2.2]" />
             <span>Morning Prayer (Lauds)</span>
           </button>
 
-          {/* 4. Daytime Prayer */}
+          {/* 4. Daytime Prayer (Vibrant Midday Blue) */}
           <button
             type="button"
             onClick={() => handleHourSelect('daytime')}
             className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               selectedHourKey === 'daytime'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold ring-1 ring-amber-700'
-                : 'bg-stone-100/80 text-stone-700 hover:text-amber-950 hover:bg-stone-200/80 border border-stone-200/70'
+                ? 'bg-blue-700 text-white shadow-md font-bold ring-2 ring-blue-400'
+                : 'bg-blue-500 text-white hover:bg-blue-600 border border-blue-600'
             }`}
           >
-            <Clock className="w-3.5 h-3.5 text-amber-500" />
+            <Clock className="w-3.5 h-3.5 text-white stroke-[2.2]" />
             <span>Daytime Prayer</span>
           </button>
 
-          {/* 5. Evening Prayer (Vespers) */}
+          {/* 5. Evening Prayer - Vespers (Dark Twilight Blue) */}
           <button
             type="button"
             onClick={() => handleHourSelect('vespers')}
             className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               selectedHourKey === 'vespers'
-                ? 'bg-amber-900 text-amber-50 shadow-xs font-bold ring-1 ring-amber-700'
-                : 'bg-stone-100/80 text-stone-700 hover:text-amber-950 hover:bg-stone-200/80 border border-stone-200/70'
+                ? 'bg-blue-900 text-white shadow-md font-bold ring-2 ring-blue-500'
+                : 'bg-blue-700 text-white hover:bg-blue-800 border border-blue-800'
             }`}
           >
-            <Sunset className="w-3.5 h-3.5 text-amber-500" />
+            <Sunset className="w-3.5 h-3.5 text-white stroke-[2.2]" />
             <span>Evening Prayer (Vespers)</span>
           </button>
 
-          {/* 6. Night Prayer (Compline) */}
+          {/* 6. Night Prayer - Compline (Deepest Midnight Blue) */}
           <button
             type="button"
             onClick={() => handleHourSelect('compline')}
             className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               selectedHourKey === 'compline'
-                ? 'bg-indigo-950 text-indigo-100 shadow-xs font-bold ring-1 ring-indigo-600'
-                : 'bg-indigo-50/80 text-indigo-950 hover:bg-indigo-100 border border-indigo-200/70'
+                ? 'bg-slate-950 text-white shadow-md font-bold ring-2 ring-indigo-400'
+                : 'bg-blue-900 text-white hover:bg-blue-950 border border-blue-950'
             }`}
           >
-            <Moon className="w-3.5 h-3.5 text-indigo-500 fill-indigo-200" />
-            <span className="font-bold">Night Prayer (Compline)</span>
+            <Moon className="w-3.5 h-3.5 text-white stroke-[2.2]" />
+            <span>Night Prayer (Compline)</span>
           </button>
         </div>
       </div>
