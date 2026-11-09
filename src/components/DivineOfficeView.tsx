@@ -323,12 +323,14 @@ export const DivineOfficeView: React.FC = () => {
       </div>
 
       {/* RECTANGLE 3: HOURS NAVIGATION TAB BAR */}
-      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-3">
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-          <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700 pl-1 pr-1 shrink-0 hidden sm:inline">
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-2.5">
+        <div className="flex items-center justify-between pb-0.5">
+          <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700 pl-1">
             Canonical Hours:
           </span>
+        </div>
 
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full">
           {[
             { key: 'invitatory' as const, label: 'Invitatory', Icon: Sunrise },
             { key: 'readings' as const, label: 'Office of Readings', Icon: BookOpen },
@@ -350,14 +352,14 @@ export const DivineOfficeView: React.FC = () => {
                   outline: isSelected ? '2px solid #5A381C' : 'none',
                   outlineOffset: '1px',
                 }}
-                className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-2 border hover:bg-[#6B4423] hover:border-[#5A381C] ${
-                  isSelected ? 'scale-105 z-10 shadow-md' : 'opacity-95 hover:opacity-100'
+                className={`w-full px-2 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-start gap-1.5 sm:gap-2.5 border hover:bg-[#6B4423] hover:border-[#5A381C] ${
+                  isSelected ? 'scale-[1.02] z-10 shadow-md' : 'opacity-95 hover:opacity-100'
                 }`}
               >
                 <span className="p-1 rounded-md bg-stone-900/85 shadow-xs flex items-center justify-center shrink-0">
-                  <Icon className="w-4 h-4" style={{ color: '#ffffff', strokeWidth: 2.3 }} />
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: '#ffffff', strokeWidth: 2.3 }} />
                 </span>
-                <span style={{ color: '#000000' }} className="font-bold tracking-wide">
+                <span style={{ color: '#000000' }} className="font-bold tracking-wide truncate">
                   {label}
                 </span>
               </button>
