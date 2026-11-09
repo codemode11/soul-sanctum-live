@@ -48,6 +48,7 @@ export const DivineOfficeView: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [iframeKey, setIframeKey] = useState(0);
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
+  const [hoveredHourKey, setHoveredHourKey] = useState<OfficeHourKey | null>(null);
 
   const hourData: DivineOfficeHourData = getDivineOfficeHour(selectedDateStr, selectedHourKey);
 
@@ -339,26 +340,30 @@ export const DivineOfficeView: React.FC = () => {
             { key: 'vespers' as const, label: 'Evening Prayer (Vespers)', Icon: Sunset },
             { key: 'compline' as const, label: 'Night Prayer (Compline)', Icon: Moon },
           ].map(({ key, label, Icon }) => {
-            const isSelected = selectedHourKey === key;
+            const isHovered = hoveredHourKey === key;
             return (
               <button
                 key={key}
                 type="button"
                 onClick={() => handleHourSelect(key)}
+                onMouseEnter={() => setHoveredHourKey(key)}
+                onMouseLeave={() => setHoveredHourKey(null)}
                 style={{
-                  backgroundColor: isSelected ? '#6B4423' : 'transparent',
+                  backgroundColor: isHovered ? '#8B5A2B' : 'transparent',
+                  borderColor: isHovered ? '#5A381C' : 'transparent',
+                  outlineColor: isHovered ? '#5A381C' : 'transparent',
                   color: '#000000',
-                  borderColor: isSelected ? '#5A381C' : 'transparent',
-                  outline: isSelected ? '2px solid #5A381C' : 'none',
-                  outlineOffset: '1px',
                 }}
-                className={`w-full px-2 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-start gap-1.5 sm:gap-2.5 border hover:bg-[#6B4423] hover:border-[#5A381C] ${
-                  isSelected ? 'scale-[1.02] z-10 shadow-md' : 'opacity-95 hover:opacity-100'
-                }`}
+                className="w-full px-2 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-start gap-1.5 sm:gap-2.5 border-2 outline-1 outline-offset-1"
               >
-                <span className="p-1 rounded-md bg-stone-900/85 shadow-xs flex items-center justify-center shrink-0">
-                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: '#ffffff', strokeWidth: 2.3 }} />
-                </span>
+                <Icon
+                  className="w-4 h-4 shrink-0"
+                  style={{
+                    color: '#ffffff',
+                    strokeWidth: 2.4,
+                    filter: 'drop-shadow(0 1px 1.5px rgba(0,0,0,0.45))',
+                  }}
+                />
                 <span style={{ color: '#000000' }} className="font-bold tracking-wide truncate">
                   {label}
                 </span>
