@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
-  Share2,
   ExternalLink,
   RefreshCw,
   Plus,
@@ -11,12 +10,23 @@ import {
   Search,
   ThumbsUp,
   Eye,
-  CheckCircle2
+  CheckCircle2,
+  Facebook,
+  Share2,
+  MessageSquare,
+  Sparkles,
+  Trash2,
+  LayoutGrid,
+  Code
 } from 'lucide-react';
 import {
   CATHOLIC_INSTAGRAM_SOURCES,
   CatholicInstagramSource,
-  CatholicStaticSocialPost
+  CatholicStaticSocialPost,
+  CATHOLIC_FACEBOOK_SOURCES,
+  CATHOLIC_FACEBOOK_POSTS,
+  CatholicFacebookPost,
+  CatholicFacebookSource
 } from '../data/catholicSocial';
 import {
   CHRISTENDOM_CHANNELS,
@@ -25,12 +35,143 @@ import {
 } from '../data/christendomData';
 import { CatholicSocialShareIcon } from './SanctumIcons';
 
-type SocialPlatformTab = 'all' | 'instagram' | 'christendom';
+type SocialPlatformTab = 'all' | 'facebook' | 'instagram' | 'christendom';
+type FacebookViewMode = 'embed' | 'card';
+
+const STORAGE_KEY_FB_CUSTOM = 'catholic_social_fb_custom_posts_v1';
 
 export const CatholicSocialView: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<SocialPlatformTab>('all');
 
-  // Instagram state
+  // =========================================================================
+  // FACEBOOK STATE
+  // =========================================================================
+  const [selectedFbSourceId, setSelectedFbSourceId] = useState<string>('all');
+  const [customFbInput, setCustomFbInput] = useState<string>('');
+  const [fbViewMode, setFbViewMode] = useState<FacebookViewMode>('embed');
+  const [fbPosts, setFbPosts] = useState<CatholicFacebookPost[]>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_FB_CUSTOM);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Merge custom stored posts at top of defaults avoiding duplicate IDs
+          const defaultIds = new Set(CATHOLIC_FACEBOOK_POSTS.map(p => p.id));
+          const uniqueCustom = parsed.filter((p: CatholicFacebookPost) => !defaultIds.has(p.id));
+          return [...uniqueCustom, ...CATHOLIC_FACEBOOK_POSTS];
+        }
+      }
+    } catch {
+      // Fallback on error
+    }
+    return CATHOLIC_FACEBOOK_POSTS;
+  });
+
+  // Save custom posts to localStorage
+  useEffect(() => {
+    try {
+      const customOnly = fbPosts.filter(p => p.id.startsWith('fb-custom-'));
+      localStorage.setItem(STORAGE_KEY_FB_CUSTOM, JSON.stringify(customOnly));
+    } catch {
+      // Ignore storage errors
+    }
+  }, [fbPosts]);
+
+  // Helper to extract or convert iframe string / Facebook post URL to official Facebook embed plugin URL
+  const parseFacebookInput = (input: string): { embedUrl: string; postUrl: string; titleHint: string } => {
+    const trimmed = input.trim();
+
+    // Check if user pasted full iframe tag with src="https://www.facebook.com/plugins/post.php?href=..."
+    const iframeSrcMatch = trimmed.match(/src=["']([^"']+)["']/i);
+    if (iframeSrcMatch && iframeSrcMatch[1]) {
+      const src = iframeSrcMatch[1];
+      // Extract href query parameter if present
+      const urlObjMatch = src.match(/href=([^&]+)/);
+      let origUrl = '';
+      if (urlObjMatch && urlObjMatch[1]) {
+        origUrl = decodeURIComponent(urlObjMatch[1]);
+      }
+      return {
+        embedUrl: src,
+        postUrl: origUrl || src,
+        titleHint: origUrl.includes('EWTN') ? 'EWTN Africa Embed' : 'Embedded Facebook Post'
+      };
+    }
+
+    // Direct Facebook URL match
+    let cleanUrl = trimmed;
+    if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+      cleanUrl = `https://${cleanUrl}`;
+    }
+
+    const pluginEmbed = `https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(cleanUrl)}&show_text=true&width=500`;
+    return {
+      embedUrl: pluginEmbed,
+      postUrl: cleanUrl,
+      titleHint: cleanUrl.includes('EWTNAfrica') ? 'EWTN Africa Post' : 'Catholic Facebook Post'
+    };
+  };
+
+  const handleCustomFacebookSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customFbInput.trim()) return;
+
+    const { embedUrl, postUrl, titleHint } = parseFacebookInput(customFbInput);
+    const newId = `fb-custom-${Date.now()}`;
+
+    // Extract handle / page name hint from URL if possible
+    let sourceName = 'Catholic Community';
+    let handle = '@CatholicSocial';
+    if (postUrl.includes('EWTNAfrica')) {
+      sourceName = 'EWTN Africa';
+      handle = '@EWTNAfrica';
+    } else if (postUrl.includes('vaticannews')) {
+      sourceName = 'Vatican News';
+      handle = '@vaticannews';
+    } else if (postUrl.includes('usccb')) {
+      sourceName = 'USCCB';
+      handle = '@usccb';
+    }
+
+    const newPost: CatholicFacebookPost = {
+      id: newId,
+      sourceId: 'fb-custom',
+      sourceName,
+      handle,
+      pageUrl: postUrl || 'https://www.facebook.com',
+      postUrl,
+      embedUrl,
+      avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
+      verified: true,
+      postDate: 'Just Now',
+      category: 'User Added Embed',
+      text: `${titleHint} added to Catholic Social.`,
+      likesCount: 1,
+      commentsCount: 0,
+      sharesCount: 1
+    };
+
+    setFbPosts(prev => [newPost, ...prev]);
+    setCustomFbInput('');
+  };
+
+  const handleDeleteCustomFbPost = (id: string) => {
+    setFbPosts(prev => prev.filter(p => p.id !== id));
+  };
+
+  const activeFbSource = useMemo(() => {
+    if (selectedFbSourceId === 'all') return null;
+    return CATHOLIC_FACEBOOK_SOURCES.find(s => s.id === selectedFbSourceId) || null;
+  }, [selectedFbSourceId]);
+
+  const filteredFbPosts = useMemo(() => {
+    if (selectedFbSourceId === 'all') return fbPosts;
+    return fbPosts.filter(p => p.sourceId === selectedFbSourceId);
+  }, [fbPosts, selectedFbSourceId]);
+
+  // =========================================================================
+  // INSTAGRAM STATE
+  // =========================================================================
   const [selectedIgSource, setSelectedIgSource] = useState<CatholicInstagramSource>(CATHOLIC_INSTAGRAM_SOURCES[0]);
   const [igShortcodes, setIgShortcodes] = useState<string[]>(CATHOLIC_INSTAGRAM_SOURCES[0].defaultShortcodes);
   const [, setIgPosts] = useState<CatholicStaticSocialPost[]>([]);
@@ -38,12 +179,6 @@ export const CatholicSocialView: React.FC = () => {
   const [isLoadingIg, setIsLoadingIg] = useState<boolean>(false);
   const [customIgInput, setCustomIgInput] = useState<string>('');
   const [igRefreshKey, setIgRefreshKey] = useState<number>(0);
-
-  // Christendom.com state
-  const [selectedChannelId, setSelectedChannelId] = useState<string>('all');
-  const [selectedVideoCategory, setSelectedVideoCategory] = useState<string>('All');
-  const [videoSearchQuery, setVideoSearchQuery] = useState<string>('');
-  const [activeVideo, setActiveVideo] = useState<ChristendomVideo | null>(null);
 
   // Fetch live Instagram data (posts + shortcodes + profile pic) for selected account
   const fetchInstagramShortcodes = useCallback(async (source: CatholicInstagramSource) => {
@@ -111,7 +246,14 @@ export const CatholicSocialView: React.FC = () => {
     }
   };
 
-  // Christendom Video categories
+  // =========================================================================
+  // CHRISTENDOM STATE
+  // =========================================================================
+  const [selectedChannelId, setSelectedChannelId] = useState<string>('all');
+  const [selectedVideoCategory, setSelectedVideoCategory] = useState<string>('All');
+  const [videoSearchQuery, setVideoSearchQuery] = useState<string>('');
+  const [activeVideo, setActiveVideo] = useState<ChristendomVideo | null>(null);
+
   const videoCategories = useMemo(() => {
     return [
       'All',
@@ -124,7 +266,6 @@ export const CatholicSocialView: React.FC = () => {
     ];
   }, []);
 
-  // Filter Christendom videos
   const filteredVideos = useMemo(() => {
     return CHRISTENDOM_VIDEOS.filter(v => {
       const matchesChannel = selectedChannelId === 'all' || v.channelId === selectedChannelId;
@@ -162,22 +303,22 @@ export const CatholicSocialView: React.FC = () => {
                 <span>CATHOLIC SOCIAL &amp; MEDIA</span>
               </span>
               <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap truncate">
-                Curated Posts from Faithful Catholic Apostolates &amp; Christendom
+                Facebook Embeds, Instagram &amp; Christendom.com Catholic Media
               </span>
             </div>
 
             {/* Line 2: Main Title */}
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
-              Catholic Instagram &amp; Christendom.com
+              Catholic Social Media Feeds &amp; Embeds
             </h2>
           </div>
 
           {/* Line 3: Platform Filter Controls */}
           <div className="flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-3 border-t border-stone-700/60">
             <span className="text-xs font-serif text-stone-300 hidden sm:inline">
-              Filter Media Channels:
+              Filter Social Channels:
             </span>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => setActivePlatform('all')}
                 className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
@@ -187,6 +328,16 @@ export const CatholicSocialView: React.FC = () => {
                 }`}
               >
                 All Feeds
+              </button>
+              <button
+                onClick={() => setActivePlatform('facebook')}
+                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border ${
+                  activePlatform === 'facebook'
+                    ? 'bg-gradient-to-r from-blue-700 to-indigo-600 text-white border-blue-300 shadow-sm'
+                    : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
+                }`}
+              >
+                Facebook
               </button>
               <button
                 onClick={() => setActivePlatform('instagram')}
@@ -214,7 +365,300 @@ export const CatholicSocialView: React.FC = () => {
       </div>
 
       {/* =====================================================================
-          1. CATHOLIC INSTAGRAM SECTION
+          1. CATHOLIC FACEBOOK EMBEDS SECTION
+          ===================================================================== */}
+      {(activePlatform === 'all' || activePlatform === 'facebook') && (
+        <section className="rounded-2xl bg-[#FBF9F5] border border-blue-900/20 shadow-xl overflow-hidden">
+          {/* Section Header */}
+          <div className="bg-gradient-to-r from-[#0E1F3B] via-[#1A335F] to-[#0E1F3B] px-4 py-3 sm:px-5 sm:py-3.5 border-b border-blue-400/30 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <Facebook className="w-4 h-4 text-blue-400 fill-blue-400" />
+                <span className="font-cinzel text-xs font-bold tracking-[0.2em] uppercase text-blue-300">
+                  CATHOLIC FACEBOOK POSTS &amp; EMBEDS
+                </span>
+              </div>
+              <h3 className="font-cinzel text-base sm:text-lg font-bold text-white">
+                {activeFbSource ? (
+                  <>
+                    {activeFbSource.name} <span className="text-blue-300 font-serif text-sm font-normal">({activeFbSource.handle})</span>
+                  </>
+                ) : (
+                  'EWTN Africa &amp; Catholic Facebook Apostolates'
+                )}
+              </h3>
+              <p className="text-xs text-stone-300 font-serif">
+                {activeFbSource
+                  ? activeFbSource.description
+                  : 'Interactive embedded posts from EWTN Africa, Vatican News, USCCB, Word on Fire, and faithful Catholic creators.'}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              {/* View mode toggle */}
+              <div className="flex items-center rounded-lg bg-black/30 p-1 border border-white/10">
+                <button
+                  onClick={() => setFbViewMode('embed')}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-cinzel font-semibold transition-colors cursor-pointer ${
+                    fbViewMode === 'embed'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'text-stone-300 hover:text-white'
+                  }`}
+                  title="Official Facebook Iframe Embed View"
+                >
+                  <Code className="w-3.5 h-3.5" />
+                  <span>Facebook Embed</span>
+                </button>
+                <button
+                  onClick={() => setFbViewMode('card')}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-cinzel font-semibold transition-colors cursor-pointer ${
+                    fbViewMode === 'card'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'text-stone-300 hover:text-white'
+                  }`}
+                  title="Native Catholic Card View"
+                >
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span>Cards</span>
+                </button>
+              </div>
+
+              <a
+                href={activeFbSource ? activeFbSource.pageUrl : 'https://www.facebook.com/EWTNAfrica'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-cinzel font-bold tracking-wider transition-colors shadow-sm"
+              >
+                <span>{activeFbSource ? activeFbSource.name : 'EWTN Africa'}</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          </div>
+
+          <div className="p-3 sm:p-5 space-y-4">
+            {/* Source selector & Custom Facebook iframe add bar */}
+            <div className="rounded-xl bg-[#0E1F3B]/[0.03] border border-blue-900/10 p-2 sm:p-3 space-y-2.5 shadow-xs">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <button
+                  onClick={() => setSelectedFbSourceId('all')}
+                  className={`px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
+                    selectedFbSourceId === 'all'
+                      ? 'bg-[#0E1F3B] text-blue-100 border-blue-700 shadow-xs font-semibold'
+                      : 'bg-white text-stone-700 border-stone-200 hover:border-blue-600/50 hover:bg-stone-50'
+                  }`}
+                >
+                  All Facebook Posts ({fbPosts.length})
+                </button>
+                {CATHOLIC_FACEBOOK_SOURCES.map(src => (
+                  <button
+                    key={src.id}
+                    onClick={() => setSelectedFbSourceId(src.id)}
+                    className={`px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
+                      selectedFbSourceId === src.id
+                        ? 'bg-[#0E1F3B] text-blue-100 border-blue-700 shadow-xs font-semibold'
+                        : 'bg-white text-stone-700 border-stone-200 hover:border-blue-600/50 hover:bg-stone-50'
+                    }`}
+                  >
+                    {src.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Paste Facebook Post URL or Iframe Code */}
+              <form onSubmit={handleCustomFacebookSubmit} className="pt-2 border-t border-stone-200/60 flex flex-col sm:flex-row items-center gap-2">
+                <div className="relative flex-1 w-full">
+                  <Facebook className="w-3.5 h-3.5 text-blue-600 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={customFbInput}
+                    onChange={e => setCustomFbInput(e.target.value)}
+                    placeholder='Paste Facebook post URL or iframe snippet (e.g. <iframe src="https://www.facebook.com/plugins/post.php...">'
+                    className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-white border border-stone-300 text-xs font-serif text-stone-800 focus:outline-none focus:border-blue-600 placeholder:text-stone-400 shadow-inner"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs font-cinzel font-bold cursor-pointer transition-colors shrink-0 shadow-sm"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Embed Facebook Post</span>
+                </button>
+              </form>
+            </div>
+
+            {/* Facebook Posts Grid */}
+            {filteredFbPosts.length === 0 ? (
+              <div className="py-12 text-center space-y-2">
+                <p className="text-sm font-serif text-stone-600">
+                  No Facebook posts found for this filter.
+                </p>
+                <button
+                  onClick={() => setSelectedFbSourceId('all')}
+                  className="px-3 py-1 rounded-md bg-[#0E1F3B] text-blue-200 text-xs font-cinzel cursor-pointer"
+                >
+                  Show All Facebook Posts
+                </button>
+              </div>
+            ) : fbViewMode === 'embed' ? (
+              /* =========================================================
+                 OFFICIAL FACEBOOK EMBED IFRAME VIEW
+                 ========================================================= */
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                {filteredFbPosts.map(post => {
+                  const rawEmbedSrc =
+                    post.embedUrl ||
+                    `https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(post.postUrl || post.pageUrl)}&show_text=true&width=500`;
+
+                  return (
+                    <div
+                      key={post.id}
+                      className="rounded-2xl overflow-hidden border border-amber-900/15 bg-stone-50/70 p-3 shadow-md hover:shadow-xl transition-shadow flex flex-col space-y-2"
+                    >
+                      <div className="px-1 py-1 flex items-center justify-between text-xs font-serif text-stone-700">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-blue-600 inline-block animate-pulse" />
+                          <span className="font-semibold font-cinzel text-amber-950">{post.sourceName}</span>
+                          <span className="text-stone-400">• {post.postDate}</span>
+                        </div>
+                        {post.id.startsWith('fb-custom-') && (
+                          <button
+                            onClick={() => handleDeleteCustomFbPost(post.id)}
+                            className="text-stone-400 hover:text-red-600 transition-colors p-1"
+                            title="Remove Embed"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Official Facebook Iframe Plugin */}
+                      <div className="w-full overflow-hidden rounded-xl bg-white border border-stone-200/80 shadow-inner flex justify-center py-2">
+                        <iframe
+                          src={rawEmbedSrc}
+                          width="500"
+                          height="679"
+                          style={{ border: 'none', overflow: 'hidden' }}
+                          scrolling="no"
+                          frameBorder="0"
+                          allowFullScreen={true}
+                          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                          className="w-full max-w-[500px] h-[679px] border-0 mx-auto"
+                          title={`Facebook Post Embed from ${post.sourceName}`}
+                        />
+                      </div>
+
+                      <div className="px-2 pt-1 flex items-center justify-between text-xs font-serif text-stone-600">
+                        <span className="text-[11px] text-stone-500 font-cinzel">
+                          {post.category}
+                        </span>
+                        <a
+                          href={post.postUrl || post.pageUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-900 font-semibold"
+                        >
+                          <span>View on Facebook</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              /* =========================================================
+                 NATIVE CATHOLIC CARD VIEW
+                 ========================================================= */
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {filteredFbPosts.map(post => (
+                  <div
+                    key={post.id}
+                    className="rounded-2xl bg-white border border-stone-200 hover:border-blue-500/50 p-4 shadow-md hover:shadow-xl transition-all flex flex-col justify-between space-y-3.5"
+                  >
+                    <div className="space-y-3">
+                      {/* Post Header */}
+                      <div className="flex items-center justify-between gap-2 border-b border-stone-100 pb-2.5">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <img
+                            src={post.avatarUrl || 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80'}
+                            alt={post.sourceName}
+                            className="w-9 h-9 rounded-full object-cover border border-amber-500/40 shrink-0"
+                          />
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-1">
+                              <h4 className="font-cinzel font-bold text-xs sm:text-sm text-stone-900 truncate">
+                                {post.sourceName}
+                              </h4>
+                              {post.verified && (
+                                <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                              )}
+                            </div>
+                            <span className="text-[11px] font-serif text-stone-400 block truncate">
+                              {post.handle} • {post.postDate}
+                            </span>
+                          </div>
+                        </div>
+
+                        <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-800 text-[10px] font-cinzel font-bold uppercase tracking-wider shrink-0 border border-blue-200/60">
+                          {post.category}
+                        </span>
+                      </div>
+
+                      {/* Text Content */}
+                      <p className="text-xs sm:text-sm font-serif text-stone-800 whitespace-pre-line leading-relaxed">
+                        {post.text}
+                      </p>
+
+                      {/* Optional Image */}
+                      {post.imageUrl && (
+                        <div className="rounded-xl overflow-hidden aspect-video bg-stone-900 border border-stone-200">
+                          <img
+                            src={post.imageUrl}
+                            alt={post.imageAlt || post.sourceName}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Footer Stats & Links */}
+                    <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs font-serif text-stone-600">
+                      <div className="flex items-center gap-3 text-[11px] text-stone-500">
+                        <span className="inline-flex items-center gap-1">
+                          <ThumbsUp className="w-3 h-3 text-blue-600" />
+                          <span>{post.likesCount.toLocaleString()}</span>
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <MessageSquare className="w-3 h-3 text-stone-400" />
+                          <span>{post.commentsCount.toLocaleString()}</span>
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <Share2 className="w-3 h-3 text-stone-400" />
+                          <span>{post.sharesCount.toLocaleString()}</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href={post.postUrl || post.pageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-900 font-cinzel font-bold text-xs"
+                      >
+                        <span>Open Post</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* =====================================================================
+          2. CATHOLIC INSTAGRAM SECTION
           ===================================================================== */}
       {(activePlatform === 'all' || activePlatform === 'instagram') && (
         <section className="rounded-2xl bg-[#FBF9F5] border border-amber-900/20 shadow-xl overflow-hidden">
@@ -333,7 +777,7 @@ export const CatholicSocialView: React.FC = () => {
       )}
 
       {/* =====================================================================
-          2. CHRISTENDOM SECTION
+          3. CHRISTENDOM SECTION
           ===================================================================== */}
       {(activePlatform === 'all' || activePlatform === 'christendom') && (
         <section className="rounded-2xl bg-[#FBF9F5] border border-amber-900/20 shadow-xl overflow-hidden">
@@ -395,7 +839,7 @@ export const CatholicSocialView: React.FC = () => {
           </div>
 
           <div className="p-3 sm:p-5 space-y-4">
-            {/* Catholic Channel Selector Bar (Compact arranged buttons matching Instagram design) */}
+            {/* Catholic Channel Selector Bar */}
             <div className="rounded-lg bg-[#241307]/[0.025] border border-amber-900/10 p-1.5 sm:p-2 flex flex-col xl:flex-row xl:items-center justify-between gap-2 shadow-xs">
               <div className="flex flex-wrap items-center gap-1">
                 <button
@@ -606,7 +1050,7 @@ export const CatholicSocialView: React.FC = () => {
       )}
 
       {/* =====================================================================
-          3. ACTIVE VIDEO THEATER MODAL
+          4. ACTIVE VIDEO THEATER MODAL
           ===================================================================== */}
       {activeVideo && (
         <div

@@ -28,12 +28,14 @@ export interface CatholicFacebookPost {
   sourceName: string;
   handle: string;
   pageUrl: string;
+  postUrl?: string;
+  embedUrl?: string;
   avatarUrl?: string;
   postDate: string;
   category: string;
   text: string;
-  imageUrl: string;
-  imageAlt: string;
+  imageUrl?: string;
+  imageAlt?: string;
   likesCount: number;
   commentsCount: number;
   sharesCount: number;
@@ -249,6 +251,24 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
 
 export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
   {
+    id: 'fb-ewtnafrica',
+    name: 'EWTN Africa',
+    handle: '@EWTNAfrica',
+    socialUsername: 'EWTNAfrica',
+    pageUrl: 'https://www.facebook.com/EWTNAfrica',
+    category: 'Catholic Media in Africa',
+    description: 'Faithful Catholic media, Papal news, feast day reflections, and African Church testimonies from EWTN Africa on Facebook.'
+  },
+  {
+    id: 'fb-ewtnasia',
+    name: 'EWTN Asia',
+    handle: '@EWTNasia',
+    socialUsername: 'EWTNasia',
+    pageUrl: 'https://www.facebook.com/EWTNasia',
+    category: 'Catholic Media in Asia',
+    description: 'Fidelity to the Church across Asia & Oceania — Catholic prayers, saint reflections, and global Asian apostolates from EWTN Asia.'
+  },
+  {
     id: 'fb-aleteia',
     name: 'Aleteia',
     handle: '@aleteia_en',
@@ -328,10 +348,119 @@ export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
     pageUrl: 'https://www.facebook.com/CatholicSpiritualDirection',
     category: 'Contemplative Prayer & Interior Life',
     description: 'Faithful Catholic spiritual direction, mental prayer, mystical theology, and wisdom of the Saints.'
+  },
+  {
+    id: 'fb-ncregister',
+    name: 'National Catholic Register',
+    handle: '@NCRegister',
+    socialUsername: 'NCRegister',
+    pageUrl: 'https://www.facebook.com/NCRegister',
+    category: 'Catholic Journalism & News',
+    description: 'Fidelity to the Magisterium — Catholic journalism, Church news, Papal coverage, and liturgical analysis from the National Catholic Register.'
   }
 ];
 
 export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
+  // 0. EWTN Africa (Featured User Embed)
+  {
+    id: 'fb-post-ewtnafrica-1',
+    sourceId: 'fb-ewtnafrica',
+    sourceName: 'EWTN Africa',
+    handle: '@EWTNAfrica',
+    pageUrl: 'https://www.facebook.com/EWTNAfrica',
+    postUrl: 'https://www.facebook.com/EWTNAfrica/posts/pfbid02dHUKotdNF9Ax2on8Ktr5cQDhpW6DoWcpqh6G7upT9Z7tDaRXDWeN5AE2D45bYQoBl',
+    embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FEWTNAfrica%2Fposts%2Fpfbid02dHUKotdNF9Ax2on8Ktr5cQDhpW6DoWcpqh6G7upT9Z7tDaRXDWeN5AE2D45bYQoBl&show_text=true&width=500',
+    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'EWTN Africa Post',
+    category: 'EWTN Africa & Catholic Faith',
+    text: `EWTN Africa — Eternal Word Television Network in Africa. Proclaiming Catholic faith, liturgical celebration, and Papal guidance across the African continent and the world.`,
+    imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Catholic Mass and faith community in Africa',
+    likesCount: 15400,
+    commentsCount: 1280,
+    sharesCount: 6420
+  },
+  // 0b. EWTN Asia (Featured User Embed)
+  {
+    id: 'fb-post-ewtnasia-1',
+    sourceId: 'fb-ewtnasia',
+    sourceName: 'EWTN Asia',
+    handle: '@EWTNasia',
+    pageUrl: 'https://www.facebook.com/EWTNasia',
+    postUrl: 'https://www.facebook.com/EWTNasia/posts/pfbid02hCX86UMvAQYLxa8Q9LwnQ5SFK4sho8XCzLythbbPYwFh9byWnR5d6s2gg7evXivil',
+    embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FEWTNasia%2Fposts%2Fpfbid02hCX86UMvAQYLxa8Q9LwnQ5SFK4sho8XCzLythbbPYwFh9byWnR5d6s2gg7evXivil&show_text=true&width=500',
+    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'EWTN Asia Post',
+    category: 'EWTN Asia & Gospel Witness',
+    text: `EWTN Asia — Eternal Word Television Network Asia. Serving the Church in Asia and Oceania with daily Mass, Marian devotion, and Catholic news.`,
+    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Catholic sanctuary and altar of Christ in Asia',
+    likesCount: 18200,
+    commentsCount: 1450,
+    sharesCount: 7100
+  },
+  // 0c. NCRegister (Featured User Embed)
+  {
+    id: 'fb-post-ncregister-1',
+    sourceId: 'fb-ncregister',
+    sourceName: 'National Catholic Register',
+    handle: '@NCRegister',
+    pageUrl: 'https://www.facebook.com/NCRegister',
+    postUrl: 'https://www.facebook.com/NCRegister/posts/pfbid0M2zP7Kobgk1qALXucs9cNVdQ9yAcuPxrKvDyY2DULoUTbkdXq2BARv12WtGy7GYZl',
+    embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNCRegister%2Fposts%2Fpfbid0M2zP7Kobgk1qALXucs9cNVdQ9yAcuPxrKvDyY2DULoUTbkdXq2BARv12WtGy7GYZl&show_text=true&width=500',
+    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'NCRegister Featured Post',
+    category: 'Catholic Journalism & Magisterium',
+    text: `National Catholic Register — Providing Catholic news and analysis with fidelity to the Magisterium of the Church.`,
+    imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'National Catholic Register journalism and sacred news',
+    likesCount: 16800,
+    commentsCount: 1120,
+    sharesCount: 5490
+  },
+  // 0c2. Vatican News (Featured User Embed)
+  {
+    id: 'fb-post-vatican-embed-1',
+    sourceId: 'fb-vaticannews',
+    sourceName: 'Vatican News',
+    handle: '@vaticannews',
+    pageUrl: 'https://www.facebook.com/vaticannews',
+    postUrl: 'https://www.facebook.com/vaticannews/posts/pfbid02aoXsGmtQerkYXouJzdGDdpcE8kkrnWrd6h8djpL9cNCKqa7qhocZGiYsweHyY3JUl',
+    embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fvaticannews%2Fposts%2Fpfbid02aoXsGmtQerkYXouJzdGDdpcE8kkrnWrd6h8djpL9cNCKqa7qhocZGiYsweHyY3JUl&show_text=true&width=500',
+    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'Vatican News Featured Post',
+    category: 'Holy See & Papal Ministry',
+    text: `Vatican News — Official news service of the Holy See. Bringing the voice of the Pope and global Church news to faithful believers worldwide.`,
+    imageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'St. Peter’s Basilica and the Holy See at Vatican City',
+    likesCount: 24500,
+    commentsCount: 1890,
+    sharesCount: 9240
+  },
+  // 0d. Catholic Social Community Post (Featured User Embed)
+  {
+    id: 'fb-post-user-permalink-1',
+    sourceId: 'fb-ewtn',
+    sourceName: 'Catholic Faith Community',
+    handle: '@CatholicCommunity',
+    pageUrl: 'https://www.facebook.com/permalink.php?story_fbid=pfbid025JYCJp6RiyWZDP1F7hvdBGSEwmnHHJXXj14MXRrbZmZrkt4azboRZJGZNjCpXqeZl&id=100085925378028',
+    postUrl: 'https://www.facebook.com/permalink.php?story_fbid=pfbid025JYCJp6RiyWZDP1F7hvdBGSEwmnHHJXXj14MXRrbZmZrkt4azboRZJGZNjCpXqeZl&id=100085925378028',
+    embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid025JYCJp6RiyWZDP1F7hvdBGSEwmnHHJXXj14MXRrbZmZrkt4azboRZJGZNjCpXqeZl%26id%3D100085925378028&show_text=true&width=500',
+    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
+    verified: true,
+    postDate: 'Catholic Community Post',
+    category: 'Catholic Community & Devotion',
+    text: `Catholic Faith Reflection — Seeking Christ through prayer, sacred liturgy, and community fellowship.`,
+    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
+    imageAlt: 'Catholic prayer chapel bathed in quiet morning light',
+    likesCount: 12400,
+    commentsCount: 980,
+    sharesCount: 4520
+  },
   // 1. Aleteia
   {
     id: 'fb-post-aleteia-1',
