@@ -610,10 +610,10 @@ ${selectedCommentary.practicalApplication}`;
             <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
           </svg>
           <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-            <path d="M 20,23 H 12 A 11,11 0 0,0 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
           </svg>
           <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-            <path d="M 4,23 H 12 A 11,11 0 0,1 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
           </svg>
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel">
             Sacred Scripture ({selectedCommentary.scriptureReference})
