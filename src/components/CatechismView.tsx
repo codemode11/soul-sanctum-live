@@ -569,27 +569,31 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-8">
 
             {/* SECTION 1: GOSPEL SUMMARY */}
-            <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs space-y-1.5 overflow-hidden">
-              <svg className="pointer-events-none absolute top-0 left-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-                <path d="M 20,1 H 12 A 11,11 0 0,0 1,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              </svg>
-              <svg className="pointer-events-none absolute top-0 right-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-                <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              </svg>
-              <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-                <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              </svg>
-              <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-                <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-              </svg>
-              
-              <div className="flex items-center gap-1.5 text-amber-900 font-cinzel font-bold text-xs uppercase tracking-wider">
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Gospel Summary ({selectedTopic.gospelCitation})</span>
+            <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs overflow-hidden">
+              <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                <svg className="pointer-events-none absolute top-0 left-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                  <path d="M 20,1 H 12 A 11,11 0 0,0 1,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                </svg>
+                <svg className="pointer-events-none absolute top-0 right-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                  <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                </svg>
+                <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                  <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                </svg>
+                <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                  <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+                </svg>
               </div>
-              <p className="font-serif text-stone-800 italic text-sm sm:text-base leading-relaxed pl-1 whitespace-pre-line">
-                {toCurvedQuotes(selectedTopic.gospelTextSnippet)}
-              </p>
+              
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-1.5 text-amber-900 font-cinzel font-bold text-xs uppercase tracking-wider">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Gospel Summary ({selectedTopic.gospelCitation})</span>
+                </div>
+                <p className="font-serif text-stone-800 italic text-sm sm:text-base leading-relaxed pl-1 whitespace-pre-line">
+                  {toCurvedQuotes(selectedTopic.gospelTextSnippet)}
+                </p>
+              </div>
             </div>
 
             {/* SECTION 2: WHAT THE CATECHISM OF THE CATHOLIC CHURCH TEACHES */}

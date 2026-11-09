@@ -602,28 +602,32 @@ ${selectedCommentary.practicalApplication}`;
       {/* Main Commentary Display Card */}
       <article className="bg-white rounded-xl p-5 sm:p-7 shadow-sm border border-stone-200/90 space-y-4">
         {/* The Scripture Text */}
-        <div className="relative p-3.5 rounded-xl bg-[#FAF8F5] shadow-2xs space-y-0.5 overflow-hidden">
-          <svg className="pointer-events-none absolute top-0 left-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-            <path d="M 20,1 H 12 A 11,11 0 0,0 1,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          </svg>
-          <svg className="pointer-events-none absolute top-0 right-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-            <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          </svg>
-          <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-            <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          </svg>
-          <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800" viewBox="0 0 24 24" fill="none">
-            <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          </svg>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel">
-            Sacred Scripture ({selectedCommentary.scriptureReference})
-          </span>
-          <p 
-            className="font-serif-sacred text-stone-900 italic transition-all duration-200"
-            style={scriptureStyle}
-          >
-            {toCurvedQuotes(selectedCommentary.scriptureText)}
-          </p>
+        <div className="relative p-3.5 rounded-xl bg-[#FAF8F5] shadow-2xs overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+            <svg className="pointer-events-none absolute top-0 left-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+              <path d="M 20,1 H 12 A 11,11 0 0,0 1,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            </svg>
+            <svg className="pointer-events-none absolute top-0 right-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+              <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            </svg>
+            <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+              <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            </svg>
+            <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+              <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            </svg>
+          </div>
+          <div className="space-y-0.5">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-amber-900 font-cinzel block">
+              Sacred Scripture ({selectedCommentary.scriptureReference})
+            </span>
+            <p 
+              className="font-serif-sacred text-stone-900 italic transition-all duration-200"
+              style={scriptureStyle}
+            >
+              {toCurvedQuotes(selectedCommentary.scriptureText)}
+            </p>
+          </div>
         </div>
 
         {/* Patristic Commentary Sections (Catena Aurea, Cornelius à Lapide, Magisterium) */}

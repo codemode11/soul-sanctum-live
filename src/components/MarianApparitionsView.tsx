@@ -380,17 +380,21 @@ export const MarianApparitionsView: React.FC = () => {
                   </div>
 
                   {/* Key Quote / Direct Words of Our Lady */}
-                  <div className="p-5 rounded-xl bg-gradient-to-r from-blue-950/80 via-stone-950 to-blue-950/80 space-y-2 relative">
-                    <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400" />
-                    <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400" />
-                    <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400" />
-                    <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400" />
-                    <span className="font-cinzel text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wider block">
-                      Words of the Blessed Virgin Mary
-                    </span>
-                    <p className={`font-serif italic text-amber-100 font-medium transition-all duration-200 ${quoteTextClass}`}>
-                      {app.keyMessage}
-                    </p>
+                  <div className="p-5 rounded-xl bg-gradient-to-r from-blue-950/80 via-stone-950 to-blue-950/80 relative">
+                    <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                      <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+                      <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+                      <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+                      <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+                    </div>
+                    <div className="space-y-2">
+                      <span className="font-cinzel text-xs sm:text-sm font-bold text-amber-300 uppercase tracking-wider block">
+                        Words of the Blessed Virgin Mary
+                      </span>
+                      <p className={`font-serif italic text-amber-100 font-medium transition-all duration-200 ${quoteTextClass}`}>
+                        {app.keyMessage}
+                      </p>
+                    </div>
                   </div>
 
                   {/* Grid: Miraculous Signs and Devotional Practice */}

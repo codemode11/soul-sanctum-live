@@ -177,10 +177,12 @@ export const MedjugorjeMessagesView: React.FC = () => {
             {VATICAN_NIHIL_OBSTAT_NOTE.summary}
           </p>
           <div className="relative p-3 rounded-xl bg-black/40 text-xs font-serif italic text-amber-100">
-            <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400" />
-            <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400" />
-            <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400" />
-            <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400" />
+            <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+              <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+              <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+              <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+              <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+            </div>
             {VATICAN_NIHIL_OBSTAT_NOTE.keyQuote}
           </div>
         </div>
@@ -216,10 +218,12 @@ export const MedjugorjeMessagesView: React.FC = () => {
                   </p>
                 </div>
                 <div className="relative p-2 rounded-xl bg-blue-950/40 mt-2 text-[10px] font-serif italic text-blue-200">
-                  <span className="pointer-events-none absolute top-0 left-0 w-3.5 h-3.5 rounded-tl-xl border-t-[2.5px] border-l-[2.5px] border-blue-400" />
-                  <span className="pointer-events-none absolute top-0 right-0 w-3.5 h-3.5 rounded-tr-xl border-t-[2.5px] border-r-[2.5px] border-blue-400" />
-                  <span className="pointer-events-none absolute bottom-0 left-0 w-3.5 h-3.5 rounded-bl-xl border-b-[2.5px] border-l-[2.5px] border-blue-400" />
-                  <span className="pointer-events-none absolute bottom-0 right-0 w-3.5 h-3.5 rounded-br-xl border-b-[2.5px] border-r-[2.5px] border-blue-400" />
+                  <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                    <span className="pointer-events-none absolute top-0 left-0 w-3.5 h-3.5 rounded-tl-xl border-t-[2.5px] border-l-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute top-0 right-0 w-3.5 h-3.5 rounded-tr-xl border-t-[2.5px] border-r-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 left-0 w-3.5 h-3.5 rounded-bl-xl border-b-[2.5px] border-l-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 right-0 w-3.5 h-3.5 rounded-br-xl border-b-[2.5px] border-r-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
+                  </div>
                   {stone.gospaQuote}
                 </div>
               </div>
@@ -273,17 +277,21 @@ export const MedjugorjeMessagesView: React.FC = () => {
         </div>
 
         {/* Message Text Quote */}
-        <div className="relative p-5 sm:p-6 rounded-xl bg-black/45 space-y-2">
-          <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400" />
-          <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400" />
-          <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400" />
-          <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400" />
-          <p className="font-serif italic text-white transition-all duration-200" style={messageStyle}>
-            "{latestMessage.messageText}"
-          </p>
-          <p className="text-xs font-serif text-stone-400 pt-1">
-            Original Croatian: <span className="italic">{latestMessage.originalCroatianExcerpt}</span>
-          </p>
+        <div className="relative p-5 sm:p-6 rounded-xl bg-black/45">
+          <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+            <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+            <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+            <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+            <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+          </div>
+          <div className="space-y-2">
+            <p className="font-serif italic text-white transition-all duration-200" style={messageStyle}>
+              "{latestMessage.messageText}"
+            </p>
+            <p className="text-xs font-serif text-stone-400 pt-1">
+              Original Croatian: <span className="italic">{latestMessage.originalCroatianExcerpt}</span>
+            </p>
+          </div>
         </div>
 
         {/* Spiritual Reflection and Scripture */}
@@ -480,10 +488,12 @@ export const MedjugorjeMessagesView: React.FC = () => {
                 className="relative font-serif italic text-amber-50 leading-relaxed bg-black/30 p-3.5 rounded-xl transition-all duration-200"
                 style={messageStyle}
               >
-                <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400/70" />
-                <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400/70" />
-                <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400/70" />
-                <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400/70" />
+                <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                  <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
+                  <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
+                  <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
+                  <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
+                </div>
                 "{msg.messageText}"
               </div>
 

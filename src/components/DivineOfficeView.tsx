@@ -378,31 +378,35 @@ export const DivineOfficeView: React.FC = () => {
         <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-8">
           
           {/* SEGMENT 1: VERSICLE & RESPONSE OPENING (Light Brown Background) */}
-          <div className="relative p-4 sm:p-5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] shadow-2xs space-y-2 overflow-hidden">
+          <div className="relative p-4 sm:p-5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] shadow-2xs overflow-hidden">
             {/* Corner Accents */}
-            <svg className="pointer-events-none absolute top-0 left-0 w-6 h-6 text-amber-800/80" viewBox="0 0 24 24" fill="none">
-              <path d="M 20,1 H 12 A 11,11 0 0,0 1,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-            </svg>
-            <svg className="pointer-events-none absolute top-0 right-0 w-6 h-6 text-amber-800/80" viewBox="0 0 24 24" fill="none">
-              <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-            </svg>
-            <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800/80" viewBox="0 0 24 24" fill="none">
-              <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-            </svg>
-            <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800/80" viewBox="0 0 24 24" fill="none">
-              <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-            </svg>
-
-            <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider">
-              Invitatory &amp; Introduction
+            <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+              <svg className="pointer-events-none absolute top-0 left-0 w-6 h-6 text-amber-800/80 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                <path d="M 20,1 H 12 A 11,11 0 0,0 1,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              </svg>
+              <svg className="pointer-events-none absolute top-0 right-0 w-6 h-6 text-amber-800/80 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                <path d="M 4,1 H 12 A 11,11 0 0,1 23,12 V 20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              </svg>
+              <svg className="pointer-events-none absolute bottom-0 left-0 w-6 h-6 text-amber-800/80 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                <path d="M 20,23 H 12 A 11,11 0 0,1 1,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              </svg>
+              <svg className="pointer-events-none absolute bottom-0 right-0 w-6 h-6 text-amber-800/80 m-0" style={{ margin: 0 }} viewBox="0 0 24 24" fill="none">
+                <path d="M 4,23 H 12 A 11,11 0 0,0 23,12 V 4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+              </svg>
             </div>
-            <div className={`font-serif text-stone-900 space-y-1.5 ${getTextSizeClass()}`}>
-              <p>
-                <span className="font-bold text-amber-900 font-cinzel">V.</span> {toCurvedQuotes(hourData.openingVerse)}
-              </p>
-              <p>
-                <span className="font-bold text-amber-900 font-cinzel">R.</span> {toCurvedQuotes(hourData.openingResponse)}
-              </p>
+
+            <div className="space-y-2">
+              <div className="font-cinzel text-xs font-bold text-amber-900 uppercase tracking-wider">
+                Invitatory &amp; Introduction
+              </div>
+              <div className={`font-serif text-stone-900 space-y-1.5 ${getTextSizeClass()}`}>
+                <p>
+                  <span className="font-bold text-amber-900 font-cinzel">V.</span> {toCurvedQuotes(hourData.openingVerse)}
+                </p>
+                <p>
+                  <span className="font-bold text-amber-900 font-cinzel">R.</span> {toCurvedQuotes(hourData.openingResponse)}
+                </p>
+              </div>
             </div>
           </div>
 

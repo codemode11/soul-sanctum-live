@@ -726,20 +726,24 @@ export const RosaryAndChapletView: React.FC = () => {
 
               {/* Scripture and Meditation (if decade start) */}
               {currentRosaryStep.mysteryName && (
-                <div className="relative p-4 rounded-xl bg-[#FAF8F5] shadow-2xs space-y-2">
-                  <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-700" />
-                  <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-700" />
-                  <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-700" />
-                  <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-700" />
-                  <div className="text-xs font-bold uppercase tracking-wider text-amber-900 font-cinzel">
-                    Scripture Contemplation
+                <div className="relative p-4 rounded-xl bg-[#FAF8F5] shadow-2xs">
+                  <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                    <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
                   </div>
-                  <p className="text-sm sm:text-base font-serif-sacred text-stone-800 italic">
-                    "{ROSARY_MYSTERY_SETS[selectedMysteryGroup].mysteries.find((m: any) => m.name === currentRosaryStep.mysteryName)?.scriptureText}"
-                  </p>
-                  <p className="text-xs text-stone-600 font-serif-sacred">
-                    — {ROSARY_MYSTERY_SETS[selectedMysteryGroup].mysteries.find((m: any) => m.name === currentRosaryStep.mysteryName)?.meditation}
-                  </p>
+                  <div className="space-y-2">
+                    <div className="text-xs font-bold uppercase tracking-wider text-amber-900 font-cinzel">
+                      Scripture Contemplation
+                    </div>
+                    <p className="text-sm sm:text-base font-serif-sacred text-stone-800 italic">
+                      "{ROSARY_MYSTERY_SETS[selectedMysteryGroup].mysteries.find((m: any) => m.name === currentRosaryStep.mysteryName)?.scriptureText}"
+                    </p>
+                    <p className="text-xs text-stone-600 font-serif-sacred">
+                      — {ROSARY_MYSTERY_SETS[selectedMysteryGroup].mysteries.find((m: any) => m.name === currentRosaryStep.mysteryName)?.meditation}
+                    </p>
+                  </div>
                 </div>
               )}
 
@@ -1356,10 +1360,12 @@ export const RosaryAndChapletView: React.FC = () => {
                         promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
                         promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
                       }`}>
-                        <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342]" />
-                        <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342]" />
-                        <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-[#B48342]" />
-                        <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-[#B48342]" />
+                        <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                          <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                          <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                          <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                          <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                        </div>
                         "{item.promise}"
                       </div>
                       <p className={`font-serif text-stone-700 leading-relaxed pt-1 ${
@@ -1494,19 +1500,23 @@ export const RosaryAndChapletView: React.FC = () => {
                       {excerpt.title}
                     </h4>
 
-                    <div className={`relative font-serif text-stone-900 leading-relaxed bg-white/55 backdrop-blur-md p-5 sm:p-6 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] space-y-4 ${
+                    <div className={`relative font-serif text-stone-900 leading-relaxed bg-white/55 backdrop-blur-md p-5 sm:p-6 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
                       promisesFontSize === 'normal' ? 'text-lg sm:text-xl' :
                       promisesFontSize === 'large' ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'
                     }`}>
-                      <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342]" />
-                      <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342]" />
-                      <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-[#B48342]" />
-                      <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-[#B48342]" />
-                      {excerpt.paragraphs.map((paragraph, pIdx) => (
-                        <p key={pIdx}>
-                          {paragraph}
-                        </p>
-                      ))}
+                      <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                        <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                        <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                        <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                        <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-[#B48342] m-0" style={{ margin: 0 }} />
+                      </div>
+                      <div className="space-y-4">
+                        {excerpt.paragraphs.map((paragraph, pIdx) => (
+                          <p key={pIdx}>
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="pt-2 flex items-center justify-end gap-2.5">
@@ -1697,10 +1707,12 @@ export const RosaryAndChapletView: React.FC = () => {
                         promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
                         promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
                       }`}>
-                        <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-blue-500" />
-                        <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-blue-500" />
-                        <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-blue-500" />
-                        <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-blue-500" />
+                        <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
+                          <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
+                          <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
+                          <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
+                          <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
+                        </div>
                         "{item.promise}"
                       </div>
                       <p className={`font-serif text-stone-700 leading-relaxed pt-1 ${
