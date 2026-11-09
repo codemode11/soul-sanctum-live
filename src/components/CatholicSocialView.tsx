@@ -535,13 +535,13 @@ export const CatholicSocialView: React.FC = () => {
 
             {/* TAB 1: EWTN LIVE TELEVISION REGIONAL CHANNELS */}
             {ewtnHubTab === 'tv' && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-left">
                 {ewtnTvChannels.map(channel => {
                   const isActiveChannel = ewtnStageVideo.id === channel.id;
                   return (
                     <div
                       key={channel.id}
-                      className={`p-3.5 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
+                      className={`p-4 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
                         isActiveChannel
                           ? 'bg-amber-950/55 border-amber-400 shadow-md'
                           : 'bg-black/45 border-amber-500/25 hover:border-amber-400/60'
@@ -551,7 +551,7 @@ export const CatholicSocialView: React.FC = () => {
                         <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block">
                           {channel.location}
                         </span>
-                        <h4 className="font-cinzel text-sm font-bold text-white">
+                        <h4 className="font-cinzel text-sm sm:text-base font-bold text-white">
                           {channel.label}
                         </h4>
                         <p className="text-xs font-serif text-stone-300 leading-relaxed">
@@ -559,7 +559,7 @@ export const CatholicSocialView: React.FC = () => {
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-2 pt-2 border-t border-white/10">
+                      <div className="flex flex-wrap items-center gap-2.5 pt-2.5 border-t border-white/10">
                         <button
                           type="button"
                           onClick={() =>
@@ -572,24 +572,24 @@ export const CatholicSocialView: React.FC = () => {
                               youtubeUrl: channel.youtubeUrl
                             })
                           }
-                          className={`flex-1 px-2.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center justify-center gap-1 whitespace-nowrap ${
+                          className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 ${
                             isActiveChannel
                               ? 'bg-amber-600 text-stone-950'
                               : 'bg-amber-900/60 hover:bg-amber-800 text-amber-100 border border-amber-500/40'
                           }`}
                         >
-                          <Tv className="w-3 h-3" />
-                          <span>{isActiveChannel ? 'Playing' : 'Watch Live'}</span>
+                          <Tv className="w-3.5 h-3.5 shrink-0" />
+                          <span>{isActiveChannel ? 'Playing Above' : 'Watch Live'}</span>
                         </button>
                         <a
                           href={channel.portalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-2.5 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1 whitespace-nowrap"
+                          className="px-3.5 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
                           title={`Open ${channel.label} official stream`}
                         >
                           <span>Portal</span>
-                          <ExternalLink className="w-3 h-3 text-amber-400" />
+                          <ExternalLink className="w-3 h-3 text-amber-400 shrink-0" />
                         </a>
                       </div>
                     </div>
