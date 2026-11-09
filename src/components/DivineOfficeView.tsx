@@ -329,89 +329,40 @@ export const DivineOfficeView: React.FC = () => {
             Canonical Hours:
           </span>
 
-          {/* 1. Invitatory (Sky Blue) */}
-          <button
-            type="button"
-            onClick={() => handleHourSelect('invitatory')}
-            className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-              selectedHourKey === 'invitatory'
-                ? 'bg-sky-500 text-white ring-4 ring-amber-400 border-2 border-amber-300 scale-105 shadow-xl font-extrabold'
-                : 'bg-sky-500 text-white hover:bg-sky-400 border border-sky-600/90 shadow-sm opacity-95 hover:opacity-100'
-            }`}
-          >
-            <Sunrise className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-            <span>Invitatory</span>
-          </button>
-
-          {/* 2. Office of Readings (Medium Sky Blue) */}
-          <button
-            type="button"
-            onClick={() => handleHourSelect('readings')}
-            className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-              selectedHourKey === 'readings'
-                ? 'bg-sky-600 text-white ring-4 ring-amber-400 border-2 border-amber-300 scale-105 shadow-xl font-extrabold'
-                : 'bg-sky-600 text-white hover:bg-sky-500 border border-sky-700/90 shadow-sm opacity-95 hover:opacity-100'
-            }`}
-          >
-            <BookOpen className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-            <span>Office of Readings</span>
-          </button>
-
-          {/* 3. Morning Prayer - Lauds (Royal Blue) */}
-          <button
-            type="button"
-            onClick={() => handleHourSelect('lauds')}
-            className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-              selectedHourKey === 'lauds'
-                ? 'bg-blue-600 text-white ring-4 ring-amber-400 border-2 border-amber-300 scale-105 shadow-xl font-extrabold'
-                : 'bg-blue-600 text-white hover:bg-blue-500 border border-blue-700/90 shadow-sm opacity-95 hover:opacity-100'
-            }`}
-          >
-            <Sun className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-            <span>Morning Prayer (Lauds)</span>
-          </button>
-
-          {/* 4. Daytime Prayer (Vibrant Midday Blue) */}
-          <button
-            type="button"
-            onClick={() => handleHourSelect('daytime')}
-            className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-              selectedHourKey === 'daytime'
-                ? 'bg-blue-700 text-white ring-4 ring-amber-400 border-2 border-amber-300 scale-105 shadow-xl font-extrabold'
-                : 'bg-blue-700 text-white hover:bg-blue-600 border border-blue-800/90 shadow-sm opacity-95 hover:opacity-100'
-            }`}
-          >
-            <Clock className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-            <span>Daytime Prayer</span>
-          </button>
-
-          {/* 5. Evening Prayer - Vespers (Dark Twilight Blue) */}
-          <button
-            type="button"
-            onClick={() => handleHourSelect('vespers')}
-            className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-              selectedHourKey === 'vespers'
-                ? 'bg-blue-900 text-white ring-4 ring-amber-400 border-2 border-amber-300 scale-105 shadow-xl font-extrabold'
-                : 'bg-blue-900 text-white hover:bg-blue-800 border border-blue-950/90 shadow-sm opacity-95 hover:opacity-100'
-            }`}
-          >
-            <Sunset className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-            <span>Evening Prayer (Vespers)</span>
-          </button>
-
-          {/* 6. Night Prayer - Compline (Deepest Midnight Blue) */}
-          <button
-            type="button"
-            onClick={() => handleHourSelect('compline')}
-            className={`px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-              selectedHourKey === 'compline'
-                ? 'bg-slate-950 text-white ring-4 ring-amber-400 border-2 border-amber-300 scale-105 shadow-xl font-extrabold'
-                : 'bg-slate-950 text-white hover:bg-slate-900 border border-slate-900/90 shadow-sm opacity-95 hover:opacity-100'
-            }`}
-          >
-            <Moon className="w-3.5 h-3.5 text-white stroke-[2.2]" />
-            <span>Night Prayer (Compline)</span>
-          </button>
+          {[
+            { key: 'invitatory' as const, label: 'Invitatory', Icon: Sunrise },
+            { key: 'readings' as const, label: 'Office of Readings', Icon: BookOpen },
+            { key: 'lauds' as const, label: 'Morning Prayer (Lauds)', Icon: Sun },
+            { key: 'daytime' as const, label: 'Daytime Prayer', Icon: Clock },
+            { key: 'vespers' as const, label: 'Evening Prayer (Vespers)', Icon: Sunset },
+            { key: 'compline' as const, label: 'Night Prayer (Compline)', Icon: Moon },
+          ].map(({ key, label, Icon }) => {
+            const isSelected = selectedHourKey === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => handleHourSelect(key)}
+                style={{
+                  backgroundColor: isSelected ? '#6B4423' : 'transparent',
+                  color: '#000000',
+                  borderColor: isSelected ? '#5A381C' : 'transparent',
+                  outline: isSelected ? '2px solid #5A381C' : 'none',
+                  outlineOffset: '1px',
+                }}
+                className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-2 border hover:bg-[#6B4423] hover:border-[#5A381C] ${
+                  isSelected ? 'scale-105 z-10 shadow-md' : 'opacity-95 hover:opacity-100'
+                }`}
+              >
+                <span className="p-1 rounded-md bg-stone-900/85 shadow-xs flex items-center justify-center shrink-0">
+                  <Icon className="w-4 h-4" style={{ color: '#ffffff', strokeWidth: 2.3 }} />
+                </span>
+                <span style={{ color: '#000000' }} className="font-bold tracking-wide">
+                  {label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
