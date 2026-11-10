@@ -28,8 +28,27 @@ import {
   ChristendomVideo
 } from '../data/christendomData';
 import { CatholicSocialShareIcon } from './SanctumIcons';
+import { EwtnLiveVideoPlayer } from './EwtnLiveVideoPlayer';
 
 type SocialPlatformTab = 'all' | 'ewtn' | 'instagram' | 'christendom';
+
+interface EwtnEpgChannelInfo {
+  channelId: string;
+  name: string;
+  mediaUrl: string;
+  nowPlaying?: {
+    title: string;
+    subtitle?: string;
+    description?: string;
+    startIso?: string;
+    endIso?: string;
+  };
+  upNext?: {
+    title: string;
+    subtitle?: string;
+    startIso?: string;
+  };
+}
 
 export const CatholicSocialView: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<SocialPlatformTab>('all');
@@ -38,22 +57,133 @@ export const CatholicSocialView: React.FC = () => {
   // EWTN HUB STATE (TELEVISION, RADIO & 24/7 EUCHARISTIC ADORATION)
   // =========================================================================
   const [ewtnHubTab, setEwtnHubTab] = useState<'tv' | 'radio' | 'adoration'>('tv');
-  const [ewtnStageVideo, setEwtnStageVideo] = useState<{
-    id: string;
-    title: string;
-    subtitle: string;
-    embedUrl: string;
-    portalUrl: string;
-    youtubeUrl: string;
-  }>({
-    id: 'ewtn-tv-live',
-    title: 'EWTN Global Catholic Television Network • Live Broadcast',
-    subtitle: 'Our Lady of the Angels • Irondale, Alabama & Worldwide',
-    embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
-    portalUrl: 'https://www.ewtn.com/tv/watch-live',
-    youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0'
-  });
+  const [ewtnEpgMap, setEwtnEpgMap] = useState<Record<string, EwtnEpgChannelInfo>>({});
+
+  const ewtnTvChannels = useMemo(() => [
+    {
+      id: 'ewtn-us-global',
+      epgChannelId: 'canada',
+      altEpgChannelId: 'united-states',
+      label: 'EWTN North America (US & Canada)',
+      location: 'Irondale, Alabama • Eastern / Central Time Feed',
+      streamUrl: ewtnEpgMap['canada']?.mediaUrl || 'https://cdn3.wowza.com/1/YW5wSWZiRGd2eFlU/bGV0aVBq/hls/live/playlist.m3u8',
+      fallbackStreamUrl: ewtnEpgMap['united-states']?.mediaUrl || 'https://cdn3.wowza.com/1/QjRzVXJtVml5SUVx/WGJRSWxz/hls/live/playlist.m3u8',
+      portalUrl: 'https://www.ewtn.com/live/tv/united-states',
+      youtubeUrl: 'https://www.youtube.com/@EWTN/streams',
+      schedule: 'Daily Mass at 8:00 AM, 12:00 PM & 7:00 PM ET • The World Over • EWTN News Nightly'
+    },
+    {
+      id: 'ewtn-asia-pacific',
+      epgChannelId: 'asia-pacific',
+      label: 'EWTN Asia-Pacific',
+      location: 'Manila / Sydney / Irondale • Asia & Oceania Feed',
+      streamUrl: ewtnEpgMap['asia-pacific']?.mediaUrl || 'https://cdn3.wowza.com/1/QmVNUVhTNTZSS3Uz/YWQ0aHpi/hls/live/playlist.m3u8',
+      portalUrl: 'https://www.ewtn.com/live/tv/asia-pacific',
+      youtubeUrl: 'https://www.youtube.com/@EWTN/streams',
+      schedule: '24/7 Catholic Television tailored for the Philippines, Asia & Oceania time zones'
+    },
+    {
+      id: 'ewtn-uk-europe',
+      epgChannelId: 'europe',
+      label: 'EWTN Great Britain & Europe',
+      location: 'London / Walsingham / Rome • European Feed',
+      streamUrl: ewtnEpgMap['europe']?.mediaUrl || 'https://cdn3.wowza.com/1/T2NXeHF6UGlGbHY3/WFluRldQ/hls/live/playlist.m3u8',
+      portalUrl: 'https://www.ewtn.com/live/tv/europe',
+      youtubeUrl: 'https://www.youtube.com/@EWTN/streams',
+      schedule: 'Live Masses from European Shrines, Vatican Coverage & UK/Ireland Programming'
+    },
+    {
+      id: 'ewtn-africa',
+      epgChannelId: 'africa-asia',
+      label: 'EWTN Africa & Middle East',
+      location: 'Nairobi / Rome / Irondale • Pan-African Feed',
+      streamUrl: ewtnEpgMap['africa-asia']?.mediaUrl || 'https://cdn3.wowza.com/1/ZVBYYXFLLzE0c3NC/Qk1FMURC/hls/live/playlist.m3u8',
+      portalUrl: 'https://www.ewtn.com/live/tv/africa-asia',
+      youtubeUrl: 'https://www.youtube.com/@EWTN/streams',
+      schedule: 'Pan-African Catholic broadcasts, Papal liturgies & daily devotions'
+    }
+  ], [ewtnEpgMap]);
+
+  const ewtnAdorationChapels = useMemo(() => [
+    {
+      id: 'ewtn-adoration-irondale',
+      epgChannelId: 'adoration',
+      label: 'Our Lady of the Angels Chapel • EWTN',
+      location: 'Irondale, Alabama • 24/7 Perpetual Adoration',
+      streamUrl: ewtnEpgMap['adoration']?.mediaUrl || 'https://cdn3.wowza.com/1/Y09GU2RCUG9EbVRr/WlpHUVVx/hls/live/playlist.m3u8',
+      embedUrl: undefined as string | undefined,
+      youtubeUrl: 'https://www.youtube.com/watch?v=GBns1m4S1Xk',
+      portalUrl: 'https://www.ewtn.com/live/adoration',
+      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration live HD stream before the Most Blessed Sacrament exposed in the monstrance at EWTN.'
+    },
+    {
+      id: 'ewtn-adoration-hanceville',
+      epgChannelId: '',
+      label: 'Shrine of the Most Blessed Sacrament',
+      location: 'Hanceville, Alabama • Poor Clares of Perpetual Adoration',
+      streamUrl: undefined as string | undefined,
+      embedUrl: 'https://www.youtube.com/embed/E5PdqveWGQI',
+      youtubeUrl: 'https://www.youtube.com/watch?v=E5PdqveWGQI',
+      portalUrl: 'https://www.olamshrine.com/',
+      description: 'Unite in silent prayer before the 8-foot gilded monstrance at Mother Angelica\'s Temple in Hanceville, Alabama.'
+    }
+  ], [ewtnEpgMap]);
+
+  const [selectedTvChannelId, setSelectedTvChannelId] = useState<string>('ewtn-us-global');
+  const [selectedAdorationId, setSelectedAdorationId] = useState<string>('ewtn-adoration-irondale');
   const [ewtnStageKey, setEwtnStageKey] = useState<number>(0);
+
+  // Fetch live EWTN EPG schedule and verify live stream URLs
+  useEffect(() => {
+    let mounted = true;
+    const fetchEpg = async () => {
+      try {
+        const res = await fetch('/api/ewtn-epg');
+        if (res.ok) {
+          const data = await res.json();
+          if (mounted && data?.channels) {
+            setEwtnEpgMap(data.channels);
+          }
+        }
+      } catch {
+        // Keep verified Wowza HLS stream URLs on network timeout
+      }
+    };
+    fetchEpg();
+    const interval = setInterval(fetchEpg, 3 * 60 * 1000);
+    return () => {
+      mounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  const ewtnStageVideo = useMemo(() => {
+    if (ewtnHubTab === 'adoration') {
+      const chapel = ewtnAdorationChapels.find(c => c.id === selectedAdorationId) || ewtnAdorationChapels[0];
+      return {
+        id: chapel.id,
+        title: `${chapel.label} • 24/7 Eucharistic Adoration`,
+        subtitle: chapel.location,
+        streamUrl: chapel.streamUrl,
+        fallbackStreamUrl: undefined as string | undefined,
+        embedUrl: chapel.embedUrl,
+        portalUrl: chapel.portalUrl,
+        youtubeUrl: chapel.youtubeUrl
+      };
+    }
+    const ch = ewtnTvChannels.find(c => c.id === selectedTvChannelId) || ewtnTvChannels[0];
+    const nowProg = ewtnEpgMap[ch.epgChannelId]?.nowPlaying || (ch.altEpgChannelId ? ewtnEpgMap[ch.altEpgChannelId]?.nowPlaying : undefined);
+    return {
+      id: ch.id,
+      title: nowProg ? `${ch.label} — Live Now: ${nowProg.title}` : `${ch.label} • Live 24/7 Broadcast`,
+      subtitle: nowProg?.subtitle ? `${ch.location} • "${nowProg.subtitle}"` : ch.location,
+      streamUrl: ch.streamUrl,
+      fallbackStreamUrl: ch.fallbackStreamUrl,
+      embedUrl: undefined as string | undefined,
+      portalUrl: ch.portalUrl,
+      youtubeUrl: ch.youtubeUrl
+    };
+  }, [ewtnHubTab, selectedTvChannelId, selectedAdorationId, ewtnTvChannels, ewtnAdorationChapels, ewtnEpgMap]);
 
   const [selectedRadioId, setSelectedRadioId] = useState<'english' | 'classics' | 'spanish'>('english');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
@@ -68,81 +198,21 @@ export const CatholicSocialView: React.FC = () => {
       name: 'EWTN Global Catholic Radio (English 24/7)',
       subtitle: 'Live Catholic Talk, Daily Mass, Morning Glory, Called to Communion & Papal Coverage',
       streamUrl: 'https://ewtn-ice.streamguys1.com/english-mp3',
-      portalUrl: 'https://www.ewtn.com/radio/listen-live'
+      portalUrl: 'https://www.ewtn.com/live/radio/radio-english'
     },
     {
       id: 'classics' as const,
       name: 'EWTN Radio Classics & Archbishop Sheen',
       subtitle: '24/7 Ven. Fulton J. Sheen, Mother Angelica Classics, Sacred Retreats & Devotions',
       streamUrl: 'https://ewtn-ice.streamguys1.com/classics-mp3',
-      portalUrl: 'https://www.ewtn.com/radio/listen-live'
+      portalUrl: 'https://www.ewtn.com/live/radio/radio-extra'
     },
     {
       id: 'spanish' as const,
       name: 'EWTN Radio Católica Mundial (Español 24/7)',
       subtitle: 'Transmisión en vivo las 24 horas: Santa Misa, Santo Rosario y formación católica',
       streamUrl: 'https://ewtn-ice.streamguys1.com/spanish-mp3',
-      portalUrl: 'https://www.ewtn.com/es/radio/escuchar-en-vivo'
-    }
-  ];
-
-  const ewtnTvChannels = [
-    {
-      id: 'ewtn-us-global',
-      label: 'EWTN US & Global English',
-      location: 'Irondale, Alabama • Worldwide',
-      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
-      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
-      portalUrl: 'https://www.ewtn.com/tv/watch-live/united-states',
-      schedule: 'Daily Mass at 8:00 AM, 12:00 PM & 7:00 PM ET • The World Over • EWTN News Nightly'
-    },
-    {
-      id: 'ewtn-asia-pacific',
-      label: 'EWTN Asia-Pacific',
-      location: 'Manila / Sydney / Irondale',
-      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
-      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
-      portalUrl: 'https://www.ewtn.com/tv/watch-live/asia-pacific',
-      schedule: '24/7 Catholic Television tailored for the Philippines, Asia & Oceania time zones'
-    },
-    {
-      id: 'ewtn-uk-europe',
-      label: 'EWTN Great Britain & Europe',
-      location: 'London / Walsingham / Rome',
-      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
-      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
-      portalUrl: 'https://www.ewtn.com/tv/watch-live/uk',
-      schedule: 'Live Masses from European Shrines, Vatican Coverage & UK/Ireland Programming'
-    },
-    {
-      id: 'ewtn-africa',
-      label: 'EWTN Africa',
-      location: 'Nairobi / Rome / Irondale',
-      embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
-      youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0',
-      portalUrl: 'https://www.ewtn.com/tv/watch-live/africa',
-      schedule: 'Pan-African Catholic broadcasts, Papal liturgies & daily devotions'
-    }
-  ];
-
-  const ewtnAdorationChapels = [
-    {
-      id: 'ewtn-adoration-irondale',
-      label: 'Our Lady of the Angels Chapel • EWTN',
-      location: 'Irondale, Alabama • 24/7 Perpetual Adoration',
-      embedUrl: 'https://www.youtube.com/embed/GBns1m4S1Xk',
-      youtubeUrl: 'https://www.youtube.com/watch?v=GBns1m4S1Xk',
-      portalUrl: 'https://www.ewtn.com/tv/watch-live',
-      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration livestream before the Most Blessed Sacrament exposed in the monstrance at EWTN.'
-    },
-    {
-      id: 'ewtn-adoration-hanceville',
-      label: 'Shrine of the Most Blessed Sacrament',
-      location: 'Hanceville, Alabama • Poor Clares of Perpetual Adoration',
-      embedUrl: 'https://www.youtube.com/embed/E5PdqveWGQI',
-      youtubeUrl: 'https://www.youtube.com/watch?v=E5PdqveWGQI',
-      portalUrl: 'https://www.olamshrine.com/',
-      description: 'Unite in silent prayer before the 8-foot gilded monstrance at Mother Angelica\'s Temple in Hanceville, Alabama.'
+      portalUrl: 'https://www.ewtn.com/live/radio/radio-catolica-mundial'
     }
   ];
 
@@ -418,17 +488,7 @@ export const CatholicSocialView: React.FC = () => {
             <div className="flex items-center gap-1 bg-black/50 p-1 rounded-lg border border-amber-500/30 self-start md:self-center shrink-0">
               <button
                 type="button"
-                onClick={() => {
-                  setEwtnHubTab('tv');
-                  setEwtnStageVideo({
-                    id: 'ewtn-tv-live',
-                    title: 'EWTN Global Catholic Television Network • Live Broadcast',
-                    subtitle: 'Our Lady of the Angels • Irondale, Alabama & Worldwide',
-                    embedUrl: 'https://www.youtube.com/embed/H3wL7TEqg_0',
-                    portalUrl: 'https://www.ewtn.com/tv/watch-live',
-                    youtubeUrl: 'https://www.youtube.com/watch?v=H3wL7TEqg_0'
-                  });
-                }}
+                onClick={() => setEwtnHubTab('tv')}
                 className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                   ewtnHubTab === 'tv'
                     ? 'bg-amber-600 text-stone-950 shadow-xs'
@@ -453,17 +513,7 @@ export const CatholicSocialView: React.FC = () => {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setEwtnHubTab('adoration');
-                  setEwtnStageVideo({
-                    id: 'ewtn-adoration-irondale',
-                    title: 'Our Lady of the Angels Chapel • EWTN 24/7 Eucharistic Adoration',
-                    subtitle: 'Irondale, Alabama • 24/7 Perpetual Adoration',
-                    embedUrl: 'https://www.youtube.com/embed/GBns1m4S1Xk',
-                    portalUrl: 'https://www.ewtn.com/tv/watch-live',
-                    youtubeUrl: 'https://www.youtube.com/watch?v=GBns1m4S1Xk'
-                  });
-                }}
+                onClick={() => setEwtnHubTab('adoration')}
                 className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                   ewtnHubTab === 'adoration'
                     ? 'bg-amber-600 text-stone-950 shadow-xs'
@@ -480,17 +530,16 @@ export const CatholicSocialView: React.FC = () => {
             {/* Embedded 16:9 Live Video Player for EWTN Television & EWTN 24/7 Adoration */}
             {(ewtnHubTab === 'tv' || ewtnHubTab === 'adoration') && (
               <div className="rounded-xl overflow-hidden border border-amber-500/35 bg-black shadow-lg">
-                <div className="relative aspect-video w-full bg-black">
-                  <iframe
-                    key={`${ewtnStageVideo.id}-${ewtnStageKey}`}
-                    src={ewtnStageVideo.embedUrl}
-                    title={ewtnStageVideo.title}
-                    className="w-full h-full border-0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                </div>
+                <EwtnLiveVideoPlayer
+                  key={`${ewtnStageVideo.id}-${ewtnStageKey}`}
+                  streamUrl={ewtnStageVideo.streamUrl}
+                  fallbackStreamUrl={ewtnStageVideo.fallbackStreamUrl}
+                  embedUrl={ewtnStageVideo.embedUrl}
+                  title={ewtnStageVideo.title}
+                  subtitle={ewtnStageVideo.subtitle}
+                  portalUrl={ewtnStageVideo.portalUrl}
+                  autoPlay={true}
+                />
                 <div className="p-3.5 sm:p-4 bg-stone-950/95 border-t border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-0.5 text-left">
                     <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block">
@@ -537,7 +586,12 @@ export const CatholicSocialView: React.FC = () => {
             {ewtnHubTab === 'tv' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-left">
                 {ewtnTvChannels.map(channel => {
-                  const isActiveChannel = ewtnStageVideo.id === channel.id;
+                  const isActiveChannel = selectedTvChannelId === channel.id;
+                  const epgInfo =
+                    ewtnEpgMap[channel.epgChannelId] ||
+                    (channel.altEpgChannelId ? ewtnEpgMap[channel.altEpgChannelId] : undefined);
+                  const nowPlaying = epgInfo?.nowPlaying;
+                  const upNext = epgInfo?.upNext;
                   return (
                     <div
                       key={channel.id}
@@ -547,31 +601,46 @@ export const CatholicSocialView: React.FC = () => {
                           : 'bg-black/45 border-amber-500/25 hover:border-amber-400/60'
                       }`}
                     >
-                      <div className="space-y-1">
-                        <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block">
-                          {channel.location}
-                        </span>
+                      <div className="space-y-1.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block">
+                            {channel.location}
+                          </span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-xs bg-red-900/70 text-red-200 border border-red-500/40 text-[10px] font-cinzel font-bold uppercase tracking-wider shrink-0">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+                            <span>LIVE 24/7</span>
+                          </span>
+                        </div>
                         <h4 className="font-cinzel text-sm sm:text-base font-bold text-white">
                           {channel.label}
                         </h4>
-                        <p className="text-xs font-serif text-stone-300 leading-relaxed">
-                          {channel.schedule}
-                        </p>
+                        {nowPlaying ? (
+                          <div className="p-2.5 rounded-lg bg-black/50 border border-amber-500/25 space-y-0.5">
+                            <div className="text-[11px] font-cinzel font-bold text-amber-300">
+                              On Air Now: {nowPlaying.title}
+                            </div>
+                            {nowPlaying.subtitle && nowPlaying.subtitle !== nowPlaying.title && (
+                              <div className="text-xs font-serif italic text-stone-200">
+                                “{nowPlaying.subtitle}”
+                              </div>
+                            )}
+                            {upNext && (
+                              <div className="text-[11px] font-serif text-stone-400 pt-0.5">
+                                Up Next: {upNext.title}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                            {channel.schedule}
+                          </p>
+                        )}
                       </div>
 
                       <div className="flex flex-wrap items-center gap-2.5 pt-2.5 border-t border-white/10">
                         <button
                           type="button"
-                          onClick={() =>
-                            setEwtnStageVideo({
-                              id: channel.id,
-                              title: `${channel.label} • Live Broadcast`,
-                              subtitle: channel.location,
-                              embedUrl: channel.embedUrl,
-                              portalUrl: channel.portalUrl,
-                              youtubeUrl: channel.youtubeUrl
-                            })
-                          }
+                          onClick={() => setSelectedTvChannelId(channel.id)}
                           className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 ${
                             isActiveChannel
                               ? 'bg-amber-600 text-stone-950'
@@ -722,7 +791,7 @@ export const CatholicSocialView: React.FC = () => {
             {ewtnHubTab === 'adoration' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 {ewtnAdorationChapels.map(chapel => {
-                  const isActiveChapel = ewtnStageVideo.id === chapel.id;
+                  const isActiveChapel = selectedAdorationId === chapel.id;
                   return (
                     <div
                       key={chapel.id}
@@ -746,16 +815,7 @@ export const CatholicSocialView: React.FC = () => {
                       <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
                         <button
                           type="button"
-                          onClick={() =>
-                            setEwtnStageVideo({
-                              id: chapel.id,
-                              title: `${chapel.label} • 24/7 Eucharistic Adoration`,
-                              subtitle: chapel.location,
-                              embedUrl: chapel.embedUrl,
-                              portalUrl: chapel.portalUrl,
-                              youtubeUrl: chapel.youtubeUrl
-                            })
-                          }
+                          onClick={() => setSelectedAdorationId(chapel.id)}
                           className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                             isActiveChapel
                               ? 'bg-amber-600 text-stone-950'
@@ -766,12 +826,12 @@ export const CatholicSocialView: React.FC = () => {
                           <span>{isActiveChapel ? 'Playing Above' : 'Watch Live Adoration'}</span>
                         </button>
                         <a
-                          href={chapel.youtubeUrl}
+                          href={chapel.portalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-3 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1.5 whitespace-nowrap"
                         >
-                          <span>YouTube 24/7 Feed</span>
+                          <span>Portal</span>
                           <ExternalLink className="w-3 h-3 text-amber-400" />
                         </a>
                       </div>

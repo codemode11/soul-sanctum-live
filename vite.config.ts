@@ -430,6 +430,88 @@ function vaticanNewsPlugin() {
           res.end(JSON.stringify({ error: err.message, shortcodes: [], posts: [] }));
         }
       });
+
+      server.middlewares.use('/api/ewtn-epg', async (_req: any, res: any) => {
+        try {
+          const response = await fetch('https://www.ewtn.com/api/content/live/epg/d/en', {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+              'Accept': 'application/json'
+            },
+            signal: AbortSignal.timeout(7500)
+          });
+
+          if (!response.ok) {
+            throw new Error(`EWTN EPG HTTP ${response.status}`);
+          }
+
+          const rawTabs = await response.json();
+          const nowUnix = Math.floor(Date.now() / 1000);
+          const channelsById: Record<string, {
+            channelId: string;
+            name: string;
+            mediaUrl: string;
+            nowPlaying?: {
+              title: string;
+              subtitle?: string;
+              description?: string;
+              startIso?: string;
+              endIso?: string;
+            };
+            upNext?: {
+              title: string;
+              subtitle?: string;
+              startIso?: string;
+            };
+          }> = {};
+
+          if (Array.isArray(rawTabs)) {
+            for (const tab of rawTabs) {
+              for (const ch of tab.channels || []) {
+                const progs = Array.isArray(ch.programs) ? ch.programs : [];
+                let currentIdx = progs.findIndex(
+                  (p: any) => p?.startDate?.unix <= nowUnix && p?.endDate?.unix >= nowUnix
+                );
+                if (currentIdx === -1 && progs.length > 0) {
+                  currentIdx = 0;
+                }
+                const currentProg = currentIdx >= 0 ? progs[currentIdx] : undefined;
+                const nextProg = currentIdx >= 0 && currentIdx + 1 < progs.length ? progs[currentIdx + 1] : undefined;
+
+                channelsById[ch.channelId] = {
+                  channelId: ch.channelId,
+                  name: ch.name,
+                  mediaUrl: ch.mediaUrl,
+                  nowPlaying: currentProg
+                    ? {
+                        title: currentProg.title,
+                        subtitle: currentProg.subtitle,
+                        description: currentProg.description,
+                        startIso: currentProg.startDate?.iso,
+                        endIso: currentProg.endDate?.iso
+                      }
+                    : undefined,
+                  upNext: nextProg
+                    ? {
+                        title: nextProg.title,
+                        subtitle: nextProg.subtitle,
+                        startIso: nextProg.startDate?.iso
+                      }
+                    : undefined
+                };
+              }
+            }
+          }
+
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.end(JSON.stringify({ updatedAt: Date.now(), channels: channelsById }));
+        } catch (err: any) {
+          res.statusCode = 502;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: err.message, channels: {} }));
+        }
+      });
     }
   };
 }

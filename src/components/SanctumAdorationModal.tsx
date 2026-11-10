@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { bellSynth } from '../utils/audioSynth';
 import { NIEPOKALANOW_HIGH_RES_IMAGES, NiepokalanowHighResImage } from '../data/sacredArt';
+import { EwtnLiveVideoPlayer } from './EwtnLiveVideoPlayer';
 
 interface SanctumAdorationModalProps {
   isOpen: boolean;
@@ -219,7 +220,7 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
                   Shrine of the Most Blessed Sacrament (Hanceville)
                 </button>
                 <a
-                  href="https://www.ewtn.com/tv/watch-live"
+                  href="https://www.ewtn.com/live/adoration"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-2.5 py-1 rounded-md text-xs font-cinzel font-bold bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40 flex items-center gap-1 whitespace-nowrap"
@@ -234,22 +235,30 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
           {/* Main Visual Altar Card */}
           <div className="relative rounded-xl overflow-hidden border border-amber-500/30 shadow-2xl bg-black aspect-[16/9] max-h-[420px] w-full group">
             {altarMode === 'ewtn-live' ? (
-              <iframe
+              <EwtnLiveVideoPlayer
                 key={ewtnChapel}
-                src={
+                streamUrl={
                   ewtnChapel === 'irondale'
-                    ? 'https://www.youtube.com/embed/GBns1m4S1Xk?autoplay=1'
-                    : 'https://www.youtube.com/embed/E5PdqveWGQI?autoplay=1'
+                    ? 'https://cdn3.wowza.com/1/Y09GU2RCUG9EbVRr/WlpHUVVx/hls/live/playlist.m3u8'
+                    : undefined
+                }
+                embedUrl={
+                  ewtnChapel === 'hanceville'
+                    ? 'https://www.youtube.com/embed/E5PdqveWGQI?autoplay=1'
+                    : undefined
                 }
                 title={
                   ewtnChapel === 'irondale'
-                    ? 'Live Eucharistic Adoration 24/7 | EWTN Our Lady of the Angels Chapel'
-                    : 'Live Eucharistic Adoration 24/7 | Shrine of the Most Blessed Sacrament'
+                    ? 'Our Lady of the Angels Chapel • EWTN 24/7 Perpetual Adoration'
+                    : 'Shrine of the Most Blessed Sacrament • Hanceville, Alabama'
                 }
-                className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
+                subtitle="24/7 Live Eucharistic Adoration"
+                portalUrl={
+                  ewtnChapel === 'irondale'
+                    ? 'https://www.ewtn.com/live/adoration'
+                    : 'https://www.olamshrine.com/'
+                }
+                autoPlay={true}
               />
             ) : (
               <>
