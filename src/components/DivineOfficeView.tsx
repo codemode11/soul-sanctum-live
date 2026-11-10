@@ -457,7 +457,7 @@ export const DivineOfficeView: React.FC = () => {
                   {/* Antiphon Callout Box (Short text retains italics) */}
                   <div className="bg-amber-100/90 border-l-4 border-amber-800 p-3 rounded-r-lg font-serif text-amber-950 text-xs sm:text-sm">
                     <span className="font-cinzel font-bold text-amber-900 not-italic uppercase tracking-wide mr-1.5">
-                      Ant.
+                      Antiphon
                     </span>
                     <span className="italic">&ldquo;{toCurvedQuotes(psalm.antiphon)}&rdquo;</span>
                   </div>
@@ -484,7 +484,7 @@ export const DivineOfficeView: React.FC = () => {
 
                   {/* Repeat Antiphon (Short text retains italics) */}
                   <div className="text-xs text-amber-900 font-serif pt-1 border-t border-amber-200/60">
-                    <span className="font-cinzel font-bold mr-1">Ant.</span>
+                    <span className="font-cinzel font-bold mr-1.5">Antiphon</span>
                     <span className="italic">&ldquo;{toCurvedQuotes(psalm.antiphon)}&rdquo;</span>
                   </div>
                 </div>
@@ -521,7 +521,7 @@ export const DivineOfficeView: React.FC = () => {
               <div className="space-y-3.5 p-4 sm:p-5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] shadow-2xs">
                 <div className="bg-amber-100/90 border-l-4 border-amber-800 p-3 rounded-r-lg font-serif text-amber-950 text-xs sm:text-sm">
                   <span className="font-cinzel font-bold text-amber-900 not-italic uppercase tracking-wide mr-1.5">
-                    Ant.
+                    Antiphon
                   </span>
                   <span className="italic">&ldquo;{toCurvedQuotes(hourData.canticle.antiphon)}&rdquo;</span>
                 </div>
@@ -538,7 +538,7 @@ export const DivineOfficeView: React.FC = () => {
                 </div>
 
                 <div className="text-xs text-amber-900 font-serif pt-1 border-t border-amber-200/60">
-                  <span className="font-cinzel font-bold mr-1">Ant.</span>
+                  <span className="font-cinzel font-bold mr-1.5">Antiphon</span>
                   <span className="italic">&ldquo;{toCurvedQuotes(hourData.canticle.antiphon)}&rdquo;</span>
                 </div>
               </div>
