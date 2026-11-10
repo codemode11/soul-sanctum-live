@@ -144,8 +144,20 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
   // Retrieve exactly 5 fresh daily Vatican stories for the selected date
   const fiveDailyStories = useMemo(() => {
     const baseFive = getDailyFiveVaticanStories(selectedDate);
-    if (liveStories && liveStories.length >= 4) {
-      return [baseFive[0], ...liveStories.slice(0, 4)];
+    if (liveStories && liveStories.length > 0) {
+      const seenIds = new Set<string>([baseFive[0].id]);
+      const seenTitles = new Set<string>([baseFive[0].title]);
+      const combined: CatholicNewsItem[] = [baseFive[0]];
+
+      for (const story of [...liveStories, ...baseFive.slice(1)]) {
+        if (combined.length >= 5) break;
+        if (!seenIds.has(story.id) && !seenTitles.has(story.title)) {
+          seenIds.add(story.id);
+          seenTitles.add(story.title);
+          combined.push(story);
+        }
+      }
+      return combined;
     }
     return baseFive;
   }, [selectedDate, liveStories]);
@@ -153,13 +165,23 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
   // Full news list including the 5 daily stories and broader archive
   const allDailyNews = useMemo(() => {
     const base = getDailyVaticanNews(selectedDate);
-    if (liveStories && liveStories.length > 0) {
-      const baseFive = getDailyFiveVaticanStories(selectedDate);
-      const usedIds = new Set([baseFive[0].id, ...liveStories.map(s => s.id)]);
-      return [baseFive[0], ...liveStories, ...base.filter(b => !usedIds.has(b.id))];
+    const sourceList = liveStories && liveStories.length > 0
+      ? [...fiveDailyStories, ...liveStories, ...base]
+      : [...fiveDailyStories, ...base];
+
+    const seenIds = new Set<string>();
+    const seenTitles = new Set<string>();
+    const uniqueList: CatholicNewsItem[] = [];
+
+    for (const item of sourceList) {
+      if (!seenIds.has(item.id) && !seenTitles.has(item.title)) {
+        seenIds.add(item.id);
+        seenTitles.add(item.title);
+        uniqueList.push(item);
+      }
     }
-    return base;
-  }, [selectedDate, liveStories]);
+    return uniqueList;
+  }, [selectedDate, liveStories, fiveDailyStories]);
 
   const [activeArticle, setActiveArticle] = useState<CatholicNewsItem | null>(() => {
     if (initialArticleId) {
@@ -203,7 +225,8 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
 
   const archiveStories = useMemo(() => {
     const fiveIds = new Set(fiveDailyStories.map(s => s.id));
-    return allDailyNews.filter(item => !fiveIds.has(item.id) && (
+    const fiveTitles = new Set(fiveDailyStories.map(s => s.title));
+    return allDailyNews.filter(item => !fiveIds.has(item.id) && !fiveTitles.has(item.title) && (
       (selectedCategory === 'All' || item.category === selectedCategory) &&
       (!searchQuery.trim() ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
