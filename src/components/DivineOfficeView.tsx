@@ -325,9 +325,9 @@ export const DivineOfficeView: React.FC = () => {
 
       {/* RECTANGLE 3: HOURS NAVIGATION TAB BAR */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-2.5">
-        <div className="flex items-center justify-between pb-0.5">
-          <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700 pl-1">
-            Canonical Hours:
+        <div className="flex items-center justify-center pb-0.5 text-center">
+          <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
+            Canonical Hours
           </span>
         </div>
 
@@ -357,9 +357,9 @@ export const DivineOfficeView: React.FC = () => {
                 className="w-full px-2 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-start gap-1.5 sm:gap-2.5 border-2 outline-1 outline-offset-1"
               >
                 <Icon
-                  className="w-4 h-4 shrink-0"
+                  className="w-4 h-4 shrink-0 text-amber-500"
                   style={{
-                    color: '#ffffff',
+                    color: '#D4AF37',
                     strokeWidth: 2.4,
                     filter: 'drop-shadow(0 1px 1.5px rgba(0,0,0,0.45))',
                   }}
