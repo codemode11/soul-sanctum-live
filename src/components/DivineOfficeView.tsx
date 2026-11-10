@@ -354,7 +354,7 @@ export const DivineOfficeView: React.FC = () => {
                   outlineColor: isHovered ? '#5A381C' : 'transparent',
                   color: '#000000',
                 }}
-                className="w-full px-2 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-start gap-1.5 sm:gap-2.5 border-2 outline-1 outline-offset-1"
+                className="w-full px-2 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center text-center gap-1.5 sm:gap-2.5 border-2 outline-1 outline-offset-1"
               >
                 <Icon
                   className="w-4 h-4 shrink-0 text-amber-500"
@@ -364,7 +364,7 @@ export const DivineOfficeView: React.FC = () => {
                     filter: 'drop-shadow(0 1px 1.5px rgba(0,0,0,0.45))',
                   }}
                 />
-                <span style={{ color: '#000000' }} className="font-bold tracking-wide truncate">
+                <span style={{ color: '#000000' }} className="font-bold tracking-wide truncate text-center">
                   {label}
                 </span>
               </button>
