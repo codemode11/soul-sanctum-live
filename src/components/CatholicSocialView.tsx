@@ -58,6 +58,7 @@ export const CatholicSocialView: React.FC = () => {
   // =========================================================================
   const [ewtnHubTab, setEwtnHubTab] = useState<'tv' | 'radio' | 'adoration'>('tv');
   const [ewtnEpgMap, setEwtnEpgMap] = useState<Record<string, EwtnEpgChannelInfo>>({});
+  const [irondaleAdorationLive, setIrondaleAdorationLive] = useState<boolean>(false);
 
   const ewtnTvChannels = useMemo(() => [
     {
@@ -106,53 +107,93 @@ export const CatholicSocialView: React.FC = () => {
 
   const ewtnAdorationChapels = useMemo(() => [
     {
-      id: 'ewtn-adoration-irondale',
+      id: 'ewtn-adoration-tyburn',
       epgChannelId: 'adoration',
-      label: 'Our Lady of the Angels Chapel • EWTN',
-      location: 'Irondale, Alabama • EWTN 24/7 Perpetual Adoration',
+      label: 'Tyburn Convent Shrine • EWTN Great Britain',
+      location: 'London, United Kingdom • Shrine of the English Martyrs',
+      scheduleBadge: 'LIVE 24/7 • MORNING, AFTERNOON & EVENING',
       streamUrl: undefined as string | undefined,
-      embedUrl: 'https://www.youtube.com/embed/GBns1m4S1Xk?autoplay=1&rel=0',
-      youtubeUrl: 'https://www.youtube.com/watch?v=GBns1m4S1Xk',
-      portalUrl: 'https://www.ewtn.com/live/adoration',
-      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration livestream before the Most Blessed Sacrament exposed in the monstrance at EWTN.'
+      embedUrl: 'https://www.youtube.com/embed/9spEO2iFGKI?autoplay=1&rel=0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=9spEO2iFGKI',
+      portalUrl: 'https://www.ewtn.co.uk/live/adoration',
+      description: 'Official EWTN Great Britain 24/7 Perpetual Eucharistic Adoration broadcast day and night from the Benedictine Adorers of the Sacred Heart of Jesus of Montmartre at Tyburn Convent.'
     },
     {
       id: 'ewtn-adoration-niepokalanow',
       epgChannelId: '',
       label: 'Sanctuary of St. Maximilian Kolbe • EWTN Niepokalanów',
-      location: 'Niepokalanów, Poland • World Center of Prayer for Peace (24/7)',
+      location: 'Niepokalanów, Poland • World Center of Prayer for Peace',
+      scheduleBadge: 'LIVE 24/7 • MORNING, AFTERNOON & EVENING',
       streamUrl: undefined as string | undefined,
       embedUrl: 'https://www.youtube.com/embed/Orc7lHFSqNY?autoplay=1&rel=0',
       youtubeUrl: 'https://www.youtube.com/watch?v=Orc7lHFSqNY',
       portalUrl: 'https://ewtn.pl/adoracja/',
-      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration broadcast live from the Chapel of Perpetual Adoration at St. Maximilian Kolbe\'s Sanctuary in Niepokalanów.'
+      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration before the "Star of the Immaculata" monstrance in the Chapel of Perpetual Adoration at St. Maximilian Kolbe\'s Sanctuary.'
+    },
+    {
+      id: 'ewtn-adoration-skd-usa',
+      epgChannelId: '',
+      label: 'St. Katharine Drexel Perpetual Adoration Chapel',
+      location: 'United States • 24/7 Parish Exposition of the Blessed Sacrament',
+      scheduleBadge: 'LIVE 24/7 • MORNING, AFTERNOON & EVENING',
+      streamUrl: undefined as string | undefined,
+      embedUrl: 'https://www.youtube.com/embed/f7Lc65byuDI?autoplay=1&rel=0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=f7Lc65byuDI',
+      portalUrl: 'https://www.youtube.com/watch?v=f7Lc65byuDI',
+      description: 'Continuous 24-hour American parish Eucharistic Adoration chapel with real-time clock overlay — active throughout both North American mornings and evenings.'
+    },
+    {
+      id: 'ewtn-adoration-irondale',
+      epgChannelId: 'adoration',
+      label: irondaleAdorationLive
+        ? 'Our Lady of the Angels Chapel • EWTN Irondale (Live Daytime Feed)'
+        : 'Our Lady of the Angels Chapel (EWTN) • St. Ignatius Manresa Evening Relay',
+      location: irondaleAdorationLive
+        ? 'Irondale, Alabama • EWTN Chapel (9:30 AM – 6:00 PM ET)'
+        : 'Irondale (9:30 AM–6 PM ET) • Evening Relay: St. Ignatius Chapel, Manresa',
+      scheduleBadge: irondaleAdorationLive
+        ? 'LIVE NOW • MORNING & AFTERNOON (9:30 AM–6:00 PM ET)'
+        : '9:30 AM–6 PM ET (IRONDALE) • EVENING & NIGHT RELAY ACTIVE NOW',
+      streamUrl: irondaleAdorationLive
+        ? 'https://cdn3.wowza.com/1/Y09GU2RCUG9EbVRr/WlpHUVVx/hls/live/playlist.m3u8'
+        : undefined,
+      embedUrl: irondaleAdorationLive
+        ? undefined
+        : 'https://www.youtube.com/embed/W4WApqZDbks?autoplay=1&rel=0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=W4WApqZDbks',
+      portalUrl: 'https://www.ewtn.com/live/adoration',
+      description: irondaleAdorationLive
+        ? 'Streaming live directly from EWTN\'s Our Lady of the Angels Chapel in Irondale, Alabama (daily exposition 9:30 AM – 6:00 PM ET).'
+        : 'EWTN\'s Irondale Chapel camera broadcasts daily from 9:30 AM to 6:00 PM ET. During evening and overnight hours, this channel automatically relays 24/7 Perpetual Adoration from the Chapel of St. Ignatius of Loyola in Manresa.'
     },
     {
       id: 'ewtn-adoration-melbourne',
       epgChannelId: '',
       label: 'St. Benedict\'s Perpetual Adoration Shrine',
       location: 'Melbourne, Australia • 24/7 Exposition of the Blessed Sacrament',
+      scheduleBadge: 'LIVE 24/7 • MORNING, AFTERNOON & EVENING',
       streamUrl: undefined as string | undefined,
       embedUrl: 'https://www.youtube.com/embed/qz8YE61BoXM?autoplay=1&rel=0',
       youtubeUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
       portalUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
-      description: 'Continuous 24/7 live Eucharistic Adoration before the Most Blessed Sacrament exposed on the altar at St. Benedict\'s Parish Shrine.'
+      description: 'Continuous 24/7 live Eucharistic Adoration before the Most Blessed Sacrament exposed on the altar at St. Benedict\'s Parish Shrine (daytime in Oceania during US evenings).'
     },
     {
       id: 'ewtn-adoration-shalom',
       epgChannelId: '',
       label: 'Shalom World Perpetual Adoration Chapel',
       location: 'Global Catholic Prayer Ministry • 24/7 Live Adoration',
+      scheduleBadge: 'LIVE 24/7 • MORNING, AFTERNOON & EVENING',
       streamUrl: undefined as string | undefined,
       embedUrl: 'https://www.youtube.com/embed/GlGkFWPKomU?autoplay=1&rel=0',
       youtubeUrl: 'https://www.youtube.com/watch?v=GlGkFWPKomU',
       portalUrl: 'https://www.youtube.com/watch?v=GlGkFWPKomU',
-      description: 'Unite in 24-hour silent adoration and intercessory prayer before the Real Presence of Jesus in the Most Holy Eucharist.'
+      description: 'Unite in 24-hour silent adoration and intercessory prayer before the Real Presence of Jesus in the Most Holy Eucharist — live morning, noon, and night.'
     }
-  ], []);
+  ], [irondaleAdorationLive]);
 
   const [selectedTvChannelId, setSelectedTvChannelId] = useState<string>('ewtn-us-global');
-  const [selectedAdorationId, setSelectedAdorationId] = useState<string>('ewtn-adoration-irondale');
+  const [selectedAdorationId, setSelectedAdorationId] = useState<string>('ewtn-adoration-tyburn');
   const [ewtnStageKey, setEwtnStageKey] = useState<number>(0);
 
   // Fetch live EWTN EPG schedule and verify live stream URLs
@@ -163,8 +204,13 @@ export const CatholicSocialView: React.FC = () => {
         const res = await fetch('/api/ewtn-epg');
         if (res.ok) {
           const data = await res.json();
-          if (mounted && data?.channels) {
-            setEwtnEpgMap(data.channels);
+          if (mounted) {
+            if (data?.channels) {
+              setEwtnEpgMap(data.channels);
+            }
+            if (typeof data?.irondaleAdorationLive === 'boolean') {
+              setIrondaleAdorationLive(data.irondaleAdorationLive);
+            }
           }
         }
       } catch {
@@ -888,55 +934,74 @@ export const CatholicSocialView: React.FC = () => {
 
             {/* TAB 3: EWTN 24/7 PERPETUAL EUCHARISTIC ADORATION */}
             {ewtnHubTab === 'adoration' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-                {ewtnAdorationChapels.map(chapel => {
-                  const isActiveChapel = selectedAdorationId === chapel.id;
-                  return (
-                    <div
-                      key={chapel.id}
-                      className={`p-4 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
-                        isActiveChapel
-                          ? 'bg-amber-950/55 border-amber-400 shadow-md'
-                          : 'bg-black/50 border-amber-500/35 hover:border-amber-400/60'
-                      }`}
-                    >
-                      <div className="space-y-1">
-                        <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400">
-                          {chapel.location}
-                        </span>
-                        <h4 className="font-cinzel text-base font-bold text-white">
-                          {chapel.label}
-                        </h4>
-                        <p className="text-xs font-serif text-stone-300 leading-relaxed">
-                          {chapel.description}
-                        </p>
+              <div className="space-y-4 text-left">
+                <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <Flame className="w-4 h-4 text-amber-400 shrink-0" />
+                    <p className="text-xs font-serif text-amber-100">
+                      <strong className="font-cinzel text-amber-300">24/7 Morning, Afternoon &amp; Evening Coverage:</strong> Five chapels stream Perpetual Adoration 24 hours a day (Morning &amp; Evening), and EWTN&apos;s Irondale Chapel streams live 9:30 AM – 6:00 PM ET with an automatic Evening Relay after 6:00 PM ET.
+                    </p>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-md bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-cinzel font-bold text-emerald-300 whitespace-nowrap shrink-0">
+                    6 DISTINCT LIVE CHAPELS
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {ewtnAdorationChapels.map(chapel => {
+                    const isActiveChapel = selectedAdorationId === chapel.id;
+                    return (
+                      <div
+                        key={chapel.id}
+                        className={`p-4 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
+                          isActiveChapel
+                            ? 'bg-amber-950/55 border-amber-400 shadow-md'
+                            : 'bg-black/50 border-amber-500/35 hover:border-amber-400/60'
+                        }`}
+                      >
+                        <div className="space-y-1.5">
+                          <div className="flex flex-wrap items-center justify-between gap-1.5">
+                            <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400">
+                              {chapel.location}
+                            </span>
+                            <span className="px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/30 text-[9px] font-cinzel font-bold text-emerald-300 tracking-wider uppercase">
+                              {chapel.scheduleBadge}
+                            </span>
+                          </div>
+                          <h4 className="font-cinzel text-base font-bold text-white">
+                            {chapel.label}
+                          </h4>
+                          <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                            {chapel.description}
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
+                          <button
+                            type="button"
+                            onClick={() => setSelectedAdorationId(chapel.id)}
+                            className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                              isActiveChapel
+                                ? 'bg-amber-600 text-stone-950'
+                                : 'bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40'
+                            }`}
+                          >
+                            <Flame className="w-3.5 h-3.5" />
+                            <span>{isActiveChapel ? 'Playing Above' : 'Watch Live Adoration'}</span>
+                          </button>
+                          <a
+                            href={chapel.portalUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-3 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1.5 whitespace-nowrap"
+                          >
+                            <span>Portal</span>
+                            <ExternalLink className="w-3 h-3 text-amber-400" />
+                          </a>
+                        </div>
                       </div>
-                      <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedAdorationId(chapel.id)}
-                          className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
-                            isActiveChapel
-                              ? 'bg-amber-600 text-stone-950'
-                              : 'bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40'
-                          }`}
-                        >
-                          <Flame className="w-3.5 h-3.5" />
-                          <span>{isActiveChapel ? 'Playing Above' : 'Watch Live Adoration'}</span>
-                        </button>
-                        <a
-                          href={chapel.portalUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1.5 whitespace-nowrap"
-                        >
-                          <span>Portal</span>
-                          <ExternalLink className="w-3 h-3 text-amber-400" />
-                        </a>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>

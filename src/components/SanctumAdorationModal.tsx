@@ -34,7 +34,7 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'contemplation' | 'prayers' | 'hymns' | 'history'>('contemplation');
   const [altarMode, setAltarMode] = useState<'art' | 'ewtn-live'>('art');
-  const [ewtnChapel, setEwtnChapel] = useState<'irondale' | 'hanceville'>('irondale');
+  const [ewtnChapel, setEwtnChapel] = useState<'tyburn' | 'niepokalanow' | 'skd' | 'manresa'>('tyburn');
   const [timerSeconds, setTimerSeconds] = useState<number | null>(null);
   const [timerInitial, setTimerInitial] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -191,41 +191,46 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
                 }`}
               >
                 <Tv className="w-3.5 h-3.5" />
-                <span>EWTN 24/7 Live Adoration</span>
+                <span>24/7 Live Adoration Chapels</span>
               </button>
             </div>
 
             {altarMode === 'ewtn-live' && (
               <div className="flex flex-wrap items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setEwtnChapel('irondale')}
-                  className={`px-2.5 py-1 rounded-md text-xs font-serif transition-all cursor-pointer whitespace-nowrap ${
-                    ewtnChapel === 'irondale'
-                      ? 'bg-amber-500/25 text-amber-200 border border-amber-400/50 font-semibold'
-                      : 'bg-black/40 text-stone-400 hover:text-stone-200 border border-white/10'
-                  }`}
-                >
-                  Our Lady of the Angels Chapel (EWTN 24/7)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEwtnChapel('hanceville')}
-                  className={`px-2.5 py-1 rounded-md text-xs font-serif transition-all cursor-pointer whitespace-nowrap ${
-                    ewtnChapel === 'hanceville'
-                      ? 'bg-amber-500/25 text-amber-200 border border-amber-400/50 font-semibold'
-                      : 'bg-black/40 text-stone-400 hover:text-stone-200 border border-white/10'
-                  }`}
-                >
-                  St. Maximilian Kolbe Sanctuary (EWTN Niepokalanów 24/7)
-                </button>
+                {[
+                  { id: 'tyburn', label: 'EWTN Tyburn Convent (24/7)' },
+                  { id: 'niepokalanow', label: 'EWTN Niepokalanów (24/7)' },
+                  { id: 'skd', label: 'St. Katharine Drexel USA (24/7)' },
+                  { id: 'manresa', label: 'St. Ignatius Manresa (24/7)' }
+                ].map(ch => (
+                  <button
+                    key={ch.id}
+                    type="button"
+                    onClick={() => setEwtnChapel(ch.id as any)}
+                    className={`px-2.5 py-1 rounded-md text-xs font-serif transition-all cursor-pointer whitespace-nowrap ${
+                      ewtnChapel === ch.id
+                        ? 'bg-amber-500/25 text-amber-200 border border-amber-400/50 font-semibold'
+                        : 'bg-black/40 text-stone-400 hover:text-stone-200 border border-white/10'
+                    }`}
+                  >
+                    {ch.label}
+                  </button>
+                ))}
                 <a
-                  href={ewtnChapel === 'irondale' ? 'https://www.ewtn.com/live/adoration' : 'https://ewtn.pl/adoracja/'}
+                  href={
+                    ewtnChapel === 'tyburn'
+                      ? 'https://www.ewtn.co.uk/live/adoration'
+                      : ewtnChapel === 'niepokalanow'
+                        ? 'https://ewtn.pl/adoracja/'
+                        : ewtnChapel === 'skd'
+                          ? 'https://www.youtube.com/watch?v=f7Lc65byuDI'
+                          : 'https://www.youtube.com/watch?v=W4WApqZDbks'
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-2.5 py-1 rounded-md text-xs font-cinzel font-bold bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40 flex items-center gap-1 whitespace-nowrap"
                 >
-                  <span>EWTN Portal</span>
+                  <span>Chapel Portal</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
@@ -238,20 +243,32 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
               <EwtnLiveVideoPlayer
                 key={ewtnChapel}
                 embedUrl={
-                  ewtnChapel === 'irondale'
-                    ? 'https://www.youtube.com/embed/GBns1m4S1Xk?autoplay=1&rel=0'
-                    : 'https://www.youtube.com/embed/Orc7lHFSqNY?autoplay=1&rel=0'
+                  ewtnChapel === 'tyburn'
+                    ? 'https://www.youtube.com/embed/9spEO2iFGKI?autoplay=1&rel=0'
+                    : ewtnChapel === 'niepokalanow'
+                      ? 'https://www.youtube.com/embed/Orc7lHFSqNY?autoplay=1&rel=0'
+                      : ewtnChapel === 'skd'
+                        ? 'https://www.youtube.com/embed/f7Lc65byuDI?autoplay=1&rel=0'
+                        : 'https://www.youtube.com/embed/W4WApqZDbks?autoplay=1&rel=0'
                 }
                 title={
-                  ewtnChapel === 'irondale'
-                    ? 'Our Lady of the Angels Chapel • EWTN 24/7 Perpetual Adoration'
-                    : 'Sanctuary of St. Maximilian Kolbe • EWTN Niepokalanów 24/7 Adoration'
+                  ewtnChapel === 'tyburn'
+                    ? 'Tyburn Convent Shrine • EWTN Great Britain 24/7 Perpetual Adoration'
+                    : ewtnChapel === 'niepokalanow'
+                      ? 'Sanctuary of St. Maximilian Kolbe • EWTN Niepokalanów 24/7 Adoration'
+                      : ewtnChapel === 'skd'
+                        ? 'St. Katharine Drexel Parish • 24/7 Perpetual Eucharistic Adoration (USA)'
+                        : 'Chapel of St. Ignatius of Loyola • Manresa 24/7 Perpetual Adoration'
                 }
-                subtitle="24/7 Live Eucharistic Adoration"
+                subtitle="LIVE 24/7 • Morning, Afternoon & Evening Exposition"
                 portalUrl={
-                  ewtnChapel === 'irondale'
-                    ? 'https://www.ewtn.com/live/adoration'
-                    : 'https://ewtn.pl/adoracja/'
+                  ewtnChapel === 'tyburn'
+                    ? 'https://www.ewtn.co.uk/live/adoration'
+                    : ewtnChapel === 'niepokalanow'
+                      ? 'https://ewtn.pl/adoracja/'
+                      : ewtnChapel === 'skd'
+                        ? 'https://www.youtube.com/watch?v=f7Lc65byuDI'
+                        : 'https://www.youtube.com/watch?v=W4WApqZDbks'
                 }
                 autoPlay={true}
               />

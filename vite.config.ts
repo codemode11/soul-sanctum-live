@@ -503,13 +503,53 @@ function vaticanNewsPlugin() {
             }
           }
 
+          // Check if EWTN Irondale Adoration HLS encoder (9:30 AM - 6:00 PM ET) has live segments right now
+          let irondaleAdorationLive = false;
+          const adorationPlaylistUrl =
+            channelsById['adoration']?.mediaUrl ||
+            'https://cdn3.wowza.com/1/Y09GU2RCUG9EbVRr/WlpHUVVx/hls/live/playlist.m3u8';
+          try {
+            const plRes = await fetch(adorationPlaylistUrl, { signal: AbortSignal.timeout(2500) });
+            if (plRes.ok) {
+              const plText = await plRes.text();
+              const subMatch = plText.match(/(\.\.\/[^\s]+chunklist\.m3u8)/);
+              if (subMatch) {
+                const chunkUrl = new URL(subMatch[1], adorationPlaylistUrl).toString();
+                const chRes = await fetch(chunkUrl, { signal: AbortSignal.timeout(2500) });
+                if (chRes.ok) {
+                  const chText = await chRes.text();
+                  const tsMatch = chText.match(/([^\s]+\.ts)/);
+                  if (tsMatch) {
+                    const tsUrl = new URL(tsMatch[1], chunkUrl).toString();
+                    const tsRes = await fetch(tsUrl, {
+                      method: 'GET',
+                      headers: { Range: 'bytes=0-64' },
+                      signal: AbortSignal.timeout(2500)
+                    });
+                    if (tsRes.ok || tsRes.status === 206) {
+                      irondaleAdorationLive = true;
+                    }
+                  }
+                }
+              }
+            }
+          } catch {
+            irondaleAdorationLive = false;
+          }
+
           res.setHeader('Content-Type', 'application/json; charset=utf-8');
           res.setHeader('Access-Control-Allow-Origin', '*');
-          res.end(JSON.stringify({ updatedAt: Date.now(), channels: channelsById }));
+          res.end(
+            JSON.stringify({
+              updatedAt: Date.now(),
+              irondaleAdorationLive,
+              channels: channelsById
+            })
+          );
         } catch (err: any) {
           res.statusCode = 502;
           res.setHeader('Content-Type', 'application/json');
-          res.end(JSON.stringify({ error: err.message, channels: {} }));
+          res.end(JSON.stringify({ error: err.message, irondaleAdorationLive: false, channels: {} }));
         }
       });
 
