@@ -350,11 +350,11 @@ export const DivineOfficeView: React.FC = () => {
                 onMouseLeave={() => setHoveredHourKey(null)}
                 style={{
                   backgroundColor: isHovered ? '#8B5A2B' : 'transparent',
-                  borderColor: isHovered ? '#5A381C' : 'transparent',
+                  borderColor: isHovered ? '#5A381C' : '#9CA3AF',
                   outlineColor: isHovered ? '#5A381C' : 'transparent',
                   color: '#000000',
                 }}
-                className="w-full px-2 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center text-center gap-1.5 sm:gap-2.5 border-2 outline-1 outline-offset-1"
+                className="w-full px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center text-center gap-1.5 sm:gap-2 border border-stone-400/80 outline-1 outline-offset-1 overflow-hidden"
               >
                 <Icon
                   className="w-4 h-4 shrink-0 text-amber-500"
