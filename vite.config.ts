@@ -512,6 +512,59 @@ function vaticanNewsPlugin() {
           res.end(JSON.stringify({ error: err.message, channels: {} }));
         }
       });
+
+      server.middlewares.use('/api/ewtn-radio', async (req: any, res: any) => {
+        try {
+          const urlObj = new URL(req.url || '', 'http://localhost');
+          const allowedStreams: Record<string, string> = {
+            'english-aac': 'https://ewtn-ice.streamguys1.com/english-aac',
+            'classics-aac': 'https://ewtn-ice.streamguys1.com/classics-aac',
+            'sky-aac': 'https://ewtn-ice.streamguys1.com/sky-aac',
+            'philippines-aac': 'https://ewtn-ice.streamguys1.com/philippines-aac',
+            'spanish-aac': 'https://ewtn-ice.streamguys1.com/spanish-aac'
+          };
+          const streamKey = urlObj.searchParams.get('stream') || 'english-aac';
+          const targetUrl = allowedStreams[streamKey] || allowedStreams['english-aac'];
+
+          const upstream = await fetch(targetUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+              'Accept': '*/*'
+            }
+          });
+
+          if (!upstream.ok || !upstream.body) {
+            res.statusCode = 502;
+            res.end('Upstream radio error');
+            return;
+          }
+
+          res.setHeader('Content-Type', upstream.headers.get('content-type') || 'audio/aacp');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Cache-Control', 'no-cache, no-store');
+
+          const reader = upstream.body.getReader();
+          req.on('close', () => {
+            reader.cancel().catch(() => {});
+          });
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            if (!res.writableEnded) {
+              res.write(Buffer.from(value));
+            } else {
+              break;
+            }
+          }
+          if (!res.writableEnded) res.end();
+        } catch {
+          if (!res.writableEnded) {
+            res.statusCode = 502;
+            res.end();
+          }
+        }
+      });
     }
   };
 }

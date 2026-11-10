@@ -185,36 +185,60 @@ export const CatholicSocialView: React.FC = () => {
     };
   }, [ewtnHubTab, selectedTvChannelId, selectedAdorationId, ewtnTvChannels, ewtnAdorationChapels, ewtnEpgMap]);
 
-  const [selectedRadioId, setSelectedRadioId] = useState<'english' | 'classics' | 'spanish'>('english');
+  const [selectedRadioId, setSelectedRadioId] = useState<'english' | 'classics' | 'gbie' | 'philippines' | 'spanish'>('english');
   const [isRadioPlaying, setIsRadioPlaying] = useState(false);
   const [isRadioMuted, setIsRadioMuted] = useState(false);
   const [radioVolume, setRadioVolume] = useState(0.85);
   const [radioError, setRadioError] = useState(false);
   const radioAudioRef = useRef<HTMLAudioElement | null>(null);
 
-  const ewtnRadioStations = [
+  const ewtnRadioStations = useMemo(() => [
     {
       id: 'english' as const,
-      name: 'EWTN Global Catholic Radio (English 24/7)',
+      epgChannelId: 'radio-english',
+      name: 'EWTN Global Catholic Radio (US & English 24/7)',
       subtitle: 'Live Catholic Talk, Daily Mass, Morning Glory, Called to Communion & Papal Coverage',
-      streamUrl: 'https://ewtn-ice.streamguys1.com/english-mp3',
+      streamUrl: ewtnEpgMap['radio-english']?.mediaUrl || 'https://ewtn-ice.streamguys1.com/english-aac',
+      proxyStreamUrl: '/api/ewtn-radio?stream=english-aac',
       portalUrl: 'https://www.ewtn.com/live/radio/radio-english'
     },
     {
       id: 'classics' as const,
-      name: 'EWTN Radio Classics & Archbishop Sheen',
-      subtitle: '24/7 Ven. Fulton J. Sheen, Mother Angelica Classics, Sacred Retreats & Devotions',
-      streamUrl: 'https://ewtn-ice.streamguys1.com/classics-mp3',
+      epgChannelId: 'radio-extra',
+      name: 'EWTN Radio Extra & Classics (Archbishop Sheen)',
+      subtitle: '24/7 Ven. Fulton J. Sheen, Mother Angelica Live Classics, Sacred Retreats & Devotions',
+      streamUrl: ewtnEpgMap['radio-extra']?.mediaUrl || 'https://ewtn-ice.streamguys1.com/classics-aac',
+      proxyStreamUrl: '/api/ewtn-radio?stream=classics-aac',
       portalUrl: 'https://www.ewtn.com/live/radio/radio-extra'
     },
     {
+      id: 'gbie' as const,
+      epgChannelId: 'radio-gbie',
+      name: 'EWTN Radio Great Britain & Ireland (24/7)',
+      subtitle: 'Live Catholic Talk Radio, Holy Rosary & Liturgies for Great Britain and Ireland',
+      streamUrl: ewtnEpgMap['radio-gbie']?.mediaUrl || 'https://ewtn-ice.streamguys1.com/sky-aac',
+      proxyStreamUrl: '/api/ewtn-radio?stream=sky-aac',
+      portalUrl: 'https://www.ewtn.com/live/radio/radio-gbie'
+    },
+    {
+      id: 'philippines' as const,
+      epgChannelId: 'radio-philippines',
+      name: 'EWTN Radio Philippines & Asia (24/7)',
+      subtitle: '24/7 Catholic Radio tailored for the Philippines and Asia-Pacific time zones',
+      streamUrl: ewtnEpgMap['radio-philippines']?.mediaUrl || 'https://ewtn-ice.streamguys1.com/philippines-aac',
+      proxyStreamUrl: '/api/ewtn-radio?stream=philippines-aac',
+      portalUrl: 'https://www.ewtn.com/live/radio/radio-philippines'
+    },
+    {
       id: 'spanish' as const,
+      epgChannelId: 'radio-catolica-mundial',
       name: 'EWTN Radio Católica Mundial (Español 24/7)',
       subtitle: 'Transmisión en vivo las 24 horas: Santa Misa, Santo Rosario y formación católica',
-      streamUrl: 'https://ewtn-ice.streamguys1.com/spanish-mp3',
+      streamUrl: ewtnEpgMap['radio-catolica-mundial']?.mediaUrl || 'https://ewtn-ice.streamguys1.com/spanish-aac',
+      proxyStreamUrl: '/api/ewtn-radio?stream=spanish-aac',
       portalUrl: 'https://www.ewtn.com/live/radio/radio-catolica-mundial'
     }
-  ];
+  ], [ewtnEpgMap]);
 
   const currentRadioStation = ewtnRadioStations.find(s => s.id === selectedRadioId) || ewtnRadioStations[0];
 
@@ -224,22 +248,41 @@ export const CatholicSocialView: React.FC = () => {
     }
   }, [radioVolume, isRadioMuted]);
 
-  const handleToggleRadio = (stationId?: 'english' | 'classics' | 'spanish') => {
+  const startRadioStream = (station: (typeof ewtnRadioStations)[number]) => {
+    const audio = radioAudioRef.current;
+    if (!audio) return;
+    setRadioError(false);
+    audio.pause();
+    audio.src = station.streamUrl;
+    audio.load();
+    audio
+      .play()
+      .then(() => {
+        setIsRadioPlaying(true);
+      })
+      .catch(() => {
+        // Fallback to server-side audio stream proxy
+        audio.src = station.proxyStreamUrl;
+        audio.load();
+        audio
+          .play()
+          .then(() => {
+            setIsRadioPlaying(true);
+          })
+          .catch(() => {
+            setRadioError(true);
+            setIsRadioPlaying(false);
+          });
+      });
+  };
+
+  const handleToggleRadio = (stationId?: 'english' | 'classics' | 'gbie' | 'philippines' | 'spanish') => {
     const targetId = stationId || selectedRadioId;
     const targetStation = ewtnRadioStations.find(s => s.id === targetId) || ewtnRadioStations[0];
 
     if (stationId && stationId !== selectedRadioId) {
       setSelectedRadioId(stationId);
-      setRadioError(false);
-      if (radioAudioRef.current) {
-        radioAudioRef.current.src = targetStation.streamUrl;
-        radioAudioRef.current.play().then(() => {
-          setIsRadioPlaying(true);
-        }).catch(() => {
-          setRadioError(true);
-          setIsRadioPlaying(false);
-        });
-      }
+      startRadioStream(targetStation);
       return;
     }
 
@@ -249,14 +292,7 @@ export const CatholicSocialView: React.FC = () => {
       radioAudioRef.current.pause();
       setIsRadioPlaying(false);
     } else {
-      setRadioError(false);
-      radioAudioRef.current.src = targetStation.streamUrl;
-      radioAudioRef.current.play().then(() => {
-        setIsRadioPlaying(true);
-      }).catch(() => {
-        setRadioError(true);
-        setIsRadioPlaying(false);
-      });
+      startRadioStream(targetStation);
     }
   };
 
@@ -461,6 +497,22 @@ export const CatholicSocialView: React.FC = () => {
         preload="none"
         onEnded={() => setIsRadioPlaying(false)}
         onError={() => {
+          const audio = radioAudioRef.current;
+          if (audio && audio.src && !audio.src.includes('/api/ewtn-radio')) {
+            audio.src = currentRadioStation.proxyStreamUrl;
+            audio.load();
+            audio
+              .play()
+              .then(() => {
+                setRadioError(false);
+                setIsRadioPlaying(true);
+              })
+              .catch(() => {
+                setRadioError(true);
+                setIsRadioPlaying(false);
+              });
+            return;
+          }
           if (isRadioPlaying) setRadioError(true);
           setIsRadioPlaying(false);
         }}
@@ -670,10 +722,13 @@ export const CatholicSocialView: React.FC = () => {
             {/* TAB 2: EWTN GLOBAL CATHOLIC RADIO (LIVE 24/7 AUDIO PLAYER) */}
             {ewtnHubTab === 'radio' && (
               <div className="space-y-4 text-left">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
                   {ewtnRadioStations.map(station => {
                     const isSelected = selectedRadioId === station.id;
                     const isThisPlaying = isSelected && isRadioPlaying;
+                    const radioEpg = ewtnEpgMap[station.epgChannelId];
+                    const nowPlaying = radioEpg?.nowPlaying;
+                    const upNext = radioEpg?.upNext;
                     return (
                       <div
                         key={station.id}
@@ -684,21 +739,43 @@ export const CatholicSocialView: React.FC = () => {
                             : 'bg-black/40 hover:bg-black/60 border-white/15'
                         }`}
                       >
-                        <div className="space-y-1">
+                        <div className="space-y-1.5">
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400">
                               24/7 Live Radio Stream
                             </span>
-                            <span className="text-[11px] font-mono text-amber-200">
-                              {isThisPlaying ? 'ON AIR' : 'READY'}
+                            <span className={`text-[10px] font-cinzel font-bold px-2 py-0.5 rounded-xs border ${
+                              isThisPlaying
+                                ? 'bg-red-900/80 text-red-100 border-red-400/50 animate-pulse'
+                                : 'bg-stone-900 text-amber-200 border-amber-500/30'
+                            }`}>
+                              {isThisPlaying ? 'ON AIR NOW' : 'LIVE 24/7'}
                             </span>
                           </div>
                           <h4 className="font-cinzel text-sm font-bold text-white">
                             {station.name}
                           </h4>
-                          <p className="text-xs font-serif text-stone-300 leading-relaxed">
-                            {station.subtitle}
-                          </p>
+                          {nowPlaying ? (
+                            <div className="p-2 rounded-lg bg-black/50 border border-amber-500/25 space-y-0.5">
+                              <div className="text-[11px] font-cinzel font-bold text-amber-300">
+                                On Air: {nowPlaying.title}
+                              </div>
+                              {nowPlaying.subtitle && nowPlaying.subtitle !== nowPlaying.title && (
+                                <div className="text-xs font-serif italic text-stone-200 line-clamp-2">
+                                  “{nowPlaying.subtitle}”
+                                </div>
+                              )}
+                              {upNext && (
+                                <div className="text-[11px] font-serif text-stone-400 pt-0.5">
+                                  Up Next: {upNext.title}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                              {station.subtitle}
+                            </p>
+                          )}
                         </div>
 
                         <div className="flex items-center justify-between pt-2 border-t border-white/10">
