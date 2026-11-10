@@ -488,6 +488,69 @@ export const CatholicSocialView: React.FC = () => {
   const [selectedVideoCategory, setSelectedVideoCategory] = useState<string>('All');
   const [videoSearchQuery, setVideoSearchQuery] = useState<string>('');
   const [activeVideo, setActiveVideo] = useState<ChristendomVideo | null>(null);
+  const [christendomVideos, setChristendomVideos] = useState<ChristendomVideo[]>(CHRISTENDOM_VIDEOS);
+  const [isLoadingChristendom, setIsLoadingChristendom] = useState<boolean>(false);
+  const [christendomOffset, setChristendomOffset] = useState<number>(0);
+
+  const fetchChristendomVideos = useCallback(async (rotatePool = false) => {
+    setIsLoadingChristendom(true);
+    try {
+      const res = await fetch(`/api/christendom-videos?_t=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        const liveVideos: ChristendomVideo[] = Array.isArray(data.videos) ? data.videos : [];
+        if (liveVideos.length > 0) {
+          // Interleave across channels so "All Channels" shows a balanced mix of all 8 channels
+          const seenYoutubeIds = new Set<string>();
+          const combined: ChristendomVideo[] = [];
+
+          // Group live videos by channelId and interleave round-robin
+          const byChannel: Record<string, ChristendomVideo[]> = {};
+          for (const v of [...liveVideos, ...CHRISTENDOM_VIDEOS]) {
+            if (!v.youtubeId || seenYoutubeIds.has(v.youtubeId)) continue;
+            seenYoutubeIds.add(v.youtubeId);
+            if (!byChannel[v.channelId]) byChannel[v.channelId] = [];
+            byChannel[v.channelId].push(v);
+          }
+
+          const channelKeys = Object.keys(byChannel);
+          const maxLen = Math.max(0, ...channelKeys.map(k => byChannel[k].length));
+          for (let i = 0; i < maxLen; i++) {
+            for (const k of channelKeys) {
+              if (byChannel[k][i]) {
+                combined.push(byChannel[k][i]);
+              }
+            }
+          }
+
+          if (combined.length > 0) {
+            setChristendomVideos(combined);
+            if (rotatePool) {
+              setChristendomOffset(prev => (prev + 3) % combined.length);
+            }
+          }
+        } else if (rotatePool) {
+          setChristendomOffset(prev => prev + 3);
+        }
+      } else if (rotatePool) {
+        setChristendomOffset(prev => prev + 3);
+      }
+    } catch {
+      if (rotatePool) {
+        setChristendomOffset(prev => prev + 3);
+      }
+    } finally {
+      setIsLoadingChristendom(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchChristendomVideos(false);
+    const interval = setInterval(() => {
+      fetchChristendomVideos(false);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [fetchChristendomVideos]);
 
   const videoCategories = useMemo(() => {
     return [
@@ -502,7 +565,7 @@ export const CatholicSocialView: React.FC = () => {
   }, []);
 
   const filteredVideos = useMemo(() => {
-    return CHRISTENDOM_VIDEOS.filter(v => {
+    const matching = christendomVideos.filter(v => {
       const matchesChannel = selectedChannelId === 'all' || v.channelId === selectedChannelId;
       if (!matchesChannel) return false;
 
@@ -518,7 +581,11 @@ export const CatholicSocialView: React.FC = () => {
         v.category.toLowerCase().includes(q)
       );
     });
-  }, [selectedChannelId, selectedVideoCategory, videoSearchQuery]);
+
+    if (matching.length <= 1 || christendomOffset === 0) return matching;
+    const shift = christendomOffset % matching.length;
+    return [...matching.slice(shift), ...matching.slice(0, shift)];
+  }, [christendomVideos, selectedChannelId, selectedVideoCategory, videoSearchQuery, christendomOffset]);
 
   const activeChannel = useMemo(() => {
     if (selectedChannelId === 'all') return null;
@@ -1206,16 +1273,28 @@ export const CatholicSocialView: React.FC = () => {
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => {
-                  setSelectedChannelId('all');
-                  setSelectedVideoCategory('All');
-                  setVideoSearchQuery('');
+                  fetchChristendomVideos(true);
                 }}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-amber-200 border border-white/15 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
-                title="Reset Channel Filter"
+                title="Refresh Christendom Channels & Videos"
               >
-                <RefreshCw className="w-3.5 h-3.5" />
-                <span>All Channels</span>
+                <RefreshCw className={`w-3.5 h-3.5 ${isLoadingChristendom ? 'animate-spin' : ''}`} />
+                <span>Refresh</span>
               </button>
+
+              {selectedChannelId !== 'all' && (
+                <button
+                  onClick={() => {
+                    setSelectedChannelId('all');
+                    setSelectedVideoCategory('All');
+                    setVideoSearchQuery('');
+                  }}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-stone-200 border border-white/15 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
+                  title="Show All Channels"
+                >
+                  <span>All Channels</span>
+                </button>
+              )}
 
               <a
                 href={activeChannel ? activeChannel.christendomUrl : 'https://www.christendom.com'}
@@ -1234,14 +1313,17 @@ export const CatholicSocialView: React.FC = () => {
             <div className="rounded-lg bg-[#241307]/[0.025] border border-amber-900/10 p-1.5 sm:p-2 flex flex-col xl:flex-row xl:items-center justify-between gap-2 shadow-xs">
               <div className="flex flex-wrap items-center gap-1">
                 <button
-                  onClick={() => setSelectedChannelId('all')}
+                  onClick={() => {
+                    setSelectedChannelId('all');
+                    setChristendomOffset(0);
+                  }}
                   className={`px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
                     selectedChannelId === 'all'
                       ? 'bg-[#241307] text-amber-200 border-amber-700 shadow-xs font-semibold'
                       : 'bg-white text-stone-700 border-stone-200 hover:border-amber-600/50 hover:bg-stone-50'
                   }`}
                 >
-                  All Channels ({CHRISTENDOM_VIDEOS.length})
+                  All Channels ({christendomVideos.length})
                 </button>
                 {CHRISTENDOM_CHANNELS.map(ch => {
                   const isSelected = selectedChannelId === ch.id;

@@ -609,6 +609,192 @@ function vaticanNewsPlugin() {
           }
         }
       });
+
+      server.middlewares.use('/api/christendom-videos', async (_req: any, res: any) => {
+        try {
+          const channelConfigs = [
+            {
+              id: 'ch-christendom',
+              ytChannelId: 'UC_xCst3mv8PQslyRtfOkMGQ',
+              name: 'Christendom College & Media',
+              avatarUrl: 'https://yt3.googleusercontent.com/ytc/AIdro_lse_d8k2NYELKQE-5cu2m5vRt5ikYvw1Q_74LaZkg=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Apologetics & Culture',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80'
+            },
+            {
+              id: 'ch-wordonfire',
+              ytChannelId: 'UCcMjLgeWNwqL2LBGS-iPb1A',
+              name: 'Word on Fire (Bishop Barron)',
+              avatarUrl: 'https://yt3.googleusercontent.com/yjqfvu6ZX2QWSqczNIi3sbN6224_O62eAFob7uLgomGEVG6es2Tc3i_RNjAa4TbJfrceWuHw8Q=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Theology & Homilies',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80'
+            },
+            {
+              id: 'ch-ascension',
+              ytChannelId: 'UCVdGX3N-WIJ5nUvklBTNhAw',
+              name: 'Ascension Presents',
+              avatarUrl: 'https://yt3.googleusercontent.com/2mhKBivLUIgeKbZ70A7z-rv3DX-KSZsxL5UPSF8CvkKQ_TAITqgarHM2eCXbtgza1vYy_VAI=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Theology & Homilies',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
+            },
+            {
+              id: 'ch-stpaulcenter',
+              ytChannelId: 'UCBr-aH7rulKvlRdSM2Zz_mQ',
+              name: 'St. Paul Center (Dr. Scott Hahn)',
+              avatarUrl: 'https://yt3.googleusercontent.com/eYpoPbiU611IXhHWGo5-5kUboJkA1CPWRNSMDbcxLfKLU4YAEHRdPHpdORnlfLsRc227-3PPBZc=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Sacred Scripture',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80'
+            },
+            {
+              id: 'ch-catholicanswers',
+              ytChannelId: 'UCvwbLBTkuIwqNm9kHUqWRnw',
+              name: 'Catholic Answers Live',
+              avatarUrl: 'https://yt3.googleusercontent.com/ytc/AIdro_mVshmYIBh_5n_6zbctv3onmWbDUQo6polUcPZjL1Y=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Apologetics & Culture',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80'
+            },
+            {
+              id: 'ch-augustine',
+              ytChannelId: 'UCViR8Uk46_06QjqkTNlVu2Q',
+              name: 'Augustine Institute & FORMED',
+              avatarUrl: 'https://yt3.googleusercontent.com/c8SAvU-uBojeQEEDkeOs1qbntDhnJ6tY_brmG-8USjn6LNdlKza3OKLSZS2OqT5ciM_cczmj59I=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Sacred Scripture',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80'
+            },
+            {
+              id: 'ch-icc',
+              ytChannelId: 'UCrkyDHc586jpfgPPQCZidwA',
+              name: 'Institute of Catholic Culture',
+              avatarUrl: 'https://yt3.googleusercontent.com/ytc/AIdro_kLo4Wzqbjkld4929HovTthbN0CUMEwQXH2ODvq1ZBmKg=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Church History',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80'
+            },
+            {
+              id: 'ch-ewtn',
+              ytChannelId: 'UCijDos-LUTh9RQvSCMQqN6Q',
+              name: 'EWTN Global Catholic Network',
+              avatarUrl: 'https://yt3.googleusercontent.com/aXMeNbOffojVIm0uqTNEUMzmHtA5YxiLzzuj7gAwbuVdsIcv1jx5tkUfMWEEMte4eKT1hasUbJY=s176-c-k-c0x00ffffff-no-rj',
+              defaultCategory: 'Sacred Liturgy & Chant',
+              fallbackImageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'
+            }
+          ];
+
+          const decodeXml = (str: string) =>
+            str
+              .replace(/&amp;/g, '&')
+              .replace(/&quot;/g, '"')
+              .replace(/&#39;|&apos;/g, "'")
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>');
+
+          const inferCategory = (title: string, desc: string, fallback: string) => {
+            const combined = `${title} ${desc}`.toLowerCase();
+            if (/mass|liturgy|chant|adoration|rosary|chaplet|vespers|benediction|eucharist/.test(combined)) {
+              return 'Sacred Liturgy & Chant';
+            }
+            if (/bible|scripture|gospel|psalm|genesis|exodus|revelation|paul|testament|covenant/.test(combined)) {
+              return 'Sacred Scripture';
+            }
+            if (/history|council|fathers|century|medieval|crusade|reformation|martyr|empire|tradition/.test(combined)) {
+              return 'Church History';
+            }
+            if (/documentary|film|episode|journey|story of|biography/.test(combined)) {
+              return 'Documentaries';
+            }
+            if (/apologetics|atheis|protestant|culture|debate|question|why do catholics|defend/.test(combined)) {
+              return 'Apologetics & Culture';
+            }
+            if (/homily|sermon|theology|aquinas|grace|prayer|virtue|sin|holiness|spiritual/.test(combined)) {
+              return 'Theology & Homilies';
+            }
+            return fallback;
+          };
+
+          const formatCount = (n: number) => {
+            if (n >= 1000000) return `${(n / 1000000).toFixed(1)}M`;
+            if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
+            return String(n);
+          };
+
+          const results = await Promise.all(
+            channelConfigs.map(async ch => {
+              try {
+                const feedUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${ch.ytChannelId}&_t=${Date.now()}`;
+                const resp = await fetch(feedUrl, {
+                  headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate'
+                  },
+                  signal: AbortSignal.timeout(6500)
+                });
+                if (!resp.ok) return [];
+                const xml = await resp.text();
+                const entries = Array.from(xml.matchAll(/<entry>([\s\S]*?)<\/entry>/gi)).slice(0, 6);
+                return entries.map((match, idx) => {
+                  const block = match[1];
+                  const videoId = ((block.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i) || [])[1] || '').trim();
+                  const rawTitle = ((block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || '').trim();
+                  const publishedRaw = ((block.match(/<published>([^<]+)<\/published>/i) || [])[1] || '').trim();
+                  const rawDesc = ((block.match(/<media:description>([\s\S]*?)<\/media:description>/i) || [])[1] || '').trim();
+                  const viewsAttr = ((block.match(/<media:statistics[^>]+views=["'](\d+)["']/i) || [])[1] || '0');
+                  const starCountAttr = ((block.match(/<media:starRating[^>]+count=["'](\d+)["']/i) || [])[1] || '0');
+
+                  const title = decodeXml(rawTitle);
+                  const cleanDesc = decodeXml(rawDesc)
+                    .replace(/https?:\/\/\S+/g, '')
+                    .replace(/\s+/g, ' ')
+                    .trim()
+                    .slice(0, 320);
+
+                  const viewsNum = parseInt(viewsAttr, 10) || 1200;
+                  const likesNum = parseInt(starCountAttr, 10) || Math.max(45, Math.round(viewsNum * 0.06));
+                  const pubDate = publishedRaw ? new Date(publishedRaw) : new Date();
+                  const pubLabel = !isNaN(pubDate.getTime())
+                    ? pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                    : ch.name;
+
+                  return {
+                    id: `yt-${ch.id}-${videoId || idx}`,
+                    title,
+                    channelId: ch.id,
+                    channelName: ch.name,
+                    channelAvatar: ch.avatarUrl,
+                    youtubeId: videoId,
+                    duration: 'Live Feed',
+                    views: `${formatCount(viewsNum)} views`,
+                    publishedAt: pubLabel,
+                    publishedTimestamp: !isNaN(pubDate.getTime()) ? pubDate.getTime() : 0,
+                    category: inferCategory(title, cleanDesc, ch.defaultCategory),
+                    description: cleanDesc || `${title} — Presented by ${ch.name}.`,
+                    thumbnailUrl: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                    fallbackImageUrl: ch.fallbackImageUrl,
+                    verified: true,
+                    likes: formatCount(likesNum),
+                    christendomUrl: `https://www.youtube.com/watch?v=${videoId}`
+                  };
+                }).filter(v => !!v.youtubeId);
+              } catch {
+                return [];
+              }
+            })
+          );
+
+          const flatVideos = results.flat();
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+          res.end(
+            JSON.stringify({
+              fetchedAt: Date.now(),
+              videos: flatVideos
+            })
+          );
+        } catch (err: any) {
+          res.statusCode = 502;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: err.message, videos: [] }));
+        }
+      });
     }
   };
 }
