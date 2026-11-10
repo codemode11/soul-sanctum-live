@@ -502,13 +502,16 @@ export const CatholicSocialView: React.FC = () => {
         if (liveVideos.length > 0) {
           // Interleave across channels so "All Channels" shows a balanced mix of all 8 channels
           const seenYoutubeIds = new Set<string>();
+          const seenTitles = new Set<string>();
           const combined: ChristendomVideo[] = [];
 
           // Group live videos by channelId and interleave round-robin
           const byChannel: Record<string, ChristendomVideo[]> = {};
           for (const v of [...liveVideos, ...CHRISTENDOM_VIDEOS]) {
-            if (!v.youtubeId || seenYoutubeIds.has(v.youtubeId)) continue;
+            const normTitle = v.title.trim().toLowerCase();
+            if (!v.youtubeId || seenYoutubeIds.has(v.youtubeId) || seenTitles.has(normTitle)) continue;
             seenYoutubeIds.add(v.youtubeId);
+            seenTitles.add(normTitle);
             if (!byChannel[v.channelId]) byChannel[v.channelId] = [];
             byChannel[v.channelId].push(v);
           }
@@ -1328,10 +1331,14 @@ export const CatholicSocialView: React.FC = () => {
                 {CHRISTENDOM_CHANNELS.map(ch => {
                   const isSelected = selectedChannelId === ch.id;
                   const shortName = ch.name.replace(/\s*\(.*\)/, '');
+                  const channelCount = christendomVideos.filter(v => v.channelId === ch.id).length;
                   return (
                     <button
                       key={ch.id}
-                      onClick={() => setSelectedChannelId(ch.id)}
+                      onClick={() => {
+                        setSelectedChannelId(ch.id);
+                        setChristendomOffset(0);
+                      }}
                       className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
                         isSelected
                           ? 'bg-[#241307] text-amber-200 border-amber-700 shadow-xs font-semibold'
@@ -1346,7 +1353,7 @@ export const CatholicSocialView: React.FC = () => {
                           e.currentTarget.style.display = 'none';
                         }}
                       />
-                      <span>{shortName}</span>
+                      <span>{shortName} ({channelCount})</span>
                     </button>
                   );
                 })}
