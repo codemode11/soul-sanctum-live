@@ -330,13 +330,15 @@ function vaticanNewsPlugin() {
         try {
           const urlObj = new URL(req.url || '', 'http://localhost');
           const rawUser = (urlObj.searchParams.get('username') || 'vaticannews').replace(/[^a-zA-Z0-9._]/g, '');
-          const embedUrl = `https://www.instagram.com/${rawUser}/embed/`;
+          const embedUrl = `https://www.instagram.com/${rawUser}/embed/?_t=${Date.now()}`;
 
           const response = await fetch(embedUrl, {
             headers: {
               'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1',
               'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-              'Accept-Language': 'en-US,en;q=0.9'
+              'Accept-Language': 'en-US,en;q=0.9',
+              'Cache-Control': 'no-cache, no-store, must-revalidate',
+              'Pragma': 'no-cache'
             },
             signal: AbortSignal.timeout(7500)
           });
@@ -409,11 +411,12 @@ function vaticanNewsPlugin() {
 
           if (shortcodes.length === 0) {
             const matches = Array.from(html.matchAll(/shortcode\\?":\\?"([A-Za-z0-9_-]{11})\\?"/g)).map(m => m[1]);
-            shortcodes = Array.from(new Set(matches)).slice(0, 6);
+            shortcodes = Array.from(new Set(matches)).slice(0, 12);
           }
 
           res.setHeader('Content-Type', 'application/json; charset=utf-8');
           res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
           res.end(
             JSON.stringify({
               username: rawUser,
@@ -421,7 +424,8 @@ function vaticanNewsPlugin() {
               profilePicUrl,
               followersCount,
               shortcodes,
-              posts
+              posts,
+              fetchedAt: Date.now()
             })
           );
         } catch (err: any) {

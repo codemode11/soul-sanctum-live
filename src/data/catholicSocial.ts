@@ -108,6 +108,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Catholic spirituality, saint stories, sacred art, and global Church news from Aleteia English.',
     profileUrl: 'https://www.instagram.com/aleteia_en/',
     defaultShortcodes: [
+      'DfhY3dnROGr', 'DfhV7ayR3vY', 'DfhTBSoxxx5',
       'DfcTTagRM-x', 'DfafIKssdp4', 'DfZl4NnxPXg',
       'DfXKc2DRKe4', 'DfUwwrKxbBo', 'DfUdUnZREdb'
     ]
@@ -120,6 +121,8 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Daily Catholic prayers, Papal updates, Saint feast days, and Eucharistic devotion from EWTN.',
     profileUrl: 'https://www.instagram.com/ewtnmedia/',
     defaultShortcodes: [
+      'DfixrNkAvEV', 'DfifRHSEs0s', 'DfiSanZAYHA',
+      'Dfh_Zbegkng', 'Dfh1g21kzPj', 'DfhxdSxCiuv',
       'DfcLS5sjHof', 'Dfa4WLVlY2G', 'Dfaik3BjOpq',
       'DfZeeyUFJ2u', 'DfYS9wkF3c9', 'DfXt3irk4nO'
     ]
@@ -132,8 +135,9 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Dr. Scott Hahn and the St. Paul Center reading Sacred Scripture from the heart of the Church.',
     profileUrl: 'https://www.instagram.com/stpaulcenter/',
     defaultShortcodes: [
-      'DfdcESGCvQn', 'DfapmAaCUPe', 'DfaTK9hEWFC',
-      'DfZ4SHSCUgL', 'DfS9kGilc3j', 'DfP1A9FDSbj'
+      'Dfh1uMPoX7W', 'Dfe68ZIkVbg', 'DfdcESGCvQn',
+      'DfapmAaCUPe', 'DfaTK9hEWFC', 'DfZ4SHSCUgL',
+      'DfS9kGilc3j', 'DfP1A9FDSbj'
     ]
   },
   {
@@ -144,8 +148,9 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Graduate Catholic theology, Sacred Scripture study, and Catholic formation from the Augustine Institute.',
     profileUrl: 'https://www.instagram.com/augustine_institute/',
     defaultShortcodes: [
-      'DfceIbOAmI9', 'DfXTjQ7DFU6', 'DfTEQESl5s_',
-      'DfQkH0XDMGD', 'DfKUnvWl2YL', 'DfCtqTbPJE3'
+      'DfirVlgF0c_', 'DfceIbOAmI9', 'DfXTjQ7DFU6',
+      'DfTEQESl5s_', 'DfQkH0XDMGD', 'DfKUnvWl2YL',
+      'DfCtqTbPJE3'
     ]
   },
   {
@@ -156,8 +161,9 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Sacred films, liturgical living, saint documentaries, and Bible studies from FORMED.',
     profileUrl: 'https://www.instagram.com/formedcatholic/',
     defaultShortcodes: [
-      'DfceIbOAmI9', 'DfTQI4NjvCS', 'DfQkH0XDMGD',
-      'DfIEdAbjJat', 'DfBGG9ijkSk', 'De-d6KuAMR1'
+      'Dfib6vUF8_F', 'DfceIbOAmI9', 'DfTQI4NjvCS',
+      'DfQkH0XDMGD', 'DfIEdAbjJat', 'DfBGG9ijkSk',
+      'De-d6KuAMR1'
     ]
   },
   {
@@ -168,6 +174,8 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Official Instagram feed of Vatican News from the Dicastery for Communication of the Holy See.',
     profileUrl: 'https://www.instagram.com/vaticannews/',
     defaultShortcodes: [
+      'DfjUesupQwk', 'Dfi_izEkjOb', 'Dfi3QdrDYOM',
+      'Dfil318CjiG', 'DfieB-AAGzN', 'DfidozIibtr',
       'DfeK41aCXrY', 'Dfdc1NsEXy7', 'DfdaAiRCkCC',
       'DfdWKDjFGCF', 'DfdSmtQglJJ', 'DfdSIURARsW'
     ]
@@ -180,8 +188,9 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Official Instagram of the United States Conference of Catholic Bishops — daily readings, prayers, and pastoral teaching.',
     profileUrl: 'https://www.instagram.com/usccb/',
     defaultShortcodes: [
-      'DfXiNmdCIKN', 'DfUtgl3ju0o', 'DfUhCHSF4ea',
-      'DfShAinlwx8', 'DfSErQgFwg0', 'DfQAXstiZS3'
+      'DfhjtDMl2cp', 'DfXiNmdCIKN', 'DfUtgl3ju0o',
+      'DfUhCHSF4ea', 'DfShAinlwx8', 'DfSErQgFwg0',
+      'DfQAXstiZS3'
     ]
   },
   {
@@ -204,8 +213,9 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Faithful Catholic spiritual direction, mental prayer, mystical theology, and wisdom of the Saints.',
     profileUrl: 'https://www.instagram.com/catholicspiritualdirection/',
     defaultShortcodes: [
-      'Dfc_Wwiildx', 'DfX1znejFBR', 'DfVQ9IjDAjV',
-      'DfUlBvQkfvQ', 'DfQHW31l1NW', 'DfNAPJwF7yw'
+      'DfiI_SMFzp4', 'DffkIl3jBdg', 'Dfc_Wwiildx',
+      'DfX1znejFBR', 'DfVQ9IjDAjV', 'DfUlBvQkfvQ',
+      'DfQHW31l1NW', 'DfNAPJwF7yw'
     ]
   },
   {
@@ -216,6 +226,7 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Bishop Robert Barron and Word on Fire proclaiming Christ in the culture through beauty, truth, and goodness.',
     profileUrl: 'https://www.instagram.com/bishopbarron/',
     defaultShortcodes: [
+      'DficXEZgN-q', 'DfhnBF4Fx4l', 'DfeusKXgPq3',
       'DfaO1PQFaLj', 'DfTUkWNkSBB', 'DfSwL9Hmo7s',
       'DfPsQBNl7NE', 'DfN0eTWjKoU', 'DfM53G4CF5z',
       'DfKM6Fllu4A', 'DfHI8Dzl5cO', 'DfES4Srl7dB'
@@ -229,9 +240,10 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Clear explanations of Catholic doctrine, apologetics Q&As, and feast day reflections from Catholic.com.',
     profileUrl: 'https://www.instagram.com/catholicanswers/',
     defaultShortcodes: [
-      'DfazpyEgaIa', 'DfZsT64CpxV', 'DfXqqsiPUPV',
-      'DeSnw6_lH9p', 'DBxAS6lSs_y', 'DbWIP8YEQ-v',
-      'DZfp_gcoPmp', 'DZa-waoDhl7', 'C_1fKOdSZ7g'
+      'DfhraB9j1cF', 'DfazpyEgaIa', 'DfZsT64CpxV',
+      'DfXqqsiPUPV', 'DeSnw6_lH9p', 'DBxAS6lSs_y',
+      'DbWIP8YEQ-v', 'DZfp_gcoPmp', 'DZa-waoDhl7',
+      'C_1fKOdSZ7g'
     ]
   },
   {
@@ -242,6 +254,8 @@ export const CATHOLIC_INSTAGRAM_SOURCES: CatholicInstagramSource[] = [
     description: 'Fidelity to the Magisterium — visual stories, sacred liturgy, and news from the National Catholic Register.',
     profileUrl: 'https://www.instagram.com/ncregister/',
     defaultShortcodes: [
+      'Dfi_an2u1pU', 'DfisrCsRUIZ', 'Dfig-05l9K2',
+      'DfiXPl9Mxa-', 'DfiN65uSiSF', 'DfiK2eMOvT4',
       'DfdmmVmNqN1', 'DfdkvpDuHz0', 'DfdiiN7Rm7h',
       'Dfdd6VFO4To', 'DfdUMg_xeso', 'DfdQeAaF7cK',
       'Dfcy2B_x3a1', 'DfcspuNx6Fv', 'Dfcn8Nvx-4D'

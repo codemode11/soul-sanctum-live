@@ -368,19 +368,36 @@ export const CatholicSocialView: React.FC = () => {
   // INSTAGRAM STATE
   // =========================================================================
   const [selectedIgSource, setSelectedIgSource] = useState<CatholicInstagramSource>(CATHOLIC_INSTAGRAM_SOURCES[0]);
-  const [igShortcodes, setIgShortcodes] = useState<string[]>(CATHOLIC_INSTAGRAM_SOURCES[0].defaultShortcodes);
+  const [igAllShortcodes, setIgAllShortcodes] = useState<string[]>(CATHOLIC_INSTAGRAM_SOURCES[0].defaultShortcodes);
+  const [igPageOffset, setIgPageOffset] = useState<number>(0);
   const [, setIgPosts] = useState<CatholicStaticSocialPost[]>([]);
   const [, setIgProfilePic] = useState<string>('');
   const [isLoadingIg, setIsLoadingIg] = useState<boolean>(false);
   const [customIgInput, setCustomIgInput] = useState<string>('');
   const [igRefreshKey, setIgRefreshKey] = useState<number>(0);
 
+  // Compute the 6 displayed shortcodes from igAllShortcodes and igPageOffset
+  const igShortcodes = useMemo(() => {
+    if (igAllShortcodes.length <= 6) return igAllShortcodes;
+    const result: string[] = [];
+    for (let i = 0; i < 6; i++) {
+      result.push(igAllShortcodes[(igPageOffset + i) % igAllShortcodes.length]);
+    }
+    return result;
+  }, [igAllShortcodes, igPageOffset]);
+
   // Fetch live Instagram data (posts + shortcodes + profile pic) for selected account
-  const fetchInstagramShortcodes = useCallback(async (source: CatholicInstagramSource) => {
+  const fetchInstagramShortcodes = useCallback(async (source: CatholicInstagramSource, rotatePool = false) => {
     setIsLoadingIg(true);
-    setIgShortcodes(source.defaultShortcodes);
+    if (!rotatePool) {
+      setIgAllShortcodes(source.defaultShortcodes);
+      setIgPageOffset(0);
+    }
     try {
-      const res = await fetch(`/api/catholic-instagram?username=${encodeURIComponent(source.username)}`);
+      const res = await fetch(
+        `/api/catholic-instagram?username=${encodeURIComponent(source.username)}&_t=${Date.now()}`,
+        { cache: 'no-store' }
+      );
       if (res.ok) {
         const data = await res.json();
         if (typeof data.profilePicUrl === 'string') {
@@ -389,14 +406,32 @@ export const CatholicSocialView: React.FC = () => {
         if (Array.isArray(data.posts) && data.posts.length > 0) {
           setIgPosts(data.posts);
         }
-        if (Array.isArray(data.shortcodes) && data.shortcodes.length > 0) {
-          const brokenSet = new Set(['DfagCq8D3sp', 'DfYQhEYAB8J', 'DfWDi7HDNuW', 'DfPX9L3D8mF']);
-          const merged = Array.from(new Set([...data.shortcodes, ...source.defaultShortcodes])).filter(c => !brokenSet.has(c));
-          setIgShortcodes(merged.slice(0, 6));
+        const brokenSet = new Set(['DfagCq8D3sp', 'DfYQhEYAB8J', 'DfWDi7HDNuW', 'DfPX9L3D8mF']);
+        const liveCodes = Array.isArray(data.shortcodes) ? data.shortcodes : [];
+        const merged = Array.from(new Set([...liveCodes, ...source.defaultShortcodes])).filter(c => !brokenSet.has(c));
+        if (merged.length > 0) {
+          setIgAllShortcodes(merged);
+          if (rotatePool && merged.length > 6) {
+            setIgPageOffset(prev => (prev + 3) % merged.length);
+          }
         }
+      } else if (rotatePool) {
+        setIgAllShortcodes(current => {
+          if (current.length > 6) {
+            setIgPageOffset(prev => (prev + 3) % current.length);
+          }
+          return current;
+        });
       }
     } catch {
-      // Keep default verified shortcodes on network timeout
+      if (rotatePool) {
+        setIgAllShortcodes(current => {
+          if (current.length > 6) {
+            setIgPageOffset(prev => (prev + 3) % current.length);
+          }
+          return current;
+        });
+      }
     } finally {
       setIsLoadingIg(false);
     }
@@ -404,7 +439,11 @@ export const CatholicSocialView: React.FC = () => {
 
   useEffect(() => {
     setIgPosts([]);
-    fetchInstagramShortcodes(selectedIgSource);
+    fetchInstagramShortcodes(selectedIgSource, false);
+    const interval = setInterval(() => {
+      fetchInstagramShortcodes(selectedIgSource, false);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, [selectedIgSource, fetchInstagramShortcodes]);
 
   const handleCustomInstagramSubmit = (e: React.FormEvent) => {
@@ -415,7 +454,8 @@ export const CatholicSocialView: React.FC = () => {
     const postMatch = trimmed.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/i);
     if (postMatch && postMatch[1]) {
       const code = postMatch[1];
-      setIgShortcodes(prev => [code, ...prev.filter(c => c !== code)]);
+      setIgAllShortcodes(prev => [code, ...prev.filter(c => c !== code)]);
+      setIgPageOffset(0);
       setCustomIgInput('');
       return;
     }
@@ -1033,10 +1073,10 @@ export const CatholicSocialView: React.FC = () => {
               <button
                 onClick={() => {
                   setIgRefreshKey(prev => prev + 1);
-                  fetchInstagramShortcodes(selectedIgSource);
+                  fetchInstagramShortcodes(selectedIgSource, true);
                 }}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-amber-200 border border-white/15 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
-                title="Refresh Instagram Feed"
+                title="Refresh & Cycle Instagram Feed"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isLoadingIg ? 'animate-spin' : ''}`} />
                 <span>Refresh</span>
