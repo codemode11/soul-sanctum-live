@@ -193,10 +193,10 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
     }
   };
 
-  // If no HLS stream is provided and only an iframe embedUrl is given (e.g. external Shrine YouTube feed)
-  if (!activeHlsUrl && embedUrl) {
+  // If no HLS stream is active (or HLS failed and embedUrl fallback is available), render the live iframe player
+  if ((!activeHlsUrl || hasError) && embedUrl) {
     return (
-      <div className="relative aspect-video w-full bg-black">
+      <div className="relative aspect-video w-full bg-black overflow-hidden">
         <iframe
           key={`${embedUrl}-${reloadNonce}`}
           src={embedUrl}

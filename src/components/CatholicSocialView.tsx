@@ -109,25 +109,47 @@ export const CatholicSocialView: React.FC = () => {
       id: 'ewtn-adoration-irondale',
       epgChannelId: 'adoration',
       label: 'Our Lady of the Angels Chapel • EWTN',
-      location: 'Irondale, Alabama • 24/7 Perpetual Adoration',
-      streamUrl: ewtnEpgMap['adoration']?.mediaUrl || 'https://cdn3.wowza.com/1/Y09GU2RCUG9EbVRr/WlpHUVVx/hls/live/playlist.m3u8',
-      embedUrl: undefined as string | undefined,
+      location: 'Irondale, Alabama • EWTN 24/7 Perpetual Adoration',
+      streamUrl: undefined as string | undefined,
+      embedUrl: 'https://www.youtube.com/embed/GBns1m4S1Xk?autoplay=1&rel=0',
       youtubeUrl: 'https://www.youtube.com/watch?v=GBns1m4S1Xk',
       portalUrl: 'https://www.ewtn.com/live/adoration',
-      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration live HD stream before the Most Blessed Sacrament exposed in the monstrance at EWTN.'
+      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration livestream before the Most Blessed Sacrament exposed in the monstrance at EWTN.'
     },
     {
-      id: 'ewtn-adoration-hanceville',
+      id: 'ewtn-adoration-niepokalanow',
       epgChannelId: '',
-      label: 'Shrine of the Most Blessed Sacrament',
-      location: 'Hanceville, Alabama • Poor Clares of Perpetual Adoration',
+      label: 'Sanctuary of St. Maximilian Kolbe • EWTN Niepokalanów',
+      location: 'Niepokalanów, Poland • World Center of Prayer for Peace (24/7)',
       streamUrl: undefined as string | undefined,
-      embedUrl: 'https://www.youtube.com/embed/E5PdqveWGQI',
-      youtubeUrl: 'https://www.youtube.com/watch?v=E5PdqveWGQI',
-      portalUrl: 'https://www.olamshrine.com/',
-      description: 'Unite in silent prayer before the 8-foot gilded monstrance at Mother Angelica\'s Temple in Hanceville, Alabama.'
+      embedUrl: 'https://www.youtube.com/embed/Orc7lHFSqNY?autoplay=1&rel=0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=Orc7lHFSqNY',
+      portalUrl: 'https://ewtn.pl/adoracja/',
+      description: 'Official EWTN 24/7 Perpetual Eucharistic Adoration broadcast live from the Chapel of Perpetual Adoration at St. Maximilian Kolbe\'s Sanctuary in Niepokalanów.'
+    },
+    {
+      id: 'ewtn-adoration-melbourne',
+      epgChannelId: '',
+      label: 'St. Benedict\'s Perpetual Adoration Shrine',
+      location: 'Melbourne, Australia • 24/7 Exposition of the Blessed Sacrament',
+      streamUrl: undefined as string | undefined,
+      embedUrl: 'https://www.youtube.com/embed/qz8YE61BoXM?autoplay=1&rel=0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
+      portalUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
+      description: 'Continuous 24/7 live Eucharistic Adoration before the Most Blessed Sacrament exposed on the altar at St. Benedict\'s Parish Shrine.'
+    },
+    {
+      id: 'ewtn-adoration-shalom',
+      epgChannelId: '',
+      label: 'Shalom World Perpetual Adoration Chapel',
+      location: 'Global Catholic Prayer Ministry • 24/7 Live Adoration',
+      streamUrl: undefined as string | undefined,
+      embedUrl: 'https://www.youtube.com/embed/GlGkFWPKomU?autoplay=1&rel=0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=GlGkFWPKomU',
+      portalUrl: 'https://www.youtube.com/watch?v=GlGkFWPKomU',
+      description: 'Unite in 24-hour silent adoration and intercessory prayer before the Real Presence of Jesus in the Most Holy Eucharist.'
     }
-  ], [ewtnEpgMap]);
+  ], []);
 
   const [selectedTvChannelId, setSelectedTvChannelId] = useState<string>('ewtn-us-global');
   const [selectedAdorationId, setSelectedAdorationId] = useState<string>('ewtn-adoration-irondale');

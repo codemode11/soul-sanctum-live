@@ -206,7 +206,7 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
                       : 'bg-black/40 text-stone-400 hover:text-stone-200 border border-white/10'
                   }`}
                 >
-                  Our Lady of the Angels Chapel (EWTN)
+                  Our Lady of the Angels Chapel (EWTN 24/7)
                 </button>
                 <button
                   type="button"
@@ -217,10 +217,10 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
                       : 'bg-black/40 text-stone-400 hover:text-stone-200 border border-white/10'
                   }`}
                 >
-                  Shrine of the Most Blessed Sacrament (Hanceville)
+                  St. Maximilian Kolbe Sanctuary (EWTN Niepokalanów 24/7)
                 </button>
                 <a
-                  href="https://www.ewtn.com/live/adoration"
+                  href={ewtnChapel === 'irondale' ? 'https://www.ewtn.com/live/adoration' : 'https://ewtn.pl/adoracja/'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-2.5 py-1 rounded-md text-xs font-cinzel font-bold bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40 flex items-center gap-1 whitespace-nowrap"
@@ -237,26 +237,21 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
             {altarMode === 'ewtn-live' ? (
               <EwtnLiveVideoPlayer
                 key={ewtnChapel}
-                streamUrl={
-                  ewtnChapel === 'irondale'
-                    ? 'https://cdn3.wowza.com/1/Y09GU2RCUG9EbVRr/WlpHUVVx/hls/live/playlist.m3u8'
-                    : undefined
-                }
                 embedUrl={
-                  ewtnChapel === 'hanceville'
-                    ? 'https://www.youtube.com/embed/E5PdqveWGQI?autoplay=1'
-                    : undefined
+                  ewtnChapel === 'irondale'
+                    ? 'https://www.youtube.com/embed/GBns1m4S1Xk?autoplay=1&rel=0'
+                    : 'https://www.youtube.com/embed/Orc7lHFSqNY?autoplay=1&rel=0'
                 }
                 title={
                   ewtnChapel === 'irondale'
                     ? 'Our Lady of the Angels Chapel • EWTN 24/7 Perpetual Adoration'
-                    : 'Shrine of the Most Blessed Sacrament • Hanceville, Alabama'
+                    : 'Sanctuary of St. Maximilian Kolbe • EWTN Niepokalanów 24/7 Adoration'
                 }
                 subtitle="24/7 Live Eucharistic Adoration"
                 portalUrl={
                   ewtnChapel === 'irondale'
                     ? 'https://www.ewtn.com/live/adoration'
-                    : 'https://www.olamshrine.com/'
+                    : 'https://ewtn.pl/adoracja/'
                 }
                 autoPlay={true}
               />
