@@ -274,7 +274,7 @@ ${reading.gospel.text}`;
         <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           <div className="space-y-1.5">
             {/* Line 1: Liturgical Color/Rank & Season (raised) */}
-            <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
+            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap sm:flex-nowrap overflow-hidden">
               <span 
                 className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
                 style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
@@ -283,7 +283,7 @@ ${reading.gospel.text}`;
                 <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
                 <span>{reading.liturgicalRank}</span>
               </span>
-              <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap">
+              <span className="text-xs sm:text-base text-stone-300 font-serif sm:whitespace-nowrap">
                 {reading.liturgicalSeason}
               </span>
             </div>

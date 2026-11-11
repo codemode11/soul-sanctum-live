@@ -39,6 +39,7 @@ export const Header: React.FC<HeaderProps> = ({
   activeEmblem,
   iconStyleConfig = DEFAULT_STYLE_CONFIG,
   onOpenAdoration,
+  onToggleMobileMenu,
   activeEstablishingImageId = 'faith-scholarship-science',
   scheduledMasthead,
 }) => {
@@ -94,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Website Masthead */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7">
+      <div className="relative z-10 max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 pt-4 pb-3 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7">
         {layoutVariant === 'solemn-centered' ? (
           /* =====================================================================
              SOLEMNITY CENTERED MASTHEAD LAYOUT (FOR SPECIAL FEAST DAYS)
@@ -146,7 +147,7 @@ export const Header: React.FC<HeaderProps> = ({
                   aria-hidden="true"
                 />
                 <h1
-                  className="relative font-cinzel select-none font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-[0.26em] text-center"
+                  className="relative font-cinzel select-none font-extrabold text-2xl sm:text-4xl md:text-5xl tracking-[0.2em] sm:tracking-[0.26em] text-center"
                   style={{
                     fontFamily: "'Cinzel', serif",
                     fontWeight: 800,
@@ -240,75 +241,90 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         ) : (
           /* =====================================================================
-             CLASSIC SANCTUM SPLIT LAYOUT (DEFAULT)
+             CLASSIC SANCTUM SPLIT LAYOUT (DEFAULT) — RESPONSIVE MOBILE & DESKTOP
              ===================================================================== */
-          <div className="flex flex-row items-start justify-between gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-start justify-between gap-3 sm:gap-6">
             
-            {/* Brand Lockup: Emblem and Left-Aligned Stacked Soul Sanctum Title */}
-            <div className="flex items-start gap-4 sm:gap-5">
-              <div 
-                className={`relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 shrink-0 border border-[#8B5A2B]/70 shadow-[0_4px_20px_rgba(0,0,0,0.9)] mt-1 select-none`}
-                title={activeEmblem.name}
-              >
-                {renderEmblemIcon()}
-              </div>
-
-              <div className="space-y-1 text-left">
-                <div className="relative flex items-center gap-2.5 sm:gap-3">
-                  <div 
-                    className="absolute -inset-x-8 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(253,224,71,0.65)_0%,rgba(251,191,36,0.38)_42%,rgba(245,158,11,0.16)_68%,transparent_82%)] blur-lg pointer-events-none -z-10" 
-                    aria-hidden="true"
-                  />
-
-                  <h1 
-                    className="relative font-cinzel select-none transition-all duration-300 flex flex-col items-start text-left leading-[0.92]"
-                    style={{ fontFamily: "'Cinzel', serif", fontWeight: 800 }}
-                    title="Soul Sanctum — Catholic Sanctuary"
-                  >
-                    <span
-                      className="font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left"
-                      style={{
-                        fontFamily: "'Cinzel', serif",
-                        fontWeight: 800,
-                        color: '#FFFDF7',
-                        textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
-                      }}
-                    >
-                      SOUL
-                    </span>
-                    <span
-                      className="font-extrabold text-2xl sm:text-3xl md:text-4xl tracking-[0.24em] sm:tracking-[0.26em] block text-left mt-0.5"
-                      style={{
-                        fontFamily: "'Cinzel', serif",
-                        fontWeight: 800,
-                        color: '#FFFDF7',
-                        textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
-                      }}
-                    >
-                      SANCTUM
-                    </span>
-                  </h1>
+            {/* Brand Lockup Row + Mobile Quick Index Trigger */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3 sm:gap-5">
+                <div 
+                  className={`relative flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 shrink-0 border border-[#8B5A2B]/70 shadow-[0_4px_20px_rgba(0,0,0,0.9)] mt-0.5 sm:mt-1 select-none`}
+                  title={activeEmblem.name}
+                >
+                  {renderEmblemIcon('w-7 h-7 sm:w-9 sm:h-9', 'text-xl sm:text-3xl')}
                 </div>
 
-                <div className="flex flex-col pt-0 -mt-0.5">
-                  <span className="text-base sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide drop-shadow-md">
-                    {mottoText}
-                  </span>
-                  <span className="text-sm sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#D4AF37] tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)] mt-0.5">
-                    {mottoCitation}
-                  </span>
+                <div className="space-y-0.5 sm:space-y-1 text-left">
+                  <div className="relative flex items-center gap-2 sm:gap-3">
+                    <div 
+                      className="absolute -inset-x-8 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(253,224,71,0.65)_0%,rgba(251,191,36,0.38)_42%,rgba(245,158,11,0.16)_68%,transparent_82%)] blur-lg pointer-events-none -z-10" 
+                      aria-hidden="true"
+                    />
+
+                    <h1 
+                      className="relative font-cinzel select-none transition-all duration-300 flex flex-col items-start text-left leading-[0.92]"
+                      style={{ fontFamily: "'Cinzel', serif", fontWeight: 800 }}
+                      title="Soul Sanctum — Catholic Sanctuary"
+                    >
+                      <span
+                        className="font-extrabold text-xl sm:text-3xl md:text-4xl tracking-[0.2em] sm:tracking-[0.26em] block text-left"
+                        style={{
+                          fontFamily: "'Cinzel', serif",
+                          fontWeight: 800,
+                          color: '#FFFDF7',
+                          textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
+                        }}
+                      >
+                        SOUL
+                      </span>
+                      <span
+                        className="font-extrabold text-xl sm:text-3xl md:text-4xl tracking-[0.2em] sm:tracking-[0.26em] block text-left mt-0.5"
+                        style={{
+                          fontFamily: "'Cinzel', serif",
+                          fontWeight: 800,
+                          color: '#FFFDF7',
+                          textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
+                        }}
+                      >
+                        SANCTUM
+                      </span>
+                    </h1>
+                  </div>
+
+                  <div className="flex flex-col pt-0 -mt-0.5">
+                    <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide drop-shadow-md">
+                      {mottoText}
+                    </span>
+                    <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#D4AF37] tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)] mt-0.5">
+                      {mottoCitation}
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              {/* Mobile-Only Quick Index Button in Masthead Top-Right */}
+              {onToggleMobileMenu && (
+                <button
+                  type="button"
+                  onClick={onToggleMobileMenu}
+                  className="sm:hidden min-h-[42px] px-3 py-1.5 rounded-xl bg-black/60 hover:bg-black/75 backdrop-blur-md border border-amber-400/50 text-amber-100 font-cinzel text-xs font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-lg shrink-0 cursor-pointer"
+                  aria-label="Open Sacred Index Menu"
+                >
+                  <span>Index</span>
+                  <ChevronDown className="w-3.5 h-3.5 text-amber-300" />
+                </button>
+              )}
             </div>
 
-            {/* Top-Right Controls */}
-            <div className="flex flex-col items-end gap-1.5 text-xs self-end sm:self-start shrink-0">
+            {/* Date & Liturgical Feast Controls: Frosted Pill Card on Mobile, Classic Right-Aligned on Desktop */}
+            <div className="flex flex-col items-start sm:items-end gap-1 text-xs w-full sm:w-auto self-stretch sm:self-start shrink-0 bg-black/55 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-amber-400/30 sm:border-none rounded-xl sm:rounded-none px-3.5 py-2.5 sm:p-0 shadow-lg sm:shadow-none">
               
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                <div className="relative">
+              <div className="w-full sm:w-auto flex flex-wrap items-center justify-between sm:justify-end gap-2">
+                <div className="relative w-full sm:w-auto">
                   <div 
                     onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-                    className="flex items-center gap-1.5 text-[#241307] hover:text-[#5C2E0E] cursor-pointer transition-colors group select-none py-1 px-0.5"
+                    className="flex items-center justify-between sm:justify-end gap-1.5 text-amber-100 sm:text-[#241307] hover:text-amber-200 sm:hover:text-[#5C2E0E] cursor-pointer transition-colors group select-none py-0.5 sm:py-1 px-0.5"
                     title="Open Catholic Liturgical Calendar (Feasts, Colors and Memorials)"
                     role="button"
                     tabIndex={0}
@@ -318,11 +334,13 @@ export const Header: React.FC<HeaderProps> = ({
                       }
                     }}
                   >
-                    <CalendarIcon className="w-4 h-4 text-[#3B1E08] group-hover:text-[#5C2E0E] group-hover:scale-110 transition-transform drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]" />
-                    <span className="font-serif font-bold text-sm sm:text-base text-[#241307] group-hover:text-[#5C2E0E] [text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
-                      {formattedDate}
-                    </span>
-                    <ChevronDown className={`w-4 h-4 text-[#3B1E08] group-hover:text-[#5C2E0E] transition-transform duration-200 drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] ${isCalendarOpen ? 'rotate-180' : ''}`} />
+                    <div className="flex items-center gap-1.5">
+                      <CalendarIcon className="w-4 h-4 text-amber-300 sm:text-[#3B1E08] group-hover:scale-110 transition-transform sm:drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] shrink-0" />
+                      <span className="font-serif font-bold text-sm sm:text-base text-amber-100 sm:text-[#241307] sm:group-hover:text-[#5C2E0E] sm:[text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
+                        {formattedDate}
+                      </span>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-amber-300 sm:text-[#3B1E08] transition-transform duration-200 sm:drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] ${isCalendarOpen ? 'rotate-180' : ''}`} />
                   </div>
 
                   <LiturgicalCalendarPicker
@@ -335,13 +353,13 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               {/* Liturgical Day Title Below Current Date */}
-              <div className="flex flex-col items-end gap-0.5 text-right pr-6">
-                <span className="font-serif font-bold text-xs sm:text-sm text-[#241307] leading-snug whitespace-nowrap [text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
+              <div className="flex flex-col items-start sm:items-end gap-0.5 text-left sm:text-right sm:pr-6 w-full sm:w-auto">
+                <span className="font-serif font-bold text-xs sm:text-sm text-stone-100 sm:text-[#241307] leading-snug whitespace-normal sm:whitespace-nowrap sm:[text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
                   {mainTitlePart}
                 </span>
 
                 {memorialPart && (
-                  <span className="font-serif font-bold not-italic text-xs sm:text-sm text-[#3B1E08] leading-snug whitespace-nowrap [text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
+                  <span className="font-serif font-bold not-italic text-xs sm:text-sm text-amber-200 sm:text-[#3B1E08] leading-snug whitespace-normal sm:whitespace-nowrap sm:[text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
                     {memorialPart}
                   </span>
                 )}

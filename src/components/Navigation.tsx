@@ -597,29 +597,57 @@ export const Navigation: React.FC<NavigationProps> = ({
         </div>
       </aside>
 
-      {/* 2. Mobile Compact Navigation Strip (Word "Menu" removed) */}
-      <div className="flex md:hidden w-full sticky top-0 z-30 bg-stone-950/90 backdrop-blur-xl border-b border-amber-500/25 rounded-xl px-3.5 py-2 items-center justify-between text-stone-100 shadow-lg">
-        <button
-          onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-semibold cursor-pointer"
-        >
-          <Layers className="w-4 h-4 text-amber-300" />
-          <span>Index</span>
-        </button>
-
-        <div className="flex items-center gap-2">
-          {currentItem && (
-            <span className="text-xs font-serif font-semibold text-amber-100 truncate max-w-[190px]">
-              {currentItem.label}
-            </span>
-          )}
+      {/* 2. Mobile Sticky Top Navigation Strip + Horizontal Quick-Jump Carousel */}
+      <div className="flex md:hidden flex-col w-full sticky top-0 z-30 bg-stone-950/92 backdrop-blur-xl border border-amber-500/25 rounded-xl px-3 py-2 text-stone-100 shadow-lg space-y-2">
+        <div className="flex items-center justify-between gap-2">
           <button
-            onClick={onOpenNotifications}
-            className="p-1.5 rounded-lg text-stone-300 hover:text-amber-200 bg-white/5 border border-white/10 cursor-pointer"
-            title="Reminders"
+            type="button"
+            onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
+            className="min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-cinzel font-bold tracking-wider uppercase cursor-pointer shrink-0 active:scale-98 transition-transform"
           >
-            <BellRing className="w-3.5 h-3.5 text-amber-400" />
+            <Layers className="w-4 h-4 text-amber-300 shrink-0" />
+            <span>Index</span>
           </button>
+
+          <div className="flex items-center gap-2 min-w-0">
+            {currentItem && (
+              <span className="text-xs sm:text-sm font-serif font-semibold text-amber-100 truncate max-w-[185px] sm:max-w-[260px]">
+                {currentItem.label}
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={onOpenNotifications}
+              className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg text-stone-300 hover:text-amber-200 bg-white/5 border border-white/10 cursor-pointer shrink-0 active:scale-95 transition-transform"
+              title="Reminders"
+              aria-label="Daily Reminders"
+            >
+              <BellRing className="w-4 h-4 text-amber-400" />
+            </button>
+          </div>
+        </div>
+
+        {/* Horizontal Swipeable Quick-Jump Tabs for One-Handed Mobile Browsing */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 -mx-1 px-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onSelectTab(item.id)}
+                className={`min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-serif font-semibold whitespace-nowrap shrink-0 flex items-center gap-1.5 border transition-all cursor-pointer ${
+                  isActive
+                    ? 'bg-gradient-to-r from-[#C89F72]/45 via-[#D4A373]/35 to-[#B88B5E]/45 text-[#FFD700] border-[#FFD700]/70 shadow-xs'
+                    : 'bg-white/5 text-stone-300 border-white/10 hover:text-amber-200'
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#FFD700]' : 'text-stone-400'}`} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -633,8 +661,8 @@ export const Navigation: React.FC<NavigationProps> = ({
           />
 
           {/* Drawer from Left Side */}
-          <div className="relative w-80 max-w-[85vw] h-full bg-gradient-to-b from-stone-950 via-[#14110f] to-stone-950 border-r border-amber-500/30 p-5 shadow-2xl flex flex-col z-10 overflow-y-auto no-scrollbar animate-slideInLeft">
-            <div className="flex items-center justify-between pb-4 border-b border-amber-500/20 mb-4">
+          <div className="relative w-80 max-w-[86vw] h-full bg-gradient-to-b from-stone-950 via-[#14110f] to-stone-950 border-r border-amber-500/30 p-4 sm:p-5 pb-20 shadow-2xl flex flex-col z-10 overflow-y-auto no-scrollbar animate-slideInLeft">
+            <div className="flex items-center justify-between pb-3.5 border-b border-amber-500/20 mb-3">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-amber-400" />
                 <span className="font-cinzel text-sm font-bold text-white tracking-widest">
@@ -643,7 +671,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               </div>
               <button
                 onClick={onCloseMobile}
-                className="p-2 rounded-lg text-stone-400 hover:text-white bg-white/5 cursor-pointer"
+                className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg text-stone-300 hover:text-white bg-white/10 cursor-pointer"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />

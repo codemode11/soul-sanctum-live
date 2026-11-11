@@ -455,7 +455,7 @@ export default function App() {
                     target.src = '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png';
                   }
                 }}
-                className="w-full h-auto block brightness-[1.02] contrast-[1.04] transform-gpu shrink-0"
+                className="w-full min-h-[46vh] sm:min-h-0 h-auto object-cover object-center sm:object-contain block brightness-[1.02] contrast-[1.04] transform-gpu shrink-0"
               />
               {/* Subtle bottom edge feathering into the page background */}
               <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-stone-950/80 to-transparent pointer-events-none" />
@@ -475,13 +475,13 @@ export default function App() {
                     target.src = '/images/sacred-art/eucharistic_adoration_altar.jpg';
                   }
                 }}
-                className="w-[120%] -mt-[24.5%] max-w-none h-auto block brightness-[1.06] contrast-[1.06] transform-gpu shrink-0"
+                className="w-[135%] sm:w-[120%] -mt-[12%] sm:-mt-[24.5%] max-w-none h-auto block brightness-[1.06] contrast-[1.06] transform-gpu shrink-0"
               />
               {/* Subtle bottom edge feathering so the priest remains completely visible */}
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
             </div>
           ) : (
-            <div className="relative w-full h-[85vh] sm:h-[100vh] -mt-12 sm:-mt-20 flex items-center justify-center overflow-hidden transform-gpu">
+            <div className="relative w-full h-[52vh] sm:h-[100vh] -mt-6 sm:-mt-20 flex items-center justify-center overflow-hidden transform-gpu">
               <img
                 src={activeEstablishingImage.imageUrl}
                 alt={activeEstablishingImage.title}
@@ -491,7 +491,7 @@ export default function App() {
                   const target = e.currentTarget;
                   target.src = 'https://images.unsplash.com/photo-1599752766954-57c001ba82cc?q=80&w=1471&auto=format&fit=crop';
                 }}
-                className="w-full h-full mx-auto object-contain object-center pt-2 sm:pt-3 brightness-[0.99] contrast-[1.08] transform-gpu"
+                className="w-full h-full mx-auto object-cover sm:object-contain object-center pt-2 sm:pt-3 brightness-[0.99] contrast-[1.08] transform-gpu"
               />
             </div>
           )}
@@ -522,7 +522,7 @@ export default function App() {
       <div className="relative z-10 flex flex-col min-h-screen">
         
         {/* Masthead Section */}
-        <div className="w-full min-h-[85vh] sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between pb-6 sm:pb-10">
+        <div className="w-full min-h-0 sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between pb-3 sm:pb-10">
           {/* Sacred Top Header */}
           <Header
             currentDateStr={currentDateStr}
@@ -541,8 +541,8 @@ export default function App() {
           />
 
           {/* Main Story: Featured Catholic Article Masthead Dispatch */}
-          <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-48 sm:mt-64 md:mt-72 lg:mt-80">
-            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/45 hover:bg-black/55 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.65)] transition-all py-4 px-5 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
+          <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 mt-4 sm:mt-64 md:mt-72 lg:mt-80">
+            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/55 sm:bg-black/45 hover:bg-black/55 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-xs sm:backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.65)] transition-all py-3.5 px-4 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
@@ -557,7 +557,7 @@ export default function App() {
                   setActiveCatholicArticleId('cerc-curated-1');
                   handleSelectTab('catholic-articles');
                 }}
-                className="font-serif text-xl sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.98)] tracking-tight cursor-pointer transition-colors"
+                className="font-serif text-lg sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.98)] tracking-tight cursor-pointer transition-colors"
               >
                 How the Catholic Church Built Western Civilization
               </h2>
@@ -567,14 +567,14 @@ export default function App() {
                 A historical survey of how Catholic monasteries, cathedral schools, and papal charters gave birth to the university system, modern charitable healthcare, and the scientific method.
               </p>
 
-              <div className="pt-2 flex items-center justify-center sm:justify-end gap-3">
+              <div className="pt-1.5 sm:pt-2 flex items-center justify-center sm:justify-end gap-3">
                 <button
                   onClick={() => {
                     setActiveCatholicArticleSourceId('cerc');
                     setActiveCatholicArticleId('cerc-curated-1');
                     handleSelectTab('catholic-articles');
                   }}
-                  className="inline-flex items-center px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
+                  className="inline-flex items-center min-h-[38px] px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
                   title="Read this full story in Catholic Articles"
                 >
                   <span>Read Full Story</span>
@@ -585,13 +585,13 @@ export default function App() {
         </div>
 
         {/* Main Body Layout */}
-        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-16 sm:pb-24 flex flex-col items-center">
+        <div className="flex-1 max-w-7xl w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center">
           
           {/* Dual Column Container: Left Navigation Index + Centered Main View */}
           <div 
             ref={mainContentRef}
             id="main-content-area"
-            className="w-full flex flex-col md:flex-row gap-6 lg:gap-8 items-start justify-center"
+            className="w-full flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-8 items-start justify-center"
           >
             
             {/* Left-Side Liturgical Menu */}
@@ -796,7 +796,7 @@ export default function App() {
       </div>
 
         {/* Reverent Catholic Footer */}
-        <footer className="bg-stone-950/85 backdrop-blur-xl text-stone-300 border-t border-amber-500/20 mt-16 sm:mt-24 py-12 sm:py-16 text-xs shadow-2xl">
+        <footer className="bg-stone-950/85 backdrop-blur-xl text-stone-300 border-t border-amber-500/20 mt-10 sm:mt-24 py-12 sm:py-16 text-xs shadow-2xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex items-start gap-4">
@@ -813,7 +813,7 @@ export default function App() {
                     <span>{currentEmblem.symbol}</span>
                   )}
                 </button>
-                <div className="space-y-1.5">
+                <div className="space-y-1.5 min-w-0">
                   <div className="relative inline-block">
                     <div 
                       className="absolute -inset-x-3 -inset-y-1 bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.4)_0%,rgba(245,158,11,0.18)_45%,transparent_75%)] blur-md pointer-events-none -z-10" 
@@ -830,7 +830,7 @@ export default function App() {
                     </span>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred whitespace-nowrap">
+                    <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred whitespace-normal sm:whitespace-nowrap leading-relaxed">
                       Faith is to believe what you do not yet see; the reward for this faith is to see what you believe.
                     </p>
                     <p className="text-xs font-serif-sacred font-bold text-[#D4AF37] text-left">

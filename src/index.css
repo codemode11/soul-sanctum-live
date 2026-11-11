@@ -1419,11 +1419,11 @@ svg.sanctum-holy-bible-icon:hover .sanctum-holy-bible-glow-layer {
 
 /* Standardized Default Top Banner Dimensions (matched to Daily Mass Readings top banner: 164px height, px-5 sm:px-6 pt-4 pb-4) */
 .sanctum-top-banner {
-  min-height: 164px;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  min-height: 152px;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1431,8 +1431,29 @@ svg.sanctum-holy-bible-icon:hover .sanctum-holy-bible-glow-layer {
 
 @media (min-width: 640px) {
   .sanctum-top-banner {
+    min-height: 164px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 }
+
+/* Mobile Phone Customizations: Prevent horizontal overflow, smooth touch scrolling, and clean tap highlights */
+@media (max-width: 767px) {
+  html,
+  body {
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Ensure comfortable touch targets and prevent zoomed inputs on iOS */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
 
