@@ -138,7 +138,6 @@ export const CatholicBiblesView: React.FC = () => {
         };
       }
 
-      // Fallback to DRC curated if available
       const fallbackDrc = CURATED_BIBLE_CHAPTERS[cacheKey]?.drc;
       if (fallbackDrc && fallbackDrc.length > 0) {
         return {
@@ -320,28 +319,27 @@ export const CatholicBiblesView: React.FC = () => {
       : 'text-base sm:text-lg leading-relaxed';
 
   return (
-    <div className="space-y-6 pb-12">
-      {/* Sacred Masthead Banner */}
-      <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-stone-950 via-[#19130e] to-stone-950 border border-[#D4AF37]/40 p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.85)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,175,55,0.14),transparent_65%)] pointer-events-none" />
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 text-stone-900">
+      {/* Light Parchment Header Card */}
+      <div className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] p-5 sm:p-7 shadow-xs space-y-5">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-[#D4AF37]/40 text-[#FFD700] text-xs font-cinzel tracking-widest uppercase">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#FFD700]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/90 border border-amber-700/30 text-amber-900 text-xs font-cinzel font-bold tracking-wider uppercase">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-800" />
               <span>73-Book Canon of the Council of Trent</span>
             </div>
-            <h1 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-wide">
-              CATHOLIC BIBLES
+            <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 tracking-normal">
+              Catholic Bibles
             </h1>
-            <p className="text-stone-300 font-serif text-sm sm:text-base leading-relaxed">
-              Read full in-app Public Domain Catholic Bibles (<span className="text-amber-200 font-semibold">Douay-Rheims</span>,{' '}
-              <span className="text-amber-200 font-semibold">Catholic Public Domain Version</span>,{' '}
-              <span className="text-amber-200 font-semibold">WEB Catholic Edition</span>, and{' '}
-              <span className="text-amber-200 font-semibold">Clementine Latin Vulgate</span>) or launch direct chapter links in modern Catholic translations (<span className="text-amber-200 font-semibold">NABRE</span>,{' '}
-              <span className="text-amber-200 font-semibold">ESV-CE</span>,{' '}
-              <span className="text-amber-200 font-semibold">RSV-CE</span>,{' '}
-              <span className="text-amber-200 font-semibold">The Jerusalem Bible</span>, and{' '}
-              <span className="text-amber-200 font-semibold">RSV</span>).
+            <p className="text-stone-700 font-serif text-sm sm:text-base leading-relaxed">
+              Read full in-app Public Domain Catholic Bibles (<span className="text-amber-900 font-semibold">Douay-Rheims</span>,{' '}
+              <span className="text-amber-900 font-semibold">Catholic Public Domain Version</span>,{' '}
+              <span className="text-amber-900 font-semibold">WEB Catholic Edition</span>, and{' '}
+              <span className="text-amber-900 font-semibold">Clementine Latin Vulgate</span>) or launch direct chapter links in modern Catholic translations (<span className="text-amber-900 font-semibold">NABRE</span>,{' '}
+              <span className="text-amber-900 font-semibold">ESV-CE</span>,{' '}
+              <span className="text-amber-900 font-semibold">RSV-CE</span>,{' '}
+              <span className="text-amber-900 font-semibold">The Jerusalem Bible</span>, and{' '}
+              <span className="text-amber-900 font-semibold">RSV</span>).
             </p>
           </div>
 
@@ -352,8 +350,8 @@ export const CatholicBiblesView: React.FC = () => {
               onClick={() => setActiveViewMode('reader')}
               className={`px-4 py-2.5 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-2 border ${
                 activeViewMode === 'reader'
-                  ? 'bg-[#D4AF37]/25 text-[#FFD700] border-[#FFD700]/70 shadow-[0_0_15px_rgba(212,175,55,0.3)]'
-                  : 'bg-stone-900/80 text-stone-300 border-white/15 hover:border-[#D4AF37]/50 hover:text-amber-200'
+                  ? 'bg-amber-900 text-amber-50 border-amber-950 shadow-sm'
+                  : 'bg-white text-stone-700 border-[#D8C7B2] hover:border-amber-800/50 hover:text-amber-950'
               }`}
             >
               <BookOpen className="w-4 h-4" />
@@ -365,8 +363,8 @@ export const CatholicBiblesView: React.FC = () => {
               onClick={() => setActiveViewMode('modern-editions')}
               className={`px-4 py-2.5 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-2 border ${
                 activeViewMode === 'modern-editions'
-                  ? 'bg-[#D4AF37]/25 text-[#FFD700] border-[#FFD700]/70 shadow-[0_0_15px_rgba(212,175,55,0.3)]'
-                  : 'bg-stone-900/80 text-stone-300 border-white/15 hover:border-[#D4AF37]/50 hover:text-amber-200'
+                  ? 'bg-amber-900 text-amber-50 border-amber-950 shadow-sm'
+                  : 'bg-white text-stone-700 border-[#D8C7B2] hover:border-amber-800/50 hover:text-amber-950'
               }`}
             >
               <Globe className="w-4 h-4" />
@@ -378,8 +376,8 @@ export const CatholicBiblesView: React.FC = () => {
               onClick={() => setActiveViewMode('bookmarks')}
               className={`px-3.5 py-2.5 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-1.5 border ${
                 activeViewMode === 'bookmarks'
-                  ? 'bg-[#D4AF37]/25 text-[#FFD700] border-[#FFD700]/70 shadow-[0_0_15px_rgba(212,175,55,0.3)]'
-                  : 'bg-stone-900/80 text-stone-300 border-white/15 hover:border-[#D4AF37]/50 hover:text-amber-200'
+                  ? 'bg-amber-900 text-amber-50 border-amber-950 shadow-sm'
+                  : 'bg-white text-stone-700 border-[#D8C7B2] hover:border-amber-800/50 hover:text-amber-950'
               }`}
             >
               <Bookmark className="w-4 h-4" />
@@ -389,11 +387,11 @@ export const CatholicBiblesView: React.FC = () => {
         </div>
 
         {/* Always-Accessible Modern Catholic Bibles Direct Chapter Bar */}
-        <div className="relative z-10 mt-6 pt-5 border-t border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs text-amber-200/90 font-serif">
-            <ExternalLink className="w-4 h-4 text-[#FFD700] shrink-0" />
+        <div className="pt-4 border-t border-[#E2D5C3] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs text-stone-700 font-serif">
+            <ExternalLink className="w-4 h-4 text-amber-800 shrink-0" />
             <span>
-              Open <strong className="text-white">{selectedBook.name} {selectedChapter}</strong> directly in Modern Catholic Translations:
+              Open <strong className="text-amber-950">{selectedBook.name} {selectedChapter}</strong> directly in Modern Catholic Translations:
             </span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -405,11 +403,11 @@ export const CatholicBiblesView: React.FC = () => {
                   href={directUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-900/90 hover:bg-[#D4AF37]/25 border border-[#D4AF37]/40 hover:border-[#FFD700] text-xs font-cinzel font-bold text-[#FFD700] transition-all shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] hover:border-amber-800 text-xs font-cinzel font-bold text-amber-900 transition-all shadow-2xs"
                   title={`Read ${selectedBook.name} ${selectedChapter} in ${edition.name} (${edition.providerLabel})`}
                 >
                   <span>{edition.acronym}</span>
-                  <ExternalLink className="w-3 h-3 opacity-80" />
+                  <ExternalLink className="w-3 h-3 text-amber-800" />
                 </a>
               );
             })}
@@ -420,25 +418,25 @@ export const CatholicBiblesView: React.FC = () => {
       {/* MODE 1: MODERN CATHOLIC BIBLES HUB (NABRE, ESV-CE, RSV-CE, JERUSALEM BIBLE, RSV, KNOX, NOVA VULGATA) */}
       {activeViewMode === 'modern-editions' && (
         <div className="space-y-6">
-          <div className="rounded-2xl bg-stone-950/85 border border-amber-500/30 p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+          <div className="rounded-xl bg-white/95 border border-[#E2D5C3] p-5 sm:p-6 space-y-5 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
               <div>
-                <h2 className="font-cinzel text-lg sm:text-xl font-bold text-[#FFD700]">
-                  Modern Approved Catholic Bibles & Liturgical Editions
+                <h2 className="font-cinzel text-lg sm:text-xl font-bold text-amber-950">
+                  Modern Approved Catholic Bibles &amp; Liturgical Editions
                 </h2>
-                <p className="text-xs sm:text-sm text-stone-300 font-serif mt-1">
+                <p className="text-xs sm:text-sm text-stone-700 font-serif mt-1">
                   Select any book and chapter below to jump directly to that passage in{' '}
-                  <strong className="text-white">NABRE</strong>, <strong className="text-white">ESV-CE</strong>,{' '}
-                  <strong className="text-white">RSV-CE</strong>, <strong className="text-white">The Jerusalem Bible</strong>,{' '}
-                  <strong className="text-white">RSV</strong>, <strong className="text-white">Knox Bible</strong>, or the Vatican’s{' '}
-                  <strong className="text-white">Nova Vulgata</strong>.
+                  <strong className="text-stone-900">NABRE</strong>, <strong className="text-stone-900">ESV-CE</strong>,{' '}
+                  <strong className="text-stone-900">RSV-CE</strong>, <strong className="text-stone-900">The Jerusalem Bible</strong>,{' '}
+                  <strong className="text-stone-900">RSV</strong>, <strong className="text-stone-900">Knox Bible</strong>, or the Vatican’s{' '}
+                  <strong className="text-stone-900">Nova Vulgata</strong>.
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <select
                   value={selectedBookId}
                   onChange={(e) => handleSelectBook(CATHOLIC_BIBLE_BOOKS.find((b) => b.id === e.target.value) || selectedBook, 1)}
-                  className="bg-stone-900 border border-[#D4AF37]/40 rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-100 font-serif focus:outline-none focus:border-[#FFD700]"
+                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
                 >
                   {CATHOLIC_BIBLE_BOOKS.map((b) => (
                     <option key={b.id} value={b.id}>
@@ -449,7 +447,7 @@ export const CatholicBiblesView: React.FC = () => {
                 <select
                   value={selectedChapter}
                   onChange={(e) => setSelectedChapter(Number(e.target.value))}
-                  className="bg-stone-900 border border-[#D4AF37]/40 rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-100 font-serif focus:outline-none focus:border-[#FFD700]"
+                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
                 >
                   {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
                     <option key={ch} value={ch}>
@@ -460,7 +458,7 @@ export const CatholicBiblesView: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
               {MODERN_CATHOLIC_BIBLE_EDITIONS.map((edition) => {
                 const primaryChapterUrl = getModernBibleChapterUrl(
                   edition.id,
@@ -476,45 +474,45 @@ export const CatholicBiblesView: React.FC = () => {
                 return (
                   <div
                     key={edition.id}
-                    className="rounded-xl bg-stone-900/75 border border-amber-500/25 hover:border-[#D4AF37]/60 p-5 flex flex-col justify-between gap-4 transition-all shadow-lg"
+                    className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] hover:border-amber-800/60 p-5 flex flex-col justify-between gap-4 transition-all shadow-2xs"
                   >
                     <div className="space-y-2.5">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <span className="inline-block px-2.5 py-0.5 rounded-md bg-[#D4AF37]/20 border border-[#D4AF37]/50 font-cinzel text-xs font-bold text-[#FFD700]">
+                          <span className="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 border border-amber-700/40 font-cinzel text-xs font-bold text-amber-950">
                             {edition.acronym}
                           </span>
-                          <h3 className="font-serif text-lg font-bold text-white mt-1.5">
+                          <h3 className="font-serif text-lg font-bold text-stone-900 mt-1.5">
                             {edition.name}
                           </h3>
                         </div>
-                        <span className="text-[11px] font-mono text-stone-400 bg-black/40 px-2.5 py-1 rounded border border-white/10 shrink-0">
+                        <span className="text-[11px] font-mono text-stone-600 bg-white px-2.5 py-1 rounded border border-[#E2D5C3] shrink-0">
                           {edition.year}
                         </span>
                       </div>
 
-                      <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
+                      <p className="text-xs sm:text-sm text-stone-700 font-serif leading-relaxed">
                         {edition.description}
                       </p>
 
-                      <div className="space-y-1 pt-1 text-xs text-stone-400 border-t border-white/10">
+                      <div className="space-y-1 pt-2 text-xs text-stone-600 border-t border-[#E2D5C3]">
                         <div>
-                          <span className="text-amber-300/90 font-semibold">Ecclesiastical Authority:</span>{' '}
+                          <span className="text-amber-950 font-semibold">Ecclesiastical Authority:</span>{' '}
                           {edition.authority}
                         </div>
                         <div>
-                          <span className="text-amber-300/90 font-semibold">Liturgical & Study Use:</span>{' '}
+                          <span className="text-amber-950 font-semibold">Liturgical &amp; Study Use:</span>{' '}
                           {edition.liturgicalUse}
                         </div>
                       </div>
                     </div>
 
-                    <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
+                    <div className="pt-3 border-t border-[#E2D5C3] flex flex-wrap items-center gap-2">
                       <a
                         href={primaryChapterUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-lg bg-[#D4AF37]/25 hover:bg-[#D4AF37]/35 border border-[#FFD700]/60 text-xs font-cinzel font-bold text-[#FFD700] transition-all"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 text-xs font-cinzel font-bold text-amber-50 transition-all shadow-2xs"
                       >
                         <span>
                           Read {selectedBook.name} {selectedChapter} ({edition.acronym})
@@ -527,7 +525,7 @@ export const CatholicBiblesView: React.FC = () => {
                           href={secondaryChapterUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 border border-white/15 text-xs font-serif text-stone-200 transition-all"
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] text-xs font-serif text-stone-800 transition-all"
                           title="Open NABRE on BibleGateway"
                         >
                           <span>BibleGateway</span>
@@ -539,7 +537,7 @@ export const CatholicBiblesView: React.FC = () => {
                         href={edition.homeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-black/40 hover:bg-white/10 border border-white/15 text-xs font-serif text-stone-300 hover:text-white transition-all"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] text-xs font-serif text-stone-700 hover:text-amber-950 transition-all"
                       >
                         <span>Index</span>
                         <ExternalLink className="w-3 h-3" />
@@ -555,21 +553,21 @@ export const CatholicBiblesView: React.FC = () => {
 
       {/* MODE 2: SAVED BOOKMARKS */}
       {activeViewMode === 'bookmarks' && (
-        <div className="rounded-2xl bg-stone-950/85 border border-amber-500/30 p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="rounded-xl bg-white/95 border border-[#E2D5C3] p-6 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between border-b border-stone-200 pb-4">
             <div>
-              <h2 className="font-cinzel text-lg font-bold text-[#FFD700]">
+              <h2 className="font-cinzel text-lg font-bold text-amber-950">
                 Saved Catholic Scripture Bookmarks
               </h2>
-              <p className="text-xs text-stone-400 font-serif">
+              <p className="text-xs text-stone-600 font-serif">
                 Click any verse below to open its full chapter in the 73-Book Catholic Bible Reader.
               </p>
             </div>
           </div>
 
           {bookmarks.length === 0 ? (
-            <div className="py-12 text-center space-y-2 text-stone-400 font-serif">
-              <Bookmark className="w-8 h-8 mx-auto text-amber-400/50" />
+            <div className="py-12 text-center space-y-2 text-stone-600 font-serif">
+              <Bookmark className="w-8 h-8 mx-auto text-amber-800/60" />
               <p>No verses bookmarked yet. Click the bookmark icon beside any verse while reading.</p>
             </div>
           ) : (
@@ -577,19 +575,19 @@ export const CatholicBiblesView: React.FC = () => {
               {bookmarks.map((bm) => (
                 <div
                   key={bm.id}
-                  className="p-4 rounded-xl bg-stone-900/80 border border-amber-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="p-4 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-cinzel text-xs font-bold text-[#FFD700]">
+                      <span className="font-cinzel text-xs font-bold text-amber-950">
                         {bm.bookName} {bm.chapter}:{bm.verse}
                       </span>
-                      <span className="text-[11px] uppercase px-2 py-0.5 rounded bg-amber-500/15 text-amber-200 border border-amber-500/30">
+                      <span className="text-[11px] uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-700/30 font-semibold">
                         {bm.translation.toUpperCase()}
                       </span>
                       <span className="text-[11px] text-stone-500">{bm.savedAt}</span>
                     </div>
-                    <p className="text-sm text-stone-200 font-serif italic">“{bm.text}”</p>
+                    <p className="text-sm text-stone-800 font-serif italic">“{bm.text}”</p>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
                     <button
@@ -603,7 +601,7 @@ export const CatholicBiblesView: React.FC = () => {
                           setActiveViewMode('reader');
                         }
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-[#D4AF37]/20 hover:bg-[#D4AF37]/30 border border-[#D4AF37]/50 text-xs font-cinzel text-[#FFD700] cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-xs font-cinzel font-bold text-amber-50 cursor-pointer"
                     >
                       Open Chapter
                     </button>
@@ -614,7 +612,7 @@ export const CatholicBiblesView: React.FC = () => {
                         setBookmarks(updated);
                         localStorage.setItem(BOOKMARKS_STORAGE_KEY, JSON.stringify(updated));
                       }}
-                      className="px-2.5 py-1.5 rounded-lg bg-red-950/40 hover:bg-red-900/50 border border-red-500/30 text-xs text-red-200 cursor-pointer"
+                      className="px-2.5 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 border border-red-300 text-xs text-red-800 cursor-pointer"
                     >
                       Remove
                     </button>
@@ -630,13 +628,13 @@ export const CatholicBiblesView: React.FC = () => {
       {activeViewMode === 'reader' && (
         <div className="space-y-6">
           {/* Featured Key Catholic & Deuterocanonical Passages Strip */}
-          <div className="rounded-xl bg-stone-950/80 border border-amber-500/25 p-4 space-y-2.5">
+          <div className="rounded-xl bg-white/95 border border-[#E2D5C3] p-4 space-y-2.5 shadow-2xs">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-cinzel uppercase tracking-wider text-[#FFD700] flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Key Catholic & Deuterocanonical Chapters</span>
+              <span className="text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-800" />
+                <span>Key Catholic &amp; Deuterocanonical Chapters</span>
               </span>
-              <span className="text-[11px] text-stone-400 font-serif">
+              <span className="text-[11px] text-stone-600 font-serif">
                 Instant Multi-Version Access (DRC • CPDV • WEB-CE • Latin Vulgate)
               </span>
             </div>
@@ -653,13 +651,19 @@ export const CatholicBiblesView: React.FC = () => {
                     }}
                     className={`px-3 py-1.5 rounded-lg text-xs font-serif whitespace-nowrap transition-all cursor-pointer border flex items-center gap-1.5 shrink-0 ${
                       isCurrent
-                        ? 'bg-[#D4AF37]/30 border-[#FFD700] text-[#FFD700] font-bold shadow-sm'
-                        : 'bg-stone-900/90 border-white/10 text-stone-300 hover:border-[#D4AF37]/50 hover:text-amber-200'
+                        ? 'bg-amber-900 border-amber-950 text-amber-50 font-bold shadow-2xs'
+                        : 'bg-[#FAF4EB] border-[#E2D5C3] text-stone-800 hover:border-amber-800/50 hover:bg-amber-50/70'
                     }`}
                     title={fp.description}
                   >
                     <span>{fp.label}</span>
-                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-black/50 text-amber-300/90">
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded ${
+                        isCurrent
+                          ? 'bg-amber-800 text-amber-100'
+                          : 'bg-amber-100/90 text-amber-900'
+                      }`}
+                    >
                       {fp.tag}
                     </span>
                   </button>
@@ -669,17 +673,17 @@ export const CatholicBiblesView: React.FC = () => {
           </div>
 
           {/* Translation Selector & Parallel Mode Controls */}
-          <div className="rounded-2xl bg-stone-950/85 border border-amber-500/30 p-5 space-y-4">
+          <div className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] p-5 space-y-4 shadow-2xs">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
               {/* Primary In-App Catholic Translation */}
               <div className="lg:col-span-5 space-y-1">
-                <label className="block text-[11px] font-cinzel uppercase tracking-wider text-amber-300/90">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
                   In-App Catholic Bible Translation
                 </label>
                 <select
                   value={primaryTranslation}
                   onChange={(e) => setPrimaryTranslation(e.target.value as CatholicBibleTranslationId)}
-                  className="w-full bg-stone-900 border border-[#D4AF37]/45 rounded-xl px-3.5 py-2.5 text-sm text-white font-serif focus:outline-none focus:border-[#FFD700]"
+                  className="w-full bg-white border border-[#D8C7B2] rounded-xl px-3.5 py-2.5 text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
                 >
                   {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
                     <option key={t.id} value={t.id}>
@@ -691,7 +695,7 @@ export const CatholicBiblesView: React.FC = () => {
 
               {/* Parallel Side-by-Side Toggle + Second Translation */}
               <div className="lg:col-span-4 space-y-1">
-                <label className="block text-[11px] font-cinzel uppercase tracking-wider text-amber-300/90">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
                   Parallel Comparison Edition
                 </label>
                 <div className="flex items-center gap-2">
@@ -700,8 +704,8 @@ export const CatholicBiblesView: React.FC = () => {
                     onClick={() => setIsParallelMode((prev) => !prev)}
                     className={`px-3 py-2.5 rounded-xl text-xs font-cinzel font-bold uppercase tracking-wider border transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                       isParallelMode
-                        ? 'bg-[#D4AF37]/25 border-[#FFD700] text-[#FFD700]'
-                        : 'bg-stone-900 border-white/15 text-stone-300 hover:border-[#D4AF37]/40'
+                        ? 'bg-amber-900 border-amber-950 text-amber-50'
+                        : 'bg-white border-[#D8C7B2] text-stone-800 hover:border-amber-800/50'
                     }`}
                   >
                     <Columns className="w-3.5 h-3.5" />
@@ -712,7 +716,7 @@ export const CatholicBiblesView: React.FC = () => {
                     <select
                       value={parallelTranslation}
                       onChange={(e) => setParallelTranslation(e.target.value as CatholicBibleTranslationId)}
-                      className="flex-1 min-w-0 bg-stone-900 border border-[#D4AF37]/45 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white font-serif focus:outline-none focus:border-[#FFD700]"
+                      className="flex-1 min-w-0 bg-white border border-[#D8C7B2] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
                     >
                       {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
                         <option key={t.id} value={t.id}>
@@ -729,10 +733,10 @@ export const CatholicBiblesView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowHaydockNotes((p) => !p)}
-                  className={`px-3 py-2 rounded-xl text-xs font-serif border transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3 py-2 rounded-xl text-xs font-serif font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
                     showHaydockNotes
-                      ? 'bg-amber-500/20 border-amber-400/60 text-amber-200'
-                      : 'bg-stone-900 border-white/10 text-stone-400 hover:text-stone-200'
+                      ? 'bg-amber-900 border-amber-950 text-amber-50'
+                      : 'bg-white border-[#D8C7B2] text-stone-700 hover:text-stone-900'
                   }`}
                   title="Toggle Challoner & Haydock Catholic Commentary Footnotes"
                 >
@@ -743,10 +747,10 @@ export const CatholicBiblesView: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleToggleAudioRead}
-                  className={`px-3 py-2 rounded-xl text-xs font-serif border transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3 py-2 rounded-xl text-xs font-serif font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSpeaking
-                      ? 'bg-amber-500/30 border-[#FFD700] text-[#FFD700]'
-                      : 'bg-stone-900 border-white/10 text-stone-300 hover:text-amber-200'
+                      ? 'bg-amber-900 border-amber-950 text-amber-50'
+                      : 'bg-white border-[#D8C7B2] text-stone-700 hover:text-amber-950'
                   }`}
                   title="Listen to this chapter read aloud"
                 >
@@ -759,7 +763,7 @@ export const CatholicBiblesView: React.FC = () => {
                   onClick={() =>
                     setFontSizeLevel((prev) => (prev === 'sm' ? 'md' : prev === 'md' ? 'lg' : 'sm'))
                   }
-                  className="px-2.5 py-2 rounded-xl bg-stone-900 border border-white/10 text-stone-300 hover:text-amber-200 text-xs font-serif cursor-pointer flex items-center gap-1"
+                  className="px-2.5 py-2 rounded-xl bg-white border border-[#D8C7B2] text-stone-800 hover:text-amber-950 text-xs font-serif font-semibold cursor-pointer flex items-center gap-1"
                   title="Cycle Scripture Font Size"
                 >
                   <Type className="w-3.5 h-3.5" />
@@ -769,12 +773,12 @@ export const CatholicBiblesView: React.FC = () => {
             </div>
 
             {/* Translation Imprimatur / Provenance Banner */}
-            <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-stone-400 font-serif">
+            <div className="pt-3 border-t border-[#E2D5C3] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-stone-700 font-serif">
               <div>
-                <strong className="text-amber-200">{activePrimaryTranslationMeta.name}:</strong>{' '}
+                <strong className="text-amber-950">{activePrimaryTranslationMeta.name}:</strong>{' '}
                 {activePrimaryTranslationMeta.imprimaturNote}
               </div>
-              <span className="px-2.5 py-0.5 rounded bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-[11px] shrink-0">
+              <span className="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-600/30 text-emerald-900 font-semibold text-[11px] shrink-0">
                 {activePrimaryTranslationMeta.copyrightStatus}
               </span>
             </div>
@@ -783,25 +787,25 @@ export const CatholicBiblesView: React.FC = () => {
           {/* Main Reader Grid: Left 73-Book Canon Navigator + Right Chapter Scripture Reader */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Left Sidebar: 73 Catholic Books Navigator */}
-            <div className="lg:col-span-4 rounded-2xl bg-stone-950/85 border border-amber-500/25 p-4 space-y-3.5">
+            <div className="lg:col-span-4 rounded-xl bg-white/95 border border-[#E2D5C3] p-4 space-y-3.5 shadow-2xs">
               <div className="flex items-center justify-between">
-                <h2 className="font-cinzel text-sm font-bold text-[#FFD700] tracking-wider uppercase">
+                <h2 className="font-cinzel text-sm font-bold text-amber-950 tracking-wider uppercase">
                   73 Books of the Bible
                 </h2>
-                <span className="text-[11px] text-stone-400 font-serif">
+                <span className="text-[11px] text-stone-600 font-serif">
                   {filteredBooks.length} shown
                 </span>
               </div>
 
               {/* Search Books */}
               <div className="relative">
-                <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   value={bookSearchQuery}
                   onChange={(e) => setBookSearchQuery(e.target.value)}
                   placeholder="Search 73 books (e.g., Tobit, Sirach, John)..."
-                  className="w-full bg-stone-900/90 border border-white/15 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-stone-500 focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-xl pl-9 pr-3 py-2 text-xs text-stone-900 placeholder-stone-500 focus:outline-none focus:border-amber-800"
                 />
               </div>
 
@@ -819,8 +823,8 @@ export const CatholicBiblesView: React.FC = () => {
                     onClick={() => setActiveTestamentFilter(tab.id as any)}
                     className={`py-1.5 px-2 rounded-lg text-[11px] font-cinzel font-bold transition-all cursor-pointer border ${
                       activeTestamentFilter === tab.id
-                        ? 'bg-[#D4AF37]/25 border-[#FFD700] text-[#FFD700]'
-                        : 'bg-stone-900/70 border-white/10 text-stone-400 hover:text-stone-200'
+                        ? 'bg-amber-900 border-amber-950 text-amber-50'
+                        : 'bg-[#FAF4EB] border-[#E2D5C3] text-stone-700 hover:text-amber-950'
                     }`}
                   >
                     {tab.label}
@@ -830,24 +834,24 @@ export const CatholicBiblesView: React.FC = () => {
 
               {/* Section Filter Dropdown */}
               <div className="flex items-center gap-2">
-                <Filter className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <Filter className="w-3.5 h-3.5 text-amber-800 shrink-0" />
                 <select
                   value={activeSectionFilter}
                   onChange={(e) => setActiveSectionFilter(e.target.value as any)}
-                  className="w-full bg-stone-900 border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-stone-200 font-serif focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs text-stone-800 font-serif focus:outline-none focus:border-amber-800"
                 >
                   <option value="ALL">All Liturgical Sections</option>
                   <option value="Pentateuch">Pentateuch / Law (5)</option>
                   <option value="Historical">Historical Books (16)</option>
-                  <option value="Wisdom">Wisdom & Poetry (7)</option>
-                  <option value="Prophets">Major & Minor Prophets (18)</option>
-                  <option value="Gospels & Acts">Holy Gospels & Acts (5)</option>
-                  <option value="Epistles & Apocalypse">Epistles & Apocalypse (22)</option>
+                  <option value="Wisdom">Wisdom &amp; Poetry (7)</option>
+                  <option value="Prophets">Major &amp; Minor Prophets (18)</option>
+                  <option value="Gospels & Acts">Holy Gospels &amp; Acts (5)</option>
+                  <option value="Epistles & Apocalypse">Epistles &amp; Apocalypse (22)</option>
                 </select>
               </div>
 
               {/* Scrollable Book List */}
-              <div className="max-h-[460px] overflow-y-auto space-y-1 pr-1">
+              <div className="max-h-[460px] overflow-y-auto space-y-1.5 pr-1">
                 {filteredBooks.map((book) => {
                   const isSelected = book.id === selectedBook.id;
                   return (
@@ -857,30 +861,50 @@ export const CatholicBiblesView: React.FC = () => {
                       onClick={() => handleSelectBook(book, 1)}
                       className={`w-full text-left px-3 py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-between gap-2 border ${
                         isSelected
-                          ? 'bg-gradient-to-r from-[#C89F72]/35 to-[#B88B5E]/25 border-[#FFD700]/65 text-white shadow-md'
-                          : 'bg-stone-900/50 hover:bg-stone-900 border-transparent hover:border-amber-500/30 text-stone-300'
+                          ? 'bg-amber-900 border-amber-950 text-amber-50 shadow-xs'
+                          : 'bg-[#FAF4EB]/80 hover:bg-[#FAF4EB] border-[#E2D5C3] hover:border-amber-800/50 text-stone-800'
                       }`}
                     >
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-[11px] font-mono text-amber-400/80">
+                          <span
+                            className={`text-[11px] font-mono ${
+                              isSelected ? 'text-amber-200' : 'text-amber-900 font-semibold'
+                            }`}
+                          >
                             {book.number}.
                           </span>
-                          <span className="font-serif font-semibold text-sm truncate">
+                          <span className="font-serif font-bold text-sm truncate">
                             {book.name}
                           </span>
                           {book.isDeuterocanonical && (
-                            <span className="text-[9px] font-cinzel uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-[#FFD700] border border-amber-400/40">
+                            <span
+                              className={`text-[9px] font-cinzel uppercase px-1.5 py-0.5 rounded border ${
+                                isSelected
+                                  ? 'bg-amber-800 text-amber-100 border-amber-600'
+                                  : 'bg-amber-100 text-amber-950 border-amber-700/30'
+                              }`}
+                            >
                               Deutero
                             </span>
                           )}
                         </div>
-                        <div className="text-[11px] text-stone-400 font-serif truncate">
+                        <div
+                          className={`text-[11px] font-serif truncate ${
+                            isSelected ? 'text-amber-100/90' : 'text-stone-600'
+                          }`}
+                        >
                           {book.traditionalName !== book.name ? `${book.traditionalName} • ` : ''}
                           <span className="italic">{book.latinName}</span>
                         </div>
                       </div>
-                      <span className="text-[11px] font-mono text-stone-400 bg-black/40 px-2 py-0.5 rounded shrink-0">
+                      <span
+                        className={`text-[11px] font-mono px-2 py-0.5 rounded shrink-0 ${
+                          isSelected
+                            ? 'bg-amber-950/60 text-amber-100'
+                            : 'bg-white text-stone-700 border border-[#E2D5C3]'
+                        }`}
+                      >
                         {book.chapters} ch
                       </span>
                     </button>
@@ -892,24 +916,24 @@ export const CatholicBiblesView: React.FC = () => {
             {/* Right Area: Chapter Selector & Full Scripture Text */}
             <div className="lg:col-span-8 space-y-4">
               {/* Book Introduction & Chapter Grid Card */}
-              <div className="rounded-2xl bg-stone-950/85 border border-amber-500/30 p-5 space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-white/10 pb-4">
+              <div className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] p-5 space-y-4 shadow-2xs">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[#E2D5C3] pb-4">
                   <div className="space-y-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded bg-amber-500/15 border border-amber-500/40 text-amber-200 text-[11px] font-cinzel uppercase">
+                      <span className="px-2.5 py-0.5 rounded bg-amber-100 border border-amber-700/30 text-amber-950 text-[11px] font-cinzel font-bold uppercase">
                         {selectedBook.testament === 'OT' ? 'Old Testament' : 'New Testament'} • {selectedBook.section}
                       </span>
                       {selectedBook.isDeuterocanonical && (
-                        <span className="px-2.5 py-0.5 rounded bg-[#D4AF37]/25 border border-[#FFD700]/60 text-[#FFD700] text-[11px] font-cinzel uppercase font-bold">
+                        <span className="px-2.5 py-0.5 rounded bg-amber-900 text-amber-50 text-[11px] font-cinzel uppercase font-bold">
                           Deuterocanonical Book
                         </span>
                       )}
                     </div>
-                    <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white pt-1">
+                    <h2 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 pt-1">
                       {selectedBook.traditionalName}{' '}
-                      <span className="text-[#FFD700]">— Chapter {selectedChapter}</span>
+                      <span className="text-amber-900">— Chapter {selectedChapter}</span>
                     </h2>
-                    <p className="text-xs text-stone-400 font-serif italic">
+                    <p className="text-xs text-stone-600 font-serif italic">
                       {selectedBook.latinName} • Theme: {selectedBook.keyTheme}
                     </p>
                   </div>
@@ -919,18 +943,18 @@ export const CatholicBiblesView: React.FC = () => {
                     <button
                       type="button"
                       onClick={handlePrevChapter}
-                      className="p-2 rounded-xl bg-stone-900 hover:bg-stone-800 border border-white/15 text-stone-200 hover:text-[#FFD700] cursor-pointer transition-colors"
+                      className="p-2 rounded-xl bg-white hover:bg-amber-50 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
                       title="Previous Chapter"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
-                    <span className="text-xs font-cinzel font-bold text-amber-200 px-2">
+                    <span className="text-xs font-cinzel font-bold text-amber-950 px-2">
                       Ch. {selectedChapter} / {selectedBook.chapters}
                     </span>
                     <button
                       type="button"
                       onClick={handleNextChapter}
-                      className="p-2 rounded-xl bg-stone-900 hover:bg-stone-800 border border-white/15 text-stone-200 hover:text-[#FFD700] cursor-pointer transition-colors"
+                      className="p-2 rounded-xl bg-white hover:bg-amber-50 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
                       title="Next Chapter"
                     >
                       <ChevronRight className="w-4 h-4" />
@@ -939,13 +963,13 @@ export const CatholicBiblesView: React.FC = () => {
                 </div>
 
                 {/* Catholic Book Introduction */}
-                <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
+                <p className="text-xs sm:text-sm text-stone-800 font-serif leading-relaxed">
                   {selectedBook.summary}
                 </p>
 
                 {/* Chapter Number Pills */}
                 <div className="space-y-1.5">
-                  <span className="text-[11px] font-cinzel uppercase tracking-wider text-stone-400">
+                  <span className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
                     Select Chapter ({selectedBook.chapters} Chapters):
                   </span>
                   <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pr-1">
@@ -956,8 +980,8 @@ export const CatholicBiblesView: React.FC = () => {
                         onClick={() => setSelectedChapter(chNum)}
                         className={`w-8 h-8 rounded-lg text-xs font-mono transition-all cursor-pointer border flex items-center justify-center ${
                           chNum === selectedChapter
-                            ? 'bg-[#D4AF37]/30 border-[#FFD700] text-[#FFD700] font-bold shadow-sm'
-                            : 'bg-stone-900/80 border-white/10 text-stone-300 hover:border-amber-500/40 hover:text-amber-200'
+                            ? 'bg-amber-900 border-amber-950 text-amber-50 font-bold shadow-2xs'
+                            : 'bg-white border-[#D8C7B2] text-stone-800 hover:border-amber-800 hover:bg-amber-50'
                         }`}
                       >
                         {chNum}
@@ -967,38 +991,38 @@ export const CatholicBiblesView: React.FC = () => {
                 </div>
               </div>
 
-              {/* Scripture Verses Card */}
-              <div className="rounded-2xl bg-stone-950/90 border border-amber-500/30 p-5 sm:p-7 space-y-5 shadow-2xl">
+              {/* Scripture Verses Card (Clean Warm Ivory Reading Page) */}
+              <div className="rounded-xl bg-white border border-[#E2D5C3] p-5 sm:p-7 space-y-5 shadow-xs">
                 {/* Chapter Toolbar: Filter Verses & Copy Chapter */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
                   <div className="relative flex-1 max-w-xs">
-                    <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <Search className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       value={verseFilterQuery}
                       onChange={(e) => setVerseFilterQuery(e.target.value)}
                       placeholder="Filter verses in this chapter..."
-                      className="w-full bg-stone-900 border border-white/15 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-stone-500 focus:outline-none focus:border-[#D4AF37]"
+                      className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-xl pl-8 pr-3 py-1.5 text-xs text-stone-900 placeholder-stone-500 focus:outline-none focus:border-amber-800"
                     />
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-stone-400 font-serif hidden sm:inline">
+                    <span className="text-[11px] text-stone-600 font-serif hidden sm:inline">
                       Source: {sourceLabel}
                     </span>
                     <button
                       type="button"
                       onClick={handleCopyWholeChapter}
-                      className="px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 border border-white/15 text-xs font-serif text-stone-200 hover:text-[#FFD700] flex items-center gap-1.5 cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/70 border border-[#D8C7B2] text-xs font-serif font-semibold text-stone-800 hover:text-amber-950 flex items-center gap-1.5 cursor-pointer"
                     >
                       {copiedKey === 'whole-chapter' ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-emerald-300">Chapter Copied</span>
+                          <Check className="w-3.5 h-3.5 text-emerald-700" />
+                          <span className="text-emerald-800">Chapter Copied</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="w-3.5 h-3.5" />
+                          <Copy className="w-3.5 h-3.5 text-amber-900" />
                           <span>Copy Chapter</span>
                         </>
                       )}
@@ -1009,15 +1033,15 @@ export const CatholicBiblesView: React.FC = () => {
                 {/* Verses Display (Single or Side-by-Side Parallel) */}
                 {isLoadingChapter ? (
                   <div className="py-16 text-center space-y-3">
-                    <div className="w-8 h-8 rounded-full border-2 border-[#FFD700] border-t-transparent animate-spin mx-auto" />
-                    <p className="text-sm font-serif text-amber-200">
+                    <div className="w-8 h-8 rounded-full border-2 border-amber-900 border-t-transparent animate-spin mx-auto" />
+                    <p className="text-sm font-serif text-amber-950">
                       Loading {selectedBook.traditionalName} Chapter {selectedChapter}...
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {isParallelMode && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2 border-b border-amber-500/20 text-xs font-cinzel uppercase tracking-wider text-[#FFD700]">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2 border-b border-[#E2D5C3] text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950">
                         <div>{activePrimaryTranslationMeta.name}</div>
                         <div>{activeParallelTranslationMeta.name}</div>
                       </div>
@@ -1032,7 +1056,7 @@ export const CatholicBiblesView: React.FC = () => {
                       return (
                         <div
                           key={vObj.verse}
-                          className="group rounded-xl p-3 hover:bg-white/[0.03] border border-transparent hover:border-amber-500/20 transition-all"
+                          className="group rounded-xl p-3 hover:bg-[#FAF4EB] border border-transparent hover:border-[#E2D5C3] transition-all"
                         >
                           <div
                             className={
@@ -1042,8 +1066,8 @@ export const CatholicBiblesView: React.FC = () => {
                             }
                           >
                             {/* Primary Translation Verse */}
-                            <div className={`font-serif text-stone-100 ${fontSizeClass} flex-1`}>
-                              <span className="inline-block font-cinzel font-bold text-xs text-[#FFD700] mr-2 select-none">
+                            <div className={`font-serif text-stone-900 ${fontSizeClass} flex-1`}>
+                              <span className="inline-block font-cinzel font-bold text-xs text-amber-900 mr-2 select-none">
                                 {vObj.verse}
                               </span>
                               <span>{vObj.text}</span>
@@ -1052,9 +1076,9 @@ export const CatholicBiblesView: React.FC = () => {
                             {/* Parallel Second Translation Verse */}
                             {isParallelMode && (
                               <div
-                                className={`font-serif text-amber-100/90 italic ${fontSizeClass} md:border-l md:border-white/10 md:pl-4`}
+                                className={`font-serif text-stone-800 italic ${fontSizeClass} md:border-l md:border-[#E2D5C3] md:pl-4`}
                               >
-                                <span className="inline-block font-cinzel font-bold text-xs text-amber-400 mr-2 select-none">
+                                <span className="inline-block font-cinzel font-bold text-xs text-amber-800 mr-2 select-none">
                                   {vObj.verse}
                                 </span>
                                 <span>
@@ -1064,15 +1088,15 @@ export const CatholicBiblesView: React.FC = () => {
                             )}
 
                             {/* Verse Action Icons */}
-                            <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity shrink-0">
+                            <div className="flex items-center gap-1 opacity-75 group-hover:opacity-100 transition-opacity shrink-0">
                               <button
                                 type="button"
                                 onClick={() => toggleBookmark(vObj)}
-                                className="p-1.5 rounded-lg hover:bg-white/10 text-stone-400 hover:text-[#FFD700] cursor-pointer"
+                                className="p-1.5 rounded-lg hover:bg-amber-100/80 text-stone-500 hover:text-amber-950 cursor-pointer"
                                 title={isBookmarked ? 'Remove Bookmark' : 'Bookmark Verse'}
                               >
                                 {isBookmarked ? (
-                                  <BookmarkCheck className="w-4 h-4 text-[#FFD700]" />
+                                  <BookmarkCheck className="w-4 h-4 text-amber-900" />
                                 ) : (
                                   <Bookmark className="w-4 h-4" />
                                 )}
@@ -1085,11 +1109,11 @@ export const CatholicBiblesView: React.FC = () => {
                                     verseCopyKey
                                   )
                                 }
-                                className="p-1.5 rounded-lg hover:bg-white/10 text-stone-400 hover:text-[#FFD700] cursor-pointer"
+                                className="p-1.5 rounded-lg hover:bg-amber-100/80 text-stone-500 hover:text-amber-950 cursor-pointer"
                                 title="Copy Verse"
                               >
                                 {copiedKey === verseCopyKey ? (
-                                  <Check className="w-4 h-4 text-emerald-400" />
+                                  <Check className="w-4 h-4 text-emerald-700" />
                                 ) : (
                                   <Copy className="w-4 h-4" />
                                 )}
@@ -1104,18 +1128,18 @@ export const CatholicBiblesView: React.FC = () => {
 
                 {/* Haydock & Challoner Catholic Commentary Notes */}
                 {showHaydockNotes && currentHaydockNotes.length > 0 && (
-                  <div className="mt-6 pt-5 border-t border-amber-500/30 space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-[#FFD700]">
-                      <ScrollText className="w-4 h-4" />
-                      <span>Bishop Challoner & Haydock Catholic Bible Annotations</span>
+                  <div className="mt-6 pt-5 border-t border-[#E2D5C3] space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                      <ScrollText className="w-4 h-4 text-amber-800" />
+                      <span>Bishop Challoner &amp; Haydock Catholic Bible Annotations</span>
                     </div>
                     <div className="space-y-2.5">
                       {currentHaydockNotes.map((hn) => (
                         <div
                           key={hn.verse}
-                          className="p-3.5 rounded-xl bg-amber-950/25 border border-amber-500/30 text-xs sm:text-sm font-serif text-stone-200 leading-relaxed"
+                          className="p-3.5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] text-xs sm:text-sm font-serif text-stone-800 leading-relaxed"
                         >
-                          <span className="font-cinzel font-bold text-[#FFD700] mr-2">
+                          <span className="font-cinzel font-bold text-amber-950 mr-2">
                             Ver. {hn.verse}.
                           </span>
                           <span>{hn.note}</span>
@@ -1126,24 +1150,24 @@ export const CatholicBiblesView: React.FC = () => {
                 )}
 
                 {/* Bottom Chapter Navigation Bar */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
                   <button
                     type="button"
                     onClick={handlePrevChapter}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 border border-white/15 text-xs font-cinzel font-bold text-stone-200 hover:text-[#FFD700] cursor-pointer transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Previous Chapter</span>
                   </button>
 
-                  <span className="text-xs font-serif text-stone-400">
+                  <span className="text-xs font-serif font-semibold text-stone-700">
                     {selectedBook.traditionalName} {selectedChapter}
                   </span>
 
                   <button
                     type="button"
                     onClick={handleNextChapter}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 border border-white/15 text-xs font-cinzel font-bold text-stone-200 hover:text-[#FFD700] cursor-pointer transition-all"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
                   >
                     <span>Next Chapter</span>
                     <ChevronRight className="w-4 h-4" />
