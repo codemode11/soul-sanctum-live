@@ -1,6 +1,7 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
 
@@ -914,8 +915,31 @@ function vaticanNewsPlugin() {
             return parsed;
           };
 
-          // 1. For DRC ('drc'), CPDV ('cpdv'), and Clementine Vulgate ('vulgate'), use SacredBible.org's complete 73-book archives
+          // 0. Instant local 73-book archive lookup for DRC ('drc'), CPDV ('cpdv'), and Clementine Vulgate ('vulgate')
           if (translation === 'drc' || translation === 'cpdv' || translation === 'vulgate') {
+            try {
+              const localJsonPath = path.join(__dirname, 'public', 'bibles', translation, `${bookId}.json`);
+              if (fs.existsSync(localJsonPath)) {
+                const rawJson = fs.readFileSync(localJsonPath, 'utf-8');
+                const bookChapters = JSON.parse(rawJson);
+                const chVerses = bookChapters[String(chapter)];
+                if (Array.isArray(chVerses) && chVerses.length > 0) {
+                  verses = chVerses;
+                  sourceLabel =
+                    translation === 'cpdv'
+                      ? 'Catholic Public Domain Version (CPDV)'
+                      : translation === 'vulgate'
+                      ? 'Vulgata Clementina (Clementine Latin Vulgate)'
+                      : 'Douay-Rheims Catholic Bible (Challoner Revision)';
+                }
+              }
+            } catch {
+              // Fall through to remote SacredBible archive
+            }
+          }
+
+          // 1. Remote fallback for DRC ('drc'), CPDV ('cpdv'), and Clementine Vulgate ('vulgate') from SacredBible.org
+          if (verses.length === 0 && (translation === 'drc' || translation === 'cpdv' || translation === 'vulgate')) {
             try {
               const editionDir =
                 translation === 'cpdv'
@@ -940,12 +964,12 @@ function vaticanNewsPlugin() {
                 }
               }
             } catch {
-              // Fall through to jsDelivr CDN
+              // Fall through
             }
           }
 
-          // 2. For WEB-CE ('webbe') or if DRC needed a fallback, use jsDelivr CDN (wldeh/bible-api)
-          if (verses.length === 0) {
+          // 2. For WEB-CE ('webbe') or DRC ('drc') fallback, use jsDelivr CDN (wldeh/bible-api)
+          if (verses.length === 0 && (translation === 'webbe' || translation === 'drc')) {
             const wldehSlug = WLDEH_BOOK_SLUGS[bookId];
             const wldehVersion = translation === 'webbe' ? 'en-webbe' : 'en-dra';
             if (wldehSlug) {

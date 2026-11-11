@@ -45,6 +45,7 @@ interface SavedBibleBookmark {
 }
 
 const BOOKMARKS_STORAGE_KEY = 'sanctum_catholic_bible_bookmarks_v1';
+const staticBookJsonCache = new Map<string, Record<string, BibleVerse[]>>();
 
 export const CatholicBiblesView: React.FC = () => {
   const [selectedBookId, setSelectedBookId] = useState<string>('JHN');
@@ -106,6 +107,44 @@ export const CatholicBiblesView: React.FC = () => {
       chapterNum: number,
       translation: CatholicBibleTranslationId
     ): Promise<{ verses: BibleVerse[]; sourceLabel: string }> => {
+      const labelForTranslation = (t: CatholicBibleTranslationId) =>
+        t === 'cpdv'
+          ? 'Catholic Public Domain Version (CPDV)'
+          : t === 'vulgate'
+          ? 'Vulgata Clementina (Clementine Latin Vulgate)'
+          : t === 'webbe'
+          ? 'World English Bible — Catholic Edition (WEB-CE)'
+          : 'Douay-Rheims Catholic Bible (Challoner Revision)';
+
+      // 1. Direct static 73-Book JSON archive in /bibles/{translation}/{bookId}.json (works in both dev and production builds)
+      if (translation === 'drc' || translation === 'cpdv' || translation === 'vulgate') {
+        try {
+          const cacheKey = `${translation}:${book.id}`;
+          let bookChapters = staticBookJsonCache.get(cacheKey);
+          if (!bookChapters) {
+            const staticResp = await fetch(`/bibles/${translation}/${book.id}.json`);
+            if (staticResp.ok) {
+              bookChapters = await staticResp.json();
+              if (bookChapters && typeof bookChapters === 'object') {
+                staticBookJsonCache.set(cacheKey, bookChapters);
+              }
+            }
+          }
+          if (bookChapters) {
+            const chVerses = bookChapters[String(chapterNum)];
+            if (Array.isArray(chVerses) && chVerses.length > 0) {
+              return {
+                verses: chVerses,
+                sourceLabel: labelForTranslation(translation)
+              };
+            }
+          }
+        } catch {
+          // Fall through to /api/catholic-bible
+        }
+      }
+
+      // 2. Server-side Catholic Bible endpoint
       try {
         const params = new URLSearchParams({
           bookId: book.id,
@@ -121,51 +160,73 @@ export const CatholicBiblesView: React.FC = () => {
           if (Array.isArray(data?.verses) && data.verses.length > 0) {
             return {
               verses: data.verses,
-              sourceLabel: data.sourceLabel || '73-Book Catholic Scripture Archive'
+              sourceLabel: data.sourceLabel || labelForTranslation(translation)
             };
           }
         }
       } catch {
-        // Fallback to direct jsDelivr Catholic Scripture CDN
+        // Fall through to direct CDN
       }
 
-      // Direct client-side fallback to jsDelivr 73-Book Catholic Bible CDN (untruncated)
-      try {
-        const cdnVersion = translation === 'webbe' ? 'en-webbe' : 'en-dra';
-        const cdnUrl = `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${cdnVersion}/books/${book.cpdvSlug}/chapters/${chapterNum}.json`;
-        const cdnResp = await fetch(cdnUrl);
-        if (cdnResp.ok) {
-          const cdnData = await cdnResp.json();
-          if (Array.isArray(cdnData?.data) && cdnData.data.length > 0) {
-            const seen = new Map<number, string>();
-            for (const item of cdnData.data) {
-              const vNum = parseInt(String(item.verse), 10);
-              const vText = String(item.text || '').replace(/\s+/g, ' ').trim();
-              if (vNum > 0 && vText && !seen.has(vNum)) {
-                seen.set(vNum, vText);
+      // 3. Direct client-side CDN for WEB-CE ('webbe') or DRC ('drc')
+      if (translation === 'webbe' || translation === 'drc') {
+        try {
+          const cdnVersion = translation === 'webbe' ? 'en-webbe' : 'en-dra';
+          const cdnUrl = `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${cdnVersion}/books/${book.cpdvSlug}/chapters/${chapterNum}.json`;
+          const cdnResp = await fetch(cdnUrl);
+          if (cdnResp.ok) {
+            const cdnData = await cdnResp.json();
+            if (Array.isArray(cdnData?.data) && cdnData.data.length > 0) {
+              const seen = new Map<number, string>();
+              for (const item of cdnData.data) {
+                const vNum = parseInt(String(item.verse), 10);
+                const vText = String(item.text || '').replace(/\s+/g, ' ').trim();
+                if (vNum > 0 && vText && !seen.has(vNum)) {
+                  seen.set(vNum, vText);
+                }
+              }
+              const verses = Array.from(seen.entries())
+                .sort((a, b) => a[0] - b[0])
+                .map(([verse, text]) => ({ verse, text }));
+              if (verses.length > 0) {
+                return {
+                  verses,
+                  sourceLabel: labelForTranslation(translation)
+                };
               }
             }
-            const verses = Array.from(seen.entries())
-              .sort((a, b) => a[0] - b[0])
-              .map(([verse, text]) => ({ verse, text }));
-            if (verses.length > 0) {
+          }
+        } catch {
+          // Ignore
+        }
+      }
+
+      // 4. Direct client-side fallback for Clementine Latin Vulgate ('vulgate')
+      if (translation === 'vulgate') {
+        try {
+          const vulgResp = await fetch(
+            `https://bible-api.com/${encodeURIComponent(book.name)}+${chapterNum}?translation=clementine`
+          );
+          if (vulgResp.ok) {
+            const vulgData = await vulgResp.json();
+            if (Array.isArray(vulgData?.verses) && vulgData.verses.length > 0) {
               return {
-                verses,
-                sourceLabel:
-                  cdnVersion === 'en-webbe'
-                    ? 'World English Bible — Catholic Edition (WEB-CE)'
-                    : 'Douay-Rheims Catholic Bible'
+                verses: vulgData.verses.map((v: any) => ({
+                  verse: Number(v.verse),
+                  text: String(v.text || '').replace(/\s+/g, ' ').trim()
+                })),
+                sourceLabel: 'Vulgata Clementina (Clementine Latin Vulgate)'
               };
             }
           }
+        } catch {
+          // Ignore
         }
-      } catch {
-        // Ignore
       }
 
       return {
         verses: [],
-        sourceLabel: 'Catholic Scripture Archive'
+        sourceLabel: labelForTranslation(translation)
       };
     },
     []
@@ -994,8 +1055,21 @@ export const CatholicBiblesView: React.FC = () => {
                 </h3>
               </div>
 
-              {/* Inline Quick Book/Chapter Jump & Prev/Next Controls */}
+              {/* Inline Quick Translation, Book/Chapter Jump & Prev/Next Controls */}
               <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <select
+                  value={primaryTranslation}
+                  onChange={(e) => setPrimaryTranslation(e.target.value as CatholicBibleTranslationId)}
+                  aria-label="Select Catholic Bible Translation"
+                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-amber-950 font-serif font-bold focus:outline-none focus:border-amber-800"
+                >
+                  {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.shortName}
+                    </option>
+                  ))}
+                </select>
+
                 <select
                   value={selectedBook.id}
                   onChange={(e) => {
