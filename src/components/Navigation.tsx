@@ -458,28 +458,46 @@ export const Navigation: React.FC<NavigationProps> = ({
   ];
 
   const currentItem = navItems.find(i => i.id === activeTab) || navItems[0];
+  const [massReadingsMidpointPx, setMassReadingsMidpointPx] = useState<number>(77);
+
+  const measureMassReadingsLabelRef = useCallback((labelEl: HTMLSpanElement | null) => {
+    if (!labelEl) return;
+    const updateMidpoint = () => {
+      const w = labelEl.offsetWidth;
+      if (w > 0) {
+        // Icon box layout width = 36px (visual left inset ~1.26px at 0.93 scale), gap = 12px (total 48px), label scaled by 0.92 from left origin
+        const midpoint = (1.26 + 48 + w * 0.92) / 2;
+        setMassReadingsMidpointPx(Math.round(midpoint * 10) / 10);
+      }
+    };
+    updateMidpoint();
+    if (typeof document !== 'undefined' && 'fonts' in document) {
+      (document as Document & { fonts: FontFaceSet }).fonts.ready.then(updateMidpoint).catch(() => {});
+    }
+  }, []);
 
   const renderNavList = () => (
     <div className="space-y-3.5">
-      {/* Top Sidebar Header with Index aligned with Mass Readings, NO icon per user instruction */}
-      <div className="px-4 pb-3 border-b border-[#D4AF37]/35 flex items-center justify-between">
-        <span className="font-cinzel text-base sm:text-lg font-bold text-[#FFD700] drop-shadow-[0_0_8px_rgba(212,175,55,0.45)] tracking-[0.2em] uppercase">
+      {/* Top Sidebar Header with Index center-aligned */}
+      <div className="relative px-4 pb-3 border-b border-[#D4AF37]/35 flex items-center justify-center">
+        <span className="font-cinzel text-base sm:text-lg font-bold text-[#FFD700] drop-shadow-[0_0_8px_rgba(212,175,55,0.45)] tracking-[0.2em] pl-[0.2em] uppercase text-center">
           INDEX
         </span>
         <button
           onClick={onOpenNotifications}
-          className="p-1.5 rounded-lg text-stone-300 hover:text-[#FFD700] hover:bg-white/10 transition-colors cursor-pointer"
+          className="absolute right-3 p-1.5 rounded-lg text-stone-300 hover:text-[#FFD700] hover:bg-white/10 transition-colors cursor-pointer"
           title="Daily Reminders and Liturgical Bells"
         >
           <BellRing className="w-4 h-4 text-[#FFD700]" />
         </button>
       </div>
 
-      {/* Unnumbered List: Descriptions/tags like Daily, Hagiography removed so titles are seen in their entirety */}
+      {/* Unnumbered List: Mass Readings icon + text centered; all other items follow the Mass Readings icon column */}
       <div className="space-y-1.5 pt-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
+          const isMassReadings = item.id === 'readings';
 
           return (
             <button
@@ -489,14 +507,15 @@ export const Navigation: React.FC<NavigationProps> = ({
                 onSelectTab(item.id);
                 if (onCloseMobile) onCloseMobile();
               }}
-              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-lg cursor-pointer select-none group text-left border transition-colors duration-500 ease-out ${
+              style={{ paddingLeft: `max(0.5rem, calc(50% - ${massReadingsMidpointPx + 28}px))` }}
+              className={`w-full flex items-center justify-start pr-2 py-3 rounded-lg cursor-pointer select-none group text-left border transition-colors duration-500 ease-out ${
                 isActive
                   ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] backdrop-blur-md'
                   : 'text-stone-300 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border-transparent'
               }`}
             >
-              {/* Unified Content Wrapper: Icon and Text grow smoothly without vertical shift */}
-              <div className="sanctum-nav-item-content flex items-center gap-3 min-w-0 flex-1 h-9">
+              {/* Unified Content Wrapper: Mass Readings is centered; all other items follow the Mass Readings icon */}
+              <div className="sanctum-nav-item-content flex items-center gap-3 min-w-0 h-9">
                 <div className={`sanctum-nav-item-icon-box p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 flex items-center justify-center ${
                   isActive 
                     ? 'bg-[#FFD700]/25 text-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.3)]' 
@@ -506,14 +525,17 @@ export const Navigation: React.FC<NavigationProps> = ({
                     isActive ? 'text-[#FFD700]' : 'text-stone-400 group-hover:text-[#FFD700]'
                   }`} />
                 </div>
-                <div className="min-w-0 flex-1 h-9 flex items-center overflow-visible">
-                  <span className={`sanctum-nav-item-label ${
-                    item.id === 'readings' ? 'sanctum-nav-item-label-readings' : ''
-                  } font-serif whitespace-nowrap transition-colors duration-500 ease-out ${
-                    isActive
-                      ? 'text-[#FFD700]'
-                      : 'text-stone-200 group-hover:text-[#FFD700]'
-                  }`}>
+                <div className="min-w-0 h-9 flex items-center overflow-visible">
+                  <span
+                    ref={isMassReadings ? measureMassReadingsLabelRef : undefined}
+                    className={`sanctum-nav-item-label ${
+                      isMassReadings ? 'sanctum-nav-item-label-readings' : ''
+                    } font-serif whitespace-nowrap text-left transition-colors duration-500 ease-out ${
+                      isActive
+                        ? 'text-[#FFD700]'
+                        : 'text-stone-200 group-hover:text-[#FFD700]'
+                    }`}
+                  >
                     {item.label}
                   </span>
                 </div>
@@ -604,9 +626,9 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         <div className="grid grid-cols-5 items-stretch max-w-md mx-auto">
           {[
-            { id: 'readings' as ActiveTab, line1: 'Mass', line2: 'Readings', icon: MassReadingsBookFlipIcon },
             { id: 'saints' as ActiveTab, line1: 'Saint of', line2: 'the Day', icon: SaintWithHaloIcon },
             { id: 'catholic-bibles' as ActiveTab, line1: 'Holy', line2: 'Bible', icon: CatholicBiblesBookIcon },
+            { id: 'readings' as ActiveTab, line1: 'Mass', line2: 'Readings', icon: MassReadingsBookFlipIcon },
             { id: 'divine-office' as ActiveTab, line1: 'Divine', line2: 'Office', icon: DivineOfficeBreviaryIcon },
           ].map((tab) => {
             const TabIcon = tab.icon;
@@ -629,43 +651,43 @@ export const Navigation: React.FC<NavigationProps> = ({
             );
           })}
 
-          {/* 5th Thumb Slot: Open Full Sacred Index Drawer */}
+          {/* 5th Thumb Slot: Open Full Sacred Index Drawer (Center-Aligned) */}
           <button
             type="button"
             onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
-            className={`min-h-[54px] flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 transition-colors cursor-pointer select-none ${
-              isMobileOpen ? 'text-[#FFD700]' : 'text-amber-200/90 hover:text-[#FFD700]'
+            className={`min-h-[54px] w-full flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 text-center transition-colors cursor-pointer select-none ${
+              isMobileOpen ? 'text-[#FFD700]' : 'text-stone-400 hover:text-stone-200'
             }`}
           >
-            <Layers className="w-5 h-5 shrink-0 text-amber-300" />
-            <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider leading-[1.12] text-center flex flex-col items-center justify-center min-h-[22px]">
-              <span>Index</span>
+            <Layers className={`w-5 h-5 shrink-0 mx-auto ${isMobileOpen ? 'text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]' : 'text-stone-400'}`} />
+            <span className={`w-full text-[10px] font-serif leading-[1.12] text-center flex flex-col items-center justify-center min-h-[22.4px] ${isMobileOpen ? 'font-bold text-[#FFD700]' : 'font-medium'}`}>
+              <span className="block whitespace-nowrap text-center">Index</span>
             </span>
           </button>
         </div>
       </nav>
 
-      {/* 3. Mobile Slide-out Drawer */}
+      {/* 3. Mobile Centered Index Drawer */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-50 flex">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3">
           {/* Backdrop */}
           <div 
             onClick={onCloseMobile}
             className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity" 
           />
 
-          {/* Drawer from Left Side */}
-          <div className="relative w-80 max-w-[86vw] h-full bg-gradient-to-b from-stone-950 via-[#14110f] to-stone-950 border-r border-amber-500/30 p-4 sm:p-5 pb-20 shadow-2xl flex flex-col z-10 overflow-y-auto no-scrollbar animate-slideInLeft">
-            <div className="flex items-center justify-between pb-3.5 border-b border-amber-500/20 mb-3">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-amber-400" />
+          {/* Centered Index Panel */}
+          <div className="relative w-full max-w-sm max-h-[85dvh] rounded-2xl bg-gradient-to-b from-stone-950 via-[#14110f] to-stone-950 border border-amber-500/35 p-4 sm:p-5 shadow-2xl flex flex-col z-10 overflow-y-auto no-scrollbar">
+            <div className="relative flex items-center justify-center pb-3.5 border-b border-amber-500/20 mb-3">
+              <div className="flex items-center justify-center gap-2 text-center">
+                <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" />
                 <span className="font-cinzel text-sm font-bold text-white tracking-widest">
                   SOUL SANCTUM
                 </span>
               </div>
               <button
                 onClick={onCloseMobile}
-                className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg text-stone-300 hover:text-white bg-white/10 cursor-pointer"
+                className="absolute right-0 min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-stone-300 hover:text-white bg-white/10 cursor-pointer"
                 aria-label="Close"
               >
                 <X className="w-5 h-5" />

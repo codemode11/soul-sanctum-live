@@ -490,7 +490,7 @@ ${reading.gospel.text}`;
           </p>
           {reading.firstReading.theme && (
             <p 
-              className="font-serif text-amber-900/95 font-bold tracking-normal whitespace-nowrap overflow-x-auto no-scrollbar leading-relaxed mt-4.5"
+              className="font-serif text-amber-900/95 font-bold tracking-normal whitespace-normal break-words leading-snug mt-4.5"
               style={{ fontSize: scriptureStyle.fontSize }}
             >
               {toCurvedQuotes(reading.firstReading.theme.trim().replace(/^["'\u201C\u2018]+|["'\u201D\u2019]+$/g, '').replace(/[.!?]?$/, '.'))}
@@ -518,10 +518,12 @@ ${reading.gospel.text}`;
           </p>
         </div>
 
-        {/* Antiphon response: Increased font size so it is highly readable and dynamically scalable */}
-        <div className="p-4 sm:p-5 rounded-md bg-[#EADACA] border border-[#C8AD8D] font-serif text-[#2C1A0E] font-bold italic flex items-center justify-center text-center gap-3 shadow-2xs" style={antiphonStyle}>
-          <span className="text-[#6B4423] font-serif font-black text-2xl sm:text-3xl leading-none not-italic">R.</span>
-          <span className="leading-snug">{toCurvedQuotes(reading.responsorialPsalm.antiphon)}</span>
+        {/* Antiphon response: Justified alignment and dynamically scalable */}
+        <div className="p-4 sm:p-5 rounded-md bg-[#EADACA] border border-[#C8AD8D] font-serif text-[#2C1A0E] font-bold italic shadow-2xs" style={antiphonStyle}>
+          <p className="w-full text-justify leading-snug">
+            <span className="text-[#6B4423] font-serif font-black text-2xl sm:text-3xl leading-none not-italic mr-2.5">R.</span>
+            <span>{toCurvedQuotes(reading.responsorialPsalm.antiphon)}</span>
+          </p>
         </div>
 
         {/* Stanzas */}
@@ -531,7 +533,7 @@ ${reading.gospel.text}`;
               <p className="whitespace-pre-line pl-3 border-l-2 border-amber-500/60">
                 {toCurvedQuotes(verse)}
               </p>
-              <p className="font-serif font-semibold text-amber-900 italic text-center" style={{ fontSize: '1.05em' }}>
+              <p className="font-serif font-semibold text-amber-900 italic text-justify" style={{ fontSize: '1.05em' }}>
                 R. {toCurvedQuotes(reading.responsorialPsalm.antiphon)}
               </p>
             </div>
@@ -594,8 +596,6 @@ ${reading.gospel.text}`;
           ? 'border-red-700 ring-4 ring-red-500/30 shadow-xl bg-amber-50/95'
           : 'bg-white border-stone-200/90 shadow-sm'
       }`}>
-        <div className="absolute top-0 right-0 w-24 h-24 bg-amber-600/5 rounded-bl-full pointer-events-none" />
-        
         <div className="border-b border-stone-200 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 className="font-serif text-2xl sm:text-[28px] font-bold text-red-950 tracking-normal leading-tight">
