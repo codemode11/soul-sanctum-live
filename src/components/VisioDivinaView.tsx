@@ -141,7 +141,10 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
       <div className="bg-white/92 backdrop-blur-md rounded-xl p-5 sm:p-7 shadow-2xl border border-stone-200/90 space-y-6">
         
         {/* Artwork Image Frame (Enlarged Viewer) */}
-        <div className="relative rounded-xl overflow-hidden bg-black aspect-[16/10] sm:aspect-[16/9] min-h-[380px] sm:min-h-[500px] md:min-h-[580px] border border-[#8B5A2B]/40 shadow-xl group flex items-center justify-center">
+        <div className="relative rounded-xl overflow-hidden bg-[#0E0B09] border border-[#8B5A2B]/60 shadow-2xl group flex items-center justify-center p-3 sm:p-6 h-[380px] sm:h-[480px] md:h-[560px] max-h-[75vh] w-full">
+          {/* Subtle warm museum spotlight vignette */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,119,6,0.10)_0%,transparent_75%)] pointer-events-none" />
+
           <img
             key={selectedArt.id}
             src={selectedArt.imageUrl}
@@ -154,13 +157,13 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
                 target.src = selectedArt.fallbackImageUrl;
               }
             }}
-            className="w-full h-full object-cover sm:object-contain object-center transition-transform duration-700 group-hover:scale-102"
+            className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg shadow-[0_16px_50px_rgba(0,0,0,0.85)] ring-1 ring-amber-500/30 z-10"
           />
 
           {onOpenArtViewer && (
             <button
               onClick={() => onOpenArtViewer(selectedArt.id)}
-              className="absolute bottom-3 right-3 px-3 py-1.5 rounded-lg bg-[#3E2716]/90 hover:bg-[#4A2E1B] text-[#F5D7B2] border border-[#8B5A2B]/60 text-xs font-serif flex items-center gap-1.5 backdrop-blur-md cursor-pointer transition-all shadow-md"
+              className="absolute bottom-3 right-3 z-20 px-3 py-1.5 rounded-lg bg-[#3E2716]/90 hover:bg-[#4A2E1B] text-[#F5D7B2] border border-[#8B5A2B]/60 text-xs font-serif flex items-center gap-1.5 backdrop-blur-md cursor-pointer transition-all shadow-md"
             >
               <Maximize2 className="w-3.5 h-3.5 text-[#D4A373]" />
               <span>Full-Screen View</span>
