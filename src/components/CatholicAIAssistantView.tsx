@@ -504,61 +504,58 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
 
   return (
     <div className="space-y-5 w-full pb-12">
-      {/* 1. Compact Unified Top Banner with Settings Dropdown */}
-      <div className="rounded-xl bg-[#1C120C] text-[#F7EBE1] border border-[#8B5A2B]/60 shadow-lg overflow-hidden w-full">
-        <div className="px-4 py-3 sm:px-5 flex items-center justify-between gap-3">
-          {/* Title & Active Engine Badge */}
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-7 h-7 rounded-md bg-[#3B1E08] border border-[#8B5A2B]/80 text-amber-300 flex items-center justify-center font-cinzel text-xs font-black tracking-tight shrink-0">
-              AI
-            </div>
-            <div className="min-w-0">
-              <h1 className="font-cinzel text-sm sm:text-base font-bold tracking-wider text-amber-100 truncate">
-                CATHOLIC AI ASSISTANT
-              </h1>
-              <div className="flex items-center gap-2 text-[11px] font-serif text-stone-300 truncate">
-                <span className="font-cinzel font-semibold text-amber-300">
-                  {AI_ENGINE_SPECS[selectedEngine].name}
-                </span>
-                <span>•</span>
+      {/* 1. Top Banner Following Daily Mass Readings Styling & Layout */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 w-full">
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-[#1C120C] to-stone-900 text-stone-100 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-2">
+            {/* Line 1: Engine/Persona Subtext */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap overflow-hidden">
+              <span className="text-xs sm:text-sm text-stone-300 font-serif sm:whitespace-nowrap">
+                <strong className="text-amber-300 font-cinzel font-semibold">{AI_ENGINE_SPECS[selectedEngine].name}</strong>
+                <span className="mx-1.5 opacity-60">•</span>
                 <span className="italic">{AI_PERSONA_SPECS[selectedPersona].title}</span>
-              </div>
+              </span>
             </div>
+
+            {/* Line 2: Prominent Main Title */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
+              Catholic Theological &amp; Scriptural Research Assistant
+            </h2>
           </div>
 
-          {/* Action Controls: Settings Dropdown Button + Reset Button */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          {/* Line 3: Action Controls lowered together at bottom-right */}
+          <div className="flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
             <button
               type="button"
               onClick={() => setIsSettingsOpen(prev => !prev)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs ${
+              className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs ${
                 isSettingsOpen
                   ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
-                  : 'bg-[#3B1E08] hover:bg-[#4E280C] text-amber-100 border-[#8B5A2B]/80'
+                  : 'bg-[#1C120C]/90 hover:bg-[#3B1E08] text-amber-100 border-[#8B5A2B]/80'
               }`}
               title={isSettingsOpen ? 'Close Settings Menu' : 'Open AI Engine Settings Drop-down'}
               aria-label="Toggle AI Settings Drop-down"
             >
               <Sliders className="w-3.5 h-3.5 text-amber-300" />
-              <span className="hidden sm:inline">Settings</span>
+              <span>Settings</span>
               <ChevronDown className={`w-3 h-3 text-amber-300 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
             </button>
 
             <button
               type="button"
               onClick={handleClearChat}
-              className="px-2.5 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 border border-stone-700 text-amber-200 text-xs font-cinzel font-semibold flex items-center gap-1 transition-all cursor-pointer"
+              className="px-3 py-1.5 rounded-md bg-stone-900/90 hover:bg-stone-800 border border-stone-700 text-amber-200 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
               title="Reset conversation thread"
             >
               <Trash2 className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden sm:inline">Reset</span>
+              <span>Reset</span>
             </button>
           </div>
         </div>
 
         {/* Settings Drop-Down Panel */}
         {isSettingsOpen && (
-          <div className="p-4 bg-[#251710] border-t border-[#8B5A2B]/50 space-y-4 animate-fade-in text-amber-100 text-xs">
+          <div className="p-4 sm:p-5 bg-[#251710] border-t border-[#8B5A2B]/50 rounded-b-xl space-y-4 animate-fade-in text-amber-100 text-xs">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Engine Selector */}
               <div className="space-y-1.5">
