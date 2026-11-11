@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { GoogleGenAI } from '@google/genai';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,10 +22,136 @@ const CATHOLIC_RSS_FEEDS: Record<string, string> = {
   'sign-org': 'https://sign.org/feed/'
 };
 
+const CATHOLIC_AI_SYSTEM_INSTRUCTION = `You are the Soul Sanctum Catholic Assistant, an authoritative, reverent, scholarly, and pastoral Catholic theological research assistant.
+
+CORE GUIDING PRINCIPLES:
+1. Ground every answer firmly in the Deposit of Faith: Sacred Scripture, Sacred Tradition, and the living Magisterium of the Catholic Church.
+2. Prominently cite the Catechism of the Catholic Church (CCC) with specific paragraph numbers (e.g., CCC 1324-1327 for the Holy Eucharist, CCC 963-975 for the Blessed Virgin Mary, CCC 1422-1498 for Penance and Reconciliation, CCC 1987-2029 for Grace and Justification).
+3. Quote and reference Sacred Scripture (using accurate Catholic editions such as NABRE, Douay-Rheims, or RSV-CE) with explicit chapter and verse.
+4. Reference the Church Fathers (such as St. Augustine, St. John Chrysostom, St. Irenaeus of Lyons, St. Ignatius of Antioch, St. Justin Martyr) and Doctors of the Church (especially St. Thomas Aquinas' Summa Theologiae, St. Alphonsus Liguori, St. Robert Bellarmine, St. Teresa of Ávila, St. John of the Cross, St. Francis de Sales).
+5. Clearly distinguish the hierarchy of theological certainty:
+   - De Fide Dogma (solemnly defined dogmas required for divine and Catholic faith, e.g. Trinity, Incarnation, Real Presence, Immaculate Conception, Assumption)
+   - Doctrinal teachings of the Ordinary and Universal Magisterium (requiring religious submission of intellect and will)
+   - Theological opinions and legitimate schools of thought within Catholic orthodoxy (e.g., Thomism vs. Scotism vs. Molinism)
+   - Approved private revelations (e.g., Fátima, Lourdes, Divine Mercy) which are worthy of pious belief but not binding on Catholic faith.
+6. Tone: Courteous, pastoral, humble, deeply reverent, charitable, lucid, and spiritually uplifting. Avoid secular polemics while remaining completely orthodox and unapologetically faithful to the Apostolic See and Catholic dogma.
+7. Formatting: Use structured headers, bulleted doctrinal points, and clear source attributions (Scripture, CCC, Patristics, Councils) so the seeker can study and verify the Church's teachings.`;
+
 function vaticanNewsPlugin() {
   return {
     name: 'vatican-news-plugin',
     configureServer(server: any) {
+      server.middlewares.use('/api/catholic-ai', async (req: any, res: any) => {
+        // Handle CORS preflight
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+        if (req.method === 'OPTIONS') {
+          res.statusCode = 204;
+          res.end();
+          return;
+        }
+
+        if (req.method === 'GET') {
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.end(JSON.stringify({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY }));
+          return;
+        }
+
+        if (req.method !== 'POST') {
+          res.statusCode = 405;
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.end(JSON.stringify({ error: 'Method not allowed' }));
+          return;
+        }
+
+        let bodyBuffer = '';
+        req.on('data', (chunk: any) => {
+          bodyBuffer += chunk;
+        });
+
+        req.on('end', async () => {
+          try {
+            const body = JSON.parse(bodyBuffer || '{}');
+            const prompt = body?.prompt;
+            const history = body?.history || [];
+
+            if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
+              res.statusCode = 400;
+              res.setHeader('Content-Type', 'application/json; charset=utf-8');
+              res.end(JSON.stringify({ error: 'A question or prompt is required.' }));
+              return;
+            }
+
+            const apiKey = process.env.GEMINI_API_KEY;
+            if (!apiKey) {
+              throw new Error('GEMINI_API_KEY is not configured in the environment.');
+            }
+
+            const ai = new GoogleGenAI({
+              apiKey,
+              httpOptions: {
+                headers: {
+                  'User-Agent': 'aistudio-build',
+                },
+              },
+            });
+
+            const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
+            if (Array.isArray(history)) {
+              for (const item of history.slice(-8)) {
+                if (item && item.content && typeof item.content === 'string') {
+                  contents.push({
+                    role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
+                    parts: [{ text: item.content }],
+                  });
+                }
+              }
+            }
+
+            contents.push({
+              role: 'user',
+              parts: [{ text: prompt.trim() }],
+            });
+
+            const candidateModels = ['gemini-3.8-flash', 'gemini-flash-latest', 'gemini-3.1-flash-lite'];
+            let reply = '';
+            let lastError: any = null;
+
+            for (const modelName of candidateModels) {
+              try {
+                const response = await ai.models.generateContent({
+                  model: modelName,
+                  contents,
+                  config: {
+                    systemInstruction: CATHOLIC_AI_SYSTEM_INSTRUCTION,
+                  },
+                });
+                if (response && response.text) {
+                  reply = response.text;
+                  break;
+                }
+              } catch (err: any) {
+                lastError = err;
+              }
+            }
+
+            if (!reply && lastError) {
+              throw lastError;
+            }
+
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.end(JSON.stringify({ reply: reply || 'No response generated from the Catholic Assistant.' }));
+          } catch (err: any) {
+            console.error('Catholic AI endpoint error in vite.config.ts:', err);
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.end(JSON.stringify({ error: err?.message || 'Error consulting the Catholic Assistant.' }));
+          }
+        });
+      });
+
       server.middlewares.use('/api/vatican-news', async (_req: any, res: any) => {
         try {
           const response = await fetch('https://www.vaticannews.va/en.rss.xml', {
