@@ -13,15 +13,12 @@ import {
   ShieldCheck, 
   ChevronRight, 
   ChevronLeft,
-  BookOpen, 
-  Heart, 
-  Flame, 
-  Filter,
+  ChevronDown,
+  Settings,
   Share2,
   Compass,
   Award,
-  Sun,
-  Moon
+  Sun
 } from 'lucide-react';
 import { CEBU_CITY_PARISHES, ParishSchedule } from '../data/cebuParishes';
 
@@ -41,6 +38,7 @@ export const CebuParishesModal: React.FC<CebuParishesModalProps> = ({ isOpen, on
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [copiedSlotKey, setCopiedSlotKey] = useState<string | null>(null);
   const [showConfessionGuide, setShowConfessionGuide] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // Determine current day of week (0 = Sunday, 1..6 = Mon..Sat)
   const todayDayOfWeek = useMemo(() => new Date().getDay(), []);
@@ -139,167 +137,206 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-stone-950/85 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-stone-950/85 backdrop-blur-md animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-6xl max-h-[94vh] flex flex-col rounded-2xl bg-[#EDE4D8] border-2 border-[#8B5A2B]/40 shadow-[0_25px_80px_rgba(0,0,0,0.7)] text-[#2B1B12] overflow-hidden"
+        className="relative w-full max-w-6xl h-[92vh] max-h-[94vh] flex flex-col rounded-2xl bg-[#EDE4D8] border-2 border-[#8B5A2B]/40 shadow-[0_25px_80px_rgba(0,0,0,0.7)] text-[#2B1B12] overflow-hidden"
         onClick={e => e.stopPropagation()}
       >
         {/* Top Liturgical Gold Border Accent */}
-        <div className="h-2 w-full bg-gradient-to-r from-[#6B3E1E] via-[#D4AF37] to-[#6B3E1E] shadow-xs" />
+        <div className="h-1.5 w-full bg-gradient-to-r from-[#6B3E1E] via-[#D4AF37] to-[#6B3E1E] shadow-xs shrink-0" />
 
-        {/* Dignified Altar Directory Header */}
-        <div className="p-4 sm:p-5 md:px-7 md:py-5 border-b border-[#8B5A2B]/25 bg-gradient-to-r from-[#2F1A0E] via-[#482813] to-[#2F1A0E] text-amber-50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
-          <div className="flex items-center gap-3.5">
-            <div className="p-2.5 sm:p-3 rounded-xl bg-gradient-to-b from-[#A07040] to-[#5C3418] text-amber-100 border border-[#D4AF37]/50 shadow-md shrink-0">
-              <Church className="w-6 h-6 sm:w-7 sm:h-7" />
-            </div>
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-cinzel text-[11px] sm:text-xs font-bold text-amber-300 tracking-wider uppercase bg-[#381F10]/90 px-2 py-0.5 rounded border border-[#D4AF37]/40 shadow-2xs">
-                  Archdiocese of Cebu • Philippines
-                </span>
-                <span className="text-amber-200/60 text-xs hidden sm:inline">•</span>
-                <span className="text-amber-100/90 text-xs font-serif hidden sm:inline">
-                  Ecclesiastical Directory of Sanctuaries
-                </span>
+        {/* Sleek Compact Header Bar with Settings Drop-Down Icon */}
+        <div className="border-b border-[#8B5A2B]/30 bg-gradient-to-r from-[#2F1A0E] via-[#482813] to-[#2F1A0E] text-amber-50 shadow-sm shrink-0 relative z-30">
+          <div className="px-3.5 py-2 sm:px-6 sm:py-2.5 flex items-center justify-between gap-3">
+            
+            {/* Left: Sanctuary Title & Info */}
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="p-1.5 rounded-lg bg-gradient-to-b from-[#A07040] to-[#5C3418] text-amber-100 border border-[#D4AF37]/50 shadow-xs shrink-0">
+                <Church className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <h2 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-wide mt-0.5 flex items-center gap-2">
-                <span>Holy Mass &amp; Confession Schedules</span>
-              </h2>
+              <div className="min-w-0">
+                <h2 className="font-cinzel text-sm sm:text-base md:text-lg font-bold text-white tracking-wide truncate leading-tight">
+                  Holy Mass &amp; Confession Schedules
+                </h2>
+                <div className="flex items-center gap-1.5 text-[10.5px] sm:text-xs text-amber-300 font-serif leading-none mt-0.5">
+                  <span className="truncate">Archdiocese of Cebu</span>
+                  <span className="text-amber-400/50">•</span>
+                  <span className="truncate text-amber-100/90 font-semibold">{selectedParish.popularName || selectedParish.name}</span>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2 self-end sm:self-auto">
-            {/* Quick Today's Liturgy Badge */}
-            <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#3A2213] border border-[#8B5A2B]/50 text-xs font-serif text-amber-200">
-              <Clock className="w-3.5 h-3.5 text-amber-400" />
-              <span>Today: {isSundayToday ? 'Sunday Liturgy' : 'Weekday Liturgy'}</span>
-            </div>
+            {/* Right Controls: Sanctuary Switcher, Settings Drop-Down Icon, Close */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              
+              {/* Previous / Next Sanctuary switcher */}
+              <div className="flex items-center bg-[#1F1108]/90 rounded-lg border border-[#8B5A2B]/40 p-0.5">
+                <button
+                  type="button"
+                  onClick={handlePrevParish}
+                  className="p-1 rounded text-amber-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  title="Previous Sanctuary"
+                  aria-label="Previous Sanctuary"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <span className="px-1.5 text-[11px] font-cinzel font-bold text-amber-300 select-none">
+                  {selectedParishIndex + 1}/{CEBU_CITY_PARISHES.length}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleNextParish}
+                  className="p-1 rounded text-amber-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  title="Next Sanctuary"
+                  aria-label="Next Sanctuary"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
 
-            <button
-              onClick={onClose}
-              className="p-2 rounded-xl text-amber-200/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer border border-amber-200/20"
-              aria-label="Close"
-              title="Close Schedule Directory"
-            >
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-          </div>
-        </div>
-
-        {/* Search & Characteristic Filters Strip */}
-        <div className="p-3.5 sm:p-4 bg-[#E3D6C6] border-b border-[#8B5A2B]/20 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          
-          {/* Search Box */}
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#7C5A40]" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
-              placeholder="Search parish, Sto. Niño, Cathedral, Redemptorist, street, or patron..."
-              className="w-full pl-10 pr-9 py-2 rounded-xl bg-white border border-[#8B5A2B]/40 text-sm sm:text-base text-[#24140B] placeholder-[#8C6F58] focus:outline-none focus:border-[#6B3E1E] focus:ring-1 focus:ring-[#6B3E1E] shadow-2xs font-serif"
-            />
-            {searchQuery && (
-              <button 
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-0.5 cursor-pointer"
-                title="Clear search"
+              {/* Settings Drop-Down Icon Button */}
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(prev => !prev)}
+                aria-expanded={isSettingsOpen}
+                className={`h-8 flex items-center gap-1 px-2 sm:px-2.5 rounded-lg transition-all cursor-pointer border ${
+                  isSettingsOpen
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4AF37] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+                }`}
+                title={isSettingsOpen ? 'Hide Search & Filters' : 'Open Search & Schedule Filters'}
+                aria-label={isSettingsOpen ? 'Hide Search & Filters' : 'Open Search & Schedule Filters'}
               >
-                <X className="w-3.5 h-3.5" />
+                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                <span className="text-xs font-serif hidden md:inline">Settings</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                    isSettingsOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
-            )}
+
+              {/* Close Button */}
+              <button
+                onClick={onClose}
+                className="p-1.5 rounded-lg text-amber-200/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer border border-amber-200/20"
+                aria-label="Close Schedule Directory"
+                title="Close"
+              >
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            </div>
           </div>
 
-          {/* Quick Category Filter Buttons */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar shrink-0 pb-1 md:pb-0">
-            <button
-              onClick={() => setParishFilter('all')}
-              className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-serif transition-all cursor-pointer whitespace-nowrap shadow-2xs ${
-                parishFilter === 'all'
-                  ? 'bg-[#3A2213] text-amber-50 font-bold border border-[#24140B]'
-                  : 'bg-white text-[#4A2E1B] hover:bg-stone-50 border border-[#8B5A2B]/30'
-              }`}
-            >
-              All Parishes ({CEBU_CITY_PARISHES.length})
-            </button>
+          {/* Settings Drop-Down Drawer (Smoothly expands below the compact header) */}
+          {isSettingsOpen && (
+            <div className="px-4 py-3 sm:px-6 bg-[#24130A] border-t border-[#8B5A2B]/40 text-amber-50 space-y-3 animate-in fade-in">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                
+                {/* Search Bar */}
+                <div className="md:col-span-5 relative">
+                  <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    placeholder="Search parish, Sto. Niño, Cathedral, patron, or language..."
+                    className="w-full pl-9 pr-7 py-1.5 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs sm:text-sm text-white placeholder-stone-400 focus:outline-none focus:border-[#D4AF37] font-serif"
+                  />
+                  {searchQuery && (
+                    <button 
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white p-0.5 cursor-pointer"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  )}
+                </div>
 
-            <button
-              onClick={() => setParishFilter('confession')}
-              className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-serif transition-all cursor-pointer whitespace-nowrap shadow-2xs flex items-center gap-1.5 ${
-                parishFilter === 'confession'
-                  ? 'bg-purple-900 text-purple-100 font-bold border border-purple-950'
-                  : 'bg-white text-purple-950 hover:bg-purple-50/50 border border-purple-300/60'
-              }`}
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
-              <span>Daily Confession</span>
-            </button>
+                {/* Parish Filter Chips */}
+                <div className="md:col-span-7 flex flex-wrap items-center gap-1.5">
+                  <span className="text-[11px] font-cinzel text-amber-300 font-bold uppercase mr-1">
+                    Sanctuary:
+                  </span>
+                  <button
+                    onClick={() => setParishFilter('all')}
+                    className={`px-2.5 py-1 rounded-md text-xs font-serif transition-all cursor-pointer ${
+                      parishFilter === 'all'
+                        ? 'bg-[#8B5A2B] text-white font-bold shadow-2xs'
+                        : 'bg-white/10 hover:bg-white/20 text-amber-100 border border-white/10'
+                    }`}
+                  >
+                    All ({CEBU_CITY_PARISHES.length})
+                  </button>
+                  <button
+                    onClick={() => setParishFilter('confession')}
+                    className={`px-2.5 py-1 rounded-md text-xs font-serif transition-all cursor-pointer flex items-center gap-1 ${
+                      parishFilter === 'confession'
+                        ? 'bg-purple-900 text-purple-100 font-bold border border-purple-500/50 shadow-2xs'
+                        : 'bg-white/10 hover:bg-white/20 text-amber-100 border border-white/10'
+                    }`}
+                  >
+                    <ShieldCheck className="w-3 h-3 text-purple-400" />
+                    <span>Daily Confession</span>
+                  </button>
+                  <button
+                    onClick={() => setParishFilter('adoration-247')}
+                    className={`px-2.5 py-1 rounded-md text-xs font-serif transition-all cursor-pointer flex items-center gap-1 ${
+                      parishFilter === 'adoration-247'
+                        ? 'bg-amber-900 text-amber-100 font-bold border border-amber-500/50 shadow-2xs'
+                        : 'bg-white/10 hover:bg-white/20 text-amber-100 border border-white/10'
+                    }`}
+                  >
+                    <Sparkles className="w-3 h-3 text-amber-400" />
+                    <span>24/7 Adoration</span>
+                  </button>
+                  <button
+                    onClick={() => setParishFilter('shrines')}
+                    className={`px-2.5 py-1 rounded-md text-xs font-serif transition-all cursor-pointer flex items-center gap-1 ${
+                      parishFilter === 'shrines'
+                        ? 'bg-amber-800 text-white font-bold shadow-2xs'
+                        : 'bg-white/10 hover:bg-white/20 text-amber-100 border border-white/10'
+                    }`}
+                  >
+                    <Award className="w-3 h-3 text-amber-400" />
+                    <span>Major Shrines</span>
+                  </button>
+                </div>
 
-            <button
-              onClick={() => setParishFilter('adoration-247')}
-              className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-serif transition-all cursor-pointer whitespace-nowrap shadow-2xs flex items-center gap-1.5 ${
-                parishFilter === 'adoration-247'
-                  ? 'bg-amber-900 text-amber-100 font-bold border border-amber-950'
-                  : 'bg-white text-amber-950 hover:bg-amber-50/50 border border-amber-300/60'
-              }`}
-            >
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>24/7 Adoration</span>
-            </button>
+              </div>
 
-            <button
-              onClick={() => setParishFilter('shrines')}
-              className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-serif transition-all cursor-pointer whitespace-nowrap shadow-2xs flex items-center gap-1.5 ${
-                parishFilter === 'shrines'
-                  ? 'bg-[#6B3E1E] text-amber-100 font-bold border border-[#4A2810]'
-                  : 'bg-white text-[#4A2E1B] hover:bg-stone-50 border border-[#8B5A2B]/30'
-              }`}
-            >
-              <Award className="w-3.5 h-3.5 text-[#8B5A2B]" />
-              <span>Major Shrines</span>
-            </button>
-          </div>
-
+              {/* Schedule Type Filter Tabs in Settings */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-white/10 text-xs">
+                <span className="text-[11px] font-cinzel text-amber-300 font-bold uppercase mr-1">
+                  View Type:
+                </span>
+                {(['all', 'sunday', 'weekday', 'confession', 'adoration'] as ScheduleTab[]).map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveScheduleTab(tab)}
+                    className={`px-2.5 py-1 rounded-md capitalize font-serif transition-all cursor-pointer ${
+                      activeScheduleTab === tab
+                        ? 'bg-[#D4AF37] text-stone-950 font-bold shadow-xs'
+                        : 'bg-white/10 hover:bg-white/20 text-amber-100'
+                    }`}
+                  >
+                    {tab === 'all' ? 'All Schedules' : tab === 'sunday' ? 'Sunday Masses' : tab === 'weekday' ? 'Weekday Masses' : tab === 'confession' ? 'Confession' : 'Adoration'}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Mobile Compact Parish Selector Bar */}
-        <div className="md:hidden px-3.5 py-2.5 bg-[#DDCBB8] border-b border-[#8B5A2B]/20 flex items-center justify-between gap-2">
-          <button
-            onClick={handlePrevParish}
-            className="p-1.5 rounded-lg bg-white text-[#341D10] border border-[#8B5A2B]/30 hover:bg-stone-50 shadow-2xs cursor-pointer shrink-0"
-            title="Previous Parish"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-
-          <div className="flex-1 text-center min-w-0 px-1">
-            <span className="text-[11px] font-cinzel text-[#7C5A40] uppercase font-bold block leading-none">
-              Viewing Sanctuary ({selectedParishIndex + 1} of {CEBU_CITY_PARISHES.length})
-            </span>
-            <span className="font-cinzel text-xs sm:text-sm font-bold text-[#24140B] truncate block mt-0.5">
-              {selectedParish.popularName || selectedParish.name}
-            </span>
-          </div>
-
-          <button
-            onClick={handleNextParish}
-            className="p-1.5 rounded-lg bg-white text-[#341D10] border border-[#8B5A2B]/30 hover:bg-stone-50 shadow-2xs cursor-pointer shrink-0"
-            title="Next Parish"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Main Body: Desktop Split View (Left: Parishes Directory, Right: Sacred Schedule) */}
-        <div className="flex-1 overflow-y-auto grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-[#8B5A2B]/20">
+        {/* Main Body: Expanded Schedule Viewer Layout (Desktop 2-Column Directory + Large Viewer) */}
+        <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-[#8B5A2B]/20 overflow-hidden">
           
-          {/* Left Column: Parish Selection Directory (Desktop) */}
-          <div className="hidden md:block md:col-span-4 p-3.5 space-y-2 max-h-[64vh] lg:max-h-[70vh] overflow-y-auto bg-[#E8DDD0]/70">
+          {/* Left Column: Parish Directory Selection (Desktop) */}
+          <div className="hidden md:block md:col-span-4 lg:col-span-3 p-3 space-y-1.5 overflow-y-auto bg-[#E8DDD0]/70 h-full">
             <div className="px-1 py-1 flex items-center justify-between text-xs font-cinzel font-bold text-[#6D482F] uppercase tracking-wider">
-              <span>Sanctuaries of Cebu ({filteredParishes.length})</span>
+              <span>Sanctuaries ({filteredParishes.length})</span>
               <Compass className="w-3.5 h-3.5 text-[#8B5A2B]" />
             </div>
 
@@ -314,55 +351,43 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                   c.toLowerCase().includes('daily') || c.toLowerCase().includes('monday to saturday')
                 );
                 const hasPerpetualAdoration = parish.adorationChapelHours.toLowerCase().includes('24');
-                const isShrineOrBasilica = parish.name.includes('Basilica') || parish.name.includes('Shrine') || parish.name.includes('Cathedral');
 
                 return (
                   <button
                     key={parish.id}
                     onClick={() => setSelectedParishId(parish.id)}
-                    className={`w-full text-left p-3 rounded-xl transition-all duration-150 cursor-pointer group flex items-start justify-between gap-2.5 ${
+                    className={`w-full text-left p-2.5 rounded-xl transition-all duration-150 cursor-pointer group flex items-start justify-between gap-2 ${
                       isSelected
                         ? 'bg-gradient-to-br from-[#381F10] to-[#24130A] text-white border-2 border-[#D4AF37] shadow-md ring-1 ring-[#D4AF37]/50'
                         : 'bg-white hover:bg-[#FAF6F0] text-[#341D10] border border-[#CBB5A0] shadow-2xs hover:border-[#8B5A2B]'
                     }`}
                   >
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
-                        <span className={`font-cinzel text-sm font-bold block transition-colors truncate ${
-                          isSelected ? 'text-white font-extrabold' : 'text-[#2D180B] group-hover:text-[#5C3214]'
-                        }`}>
-                          {parish.name}
-                        </span>
-                      </div>
+                      <span className={`font-cinzel text-xs sm:text-sm font-bold block transition-colors truncate ${
+                        isSelected ? 'text-white font-extrabold' : 'text-[#2D180B] group-hover:text-[#5C3214]'
+                      }`}>
+                        {parish.name}
+                      </span>
 
                       {parish.popularName && (
-                        <span className={`text-xs font-serif block truncate mt-0.5 ${
+                        <span className={`text-[11px] font-serif block truncate mt-0.5 ${
                           isSelected ? 'text-amber-200 font-semibold' : 'text-[#634835]'
                         }`}>
                           {parish.popularName}
                         </span>
                       )}
 
-                      <div className={`flex items-center gap-1.5 text-[11px] mt-1.5 font-serif ${
+                      <div className={`flex items-center gap-1.5 text-[10px] sm:text-[11px] mt-1 font-serif ${
                         isSelected ? 'text-amber-100/90' : 'text-[#7A5B42]'
                       }`}>
                         <MapPin className={`w-3 h-3 shrink-0 ${isSelected ? 'text-amber-300' : 'text-[#8C6D54]'}`} />
                         <span className="truncate">{parish.address}</span>
                       </div>
 
-                      {/* Attribute Pills */}
-                      <div className="flex flex-wrap items-center gap-1 mt-2">
-                        {isShrineOrBasilica && (
-                          <span className={`text-[9.5px] px-1.5 py-0.5 rounded font-cinzel font-semibold leading-none ${
-                            isSelected 
-                              ? 'bg-amber-400/20 text-amber-200 border border-amber-400/40' 
-                              : 'bg-[#EAE0D3] text-[#5C3418] border border-[#D5C2B0]'
-                          }`}>
-                            Shrine
-                          </span>
-                        )}
+                      {/* Small tags */}
+                      <div className="flex flex-wrap items-center gap-1 mt-1.5">
                         {hasDailyConfession && (
-                          <span className={`text-[9.5px] px-1.5 py-0.5 rounded font-serif font-semibold leading-none ${
+                          <span className={`text-[9px] px-1.5 py-0.2 rounded font-serif font-semibold leading-none ${
                             isSelected 
                               ? 'bg-purple-900/60 text-purple-200 border border-purple-400/40' 
                               : 'bg-purple-100 text-purple-900 border border-purple-200'
@@ -371,7 +396,7 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                           </span>
                         )}
                         {hasPerpetualAdoration && (
-                          <span className={`text-[9.5px] px-1.5 py-0.5 rounded font-serif font-semibold leading-none ${
+                          <span className={`text-[9px] px-1.5 py-0.2 rounded font-serif font-semibold leading-none ${
                             isSelected 
                               ? 'bg-amber-900/60 text-amber-200 border border-amber-400/40' 
                               : 'bg-amber-100 text-amber-900 border border-amber-200'
@@ -382,7 +407,7 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                       </div>
                     </div>
 
-                    <ChevronRight className={`w-4 h-4 shrink-0 mt-1 transition-transform ${
+                    <ChevronRight className={`w-3.5 h-3.5 shrink-0 mt-1 transition-transform ${
                       isSelected ? 'text-[#D4AF37] translate-x-0.5' : 'text-[#8C6D54] group-hover:text-[#4A2D19]'
                     }`} />
                   </button>
@@ -391,63 +416,66 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
             )}
           </div>
 
-          {/* Right Column: Detailed Sacred Schedule View */}
-          <div className="md:col-span-8 p-4 sm:p-6 lg:p-7 space-y-5 max-h-[66vh] lg:max-h-[70vh] overflow-y-auto bg-[#FAF6F0]">
+          {/* Right Column: High-Capacity Sacred Schedule Viewer (Enlarged and Spacious) */}
+          <div className="md:col-span-8 lg:col-span-9 p-3.5 sm:p-5 lg:p-6 space-y-4 overflow-y-auto bg-[#FAF6F0] h-full">
             
-            {/* Selected Parish Dignified Altar Title Card */}
-            <div className="rounded-2xl p-4 sm:p-5 bg-gradient-to-b from-[#EFE5D8] to-[#E5D7C7] border border-[#8B5A2B]/35 shadow-xs space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                <div className="space-y-1">
+            {/* Selected Parish Dignified Header Bar */}
+            <div className="rounded-xl p-3 sm:p-4 bg-gradient-to-b from-[#EFE5D8] to-[#E5D7C7] border border-[#8B5A2B]/35 shadow-xs space-y-2">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <div className="space-y-0.5 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-cinzel text-xs font-bold text-[#8B5A2B] uppercase tracking-wider bg-white/70 px-2 py-0.5 rounded border border-[#8B5A2B]/20">
-                      Parish #{selectedParishIndex + 1}
+                    <span className="font-cinzel text-[10.5px] font-bold text-[#8B5A2B] uppercase tracking-wider bg-white/70 px-1.5 py-0.5 rounded border border-[#8B5A2B]/20">
+                      Sanctuary #{selectedParishIndex + 1}
                     </span>
-                    <span className="text-xs font-serif text-[#5C3D28]">
+                    <span className="text-[11px] font-serif text-[#5C3D28]">
                       Patron: <strong className="text-[#24140B] font-semibold">{selectedParish.patronSaint}</strong>
+                    </span>
+                    <span className="text-[11px] font-serif text-[#5C3D28] hidden sm:inline">
+                      • Feast: <strong className="text-[#24140B] font-semibold">{selectedParish.feastDay}</strong>
                     </span>
                   </div>
 
-                  <h3 className="font-cinzel text-xl sm:text-2xl lg:text-3xl font-bold text-[#24140B] leading-tight">
+                  <h3 className="font-cinzel text-lg sm:text-xl lg:text-2xl font-bold text-[#24140B] leading-tight truncate">
                     {selectedParish.name}
                   </h3>
 
                   {selectedParish.popularName && (
-                    <p className="text-sm sm:text-base font-serif font-semibold text-[#6B3E1E]">
+                    <p className="text-xs sm:text-sm font-serif font-semibold text-[#6B3E1E] truncate">
                       {selectedParish.popularName}
                     </p>
                   )}
                 </div>
 
-                {/* Quick Share / Copy Entire Schedule Button */}
+                {/* Quick Copy Full Schedule Button */}
                 <button
                   onClick={() => handleCopySchedule(selectedParish)}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#3A2213] to-[#24140B] hover:from-[#4E301C] hover:to-[#381F10] text-amber-50 text-xs sm:text-sm font-serif font-semibold transition-all cursor-pointer shrink-0 shadow-xs border border-[#8B5A2B]/40"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#3A2213] hover:bg-[#4E301C] text-amber-50 text-xs font-serif font-semibold transition-all cursor-pointer shrink-0 shadow-2xs border border-[#8B5A2B]/40 self-start sm:self-center"
                   title="Copy complete parish schedule to clipboard"
                 >
                   {copiedId === selectedParish.id ? (
                     <>
-                      <Check className="w-4 h-4 text-emerald-400" />
-                      <span>Copied Full Schedule</span>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Copied Schedule</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-4 h-4 text-[#D4AF37]" />
-                      <span>Copy Full Schedule</span>
+                      <Copy className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <span>Copy Schedule</span>
                     </>
                   )}
                 </button>
               </div>
 
-              {/* Address, Phone, Feast Day Strip */}
-              <div className="flex flex-wrap items-center gap-y-1.5 gap-x-4 text-xs sm:text-sm text-[#5C3D28] pt-1 border-t border-[#8B5A2B]/20 font-serif">
-                <div className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#7A4B27] shrink-0" />
-                  <span>{selectedParish.address}</span>
+              {/* Address and Contact info */}
+              <div className="flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-[#5C3D28] pt-1 border-t border-[#8B5A2B]/20 font-serif">
+                <div className="flex items-center gap-1">
+                  <MapPin className="w-3 h-3 text-[#7A4B27] shrink-0" />
+                  <span className="truncate">{selectedParish.address}</span>
                 </div>
 
                 {selectedParish.contactNumber && (
-                  <div className="flex items-center gap-1.5">
-                    <Phone className="w-3.5 h-3.5 text-[#7A4B27] shrink-0" />
+                  <div className="flex items-center gap-1">
+                    <Phone className="w-3 h-3 text-[#7A4B27] shrink-0" />
                     <a 
                       href={`tel:${selectedParish.contactNumber.replace(/[^0-9]/g, '')}`} 
                       className="text-[#6B3E1E] hover:underline font-semibold"
@@ -456,110 +484,30 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                     </a>
                   </div>
                 )}
-
-                <div className="flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-[#7A4B27] shrink-0" />
-                  <span>Feast: <strong className="text-[#24140B] font-semibold">{selectedParish.feastDay}</strong></span>
-                </div>
               </div>
-            </div>
-
-            {/* Historical Significance Banner if available */}
-            {selectedParish.historicalSignificance && (
-              <div className="p-3.5 sm:p-4 rounded-xl bg-[#F4EFE6] border border-[#8B5A2B]/25 text-xs sm:text-sm font-serif text-[#3A2213] flex items-start gap-2.5 shadow-2xs">
-                <Sparkles className="w-4 h-4 text-[#8B5A2B] shrink-0 mt-0.5" />
-                <p className="leading-relaxed">
-                  <strong className="font-semibold text-[#24140B]">Heritage &amp; Sacred History:</strong> {selectedParish.historicalSignificance}
-                </p>
-              </div>
-            )}
-
-            {/* Filter Tabs for Schedule Sections */}
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar border-b border-[#8B5A2B]/20 pb-2">
-              <button
-                onClick={() => setActiveScheduleTab('all')}
-                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer whitespace-nowrap ${
-                  activeScheduleTab === 'all'
-                    ? 'bg-[#3A2213] text-amber-50 shadow-xs'
-                    : 'bg-white hover:bg-stone-50 text-[#5C3D28] border border-[#8B5A2B]/30'
-                }`}
-              >
-                All Schedules
-              </button>
-
-              <button
-                onClick={() => setActiveScheduleTab('sunday')}
-                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                  activeScheduleTab === 'sunday'
-                    ? 'bg-[#8B5A2B] text-white shadow-xs'
-                    : 'bg-white hover:bg-stone-50 text-[#5C3D28] border border-[#8B5A2B]/30'
-                }`}
-              >
-                <Sun className="w-3.5 h-3.5 text-amber-600" />
-                <span>Sunday Masses ({selectedParish.sundayMasses.length})</span>
-              </button>
-
-              <button
-                onClick={() => setActiveScheduleTab('weekday')}
-                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                  activeScheduleTab === 'weekday'
-                    ? 'bg-[#5C3418] text-white shadow-xs'
-                    : 'bg-white hover:bg-stone-50 text-[#5C3D28] border border-[#8B5A2B]/30'
-                }`}
-              >
-                <Clock className="w-3.5 h-3.5 text-[#8B5A2B]" />
-                <span>Weekday Masses ({selectedParish.dailyMasses.length})</span>
-              </button>
-
-              <button
-                onClick={() => setActiveScheduleTab('confession')}
-                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                  activeScheduleTab === 'confession'
-                    ? 'bg-purple-900 text-purple-100 shadow-xs'
-                    : 'bg-white hover:bg-purple-50/40 text-purple-900 border border-purple-300/60'
-                }`}
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-purple-700" />
-                <span>Confession Times</span>
-              </button>
-
-              <button
-                onClick={() => setActiveScheduleTab('adoration')}
-                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                  activeScheduleTab === 'adoration'
-                    ? 'bg-amber-800 text-amber-100 shadow-xs'
-                    : 'bg-white hover:bg-amber-50/40 text-amber-950 border border-amber-300/60'
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>Adoration Chapel</span>
-              </button>
             </div>
 
             {/* 1. SUNDAY HOLY MASSES */}
             {(activeScheduleTab === 'all' || activeScheduleTab === 'sunday') && (
-              <div className="space-y-3 rounded-2xl p-4 sm:p-5 bg-white border border-[#D5C2B0] shadow-xs border-l-4 border-l-[#C49A45]">
-                <div className="flex items-center justify-between border-b border-[#E8DDD0] pb-2.5">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-amber-100 text-amber-900">
-                      <Sun className="w-4 h-4" />
+              <div className="space-y-2.5 rounded-xl p-3.5 sm:p-4 bg-white border border-[#D5C2B0] shadow-xs border-l-4 border-l-[#C49A45]">
+                <div className="flex items-center justify-between border-b border-[#E8DDD0] pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <div className="p-1 rounded-md bg-amber-100 text-amber-900">
+                      <Sun className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#24140B] uppercase tracking-wide">
+                      <h4 className="font-cinzel text-xs sm:text-sm font-bold text-[#24140B] uppercase tracking-wide">
                         Sunday Holy Masses
                       </h4>
-                      <p className="text-[11px] sm:text-xs font-serif text-[#6D482F]">
-                        Fulfill the Sunday Obligation • Arrive 15 minutes prior for quiet prayer
-                      </p>
                     </div>
                   </div>
 
-                  <span className="text-xs font-cinzel font-bold bg-[#EFE6DC] text-[#341D10] px-2.5 py-1 rounded-md border border-[#D5C2B0]">
+                  <span className="text-[11px] font-cinzel font-bold bg-[#EFE6DC] text-[#341D10] px-2 py-0.5 rounded border border-[#D5C2B0]">
                     {selectedParish.sundayMasses.length} Masses
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-0.5">
                   {selectedParish.sundayMasses.map((m, idx) => {
                     const slotKey = `${selectedParish.id}-sunday-${idx}`;
                     const isSlotCopied = copiedSlotKey === slotKey;
@@ -571,15 +519,15 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                         key={idx}
                         type="button"
                         onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Sunday Mass: ${m.time} (${m.language}${m.notes ? `, ${m.notes}` : ''})`)}
-                        className="p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F4ECE1] border border-[#E0D2C2] hover:border-[#8B5A2B] flex flex-col justify-between gap-2 text-left font-serif transition-all cursor-pointer shadow-2xs group"
+                        className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F4ECE1] border border-[#E0D2C2] hover:border-[#8B5A2B] flex flex-col justify-between gap-1.5 text-left font-serif transition-all cursor-pointer shadow-2xs group"
                         title="Click to copy this Sunday Mass time"
                       >
                         <div className="flex items-center justify-between gap-1 w-full">
-                          <span className="font-cinzel font-bold text-base sm:text-lg text-[#24140B] group-hover:text-[#6B3E1E] transition-colors">
+                          <span className="font-cinzel font-bold text-sm sm:text-base text-[#24140B] group-hover:text-[#6B3E1E] transition-colors">
                             {m.time}
                           </span>
 
-                          <span className={`text-[11px] px-2 py-0.5 rounded font-serif font-semibold border ${
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded font-serif font-semibold border ${
                             isEnglish 
                               ? 'bg-blue-50 text-blue-900 border-blue-200' 
                               : isCebuano 
@@ -591,9 +539,8 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                         </div>
 
                         {m.notes && (
-                          <div className="text-[11px] sm:text-xs text-[#5C3D28] font-serif italic flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#8B5A2B]/60" />
-                            <span className="truncate">{m.notes}</span>
+                          <div className="text-[10.5px] text-[#5C3D28] font-serif italic truncate">
+                            {m.notes}
                           </div>
                         )}
                       </button>
@@ -605,28 +552,25 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
 
             {/* 2. WEEKDAY HOLY MASSES */}
             {(activeScheduleTab === 'all' || activeScheduleTab === 'weekday') && (
-              <div className="space-y-3 rounded-2xl p-4 sm:p-5 bg-white border border-[#D5C2B0] shadow-xs border-l-4 border-l-[#8B5A2B]">
-                <div className="flex items-center justify-between border-b border-[#E8DDD0] pb-2.5">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-[#EFE6DC] text-[#5C3418]">
-                      <Clock className="w-4 h-4" />
+              <div className="space-y-2.5 rounded-xl p-3.5 sm:p-4 bg-white border border-[#D5C2B0] shadow-xs border-l-4 border-l-[#8B5A2B]">
+                <div className="flex items-center justify-between border-b border-[#E8DDD0] pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <div className="p-1 rounded-md bg-[#EFE6DC] text-[#5C3418]">
+                      <Clock className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#24140B] uppercase tracking-wide">
+                      <h4 className="font-cinzel text-xs sm:text-sm font-bold text-[#24140B] uppercase tracking-wide">
                         Weekday Holy Masses (Monday – Saturday)
                       </h4>
-                      <p className="text-[11px] sm:text-xs font-serif text-[#6D482F]">
-                        Daily Eucharist, Anticipated Masses &amp; Weekly Novenas
-                      </p>
                     </div>
                   </div>
 
-                  <span className="text-xs font-cinzel font-bold bg-[#EFE6DC] text-[#341D10] px-2.5 py-1 rounded-md border border-[#D5C2B0]">
+                  <span className="text-[11px] font-cinzel font-bold bg-[#EFE6DC] text-[#341D10] px-2 py-0.5 rounded border border-[#D5C2B0]">
                     {selectedParish.dailyMasses.length} Masses
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 pt-0.5">
                   {selectedParish.dailyMasses.map((m, idx) => {
                     const slotKey = `${selectedParish.id}-daily-${idx}`;
                     const isSlotCopied = copiedSlotKey === slotKey;
@@ -638,15 +582,15 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                         key={idx}
                         type="button"
                         onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Weekday Mass: ${m.time} (${m.language}${m.notes ? `, ${m.notes}` : ''})`)}
-                        className="p-3 rounded-xl bg-[#FAF8F5] hover:bg-[#F4ECE1] border border-[#E0D2C2] hover:border-[#8B5A2B] flex flex-col justify-between gap-2 text-left font-serif transition-all cursor-pointer shadow-2xs group"
+                        className="p-2.5 rounded-lg bg-[#FAF8F5] hover:bg-[#F4ECE1] border border-[#E0D2C2] hover:border-[#8B5A2B] flex flex-col justify-between gap-1.5 text-left font-serif transition-all cursor-pointer shadow-2xs group"
                         title="Click to copy this Weekday Mass time"
                       >
                         <div className="flex items-center justify-between gap-1 w-full">
-                          <span className="font-cinzel font-bold text-base sm:text-lg text-[#24140B] group-hover:text-[#6B3E1E] transition-colors">
+                          <span className="font-cinzel font-bold text-sm sm:text-base text-[#24140B] group-hover:text-[#6B3E1E] transition-colors">
                             {m.time}
                           </span>
 
-                          <span className={`text-[11px] px-2 py-0.5 rounded font-serif font-semibold border ${
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded font-serif font-semibold border ${
                             isEnglish 
                               ? 'bg-blue-50 text-blue-900 border-blue-200' 
                               : isCebuano 
@@ -658,9 +602,8 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                         </div>
 
                         {m.notes && (
-                          <div className="text-[11px] sm:text-xs text-[#5C3D28] font-serif italic flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#8B5A2B]/60" />
-                            <span className="truncate">{m.notes}</span>
+                          <div className="text-[10.5px] text-[#5C3D28] font-serif italic truncate">
+                            {m.notes}
                           </div>
                         )}
                       </button>
@@ -672,19 +615,16 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
 
             {/* 3. SACRAMENT OF RECONCILIATION (CONFESSION) */}
             {(activeScheduleTab === 'all' || activeScheduleTab === 'confession') && (
-              <div className="space-y-3.5 rounded-2xl p-4 sm:p-5 bg-gradient-to-br from-purple-50/90 via-white to-stone-50 border border-purple-200 shadow-xs border-l-4 border-l-purple-800">
-                <div className="flex items-center justify-between border-b border-purple-200/80 pb-2.5">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-purple-100 text-purple-900">
-                      <ShieldCheck className="w-4 h-4" />
+              <div className="space-y-3 rounded-xl p-3.5 sm:p-4 bg-gradient-to-br from-purple-50/90 via-white to-stone-50 border border-purple-200 shadow-xs border-l-4 border-l-purple-800">
+                <div className="flex items-center justify-between border-b border-purple-200/80 pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <div className="p-1 rounded-md bg-purple-100 text-purple-900">
+                      <ShieldCheck className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-purple-950 uppercase tracking-wide">
+                      <h4 className="font-cinzel text-xs sm:text-sm font-bold text-purple-950 uppercase tracking-wide">
                         Sacrament of Reconciliation (Confession)
                       </h4>
-                      <p className="text-[11px] sm:text-xs font-serif text-purple-900/80">
-                        Sacramental absolution, forgiveness of sins, and restoration of sanctifying grace
-                      </p>
                     </div>
                   </div>
 
@@ -696,24 +636,24 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                   </button>
                 </div>
 
-                {/* Optional 5 Steps to Confession Guide */}
+                {/* 5 Steps to Confession Guide */}
                 {showConfessionGuide && (
-                  <div className="p-3.5 rounded-xl bg-purple-100/70 border border-purple-200 text-xs sm:text-sm font-serif text-purple-950 space-y-1.5 animate-in fade-in">
-                    <p className="font-bold font-cinzel text-xs text-purple-900">
+                  <div className="p-3 rounded-lg bg-purple-100/80 border border-purple-200 text-xs font-serif text-purple-950 space-y-1 animate-in fade-in">
+                    <p className="font-bold font-cinzel text-[11px] text-purple-900">
                       Five Requirements for a Devout Sacramental Confession:
                     </p>
-                    <ol className="list-decimal pl-5 space-y-1 text-purple-950">
-                      <li><strong>Examination of Conscience:</strong> Recall all sins committed against the Ten Commandments since your last good confession.</li>
-                      <li><strong>Contrition:</strong> Sincere sorrow for having offended God Who is all good and deserving of all your love.</li>
-                      <li><strong>Firm Purpose of Amendment:</strong> Resolute decision to avoid these sins and proximate occasions in the future.</li>
-                      <li><strong>Confession:</strong> Clearly confess all mortal sins (number and kind) to the priest in the confessional.</li>
-                      <li><strong>Satisfaction / Penance:</strong> Faithfully pray the penance assigned by the confessor and make restitution if required.</li>
+                    <ol className="list-decimal pl-4 space-y-0.5 text-purple-950 text-[11.5px]">
+                      <li><strong>Examination of Conscience:</strong> Recall sins committed against God&apos;s commandments.</li>
+                      <li><strong>Contrition:</strong> Sincere sorrow for having offended God Who is all good.</li>
+                      <li><strong>Firm Purpose of Amendment:</strong> Resolute decision to avoid sin in the future.</li>
+                      <li><strong>Confession:</strong> Clearly confess all mortal sins to the priest in the confessional.</li>
+                      <li><strong>Satisfaction / Penance:</strong> Faithfully pray the penance assigned by the confessor.</li>
                     </ol>
                   </div>
                 )}
 
                 {/* Confession Slots */}
-                <div className="space-y-2 pt-1">
+                <div className="space-y-1.5 pt-0.5">
                   {selectedParish.confessionSchedule.map((c, idx) => {
                     const slotKey = `${selectedParish.id}-confession-${idx}`;
                     const isSlotCopied = copiedSlotKey === slotKey;
@@ -723,20 +663,20 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                         key={idx}
                         type="button"
                         onClick={() => handleCopySlot(slotKey, `${selectedParish.name} — Confession: ${c}`)}
-                        className="w-full p-3 rounded-xl bg-white hover:bg-purple-50/60 border border-purple-200/90 hover:border-purple-400 flex items-center justify-between gap-3 text-left font-serif transition-all cursor-pointer shadow-2xs group"
+                        className="w-full p-2.5 rounded-lg bg-white hover:bg-purple-50/60 border border-purple-200/90 hover:border-purple-400 flex items-center justify-between gap-2.5 text-left font-serif transition-all cursor-pointer shadow-2xs group"
                         title="Click to copy this Confession schedule"
                       >
-                        <div className="flex items-start gap-2.5">
-                          <span className="w-2 h-2 rounded-full bg-purple-600 mt-1.5 shrink-0" />
+                        <div className="flex items-start gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-purple-600 mt-1.5 shrink-0" />
                           <span className="font-semibold text-xs sm:text-sm text-purple-950 leading-snug">
                             {c}
                           </span>
                         </div>
 
-                        <span className="text-xs font-cinzel font-bold text-purple-800 shrink-0">
+                        <span className="text-[11px] font-cinzel font-bold text-purple-800 shrink-0">
                           {isSlotCopied ? (
                             <span className="flex items-center gap-1 text-emerald-700">
-                              <Check className="w-3.5 h-3.5" />
+                              <Check className="w-3 h-3" />
                               <span>Copied</span>
                             </span>
                           ) : (
@@ -752,43 +692,40 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
 
             {/* 4. EUCHARISTIC ADORATION CHAPEL */}
             {(activeScheduleTab === 'all' || activeScheduleTab === 'adoration') && (
-              <div className="space-y-3 rounded-2xl p-4 sm:p-5 bg-white border border-[#D5C2B0] shadow-xs border-l-4 border-l-amber-500">
-                <div className="flex items-center justify-between border-b border-[#E8DDD0] pb-2.5">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-amber-100 text-amber-900">
-                      <Sparkles className="w-4 h-4" />
+              <div className="space-y-2 rounded-xl p-3.5 sm:p-4 bg-white border border-[#D5C2B0] shadow-xs border-l-4 border-l-amber-500">
+                <div className="flex items-center justify-between border-b border-[#E8DDD0] pb-2">
+                  <div className="flex items-center gap-1.5">
+                    <div className="p-1 rounded-md bg-amber-100 text-amber-900">
+                      <Sparkles className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#24140B] uppercase tracking-wide">
+                      <h4 className="font-cinzel text-xs sm:text-sm font-bold text-[#24140B] uppercase tracking-wide">
                         Eucharistic Adoration Chapel
                       </h4>
-                      <p className="text-[11px] sm:text-xs font-serif text-[#6D482F]">
-                        Adore Our Eucharistic Lord exposed in the sacred monstrance
-                      </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-1">
+                <div className="pt-0.5">
                   <button
                     type="button"
                     onClick={() => handleCopySlot(`${selectedParish.id}-adoration`, `${selectedParish.name} — Eucharistic Adoration Chapel: ${selectedParish.adorationChapelHours}`)}
-                    className="w-full p-3.5 rounded-xl bg-gradient-to-r from-amber-50/80 to-white hover:bg-amber-50 border border-amber-200/90 flex items-center justify-between gap-3 text-left font-serif transition-all cursor-pointer shadow-2xs group"
+                    className="w-full p-2.5 rounded-lg bg-gradient-to-r from-amber-50/80 to-white hover:bg-amber-50 border border-amber-200/90 flex items-center justify-between gap-2.5 text-left font-serif transition-all cursor-pointer shadow-2xs group"
                     title="Click to copy Adoration Chapel hours"
                   >
                     <div className="space-y-0.5">
-                      <span className="text-xs font-cinzel font-bold text-amber-900 block">
-                        Exposition of the Most Blessed Sacrament
+                      <span className="text-[10.5px] font-cinzel font-bold text-amber-900 block">
+                        Exposition of the Blessed Sacrament
                       </span>
-                      <span className="font-semibold text-sm sm:text-base text-[#24140B] leading-snug">
+                      <span className="font-semibold text-xs sm:text-sm text-[#24140B] leading-snug">
                         {selectedParish.adorationChapelHours}
                       </span>
                     </div>
 
-                    <span className="text-xs font-cinzel font-bold text-amber-800 shrink-0">
+                    <span className="text-[11px] font-cinzel font-bold text-amber-800 shrink-0">
                       {copiedSlotKey === `${selectedParish.id}-adoration` ? (
                         <span className="flex items-center gap-1 text-emerald-700">
-                          <Check className="w-3.5 h-3.5" />
+                          <Check className="w-3 h-3" />
                           <span>Copied</span>
                         </span>
                       ) : (
@@ -799,8 +736,8 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
                 </div>
 
                 {selectedParish.notes && (
-                  <p className="text-xs sm:text-sm font-serif text-[#5C3D28] pt-1 leading-relaxed bg-[#FAF8F5] p-3 rounded-xl border border-[#E0D2C2]">
-                    <strong className="font-semibold text-[#24140B]">Sanctuary Notes &amp; Devotions:</strong> {selectedParish.notes}
+                  <p className="text-[11px] sm:text-xs font-serif text-[#5C3D28] pt-0.5 leading-relaxed bg-[#FAF8F5] p-2.5 rounded-lg border border-[#E0D2C2]">
+                    <strong className="font-semibold text-[#24140B]">Devotions &amp; Notes:</strong> {selectedParish.notes}
                   </p>
                 )}
               </div>
@@ -810,20 +747,14 @@ Archdiocese of Cebu • Catholic Ecclesiastical Directory`;
 
         </div>
 
-        {/* Dignified Footer Strip */}
-        <div className="px-5 py-3.5 bg-[#DFD0C0] border-t border-[#8B5A2B]/25 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs sm:text-sm font-serif text-[#4A2D19]">
-          <div className="flex items-center gap-2">
-            <Church className="w-4 h-4 text-[#7A4B27] shrink-0" />
-            <p className="font-medium text-center sm:text-left">
-              Archdiocese of Cebu Mass Schedules • Always arrive 15 minutes before Holy Mass
-            </p>
-          </div>
-
+        {/* Dignified Compact Footer Bar */}
+        <div className="px-4 py-2 sm:px-6 bg-[#DFD0C0] border-t border-[#8B5A2B]/25 flex items-center justify-between gap-3 text-xs font-serif text-[#4A2D19] shrink-0">
+          <p className="truncate">Archdiocese of Cebu Mass Schedules • Always arrive 15 minutes before Holy Mass</p>
           <button
             onClick={onClose}
-            className="px-6 py-2 rounded-xl bg-[#3A2213] hover:bg-[#4E301C] text-amber-50 font-serif font-semibold text-xs sm:text-sm transition-colors shadow-xs cursor-pointer border border-[#8B5A2B]/40"
+            className="px-4 py-1.5 rounded-lg bg-[#3A2213] hover:bg-[#4E301C] text-amber-50 font-serif font-semibold text-xs transition-colors shadow-2xs cursor-pointer border border-[#8B5A2B]/40 shrink-0"
           >
-            Close Directory
+            Close
           </button>
         </div>
 

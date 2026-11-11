@@ -63,6 +63,7 @@ export type ActiveTab =
   | 'readings'
   | 'saints'
   | 'catechism'
+  | 'catholic-ai'
   | 'divine-office'
   | 'catholic-bibles'
   | 'reflection'
@@ -273,6 +274,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: BetterScrollIcon, 
       tag: 'Doctrine', 
       subtext: 'Pillars of Catholic Faith' 
+    },
+    { 
+      id: 'catholic-ai', 
+      label: 'Catholic Assistant', 
+      icon: Sparkles, 
+      tag: 'Magisterium', 
+      subtext: 'Scripture, Catechism & Church Fathers AI Research' 
     },
     { 
       id: 'divine-office', 

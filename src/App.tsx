@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { Navigation, ActiveTab } from './components/Navigation';
 import { DailyMassReadingsView } from './components/DailyMassReadingsView';
 import { CatechismView } from './components/CatechismView';
+import { CatholicAIAssistantView } from './components/CatholicAIAssistantView';
 import { SaintOfTheDayView } from './components/SaintOfTheDayView';
 import { DivineOfficeView } from './components/DivineOfficeView';
 import { CatholicBiblesView } from './components/CatholicBiblesView';
@@ -637,6 +638,9 @@ export default function App() {
                 onSelectDate={(newDate) => setCurrentDateStr(newDate)}
               />
             )}
+
+            {/* Catholic AI Assistant (Scripture, Catechism, Tradition & Patristics Research) */}
+            {activeTab === 'catholic-ai' && <CatholicAIAssistantView />}
 
             {/* 4. Divine Office (Liturgy of the Hours) */}
             {activeTab === 'divine-office' && <DivineOfficeView />}

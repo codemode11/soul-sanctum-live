@@ -727,36 +727,40 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               const hasPrev = globalIdx > 0;
               const hasNext = globalIdx >= 0 && globalIdx < allTopics.length - 1;
               return (
-                <div className="flex items-center justify-between gap-2 pt-4 border-t border-stone-200 text-xs w-full overflow-hidden">
-                  <button
-                    onClick={handlePrevTopic}
-                    disabled={!hasPrev}
-                    className="flex-1 min-w-0 max-w-[48%] flex items-center justify-start gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-35 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
-                    title="Previous Gospel Topic"
-                    aria-label="Previous Gospel Topic"
-                  >
-                    <ChevronLeft className="w-4 h-4 text-amber-800 shrink-0" />
-                    <span className="truncate min-w-0 text-left">
-                      {hasPrev
-                        ? `${allTopics[globalIdx - 1].dateLabel}: ${allTopics[globalIdx - 1].gospelCitation}`
-                        : 'Previous Topic'}
-                    </span>
-                  </button>
+                <div className="pt-4 border-t border-stone-200 w-full overflow-hidden">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3 w-full">
+                    <button
+                      type="button"
+                      onClick={handlePrevTopic}
+                      disabled={!hasPrev}
+                      className="w-full min-w-0 flex items-center justify-start gap-1 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs overflow-hidden"
+                      title="Previous Gospel Topic"
+                      aria-label="Previous Gospel Topic"
+                    >
+                      <ChevronLeft className="w-4 h-4 text-amber-800 shrink-0" />
+                      <span className="truncate min-w-0 text-left text-xs">
+                        {hasPrev
+                          ? `${allTopics[globalIdx - 1].dateLabel}: ${allTopics[globalIdx - 1].gospelCitation}`
+                          : 'Previous'}
+                      </span>
+                    </button>
 
-                  <button
-                    onClick={handleNextTopic}
-                    disabled={!hasNext}
-                    className="flex-1 min-w-0 max-w-[48%] flex items-center justify-end gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-35 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
-                    title="Next Gospel Topic"
-                    aria-label="Next Gospel Topic"
-                  >
-                    <span className="truncate min-w-0 text-right">
-                      {hasNext
-                        ? `${allTopics[globalIdx + 1].dateLabel}: ${allTopics[globalIdx + 1].gospelCitation}`
-                        : 'Next Topic'}
-                    </span>
-                    <ChevronRight className="w-4 h-4 text-amber-800 shrink-0" />
-                  </button>
+                    <button
+                      type="button"
+                      onClick={handleNextTopic}
+                      disabled={!hasNext}
+                      className="w-full min-w-0 flex items-center justify-end gap-1 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs overflow-hidden"
+                      title="Next Gospel Topic"
+                      aria-label="Next Gospel Topic"
+                    >
+                      <span className="truncate min-w-0 text-right text-xs">
+                        {hasNext
+                          ? `${allTopics[globalIdx + 1].dateLabel}: ${allTopics[globalIdx + 1].gospelCitation}`
+                          : 'Next'}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-amber-800 shrink-0" />
+                    </button>
+                  </div>
                 </div>
               );
             })()}
