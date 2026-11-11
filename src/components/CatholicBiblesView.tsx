@@ -22,7 +22,6 @@ import {
 import {
   CATHOLIC_BIBLE_BOOKS,
   CATHOLIC_BIBLE_TRANSLATIONS,
-  CURATED_BIBLE_CHAPTERS,
   HAYDOCK_CHAPTER_NOTES,
   FEATURED_CATHOLIC_PASSAGES,
   MODERN_CATHOLIC_BIBLE_EDITIONS,
@@ -107,16 +106,14 @@ export const CatholicBiblesView: React.FC = () => {
       chapterNum: number,
       translation: CatholicBibleTranslationId
     ): Promise<{ verses: BibleVerse[]; sourceLabel: string }> => {
-      const cacheKey = `${book.id}:${chapterNum}`;
-      const curated = CURATED_BIBLE_CHAPTERS[cacheKey]?.[translation];
-
       try {
         const params = new URLSearchParams({
           bookId: book.id,
           bookName: book.name,
           drboCode: book.drboCode,
           chapter: String(chapterNum),
-          translation
+          translation,
+          _cb: String(Date.now())
         });
         const resp = await fetch(`/api/catholic-bible?${params.toString()}`);
         if (resp.ok) {
@@ -129,32 +126,46 @@ export const CatholicBiblesView: React.FC = () => {
           }
         }
       } catch {
-        // Fallback to local curated treasury
+        // Fallback to direct jsDelivr Catholic Scripture CDN
       }
 
-      if (curated && curated.length > 0) {
-        return {
-          verses: curated,
-          sourceLabel: 'Soul Sanctum Offline Catholic Scripture Treasury'
-        };
-      }
-
-      const fallbackDrc = CURATED_BIBLE_CHAPTERS[cacheKey]?.drc;
-      if (fallbackDrc && fallbackDrc.length > 0) {
-        return {
-          verses: fallbackDrc,
-          sourceLabel: 'Douay-Rheims Offline Treasury'
-        };
+      // Direct client-side fallback to jsDelivr 73-Book Catholic Bible CDN (untruncated)
+      try {
+        const cdnVersion = translation === 'webbe' ? 'en-webbe' : 'en-dra';
+        const cdnUrl = `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${cdnVersion}/books/${book.cpdvSlug}/chapters/${chapterNum}.json`;
+        const cdnResp = await fetch(cdnUrl);
+        if (cdnResp.ok) {
+          const cdnData = await cdnResp.json();
+          if (Array.isArray(cdnData?.data) && cdnData.data.length > 0) {
+            const seen = new Map<number, string>();
+            for (const item of cdnData.data) {
+              const vNum = parseInt(String(item.verse), 10);
+              const vText = String(item.text || '').replace(/\s+/g, ' ').trim();
+              if (vNum > 0 && vText && !seen.has(vNum)) {
+                seen.set(vNum, vText);
+              }
+            }
+            const verses = Array.from(seen.entries())
+              .sort((a, b) => a[0] - b[0])
+              .map(([verse, text]) => ({ verse, text }));
+            if (verses.length > 0) {
+              return {
+                verses,
+                sourceLabel:
+                  cdnVersion === 'en-webbe'
+                    ? 'World English Bible — Catholic Edition (WEB-CE)'
+                    : 'Douay-Rheims Catholic Bible'
+              };
+            }
+          }
+        }
+      } catch {
+        // Ignore
       }
 
       return {
-        verses: [
-          {
-            verse: 1,
-            text: `${book.traditionalName} — Chapter ${chapterNum}. (${book.summary})`
-          }
-        ],
-        sourceLabel: 'Catholic Canon Summary'
+        verses: [],
+        sourceLabel: 'Catholic Scripture Archive'
       };
     },
     []
@@ -367,22 +378,13 @@ export const CatholicBiblesView: React.FC = () => {
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-200/90">
-                73-Book Canon of the Council of Trent
-              </span>
-            </div>
-
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight">
-                Catholic Bibles
-              </h2>
-              <span className="text-xs sm:text-sm text-stone-300 font-serif font-medium">
-                {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
-              </span>
-            </div>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight">
+              Catholic Bibles
+            </h2>
+            <span className="text-xs sm:text-sm text-stone-300 font-serif font-medium">
+              {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
+            </span>
           </div>
 
           {/* Right Controls: View Switcher & Drop-Down Settings Button */}

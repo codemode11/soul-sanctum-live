@@ -796,12 +796,70 @@ function vaticanNewsPlugin() {
         }
       });
 
+      const sacredBibleBookCache = new Map<string, string>();
+
+      const SACRED_BIBLE_EN_FILES: Record<string, string> = {
+        GEN: 'OT-01_Genesis.htm', EXO: 'OT-02_Exodus.htm', LEV: 'OT-03_Leviticus.htm', NUM: 'OT-04_Numbers.htm', DEU: 'OT-05_Deuteronomy.htm',
+        JOS: 'OT-06_Joshua.htm', JDG: 'OT-07_Judges.htm', RUT: 'OT-08_Ruth.htm', '1SA': 'OT-09_1-Samuel.htm', '2SA': 'OT-10_2-Samuel.htm',
+        '1KI': 'OT-11_1-Kings.htm', '2KI': 'OT-12_2-Kings.htm', '1CH': 'OT-13_1-Chronicles.htm', '2CH': 'OT-14_2-Chronicles.htm',
+        EZR: 'OT-15_Ezra.htm', NEH: 'OT-16_Nehemiah.htm', TOB: 'OT-17_Tobit.htm', JDT: 'OT-18_Judith.htm', EST: 'OT-19_Esther.htm',
+        JOB: 'OT-20_Job.htm', PSA: 'OT-21_Psalms.htm', PRO: 'OT-22_Proverbs.htm', ECC: 'OT-23_Ecclesiastes.htm', SNG: 'OT-24_Song.htm',
+        WIS: 'OT-25_Wisdom.htm', SIR: 'OT-26_Sirach.htm', ISA: 'OT-27_Isaiah.htm', JER: 'OT-28_Jeremiah.htm', LAM: 'OT-29_Lamentations.htm',
+        BAR: 'OT-30_Baruch.htm', EZK: 'OT-31_Ezekiel.htm', DAN: 'OT-32_Daniel.htm', HOS: 'OT-33_Hosea.htm', JOL: 'OT-34_Joel.htm',
+        AMO: 'OT-35_Amos.htm', OBA: 'OT-36_Obadiah.htm', JON: 'OT-37_Jonah.htm', MIC: 'OT-38_Micah.htm', NAH: 'OT-39_Nahum.htm',
+        HAB: 'OT-40_Habakkuk.htm', ZEP: 'OT-41_Zephaniah.htm', HAG: 'OT-42_Haggai.htm', ZEC: 'OT-43_Zechariah.htm', MAL: 'OT-44_Malachi.htm',
+        '1MA': 'OT-45_1-Maccabees.htm', '2MA': 'OT-46_2-Maccabees.htm',
+        MAT: 'NT-01_Matthew.htm', MRK: 'NT-02_Mark.htm', LUK: 'NT-03_Luke.htm', JHN: 'NT-04_John.htm', ACT: 'NT-05_Acts.htm',
+        ROM: 'NT-06_Romans.htm', '1CO': 'NT-07_1-Corinthians.htm', '2CO': 'NT-08_2-Corinthians.htm', GAL: 'NT-09_Galatians.htm',
+        EPH: 'NT-10_Ephesians.htm', PHP: 'NT-11_Philippians.htm', COL: 'NT-12_Colossians.htm', '1TH': 'NT-13_1-Thessalonians.htm',
+        '2TH': 'NT-14_2-Thessalonians.htm', '1TI': 'NT-15_1-Timothy.htm', '2TI': 'NT-16_2-Timothy.htm', TIT: 'NT-17_Titus.htm',
+        PHM: 'NT-18_Philemon.htm', HEB: 'NT-19_Hebrews.htm', JAS: 'NT-20_James.htm', '1PE': 'NT-21_1-Peter.htm', '2PE': 'NT-22_2-Peter.htm',
+        '1JN': 'NT-23_1-John.htm', '2JN': 'NT-24_2-John.htm', '3JN': 'NT-25_3-John.htm', JUD: 'NT-26_Jude.htm', REV: 'NT-27_Revelation.htm'
+      };
+
+      const SACRED_BIBLE_LA_FILES: Record<string, string> = {
+        GEN: 'VT-01_Genesis.htm', EXO: 'VT-02_Exodus.htm', LEV: 'VT-03_Leviticus.htm', NUM: 'VT-04_Numeri.htm', DEU: 'VT-05_Deuteronomium.htm',
+        JOS: 'VT-06_Josue.htm', JDG: 'VT-07_Judices.htm', RUT: 'VT-08_Ruth.htm', '1SA': 'VT-09_1-Samuel.htm', '2SA': 'VT-10_2-Samuel.htm',
+        '1KI': 'VT-11_1-Reges.htm', '2KI': 'VT-12_2-Reges.htm', '1CH': 'VT-13_1-Paralipomenon.htm', '2CH': 'VT-14_2-Paralipomenon.htm',
+        EZR: 'VT-15_Esdras.htm', NEH: 'VT-16_Nehemias.htm', TOB: 'VT-17_Tobias.htm', JDT: 'VT-18_Judith.htm', EST: 'VT-19_Esther.htm',
+        JOB: 'VT-20_Job.htm', PSA: 'VT-21_Psalmi.htm', PRO: 'VT-22_Proverbia.htm', ECC: 'VT-23_Ecclesiastes.htm', SNG: 'VT-24_Canticum.htm',
+        WIS: 'VT-25_Sapientia.htm', SIR: 'VT-26_Ecclesiasticus.htm', ISA: 'VT-27_Isaias.htm', JER: 'VT-28_Jeremias.htm', LAM: 'VT-29_Lamentationes.htm',
+        BAR: 'VT-30_Baruch.htm', EZK: 'VT-31_Ezechiel.htm', DAN: 'VT-32_Daniel.htm', HOS: 'VT-33_Osee.htm', JOL: 'VT-34_Joel.htm',
+        AMO: 'VT-35_Amos.htm', OBA: 'VT-36_Abdias.htm', JON: 'VT-37_Jonas.htm', MIC: 'VT-38_Michaeas.htm', NAH: 'VT-39_Nahum.htm',
+        HAB: 'VT-40_Habacuc.htm', ZEP: 'VT-41_Sophonias.htm', HAG: 'VT-42_Aggaeus.htm', ZEC: 'VT-43_Zacharias.htm', MAL: 'VT-44_Malachias.htm',
+        '1MA': 'VT-45_1-Machabaeus.htm', '2MA': 'VT-46_2-Machabaeus.htm',
+        MAT: 'NT-01_Matthaeus.htm', MRK: 'NT-02_Marcus.htm', LUK: 'NT-03_Lucas.htm', JHN: 'NT-04_Joannes.htm', ACT: 'NT-05_Actus.htm',
+        ROM: 'NT-06_Romani.htm', '1CO': 'NT-07_1-Corinthii.htm', '2CO': 'NT-08_2-Corinthii.htm', GAL: 'NT-09_Galatae.htm',
+        EPH: 'NT-10_Ephesii.htm', PHP: 'NT-11_Philippenses.htm', COL: 'NT-12_Colossenses.htm', '1TH': 'NT-13_1-Thessalonicenses.htm',
+        '2TH': 'NT-14_2-Thessalonicenses.htm', '1TI': 'NT-15_1-Timotheus.htm', '2TI': 'NT-16_2-Timotheus.htm', TIT: 'NT-17_Titus.htm',
+        PHM: 'NT-18_Philemon.htm', HEB: 'NT-19_Hebraei.htm', JAS: 'NT-20_Jacobus.htm', '1PE': 'NT-21_1-Petrus.htm', '2PE': 'NT-22_2-Petrus.htm',
+        '1JN': 'NT-23_1-Joannes.htm', '2JN': 'NT-24_2-Joannes.htm', '3JN': 'NT-25_3-Joannes.htm', JUD: 'NT-26_Judas.htm', REV: 'NT-27_Apocalypsis.htm'
+      };
+
+      const WLDEH_BOOK_SLUGS: Record<string, string> = {
+        GEN: 'genesis', EXO: 'exodus', LEV: 'leviticus', NUM: 'numbers', DEU: 'deuteronomy',
+        JOS: 'joshua', JDG: 'judges', RUT: 'ruth', '1SA': '1samuel', '2SA': '2samuel',
+        '1KI': '1kings', '2KI': '2kings', '1CH': '1chronicles', '2CH': '2chronicles',
+        EZR: 'ezra', NEH: 'nehemiah', TOB: 'tobit', JDT: 'judith', EST: 'esther',
+        JOB: 'job', PSA: 'psalms', PRO: 'proverbs', ECC: 'ecclesiastes', SNG: 'songofsolomon',
+        WIS: 'wisdom', SIR: 'sirach', ISA: 'isaiah', JER: 'jeremiah', LAM: 'lamentations',
+        BAR: 'baruch', EZK: 'ezekiel', DAN: 'daniel', HOS: 'hosea', JOL: 'joel',
+        AMO: 'amos', OBA: 'obadiah', JON: 'jonah', MIC: 'micah', NAH: 'nahum',
+        HAB: 'habakkuk', ZEP: 'zephaniah', HAG: 'haggai', ZEC: 'zechariah', MAL: 'malachi',
+        '1MA': '1maccabees', '2MA': '2maccabees',
+        MAT: 'matthew', MRK: 'mark', LUK: 'luke', JHN: 'john', ACT: 'acts',
+        ROM: 'romans', '1CO': '1corinthians', '2CO': '2corinthians', GAL: 'galatians',
+        EPH: 'ephesians', PHP: 'philippians', COL: 'colossians', '1TH': '1thessalonians',
+        '2TH': '2thessalonians', '1TI': '1timothy', '2TI': '2timothy', TIT: 'titus',
+        PHM: 'philemon', HEB: 'hebrews', JAS: 'james', '1PE': '1peter', '2PE': '2peter',
+        '1JN': '1john', '2JN': '2john', '3JN': '3john', JUD: 'jude', REV: 'revelation'
+      };
+
       server.middlewares.use('/api/catholic-bible', async (req: any, res: any) => {
         try {
           const urlObj = new URL(req.url || '', 'http://localhost');
           const bookId = (urlObj.searchParams.get('bookId') || 'GEN').toUpperCase();
           const bookName = urlObj.searchParams.get('bookName') || 'Genesis';
-          const drboCode = urlObj.searchParams.get('drboCode') || '01';
           const chapter = Math.max(1, parseInt(urlObj.searchParams.get('chapter') || '1', 10));
           const translation = (urlObj.searchParams.get('translation') || 'drc').toLowerCase();
 
@@ -820,78 +878,117 @@ function vaticanNewsPlugin() {
           let verses: { verse: number; text: string }[] = [];
           let sourceLabel = 'Catholic Public Domain Scripture Repository';
 
-          // 1. Try bible-api.com first for DRC ('dra'), WEB-CE ('webbe'), or Latin Vulgate ('clementine')
-          const bibleApiTranslationMap: Record<string, string> = {
-            drc: 'dra',
-            cpdv: 'dra',
-            webbe: 'webbe',
-            vulgate: 'clementine'
-          };
-          const apiTrans = bibleApiTranslationMap[translation] || 'dra';
-
-          if (translation !== 'cpdv') {
-            try {
-              const queryRef = encodeURIComponent(`${bookName} ${chapter}`);
-              const apiUrl = `https://bible-api.com/${queryRef}?translation=${apiTrans}`;
-              const resp = await fetch(apiUrl, {
-                headers: { 'User-Agent': 'SoulSanctumCatholicBible/1.0' },
-                signal: AbortSignal.timeout(5500)
-              });
-              if (resp.ok) {
-                const data: any = await resp.json();
-                if (Array.isArray(data?.verses) && data.verses.length > 0) {
-                  verses = data.verses.map((v: any, i: number) => ({
-                    verse: Number(v.verse) || i + 1,
-                    text: String(v.text || '').replace(/\s+/g, ' ').trim()
-                  }));
-                  sourceLabel = data.translation_name || 'Public Domain Catholic Scripture';
-                }
-              }
-            } catch {
-              // Fall through to secondary Catholic scripture mirrors
-            }
-          }
-
-          // 2. If CPDV or Deuterocanonical book not returned by bible-api, fetch from DRBO.org (Douay-Rheims / Vulgate 73-book mirror)
-          if (verses.length === 0 && drboCode) {
-            try {
-              const chapterPadded = String(chapter).padStart(3, '0');
-              const drboUrl =
-                translation === 'vulgate'
-                  ? `https://www.drbo.org/lvb/chapter/${drboCode}${chapterPadded}.htm`
-                  : `https://www.drbo.org/chapter/${drboCode}${chapterPadded}.htm`;
-              const drboResp = await fetch(drboUrl, {
+          const parseSacredBibleChapter = async (
+            editionDir: 'challoner' | 'catholic' | 'vulgate2009',
+            fileKey: string,
+            targetChapter: number
+          ): Promise<{ verse: number; text: string }[]> => {
+            const cacheKey = `${editionDir}:${fileKey}`;
+            let html = sacredBibleBookCache.get(cacheKey);
+            if (!html) {
+              const targetUrl = `https://sacredbible.org/${editionDir}/${fileKey}`;
+              const resp = await fetch(targetUrl, {
                 headers: {
                   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) SoulSanctumCatholicBible/1.0'
                 },
-                signal: AbortSignal.timeout(6500)
+                signal: AbortSignal.timeout(8000)
               });
-              if (drboResp.ok) {
-                const html = await drboResp.text();
-                const parsedVerses: { verse: number; text: string }[] = [];
-                const regex = /<a[^>]*name=["']?v?(\d+)["']?[^>]*>[\s\S]*?<\/a>\s*([\s\S]*?)(?=(?:<a[^>]*name=["']?v?\d+|<\/p>|<hr|<div))/gi;
-                let match: RegExpExecArray | null;
-                while ((match = regex.exec(html)) !== null) {
-                  const vNum = parseInt(match[1], 10);
-                  const vText = decodeHtml(match[2].replace(/^\[?\d+\]?\s*/, ''));
-                  if (vNum > 0 && vText.length > 1) {
-                    parsedVerses.push({ verse: vNum, text: vText });
-                  }
-                }
-                if (parsedVerses.length > 0) {
-                  verses = parsedVerses;
+              if (resp.ok) {
+                const buf = await resp.arrayBuffer();
+                html = new TextDecoder('windows-1252').decode(buf);
+                sacredBibleBookCache.set(cacheKey, html);
+              }
+            }
+            if (!html) return [];
+
+            const parsed: { verse: number; text: string }[] = [];
+            const pattern = new RegExp(`\\{${targetChapter}:(\\d+)\\}\\s*([\\s\\S]*?)(?=<BR>|\\{\\d+:\\d+\\}|</FONT>|</BODY>)`, 'gi');
+            let m: RegExpExecArray | null;
+            while ((m = pattern.exec(html)) !== null) {
+              const vNum = parseInt(m[1], 10);
+              const vText = decodeHtml(m[2]);
+              if (vNum > 0 && vText) {
+                parsed.push({ verse: vNum, text: vText });
+              }
+            }
+            return parsed;
+          };
+
+          // 1. For DRC ('drc'), CPDV ('cpdv'), and Clementine Vulgate ('vulgate'), use SacredBible.org's complete 73-book archives
+          if (translation === 'drc' || translation === 'cpdv' || translation === 'vulgate') {
+            try {
+              const editionDir =
+                translation === 'cpdv'
+                  ? 'catholic'
+                  : translation === 'vulgate'
+                  ? 'vulgate2009'
+                  : 'challoner';
+              const fileName =
+                translation === 'vulgate'
+                  ? SACRED_BIBLE_LA_FILES[bookId]
+                  : SACRED_BIBLE_EN_FILES[bookId];
+
+              if (fileName) {
+                verses = await parseSacredBibleChapter(editionDir, fileName, chapter);
+                if (verses.length > 0) {
                   sourceLabel =
-                    translation === 'vulgate'
-                      ? 'Vulgata Clementina (73-Book Catholic Archive)'
-                      : 'Douay-Rheims 73-Book Catholic Archive';
+                    translation === 'cpdv'
+                      ? 'Catholic Public Domain Version (CPDV)'
+                      : translation === 'vulgate'
+                      ? 'Vulgata Clementina (Clementine Latin Vulgate)'
+                      : 'Douay-Rheims Catholic Bible (Challoner Revision)';
                 }
               }
             } catch {
-              // Fall through to bible-api fallback
+              // Fall through to jsDelivr CDN
             }
           }
 
-          // 3. Final fallback to bible-api 'dra' or 'webbe' if still empty
+          // 2. For WEB-CE ('webbe') or if DRC needed a fallback, use jsDelivr CDN (wldeh/bible-api)
+          if (verses.length === 0) {
+            const wldehSlug = WLDEH_BOOK_SLUGS[bookId];
+            const wldehVersion = translation === 'webbe' ? 'en-webbe' : 'en-dra';
+            if (wldehSlug) {
+              try {
+                const cdnUrl = `https://cdn.jsdelivr.net/gh/wldeh/bible-api/bibles/${wldehVersion}/books/${wldehSlug}/chapters/${chapter}.json`;
+                const cdnResp = await fetch(cdnUrl, { signal: AbortSignal.timeout(6500) });
+                if (cdnResp.ok) {
+                  const cdnData: any = await cdnResp.json();
+                  if (Array.isArray(cdnData?.data) && cdnData.data.length > 0) {
+                    const seenVerses = new Map<number, string>();
+                    for (const item of cdnData.data) {
+                      const vNum = parseInt(String(item.verse), 10);
+                      const vText = String(item.text || '').replace(/\s+/g, ' ').trim();
+                      if (vNum > 0 && vText && !seenVerses.has(vNum)) {
+                        seenVerses.set(vNum, vText);
+                      }
+                    }
+                    verses = Array.from(seenVerses.entries())
+                      .sort((a, b) => a[0] - b[0])
+                      .map(([verse, text]) => ({ verse, text }));
+                    sourceLabel =
+                      wldehVersion === 'en-webbe'
+                        ? 'World English Bible — Catholic Edition (WEB-CE)'
+                        : 'Douay-Rheims Catholic Bible';
+                  }
+                }
+              } catch {
+                // Fall through
+              }
+            }
+          }
+
+          // 3. If WEB-CE was requested on a book where wldeh slug differed, fallback to SacredBible CPDV
+          if (verses.length === 0 && SACRED_BIBLE_EN_FILES[bookId]) {
+            try {
+              verses = await parseSacredBibleChapter('catholic', SACRED_BIBLE_EN_FILES[bookId], chapter);
+              sourceLabel = 'Catholic Public Domain Version (CPDV)';
+            } catch {
+              // Fall through
+            }
+          }
+
+          // 4. Final fallback to bible-api.com
           if (verses.length === 0) {
             try {
               const queryRef = encodeURIComponent(`${bookName} ${chapter}`);
