@@ -2006,7 +2006,7 @@ export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 
 /**
  * 31. Holy Bible Icon:
  * Depicts an ornate Catholic Sacred Scripture codex with a golden Latin cross on the cover,
- * clasped binding, and ribbon bookmark. The icon outlines glow luminously when hovered on.
+ * clasped binding, and ribbon bookmark. The icon outlines glow gradually when hovered on.
  */
 export const CatholicBiblesBookIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -2019,32 +2019,61 @@ export const CatholicBiblesBookIcon: React.FC<IconProps> = ({ className = 'w-5 h
     className={`${className} sanctum-holy-bible-icon overflow-visible`}
     aria-label="Holy Bible — 73-Book Sacred Scripture"
   >
-    {/* Book Spine and Cover Outline */}
+    {/* Base Book Spine and Cover Outline */}
     <path
       className="sanctum-holy-bible-outline"
       d="M4.5 19.5A2.5 2.5 0 0 1 7 17h12.5V3.5H7A2.5 2.5 0 0 0 4.5 6v13.5Z"
       fill="currentColor"
       fillOpacity="0.12"
     />
-    {/* Bottom Page Edges & Fore-edge Outline */}
+    {/* Base Bottom Page Edges & Fore-edge Outline */}
     <path
       className="sanctum-holy-bible-outline"
       d="M4.5 19.5A2.5 2.5 0 0 0 7 22h12.5v-5H7a2.5 2.5 0 0 0-2.5 2.5Z"
     />
-    {/* Golden Cross Embossed on the Bible Cover */}
+    {/* Base Golden Cross Embossed on the Bible Cover */}
     <path
       className="sanctum-holy-bible-outline sanctum-holy-bible-cross"
       d="M12.5 6.8v6.8M10.1 9.4h4.8"
       stroke="#FDE047"
       strokeWidth="1.8"
     />
-    {/* Ribbon Bookmark Outline */}
+    {/* Base Ribbon Bookmark Outline */}
     <path
       className="sanctum-holy-bible-outline sanctum-holy-bible-ribbon"
       d="M10.5 19.5v3l1.5-1 1.5 1v-3"
       stroke="#FDE047"
       strokeWidth="1.4"
     />
+
+    {/* Gradual Luminous Golden Outline Glow Overlay (fades in smoothly from 0 to 1 on hover) */}
+    <g className="sanctum-holy-bible-glow-layer" aria-hidden="true">
+      <path
+        d="M4.5 19.5A2.5 2.5 0 0 1 7 17h12.5V3.5H7A2.5 2.5 0 0 0 4.5 6v13.5Z"
+        fill="#FDE047"
+        fillOpacity="0.1"
+        stroke="#FEF08A"
+        strokeWidth="1.95"
+      />
+      <path
+        d="M4.5 19.5A2.5 2.5 0 0 0 7 22h12.5v-5H7a2.5 2.5 0 0 0-2.5 2.5Z"
+        fill="none"
+        stroke="#FEF08A"
+        strokeWidth="1.95"
+      />
+      <path
+        d="M12.5 6.8v6.8M10.1 9.4h4.8"
+        fill="none"
+        stroke="#FFFBEB"
+        strokeWidth="2.1"
+      />
+      <path
+        d="M10.5 19.5v3l1.5-1 1.5 1v-3"
+        fill="none"
+        stroke="#FEF08A"
+        strokeWidth="1.65"
+      />
+    </g>
   </svg>
 );
 
