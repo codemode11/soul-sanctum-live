@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { GoogleGenAI } from '@google/genai';
+import { searchCatholicInternet, WebResearchSource } from './src/utils/catholicInternetResearch.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -66,22 +67,29 @@ function vaticanNewsPlugin() {
           return;
         }
 
-        let bodyBuffer = '';
-        req.on('data', (chunk: any) => {
-          bodyBuffer += chunk;
-        });
-
-        req.on('end', async () => {
+        const processRequest = async (body: any) => {
           try {
-            const body = JSON.parse(bodyBuffer || '{}');
             const prompt = body?.prompt;
             const history = body?.history || [];
+            const enableWebResearch = body?.enableWebResearch !== false;
 
             if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
               res.statusCode = 400;
               res.setHeader('Content-Type', 'application/json; charset=utf-8');
               res.end(JSON.stringify({ error: 'A question or prompt is required.' }));
               return;
+            }
+
+            const trimmedPrompt = prompt.trim();
+
+            // Perform real-time Catholic web research
+            let webSources: WebResearchSource[] = [];
+            if (enableWebResearch) {
+              try {
+                webSources = await searchCatholicInternet(trimmedPrompt);
+              } catch (err) {
+                console.warn('Web research query error in vite:', err);
+              }
             }
 
             const apiKey = process.env.GEMINI_API_KEY;
@@ -100,7 +108,7 @@ function vaticanNewsPlugin() {
 
             const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
             if (Array.isArray(history)) {
-              for (const item of history.slice(-8)) {
+              for (const item of history.slice(-6)) {
                 if (item && item.content && typeof item.content === 'string') {
                   contents.push({
                     role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
@@ -110,12 +118,21 @@ function vaticanNewsPlugin() {
               }
             }
 
+            let promptWithResearch = trimmedPrompt;
+            if (webSources.length > 0) {
+              const researchSnippets = webSources
+                .map((s, idx) => `[Source ${idx + 1}: ${s.title} (${s.url})]\n${s.snippet}`)
+                .join('\n\n');
+
+              promptWithResearch = `${trimmedPrompt}\n\n--- REAL-TIME INTERNET RESEARCH FINDINGS ---\n${researchSnippets}\n------------------------------------------\n(Synthesize these real-time web research findings together with authentic Catholic doctrine, Sacred Scripture, CCC citations, and Church Fathers. Cite source links where appropriate.)`;
+            }
+
             contents.push({
               role: 'user',
-              parts: [{ text: prompt.trim() }],
+              parts: [{ text: promptWithResearch }],
             });
 
-            const candidateModels = ['gemini-3.8-flash', 'gemini-flash-latest', 'gemini-3.1-flash-lite'];
+            const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
             let reply = '';
             let lastError: any = null;
 
@@ -142,12 +159,36 @@ function vaticanNewsPlugin() {
             }
 
             res.setHeader('Content-Type', 'application/json; charset=utf-8');
-            res.end(JSON.stringify({ reply: reply || 'No response generated from the Catholic Assistant.' }));
+            res.end(JSON.stringify({
+              reply: reply || 'No response generated from the Catholic Assistant.',
+              webSources
+            }));
           } catch (err: any) {
             console.error('Catholic AI endpoint error in vite.config.ts:', err);
             res.statusCode = 500;
             res.setHeader('Content-Type', 'application/json; charset=utf-8');
             res.end(JSON.stringify({ error: err?.message || 'Error consulting the Catholic Assistant.' }));
+          }
+        };
+
+        if (req.body && typeof req.body === 'object') {
+          processRequest(req.body);
+          return;
+        }
+
+        let bodyBuffer = '';
+        req.on('data', (chunk: any) => {
+          bodyBuffer += chunk;
+        });
+
+        req.on('end', () => {
+          try {
+            const body = JSON.parse(bodyBuffer || '{}');
+            processRequest(body);
+          } catch (e: any) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.end(JSON.stringify({ error: 'Malformed JSON payload.' }));
           }
         });
       });

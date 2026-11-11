@@ -43,15 +43,16 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
 
   const [selectedMonth, setSelectedMonth] = useState<string>('November');
 
-  // Match initial commentary to currentReading date or default to Nov 4 (Luke 15:1-10)
+  // Match initial commentary to today's reading date or dynamic Gospel commentary
   const initialCommentary = React.useMemo(() => {
     if (currentReading?.date) {
       const match = ninetyTwoCommentaries.find(c => c.dateKey === currentReading.date);
       if (match) return match;
+      const dynamicList = getDailyGospelCommentaries(currentReading);
+      if (dynamicList && dynamicList.length > 0) return dynamicList[0];
     }
-    const nov4 = ninetyTwoCommentaries.find(c => c.dateKey === '2026-11-04');
-    return nov4 || ninetyTwoCommentaries[0];
-  }, [currentReading?.date, ninetyTwoCommentaries]);
+    return ninetyTwoCommentaries[0];
+  }, [currentReading, ninetyTwoCommentaries]);
 
   const [selectedCommentary, setSelectedCommentary] = useState<BibleCommentary>(initialCommentary);
   const [copied, setCopied] = useState(false);
@@ -85,14 +86,19 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
         if (match.monthName) {
           setSelectedMonth(match.monthName);
         }
-        if (isReadingAloud) {
-          SacredReader.stop();
-          setIsReadingAloud(false);
-          setActiveSpeakingSection(null);
+      } else {
+        const dynamicList = getDailyGospelCommentaries(currentReading);
+        if (dynamicList && dynamicList.length > 0) {
+          setSelectedCommentary(dynamicList[0]);
         }
       }
+      if (isReadingAloud) {
+        SacredReader.stop();
+        setIsReadingAloud(false);
+        setActiveSpeakingSection(null);
+      }
     }
-  }, [currentReading?.date, ninetyTwoCommentaries]);
+  }, [currentReading, ninetyTwoCommentaries]);
 
   // Smoothly center selected pill when passage changes
   React.useEffect(() => {

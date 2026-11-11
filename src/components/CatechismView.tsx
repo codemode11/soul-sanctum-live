@@ -82,7 +82,8 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
 
   // Compute default topic matching active day's Gospel
   const defaultTopic = useMemo(() => {
-    const targetDate = currentReading?.date || currentDateStr || '2026-11-04';
+    const todayDateStr = typeof window !== 'undefined' ? new Date().toISOString().split('T')[0] : '2026-11-11';
+    const targetDate = currentReading?.date || currentDateStr || todayDateStr;
     const match = allTopics.find(t => t.dateKey === targetDate);
     if (match) return match;
     return getGospelCatechismForReading(currentReading, targetDate);
@@ -92,7 +93,8 @@ export const CatechismView: React.FC<CatechismViewProps> = ({
 
   // Sync when currentReading or currentDateStr updates
   useEffect(() => {
-    const targetDate = currentReading?.date || currentDateStr || '2026-11-04';
+    const todayDateStr = typeof window !== 'undefined' ? new Date().toISOString().split('T')[0] : '2026-11-11';
+    const targetDate = currentReading?.date || currentDateStr || todayDateStr;
     const match = allTopics.find(t => t.dateKey === targetDate);
     if (match) {
       setSelectedTopic(match);
@@ -727,37 +729,47 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               const hasPrev = globalIdx > 0;
               const hasNext = globalIdx >= 0 && globalIdx < allTopics.length - 1;
               return (
-                <div className="pt-4 border-t border-stone-200 w-full overflow-hidden">
-                  <div className="grid grid-cols-2 gap-2 sm:gap-3 w-full">
+                <div className="pt-4 border-t border-stone-200 w-full">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 w-full">
                     <button
                       type="button"
                       onClick={handlePrevTopic}
                       disabled={!hasPrev}
-                      className="w-full min-w-0 flex items-center justify-start gap-1 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs overflow-hidden"
+                      className="w-full min-w-0 flex items-center justify-start gap-2.5 px-3 py-2.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs"
                       title="Previous Gospel Topic"
                       aria-label="Previous Gospel Topic"
                     >
                       <ChevronLeft className="w-4 h-4 text-amber-800 shrink-0" />
-                      <span className="truncate min-w-0 text-left text-xs">
-                        {hasPrev
-                          ? `${allTopics[globalIdx - 1].dateLabel}: ${allTopics[globalIdx - 1].gospelCitation}`
-                          : 'Previous'}
-                      </span>
+                      <div className="flex-1 min-w-0 text-left">
+                        <div className="text-[10px] uppercase tracking-wider text-amber-900 font-cinzel font-bold">
+                          Previous Gospel Topic
+                        </div>
+                        <div className="truncate text-xs text-stone-700 font-medium">
+                          {hasPrev
+                            ? `${allTopics[globalIdx - 1].dateLabel}: ${allTopics[globalIdx - 1].gospelCitation}`
+                            : 'No previous topic'}
+                        </div>
+                      </div>
                     </button>
 
                     <button
                       type="button"
                       onClick={handleNextTopic}
                       disabled={!hasNext}
-                      className="w-full min-w-0 flex items-center justify-end gap-1 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs overflow-hidden"
+                      className="w-full min-w-0 flex items-center justify-end gap-2.5 px-3 py-2.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-all shadow-2xs"
                       title="Next Gospel Topic"
                       aria-label="Next Gospel Topic"
                     >
-                      <span className="truncate min-w-0 text-right text-xs">
-                        {hasNext
-                          ? `${allTopics[globalIdx + 1].dateLabel}: ${allTopics[globalIdx + 1].gospelCitation}`
-                          : 'Next'}
-                      </span>
+                      <div className="flex-1 min-w-0 text-right">
+                        <div className="text-[10px] uppercase tracking-wider text-amber-900 font-cinzel font-bold">
+                          Next Gospel Topic
+                        </div>
+                        <div className="truncate text-xs text-stone-700 font-medium">
+                          {hasNext
+                            ? `${allTopics[globalIdx + 1].dateLabel}: ${allTopics[globalIdx + 1].gospelCitation}`
+                            : 'No next topic'}
+                        </div>
+                      </div>
                       <ChevronRight className="w-4 h-4 text-amber-800 shrink-0" />
                     </button>
                   </div>

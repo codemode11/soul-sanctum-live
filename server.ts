@@ -44,6 +44,8 @@ function getGenAI() {
   });
 }
 
+import { searchCatholicInternet, WebResearchSource } from './src/utils/catholicInternetResearch.js';
+
 app.get('/api/catholic-ai/health', (_req, res) => {
   res.json({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY });
 });
@@ -52,10 +54,23 @@ app.get('/api/catholic-ai/health', (_req, res) => {
 app.post('/api/catholic-ai', async (req, res) => {
   console.log('[API] Received /api/catholic-ai request');
   try {
-    const { prompt, history = [] } = req.body || {};
+    const { prompt, history = [], enableWebResearch = true } = req.body || {};
 
     if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
       return res.status(400).json({ error: 'A question or prompt is required.' });
+    }
+
+    const trimmedPrompt = prompt.trim();
+
+    // 1. Live Internet and Catholic Web Research
+    let webSources: WebResearchSource[] = [];
+    if (enableWebResearch !== false) {
+      try {
+        webSources = await searchCatholicInternet(trimmedPrompt);
+        console.log(`[Research] Found ${webSources.length} web sources for: "${trimmedPrompt.slice(0, 40)}"`);
+      } catch (err) {
+        console.warn('[Research] Web search encountered non-critical error:', err);
+      }
     }
 
     const ai = getGenAI();
@@ -64,7 +79,7 @@ app.post('/api/catholic-ai', async (req, res) => {
     const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
 
     if (Array.isArray(history)) {
-      for (const item of history.slice(-8)) {
+      for (const item of history.slice(-6)) {
         if (item && item.content && typeof item.content === 'string') {
           contents.push({
             role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
@@ -74,12 +89,23 @@ app.post('/api/catholic-ai', async (req, res) => {
       }
     }
 
+    // Augment user prompt with real-time web research findings if available
+    let promptWithResearch = trimmedPrompt;
+    if (webSources.length > 0) {
+      const researchSnippets = webSources
+        .map((s, idx) => `[Source ${idx + 1}: ${s.title} (${s.url})]\n${s.snippet}`)
+        .join('\n\n');
+
+      promptWithResearch = `${trimmedPrompt}\n\n--- REAL-TIME INTERNET RESEARCH FINDINGS ---\n${researchSnippets}\n------------------------------------------\n(Please synthesize the real-time research findings above with authentic Catholic doctrine, Sacred Scripture, CCC citations, and Church Fathers. Mention relevant source links where helpful.)`;
+    }
+
     contents.push({
       role: 'user',
-      parts: [{ text: prompt.trim() }],
+      parts: [{ text: promptWithResearch }],
     });
 
-    const candidateModels = ['gemini-3.8-flash', 'gemini-flash-latest', 'gemini-3.1-flash-lite'];
+    // gemini-3.1-flash-lite provides fast reliable responses; gemini-3.8-flash as fallback
+    const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
     let reply = '';
     let lastError: any = null;
 
@@ -97,7 +123,7 @@ app.post('/api/catholic-ai', async (req, res) => {
           break;
         }
       } catch (err: any) {
-        console.warn(`Model ${modelName} failed, trying next candidate if available:`, err?.message || err);
+        console.warn(`Model ${modelName} failed, trying next candidate:`, err?.message || err);
         lastError = err;
       }
     }
@@ -106,7 +132,10 @@ app.post('/api/catholic-ai', async (req, res) => {
       throw lastError;
     }
 
-    return res.json({ reply: reply || 'No response generated from the Catholic Assistant.' });
+    return res.json({
+      reply: reply || 'No response generated from the Catholic Assistant.',
+      webSources
+    });
   } catch (error: any) {
     console.error('Error in /api/catholic-ai:', error);
     const errorMessage = error?.message || 'An error occurred while consulting the Catholic Assistant.';

@@ -15,8 +15,10 @@ import {
   Search,
   ExternalLink,
   ChevronRight,
-  Bookmark
+  Bookmark,
+  Globe
 } from 'lucide-react';
+import { WebResearchSource } from '../utils/catholicInternetResearch';
 import { 
   BetterScrollIcon, 
   SaintWithHaloIcon, 
@@ -30,6 +32,7 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: number;
+  webSources?: WebResearchSource[];
 }
 
 const SUGGESTED_QUESTIONS = [
@@ -307,6 +310,7 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
 
   const [inputPrompt, setInputPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isWebResearchEnabled, setIsWebResearchEnabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
@@ -402,41 +406,43 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           prompt: promptToSend,
-          history: historyPayload
+          history: historyPayload,
+          enableWebResearch: isWebResearchEnabled
         })
       });
 
       if (!response.ok) {
-        const fallbackReply = resolveCatholicTheologicalAnswer(promptToSend);
-        const assistantMsg: ChatMessage = {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: fallbackReply,
-          timestamp: Date.now()
-        };
-        setMessages(prev => [...prev, assistantMsg]);
-        setIsLoading(false);
-        return;
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Server responded with status ${response.status}`);
       }
 
       const data = await response.json();
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
-        content: data.reply || resolveCatholicTheologicalAnswer(promptToSend),
-        timestamp: Date.now()
+        content: data.reply || 'No response returned from the Catholic Assistant.',
+        timestamp: Date.now(),
+        webSources: data.webSources || []
       };
       setMessages(prev => [...prev, assistantMsg]);
     } catch (err: any) {
-      console.warn('Network issue contacting Catholic AI, providing authentic doctrinal answer:', err);
-      const fallbackReply = resolveCatholicTheologicalAnswer(promptToSend);
-      const assistantMsg: ChatMessage = {
-        id: `assistant-${Date.now()}`,
-        role: 'assistant',
-        content: fallbackReply,
-        timestamp: Date.now()
-      };
-      setMessages(prev => [...prev, assistantMsg]);
+      console.warn('Issue contacting Catholic AI:', err);
+      const matchedCanned = resolveCatholicTheologicalAnswer(promptToSend);
+      const isSpecificMatch = !matchedCanned.includes('Catholic Theological Guidance on:');
+
+      if (isSpecificMatch) {
+        const assistantMsg: ChatMessage = {
+          id: `assistant-${Date.now()}`,
+          role: 'assistant',
+          content: matchedCanned,
+          timestamp: Date.now()
+        };
+        setMessages(prev => [...prev, assistantMsg]);
+      } else {
+        setErrorMessage(
+          err.message || 'Unable to complete online research. Please check your connection and try again.'
+        );
+      }
     } finally {
       setIsLoading(false);
     }
@@ -587,6 +593,10 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
               <span className="px-2.5 py-0.5 rounded-full bg-amber-900/60 border border-amber-500/50 text-amber-200">
                 21 Ecumenical Councils
               </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-amber-800/80 border border-amber-400/70 text-amber-100 font-semibold flex items-center gap-1">
+                <Globe className="w-3 h-3 text-amber-300" />
+                Real-Time Web Research
+              </span>
             </div>
           </div>
 
@@ -705,10 +715,41 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
                   renderFormattedContent(msg.content)
                 )}
 
+                {/* Live Web & Internet Sources Consulted */}
+                {!isUser && msg.webSources && msg.webSources.length > 0 && (
+                  <div className="mt-3.5 p-3 rounded-xl bg-amber-50/90 border border-amber-200/90 space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-950">
+                      <Globe className="w-3.5 h-3.5 text-amber-700 shrink-0" />
+                      <span>Internet Sources Consulted & Verified:</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                      {msg.webSources.map((source, sIdx) => (
+                        <a
+                          key={sIdx}
+                          href={source.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-between gap-2 p-2 rounded-lg bg-white/90 hover:bg-white text-xs text-amber-950 hover:text-amber-800 border border-amber-200/60 hover:border-amber-400 transition-all shadow-2xs group"
+                          title={source.snippet}
+                        >
+                          <span className="font-serif font-medium truncate flex-1">{source.title}</span>
+                          <span className="text-[10px] text-amber-700/90 font-mono shrink-0 flex items-center gap-1">
+                            <span>{source.domain}</span>
+                            <ExternalLink className="w-3 h-3 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* Footer source note on assistant messages */}
                 {!isUser && msg.id !== 'welcome' && (
                   <div className="mt-4 pt-2 border-t border-stone-200/60 flex items-center justify-between text-[11px] text-stone-400 italic font-serif">
-                    <span>Grounded in Catholic Magisterium & Tradition</span>
+                    <span className="flex items-center gap-1">
+                      <Globe className="w-3 h-3 text-amber-600" />
+                      Grounded in Catholic Magisterium, Scripture & Online Research
+                    </span>
                     <span>{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                   </div>
                 )}
@@ -731,9 +772,14 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
             </div>
             <div className="bg-[#FAF8F5] border border-amber-200/80 rounded-2xl rounded-tl-none p-4 shadow-sm flex items-center gap-3">
               <RefreshCw className="w-4 h-4 text-amber-700 animate-spin" />
-              <span className="text-xs sm:text-sm font-serif italic text-stone-700">
-                Searching Sacred Scripture, the Catechism, and Church Fathers...
-              </span>
+              <div className="space-y-0.5">
+                <span className="text-xs sm:text-sm font-serif italic text-stone-800 font-semibold block">
+                  Researching online Catholic sources and Vatican archives...
+                </span>
+                <span className="text-[11px] text-stone-500 font-serif block">
+                  Cross-referencing Sacred Scripture, the Catechism (CCC), and Church Fathers.
+                </span>
+              </div>
             </div>
           </div>
         )}
@@ -745,7 +791,7 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
             <div className="space-y-1">
               <p className="font-semibold">{errorMessage}</p>
               <p className="text-red-300/80">
-                You can try asking another question or click any of the suggested topics above for instant doctrinal answers.
+                Please verify your connection or try rephrasing your question.
               </p>
             </div>
           </div>
@@ -770,7 +816,7 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
                 handleSubmit();
               }
             }}
-            placeholder="Ask a question on Sacred Scripture, Catholic doctrine, Church history, or the Catechism..."
+            placeholder="Ask any question on Sacred Scripture, Catholic doctrine, Church history, Vatican news, or saints..."
             rows={2}
             className="flex-1 bg-stone-900 text-amber-100 placeholder-stone-400 text-sm font-serif rounded-xl p-3 border border-stone-700 focus:border-amber-400 focus:outline-none resize-none leading-relaxed"
           />
@@ -791,9 +837,21 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
           </button>
         </div>
 
-        <div className="flex items-center justify-between text-[11px] text-stone-400 px-1">
-          <span>Press Enter to send (Shift + Enter for new line)</span>
-          <span className="italic text-amber-400/80">Soul Sanctum Catholic AI</span>
+        <div className="flex items-center justify-between text-[11px] text-stone-400 px-1 pt-0.5">
+          <button
+            type="button"
+            onClick={() => setIsWebResearchEnabled(prev => !prev)}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-cinzel transition-all cursor-pointer border ${
+              isWebResearchEnabled
+                ? 'bg-amber-950/90 border-amber-400/70 text-amber-200 shadow-2xs ring-1 ring-amber-400/30'
+                : 'bg-stone-900 border-stone-700 text-stone-400 hover:text-stone-300'
+            }`}
+            title="Toggle live online Catholic Internet research"
+          >
+            <Globe className={`w-3.5 h-3.5 ${isWebResearchEnabled ? 'text-green-400 animate-pulse' : 'text-stone-500'}`} />
+            <span>Internet Research: <strong className={isWebResearchEnabled ? 'text-green-400' : 'text-stone-400'}>{isWebResearchEnabled ? 'ACTIVE' : 'OFF'}</strong></span>
+          </button>
+          <span className="italic text-amber-400/80 hidden sm:inline">Press Enter to send (Shift + Enter for new line)</span>
         </div>
       </form>
     </div>
