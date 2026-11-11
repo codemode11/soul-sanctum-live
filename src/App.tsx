@@ -455,7 +455,7 @@ export default function App() {
                     target.src = '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png';
                   }
                 }}
-                className="w-full min-h-[46vh] sm:min-h-0 h-auto object-cover object-center sm:object-contain block brightness-[1.02] contrast-[1.04] transform-gpu shrink-0"
+                className="w-full min-h-[78vh] sm:min-h-0 h-auto object-cover object-center sm:object-contain block brightness-[1.02] contrast-[1.04] transform-gpu shrink-0"
               />
               {/* Subtle bottom edge feathering into the page background */}
               <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-stone-950/80 to-transparent pointer-events-none" />
@@ -481,7 +481,7 @@ export default function App() {
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
             </div>
           ) : (
-            <div className="relative w-full h-[52vh] sm:h-[100vh] -mt-6 sm:-mt-20 flex items-center justify-center overflow-hidden transform-gpu">
+            <div className="relative w-full h-[80vh] sm:h-[100vh] -mt-6 sm:-mt-20 flex items-center justify-center overflow-hidden transform-gpu">
               <img
                 src={activeEstablishingImage.imageUrl}
                 alt={activeEstablishingImage.title}
@@ -521,8 +521,8 @@ export default function App() {
       {/* Foreground Container with Frosted Glass Transparency and Sacred Ambiance */}
       <div className="relative z-10 flex flex-col min-h-screen">
         
-        {/* Masthead Section */}
-        <div className="w-full min-h-0 sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between pb-3 sm:pb-10">
+        {/* Masthead Section: On mobile, fills viewport down to just above the 5 bottom icons */}
+        <div className="w-full min-h-[calc(100dvh-74px)] sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between pb-3 sm:pb-10">
           {/* Sacred Top Header */}
           <Header
             currentDateStr={currentDateStr}
@@ -540,8 +540,8 @@ export default function App() {
             scheduledMasthead={activeScheduledMasthead}
           />
 
-          {/* Main Story: Featured Catholic Article Masthead Dispatch */}
-          <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 mt-4 sm:mt-64 md:mt-72 lg:mt-80">
+          {/* Main Story: Featured Catholic Article Masthead Dispatch (slightly above the 5 bottom icons on mobile) */}
+          <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 mt-auto pt-10 sm:pt-0 sm:mt-64 md:mt-72 lg:mt-80">
             <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/55 sm:bg-black/45 hover:bg-black/55 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-xs sm:backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.65)] transition-all py-3.5 px-4 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
@@ -796,7 +796,7 @@ export default function App() {
       </div>
 
         {/* Reverent Catholic Footer */}
-        <footer className="bg-stone-950/85 backdrop-blur-xl text-stone-300 border-t border-amber-500/20 mt-10 sm:mt-24 py-12 sm:py-16 text-xs shadow-2xl">
+        <footer className="bg-stone-950/85 backdrop-blur-xl text-stone-300 border-t border-amber-500/20 mt-10 sm:mt-24 pt-10 pb-24 sm:py-16 text-xs shadow-2xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex items-start gap-4">

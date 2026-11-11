@@ -101,7 +101,7 @@ export const PodcastPlayerBar: React.FC<PodcastPlayerBarProps> = ({
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#120A05]/95 backdrop-blur-xl border-t border-amber-500/30 text-stone-100 shadow-[0_-10px_35px_rgba(0,0,0,0.85)] transition-all">
+    <div className="fixed bottom-[58px] md:bottom-0 left-0 right-0 z-50 bg-[#120A05]/95 backdrop-blur-xl border-t border-amber-500/30 text-stone-100 shadow-[0_-10px_35px_rgba(0,0,0,0.85)] transition-all">
       {/* Top Scrubber Progress Line */}
       <div className="relative w-full h-1.5 bg-stone-800 cursor-pointer group">
         <div 

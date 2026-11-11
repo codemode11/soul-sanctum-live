@@ -302,23 +302,10 @@ export const Header: React.FC<HeaderProps> = ({
                   </div>
                 </div>
               </div>
-
-              {/* Mobile-Only Quick Index Button in Masthead Top-Right */}
-              {onToggleMobileMenu && (
-                <button
-                  type="button"
-                  onClick={onToggleMobileMenu}
-                  className="sm:hidden min-h-[42px] px-3 py-1.5 rounded-xl bg-black/60 hover:bg-black/75 backdrop-blur-md border border-amber-400/50 text-amber-100 font-cinzel text-xs font-bold tracking-wider uppercase flex items-center gap-1.5 shadow-lg shrink-0 cursor-pointer"
-                  aria-label="Open Sacred Index Menu"
-                >
-                  <span>Index</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-amber-300" />
-                </button>
-              )}
             </div>
 
-            {/* Date & Liturgical Feast Controls: Frosted Pill Card on Mobile, Classic Right-Aligned on Desktop */}
-            <div className="flex flex-col items-start sm:items-end gap-1 text-xs w-full sm:w-auto self-stretch sm:self-start shrink-0 bg-black/55 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-amber-400/30 sm:border-none rounded-xl sm:rounded-none px-3.5 py-2.5 sm:p-0 shadow-lg sm:shadow-none">
+            {/* Date & Liturgical Feast Controls: Frosted Pill Card on Mobile (lowered), Classic Right-Aligned on Desktop */}
+            <div className="mt-14 sm:mt-0 flex flex-col items-start sm:items-end gap-1 text-xs w-full sm:w-auto self-stretch sm:self-start shrink-0 bg-black/55 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none border border-amber-400/30 sm:border-none rounded-xl sm:rounded-none px-3.5 py-2.5 sm:p-0 shadow-lg sm:shadow-none">
               
               <div className="w-full sm:w-auto flex flex-wrap items-center justify-between sm:justify-end gap-2">
                 <div className="relative w-full sm:w-auto">

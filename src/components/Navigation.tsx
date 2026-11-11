@@ -597,59 +597,53 @@ export const Navigation: React.FC<NavigationProps> = ({
         </div>
       </aside>
 
-      {/* 2. Mobile Sticky Top Navigation Strip + Horizontal Quick-Jump Carousel */}
-      <div className="flex md:hidden flex-col w-full sticky top-0 z-30 bg-stone-950/92 backdrop-blur-xl border border-amber-500/25 rounded-xl px-3 py-2 text-stone-100 shadow-lg space-y-2">
-        <div className="flex items-center justify-between gap-2">
-          <button
-            type="button"
-            onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
-            className="min-h-[40px] flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-cinzel font-bold tracking-wider uppercase cursor-pointer shrink-0 active:scale-98 transition-transform"
-          >
-            <Layers className="w-4 h-4 text-amber-300 shrink-0" />
-            <span>Index</span>
-          </button>
-
-          <div className="flex items-center gap-2 min-w-0">
-            {currentItem && (
-              <span className="text-xs sm:text-sm font-serif font-semibold text-amber-100 truncate max-w-[185px] sm:max-w-[260px]">
-                {currentItem.label}
-              </span>
-            )}
-            <button
-              type="button"
-              onClick={onOpenNotifications}
-              className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg text-stone-300 hover:text-amber-200 bg-white/5 border border-white/10 cursor-pointer shrink-0 active:scale-95 transition-transform"
-              title="Reminders"
-              aria-label="Daily Reminders"
-            >
-              <BellRing className="w-4 h-4 text-amber-400" />
-            </button>
-          </div>
-        </div>
-
-        {/* Horizontal Swipeable Quick-Jump Tabs for One-Handed Mobile Browsing */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-0.5 -mx-1 px-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.id;
+      {/* 2. Mobile Fixed Bottom Thumb-Zone Navigation Dock */}
+      <nav
+        aria-label="Mobile Primary Navigation"
+        className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-stone-950/95 backdrop-blur-2xl border-t border-amber-500/30 shadow-[0_-8px_30px_rgba(0,0,0,0.85)] px-1.5 pt-1 pb-[calc(0.35rem+env(safe-area-inset-bottom))]"
+      >
+        <div className="grid grid-cols-5 items-stretch max-w-md mx-auto">
+          {[
+            { id: 'readings' as ActiveTab, line1: 'Mass', line2: 'Readings', icon: MassReadingsBookFlipIcon },
+            { id: 'saints' as ActiveTab, line1: 'Saint of', line2: 'the Day', icon: SaintWithHaloIcon },
+            { id: 'catholic-bibles' as ActiveTab, line1: 'Holy', line2: 'Bible', icon: CatholicBiblesBookIcon },
+            { id: 'divine-office' as ActiveTab, line1: 'Divine', line2: 'Office', icon: DivineOfficeBreviaryIcon },
+          ].map((tab) => {
+            const TabIcon = tab.icon;
+            const isActive = activeTab === tab.id;
             return (
               <button
-                key={item.id}
+                key={tab.id}
                 type="button"
-                onClick={() => onSelectTab(item.id)}
-                className={`min-h-[34px] px-2.5 py-1 rounded-lg text-xs font-serif font-semibold whitespace-nowrap shrink-0 flex items-center gap-1.5 border transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-gradient-to-r from-[#C89F72]/45 via-[#D4A373]/35 to-[#B88B5E]/45 text-[#FFD700] border-[#FFD700]/70 shadow-xs'
-                    : 'bg-white/5 text-stone-300 border-white/10 hover:text-amber-200'
+                onClick={() => onSelectTab(tab.id)}
+                className={`min-h-[54px] flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 transition-colors cursor-pointer select-none ${
+                  isActive ? 'text-[#FFD700]' : 'text-stone-400 hover:text-stone-200'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#FFD700]' : 'text-stone-400'}`} />
-                <span>{item.label}</span>
+                <TabIcon className={`w-5 h-5 shrink-0 ${isActive ? 'text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]' : 'text-stone-400'}`} />
+                <span className={`text-[10px] font-serif leading-[1.12] text-center flex flex-col items-center ${isActive ? 'font-bold text-[#FFD700]' : 'font-medium'}`}>
+                  <span className="block whitespace-nowrap">{tab.line1}</span>
+                  <span className="block whitespace-nowrap">{tab.line2}</span>
+                </span>
               </button>
             );
           })}
+
+          {/* 5th Thumb Slot: Open Full Sacred Index Drawer */}
+          <button
+            type="button"
+            onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
+            className={`min-h-[54px] flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 transition-colors cursor-pointer select-none ${
+              isMobileOpen ? 'text-[#FFD700]' : 'text-amber-200/90 hover:text-[#FFD700]'
+            }`}
+          >
+            <Layers className="w-5 h-5 shrink-0 text-amber-300" />
+            <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider leading-[1.12] text-center flex flex-col items-center justify-center min-h-[22px]">
+              <span>Index</span>
+            </span>
+          </button>
         </div>
-      </div>
+      </nav>
 
       {/* 3. Mobile Slide-out Drawer */}
       {isMobileOpen && (
