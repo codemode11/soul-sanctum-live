@@ -331,15 +331,15 @@ export const DivineOfficeView: React.FC = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full">
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 w-full items-stretch">
           {[
-            { key: 'invitatory' as const, label: 'Invitatory', Icon: Sunrise },
-            { key: 'readings' as const, label: 'Office of Readings', Icon: BookOpen },
-            { key: 'lauds' as const, label: 'Morning Prayer (Lauds)', Icon: Sun },
-            { key: 'daytime' as const, label: 'Daytime Prayer', Icon: Clock },
-            { key: 'vespers' as const, label: 'Evening Prayer (Vespers)', Icon: Sunset },
-            { key: 'compline' as const, label: 'Night Prayer (Compline)', Icon: Moon },
-          ].map(({ key, label, Icon }) => {
+            { key: 'invitatory' as const, line1: 'Invitatory', line2: '', Icon: Sunrise },
+            { key: 'readings' as const, line1: 'Office of', line2: 'Readings', Icon: BookOpen },
+            { key: 'lauds' as const, line1: 'Morning', line2: 'Prayer', Icon: Sun },
+            { key: 'daytime' as const, line1: 'Daytime', line2: 'Prayer', Icon: Clock },
+            { key: 'vespers' as const, line1: 'Evening', line2: 'Prayer', Icon: Sunset },
+            { key: 'compline' as const, line1: 'Night', line2: 'Prayer', Icon: Moon },
+          ].map(({ key, line1, line2, Icon }) => {
             const isHovered = hoveredHourKey === key;
             return (
               <button
@@ -354,18 +354,19 @@ export const DivineOfficeView: React.FC = () => {
                   outlineColor: isHovered ? '#5A381C' : 'transparent',
                   color: '#000000',
                 }}
-                className="w-full px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[11px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center text-center gap-1.5 sm:gap-2 border border-stone-400/80 outline-1 outline-offset-1 overflow-hidden"
+                className="w-full px-1.5 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[10.5px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center text-center gap-1 sm:gap-2 border border-stone-400/80 outline-1 outline-offset-1 overflow-hidden"
               >
                 <Icon
-                  className="w-4 h-4 shrink-0 text-amber-500"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-500"
                   style={{
                     color: '#D4AF37',
                     strokeWidth: 2.4,
                     filter: 'drop-shadow(0 1px 1.5px rgba(0,0,0,0.45))',
                   }}
                 />
-                <span style={{ color: '#000000' }} className="font-bold tracking-wide truncate text-center">
-                  {label}
+                <span style={{ color: '#000000' }} className="w-[54px] sm:w-[64px] shrink-0 font-bold tracking-normal leading-tight text-center flex flex-col items-center justify-center">
+                  <span className="block whitespace-nowrap">{line1}</span>
+                  {line2 && <span className="block whitespace-nowrap">{line2}</span>}
                 </span>
               </button>
             );

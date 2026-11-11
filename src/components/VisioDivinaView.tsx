@@ -9,7 +9,9 @@ import {
   ChevronRight,
   Flame,
   Volume2,
-  VolumeX
+  VolumeX,
+  Settings,
+  ChevronDown
 } from 'lucide-react';
 import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { SacredMasterpiece } from '../types';
@@ -25,6 +27,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
   const [selectedArt, setSelectedArt] = useState<SacredMasterpiece>(SACRED_MASTERPIECES[0]);
   const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4>(1);
   const [isReadingAloud, setIsReadingAloud] = useState(false);
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
 
   const steps = [
     {
@@ -65,27 +68,53 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-12 animate-fadeIn">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12 animate-fadeIn">
       
-      {/* Visio Divina Banner: Lighter luminous sacred ivory background distinct from dark page */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#FAF7F2]/95 backdrop-blur-xl rounded-xl border border-amber-300/80 text-stone-900 shadow-2xl relative overflow-hidden">
-        {/* Subtle luminous gold Eucharistic ambient halo */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-amber-200/30 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-        
-        <div className="relative z-10 space-y-2">
-          <div className="flex items-center gap-2">
-            <Eye className="w-5 h-5 text-amber-700" />
-            <span className="font-cinzel text-xs uppercase tracking-widest text-amber-800 font-bold">
-              The Ancient Monastic Way of Divine Seeing
-            </span>
+      {/* Visio Divina Banner with Settings Drop-Down Icon */}
+      <div className="bg-[#FAF7F2]/95 backdrop-blur-xl rounded-xl border border-amber-300/80 text-stone-900 shadow-xl relative overflow-hidden">
+        <div className="px-5 py-3 sm:px-6 flex items-center justify-between gap-3">
+          <div className="space-y-0.5 text-left min-w-0">
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4 text-amber-700" />
+              <span className="font-cinzel text-xs uppercase tracking-widest text-amber-800 font-bold truncate">
+                The Ancient Monastic Way of Divine Seeing
+              </span>
+            </div>
+            <h2 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-wide drop-shadow-2xs truncate">
+              Visio Divina
+            </h2>
           </div>
-          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-amber-950 tracking-wide drop-shadow-2xs">
-            Visio Divina
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl text-stone-800 font-serif max-w-3xl leading-relaxed">
-            Contemplating God through the luminous beauty of Catholic sacred art. Just as Lectio Divina listens to the Word of God, Visio Divina beholds the presence of the Divine Mystery through holy images.
-          </p>
+
+          {/* Settings Drop-Down Icon Button */}
+          <button
+            type="button"
+            onClick={() => setIsTopSettingsOpen(prev => !prev)}
+            aria-expanded={isTopSettingsOpen}
+            className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+              isTopSettingsOpen
+                ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                : 'bg-white/80 hover:bg-white text-[#8B5A2B] hover:text-[#25170F] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+            }`}
+            title={isTopSettingsOpen ? 'Hide Contemplative Guide' : 'Show Contemplative Guide'}
+            aria-label={isTopSettingsOpen ? 'Hide Contemplative Guide' : 'Show Contemplative Guide'}
+          >
+            <Settings className="w-3.5 h-3.5 text-[#8B5A2B] shrink-0" />
+            <ChevronDown
+              className={`w-3.5 h-3.5 text-[#8B5A2B] shrink-0 transition-transform duration-200 ${
+                isTopSettingsOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
         </div>
+
+        {/* Dropdown contemplative description */}
+        {isTopSettingsOpen && (
+          <div className="px-5 py-3.5 sm:px-6 border-t border-amber-200/80 bg-amber-50/70 text-stone-800 space-y-2 animate-in fade-in">
+            <p className="text-xs sm:text-sm font-serif leading-relaxed">
+              Contemplating God through the luminous beauty of Catholic sacred art. Just as Lectio Divina listens to the Word of God, Visio Divina beholds the presence of the Divine Mystery through holy images.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Artwork Selector Bar with lighter styling */}
@@ -109,10 +138,10 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
       </div>
 
       {/* Main Sacred Artwork Presentation */}
-      <div className="bg-white/92 backdrop-blur-md rounded-xl p-6 sm:p-8 shadow-2xl border border-stone-200/90 space-y-6">
+      <div className="bg-white/92 backdrop-blur-md rounded-xl p-5 sm:p-7 shadow-2xl border border-stone-200/90 space-y-6">
         
-        {/* Artwork Image Frame */}
-        <div className="relative rounded-xl overflow-hidden bg-black aspect-[16/10] sm:aspect-[16/9] border border-[#8B5A2B]/40 shadow-xl group">
+        {/* Artwork Image Frame (Enlarged Viewer) */}
+        <div className="relative rounded-xl overflow-hidden bg-black aspect-[16/10] sm:aspect-[16/9] min-h-[380px] sm:min-h-[500px] md:min-h-[580px] border border-[#8B5A2B]/40 shadow-xl group flex items-center justify-center">
           <img
             key={selectedArt.id}
             src={selectedArt.imageUrl}

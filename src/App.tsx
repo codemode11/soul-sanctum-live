@@ -899,12 +899,12 @@ export default function App() {
               </button>
               <span>•</span>
 
-              {/* 8. Cebu Parishes Schedules */}
+              {/* 8. Holy Mass and Confession Schedules */}
               <button 
                 onClick={() => setIsCebuParishesOpen(true)} 
                 className="hover:text-amber-300 cursor-pointer transition-colors"
               >
-                Cebu Parishes Schedules
+                Holy Mass and Confession Schedules
               </button>
               <span>•</span>
 

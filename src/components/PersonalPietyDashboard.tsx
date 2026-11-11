@@ -665,7 +665,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                 className="px-3.5 py-2 rounded-lg bg-white hover:bg-stone-50 text-[#24140B] border border-[#8B5A2B]/40 text-xs font-cinzel font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
               >
                 <MapPin className="w-3.5 h-3.5 text-[#6B3E1E]" />
-                <span>Mass &amp; Confession Schedules</span>
+                <span>Holy Mass &amp; Confession Schedules</span>
               </button>
             )}
             <button

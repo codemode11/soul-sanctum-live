@@ -226,6 +226,16 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   const days = getLiturgicalMonth(currentYear, currentMonth);
   const monthName = new Date(currentYear, currentMonth).toLocaleDateString('en-US', { month: 'long' });
 
+  // Next month calculation for completion squares
+  const nextMonth = currentMonth === 11 ? 0 : currentMonth + 1;
+  const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+  const nextMonthDays = getLiturgicalMonth(nextYear, nextMonth);
+  const nextMonthShortName = new Date(nextYear, nextMonth, 1).toLocaleDateString('en-US', { month: 'short' });
+
+  // Exactly 8 rows of 4 squares = 32 squares total
+  const remainingSlots = Math.max(0, 32 - days.length);
+  const completionDays = nextMonthDays.slice(0, remainingSlots);
+
   // First day of week padding
   const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
 
@@ -376,34 +386,20 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
         </div>
       </div>
 
-      {/* Monthly Grid in Light Brown and Dark Brown Theme */}
-      <div className="rounded-xl p-4 sm:p-5 border border-[#A78262] shadow-sm bg-gradient-to-b from-[#E4D5C6]/70 via-[#DBC9B7]/50 to-[#E4D5C6]/70">
+      {/* Monthly Grid: Eight Rows with Four Squares Each (32 Squares Total) */}
+      <div className="rounded-xl p-3 sm:p-5 border border-[#A78262] shadow-sm bg-gradient-to-b from-[#E4D5C6]/70 via-[#DBC9B7]/50 to-[#E4D5C6]/70">
         
-        {/* Day of Week Headers */}
-        <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2 text-center text-xs sm:text-sm font-bold text-[#6D482F] font-cinzel leading-none">
-          <span className="text-[#7A3E1B]">Sun</span>
-          <span>Mon</span>
-          <span>Tue</span>
-          <span>Wed</span>
-          <span>Thu</span>
-          <span>Fri</span>
-          <span>Sat</span>
-        </div>
-
-        {/* Days Grid */}
-        <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
-          {/* Leading empty cells */}
-          {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-            <div key={`empty-${i}`} className="min-h-24 sm:min-h-28 bg-white/70 rounded-xl border border-[#D5C2B0]/50" />
-          ))}
-
-          {/* Actual days */}
+        {/* 8 Rows × 4 Squares Grid */}
+        <div className="grid grid-cols-4 gap-2 sm:gap-2.5">
+          {/* Current Month Days */}
           {days.map((dayInfo, idx) => {
             const dayNum = idx + 1;
+            const dateObj = new Date(currentYear, currentMonth, dayNum);
+            const weekdayShort = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+            const isSunday = dateObj.getDay() === 0;
             const isToday = dayInfo.date === todayDateStr;
             const isSelected = selectedDateStr === dayInfo.date;
             const colorMeta = LITURGICAL_COLORS_INFO[dayInfo.color];
-            const isSunday = (firstDayOfWeek + idx) % 7 === 0;
 
             // Check if day celebrates a specific saint or feast
             const hasCelebratedSaintOrFeast = Boolean(
@@ -427,7 +423,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   setInspectedDay(dayInfo);
                   onSelectDate(dayInfo.date);
                 }}
-                className={`min-h-24 sm:min-h-28 p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-white hover:bg-stone-50 text-[#3B2213] ${
+                className={`min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-white hover:bg-stone-50 text-[#3B2213] ${
                   isSelected
                     ? 'border-2 border-[#341D10] ring-2 ring-[#8B5A2B]/60 shadow-md scale-[1.01] z-10'
                     : isToday
@@ -435,19 +431,24 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                       : 'border border-[#D5C2B0]/90 hover:border-[#8B5A2B] shadow-2xs'
                 }`}
               >
-                {/* Date number and color indicator */}
+                {/* Date number, day of week, and color indicator */}
                 <div className="flex items-center justify-between leading-none">
-                  <span className={`text-sm sm:text-base font-bold font-cinzel leading-none ${
-                    isSelected 
-                      ? 'w-6 h-6 rounded-full bg-[#341D10] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
-                      : isToday 
-                        ? 'w-6 h-6 rounded-full bg-[#5D371F] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
-                        : isSunday 
-                          ? 'text-[#7A3E1B]' 
-                          : 'text-[#341D10]'
-                  }`}>
-                    {dayNum}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className={`font-bold font-cinzel leading-none ${
+                      isSelected 
+                        ? 'w-6 h-6 rounded-full bg-[#341D10] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
+                        : isToday 
+                          ? 'w-6 h-6 rounded-full bg-[#5D371F] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
+                          : isSunday 
+                            ? 'text-[#7A3E1B] text-sm sm:text-base' 
+                            : 'text-[#341D10] text-sm sm:text-base'
+                    }`}>
+                      {dayNum}
+                    </span>
+                    <span className={`text-[11px] sm:text-xs font-cinzel font-bold tracking-wider uppercase ${isSunday ? 'text-[#7A3E1B]' : 'text-[#8B5A2B]'}`}>
+                      {weekdayShort}
+                    </span>
+                  </div>
 
                   <span 
                     className="w-2.5 h-2.5 rounded-full ring-1 ring-[#5D371F]/40 shadow-2xs shrink-0" 
@@ -456,10 +457,10 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   />
                 </div>
 
-                {/* Feast title snippet with comfortable, clear font size (13px - 14.5px) and narrowed line spacing */}
+                {/* Feast title snippet with comfortable, clear font size and narrowed line spacing */}
                 <div className="mt-1 flex-1">
                   <p 
-                    className={`text-[13px] sm:text-[14px] font-serif line-clamp-2 leading-[1.18] tracking-tight ${
+                    className={`text-[12.5px] sm:text-[13.5px] font-serif line-clamp-2 leading-[1.18] tracking-tight ${
                       hasCelebratedSaintOrFeast 
                         ? 'font-bold text-[#2A1409]' 
                         : 'font-normal text-[#5D371F]'
@@ -473,7 +474,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 <div className="flex flex-wrap items-center gap-1 mt-1">
                   {dayInfo.isHolyDay && (
                     <span 
-                      className="text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs font-bold leading-none bg-red-100/90 text-red-900 border border-red-300/50" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-bold leading-none bg-red-100/90 text-red-900 border border-red-300/50" 
                       title="Holy Day of Obligation"
                     >
                       Obligation
@@ -481,7 +482,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   )}
                   {dayInfo.isFastingDay && (
                     <span 
-                      className="text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs leading-none bg-purple-100/90 text-purple-900 border border-purple-300/50" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs leading-none bg-purple-100/90 text-purple-900 border border-purple-300/50" 
                       title="Day of Penance / Abstinence"
                     >
                       Penance
@@ -489,12 +490,71 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   )}
                   {dayInfo.historicalEvent && (
                     <span 
-                      className="text-[10px] sm:text-[10.5px] px-1.5 py-0.5 rounded-xs font-medium leading-none bg-[#EFE6DC] text-[#341D10] border border-[#BFA287]/60" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-medium leading-none bg-[#EFE6DC] text-[#341D10] border border-[#BFA287]/60" 
                       title={dayInfo.historicalEvent.title}
                     >
                       {dayInfo.historicalEvent.year}
                     </span>
                   )}
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Completion Days to guarantee exactly 8 rows with 4 squares each (32 squares total) */}
+          {completionDays.map((nextDayInfo, cIdx) => {
+            const nextDayNum = cIdx + 1;
+            const nextDateObj = new Date(nextYear, nextMonth, nextDayNum);
+            const nextWeekdayShort = nextDateObj.toLocaleDateString('en-US', { weekday: 'short' });
+            const isNextSunday = nextDateObj.getDay() === 0;
+            const nextColorMeta = LITURGICAL_COLORS_INFO[nextDayInfo.color];
+            const nextDisplayTitle = nextDayInfo.saintName
+              ? nextDayInfo.saintName
+              : nextDayInfo.rank === 'Sunday'
+                ? (nextDayInfo.title.includes('(') ? nextDayInfo.title.split('(')[0].trim() : nextDayInfo.title)
+                : nextDayInfo.title.replace('in Ordinary Time', '').trim();
+
+            return (
+              <div
+                key={`next-${nextDayInfo.date}`}
+                onClick={() => {
+                  setCurrentMonth(nextMonth);
+                  setCurrentYear(nextYear);
+                  setInspectedDay(nextDayInfo);
+                  onSelectDate(nextDayInfo.date);
+                }}
+                className="min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-[#F8F3EC]/80 hover:bg-white text-[#5D371F] border border-dashed border-[#BFA287] shadow-2xs hover:border-[#8B5A2B]"
+                title={`Next Month: Click to view ${nextMonthShortName} ${nextDayNum}`}
+              >
+                {/* Date number, day of week, and color indicator */}
+                <div className="flex items-center justify-between leading-none">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs sm:text-sm font-bold font-cinzel text-[#8B5A2B]">
+                      {nextMonthShortName} {nextDayNum}
+                    </span>
+                    <span className={`text-[10.5px] sm:text-xs font-cinzel font-semibold uppercase ${isNextSunday ? 'text-[#7A3E1B]' : 'text-[#8B5A2B]/80'}`}>
+                      {nextWeekdayShort}
+                    </span>
+                  </div>
+                  <span 
+                    className="w-2.5 h-2.5 rounded-full ring-1 ring-[#5D371F]/30 shadow-2xs shrink-0" 
+                    style={{ backgroundColor: nextColorMeta.hex }} 
+                    title={`Color: ${nextColorMeta.name}`}
+                  />
+                </div>
+
+                {/* Feast title */}
+                <div className="mt-1 flex-1">
+                  <p className="text-[12px] sm:text-[13px] font-serif line-clamp-2 leading-[1.18] tracking-tight text-[#6D482F]">
+                    {nextDisplayTitle}
+                  </p>
+                </div>
+
+                {/* Next month indicator badge */}
+                <div className="flex items-center justify-between text-[9.5px] sm:text-[10px] font-cinzel text-[#8B5A2B] pt-0.5">
+                  <span className="bg-[#EFE6DC] px-1.5 py-0.5 rounded text-[#5D371F] font-semibold border border-[#D5C2B0]/80">
+                    Next Month
+                  </span>
                 </div>
               </div>
             );
@@ -788,7 +848,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             </span>
             <div>
               <h4 className="font-cinzel text-base sm:text-lg font-bold text-[#24140B] leading-snug">
-                Archdiocese of Cebu • Parish Mass and Confession Schedules
+                Archdiocese of Cebu • Holy Mass and Confession Schedules
               </h4>
               <p className="text-xs sm:text-sm font-serif text-[#5C3D28] font-normal mt-0.5 leading-snug">
                 Basilica Minore del Santo Niño, Cebu Metropolitan Cathedral, Redemptorist Church, Carmelite Monastery, Shrine of San Roque and Guadalupe
@@ -799,7 +859,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             onClick={onOpenCebuParishes}
             className="px-4 py-2.5 rounded-lg bg-white hover:bg-stone-50 text-[#24140B] border border-[#8B5A2B]/40 text-xs sm:text-sm font-serif font-bold cursor-pointer whitespace-nowrap self-start sm:self-auto transition-all shadow-xs leading-none"
           >
-            Mass and Confession Schedules
+            Holy Mass &amp; Confession Schedules
           </button>
         </div>
       )}

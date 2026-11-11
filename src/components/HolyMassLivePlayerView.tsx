@@ -13,8 +13,12 @@ import {
   Check, 
   Share2, 
   ChevronRight,
+  ChevronDown,
   Info,
-  Volume2
+  Volume2,
+  Settings,
+  Maximize2,
+  Minimize2
 } from 'lucide-react';
 import { HolyMassLiveStream, LiveStreamRegion, LiveStreamCategory, MassReading } from '../types';
 import { HOLY_MASS_LIVESTREAMS } from '../data/holyMassLiveStreams';
@@ -47,6 +51,8 @@ export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
   const [savedIntentions, setSavedIntentions] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
   const [streamKey, setStreamKey] = useState(Date.now());
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
+  const [isTheaterMode, setIsTheaterMode] = useState(false);
 
   // Filter streams
   const filteredStreams = HOLY_MASS_LIVESTREAMS.filter(stream => {
@@ -180,50 +186,128 @@ Live on Soul Sanctum Catholic Sanctuary.`;
   };
 
   return (
-    <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-6">
+    <div className={`mx-auto pt-0 pb-20 space-y-6 transition-all duration-300 ${isTheaterMode ? 'max-w-7xl' : 'max-w-5xl'}`}>
       
       {/* 1. Top Masthead & Active Sanctuary Stage Card */}
       <div className="rounded-xl overflow-hidden bg-gradient-to-b from-stone-900 via-[#1A110B] to-stone-950 border border-amber-500/35 shadow-2xl text-stone-100">
         
-        {/* Top Header Bar */}
-        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] border-b border-amber-500/25 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1.5 max-w-2xl text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[11px] font-cinzel font-bold tracking-wider uppercase">
-              <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
-              <span>Worldwide Catholic Livestream</span>
+        {/* Top Header Bar with Settings Drop-Down Icon */}
+        <div className="bg-gradient-to-r from-stone-900 via-[#1C120C] to-stone-900 text-stone-100 border-b border-amber-500/25">
+          <div className="px-4 py-3 sm:px-6 flex items-center justify-between gap-3">
+            <div className="space-y-0.5 text-left min-w-0">
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[10.5px] font-cinzel font-bold tracking-wider uppercase">
+                <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
+                <span className="truncate">Live: {selectedStream.sanctuary}</span>
+              </div>
+
+              <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide truncate">
+                Holy Mass Live
+              </h2>
             </div>
 
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-              Holy Mass Live
-            </h2>
+            {/* Quick Actions & Settings Drop-Down Button */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {/* Quick Reload Stream */}
+              <button
+                type="button"
+                onClick={() => setStreamKey(Date.now())}
+                className="h-8 px-2.5 rounded-md bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border border-[#8B5A2B]/50 hover:border-[#D4A373]/70 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-sans"
+                title="Reload video stream"
+              >
+                <RefreshCw className="w-3.5 h-3.5 text-[#D4A373]" />
+                <span className="hidden sm:inline">Reload</span>
+              </button>
 
-            <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-              Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, <strong>EWTN Live Mass &amp; Devotions</strong>, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, Basilica Minore del Santo Niño de Cebú, and perpetual adoration sanctuaries worldwide.
-            </p>
+              {/* Enlarge / Theater Mode Toggle */}
+              <button
+                type="button"
+                onClick={() => setIsTheaterMode(prev => !prev)}
+                className={`h-8 px-2.5 rounded-md transition-all cursor-pointer flex items-center gap-1.5 text-xs font-sans border ${
+                  isTheaterMode
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+                }`}
+                title={isTheaterMode ? 'Compact Viewer Size' : 'Enlarge Viewer (Theater Mode)'}
+              >
+                {isTheaterMode ? (
+                  <>
+                    <Minimize2 className="w-3.5 h-3.5 text-[#D4A373]" />
+                    <span className="hidden sm:inline">Compact</span>
+                  </>
+                ) : (
+                  <>
+                    <Maximize2 className="w-3.5 h-3.5 text-[#D4A373]" />
+                    <span className="hidden sm:inline">Enlarge</span>
+                  </>
+                )}
+              </button>
+
+              {/* Settings Drop-Down Icon Button */}
+              <button
+                type="button"
+                onClick={() => setIsTopSettingsOpen(prev => !prev)}
+                aria-expanded={isTopSettingsOpen}
+                className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+                  isTopSettingsOpen
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+                }`}
+                title={isTopSettingsOpen ? 'Hide Stream Options & Details' : 'Show Stream Options & Details'}
+                aria-label={isTopSettingsOpen ? 'Hide Stream Options & Details' : 'Show Stream Options & Details'}
+              >
+                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                    isTopSettingsOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 self-start md:self-center shrink-0">
-            <button
-              onClick={() => setStreamKey(Date.now())}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-stone-600 text-stone-200 text-xs font-sans font-medium transition-all cursor-pointer"
-              title="Reload video stream"
-            >
-              <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
-              <span>Reload Stream</span>
-            </button>
+          {/* Expandable Settings Drop-Down Panel */}
+          {isTopSettingsOpen && (
+            <div className="px-4 py-3 sm:px-6 bg-[#160D08]/95 border-t border-amber-500/20 text-stone-200 space-y-3 animate-in fade-in">
+              <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
+                Unite in the Holy Sacrifice of the Mass celebrated in real-time from Saint Peter&apos;s Basilica in the Vatican, <strong>EWTN Live Mass &amp; Devotions</strong>, the Grotto of Lourdes, Fátima, the Holy Sepulchre in Jerusalem, Basilica Minore del Santo Niño de Cebú, and perpetual adoration sanctuaries worldwide.
+              </p>
 
-            <button
-              onClick={handleShareStream}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-900/60 hover:bg-amber-800/80 border border-amber-600/70 text-amber-100 text-xs font-sans font-semibold transition-all cursor-pointer"
-            >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
-              <span>{copied ? 'Link Copied' : 'Share Stream'}</span>
-            </button>
-          </div>
+              <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-amber-900/30">
+                <button
+                  type="button"
+                  onClick={handleShareStream}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-900/70 hover:bg-amber-800 border border-amber-600/70 text-amber-100 text-xs font-sans font-medium transition-all cursor-pointer"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Link Copied' : 'Share Stream Link'}</span>
+                </button>
+
+                {selectedStream.youtubeLiveUrl && (
+                  <a
+                    href={selectedStream.youtubeLiveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 border border-stone-600 text-stone-200 text-xs font-sans transition-all"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
+                    <span>Open External Broadcast</span>
+                  </a>
+                )}
+
+                <div className="text-[11px] text-stone-400 font-serif ml-auto">
+                  Quality: 1080p HD • Audio: Live Altar Choir &amp; Proclamation
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Full-Width 16:9 Livestream Video Player */}
-        <div className="relative aspect-video w-full bg-black border-b border-amber-500/30">
+        {/* Full-Width Livestream Video Player (Enlarged Viewer) */}
+        <div className={`relative w-full bg-black border-b border-amber-500/30 transition-all duration-300 ${
+          isTheaterMode 
+            ? 'aspect-[16/9] min-h-[460px] sm:min-h-[600px] md:min-h-[720px]' 
+            : 'aspect-[16/9] min-h-[360px] sm:min-h-[480px] md:min-h-[580px]'
+        }`}>
           <iframe
             key={`${selectedStream.id}-${streamKey}`}
             src={selectedStream.videoEmbedUrl}
@@ -243,6 +327,19 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             <span className="px-2.5 py-1 rounded-full bg-black/75 text-amber-200 text-[11px] font-serif border border-white/20 backdrop-blur-md">
               {selectedStream.sanctuary}
             </span>
+          </div>
+
+          {/* Top-Right Quick Enlarge Toggle Button */}
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 z-10">
+            <button
+              type="button"
+              onClick={() => setIsTheaterMode(prev => !prev)}
+              className="px-2.5 py-1 rounded-full bg-black/75 hover:bg-black/90 text-amber-200 hover:text-white text-xs font-serif border border-white/20 backdrop-blur-md transition-all flex items-center gap-1 shadow-md cursor-pointer"
+              title={isTheaterMode ? 'Compact View' : 'Enlarge Viewer'}
+            >
+              {isTheaterMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+              <span className="hidden sm:inline">{isTheaterMode ? 'Standard' : 'Enlarge'}</span>
+            </button>
           </div>
         </div>
 

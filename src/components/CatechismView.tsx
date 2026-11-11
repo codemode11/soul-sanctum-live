@@ -265,40 +265,40 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
       {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between">
-        <div className="space-y-1.5">
-          {/* Line 1: Heading & Subtitle */}
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel">
-              Catechism
-            </span>
-            <span className="text-xs sm:text-sm text-stone-300 font-serif-sacred">
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-1.5">
+            {/* Line 1: Heading, Paragraphs Range & Subtitle */}
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel">
+                Catechism
+              </span>
+              <span className="text-xs sm:text-sm font-semibold text-amber-200/90 font-cinzel">
+                {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
+                  ? selectedTopic.paragraphsRange
+                  : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
+              </span>
+            </div>
+
+            {/* Line 2: Topic Title */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 leading-snug break-words">
+              {toCurvedQuotes(selectedTopic.topicTitle)}
+            </h2>
+
+            {/* Subtitle / Theme description */}
+            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred line-clamp-2 sm:line-clamp-1">
               {toCurvedQuotes(selectedTopic.topicSubtitle)}
-            </span>
+            </p>
           </div>
 
-          {/* Line 2: Topic Title */}
-          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 leading-snug break-words">
-            {toCurvedQuotes(selectedTopic.topicTitle)}
-          </h2>
-        </div>
-
-        {/* Bottom Bar: Paragraphs Range at bottom-left, Settings/Actions at bottom-right */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-auto pt-3 border-t border-stone-800/80">
-          <div className="text-xs sm:text-sm font-semibold text-amber-200/90 font-cinzel">
-            {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
-              ? selectedTopic.paragraphsRange
-              : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
-          </div>
-
-          {/* Settings & actions at the bottom (right side) */}
-          <div className="flex flex-wrap items-center gap-2 shrink-0 sm:self-auto">
-            {/* Quick Topic Date Navigation with Arrows */}
-            <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs">
+          {/* Line 3: Bottom Bar with Topic Navigation & Action Buttons */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-3 border-t border-stone-800/80 w-full">
+            {/* Left: Quick Date & Gospel Citation Navigation Bar */}
+            <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs max-w-full shrink-0">
               <button
                 type="button"
                 onClick={handlePrevTopic}
-                className="h-full px-2 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                className="h-full px-2.5 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
                 title="Previous Gospel Topic"
                 aria-label="Previous Gospel Topic"
               >
@@ -308,11 +308,11 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               <button
                 type="button"
                 onClick={() => setIsSettingsOpen(prev => !prev)}
-                className="h-full flex items-center gap-1.5 px-2.5 text-xs font-medium hover:text-[#F7EBE1] hover:bg-white/10 transition-colors cursor-pointer select-none"
+                className="h-full flex items-center gap-1.5 px-2 sm:px-2.5 text-xs font-medium hover:text-[#F7EBE1] hover:bg-white/10 transition-colors cursor-pointer select-none min-w-0"
                 title="Open Settings to view Topics and Daily Gospel Topics"
               >
                 <BookOpen className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                <span className="whitespace-nowrap leading-none font-cinzel text-amber-200">
+                <span className="truncate leading-none font-cinzel text-amber-200 text-[11px] sm:text-xs max-w-[130px] sm:max-w-[210px] md:max-w-[280px]">
                   {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
                 </span>
               </button>
@@ -320,7 +320,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               <button
                 type="button"
                 onClick={handleNextTopic}
-                className="h-full px-2 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                className="h-full px-2.5 flex items-center justify-center text-stone-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
                 title="Next Gospel Topic"
                 aria-label="Next Gospel Topic"
               >
@@ -328,52 +328,52 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </button>
             </div>
 
-            {/* Dedicated Settings Button */}
-            <button
-              type="button"
-              onClick={() => setIsSettingsOpen(prev => !prev)}
-              className={`h-8 px-3 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs border ${
-                isSettingsOpen
-                  ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
-                  : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border-[#8B5A2B]/70 hover:border-amber-400/60'
-              }`}
-              title={isSettingsOpen ? 'Close Settings' : 'Open Settings (Topics & Daily Gospel Topics)'}
-              aria-label="Settings"
-            >
-              <Settings className={`w-3.5 h-3.5 text-amber-300 transition-transform duration-200 ${isSettingsOpen ? 'rotate-90 text-white' : ''}`} />
-              <span>Settings</span>
-              <ChevronDown className={`w-3 h-3 text-amber-300/80 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
-            </button>
+            {/* Right: Settings, Audio, and Copy Action Buttons */}
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(prev => !prev)}
+                className={`h-8 px-2.5 sm:px-3 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs border ${
+                  isSettingsOpen
+                    ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
+                    : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border-[#8B5A2B]/70 hover:border-amber-400/60'
+                }`}
+                title={isSettingsOpen ? 'Close Settings' : 'Open Settings (Topics & Daily Gospel Topics)'}
+                aria-label="Settings"
+              >
+                <Settings className={`w-3.5 h-3.5 text-amber-300 transition-transform duration-200 ${isSettingsOpen ? 'rotate-90 text-white' : ''}`} />
+                <span>Settings</span>
+                <ChevronDown className={`w-3 h-3 text-amber-300/80 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
+              </button>
 
-            {/* Audio Narration */}
-            <button
-              onClick={handleToggleReadAloud}
-              className={`h-8 p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs flex items-center justify-center ${
-                isReadingAloud
-                  ? 'bg-amber-600 text-white animate-pulse'
-                  : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
-              }`}
-              title={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism Teaching & Magisterium'}
-              aria-label={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}
-            >
-              {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
-            </button>
+              <button
+                onClick={handleToggleReadAloud}
+                className={`h-8 p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs flex items-center justify-center shrink-0 ${
+                  isReadingAloud
+                    ? 'bg-amber-600 text-white animate-pulse'
+                    : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
+                }`}
+                title={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism Teaching & Magisterium'}
+                aria-label={isReadingAloud ? 'Stop Audio' : 'Listen to Catechism'}
+              >
+                {isReadingAloud ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
+              </button>
 
-            {/* Copy Teaching */}
-            <button
-              onClick={handleCopy}
-              className="h-8 p-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center"
-              title={copied ? 'Copied to clipboard' : 'Copy Catechism and Magisterium text'}
-              aria-label="Copy Catechism text"
-            >
-              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-            </button>
+              <button
+                onClick={handleCopy}
+                className="h-8 p-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                title={copied ? 'Copied to clipboard' : 'Copy Catechism and Magisterium text'}
+                aria-label="Copy Catechism text"
+              >
+                {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* SETTINGS PANEL IN THE FIRST RECTANGLE */}
+        {/* SETTINGS PANEL IN RECTANGLE 2 */}
         {isSettingsOpen && (
-          <div className="mt-3.5 pt-3.5 border-t border-[#8B5A2B]/50 bg-[#140C08]/95 rounded-xl p-3.5 sm:p-4 border border-[#8B5A2B]/60 shadow-inner space-y-3.5 animate-in fade-in duration-150">
+          <div className="px-5 py-3.5 sm:px-6 bg-[#140C08]/95 backdrop-blur-md border-t border-[#8B5A2B]/50 flex flex-col justify-center gap-3 animate-fadeIn rounded-b-xl border border-t-0 border-[#8B5A2B]/60 shadow-inner">
             {/* Settings Header */}
             <div className="flex items-center justify-between pb-2 border-b border-[#8B5A2B]/40">
               <div className="flex items-center gap-2 text-amber-300">
@@ -477,27 +477,27 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             {/* 2. Daily Gospel Topics */}
             <div className="pt-2 border-t border-[#8B5A2B]/40 space-y-2">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300/80">
+                <div className="flex flex-wrap items-center gap-2 max-w-full">
+                  <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300/80 shrink-0">
                     Daily Gospel Topics
                   </span>
-                  <div className="inline-flex items-center rounded-lg border border-[#8B5A2B]/80 bg-[#251710] text-amber-200 overflow-hidden shadow-2xs">
+                  <div className="inline-flex items-center rounded-lg border border-[#8B5A2B]/80 bg-[#251710] text-amber-200 overflow-hidden shadow-2xs max-w-full shrink-0">
                     <button
                       type="button"
                       onClick={handlePrevTopic}
-                      className="px-2 py-1 hover:bg-white/10 text-amber-300 transition-colors cursor-pointer flex items-center justify-center"
+                      className="px-2.5 py-1 hover:bg-white/10 text-amber-300 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                       title="Previous Gospel Topic"
                       aria-label="Previous Gospel Topic"
                     >
                       <ChevronLeft className="w-3.5 h-3.5" />
                     </button>
-                    <span className="text-[11px] font-semibold px-2.5 py-0.5 font-cinzel border-x border-[#8B5A2B]/60 text-amber-100">
+                    <span className="text-[11px] font-semibold px-2 sm:px-2.5 py-0.5 font-cinzel border-x border-[#8B5A2B]/60 text-amber-100 truncate max-w-[140px] sm:max-w-[200px]">
                       {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
                     </span>
                     <button
                       type="button"
                       onClick={handleNextTopic}
-                      className="px-2 py-1 hover:bg-white/10 text-amber-300 transition-colors cursor-pointer flex items-center justify-center"
+                      className="px-2.5 py-1 hover:bg-white/10 text-amber-300 transition-colors cursor-pointer flex items-center justify-center shrink-0"
                       title="Next Gospel Topic"
                       aria-label="Next Gospel Topic"
                     >
@@ -506,16 +506,16 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 max-w-full">
                   {/* Month Selector: Nov 2026 – Dec 2027 */}
-                  <div className="flex items-center gap-1.5 bg-[#251710] p-1 rounded-lg border border-[#8B5A2B]/60 shadow-2xs">
+                  <div className="flex items-center gap-1.5 bg-[#251710] p-1 rounded-lg border border-[#8B5A2B]/60 shadow-2xs shrink-0">
                     <span className="text-[11px] font-cinzel font-bold text-amber-300/80 pl-1 shrink-0 hidden sm:inline">
                       Month:
                     </span>
                     <select
                       value={selectedMonth}
                       onChange={(e) => handleSelectMonth(e.target.value)}
-                      className="text-xs font-semibold py-1 px-2.5 rounded-md bg-stone-900 text-amber-100 border border-amber-800/60 focus:outline-none focus:border-amber-400 cursor-pointer shadow-2xs font-cinzel"
+                      className="text-xs font-semibold py-1 px-2.5 rounded-md bg-stone-900 text-amber-100 border border-amber-800/60 focus:outline-none focus:border-amber-400 cursor-pointer shadow-2xs font-cinzel max-w-[160px] sm:max-w-none"
                       title="Jump to any month from November 2026 to December 2027"
                       aria-label="Select Liturgical Month"
                     >
@@ -528,10 +528,10 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                   </div>
 
                   {/* Quick Prev / Next Topic Buttons with Arrows */}
-                  <div className="flex items-center gap-1 bg-[#251710] border border-[#8B5A2B]/60 rounded-lg p-0.5 shadow-2xs">
+                  <div className="flex items-center gap-1 bg-[#251710] border border-[#8B5A2B]/60 rounded-lg p-0.5 shadow-2xs shrink-0">
                     <button
                       onClick={handlePrevTopic}
-                      className="p-1 rounded-md text-amber-200 hover:text-white hover:bg-white/10 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2 font-cinzel"
+                      className="p-1 rounded-md text-amber-200 hover:text-white hover:bg-white/10 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2 font-cinzel shrink-0"
                       title="Previous Gospel Topic"
                       aria-label="Previous Gospel Topic"
                     >
@@ -541,7 +541,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                     <span className="text-amber-700/60">|</span>
                     <button
                       onClick={handleNextTopic}
-                      className="p-1 rounded-md text-amber-200 hover:text-white hover:bg-white/10 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2 font-cinzel"
+                      className="p-1 rounded-md text-amber-200 hover:text-white hover:bg-white/10 cursor-pointer transition-all flex items-center gap-1 text-xs font-semibold px-2 font-cinzel shrink-0"
                       title="Next Gospel Topic"
                       aria-label="Next Gospel Topic"
                     >
@@ -567,7 +567,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
       {activeSubView === 'daily' && (
         <div className="space-y-5">
           {/* Main Article Display Card */}
-          <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-8">
+          <article className="bg-white rounded-xl p-4 sm:p-8 shadow-sm border border-stone-200/90 space-y-8 overflow-hidden">
 
             {/* SECTION 1: GOSPEL SUMMARY */}
             <div className="relative p-4 rounded-xl bg-[#FAF8F5] border border-amber-200/60 shadow-2xs overflow-hidden">
@@ -586,12 +586,12 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 </svg>
               </div>
               
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-1.5 text-amber-900 font-cinzel font-bold text-xs uppercase tracking-wider">
-                  <BookOpen className="w-3.5 h-3.5" />
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-2 text-amber-900 font-cinzel font-bold text-sm sm:text-base uppercase tracking-wider">
+                  <BookOpen className="w-4 h-4 shrink-0" />
                   <span>Gospel Summary ({selectedTopic.gospelCitation})</span>
                 </div>
-                <p className="font-serif text-stone-800 italic text-sm sm:text-base leading-relaxed pl-1 whitespace-pre-line">
+                <p className="font-serif-sacred text-stone-900 text-xl sm:text-[21px] leading-[1.8] pl-1 whitespace-pre-line">
                   {toCurvedQuotes(selectedTopic.gospelTextSnippet)}
                 </p>
               </div>
@@ -611,17 +611,17 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 {selectedTopic.catechismArticles.map((art) => (
                   <div key={art.number} className="p-4 sm:p-5 rounded-xl bg-[#FAF7F2] border border-[#E8DEC8] space-y-2">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="px-2.5 py-0.5 rounded-md bg-[#6B4423] text-white font-cinzel font-bold text-xs shadow-2xs">
+                      <span className="px-2.5 py-0.5 rounded-md bg-[#6B4423] text-white font-cinzel font-bold text-xs sm:text-sm shadow-2xs">
                         CCC {art.number}
                       </span>
                       {art.title && (
-                        <span className="font-cinzel text-xs font-semibold text-amber-950 uppercase tracking-wider">
+                        <span className="font-cinzel text-xs sm:text-sm font-semibold text-amber-950 uppercase tracking-wider">
                           {toCurvedQuotes(art.title)}
                         </span>
                       )}
                     </div>
 
-                    <p className="font-serif text-stone-900 text-base sm:text-lg leading-relaxed pt-1 pl-3 border-l-2 border-amber-800">
+                    <p className="font-serif-sacred text-stone-900 text-lg sm:text-xl leading-relaxed pt-1 pl-3 border-l-2 border-amber-800">
                       {toCurvedQuotes(art.text)}
                     </p>
                   </div>
@@ -641,15 +641,15 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {selectedTopic.magisterialInputs.map((input, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-amber-50/50 border border-amber-200/70 shadow-2xs space-y-2 flex flex-col justify-between">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold font-cinzel text-amber-900 uppercase tracking-wider">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center gap-1.5 text-xs font-bold font-cinzel text-amber-900 uppercase tracking-wider">
                         <Sparkles className="w-3.5 h-3.5 text-amber-800" />
                         <span>{toCurvedQuotes(input.authority)}</span>
                       </div>
-                      <p className="font-cinzel font-semibold text-xs text-stone-800">
+                      <p className="font-cinzel font-semibold text-xs sm:text-sm text-stone-800">
                         {toCurvedQuotes(input.documentTitle)} ({toCurvedQuotes(input.citation)})
                       </p>
-                      <p className="font-serif text-stone-800 text-sm sm:text-base italic leading-relaxed pt-1">
+                      <p className="font-serif text-stone-900 text-lg sm:text-xl italic leading-relaxed pt-1">
                         &ldquo;{toCurvedQuotes(input.insight)}&rdquo;
                       </p>
                     </div>
@@ -660,11 +660,11 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
 
             {/* SECTION 4: IN BRIEF — CORE DOCTRINE SUMMARY */}
             <div className="rounded-xl p-5 bg-amber-50/80 border border-amber-200/80 space-y-3">
-              <div className="flex items-center gap-2 text-amber-950 font-serif font-bold text-base sm:text-lg">
+              <div className="flex items-center gap-2 text-amber-950 font-serif font-bold text-lg sm:text-xl">
                 <ScrollText className="w-4 h-4 text-amber-800" />
                 <span>In Brief — Authentic Magisterial Synthesis</span>
               </div>
-              <ul className="space-y-2 text-base text-stone-800 font-serif leading-relaxed">
+              <ul className="space-y-2 text-lg sm:text-xl text-stone-900 font-serif leading-relaxed">
                 {selectedTopic.inBrief.map((brief, idx) => (
                   <li key={idx} className="flex items-start gap-2">
                     <span className="text-amber-800 font-bold">•</span>
@@ -676,24 +676,24 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
 
             {/* SECTION 5: MEDITATION & PRACTICAL LIVING */}
             <div className="rounded-xl p-5 bg-[#FAF8F5] border border-stone-200/90 space-y-4">
-              <div className="flex items-center gap-2 text-stone-900 font-serif font-bold text-base sm:text-lg">
+              <div className="flex items-center gap-2 text-stone-900 font-serif font-bold text-lg sm:text-xl">
                 <Compass className="w-4 h-4 text-amber-800" />
                 <span>Spiritual Meditation & Practical Living in Grace</span>
               </div>
               
-              <div className="space-y-2 pl-3 border-l-2 border-amber-800">
-                <p className="text-stone-900 font-serif text-base sm:text-lg italic leading-relaxed">
+              <div className="space-y-2.5 pl-3 border-l-2 border-amber-800">
+                <p className="text-stone-900 font-serif text-lg sm:text-xl italic leading-relaxed">
                   &ldquo;{toCurvedQuotes(selectedTopic.meditationQuestion)}&rdquo;
                 </p>
-                <p className="text-amber-950 font-serif text-sm sm:text-base leading-relaxed">
-                  <span className="font-semibold text-amber-900 font-cinzel text-xs uppercase tracking-wider block">Practical Application:</span>
+                <p className="text-amber-950 font-serif text-lg sm:text-xl leading-relaxed">
+                  <span className="font-semibold text-amber-900 font-cinzel text-xs sm:text-sm uppercase tracking-wider block">Practical Application:</span>
                   {toCurvedQuotes(selectedTopic.practicalLiving)}
                 </p>
               </div>
 
               {/* Cross-References */}
               {selectedTopic.crossReferences && (
-                <div className="pt-2 text-xs text-stone-600 flex flex-wrap items-center gap-2 font-serif">
+                <div className="pt-2 text-sm text-stone-700 flex flex-wrap items-center gap-2 font-serif">
                   <span className="font-semibold text-stone-800 font-cinzel">Scriptural & CCC Cross-References:</span>
                   <span>{selectedTopic.crossReferences.join(' • ')}</span>
                 </div>
@@ -727,39 +727,35 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               const hasPrev = globalIdx > 0;
               const hasNext = globalIdx >= 0 && globalIdx < allTopics.length - 1;
               return (
-                <div className="flex items-center justify-between pt-3 border-t border-stone-200 text-xs">
+                <div className="flex items-center justify-between gap-2 pt-4 border-t border-stone-200 text-xs w-full overflow-hidden">
                   <button
                     onClick={handlePrevTopic}
                     disabled={!hasPrev}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+                    className="flex-1 min-w-0 max-w-[48%] flex items-center justify-start gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-35 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
                     title="Previous Gospel Topic"
                     aria-label="Previous Gospel Topic"
                   >
-                    <ChevronLeft className="w-4 h-4 text-amber-800" />
-                    <span className="truncate max-w-[140px] sm:max-w-none">
+                    <ChevronLeft className="w-4 h-4 text-amber-800 shrink-0" />
+                    <span className="truncate min-w-0 text-left">
                       {hasPrev
                         ? `${allTopics[globalIdx - 1].dateLabel}: ${allTopics[globalIdx - 1].gospelCitation}`
                         : 'Previous Topic'}
                     </span>
                   </button>
 
-                  <span className="font-cinzel text-stone-600 font-bold text-[11px] uppercase tracking-wider hidden xs:inline">
-                    {selectedTopic.dateLabel}
-                  </span>
-
                   <button
                     onClick={handleNextTopic}
                     disabled={!hasNext}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+                    className="flex-1 min-w-0 max-w-[48%] flex items-center justify-end gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-35 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
                     title="Next Gospel Topic"
                     aria-label="Next Gospel Topic"
                   >
-                    <span className="truncate max-w-[140px] sm:max-w-none">
+                    <span className="truncate min-w-0 text-right">
                       {hasNext
                         ? `${allTopics[globalIdx + 1].dateLabel}: ${allTopics[globalIdx + 1].gospelCitation}`
                         : 'Next Topic'}
                     </span>
-                    <ChevronRight className="w-4 h-4 text-amber-800" />
+                    <ChevronRight className="w-4 h-4 text-amber-800 shrink-0" />
                   </button>
                 </div>
               );
