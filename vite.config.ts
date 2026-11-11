@@ -54,19 +54,6 @@ function vaticanNewsPlugin() {
           return;
         }
 
-        if (req.method === 'GET') {
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.end(JSON.stringify({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY }));
-          return;
-        }
-
-        if (req.method !== 'POST') {
-          res.statusCode = 405;
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.end(JSON.stringify({ error: 'Method not allowed' }));
-          return;
-        }
-
         const processRequest = async (body: any) => {
           try {
             const prompt = body?.prompt;
@@ -171,7 +158,33 @@ function vaticanNewsPlugin() {
           }
         };
 
-        if (req.body && typeof req.body === 'object') {
+        if (req.method === 'GET') {
+          const urlObj = new URL(req.url || '', 'http://localhost');
+          const promptParam = urlObj.searchParams.get('prompt');
+          if (!promptParam) {
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.end(JSON.stringify({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY }));
+            return;
+          }
+          const enableWebResearchParam = urlObj.searchParams.get('enableWebResearch');
+          const historyParam = urlObj.searchParams.get('history');
+          let parsedHistory: any[] = [];
+          if (historyParam) {
+            try {
+              parsedHistory = JSON.parse(historyParam);
+            } catch {
+              parsedHistory = [];
+            }
+          }
+          processRequest({
+            prompt: promptParam,
+            enableWebResearch: enableWebResearchParam !== 'false',
+            history: parsedHistory,
+          });
+          return;
+        }
+
+        if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
           processRequest(req.body);
           return;
         }

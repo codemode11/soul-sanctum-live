@@ -8,7 +8,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT =
+  process.env.PORT && process.env.PORT !== '8080'
+    ? Number(process.env.PORT)
+    : Number(process.env.DEFAULT_APP_PORT || 3000);
 const isProd = process.env.NODE_ENV === 'production';
 
 app.use(cors());
@@ -50,11 +53,35 @@ app.get('/api/catholic-ai/health', (_req, res) => {
   res.json({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY });
 });
 
-// Dedicated Catholic Theological AI Research Endpoint
-app.post('/api/catholic-ai', async (req, res) => {
-  console.log('[API] Received /api/catholic-ai request');
+// Dedicated Catholic Theological AI Research Endpoint (supports both GET query params and POST JSON body)
+app.all('/api/catholic-ai', async (req, res) => {
+  console.log(`[API] Received ${req.method} /api/catholic-ai request`);
   try {
-    const { prompt, history = [], enableWebResearch = true } = req.body || {};
+    let prompt: string | undefined;
+    let history: any[] = [];
+    let enableWebResearch = true;
+
+    if (req.method === 'GET') {
+      prompt = typeof req.query.prompt === 'string' ? req.query.prompt : undefined;
+      if (!prompt) {
+        return res.json({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY });
+      }
+      if (typeof req.query.enableWebResearch === 'string') {
+        enableWebResearch = req.query.enableWebResearch !== 'false';
+      }
+      if (typeof req.query.history === 'string' && req.query.history.trim()) {
+        try {
+          history = JSON.parse(req.query.history);
+        } catch {
+          history = [];
+        }
+      }
+    } else {
+      const body = req.body || {};
+      prompt = body.prompt;
+      history = Array.isArray(body.history) ? body.history : [];
+      enableWebResearch = body.enableWebResearch !== false;
+    }
 
     if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
       return res.status(400).json({ error: 'A question or prompt is required.' });
@@ -153,10 +180,10 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    // In production, serve static build output
+    // In production, serve static build output (Express 5 compatible fallback)
     const distPath = path.resolve(__dirname, 'dist');
     app.use(express.static(distPath));
-    app.get('*', (_req, res) => {
+    app.use((_req, res) => {
       res.sendFile(path.resolve(distPath, 'index.html'));
     });
   }

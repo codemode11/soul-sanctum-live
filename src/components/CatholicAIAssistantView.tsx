@@ -18,7 +18,11 @@ import {
   Bookmark,
   Globe
 } from 'lucide-react';
-import { WebResearchSource } from '../utils/catholicInternetResearch';
+import {
+  WebResearchSource,
+  searchCatholicInternet,
+  synthesizeResearchResponse,
+} from '../utils/catholicInternetResearch';
 import { 
   BetterScrollIcon, 
   SaintWithHaloIcon, 
@@ -396,53 +400,121 @@ Feel free to ask any question on Catholic dogma, Scripture passages, moral theol
     setIsLoading(true);
 
     try {
-      // Prepare history excluding welcome message
+      // Prepare compact history excluding welcome message
       const historyPayload = messages
         .filter(m => m.id !== 'welcome')
-        .map(m => ({ role: m.role, content: m.content }));
+        .slice(-4)
+        .map(m => ({ role: m.role, content: m.content.slice(0, 600) }));
 
-      const response = await fetch('/api/catholic-ai', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt: promptToSend,
-          history: historyPayload,
-          enableWebResearch: isWebResearchEnabled
-        })
-      });
+      let data: { reply?: string; webSources?: WebResearchSource[] } | null = null;
 
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || `Server responded with status ${response.status}`);
+      // 1. Primary GET request (avoids HTTP 405 on static proxies / Nginx redirects)
+      try {
+        const queryUrl = `/api/catholic-ai?prompt=${encodeURIComponent(
+          promptToSend
+        )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}`;
+
+        const getRes = await fetch(queryUrl, {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+          credentials: 'same-origin',
+        });
+
+        const contentType = getRes.headers.get('content-type') || '';
+        if (getRes.ok && contentType.includes('application/json')) {
+          const parsed = await getRes.json();
+          if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
+            data = parsed;
+          }
+        }
+      } catch {
+        // Proceed to POST fallback
       }
 
-      const data = await response.json();
+      // 2. Fallback POST request if GET did not return a reply
+      if (!data) {
+        try {
+          const postRes = await fetch('/api/catholic-ai', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              prompt: promptToSend,
+              history: historyPayload,
+              enableWebResearch: isWebResearchEnabled,
+            }),
+          });
+
+          const postContentType = postRes.headers.get('content-type') || '';
+          if (postRes.ok && postContentType.includes('application/json')) {
+            const parsed = await postRes.json();
+            if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
+              data = parsed;
+            }
+          }
+        } catch {
+          // Proceed to live client-side Internet research fallback
+        }
+      }
+
+      if (data && data.reply) {
+        const assistantMsg: ChatMessage = {
+          id: `assistant-${Date.now()}`,
+          role: 'assistant',
+          content: data.reply,
+          timestamp: Date.now(),
+          webSources: data.webSources || [],
+        };
+        setMessages(prev => [...prev, assistantMsg]);
+        return;
+      }
+
+      // 3. Direct Client-Side Live Internet Research Fallback (for static preview environments)
+      const liveWebSources = isWebResearchEnabled
+        ? await searchCatholicInternet(promptToSend)
+        : [];
+      const matchedCanned = resolveCatholicTheologicalAnswer(promptToSend);
+      const isSpecificMatch = !matchedCanned.includes('Catholic Theological Guidance on:');
+
+      const synthesizedReply = synthesizeResearchResponse(
+        promptToSend,
+        liveWebSources,
+        isSpecificMatch ? matchedCanned : undefined
+      );
+
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
-        content: data.reply || 'No response returned from the Catholic Assistant.',
+        content: synthesizedReply,
         timestamp: Date.now(),
-        webSources: data.webSources || []
+        webSources: liveWebSources,
       };
       setMessages(prev => [...prev, assistantMsg]);
     } catch (err: any) {
       console.warn('Issue contacting Catholic AI:', err);
+      const liveWebSources = isWebResearchEnabled
+        ? await searchCatholicInternet(promptToSend).catch(() => [])
+        : [];
       const matchedCanned = resolveCatholicTheologicalAnswer(promptToSend);
       const isSpecificMatch = !matchedCanned.includes('Catholic Theological Guidance on:');
 
-      if (isSpecificMatch) {
-        const assistantMsg: ChatMessage = {
-          id: `assistant-${Date.now()}`,
-          role: 'assistant',
-          content: matchedCanned,
-          timestamp: Date.now()
-        };
-        setMessages(prev => [...prev, assistantMsg]);
-      } else {
-        setErrorMessage(
-          err.message || 'Unable to complete online research. Please check your connection and try again.'
-        );
-      }
+      const synthesizedReply = synthesizeResearchResponse(
+        promptToSend,
+        liveWebSources,
+        isSpecificMatch ? matchedCanned : undefined
+      );
+
+      const assistantMsg: ChatMessage = {
+        id: `assistant-${Date.now()}`,
+        role: 'assistant',
+        content: synthesizedReply,
+        timestamp: Date.now(),
+        webSources: liveWebSources,
+      };
+      setMessages(prev => [...prev, assistantMsg]);
     } finally {
       setIsLoading(false);
     }
