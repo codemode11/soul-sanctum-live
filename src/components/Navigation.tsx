@@ -276,13 +276,6 @@ export const Navigation: React.FC<NavigationProps> = ({
       subtext: 'Pillars of Catholic Faith' 
     },
     { 
-      id: 'catholic-ai', 
-      label: 'Catholic Assistant', 
-      icon: Sparkles, 
-      tag: 'Magisterium', 
-      subtext: 'Scripture, Catechism & Church Fathers AI Research' 
-    },
-    { 
       id: 'divine-office', 
       label: 'Divine Office', 
       icon: DivineOfficeBreviaryIcon, 
@@ -486,18 +479,41 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   const renderNavList = () => (
     <div className="space-y-3.5">
-      {/* Top Sidebar Header with Index center-aligned */}
-      <div className="relative px-4 pb-3 border-b border-[#D4AF37]/35 flex items-center justify-center">
-        <span className="font-cinzel text-base sm:text-lg font-bold text-[#FFD700] drop-shadow-[0_0_8px_rgba(212,175,55,0.45)] tracking-[0.2em] pl-[0.2em] uppercase text-center">
+      {/* Top Sidebar Header with Index aligned with Mass Readings icon */}
+      <div 
+        className="relative pb-3 pr-2 border-b border-[#D4AF37]/35 flex items-center justify-between"
+        style={{ paddingLeft: `max(0.5rem, calc(50% - ${massReadingsMidpointPx + 28}px))` }}
+      >
+        <span className="font-cinzel text-base sm:text-lg font-bold text-[#FFD700] drop-shadow-[0_0_8px_rgba(212,175,55,0.45)] tracking-[0.2em] uppercase text-left">
           INDEX
         </span>
-        <button
-          onClick={onOpenNotifications}
-          className="absolute right-3 p-1.5 rounded-lg text-stone-300 hover:text-[#FFD700] hover:bg-white/10 transition-colors cursor-pointer"
-          title="Daily Reminders and Liturgical Bells"
-        >
-          <BellRing className="w-4 h-4 text-[#FFD700]" />
-        </button>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={onOpenNotifications}
+            className="p-1.5 rounded-lg text-stone-300 hover:text-[#FFD700] hover:bg-white/10 transition-colors cursor-pointer"
+            title="Daily Reminders and Liturgical Bells"
+            aria-label="Open Notifications"
+          >
+            <BellRing className="w-4 h-4 text-[#FFD700]" />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              onSelectTab('catholic-ai');
+              if (onCloseMobile) onCloseMobile();
+            }}
+            className={`w-7 h-7 rounded-md transition-all cursor-pointer flex items-center justify-center border ${
+              activeTab === 'catholic-ai'
+                ? 'bg-[#FFD700] text-stone-950 border-[#FFD700] font-black shadow-[0_0_10px_rgba(255,215,0,0.5)]'
+                : 'bg-[#1C120C] text-[#FFD700] border-[#FFD700]/70 hover:bg-[#FFD700]/20'
+            }`}
+            title="Catholic AI Assistant"
+            aria-label="Open Catholic AI Assistant"
+          >
+            <span className="font-cinzel text-[11px] font-black tracking-tight leading-none">AI</span>
+          </button>
+        </div>
       </div>
 
       {/* Unnumbered List: Mass Readings icon + text centered; all other items follow the Mass Readings icon column */}

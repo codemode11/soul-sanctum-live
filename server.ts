@@ -47,10 +47,17 @@ function getGenAI() {
   });
 }
 
+import OpenAI from 'openai';
+
 import { searchCatholicInternet, WebResearchSource } from './src/utils/catholicInternetResearch.js';
 
 app.get('/api/catholic-ai/health', (_req, res) => {
-  res.json({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY });
+  res.json({
+    status: 'ok',
+    hasGeminiKey: !!process.env.GEMINI_API_KEY,
+    hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+    supportedProviders: ['gemini', 'openai', 'magisterium', 'auto'],
+  });
 });
 
 // Dedicated Catholic Theological AI Research Endpoint (supports both GET query params and POST JSON body)
@@ -60,14 +67,26 @@ app.all('/api/catholic-ai', async (req, res) => {
     let prompt: string | undefined;
     let history: any[] = [];
     let enableWebResearch = true;
+    let provider = 'auto'; // 'gemini' | 'openai' | 'magisterium' | 'auto'
+    let customApiKey: string | undefined;
 
     if (req.method === 'GET') {
       prompt = typeof req.query.prompt === 'string' ? req.query.prompt : undefined;
       if (!prompt) {
-        return res.json({ status: 'ok', hasKey: !!process.env.GEMINI_API_KEY });
+        return res.json({
+          status: 'ok',
+          hasGeminiKey: !!process.env.GEMINI_API_KEY,
+          hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+        });
       }
       if (typeof req.query.enableWebResearch === 'string') {
         enableWebResearch = req.query.enableWebResearch !== 'false';
+      }
+      if (typeof req.query.provider === 'string') {
+        provider = req.query.provider;
+      }
+      if (typeof req.query.apiKey === 'string' && req.query.apiKey.trim()) {
+        customApiKey = req.query.apiKey.trim();
       }
       if (typeof req.query.history === 'string' && req.query.history.trim()) {
         try {
@@ -81,6 +100,8 @@ app.all('/api/catholic-ai', async (req, res) => {
       prompt = body.prompt;
       history = Array.isArray(body.history) ? body.history : [];
       enableWebResearch = body.enableWebResearch !== false;
+      provider = body.provider || 'auto';
+      customApiKey = typeof body.apiKey === 'string' ? body.apiKey.trim() : undefined;
     }
 
     if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
@@ -100,23 +121,7 @@ app.all('/api/catholic-ai', async (req, res) => {
       }
     }
 
-    const ai = getGenAI();
-
-    // Map conversation history
-    const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
-
-    if (Array.isArray(history)) {
-      for (const item of history.slice(-6)) {
-        if (item && item.content && typeof item.content === 'string') {
-          contents.push({
-            role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
-            parts: [{ text: item.content }],
-          });
-        }
-      }
-    }
-
-    // Augment user prompt with real-time web research findings if available
+    // Prepare prompt with real-time web research findings
     let promptWithResearch = trimmedPrompt;
     if (webSources.length > 0) {
       const researchSnippets = webSources
@@ -126,32 +131,93 @@ app.all('/api/catholic-ai', async (req, res) => {
       promptWithResearch = `${trimmedPrompt}\n\n--- REAL-TIME INTERNET RESEARCH FINDINGS ---\n${researchSnippets}\n------------------------------------------\n(Please synthesize the real-time research findings above with authentic Catholic doctrine, Sacred Scripture, CCC citations, and Church Fathers. Mention relevant source links where helpful.)`;
     }
 
-    contents.push({
-      role: 'user',
-      parts: [{ text: promptWithResearch }],
-    });
-
-    // gemini-3.1-flash-lite provides fast reliable responses; gemini-3.8-flash as fallback
-    const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
     let reply = '';
+    let usedProvider = 'gemini';
+    let usedModel = 'gemini-3.1-flash-lite';
     let lastError: any = null;
 
-    for (const modelName of candidateModels) {
+    // 2. OpenAI (ChatGPT) Execution Path
+    const openAiKey = customApiKey || process.env.OPENAI_API_KEY;
+    if ((provider === 'openai' || (provider === 'auto' && openAiKey)) && openAiKey) {
       try {
-        const response = await ai.models.generateContent({
-          model: modelName,
-          contents,
-          config: {
-            systemInstruction: CATHOLIC_AI_SYSTEM_INSTRUCTION,
-          },
+        const openai = new OpenAI({ apiKey: openAiKey });
+        const messagesPayload: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+          { role: 'system', content: CATHOLIC_AI_SYSTEM_INSTRUCTION },
+        ];
+
+        if (Array.isArray(history)) {
+          for (const item of history.slice(-6)) {
+            if (item && item.content && typeof item.content === 'string') {
+              messagesPayload.push({
+                role: item.role === 'assistant' || item.role === 'model' ? 'assistant' : 'user',
+                content: item.content,
+              });
+            }
+          }
+        }
+
+        messagesPayload.push({ role: 'user', content: promptWithResearch });
+
+        const openAiResponse = await openai.chat.completions.create({
+          model: 'gpt-4o-mini',
+          messages: messagesPayload,
+          temperature: 0.4,
+          max_tokens: 1800,
         });
-        if (response && response.text) {
-          reply = response.text;
-          break;
+
+        if (openAiResponse.choices?.[0]?.message?.content) {
+          reply = openAiResponse.choices[0].message.content;
+          usedProvider = 'openai';
+          usedModel = 'gpt-4o-mini';
         }
       } catch (err: any) {
-        console.warn(`Model ${modelName} failed, trying next candidate:`, err?.message || err);
+        console.warn('OpenAI API call failed, falling back to Gemini:', err?.message || err);
         lastError = err;
+      }
+    }
+
+    // 3. Google Gemini Execution Path (Default / Fallback)
+    if (!reply) {
+      const ai = getGenAI();
+      const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
+
+      if (Array.isArray(history)) {
+        for (const item of history.slice(-6)) {
+          if (item && item.content && typeof item.content === 'string') {
+            contents.push({
+              role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
+              parts: [{ text: item.content }],
+            });
+          }
+        }
+      }
+
+      contents.push({
+        role: 'user',
+        parts: [{ text: promptWithResearch }],
+      });
+
+      const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
+
+      for (const modelName of candidateModels) {
+        try {
+          const response = await ai.models.generateContent({
+            model: modelName,
+            contents,
+            config: {
+              systemInstruction: CATHOLIC_AI_SYSTEM_INSTRUCTION,
+            },
+          });
+          if (response && response.text) {
+            reply = response.text;
+            usedProvider = 'gemini';
+            usedModel = modelName;
+            break;
+          }
+        } catch (err: any) {
+          console.warn(`Model ${modelName} failed, trying next candidate:`, err?.message || err);
+          lastError = err;
+        }
       }
     }
 
@@ -161,7 +227,9 @@ app.all('/api/catholic-ai', async (req, res) => {
 
     return res.json({
       reply: reply || 'No response generated from the Catholic Assistant.',
-      webSources
+      webSources,
+      provider: usedProvider,
+      model: usedModel,
     });
   } catch (error: any) {
     console.error('Error in /api/catholic-ai:', error);

@@ -586,7 +586,7 @@ export default function App() {
         </div>
 
         {/* Main Body Layout */}
-        <div className="flex-1 max-w-7xl w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center">
+        <div className={`flex-1 w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center ${activeTab === 'catholic-ai' ? 'max-w-none' : 'max-w-7xl'}`}>
           
           {/* Dual Column Container: Left Navigation Index + Centered Main View */}
           <div 
@@ -610,7 +610,7 @@ export default function App() {
             />
 
             {/* Centered Main Content Area */}
-            <main className="flex-1 w-full min-w-0 max-w-4xl">
+            <main className={`flex-1 w-full min-w-0 ${activeTab === 'catholic-ai' ? 'max-w-full' : 'max-w-4xl'}`}>
 
             {/* 1. Mass Readings */}
             {activeTab === 'readings' && (
