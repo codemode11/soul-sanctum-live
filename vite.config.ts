@@ -795,6 +795,140 @@ function vaticanNewsPlugin() {
           res.end(JSON.stringify({ error: err.message, videos: [] }));
         }
       });
+
+      server.middlewares.use('/api/catholic-bible', async (req: any, res: any) => {
+        try {
+          const urlObj = new URL(req.url || '', 'http://localhost');
+          const bookId = (urlObj.searchParams.get('bookId') || 'GEN').toUpperCase();
+          const bookName = urlObj.searchParams.get('bookName') || 'Genesis';
+          const drboCode = urlObj.searchParams.get('drboCode') || '01';
+          const chapter = Math.max(1, parseInt(urlObj.searchParams.get('chapter') || '1', 10));
+          const translation = (urlObj.searchParams.get('translation') || 'drc').toLowerCase();
+
+          const decodeHtml = (raw: string) =>
+            raw
+              .replace(/<[^>]+>/g, ' ')
+              .replace(/&nbsp;|&#160;/g, ' ')
+              .replace(/&quot;|&#34;/g, '"')
+              .replace(/&apos;|&#39;/g, "'")
+              .replace(/&amp;/g, '&')
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/\s+/g, ' ')
+              .trim();
+
+          let verses: { verse: number; text: string }[] = [];
+          let sourceLabel = 'Catholic Public Domain Scripture Repository';
+
+          // 1. Try bible-api.com first for DRC ('dra'), WEB-CE ('webbe'), or Latin Vulgate ('clementine')
+          const bibleApiTranslationMap: Record<string, string> = {
+            drc: 'dra',
+            cpdv: 'dra',
+            webbe: 'webbe',
+            vulgate: 'clementine'
+          };
+          const apiTrans = bibleApiTranslationMap[translation] || 'dra';
+
+          if (translation !== 'cpdv') {
+            try {
+              const queryRef = encodeURIComponent(`${bookName} ${chapter}`);
+              const apiUrl = `https://bible-api.com/${queryRef}?translation=${apiTrans}`;
+              const resp = await fetch(apiUrl, {
+                headers: { 'User-Agent': 'SoulSanctumCatholicBible/1.0' },
+                signal: AbortSignal.timeout(5500)
+              });
+              if (resp.ok) {
+                const data: any = await resp.json();
+                if (Array.isArray(data?.verses) && data.verses.length > 0) {
+                  verses = data.verses.map((v: any, i: number) => ({
+                    verse: Number(v.verse) || i + 1,
+                    text: String(v.text || '').replace(/\s+/g, ' ').trim()
+                  }));
+                  sourceLabel = data.translation_name || 'Public Domain Catholic Scripture';
+                }
+              }
+            } catch {
+              // Fall through to secondary Catholic scripture mirrors
+            }
+          }
+
+          // 2. If CPDV or Deuterocanonical book not returned by bible-api, fetch from DRBO.org (Douay-Rheims / Vulgate 73-book mirror)
+          if (verses.length === 0 && drboCode) {
+            try {
+              const chapterPadded = String(chapter).padStart(3, '0');
+              const drboUrl =
+                translation === 'vulgate'
+                  ? `https://www.drbo.org/lvb/chapter/${drboCode}${chapterPadded}.htm`
+                  : `https://www.drbo.org/chapter/${drboCode}${chapterPadded}.htm`;
+              const drboResp = await fetch(drboUrl, {
+                headers: {
+                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) SoulSanctumCatholicBible/1.0'
+                },
+                signal: AbortSignal.timeout(6500)
+              });
+              if (drboResp.ok) {
+                const html = await drboResp.text();
+                const parsedVerses: { verse: number; text: string }[] = [];
+                const regex = /<a[^>]*name=["']?v?(\d+)["']?[^>]*>[\s\S]*?<\/a>\s*([\s\S]*?)(?=(?:<a[^>]*name=["']?v?\d+|<\/p>|<hr|<div))/gi;
+                let match: RegExpExecArray | null;
+                while ((match = regex.exec(html)) !== null) {
+                  const vNum = parseInt(match[1], 10);
+                  const vText = decodeHtml(match[2].replace(/^\[?\d+\]?\s*/, ''));
+                  if (vNum > 0 && vText.length > 1) {
+                    parsedVerses.push({ verse: vNum, text: vText });
+                  }
+                }
+                if (parsedVerses.length > 0) {
+                  verses = parsedVerses;
+                  sourceLabel =
+                    translation === 'vulgate'
+                      ? 'Vulgata Clementina (73-Book Catholic Archive)'
+                      : 'Douay-Rheims 73-Book Catholic Archive';
+                }
+              }
+            } catch {
+              // Fall through to bible-api fallback
+            }
+          }
+
+          // 3. Final fallback to bible-api 'dra' or 'webbe' if still empty
+          if (verses.length === 0) {
+            try {
+              const queryRef = encodeURIComponent(`${bookName} ${chapter}`);
+              const fallbackUrl = `https://bible-api.com/${queryRef}?translation=dra`;
+              const resp = await fetch(fallbackUrl, { signal: AbortSignal.timeout(5000) });
+              if (resp.ok) {
+                const data: any = await resp.json();
+                if (Array.isArray(data?.verses) && data.verses.length > 0) {
+                  verses = data.verses.map((v: any, i: number) => ({
+                    verse: Number(v.verse) || i + 1,
+                    text: String(v.text || '').replace(/\s+/g, ' ').trim()
+                  }));
+                  sourceLabel = 'Douay-Rheims Catholic Bible (Challoner)';
+                }
+              }
+            } catch {
+              // Ignore
+            }
+          }
+
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.end(
+            JSON.stringify({
+              bookId,
+              chapter,
+              translation,
+              sourceLabel,
+              verses
+            })
+          );
+        } catch (err: any) {
+          res.statusCode = 502;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: err.message, verses: [] }));
+        }
+      });
     }
   };
 }

@@ -54,6 +54,7 @@ import {
   SacredArtGallerySwapIcon,
   CatholicLinksTightenIcon,
   DivineOfficeBreviaryIcon,
+  CatholicBiblesBookIcon,
   CatholicArticlesRssIcon,
   CatholicSocialShareIcon
 } from './SanctumIcons';
@@ -63,6 +64,7 @@ export type ActiveTab =
   | 'saints'
   | 'catechism'
   | 'divine-office'
+  | 'catholic-bibles'
   | 'reflection'
   | 'visio-divina'
   | 'wisdom'
@@ -278,6 +280,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: DivineOfficeBreviaryIcon, 
       tag: 'Breviary', 
       subtext: 'Liturgy of the Hours Text and Audio' 
+    },
+    { 
+      id: 'catholic-bibles', 
+      label: 'Catholic Bibles', 
+      icon: CatholicBiblesBookIcon, 
+      tag: 'Scripture', 
+      subtext: '73-Book Douay-Rheims, CPDV, Vulgate, NABRE, RSV-CE & ESV-CE' 
     },
     { 
       id: 'bible-flashcards', 

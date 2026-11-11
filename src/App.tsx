@@ -5,6 +5,7 @@ import { DailyMassReadingsView } from './components/DailyMassReadingsView';
 import { CatechismView } from './components/CatechismView';
 import { SaintOfTheDayView } from './components/SaintOfTheDayView';
 import { DivineOfficeView } from './components/DivineOfficeView';
+import { CatholicBiblesView } from './components/CatholicBiblesView';
 import { RosaryAndChapletView } from './components/RosaryAndChapletView';
 import { NovenaTrackerView } from './components/NovenaTrackerView';
 import { ChurchCalendarView } from './components/ChurchCalendarView';
@@ -639,6 +640,9 @@ export default function App() {
 
             {/* 4. Divine Office (Liturgy of the Hours) */}
             {activeTab === 'divine-office' && <DivineOfficeView />}
+
+            {/* Catholic Bibles (73-Book In-App Bibles & Modern Catholic Translations) */}
+            {activeTab === 'catholic-bibles' && <CatholicBiblesView />}
 
             {/* 5. Reflection (Daily Liturgical Meditation) */}
             {activeTab === 'reflection' && (
