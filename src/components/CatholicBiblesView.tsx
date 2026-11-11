@@ -16,8 +16,8 @@ import {
   ScrollText,
   Globe,
   ShieldCheck,
-  Filter,
-  Type
+  Settings,
+  ChevronDown
 } from 'lucide-react';
 import {
   CATHOLIC_BIBLE_BOOKS,
@@ -58,7 +58,8 @@ export const CatholicBiblesView: React.FC = () => {
   const [activeSectionFilter, setActiveSectionFilter] = useState<BiblicalSection | 'ALL'>('ALL');
   const [bookSearchQuery, setBookSearchQuery] = useState<string>('');
   const [verseFilterQuery, setVerseFilterQuery] = useState<string>('');
-  const [fontSizeLevel, setFontSizeLevel] = useState<'sm' | 'md' | 'lg'>('md');
+  const [textSize, setTextSize] = useState<'normal' | 'medium' | 'large' | 'xlarge'>('medium');
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState<boolean>(false);
 
   const [primaryVerses, setPrimaryVerses] = useState<BibleVerse[]>([]);
   const [secondaryVerses, setSecondaryVerses] = useState<BibleVerse[]>([]);
@@ -78,7 +79,7 @@ export const CatholicBiblesView: React.FC = () => {
   });
 
   const selectedBook: CatholicBibleBook = useMemo(() => {
-    return CATHOLIC_BIBLE_BOOKS.find((b) => b.id === selectedBookId) || CATHOLIC_BIBLE_BOOKS[49]; // Default John
+    return CATHOLIC_BIBLE_BOOKS.find((b) => b.id === selectedBookId) || CATHOLIC_BIBLE_BOOKS[49];
   }, [selectedBookId]);
 
   const filteredBooks = useMemo(() => {
@@ -311,249 +312,553 @@ export const CatholicBiblesView: React.FC = () => {
     CATHOLIC_BIBLE_TRANSLATIONS.find((t) => t.id === parallelTranslation) ||
     CATHOLIC_BIBLE_TRANSLATIONS[3];
 
-  const fontSizeClass =
-    fontSizeLevel === 'sm'
-      ? 'text-sm sm:text-base leading-relaxed'
-      : fontSizeLevel === 'lg'
-      ? 'text-lg sm:text-xl leading-loose'
-      : 'text-base sm:text-lg leading-relaxed';
+  const getTextSizeClass = () => {
+    if (textSize === 'normal') return 'text-sm sm:text-base leading-relaxed';
+    if (textSize === 'large') return 'text-lg sm:text-xl leading-relaxed';
+    if (textSize === 'xlarge') return 'text-xl sm:text-2xl leading-loose';
+    return 'text-base sm:text-lg leading-relaxed';
+  };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 text-stone-900">
-      {/* Light Parchment Header Card */}
-      <div className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] p-5 sm:p-7 shadow-xs space-y-5">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/90 border border-amber-700/30 text-amber-900 text-xs font-cinzel font-bold tracking-wider uppercase">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-800" />
-              <span>73-Book Canon of the Council of Trent</span>
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-5 mb-12 text-stone-900">
+      
+      {/* TOP CONTAINER: Compact First Block + Drop-Down Settings Rectangle */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        
+        {/* RECTANGLE 1: Compact Main Title Banner */}
+        <div
+          className={`px-5 py-3.5 sm:px-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+            isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
+          }`}
+        >
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-200/90">
+                73-Book Canon of the Council of Trent
+              </span>
             </div>
-            <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900 tracking-normal">
-              Catholic Bibles
-            </h1>
-            <p className="text-stone-700 font-serif text-sm sm:text-base leading-relaxed">
-              Read full in-app Public Domain Catholic Bibles (<span className="text-amber-900 font-semibold">Douay-Rheims</span>,{' '}
-              <span className="text-amber-900 font-semibold">Catholic Public Domain Version</span>,{' '}
-              <span className="text-amber-900 font-semibold">WEB Catholic Edition</span>, and{' '}
-              <span className="text-amber-900 font-semibold">Clementine Latin Vulgate</span>) or launch direct chapter links in modern Catholic translations (<span className="text-amber-900 font-semibold">NABRE</span>,{' '}
-              <span className="text-amber-900 font-semibold">ESV-CE</span>,{' '}
-              <span className="text-amber-900 font-semibold">RSV-CE</span>,{' '}
-              <span className="text-amber-900 font-semibold">The Jerusalem Bible</span>, and{' '}
-              <span className="text-amber-900 font-semibold">RSV</span>).
-            </p>
+
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight">
+                Catholic Bibles
+              </h2>
+              <span className="text-xs sm:text-sm text-stone-300 font-serif font-medium">
+                {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
+              </span>
+            </div>
           </div>
 
-          {/* View Mode Switcher */}
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
-            <button
-              type="button"
-              onClick={() => setActiveViewMode('reader')}
-              className={`px-4 py-2.5 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-2 border ${
-                activeViewMode === 'reader'
-                  ? 'bg-amber-900 text-amber-50 border-amber-950 shadow-sm'
-                  : 'bg-white text-stone-700 border-[#D8C7B2] hover:border-amber-800/50 hover:text-amber-950'
-              }`}
-            >
-              <BookOpen className="w-4 h-4" />
-              <span>73-Book Reader</span>
-            </button>
+          {/* Right Controls: View Switcher & Drop-Down Settings Button */}
+          <div className="flex flex-wrap items-center justify-end gap-2 shrink-0">
+            <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-amber-100 p-0.5 shadow-xs">
+              <button
+                type="button"
+                onClick={() => setActiveViewMode('reader')}
+                className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeViewMode === 'reader'
+                    ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
+                    : 'text-stone-300 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5 text-amber-300" />
+                <span>Reader</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveViewMode('modern-editions')}
-              className={`px-4 py-2.5 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-2 border ${
-                activeViewMode === 'modern-editions'
-                  ? 'bg-amber-900 text-amber-50 border-amber-950 shadow-sm'
-                  : 'bg-white text-stone-700 border-[#D8C7B2] hover:border-amber-800/50 hover:text-amber-950'
-              }`}
-            >
-              <Globe className="w-4 h-4" />
-              <span>Modern Bibles (NABRE • ESV-CE • RSV-CE • JB)</span>
-            </button>
+              <button
+                type="button"
+                onClick={() => setActiveViewMode('modern-editions')}
+                className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeViewMode === 'modern-editions'
+                    ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
+                    : 'text-stone-300 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <Globe className="w-3.5 h-3.5 text-amber-300" />
+                <span>Modern Bibles</span>
+              </button>
 
+              <button
+                type="button"
+                onClick={() => setActiveViewMode('bookmarks')}
+                className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  activeViewMode === 'bookmarks'
+                    ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
+                    : 'text-stone-300 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                <Bookmark className="w-3.5 h-3.5 text-amber-300" />
+                <span>Saved ({bookmarks.length})</span>
+              </button>
+            </div>
+
+            {/* Settings Drop-Down Toggle Button */}
             <button
               type="button"
-              onClick={() => setActiveViewMode('bookmarks')}
-              className={`px-3.5 py-2.5 rounded-xl font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-1.5 border ${
-                activeViewMode === 'bookmarks'
-                  ? 'bg-amber-900 text-amber-50 border-amber-950 shadow-sm'
-                  : 'bg-white text-stone-700 border-[#D8C7B2] hover:border-amber-800/50 hover:text-amber-950'
+              onClick={() => setIsTopSettingsOpen((prev) => !prev)}
+              aria-expanded={isTopSettingsOpen}
+              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border ${
+                isTopSettingsOpen
+                  ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                  : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
               }`}
+              title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
             >
-              <Bookmark className="w-4 h-4" />
-              <span>Saved ({bookmarks.length})</span>
+              <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+              <span className="text-xs font-cinzel font-semibold">Settings</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                  isTopSettingsOpen ? 'rotate-180' : ''
+                }`}
+              />
             </button>
           </div>
         </div>
 
-        {/* Always-Accessible Modern Catholic Bibles Direct Chapter Bar */}
-        <div className="pt-4 border-t border-[#E2D5C3] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-xs text-stone-700 font-serif">
-            <ExternalLink className="w-4 h-4 text-amber-800 shrink-0" />
-            <span>
-              Open <strong className="text-amber-950">{selectedBook.name} {selectedChapter}</strong> directly in Modern Catholic Translations:
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {MODERN_CATHOLIC_BIBLE_EDITIONS.map((edition) => {
-              const directUrl = getModernBibleChapterUrl(edition.id, selectedBook, selectedChapter);
-              return (
-                <a
-                  key={edition.id}
-                  href={directUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] hover:border-amber-800 text-xs font-cinzel font-bold text-amber-900 transition-all shadow-2xs"
-                  title={`Read ${selectedBook.name} ${selectedChapter} in ${edition.name} (${edition.providerLabel})`}
-                >
-                  <span>{edition.acronym}</span>
-                  <ExternalLink className="w-3 h-3 text-amber-800" />
-                </a>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* MODE 1: MODERN CATHOLIC BIBLES HUB (NABRE, ESV-CE, RSV-CE, JERUSALEM BIBLE, RSV, KNOX, NOVA VULGATA) */}
-      {activeViewMode === 'modern-editions' && (
-        <div className="space-y-6">
-          <div className="rounded-xl bg-white/95 border border-[#E2D5C3] p-5 sm:p-6 space-y-5 shadow-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
-              <div>
-                <h2 className="font-cinzel text-lg sm:text-xl font-bold text-amber-950">
-                  Modern Approved Catholic Bibles &amp; Liturgical Editions
-                </h2>
-                <p className="text-xs sm:text-sm text-stone-700 font-serif mt-1">
-                  Select any book and chapter below to jump directly to that passage in{' '}
-                  <strong className="text-stone-900">NABRE</strong>, <strong className="text-stone-900">ESV-CE</strong>,{' '}
-                  <strong className="text-stone-900">RSV-CE</strong>, <strong className="text-stone-900">The Jerusalem Bible</strong>,{' '}
-                  <strong className="text-stone-900">RSV</strong>, <strong className="text-stone-900">Knox Bible</strong>, or the Vatican’s{' '}
-                  <strong className="text-stone-900">Nova Vulgata</strong>.
-                </p>
+        {/* RECTANGLE 2: Comprehensive Drop-Down Settings Rectangle */}
+        {isTopSettingsOpen && (
+          <div className="p-4 sm:p-5 bg-[#FAF4EB] border-t border-[#E2D5C3] space-y-4 animate-fadeIn rounded-b-xl text-stone-900">
+            
+            {/* Row 1: Book Filter, 73-Book Selector & Chapter Selector */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 p-3.5 rounded-xl bg-white border border-[#E2D5C3] shadow-2xs">
+              {/* Testament / Deuterocanon Filter */}
+              <div className="md:col-span-4 space-y-1">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  1. Filter Canon
+                </label>
+                <div className="grid grid-cols-4 gap-1">
+                  {[
+                    { id: 'ALL', label: 'All (73)' },
+                    { id: 'OT', label: 'OT (46)' },
+                    { id: 'NT', label: 'NT (27)' },
+                    { id: 'DEUTERO', label: 'Deutero' }
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setActiveTestamentFilter(tab.id as any)}
+                      className={`py-1.5 px-1.5 rounded-md text-[10px] font-cinzel font-bold transition-all cursor-pointer border ${
+                        activeTestamentFilter === tab.id
+                          ? 'bg-amber-900 border-amber-950 text-amber-50'
+                          : 'bg-[#FAF4EB] border-[#E2D5C3] text-stone-700 hover:text-amber-950'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center gap-2">
+
+              {/* Section Filter */}
+              <div className="md:col-span-3 space-y-1">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  2. Biblical Section
+                </label>
                 <select
-                  value={selectedBookId}
-                  onChange={(e) => handleSelectBook(CATHOLIC_BIBLE_BOOKS.find((b) => b.id === e.target.value) || selectedBook, 1)}
-                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+                  value={activeSectionFilter}
+                  onChange={(e) => setActiveSectionFilter(e.target.value as any)}
+                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs text-stone-900 font-serif focus:outline-none focus:border-amber-800"
                 >
-                  {CATHOLIC_BIBLE_BOOKS.map((b) => (
+                  <option value="ALL">All Sections ({filteredBooks.length})</option>
+                  <option value="Pentateuch">Pentateuch (5)</option>
+                  <option value="Historical">Historical Books (16)</option>
+                  <option value="Wisdom">Wisdom &amp; Poetry (7)</option>
+                  <option value="Prophets">Prophets (18)</option>
+                  <option value="Gospels & Acts">Gospels &amp; Acts (5)</option>
+                  <option value="Epistles & Apocalypse">Epistles &amp; Apocalypse (22)</option>
+                </select>
+              </div>
+
+              {/* Select Book */}
+              <div className="md:col-span-3 space-y-1">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  3. Select Book
+                </label>
+                <select
+                  value={selectedBook.id}
+                  onChange={(e) => {
+                    const b = CATHOLIC_BIBLE_BOOKS.find((x) => x.id === e.target.value);
+                    if (b) handleSelectBook(b, 1);
+                  }}
+                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
+                >
+                  {filteredBooks.map((b) => (
                     <option key={b.id} value={b.id}>
                       {b.number}. {b.name} {b.isDeuterocanonical ? '(Deuterocanon)' : ''}
                     </option>
                   ))}
                 </select>
+              </div>
+
+              {/* Select Chapter */}
+              <div className="md:col-span-2 space-y-1">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  4. Chapter
+                </label>
                 <select
                   value={selectedChapter}
                   onChange={(e) => setSelectedChapter(Number(e.target.value))}
-                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
                 >
                   {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
                     <option key={ch} value={ch}>
-                      Ch. {ch}
+                      Chapter {ch}
                     </option>
                   ))}
                 </select>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-              {MODERN_CATHOLIC_BIBLE_EDITIONS.map((edition) => {
-                const primaryChapterUrl = getModernBibleChapterUrl(
-                  edition.id,
-                  selectedBook,
-                  selectedChapter,
-                  'primary'
-                );
-                const secondaryChapterUrl =
-                  edition.id === 'nabre'
-                    ? getModernBibleChapterUrl(edition.id, selectedBook, selectedChapter, 'biblegateway')
-                    : null;
+            {/* Row 2: In-App Catholic Translation, Side-by-Side Parallel Mode & Verse Search */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 p-3.5 rounded-xl bg-white border border-[#E2D5C3] shadow-2xs items-end">
+              <div className="md:col-span-4 space-y-1">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  In-App Catholic Translation
+                </label>
+                <select
+                  value={primaryTranslation}
+                  onChange={(e) => setPrimaryTranslation(e.target.value as CatholicBibleTranslationId)}
+                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-1.5 text-xs text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+                >
+                  {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.name} ({t.year})
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-                return (
-                  <div
-                    key={edition.id}
-                    className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] hover:border-amber-800/60 p-5 flex flex-col justify-between gap-4 transition-all shadow-2xs"
+              <div className="md:col-span-5 space-y-1">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  Side-by-Side Parallel Comparison
+                </label>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsParallelMode((prev) => !prev)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold uppercase border transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                      isParallelMode
+                        ? 'bg-amber-900 border-amber-950 text-amber-50'
+                        : 'bg-[#FAF4EB] border-[#D8C7B2] text-stone-800 hover:border-amber-800'
+                    }`}
                   >
-                    <div className="space-y-2.5">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <span className="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 border border-amber-700/40 font-cinzel text-xs font-bold text-amber-950">
-                            {edition.acronym}
-                          </span>
-                          <h3 className="font-serif text-lg font-bold text-stone-900 mt-1.5">
-                            {edition.name}
-                          </h3>
-                        </div>
-                        <span className="text-[11px] font-mono text-stone-600 bg-white px-2.5 py-1 rounded border border-[#E2D5C3] shrink-0">
-                          {edition.year}
+                    <Columns className="w-3.5 h-3.5" />
+                    <span>{isParallelMode ? 'Parallel On' : 'Side-by-Side'}</span>
+                  </button>
+
+                  {isParallelMode && (
+                    <select
+                      value={parallelTranslation}
+                      onChange={(e) => setParallelTranslation(e.target.value as CatholicBibleTranslationId)}
+                      className="flex-1 min-w-0 bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+                    >
+                      {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
+                        <option key={t.id} value={t.id}>
+                          {t.shortName}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              </div>
+
+              <div className="md:col-span-3 space-y-1">
+                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  Search Verses in Chapter
+                </label>
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 text-stone-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={verseFilterQuery}
+                    onChange={(e) => setVerseFilterQuery(e.target.value)}
+                    placeholder="Keyword or verse #..."
+                    className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg pl-8 pr-2.5 py-1.5 text-xs text-stone-900 placeholder-stone-500 focus:outline-none focus:border-amber-800"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Row 3: Audio Narration, Text Size, Haydock Notes & Copy Chapter */}
+            <div className="flex flex-wrap items-center justify-between gap-2.5 p-3 rounded-xl bg-white border border-[#E2D5C3] shadow-2xs text-xs">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleToggleAudioRead}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer shadow-2xs ${
+                    isSpeaking
+                      ? 'bg-[#6B4423] text-white animate-pulse'
+                      : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
+                  }`}
+                >
+                  {isSpeaking ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-300" />}
+                  <span>{isSpeaking ? 'Stop Audio' : 'Listen to Chapter'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowHaydockNotes((p) => !p)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
+                    showHaydockNotes
+                      ? 'bg-amber-900 border-amber-950 text-amber-50'
+                      : 'bg-[#FAF4EB] border-[#D8C7B2] text-stone-700 hover:text-stone-900'
+                  }`}
+                >
+                  <ScrollText className="w-3.5 h-3.5" />
+                  <span>Challoner &amp; Haydock Notes: {showHaydockNotes ? 'On' : 'Off'}</span>
+                </button>
+              </div>
+
+              {/* Text Size Selector */}
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-medium text-stone-600">Text Size:</span>
+                <div className="flex items-center bg-[#FAF4EB] border border-[#D8C7B2] rounded-md p-0.5 text-xs">
+                  {(['normal', 'medium', 'large', 'xlarge'] as const).map((sz) => (
+                    <button
+                      key={sz}
+                      type="button"
+                      onClick={() => setTextSize(sz)}
+                      className={`px-2 py-0.5 rounded text-xs font-medium transition-colors cursor-pointer capitalize ${
+                        textSize === sz
+                          ? 'bg-amber-900 text-white font-bold'
+                          : 'text-stone-700 hover:text-amber-950'
+                      }`}
+                    >
+                      {sz === 'xlarge' ? 'X-Large' : sz}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCopyWholeChapter}
+                className="px-3 py-1.5 rounded-md bg-stone-800 hover:bg-stone-700 text-amber-200 border border-stone-700 text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5"
+              >
+                {copiedKey === 'whole-chapter' ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy Chapter</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Row 4: Key Catholic & Deuterocanonical Quick Passages */}
+            <div className="p-3 rounded-xl bg-white border border-[#E2D5C3] space-y-2">
+              <div className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-800" />
+                <span>Key Catholic &amp; Deuterocanonical Chapters</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-1.5">
+                {FEATURED_CATHOLIC_PASSAGES.map((fp) => {
+                  const isCurrent = selectedBook.id === fp.bookId && selectedChapter === fp.chapter;
+                  return (
+                    <button
+                      key={`${fp.bookId}-${fp.chapter}`}
+                      type="button"
+                      onClick={() => {
+                        const b = CATHOLIC_BIBLE_BOOKS.find((x) => x.id === fp.bookId);
+                        if (b) {
+                          handleSelectBook(b, fp.chapter);
+                          setActiveViewMode('reader');
+                        }
+                      }}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-serif transition-all cursor-pointer border flex items-center gap-1.5 ${
+                        isCurrent
+                          ? 'bg-amber-900 border-amber-950 text-amber-50 font-bold'
+                          : 'bg-[#FAF4EB] border-[#E2D5C3] text-stone-800 hover:border-amber-800/60'
+                      }`}
+                      title={fp.description}
+                    >
+                      <span>{fp.label}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.2 rounded ${
+                          isCurrent ? 'bg-amber-800 text-amber-100' : 'bg-amber-100 text-amber-900'
+                        }`}
+                      >
+                        {fp.tag}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Row 5: Direct Chapter Links in Modern Catholic Translations (NABRE, ESV-CE, RSV-CE, JB, RSV) */}
+            <div className="p-3 rounded-xl bg-white border border-[#E2D5C3] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div className="flex items-center gap-1.5 text-xs text-stone-700 font-serif">
+                <ExternalLink className="w-3.5 h-3.5 text-amber-800 shrink-0" />
+                <span>
+                  Open <strong className="text-amber-950">{selectedBook.name} {selectedChapter}</strong> in Modern Catholic Bibles:
+                </span>
+              </div>
+              <div className="flex flex-wrap items-center gap-1.5">
+                {MODERN_CATHOLIC_BIBLE_EDITIONS.map((edition) => {
+                  const directUrl = getModernBibleChapterUrl(edition.id, selectedBook, selectedChapter);
+                  return (
+                    <a
+                      key={edition.id}
+                      href={directUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#FAF4EB] hover:bg-amber-100 border border-[#D8C7B2] hover:border-amber-800 text-xs font-cinzel font-bold text-amber-950 transition-all"
+                      title={`Read ${selectedBook.name} ${selectedChapter} in ${edition.name}`}
+                    >
+                      <span>{edition.acronym}</span>
+                      <ExternalLink className="w-3 h-3 text-amber-800" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+
+          </div>
+        )}
+      </div>
+
+      {/* MODE 1: MODERN CATHOLIC BIBLES HUB */}
+      {activeViewMode === 'modern-editions' && (
+        <div className="w-full rounded-xl bg-white/95 border border-[#E2D5C3] p-5 sm:p-6 space-y-5 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
+            <div>
+              <h2 className="font-cinzel text-lg sm:text-xl font-bold text-amber-950">
+                Modern Approved Catholic Bibles &amp; Liturgical Editions
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-700 font-serif mt-1">
+                Select any book and chapter to jump directly to that passage in{' '}
+                <strong className="text-stone-900">NABRE</strong>, <strong className="text-stone-900">ESV-CE</strong>,{' '}
+                <strong className="text-stone-900">RSV-CE</strong>, <strong className="text-stone-900">The Jerusalem Bible</strong>,{' '}
+                <strong className="text-stone-900">RSV</strong>, <strong className="text-stone-900">Knox Bible</strong>, or{' '}
+                <strong className="text-stone-900">Nova Vulgata</strong>.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <select
+                value={selectedBookId}
+                onChange={(e) => handleSelectBook(CATHOLIC_BIBLE_BOOKS.find((b) => b.id === e.target.value) || selectedBook, 1)}
+                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+              >
+                {CATHOLIC_BIBLE_BOOKS.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.number}. {b.name} {b.isDeuterocanonical ? '(Deuterocanon)' : ''}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={selectedChapter}
+                onChange={(e) => setSelectedChapter(Number(e.target.value))}
+                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+              >
+                {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
+                  <option key={ch} value={ch}>
+                    Ch. {ch}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+            {MODERN_CATHOLIC_BIBLE_EDITIONS.map((edition) => {
+              const primaryChapterUrl = getModernBibleChapterUrl(
+                edition.id,
+                selectedBook,
+                selectedChapter,
+                'primary'
+              );
+              const secondaryChapterUrl =
+                edition.id === 'nabre'
+                  ? getModernBibleChapterUrl(edition.id, selectedBook, selectedChapter, 'biblegateway')
+                  : null;
+
+              return (
+                <div
+                  key={edition.id}
+                  className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] hover:border-amber-800/60 p-5 flex flex-col justify-between gap-4 transition-all shadow-2xs"
+                >
+                  <div className="space-y-2.5">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <span className="inline-block px-2.5 py-0.5 rounded-md bg-amber-100 border border-amber-700/40 font-cinzel text-xs font-bold text-amber-950">
+                          {edition.acronym}
                         </span>
+                        <h3 className="font-serif text-lg font-bold text-stone-900 mt-1.5">
+                          {edition.name}
+                        </h3>
                       </div>
-
-                      <p className="text-xs sm:text-sm text-stone-700 font-serif leading-relaxed">
-                        {edition.description}
-                      </p>
-
-                      <div className="space-y-1 pt-2 text-xs text-stone-600 border-t border-[#E2D5C3]">
-                        <div>
-                          <span className="text-amber-950 font-semibold">Ecclesiastical Authority:</span>{' '}
-                          {edition.authority}
-                        </div>
-                        <div>
-                          <span className="text-amber-950 font-semibold">Liturgical &amp; Study Use:</span>{' '}
-                          {edition.liturgicalUse}
-                        </div>
-                      </div>
+                      <span className="text-[11px] font-mono text-stone-600 bg-white px-2.5 py-1 rounded border border-[#E2D5C3] shrink-0">
+                        {edition.year}
+                      </span>
                     </div>
 
-                    <div className="pt-3 border-t border-[#E2D5C3] flex flex-wrap items-center gap-2">
-                      <a
-                        href={primaryChapterUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 text-xs font-cinzel font-bold text-amber-50 transition-all shadow-2xs"
-                      >
-                        <span>
-                          Read {selectedBook.name} {selectedChapter} ({edition.acronym})
-                        </span>
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                    <p className="text-xs sm:text-sm text-stone-700 font-serif leading-relaxed">
+                      {edition.description}
+                    </p>
 
-                      {secondaryChapterUrl && (
-                        <a
-                          href={secondaryChapterUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] text-xs font-serif text-stone-800 transition-all"
-                          title="Open NABRE on BibleGateway"
-                        >
-                          <span>BibleGateway</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-
-                      <a
-                        href={edition.homeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] text-xs font-serif text-stone-700 hover:text-amber-950 transition-all"
-                      >
-                        <span>Index</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
+                    <div className="space-y-1 pt-2 text-xs text-stone-600 border-t border-[#E2D5C3]">
+                      <div>
+                        <span className="text-amber-950 font-semibold">Ecclesiastical Authority:</span>{' '}
+                        {edition.authority}
+                      </div>
+                      <div>
+                        <span className="text-amber-950 font-semibold">Liturgical &amp; Study Use:</span>{' '}
+                        {edition.liturgicalUse}
+                      </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+
+                  <div className="pt-3 border-t border-[#E2D5C3] flex flex-wrap items-center gap-2">
+                    <a
+                      href={primaryChapterUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-lg bg-amber-900 hover:bg-amber-800 text-xs font-cinzel font-bold text-amber-50 transition-all shadow-2xs"
+                    >
+                      <span>
+                        Read {selectedBook.name} {selectedChapter} ({edition.acronym})
+                      </span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+
+                    {secondaryChapterUrl && (
+                      <a
+                        href={secondaryChapterUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] text-xs font-serif text-stone-800 transition-all"
+                        title="Open NABRE on BibleGateway"
+                      >
+                        <span>BibleGateway</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    )}
+
+                    <a
+                      href={edition.homeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-amber-50 border border-[#D8C7B2] text-xs font-serif text-stone-700 hover:text-amber-950 transition-all"
+                    >
+                      <span>Index</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* MODE 2: SAVED BOOKMARKS */}
+      {/* MODE 2: SAVED BOOKMARKS (FULL WIDTH) */}
       {activeViewMode === 'bookmarks' && (
-        <div className="rounded-xl bg-white/95 border border-[#E2D5C3] p-6 space-y-4 shadow-xs">
+        <div className="w-full rounded-xl bg-white/95 border border-[#E2D5C3] p-6 space-y-4 shadow-xs">
           <div className="flex items-center justify-between border-b border-stone-200 pb-4">
             <div>
               <h2 className="font-cinzel text-lg font-bold text-amber-950">
@@ -624,557 +929,234 @@ export const CatholicBiblesView: React.FC = () => {
         </div>
       )}
 
-      {/* MODE 3: FULL IN-APP 73-BOOK CATHOLIC BIBLE READER */}
+      {/* MODE 3: FULL-WIDTH 73-BOOK CATHOLIC BIBLE READER */}
       {activeViewMode === 'reader' && (
-        <div className="space-y-6">
-          {/* Featured Key Catholic & Deuterocanonical Passages Strip */}
-          <div className="rounded-xl bg-white/95 border border-[#E2D5C3] p-4 space-y-2.5 shadow-2xs">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-800" />
-                <span>Key Catholic &amp; Deuterocanonical Chapters</span>
-              </span>
-              <span className="text-[11px] text-stone-600 font-serif">
-                Instant Multi-Version Access (DRC • CPDV • WEB-CE • Latin Vulgate)
-              </span>
+        <div className="w-full rounded-xl bg-white border border-[#E2D5C3] p-5 sm:p-7 md:p-8 space-y-6 shadow-xs">
+          
+          {/* Compact Full-Width Chapter Navigation Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2D5C3] pb-4">
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded bg-amber-100 border border-amber-700/30 text-amber-950 text-[11px] font-cinzel font-bold uppercase">
+                  {selectedBook.testament === 'OT' ? 'Old Testament' : 'New Testament'} • {selectedBook.section}
+                </span>
+                {selectedBook.isDeuterocanonical && (
+                  <span className="px-2.5 py-0.5 rounded bg-amber-900 text-amber-50 text-[11px] font-cinzel uppercase font-bold">
+                    Deuterocanonical Book
+                  </span>
+                )}
+                <span className="text-xs text-stone-500 font-serif italic">
+                  {selectedBook.latinName}
+                </span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 pt-0.5">
+                {selectedBook.traditionalName}{' '}
+                <span className="text-amber-900">— Chapter {selectedChapter}</span>
+              </h3>
             </div>
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-              {FEATURED_CATHOLIC_PASSAGES.map((fp) => {
-                const isCurrent = selectedBook.id === fp.bookId && selectedChapter === fp.chapter;
+
+            {/* Inline Quick Book/Chapter Jump & Prev/Next Controls */}
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <select
+                value={selectedBook.id}
+                onChange={(e) => {
+                  const b = CATHOLIC_BIBLE_BOOKS.find((x) => x.id === e.target.value);
+                  if (b) handleSelectBook(b, 1);
+                }}
+                aria-label="Select Bible Book"
+                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
+              >
+                {CATHOLIC_BIBLE_BOOKS.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.number}. {b.name}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={selectedChapter}
+                onChange={(e) => setSelectedChapter(Number(e.target.value))}
+                aria-label="Select Chapter"
+                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
+              >
+                {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
+                  <option key={ch} value={ch}>
+                    Ch. {ch} / {selectedBook.chapters}
+                  </option>
+                ))}
+              </select>
+
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={handlePrevChapter}
+                  className="p-2 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
+                  title="Previous Chapter"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNextChapter}
+                  className="p-2 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
+                  title="Next Chapter"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Book Summary Callout */}
+          <div className="px-4 py-3 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] text-xs sm:text-sm text-stone-700 font-serif leading-relaxed">
+            <strong className="text-amber-950 font-cinzel uppercase text-[11px] tracking-wider mr-2">
+              Argument:
+            </strong>
+            {selectedBook.summary}
+          </div>
+
+          {/* Verses Display (Full Width Single or Side-by-Side Parallel) */}
+          {isLoadingChapter ? (
+            <div className="py-16 text-center space-y-3">
+              <div className="w-8 h-8 rounded-full border-2 border-amber-900 border-t-transparent animate-spin mx-auto" />
+              <p className="text-sm font-serif text-amber-950">
+                Loading {selectedBook.traditionalName} Chapter {selectedChapter}...
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-2.5">
+              {isParallelMode && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-2 border-b border-[#E2D5C3] text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                  <div>{activePrimaryTranslationMeta.name}</div>
+                  <div>{activeParallelTranslationMeta.name}</div>
+                </div>
+              )}
+
+              {displayedPrimaryVerses.map((vObj) => {
+                const bookmarkId = `${selectedBook.id}:${selectedChapter}:${vObj.verse}:${primaryTranslation}`;
+                const isBookmarked = bookmarks.some((b) => b.id === bookmarkId);
+                const parallelVerse = secondaryVerses.find((sv) => sv.verse === vObj.verse);
+                const verseCopyKey = `v-${vObj.verse}`;
+
                 return (
-                  <button
-                    key={`${fp.bookId}-${fp.chapter}`}
-                    type="button"
-                    onClick={() => {
-                      const b = CATHOLIC_BIBLE_BOOKS.find((x) => x.id === fp.bookId);
-                      if (b) handleSelectBook(b, fp.chapter);
-                    }}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-serif whitespace-nowrap transition-all cursor-pointer border flex items-center gap-1.5 shrink-0 ${
-                      isCurrent
-                        ? 'bg-amber-900 border-amber-950 text-amber-50 font-bold shadow-2xs'
-                        : 'bg-[#FAF4EB] border-[#E2D5C3] text-stone-800 hover:border-amber-800/50 hover:bg-amber-50/70'
-                    }`}
-                    title={fp.description}
+                  <div
+                    key={vObj.verse}
+                    className="group rounded-xl p-3 hover:bg-[#FAF4EB] border border-transparent hover:border-[#E2D5C3] transition-all"
                   >
-                    <span>{fp.label}</span>
-                    <span
-                      className={`text-[10px] px-1.5 py-0.2 rounded ${
-                        isCurrent
-                          ? 'bg-amber-800 text-amber-100'
-                          : 'bg-amber-100/90 text-amber-900'
-                      }`}
+                    <div
+                      className={
+                        isParallelMode
+                          ? 'grid grid-cols-1 md:grid-cols-2 gap-6 items-start'
+                          : 'flex items-start justify-between gap-3'
+                      }
                     >
-                      {fp.tag}
-                    </span>
-                  </button>
+                      {/* Primary Translation Verse */}
+                      <div className={`font-serif text-stone-900 ${getTextSizeClass()} flex-1`}>
+                        <span className="inline-block font-cinzel font-bold text-xs text-amber-900 mr-2.5 select-none">
+                          {vObj.verse}
+                        </span>
+                        <span>{vObj.text}</span>
+                      </div>
+
+                      {/* Parallel Second Translation Verse */}
+                      {isParallelMode && (
+                        <div
+                          className={`font-serif text-stone-800 italic ${getTextSizeClass()} md:border-l md:border-[#E2D5C3] md:pl-6`}
+                        >
+                          <span className="inline-block font-cinzel font-bold text-xs text-amber-800 mr-2.5 select-none">
+                            {vObj.verse}
+                          </span>
+                          <span>
+                            {parallelVerse ? parallelVerse.text : '—'}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Verse Action Icons */}
+                      <div className="flex items-center gap-1 opacity-75 group-hover:opacity-100 transition-opacity shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => toggleBookmark(vObj)}
+                          className="p-1.5 rounded-lg hover:bg-amber-100/80 text-stone-500 hover:text-amber-950 cursor-pointer"
+                          title={isBookmarked ? 'Remove Bookmark' : 'Bookmark Verse'}
+                        >
+                          {isBookmarked ? (
+                            <BookmarkCheck className="w-4 h-4 text-amber-900" />
+                          ) : (
+                            <Bookmark className="w-4 h-4" />
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleCopyText(
+                              `${selectedBook.name} ${selectedChapter}:${vObj.verse} (${activePrimaryTranslationMeta.shortName}) — "${vObj.text}"`,
+                              verseCopyKey
+                            )
+                          }
+                          className="p-1.5 rounded-lg hover:bg-amber-100/80 text-stone-500 hover:text-amber-950 cursor-pointer"
+                          title="Copy Verse"
+                        >
+                          {copiedKey === verseCopyKey ? (
+                            <Check className="w-4 h-4 text-emerald-700" />
+                          ) : (
+                            <Copy className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
             </div>
-          </div>
+          )}
 
-          {/* Translation Selector & Parallel Mode Controls */}
-          <div className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] p-5 space-y-4 shadow-2xs">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-              {/* Primary In-App Catholic Translation */}
-              <div className="lg:col-span-5 space-y-1">
-                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
-                  In-App Catholic Bible Translation
-                </label>
-                <select
-                  value={primaryTranslation}
-                  onChange={(e) => setPrimaryTranslation(e.target.value as CatholicBibleTranslationId)}
-                  className="w-full bg-white border border-[#D8C7B2] rounded-xl px-3.5 py-2.5 text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
-                >
-                  {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.name} ({t.year})
-                    </option>
-                  ))}
-                </select>
+          {/* Haydock & Challoner Catholic Commentary Notes */}
+          {showHaydockNotes && currentHaydockNotes.length > 0 && (
+            <div className="mt-6 pt-5 border-t border-[#E2D5C3] space-y-3">
+              <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                <ScrollText className="w-4 h-4 text-amber-800" />
+                <span>Bishop Challoner &amp; Haydock Catholic Bible Annotations</span>
               </div>
-
-              {/* Parallel Side-by-Side Toggle + Second Translation */}
-              <div className="lg:col-span-4 space-y-1">
-                <label className="block text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
-                  Parallel Comparison Edition
-                </label>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsParallelMode((prev) => !prev)}
-                    className={`px-3 py-2.5 rounded-xl text-xs font-cinzel font-bold uppercase tracking-wider border transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
-                      isParallelMode
-                        ? 'bg-amber-900 border-amber-950 text-amber-50'
-                        : 'bg-white border-[#D8C7B2] text-stone-800 hover:border-amber-800/50'
-                    }`}
+              <div className="space-y-2.5">
+                {currentHaydockNotes.map((hn) => (
+                  <div
+                    key={hn.verse}
+                    className="p-3.5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] text-xs sm:text-sm font-serif text-stone-800 leading-relaxed"
                   >
-                    <Columns className="w-3.5 h-3.5" />
-                    <span>{isParallelMode ? 'Parallel On' : 'Side-by-Side'}</span>
-                  </button>
-
-                  {isParallelMode && (
-                    <select
-                      value={parallelTranslation}
-                      onChange={(e) => setParallelTranslation(e.target.value as CatholicBibleTranslationId)}
-                      className="flex-1 min-w-0 bg-white border border-[#D8C7B2] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
-                    >
-                      {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
-                        <option key={t.id} value={t.id}>
-                          {t.shortName}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </div>
-              </div>
-
-              {/* Reader Utility Buttons (Haydock Commentary, Audio Narration, Font Size) */}
-              <div className="lg:col-span-3 flex flex-wrap items-center justify-end gap-2 pt-2 lg:pt-5">
-                <button
-                  type="button"
-                  onClick={() => setShowHaydockNotes((p) => !p)}
-                  className={`px-3 py-2 rounded-xl text-xs font-serif font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
-                    showHaydockNotes
-                      ? 'bg-amber-900 border-amber-950 text-amber-50'
-                      : 'bg-white border-[#D8C7B2] text-stone-700 hover:text-stone-900'
-                  }`}
-                  title="Toggle Challoner & Haydock Catholic Commentary Footnotes"
-                >
-                  <ScrollText className="w-3.5 h-3.5" />
-                  <span>Notes</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleToggleAudioRead}
-                  className={`px-3 py-2 rounded-xl text-xs font-serif font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
-                    isSpeaking
-                      ? 'bg-amber-900 border-amber-950 text-amber-50'
-                      : 'bg-white border-[#D8C7B2] text-stone-700 hover:text-amber-950'
-                  }`}
-                  title="Listen to this chapter read aloud"
-                >
-                  {isSpeaking ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                  <span>{isSpeaking ? 'Stop' : 'Listen'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    setFontSizeLevel((prev) => (prev === 'sm' ? 'md' : prev === 'md' ? 'lg' : 'sm'))
-                  }
-                  className="px-2.5 py-2 rounded-xl bg-white border border-[#D8C7B2] text-stone-800 hover:text-amber-950 text-xs font-serif font-semibold cursor-pointer flex items-center gap-1"
-                  title="Cycle Scripture Font Size"
-                >
-                  <Type className="w-3.5 h-3.5" />
-                  <span className="uppercase">{fontSizeLevel}</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Translation Imprimatur / Provenance Banner */}
-            <div className="pt-3 border-t border-[#E2D5C3] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-stone-700 font-serif">
-              <div>
-                <strong className="text-amber-950">{activePrimaryTranslationMeta.name}:</strong>{' '}
-                {activePrimaryTranslationMeta.imprimaturNote}
-              </div>
-              <span className="px-2.5 py-0.5 rounded bg-emerald-50 border border-emerald-600/30 text-emerald-900 font-semibold text-[11px] shrink-0">
-                {activePrimaryTranslationMeta.copyrightStatus}
-              </span>
-            </div>
-          </div>
-
-          {/* Main Reader Grid: Left 73-Book Canon Navigator + Right Chapter Scripture Reader */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Left Sidebar: 73 Catholic Books Navigator */}
-            <div className="lg:col-span-4 rounded-xl bg-white/95 border border-[#E2D5C3] p-4 space-y-3.5 shadow-2xs">
-              <div className="flex items-center justify-between">
-                <h2 className="font-cinzel text-sm font-bold text-amber-950 tracking-wider uppercase">
-                  73 Books of the Bible
-                </h2>
-                <span className="text-[11px] text-stone-600 font-serif">
-                  {filteredBooks.length} shown
-                </span>
-              </div>
-
-              {/* Search Books */}
-              <div className="relative">
-                <Search className="w-4 h-4 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={bookSearchQuery}
-                  onChange={(e) => setBookSearchQuery(e.target.value)}
-                  placeholder="Search 73 books (e.g., Tobit, Sirach, John)..."
-                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-xl pl-9 pr-3 py-2 text-xs text-stone-900 placeholder-stone-500 focus:outline-none focus:border-amber-800"
-                />
-              </div>
-
-              {/* Testament & Deuterocanon Filter Tabs */}
-              <div className="grid grid-cols-4 gap-1.5">
-                {[
-                  { id: 'ALL', label: 'All (73)' },
-                  { id: 'OT', label: 'OT (46)' },
-                  { id: 'NT', label: 'NT (27)' },
-                  { id: 'DEUTERO', label: 'Deutero (7)' }
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setActiveTestamentFilter(tab.id as any)}
-                    className={`py-1.5 px-2 rounded-lg text-[11px] font-cinzel font-bold transition-all cursor-pointer border ${
-                      activeTestamentFilter === tab.id
-                        ? 'bg-amber-900 border-amber-950 text-amber-50'
-                        : 'bg-[#FAF4EB] border-[#E2D5C3] text-stone-700 hover:text-amber-950'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
+                    <span className="font-cinzel font-bold text-amber-950 mr-2">
+                      Ver. {hn.verse}.
+                    </span>
+                    <span>{hn.note}</span>
+                  </div>
                 ))}
               </div>
-
-              {/* Section Filter Dropdown */}
-              <div className="flex items-center gap-2">
-                <Filter className="w-3.5 h-3.5 text-amber-800 shrink-0" />
-                <select
-                  value={activeSectionFilter}
-                  onChange={(e) => setActiveSectionFilter(e.target.value as any)}
-                  className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs text-stone-800 font-serif focus:outline-none focus:border-amber-800"
-                >
-                  <option value="ALL">All Liturgical Sections</option>
-                  <option value="Pentateuch">Pentateuch / Law (5)</option>
-                  <option value="Historical">Historical Books (16)</option>
-                  <option value="Wisdom">Wisdom &amp; Poetry (7)</option>
-                  <option value="Prophets">Major &amp; Minor Prophets (18)</option>
-                  <option value="Gospels & Acts">Holy Gospels &amp; Acts (5)</option>
-                  <option value="Epistles & Apocalypse">Epistles &amp; Apocalypse (22)</option>
-                </select>
-              </div>
-
-              {/* Scrollable Book List */}
-              <div className="max-h-[460px] overflow-y-auto space-y-1.5 pr-1">
-                {filteredBooks.map((book) => {
-                  const isSelected = book.id === selectedBook.id;
-                  return (
-                    <button
-                      key={book.id}
-                      type="button"
-                      onClick={() => handleSelectBook(book, 1)}
-                      className={`w-full text-left px-3 py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-between gap-2 border ${
-                        isSelected
-                          ? 'bg-amber-900 border-amber-950 text-amber-50 shadow-xs'
-                          : 'bg-[#FAF4EB]/80 hover:bg-[#FAF4EB] border-[#E2D5C3] hover:border-amber-800/50 text-stone-800'
-                      }`}
-                    >
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span
-                            className={`text-[11px] font-mono ${
-                              isSelected ? 'text-amber-200' : 'text-amber-900 font-semibold'
-                            }`}
-                          >
-                            {book.number}.
-                          </span>
-                          <span className="font-serif font-bold text-sm truncate">
-                            {book.name}
-                          </span>
-                          {book.isDeuterocanonical && (
-                            <span
-                              className={`text-[9px] font-cinzel uppercase px-1.5 py-0.5 rounded border ${
-                                isSelected
-                                  ? 'bg-amber-800 text-amber-100 border-amber-600'
-                                  : 'bg-amber-100 text-amber-950 border-amber-700/30'
-                              }`}
-                            >
-                              Deutero
-                            </span>
-                          )}
-                        </div>
-                        <div
-                          className={`text-[11px] font-serif truncate ${
-                            isSelected ? 'text-amber-100/90' : 'text-stone-600'
-                          }`}
-                        >
-                          {book.traditionalName !== book.name ? `${book.traditionalName} • ` : ''}
-                          <span className="italic">{book.latinName}</span>
-                        </div>
-                      </div>
-                      <span
-                        className={`text-[11px] font-mono px-2 py-0.5 rounded shrink-0 ${
-                          isSelected
-                            ? 'bg-amber-950/60 text-amber-100'
-                            : 'bg-white text-stone-700 border border-[#E2D5C3]'
-                        }`}
-                      >
-                        {book.chapters} ch
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
             </div>
+          )}
 
-            {/* Right Area: Chapter Selector & Full Scripture Text */}
-            <div className="lg:col-span-8 space-y-4">
-              {/* Book Introduction & Chapter Grid Card */}
-              <div className="rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] p-5 space-y-4 shadow-2xs">
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[#E2D5C3] pb-4">
-                  <div className="space-y-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded bg-amber-100 border border-amber-700/30 text-amber-950 text-[11px] font-cinzel font-bold uppercase">
-                        {selectedBook.testament === 'OT' ? 'Old Testament' : 'New Testament'} • {selectedBook.section}
-                      </span>
-                      {selectedBook.isDeuterocanonical && (
-                        <span className="px-2.5 py-0.5 rounded bg-amber-900 text-amber-50 text-[11px] font-cinzel uppercase font-bold">
-                          Deuterocanonical Book
-                        </span>
-                      )}
-                    </div>
-                    <h2 className="font-serif text-xl sm:text-2xl font-bold text-stone-900 pt-1">
-                      {selectedBook.traditionalName}{' '}
-                      <span className="text-amber-900">— Chapter {selectedChapter}</span>
-                    </h2>
-                    <p className="text-xs text-stone-600 font-serif italic">
-                      {selectedBook.latinName} • Theme: {selectedBook.keyTheme}
-                    </p>
-                  </div>
+          {/* Bottom Chapter Navigation Bar */}
+          <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
+            <button
+              type="button"
+              onClick={handlePrevChapter}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>Previous Chapter</span>
+            </button>
 
-                  {/* Prev / Next Chapter Buttons */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      type="button"
-                      onClick={handlePrevChapter}
-                      className="p-2 rounded-xl bg-white hover:bg-amber-50 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
-                      title="Previous Chapter"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </button>
-                    <span className="text-xs font-cinzel font-bold text-amber-950 px-2">
-                      Ch. {selectedChapter} / {selectedBook.chapters}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleNextChapter}
-                      className="p-2 rounded-xl bg-white hover:bg-amber-50 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
-                      title="Next Chapter"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
+            <span className="text-xs font-serif font-semibold text-stone-600">
+              {selectedBook.traditionalName} {selectedChapter} • {sourceLabel}
+            </span>
 
-                {/* Catholic Book Introduction */}
-                <p className="text-xs sm:text-sm text-stone-800 font-serif leading-relaxed">
-                  {selectedBook.summary}
-                </p>
-
-                {/* Chapter Number Pills */}
-                <div className="space-y-1.5">
-                  <span className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-950">
-                    Select Chapter ({selectedBook.chapters} Chapters):
-                  </span>
-                  <div className="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pr-1">
-                    {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((chNum) => (
-                      <button
-                        key={chNum}
-                        type="button"
-                        onClick={() => setSelectedChapter(chNum)}
-                        className={`w-8 h-8 rounded-lg text-xs font-mono transition-all cursor-pointer border flex items-center justify-center ${
-                          chNum === selectedChapter
-                            ? 'bg-amber-900 border-amber-950 text-amber-50 font-bold shadow-2xs'
-                            : 'bg-white border-[#D8C7B2] text-stone-800 hover:border-amber-800 hover:bg-amber-50'
-                        }`}
-                      >
-                        {chNum}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Scripture Verses Card (Clean Warm Ivory Reading Page) */}
-              <div className="rounded-xl bg-white border border-[#E2D5C3] p-5 sm:p-7 space-y-5 shadow-xs">
-                {/* Chapter Toolbar: Filter Verses & Copy Chapter */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
-                  <div className="relative flex-1 max-w-xs">
-                    <Search className="w-3.5 h-3.5 text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="text"
-                      value={verseFilterQuery}
-                      onChange={(e) => setVerseFilterQuery(e.target.value)}
-                      placeholder="Filter verses in this chapter..."
-                      className="w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-xl pl-8 pr-3 py-1.5 text-xs text-stone-900 placeholder-stone-500 focus:outline-none focus:border-amber-800"
-                    />
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] text-stone-600 font-serif hidden sm:inline">
-                      Source: {sourceLabel}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={handleCopyWholeChapter}
-                      className="px-3 py-1.5 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/70 border border-[#D8C7B2] text-xs font-serif font-semibold text-stone-800 hover:text-amber-950 flex items-center gap-1.5 cursor-pointer"
-                    >
-                      {copiedKey === 'whole-chapter' ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-700" />
-                          <span className="text-emerald-800">Chapter Copied</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5 text-amber-900" />
-                          <span>Copy Chapter</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Verses Display (Single or Side-by-Side Parallel) */}
-                {isLoadingChapter ? (
-                  <div className="py-16 text-center space-y-3">
-                    <div className="w-8 h-8 rounded-full border-2 border-amber-900 border-t-transparent animate-spin mx-auto" />
-                    <p className="text-sm font-serif text-amber-950">
-                      Loading {selectedBook.traditionalName} Chapter {selectedChapter}...
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-2.5">
-                    {isParallelMode && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2 border-b border-[#E2D5C3] text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950">
-                        <div>{activePrimaryTranslationMeta.name}</div>
-                        <div>{activeParallelTranslationMeta.name}</div>
-                      </div>
-                    )}
-
-                    {displayedPrimaryVerses.map((vObj) => {
-                      const bookmarkId = `${selectedBook.id}:${selectedChapter}:${vObj.verse}:${primaryTranslation}`;
-                      const isBookmarked = bookmarks.some((b) => b.id === bookmarkId);
-                      const parallelVerse = secondaryVerses.find((sv) => sv.verse === vObj.verse);
-                      const verseCopyKey = `v-${vObj.verse}`;
-
-                      return (
-                        <div
-                          key={vObj.verse}
-                          className="group rounded-xl p-3 hover:bg-[#FAF4EB] border border-transparent hover:border-[#E2D5C3] transition-all"
-                        >
-                          <div
-                            className={
-                              isParallelMode
-                                ? 'grid grid-cols-1 md:grid-cols-2 gap-4 items-start'
-                                : 'flex items-start justify-between gap-3'
-                            }
-                          >
-                            {/* Primary Translation Verse */}
-                            <div className={`font-serif text-stone-900 ${fontSizeClass} flex-1`}>
-                              <span className="inline-block font-cinzel font-bold text-xs text-amber-900 mr-2 select-none">
-                                {vObj.verse}
-                              </span>
-                              <span>{vObj.text}</span>
-                            </div>
-
-                            {/* Parallel Second Translation Verse */}
-                            {isParallelMode && (
-                              <div
-                                className={`font-serif text-stone-800 italic ${fontSizeClass} md:border-l md:border-[#E2D5C3] md:pl-4`}
-                              >
-                                <span className="inline-block font-cinzel font-bold text-xs text-amber-800 mr-2 select-none">
-                                  {vObj.verse}
-                                </span>
-                                <span>
-                                  {parallelVerse ? parallelVerse.text : '—'}
-                                </span>
-                              </div>
-                            )}
-
-                            {/* Verse Action Icons */}
-                            <div className="flex items-center gap-1 opacity-75 group-hover:opacity-100 transition-opacity shrink-0">
-                              <button
-                                type="button"
-                                onClick={() => toggleBookmark(vObj)}
-                                className="p-1.5 rounded-lg hover:bg-amber-100/80 text-stone-500 hover:text-amber-950 cursor-pointer"
-                                title={isBookmarked ? 'Remove Bookmark' : 'Bookmark Verse'}
-                              >
-                                {isBookmarked ? (
-                                  <BookmarkCheck className="w-4 h-4 text-amber-900" />
-                                ) : (
-                                  <Bookmark className="w-4 h-4" />
-                                )}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  handleCopyText(
-                                    `${selectedBook.name} ${selectedChapter}:${vObj.verse} (${activePrimaryTranslationMeta.shortName}) — "${vObj.text}"`,
-                                    verseCopyKey
-                                  )
-                                }
-                                className="p-1.5 rounded-lg hover:bg-amber-100/80 text-stone-500 hover:text-amber-950 cursor-pointer"
-                                title="Copy Verse"
-                              >
-                                {copiedKey === verseCopyKey ? (
-                                  <Check className="w-4 h-4 text-emerald-700" />
-                                ) : (
-                                  <Copy className="w-4 h-4" />
-                                )}
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-
-                {/* Haydock & Challoner Catholic Commentary Notes */}
-                {showHaydockNotes && currentHaydockNotes.length > 0 && (
-                  <div className="mt-6 pt-5 border-t border-[#E2D5C3] space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950">
-                      <ScrollText className="w-4 h-4 text-amber-800" />
-                      <span>Bishop Challoner &amp; Haydock Catholic Bible Annotations</span>
-                    </div>
-                    <div className="space-y-2.5">
-                      {currentHaydockNotes.map((hn) => (
-                        <div
-                          key={hn.verse}
-                          className="p-3.5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] text-xs sm:text-sm font-serif text-stone-800 leading-relaxed"
-                        >
-                          <span className="font-cinzel font-bold text-amber-950 mr-2">
-                            Ver. {hn.verse}.
-                          </span>
-                          <span>{hn.note}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Bottom Chapter Navigation Bar */}
-                <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
-                  <button
-                    type="button"
-                    onClick={handlePrevChapter}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                    <span>Previous Chapter</span>
-                  </button>
-
-                  <span className="text-xs font-serif font-semibold text-stone-700">
-                    {selectedBook.traditionalName} {selectedChapter}
-                  </span>
-
-                  <button
-                    type="button"
-                    onClick={handleNextChapter}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
-                  >
-                    <span>Next Chapter</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
+            <button
+              type="button"
+              onClick={handleNextChapter}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
+            >
+              <span>Next Chapter</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       )}
