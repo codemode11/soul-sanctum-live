@@ -1101,10 +1101,10 @@ export const CatholicBiblesView: React.FC = () => {
       {activeViewMode === 'reader' && (
         <div className="w-full rounded-xl bg-white border border-[#E2D5C3] p-5 sm:p-7 md:p-8 space-y-6 shadow-xs">
           
-          {/* Chapter Header + Pericope Subheading */}
+          {/* Book Header, Pericope Summary & Chapter Heading */}
           <div className="border-b border-stone-200 pb-4 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-1">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div className="space-y-1.5">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded bg-amber-100 border border-amber-700/30 text-amber-950 text-[11px] font-cinzel font-bold uppercase">
                     {selectedBook.testament === 'OT' ? 'Old Testament' : 'New Testament'} • {selectedBook.section}
@@ -1119,8 +1119,7 @@ export const CatholicBiblesView: React.FC = () => {
                   </span>
                 </div>
                 <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-950 tracking-normal leading-tight pt-0.5">
-                  {selectedBook.traditionalName}{' '}
-                  <span className="text-stone-700 font-semibold">— Chapter {selectedChapter}</span>
+                  {selectedBook.traditionalName}
                 </h3>
               </div>
 
@@ -1189,13 +1188,18 @@ export const CatholicBiblesView: React.FC = () => {
               </div>
             </div>
 
-            {/* Pericope Summary (No 'Argument' label) */}
+            {/* Book Summary placed before Chapter heading */}
             <p
-              className="font-serif text-amber-900/95 font-bold italic tracking-normal leading-relaxed pt-1"
+              className="font-serif text-amber-900/95 font-bold italic tracking-normal leading-relaxed pt-0.5"
               style={pericopeStyle}
             >
               {selectedBook.summary}
             </p>
+
+            {/* Chapter Heading */}
+            <h4 className="font-serif text-lg sm:text-xl md:text-2xl font-bold text-stone-800 tracking-normal pt-1">
+              Chapter {selectedChapter}
+            </h4>
           </div>
 
           {/* Verses Display (Full Width Single or Side-by-Side Parallel) */}
