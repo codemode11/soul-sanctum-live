@@ -312,11 +312,47 @@ export const CatholicBiblesView: React.FC = () => {
     CATHOLIC_BIBLE_TRANSLATIONS.find((t) => t.id === parallelTranslation) ||
     CATHOLIC_BIBLE_TRANSLATIONS[3];
 
-  const getTextSizeClass = () => {
-    if (textSize === 'normal') return 'text-sm sm:text-base leading-relaxed';
-    if (textSize === 'large') return 'text-lg sm:text-xl leading-relaxed';
-    if (textSize === 'xlarge') return 'text-xl sm:text-2xl leading-loose';
-    return 'text-base sm:text-lg leading-relaxed';
+  const scriptureStyle = {
+    fontSize:
+      textSize === 'normal'
+        ? '1.25rem'
+        : textSize === 'medium'
+        ? '1.45rem'
+        : textSize === 'large'
+        ? '1.68rem'
+        : '1.95rem',
+    lineHeight:
+      textSize === 'normal'
+        ? '1.8'
+        : textSize === 'medium'
+        ? '1.84'
+        : textSize === 'large'
+        ? '1.88'
+        : '1.95'
+  };
+
+  const pericopeStyle = {
+    fontSize:
+      textSize === 'normal'
+        ? '1.2rem'
+        : textSize === 'medium'
+        ? '1.38rem'
+        : textSize === 'large'
+        ? '1.58rem'
+        : '1.85rem',
+    lineHeight: '1.6'
+  };
+
+  const noteStyle = {
+    fontSize:
+      textSize === 'normal'
+        ? '1.1rem'
+        : textSize === 'medium'
+        ? '1.25rem'
+        : textSize === 'large'
+        ? '1.42rem'
+        : '1.65rem',
+    lineHeight: '1.7'
   };
 
   return (
@@ -933,86 +969,88 @@ export const CatholicBiblesView: React.FC = () => {
       {activeViewMode === 'reader' && (
         <div className="w-full rounded-xl bg-white border border-[#E2D5C3] p-5 sm:p-7 md:p-8 space-y-6 shadow-xs">
           
-          {/* Compact Full-Width Chapter Navigation Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E2D5C3] pb-4">
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded bg-amber-100 border border-amber-700/30 text-amber-950 text-[11px] font-cinzel font-bold uppercase">
-                  {selectedBook.testament === 'OT' ? 'Old Testament' : 'New Testament'} • {selectedBook.section}
-                </span>
-                {selectedBook.isDeuterocanonical && (
-                  <span className="px-2.5 py-0.5 rounded bg-amber-900 text-amber-50 text-[11px] font-cinzel uppercase font-bold">
-                    Deuterocanonical Book
+          {/* Chapter Header + Pericope Subheading */}
+          <div className="border-b border-stone-200 pb-4 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded bg-amber-100 border border-amber-700/30 text-amber-950 text-[11px] font-cinzel font-bold uppercase">
+                    {selectedBook.testament === 'OT' ? 'Old Testament' : 'New Testament'} • {selectedBook.section}
                   </span>
-                )}
-                <span className="text-xs text-stone-500 font-serif italic">
-                  {selectedBook.latinName}
-                </span>
+                  {selectedBook.isDeuterocanonical && (
+                    <span className="px-2.5 py-0.5 rounded bg-amber-900 text-amber-50 text-[11px] font-cinzel uppercase font-bold">
+                      Deuterocanonical Book
+                    </span>
+                  )}
+                  <span className="text-xs text-stone-500 font-serif italic">
+                    {selectedBook.latinName}
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-950 tracking-normal leading-tight pt-0.5">
+                  {selectedBook.traditionalName}{' '}
+                  <span className="text-stone-700 font-semibold">— Chapter {selectedChapter}</span>
+                </h3>
               </div>
-              <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 pt-0.5">
-                {selectedBook.traditionalName}{' '}
-                <span className="text-amber-900">— Chapter {selectedChapter}</span>
-              </h3>
+
+              {/* Inline Quick Book/Chapter Jump & Prev/Next Controls */}
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                <select
+                  value={selectedBook.id}
+                  onChange={(e) => {
+                    const b = CATHOLIC_BIBLE_BOOKS.find((x) => x.id === e.target.value);
+                    if (b) handleSelectBook(b, 1);
+                  }}
+                  aria-label="Select Bible Book"
+                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
+                >
+                  {CATHOLIC_BIBLE_BOOKS.map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.number}. {b.name}
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  value={selectedChapter}
+                  onChange={(e) => setSelectedChapter(Number(e.target.value))}
+                  aria-label="Select Chapter"
+                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
+                >
+                  {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
+                    <option key={ch} value={ch}>
+                      Ch. {ch} / {selectedBook.chapters}
+                    </option>
+                  ))}
+                </select>
+
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={handlePrevChapter}
+                    className="p-2 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
+                    title="Previous Chapter"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextChapter}
+                    className="p-2 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
+                    title="Next Chapter"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Inline Quick Book/Chapter Jump & Prev/Next Controls */}
-            <div className="flex flex-wrap items-center gap-2 shrink-0">
-              <select
-                value={selectedBook.id}
-                onChange={(e) => {
-                  const b = CATHOLIC_BIBLE_BOOKS.find((x) => x.id === e.target.value);
-                  if (b) handleSelectBook(b, 1);
-                }}
-                aria-label="Select Bible Book"
-                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
-              >
-                {CATHOLIC_BIBLE_BOOKS.map((b) => (
-                  <option key={b.id} value={b.id}>
-                    {b.number}. {b.name}
-                  </option>
-                ))}
-              </select>
-
-              <select
-                value={selectedChapter}
-                onChange={(e) => setSelectedChapter(Number(e.target.value))}
-                aria-label="Select Chapter"
-                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
-              >
-                {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
-                  <option key={ch} value={ch}>
-                    Ch. {ch} / {selectedBook.chapters}
-                  </option>
-                ))}
-              </select>
-
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={handlePrevChapter}
-                  className="p-2 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
-                  title="Previous Chapter"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleNextChapter}
-                  className="p-2 rounded-lg bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-stone-800 hover:text-amber-950 cursor-pointer transition-colors"
-                  title="Next Chapter"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Book Summary Callout */}
-          <div className="px-4 py-3 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] text-xs sm:text-sm text-stone-700 font-serif leading-relaxed">
-            <strong className="text-amber-950 font-cinzel uppercase text-[11px] tracking-wider mr-2">
-              Argument:
-            </strong>
-            {selectedBook.summary}
+            {/* Pericope Summary (No 'Argument' label) */}
+            <p
+              className="font-serif text-amber-900/95 font-bold italic tracking-normal leading-relaxed pt-1"
+              style={pericopeStyle}
+            >
+              {selectedBook.summary}
+            </p>
           </div>
 
           {/* Verses Display (Full Width Single or Side-by-Side Parallel) */}
@@ -1051,8 +1089,8 @@ export const CatholicBiblesView: React.FC = () => {
                       }
                     >
                       {/* Primary Translation Verse */}
-                      <div className={`font-serif text-stone-900 ${getTextSizeClass()} flex-1`}>
-                        <span className="inline-block font-cinzel font-bold text-xs text-amber-900 mr-2.5 select-none">
+                      <div className="font-serif-sacred text-stone-800 flex-1" style={scriptureStyle}>
+                        <span className="inline-block font-cinzel font-bold text-sm text-amber-900 mr-2.5 select-none">
                           {vObj.verse}
                         </span>
                         <span>{vObj.text}</span>
@@ -1061,9 +1099,10 @@ export const CatholicBiblesView: React.FC = () => {
                       {/* Parallel Second Translation Verse */}
                       {isParallelMode && (
                         <div
-                          className={`font-serif text-stone-800 italic ${getTextSizeClass()} md:border-l md:border-[#E2D5C3] md:pl-6`}
+                          className="font-serif-sacred text-stone-800 italic md:border-l md:border-[#E2D5C3] md:pl-6"
+                          style={scriptureStyle}
                         >
-                          <span className="inline-block font-cinzel font-bold text-xs text-amber-800 mr-2.5 select-none">
+                          <span className="inline-block font-cinzel font-bold text-sm text-amber-800 mr-2.5 select-none">
                             {vObj.verse}
                           </span>
                           <span>
@@ -1122,7 +1161,8 @@ export const CatholicBiblesView: React.FC = () => {
                 {currentHaydockNotes.map((hn) => (
                   <div
                     key={hn.verse}
-                    className="p-3.5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] text-xs sm:text-sm font-serif text-stone-800 leading-relaxed"
+                    className="p-4 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] font-serif text-stone-800"
+                    style={noteStyle}
                   >
                     <span className="font-cinzel font-bold text-amber-950 mr-2">
                       Ver. {hn.verse}.
