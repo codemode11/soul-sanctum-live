@@ -540,9 +540,9 @@ export default function App() {
             scheduledMasthead={activeScheduledMasthead}
           />
 
-          {/* Main Story: Featured Catholic Article Masthead Dispatch (slightly above the 5 bottom icons on mobile) */}
-          <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 mt-auto pt-10 sm:pt-0 sm:mt-64 md:mt-72 lg:mt-80">
-            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/55 sm:bg-black/45 hover:bg-black/55 border border-amber-500/60 hover:border-amber-400 text-amber-100 backdrop-blur-xs sm:backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.65)] transition-all py-3.5 px-4 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
+          {/* Main Story: Featured Catholic Article Masthead Dispatch (stacked right below the Date banner and slightly above the 5 bottom icons on mobile) */}
+          <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-0 sm:mt-64 md:mt-72 lg:mt-80">
+            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/30 sm:bg-black/40 hover:bg-black/50 border border-amber-500/45 hover:border-amber-400 text-amber-100 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.55)] transition-all py-3.5 px-4 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
