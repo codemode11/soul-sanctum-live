@@ -46,9 +46,31 @@ interface SavedBibleBookmark {
 
 const BOOKMARKS_STORAGE_KEY = 'sanctum_catholic_bible_bookmarks_v1';
 const staticBookJsonCache = new Map<string, Record<string, BibleVerse[]>>();
+const staticNotesJsonCache = new Map<string, Record<string, { verse: number; note: string }[]>>();
+
+function stripInlineNotesFromVerses(
+  verses: BibleVerse[],
+  chapterNum: number
+): { cleanedVerses: BibleVerse[]; extractedNotes: { verse: number; note: string }[] } {
+  const extractedNotes: { verse: number; note: string }[] = [];
+  const cleanedVerses = verses.map((v) => {
+    const inlinePattern = new RegExp(`(${chapterNum}:${v.verse})\\s+([^.?!]+[.?!])\\s*`, 'g');
+    let text = v.text;
+    let m: RegExpExecArray | null;
+    while ((m = inlinePattern.exec(v.text)) !== null) {
+      const noteText = m[2].trim();
+      if (noteText) {
+        extractedNotes.push({ verse: v.verse, note: noteText });
+      }
+      text = text.replace(m[0], ' ').replace(/\s+/g, ' ').trim();
+    }
+    return { verse: v.verse, text };
+  });
+  return { cleanedVerses, extractedNotes };
+}
 
 export const CatholicBiblesView: React.FC = () => {
-  const [selectedBookId, setSelectedBookId] = useState<string>('JHN');
+  const [selectedBookId, setSelectedBookId] = useState<string>('GEN');
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
   const [primaryTranslation, setPrimaryTranslation] = useState<CatholicBibleTranslationId>('drc');
   const [parallelTranslation, setParallelTranslation] = useState<CatholicBibleTranslationId>('vulgate');
@@ -63,6 +85,7 @@ export const CatholicBiblesView: React.FC = () => {
 
   const [primaryVerses, setPrimaryVerses] = useState<BibleVerse[]>([]);
   const [secondaryVerses, setSecondaryVerses] = useState<BibleVerse[]>([]);
+  const [explanatoryNotes, setExplanatoryNotes] = useState<{ verse: number; note: string }[]>([]);
   const [sourceLabel, setSourceLabel] = useState<string>('Douay-Rheims Catholic Bible');
   const [isLoadingChapter, setIsLoadingChapter] = useState<boolean>(false);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -79,7 +102,7 @@ export const CatholicBiblesView: React.FC = () => {
   });
 
   const selectedBook: CatholicBibleBook = useMemo(() => {
-    return CATHOLIC_BIBLE_BOOKS.find((b) => b.id === selectedBookId) || CATHOLIC_BIBLE_BOOKS[49];
+    return CATHOLIC_BIBLE_BOOKS.find((b) => b.id === selectedBookId) || CATHOLIC_BIBLE_BOOKS[0];
   }, [selectedBookId]);
 
   const filteredBooks = useMemo(() => {
@@ -101,12 +124,40 @@ export const CatholicBiblesView: React.FC = () => {
     });
   }, [activeTestamentFilter, activeSectionFilter, bookSearchQuery]);
 
+  const fetchChapterExplanatoryNotes = useCallback(
+    async (bookId: string, chapterNum: number): Promise<{ verse: number; note: string }[]> => {
+      try {
+        let bookNotes = staticNotesJsonCache.get(bookId);
+        if (!bookNotes) {
+          const resp = await fetch(`/bibles/notes/${bookId}.json`);
+          if (resp.ok) {
+            bookNotes = await resp.json();
+            if (bookNotes && typeof bookNotes === 'object') {
+              staticNotesJsonCache.set(bookId, bookNotes);
+            }
+          }
+        }
+        if (bookNotes && Array.isArray(bookNotes[String(chapterNum)])) {
+          return bookNotes[String(chapterNum)];
+        }
+      } catch {
+        // Ignore
+      }
+      return [];
+    },
+    []
+  );
+
   const fetchTranslationChapter = useCallback(
     async (
       book: CatholicBibleBook,
       chapterNum: number,
       translation: CatholicBibleTranslationId
-    ): Promise<{ verses: BibleVerse[]; sourceLabel: string }> => {
+    ): Promise<{
+      verses: BibleVerse[];
+      sourceLabel: string;
+      explanatoryNotes: { verse: number; note: string }[];
+    }> => {
       const labelForTranslation = (t: CatholicBibleTranslationId) =>
         t === 'cpdv'
           ? 'Catholic Public Domain Version (CPDV)'
@@ -116,32 +167,34 @@ export const CatholicBiblesView: React.FC = () => {
           ? 'World English Bible — Catholic Edition (WEB-CE)'
           : 'Douay-Rheims Catholic Bible (Challoner Revision)';
 
-      // 1. Direct static 73-Book JSON archive in /bibles/{translation}/{bookId}.json (works in both dev and production builds)
-      if (translation === 'drc' || translation === 'cpdv' || translation === 'vulgate') {
-        try {
-          const cacheKey = `${translation}:${book.id}`;
-          let bookChapters = staticBookJsonCache.get(cacheKey);
-          if (!bookChapters) {
-            const staticResp = await fetch(`/bibles/${translation}/${book.id}.json`);
-            if (staticResp.ok) {
-              bookChapters = await staticResp.json();
-              if (bookChapters && typeof bookChapters === 'object') {
-                staticBookJsonCache.set(cacheKey, bookChapters);
-              }
+      const baseNotes = await fetchChapterExplanatoryNotes(book.id, chapterNum);
+
+      // 1. Direct static 73-Book JSON archive in /bibles/{translation}/{bookId}.json for all 4 Bibles ('drc', 'cpdv', 'webbe', 'vulgate')
+      try {
+        const cacheKey = `${translation}:${book.id}`;
+        let bookChapters = staticBookJsonCache.get(cacheKey);
+        if (!bookChapters) {
+          const staticResp = await fetch(`/bibles/${translation}/${book.id}.json`);
+          if (staticResp.ok) {
+            bookChapters = await staticResp.json();
+            if (bookChapters && typeof bookChapters === 'object') {
+              staticBookJsonCache.set(cacheKey, bookChapters);
             }
           }
-          if (bookChapters) {
-            const chVerses = bookChapters[String(chapterNum)];
-            if (Array.isArray(chVerses) && chVerses.length > 0) {
-              return {
-                verses: chVerses,
-                sourceLabel: labelForTranslation(translation)
-              };
-            }
-          }
-        } catch {
-          // Fall through to /api/catholic-bible
         }
+        if (bookChapters) {
+          const chVerses = bookChapters[String(chapterNum)];
+          if (Array.isArray(chVerses) && chVerses.length > 0) {
+            const { cleanedVerses, extractedNotes } = stripInlineNotesFromVerses(chVerses, chapterNum);
+            return {
+              verses: cleanedVerses,
+              sourceLabel: labelForTranslation(translation),
+              explanatoryNotes: baseNotes.length > 0 ? baseNotes : extractedNotes
+            };
+          }
+        }
+      } catch {
+        // Fall through to /api/catholic-bible
       }
 
       // 2. Server-side Catholic Bible endpoint
@@ -158,9 +211,16 @@ export const CatholicBiblesView: React.FC = () => {
         if (resp.ok) {
           const data = await resp.json();
           if (Array.isArray(data?.verses) && data.verses.length > 0) {
+            const { cleanedVerses, extractedNotes } = stripInlineNotesFromVerses(data.verses, chapterNum);
+            const serverNotes = Array.isArray(data?.explanatoryNotes) && data.explanatoryNotes.length > 0
+              ? data.explanatoryNotes
+              : baseNotes.length > 0
+              ? baseNotes
+              : extractedNotes;
             return {
-              verses: data.verses,
-              sourceLabel: data.sourceLabel || labelForTranslation(translation)
+              verses: cleanedVerses,
+              sourceLabel: data.sourceLabel || labelForTranslation(translation),
+              explanatoryNotes: serverNotes
             };
           }
         }
@@ -185,13 +245,15 @@ export const CatholicBiblesView: React.FC = () => {
                   seen.set(vNum, vText);
                 }
               }
-              const verses = Array.from(seen.entries())
+              const rawVerses = Array.from(seen.entries())
                 .sort((a, b) => a[0] - b[0])
                 .map(([verse, text]) => ({ verse, text }));
-              if (verses.length > 0) {
+              if (rawVerses.length > 0) {
+                const { cleanedVerses, extractedNotes } = stripInlineNotesFromVerses(rawVerses, chapterNum);
                 return {
-                  verses,
-                  sourceLabel: labelForTranslation(translation)
+                  verses: cleanedVerses,
+                  sourceLabel: labelForTranslation(translation),
+                  explanatoryNotes: baseNotes.length > 0 ? baseNotes : extractedNotes
                 };
               }
             }
@@ -215,7 +277,8 @@ export const CatholicBiblesView: React.FC = () => {
                   verse: Number(v.verse),
                   text: String(v.text || '').replace(/\s+/g, ' ').trim()
                 })),
-                sourceLabel: 'Vulgata Clementina (Clementine Latin Vulgate)'
+                sourceLabel: 'Vulgata Clementina (Clementine Latin Vulgate)',
+                explanatoryNotes: baseNotes
               };
             }
           }
@@ -226,10 +289,11 @@ export const CatholicBiblesView: React.FC = () => {
 
       return {
         verses: [],
-        sourceLabel: labelForTranslation(translation)
+        sourceLabel: labelForTranslation(translation),
+        explanatoryNotes: baseNotes
       };
     },
-    []
+    [fetchChapterExplanatoryNotes]
   );
 
   useEffect(() => {
@@ -245,7 +309,11 @@ export const CatholicBiblesView: React.FC = () => {
         primaryTranslation
       );
 
-      let secondaryResult: { verses: BibleVerse[]; sourceLabel: string } | null = null;
+      let secondaryResult: {
+        verses: BibleVerse[];
+        sourceLabel: string;
+        explanatoryNotes: { verse: number; note: string }[];
+      } | null = null;
       if (isParallelMode) {
         secondaryResult = await fetchTranslationChapter(
           selectedBook,
@@ -257,6 +325,7 @@ export const CatholicBiblesView: React.FC = () => {
       if (!isCancelled) {
         setPrimaryVerses(primaryResult.verses);
         setSourceLabel(primaryResult.sourceLabel);
+        setExplanatoryNotes(primaryResult.explanatoryNotes);
         setSecondaryVerses(secondaryResult ? secondaryResult.verses : []);
         setIsLoadingChapter(false);
       }
@@ -1223,6 +1292,30 @@ export const CatholicBiblesView: React.FC = () => {
                   </div>
                 );
               })}
+            </div>
+          )}
+
+          {/* Explanatory Notes (placed at the bottom, before the annotations, for all four Bibles) */}
+          {explanatoryNotes.length > 0 && (
+            <div className="mt-6 pt-5 border-t border-[#E2D5C3] space-y-3">
+              <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-amber-950">
+                <BookOpen className="w-4 h-4 text-amber-800" />
+                <span>Explanatory Notes</span>
+              </div>
+              <div className="space-y-2.5">
+                {explanatoryNotes.map((en, idx) => (
+                  <div
+                    key={`${en.verse}-${idx}`}
+                    className="p-4 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] font-serif text-stone-800"
+                    style={noteStyle}
+                  >
+                    <span className="font-cinzel font-bold text-amber-950 mr-2">
+                      Ver. {en.verse}.
+                    </span>
+                    <span>{en.note}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 

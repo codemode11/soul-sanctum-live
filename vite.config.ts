@@ -915,8 +915,27 @@ function vaticanNewsPlugin() {
             return parsed;
           };
 
-          // 0. Instant local 73-book archive lookup for DRC ('drc'), CPDV ('cpdv'), and Clementine Vulgate ('vulgate')
-          if (translation === 'drc' || translation === 'cpdv' || translation === 'vulgate') {
+          let explanatoryNotes: { verse: number; note: string }[] = [];
+          try {
+            const notesJsonPath = path.join(__dirname, 'public', 'bibles', 'notes', `${bookId}.json`);
+            if (fs.existsSync(notesJsonPath)) {
+              const rawNotes = fs.readFileSync(notesJsonPath, 'utf-8');
+              const bookNotes = JSON.parse(rawNotes);
+              if (Array.isArray(bookNotes[String(chapter)])) {
+                explanatoryNotes = bookNotes[String(chapter)];
+              }
+            }
+          } catch {
+            // Ignore notes read error
+          }
+
+          // 0. Instant local 73-book archive lookup for all 4 translations ('drc', 'cpdv', 'webbe', 'vulgate')
+          if (
+            translation === 'drc' ||
+            translation === 'cpdv' ||
+            translation === 'webbe' ||
+            translation === 'vulgate'
+          ) {
             try {
               const localJsonPath = path.join(__dirname, 'public', 'bibles', translation, `${bookId}.json`);
               if (fs.existsSync(localJsonPath)) {
@@ -930,6 +949,8 @@ function vaticanNewsPlugin() {
                       ? 'Catholic Public Domain Version (CPDV)'
                       : translation === 'vulgate'
                       ? 'Vulgata Clementina (Clementine Latin Vulgate)'
+                      : translation === 'webbe'
+                      ? 'World English Bible — Catholic Edition (WEB-CE)'
                       : 'Douay-Rheims Catholic Bible (Challoner Revision)';
                 }
               }
@@ -1041,7 +1062,8 @@ function vaticanNewsPlugin() {
               chapter,
               translation,
               sourceLabel,
-              verses
+              verses,
+              explanatoryNotes
             })
           );
         } catch (err: any) {
