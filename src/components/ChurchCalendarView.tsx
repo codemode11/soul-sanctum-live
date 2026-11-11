@@ -282,7 +282,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
     <div className="max-w-5xl mx-auto space-y-5 pb-12">
       
       {/* Calendar Header Banner - Clear font sizes with narrowed line spacing */}
-      <div className="rounded-xl p-6 sm:p-7 border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.20)] bg-gradient-to-b from-[#E4D5C6] via-[#DBC9B7] to-[#E4D5C6] text-[#341D10] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.20)] bg-gradient-to-b from-[#E4D5C6] via-[#DBC9B7] to-[#E4D5C6] text-[#341D10] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <CalendarIcon className="w-5 h-5 text-[#5D371F]" />

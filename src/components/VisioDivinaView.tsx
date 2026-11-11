@@ -68,7 +68,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
     <div className="max-w-4xl mx-auto space-y-8 pb-12 animate-fadeIn">
       
       {/* Visio Divina Banner: Lighter luminous sacred ivory background distinct from dark page */}
-      <div className="bg-[#FAF7F2]/95 backdrop-blur-xl rounded-xl p-6 sm:p-8 border border-amber-300/80 text-stone-900 shadow-2xl relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#FAF7F2]/95 backdrop-blur-xl rounded-xl border border-amber-300/80 text-stone-900 shadow-2xl relative overflow-hidden">
         {/* Subtle luminous gold Eucharistic ambient halo */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-amber-200/30 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
         

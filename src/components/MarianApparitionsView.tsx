@@ -120,7 +120,7 @@ export const MarianApparitionsView: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-6 pb-16 animate-fadeIn text-stone-100">
       
       {/* Marian Header Banner */}
-      <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-br from-blue-950 via-[#11192b] to-stone-950 border border-blue-500/35 shadow-2xl space-y-4 relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-br from-blue-950 via-[#11192b] to-stone-950 border border-blue-500/35 shadow-2xl space-y-4 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="flex flex-wrap items-center justify-between gap-3">

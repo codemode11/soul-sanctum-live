@@ -282,11 +282,11 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
   ];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
 
       {/* 1. TOP BANNER: Vatican News and Church Dispatches + Settings Toggle for Archive */}
-      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-md border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
-        <div className={`bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 p-6 sm:p-8 text-amber-50 border-b border-amber-900/40 ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">

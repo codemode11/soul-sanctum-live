@@ -78,16 +78,16 @@ export const QuotationsView: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 animate-fadeIn">
       {/* Header & Filter Card (Dark Brown) */}
-      <div className="bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] rounded-xl p-5 sm:p-7 text-amber-50 shadow-[0_12px_32px_rgba(0,0,0,0.45)] border border-[#8B5A2B]/70 relative z-30">
-        <div className="relative z-10 space-y-4">
-          <div className="border-b border-[#8B5A2B]/40 pb-4">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] rounded-xl text-amber-50 shadow-[0_12px_32px_rgba(0,0,0,0.45)] border border-[#8B5A2B]/70 relative z-30 flex flex-col justify-between">
+        <div className="relative z-10 flex flex-col justify-between flex-1">
+          <div className="border-b border-[#8B5A2B]/40 pb-3">
             <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-white">
               Quotations
             </h2>
           </div>
 
           {/* Topic Drop-Down System & Search */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 mt-auto">
             <div ref={dropdownRef} className="relative w-full sm:w-auto sm:min-w-[300px]">
               <button
                 type="button"

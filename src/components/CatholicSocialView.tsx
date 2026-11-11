@@ -599,7 +599,7 @@ export const CatholicSocialView: React.FC = () => {
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       {/* Top Banner Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className="px-5 pt-4 pb-4 sm:px-6 min-h-[148px] bg-gradient-to-r from-stone-900 via-stone-850 to-stone-800 text-stone-100 flex flex-col justify-between rounded-xl">
+        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-stone-850 to-stone-800 text-stone-100 flex flex-col justify-between rounded-xl">
           <div className="space-y-1.5">
             {/* Line 1: Badge & Subtitle */}
             <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">

@@ -58,7 +58,7 @@ export const EucharisticCatechismView: React.FC<EucharisticCatechismViewProps> =
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-amber-900 via-stone-900 to-amber-950 rounded-xl p-6 text-amber-50 shadow-md border border-amber-900/40">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-amber-900 via-stone-900 to-amber-950 rounded-xl text-amber-50 shadow-md border border-amber-900/40">
         <div className="flex items-center gap-2 mb-2">
           <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />

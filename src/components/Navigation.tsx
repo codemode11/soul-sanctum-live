@@ -283,10 +283,10 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     { 
       id: 'catholic-bibles', 
-      label: 'Catholic Bibles', 
+      label: 'Holy Bible', 
       icon: CatholicBiblesBookIcon, 
       tag: 'Scripture', 
-      subtext: '73-Book Douay-Rheims, CPDV, Vulgate, NABRE, RSV-CE & ESV-CE' 
+      subtext: '73-Book WEB-CE, Douay-Rheims, CPDV, Vulgate, NABRE, RSV-CE & ESV-CE' 
     },
     { 
       id: 'bible-flashcards', 

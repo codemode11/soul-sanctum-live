@@ -502,23 +502,32 @@ export const CatholicBiblesView: React.FC = () => {
       {/* TOP CONTAINER: Compact First Block + Drop-Down Settings Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
-        {/* RECTANGLE 1: Compact Main Title Banner */}
+        {/* RECTANGLE 1: Standardized Main Title Banner (Daily Mass Readings Banner Dimensions) */}
         <div
-          className={`px-5 py-3.5 sm:px-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-tight">
-              Catholic Bibles
+          <div className="space-y-1.5">
+            {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
+            <div className="flex items-center gap-2.5 flex-wrap overflow-hidden">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950">
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Sacred Scripture</span>
+              </span>
+              <span className="text-sm sm:text-base text-stone-300 font-serif">
+                {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
+              </span>
+            </div>
+
+            {/* Line 2: Main Title */}
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
+              Holy Bible
             </h2>
-            <span className="text-xs sm:text-sm text-stone-300 font-serif font-medium">
-              {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
-            </span>
           </div>
 
-          {/* Right Controls: View Switcher & Drop-Down Settings Button */}
-          <div className="flex flex-wrap items-center justify-end gap-2 shrink-0">
+          {/* Line 3: View Switcher & Drop-Down Settings Button lowered at bottom right */}
+          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
             <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-amber-100 p-0.5 shadow-xs">
               <button
                 type="button"

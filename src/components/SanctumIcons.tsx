@@ -2004,9 +2004,9 @@ export const CatholicSocialShareIcon: React.FC<IconProps> = ({ className = 'w-5 
 );
 
 /**
- * 31. Catholic Bibles Icon:
+ * 31. Holy Bible Icon:
  * Depicts an ornate Catholic Sacred Scripture codex with a golden Latin cross on the cover,
- * clasped binding, and ribbon bookmark.
+ * clasped binding, and ribbon bookmark. The icon outlines glow luminously when hovered on.
  */
 export const CatholicBiblesBookIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -2016,21 +2016,35 @@ export const CatholicBiblesBookIcon: React.FC<IconProps> = ({ className = 'w-5 h
     strokeWidth="1.75"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={`${className} overflow-visible`}
-    aria-label="Catholic Bibles — 73-Book Sacred Scripture"
+    className={`${className} sanctum-holy-bible-icon overflow-visible`}
+    aria-label="Holy Bible — 73-Book Sacred Scripture"
   >
-    {/* Book Spine and Cover */}
+    {/* Book Spine and Cover Outline */}
     <path
+      className="sanctum-holy-bible-outline"
       d="M4.5 19.5A2.5 2.5 0 0 1 7 17h12.5V3.5H7A2.5 2.5 0 0 0 4.5 6v13.5Z"
       fill="currentColor"
       fillOpacity="0.12"
     />
-    {/* Bottom Page Edges & Fore-edge */}
-    <path d="M4.5 19.5A2.5 2.5 0 0 0 7 22h12.5v-5H7a2.5 2.5 0 0 0-2.5 2.5Z" />
+    {/* Bottom Page Edges & Fore-edge Outline */}
+    <path
+      className="sanctum-holy-bible-outline"
+      d="M4.5 19.5A2.5 2.5 0 0 0 7 22h12.5v-5H7a2.5 2.5 0 0 0-2.5 2.5Z"
+    />
     {/* Golden Cross Embossed on the Bible Cover */}
-    <path d="M12.5 6.8v6.8M10.1 9.4h4.8" stroke="#FDE047" strokeWidth="1.8" />
-    {/* Ribbon Bookmark */}
-    <path d="M10.5 19.5v3l1.5-1 1.5 1v-3" stroke="#FDE047" strokeWidth="1.4" />
+    <path
+      className="sanctum-holy-bible-outline sanctum-holy-bible-cross"
+      d="M12.5 6.8v6.8M10.1 9.4h4.8"
+      stroke="#FDE047"
+      strokeWidth="1.8"
+    />
+    {/* Ribbon Bookmark Outline */}
+    <path
+      className="sanctum-holy-bible-outline sanctum-holy-bible-ribbon"
+      d="M10.5 19.5v3l1.5-1 1.5 1v-3"
+      stroke="#FDE047"
+      strokeWidth="1.4"
+    />
   </svg>
 );
 

@@ -1377,3 +1377,57 @@ svg.sanctum-social-icon:hover .sanctum-social-extending-cross,
   transform: translate3d(0, 0, 0) scale3d(0.9999, 0.9999, 1);
 }
 
+/* Holy Bible Icon: Icon outlines glow luminously when hovered on */
+.sanctum-holy-bible-icon {
+  transition: filter 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sanctum-holy-bible-outline {
+  transition:
+    stroke 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke-width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .sanctum-holy-bible-icon,
+.sanctum-nav-item-icon-box:hover .sanctum-holy-bible-icon,
+svg.sanctum-holy-bible-icon:hover {
+  filter:
+    drop-shadow(0 0 2.5px rgba(254, 240, 138, 0.95))
+    drop-shadow(0 0 6px rgba(250, 204, 21, 0.85))
+    drop-shadow(0 0 11px rgba(245, 158, 11, 0.65));
+}
+
+.group:hover .sanctum-holy-bible-icon .sanctum-holy-bible-outline,
+.sanctum-nav-item-icon-box:hover .sanctum-holy-bible-icon .sanctum-holy-bible-outline,
+svg.sanctum-holy-bible-icon:hover .sanctum-holy-bible-outline {
+  stroke: #FEF08A;
+  filter: drop-shadow(0 0 2px #FEF08A);
+}
+
+.group:hover .sanctum-holy-bible-icon .sanctum-holy-bible-cross,
+.sanctum-nav-item-icon-box:hover .sanctum-holy-bible-icon .sanctum-holy-bible-cross,
+svg.sanctum-holy-bible-icon:hover .sanctum-holy-bible-cross {
+  stroke: #FFFBEB;
+  stroke-width: 2;
+}
+
+/* Standardized Default Top Banner Dimensions (matched to Daily Mass Readings top banner: 164px height, px-5 sm:px-6 pt-4 pb-4) */
+.sanctum-top-banner {
+  min-height: 164px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 640px) {
+  .sanctum-top-banner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+

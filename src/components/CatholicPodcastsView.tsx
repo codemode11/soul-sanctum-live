@@ -197,7 +197,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
     <div className="max-w-5xl mx-auto space-y-8 pb-24">
       
       {/* Sanctum Podcasts Master Hero Banner */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 p-6 sm:p-8 md:p-10 shadow-2xl text-stone-100">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 shadow-2xl text-stone-100">
         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.18)_0%,transparent_70%)] pointer-events-none" />
         
         <div className="relative z-10 max-w-3xl space-y-3">

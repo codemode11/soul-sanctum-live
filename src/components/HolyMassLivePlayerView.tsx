@@ -186,7 +186,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
       <div className="rounded-xl overflow-hidden bg-gradient-to-b from-stone-900 via-[#1A110B] to-stone-950 border border-amber-500/35 shadow-2xl text-stone-100">
         
         {/* Top Header Bar */}
-        <div className="p-5 sm:p-7 border-b border-amber-500/25 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] border-b border-amber-500/25 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5 max-w-2xl text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[11px] font-cinzel font-bold tracking-wider uppercase">
               <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />

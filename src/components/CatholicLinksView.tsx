@@ -191,7 +191,7 @@ export const CatholicLinksView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-14 animate-fadeIn">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#1C120C] via-[#2B1B10] to-[#1C120C] rounded-xl p-6 sm:p-7 text-[#F7EBE1] shadow-xl border border-[#8B5A2B]/50">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-[#1C120C] via-[#2B1B10] to-[#1C120C] rounded-xl text-[#F7EBE1] shadow-xl border border-[#8B5A2B]/50">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-2 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6B4423]/40 border border-[#C89F72]/40 text-[#F5D7B2] text-xs font-cinzel font-bold uppercase tracking-wider">

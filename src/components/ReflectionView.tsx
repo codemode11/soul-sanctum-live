@@ -65,25 +65,25 @@ ${reading.reflection.content}`;
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-12 animate-fadeIn">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 animate-fadeIn">
       {/* Liturgical Day Banner */}
-      <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 overflow-hidden">
-        <div className="p-4 sm:p-6 bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 overflow-hidden">
+        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
               <span 
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider"
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
                 style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
               >
                 <span>{colorMeta.name}</span>
                 <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
                 <span>{reading.liturgicalRank}</span>
               </span>
-              <span className="text-xs text-stone-300 font-serif-sacred">
+              <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap">
                 {reading.liturgicalSeason}
               </span>
             </div>
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-normal text-amber-100">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
               {reading.liturgicalDay.includes(' / ') ? (
                 <>
                   <span className="block">{reading.liturgicalDay.split(' / ')[0]}</span>
@@ -97,7 +97,7 @@ ${reading.reflection.content}`;
             </h2>
           </div>
 
-          <div className="flex items-center gap-2 self-start md:self-auto">
+          <div className="flex items-center justify-end gap-2 mt-auto pt-4 shrink-0">
             <button
               onClick={handlePrevDay}
               className="p-2 rounded-lg bg-stone-700/80 hover:bg-stone-600 text-stone-200 transition-colors cursor-pointer"

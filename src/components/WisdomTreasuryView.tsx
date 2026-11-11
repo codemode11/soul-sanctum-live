@@ -60,7 +60,7 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
     <div className="max-w-5xl mx-auto space-y-6 pb-12">
       
       {/* Featured Spotlight Quote Card */}
-      <div className="bg-gradient-to-br from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-br from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
         
         <div className="space-y-4 relative z-10">

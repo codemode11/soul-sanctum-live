@@ -765,7 +765,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
     <div className="max-w-5xl mx-auto space-y-5 sm:space-y-6 pb-16">
       
       {/* Sacred Masthead Banner */}
-      <div className="p-4 sm:p-5 md:p-6 rounded-xl bg-gradient-to-br from-[#2B1B10] via-[#4A2E1B] to-[#1A0F08] border border-[#C89F72]/50 shadow-xl text-stone-100 space-y-3">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-br from-[#2B1B10] via-[#4A2E1B] to-[#1A0F08] border border-[#C89F72]/50 shadow-xl text-stone-100 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">

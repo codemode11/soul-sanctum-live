@@ -59,7 +59,7 @@ Catechism: ${term.catechismRef || 'N/A'}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Featured: Catholic Term of the Day */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden">
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 flex items-center gap-1.5">

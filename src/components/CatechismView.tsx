@@ -262,28 +262,29 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-5 md:p-6 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-4 sm:space-y-5 mb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
       {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
-      <div className="bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl p-5 sm:p-6 text-amber-50 shadow-md border border-stone-800 space-y-3 sm:space-y-4">
-        {/* Large "Catechism" Heading */}
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-amber-100 tracking-normal leading-tight">
-          Catechism
-        </h2>
-
-        {/* Large Topic Title with Subtitle below it */}
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-stone-850 to-stone-900 rounded-xl text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between">
         <div className="space-y-1.5">
-          <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-[#D4A373] leading-tight">
-            {toCurvedQuotes(selectedTopic.topicTitle)}
-          </h3>
+          {/* Line 1: Heading & Subtitle */}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel">
+              Catechism
+            </span>
+            <span className="text-xs sm:text-sm text-stone-300 font-serif-sacred">
+              {toCurvedQuotes(selectedTopic.topicSubtitle)}
+            </span>
+          </div>
 
-          <p className="text-sm sm:text-base text-stone-300 font-serif-sacred max-w-3xl leading-relaxed">
-            {toCurvedQuotes(selectedTopic.topicSubtitle)}
-          </p>
+          {/* Line 2: Topic Title */}
+          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 leading-snug break-words">
+            {toCurvedQuotes(selectedTopic.topicTitle)}
+          </h2>
         </div>
 
         {/* Bottom Bar: Paragraphs Range at bottom-left, Settings/Actions at bottom-right */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-stone-800/80">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-auto pt-3 border-t border-stone-800/80">
           <div className="text-xs sm:text-sm font-semibold text-amber-200/90 font-cinzel">
             {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
               ? selectedTopic.paragraphsRange
