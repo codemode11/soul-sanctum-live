@@ -57,6 +57,16 @@ export interface ChapterPayload {
 
 export const CATHOLIC_BIBLE_TRANSLATIONS: CatholicBibleTranslation[] = [
   {
+    id: 'webbe',
+    name: 'World English Bible — Catholic Edition',
+    shortName: 'World English Catholic (WEB-CE)',
+    year: '2020',
+    language: 'English (Modern)',
+    imprimaturNote: 'Includes the complete Catholic Deuterocanonical books in accessible contemporary English.',
+    copyrightStatus: 'Public Domain (CC0)',
+    description: 'A readable contemporary English edition with the full 73-book Catholic Old and New Testaments.'
+  },
+  {
     id: 'drc',
     name: 'Douay-Rheims Catholic Bible',
     shortName: 'Douay-Rheims (DRC)',
@@ -75,16 +85,6 @@ export const CATHOLIC_BIBLE_TRANSLATIONS: CatholicBibleTranslation[] = [
     imprimaturNote: 'Translated directly from the Pope Clement VIII Sixto-Clementine Latin Vulgate by Ronald L. Conte Jr.',
     copyrightStatus: 'Public Domain Worldwide',
     description: 'A clear, faithful modern-English translation of the official Sixto-Clementine Latin Vulgate containing all 73 books of the Catholic Canon.'
-  },
-  {
-    id: 'webbe',
-    name: 'World English Bible — Catholic Edition',
-    shortName: 'World English Catholic (WEB-CE)',
-    year: '2020',
-    language: 'English (Modern)',
-    imprimaturNote: 'Includes the complete Catholic Deuterocanonical books in accessible contemporary English.',
-    copyrightStatus: 'Public Domain (CC0)',
-    description: 'A readable contemporary English edition with the full 73-book Catholic Old and New Testaments.'
   },
   {
     id: 'vulgate',

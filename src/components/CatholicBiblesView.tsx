@@ -72,7 +72,7 @@ function stripInlineNotesFromVerses(
 export const CatholicBiblesView: React.FC = () => {
   const [selectedBookId, setSelectedBookId] = useState<string>('GEN');
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
-  const [primaryTranslation, setPrimaryTranslation] = useState<CatholicBibleTranslationId>('drc');
+  const [primaryTranslation, setPrimaryTranslation] = useState<CatholicBibleTranslationId>('webbe');
   const [parallelTranslation, setParallelTranslation] = useState<CatholicBibleTranslationId>('vulgate');
   const [isParallelMode, setIsParallelMode] = useState<boolean>(false);
   const [showHaydockNotes, setShowHaydockNotes] = useState<boolean>(true);
@@ -86,7 +86,7 @@ export const CatholicBiblesView: React.FC = () => {
   const [primaryVerses, setPrimaryVerses] = useState<BibleVerse[]>([]);
   const [secondaryVerses, setSecondaryVerses] = useState<BibleVerse[]>([]);
   const [explanatoryNotes, setExplanatoryNotes] = useState<{ verse: number; note: string }[]>([]);
-  const [sourceLabel, setSourceLabel] = useState<string>('Douay-Rheims Catholic Bible');
+  const [sourceLabel, setSourceLabel] = useState<string>('World English Bible — Catholic Edition (WEB-CE)');
   const [isLoadingChapter, setIsLoadingChapter] = useState<boolean>(false);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
