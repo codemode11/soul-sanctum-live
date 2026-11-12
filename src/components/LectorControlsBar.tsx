@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Pause, Play, Square, Settings2, Mic, User, Gauge, Sparkles, Scroll, ChevronDown, Key, CheckCircle2 } from 'lucide-react';
-import { SacredReader, SACRED_MALE_SAINT_PERSONAS, SACRED_FEMALE_PERSONAS } from '../utils/speech';
+import { SacredReader, SACRED_MALE_SAINT_PERSONAS, SACRED_FEMALE_PERSONAS, SACRED_MALE_LITURGICAL_PERSONAS } from '../utils/speech';
 
 interface LectorControlsBarProps {
   onPlay?: () => void;
@@ -91,7 +91,10 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
         sampleText = saint ? `${saint.saintName}: "${saint.sampleQuote}"` : 'Laudetur Jesus Christus!';
       } else if (voiceKey.startsWith('persona-')) {
         const persona = SACRED_FEMALE_PERSONAS.find(p => p.id === voiceKey);
-        sampleText = persona ? `${persona.name}. Proclaiming the holy word in quiet contemplation.` : 'Laudetur Jesus Christus!';
+        sampleText = persona ? `${persona.name.split('—')[0].trim()}. Proclaiming the holy word in quiet contemplation.` : 'Laudetur Jesus Christus!';
+      } else if (voiceKey.startsWith('liturgical-')) {
+        const lector = SACRED_MALE_LITURGICAL_PERSONAS.find(l => l.id === voiceKey);
+        sampleText = lector ? `${lector.name.split('—')[0].trim()}. A reading from the Holy Gospel.` : 'Laudetur Jesus Christus!';
       } else {
         sampleText = `Laudetur Jesus Christus! Proclaiming sacred Scripture.`;
       }
@@ -102,6 +105,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
       voiceKey === 'david' ||
       (!voiceKey.startsWith('gemini-') &&
         !voiceKey.startsWith('persona-') &&
+        !voiceKey.startsWith('liturgical-') &&
         !voiceKey.startsWith('saint-') &&
         typeof window !== 'undefined' &&
         'speechSynthesis' in window &&
@@ -193,6 +197,10 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
       if (p) setSelectedVoiceLabel(p.name);
       SacredReader.setRecitationVoice('ava-grace');
       SacredReader.setSelectedFemaleVoiceName(val);
+    } else if (val.startsWith('liturgical-')) {
+      const l = SACRED_MALE_LITURGICAL_PERSONAS.find(m => m.id === val);
+      if (l) setSelectedVoiceLabel(l.name);
+      SacredReader.setRecitationVoice('david');
     } else {
       setSelectedVoiceLabel(val);
     }
@@ -328,10 +336,26 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                 <option value="gemini-Zephyr">Zephyr — Smooth UK Liturgical Reader</option>
               </optgroup>
 
-              <optgroup label="Sacred Devotional Female Personas">
+              <optgroup label="Sacred Devotional Female Personas (Gemini)">
                 {SACRED_FEMALE_PERSONAS.map(p => (
                   <option key={p.id} value={p.id}>
                     {p.name}
+                  </option>
+                ))}
+              </optgroup>
+
+              <optgroup label="Sacred Male Liturgical Lectors (Gemini)">
+                {SACRED_MALE_LITURGICAL_PERSONAS.map(m => (
+                  <option key={m.id} value={m.id}>
+                    {m.name}
+                  </option>
+                ))}
+              </optgroup>
+
+              <optgroup label="Church Father & Saint Personas (Gemini)">
+                {SACRED_MALE_SAINT_PERSONAS.filter(s => s.id !== 'general-lector').map(s => (
+                  <option key={s.id} value={s.id}>
+                    {s.saintName} — {s.timbreDescription}
                   </option>
                 ))}
               </optgroup>
@@ -421,11 +445,17 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
             <div className="flex flex-wrap items-center gap-1.5">
               {[
                 { id: 'gemini-Kore', label: 'Kore (Default Female ♀)', fullLabel: 'Kore — Serene Devotional Soprano (Default Female)' },
-                { id: 'david', label: 'Microsoft David (Default Male ♂)', fullLabel: 'Microsoft David — Traditional Solemn Lector (Default Male)' },
+                { id: 'persona-ava', label: 'Ava Grace (Devotional ♀)', fullLabel: 'Ava Grace — Gentle Devotional Lector (Gemini)' },
+                { id: 'persona-sonia', label: 'Sister Sonia (Cathedral ♀)', fullLabel: 'Sister Sonia — Cathedral Contemplative Soprano (Gemini)' },
+                { id: 'persona-clara', label: 'St. Clare Choir (Meditative ♀)', fullLabel: 'St. Clare Choir — Soft Meditative Tone (Gemini)' },
+                { id: 'liturgical-deacon', label: 'Cathedral Deacon (Gospel ♂)', fullLabel: 'Cathedral Deacon — Solemn Gospel Proclamation (Gemini)' },
+                { id: 'liturgical-monk', label: 'Benedictine Abbot (Monastic ♂)', fullLabel: 'Benedictine Abbot — Monastic Lectio Divina (Gemini)' },
                 { id: 'gemini-Puck', label: 'Puck (Lively Tenor ♂)', fullLabel: 'Puck — Lively Young Tenor Lector' },
                 { id: 'gemini-Charon', label: 'Charon (Deep Monastic Bass ♂)', fullLabel: 'Charon — Deep Monastic Bass' },
                 { id: 'gemini-Fenrir', label: 'Fenrir (Benedictine Baritone ♂)', fullLabel: 'Fenrir — Resonant Benedictine Baritone' },
-                { id: 'gemini-Zephyr', label: 'Zephyr (UK Liturgical Reader ♂)', fullLabel: 'Zephyr — Smooth UK Liturgical Reader' },
+                { id: 'gemini-Zephyr', label: 'Zephyr (Balanced Reader)', fullLabel: 'Zephyr — Smooth Liturgical Reader' },
+                { id: 'saint-augustine', label: 'St. Augustine (Father ♂)', fullLabel: 'St. Augustine of Hippo — Deep Contemplative Baritone' },
+                { id: 'david', label: 'Microsoft David (Local ♂)', fullLabel: 'Microsoft David — Traditional Solemn Lector (Local Device)' },
               ].map((v) => {
                 const isSelected = selectedVoiceId === v.id;
                 const isPlayingThis = activePlayingVoice === v.id;

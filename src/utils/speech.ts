@@ -277,7 +277,24 @@ export const RECITATION_VOICES: RecitationVoiceOption[] = [
 ];
 
 export const SACRED_FEMALE_PERSONAS: FemaleVoiceProfile[] = [
-  { id: 'persona-sonia', name: 'Sister Sonia (British Cathedral Cadence • High Soprano)', description: 'Solemn, serene UK soprano cadence', pitch: 1.15, rate: 0.88, voiceKeyword: 'sonia' }
+  { id: 'persona-ava', name: 'Ava Grace — Gentle Devotional Lector (Gemini)', description: 'Gentle, heartfelt, peaceful female devotional voice', pitch: 1.06, rate: 0.90, voiceKeyword: 'ava' },
+  { id: 'persona-sonia', name: 'Sister Sonia — Cathedral Contemplative Soprano (Gemini)', description: 'Solemn, serene cathedral cadence', pitch: 1.12, rate: 0.88, voiceKeyword: 'sonia' },
+  { id: 'persona-clara', name: 'St. Clare Choir — Soft Meditative Tone (Gemini)', description: 'Hushed, contemplative tone for Eucharistic adoration', pitch: 1.04, rate: 0.87, voiceKeyword: 'clara' },
+  { id: 'persona-grace', name: 'Grace — Warm Narrative Reader (Gemini)', description: 'Warm, expressive voice for Saints and Catholic articles', pitch: 1.05, rate: 0.92, voiceKeyword: 'grace' }
+];
+
+export interface MaleLectorProfile {
+  id: string;
+  name: string;
+  description: string;
+  pitch: number;
+  rate: number;
+}
+
+export const SACRED_MALE_LITURGICAL_PERSONAS: MaleLectorProfile[] = [
+  { id: 'liturgical-deacon', name: 'Cathedral Deacon — Solemn Gospel Proclamation (Gemini)', description: 'Solemn, authoritative deacon proclaiming the Gospel', pitch: 0.88, rate: 0.88 },
+  { id: 'liturgical-monk', name: 'Benedictine Abbot — Monastic Lectio Divina (Gemini)', description: 'Deep, unhurried Benedictine cadence', pitch: 0.86, rate: 0.86 },
+  { id: 'liturgical-scholar', name: 'Biblical Scholar — Crisp Theological Reader (Gemini)', description: 'Clear, articulate reader for Catechism and Scripture', pitch: 1.0, rate: 0.94 }
 ];
 
 export interface SaintReaderPersona {
@@ -961,6 +978,7 @@ export class SacredReader {
     if (
       voiceKey.startsWith('gemini-') ||
       voiceKey.startsWith('persona-') ||
+      voiceKey.startsWith('liturgical-') ||
       voiceKey.startsWith('saint-') ||
       voiceKey === 'ava-grace' ||
       voiceKey === 'david'
@@ -1048,7 +1066,7 @@ export class SacredReader {
       return false;
     }
 
-    const chunkMaxLen = voiceName === 'gemini-Kore' || voiceName === 'Kore' ? 190 : 300;
+    const chunkMaxLen = 360;
     const chunks = this.splitIntoSpeechChunks(fullText, chunkMaxLen);
     if (chunks.length === 0) return false;
 
@@ -1275,6 +1293,13 @@ export class SacredReader {
       if (p) {
         const { voice } = this.getVoiceForAvaGrace();
         return { voice, pitch: p.pitch, rate: p.rate };
+      }
+    }
+    if (voiceKey.startsWith('liturgical-')) {
+      const m = SACRED_MALE_LITURGICAL_PERSONAS.find(l => l.id === voiceKey);
+      if (m) {
+        const { voice } = this.getVoiceForDavid();
+        return { voice, pitch: m.pitch, rate: m.rate };
       }
     }
     return this.getVoiceForGender(gender);
@@ -1661,8 +1686,14 @@ export class SacredReader {
 
     const activeKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
 
-    // If Microsoft David is requested (either via voiceOrGenderOrRate === 'david'/'male' or activeKey === 'david')
-    if (activeKey === 'david' || voiceOrGenderOrRate === 'david' || voiceOrGenderOrRate === 'male') {
+    // Only force local Microsoft David if the user actually chose 'david' or a local explicit gender override without picking another Gemini/persona voice
+    const isCustomServerVoice =
+      activeKey.startsWith('gemini-') ||
+      activeKey.startsWith('persona-') ||
+      activeKey.startsWith('liturgical-') ||
+      activeKey.startsWith('saint-');
+
+    if (voiceOrGenderOrRate === 'david' || (activeKey === 'david' && voiceOrGenderOrRate !== 'female' && voiceOrGenderOrRate !== 'ava-grace') || (voiceOrGenderOrRate === 'male' && !isCustomServerVoice)) {
       const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
       if (davidVoice) {
         const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : (customRate || this.currentRate || 0.92);
@@ -1683,7 +1714,9 @@ export class SacredReader {
     }
 
     let targetVoiceKey = activeKey;
-    if (voiceOrGenderOrRate === 'david' || voiceOrGenderOrRate === 'male') {
+    if (voiceOrGenderOrRate === 'david') {
+      targetVoiceKey = 'liturgical-deacon';
+    } else if (voiceOrGenderOrRate === 'male' && !isCustomServerVoice) {
       targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey) ? activeKey : 'gemini-Charon';
     } else if (voiceOrGenderOrRate === 'ava-grace' || voiceOrGenderOrRate === 'female') {
       targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey)
@@ -1786,10 +1819,17 @@ export class SacredReader {
         return;
       }
 
-      // Default male voice for the Holy Gospel (and any male part) is Microsoft David.
-      if (currentPart.id === 'gospel' || currentPart.gender === 'male' || activeVoiceKey === 'david') {
+      const isUserMaleServerVoice =
+        activeVoiceKey === 'gemini-Charon' ||
+        activeVoiceKey === 'gemini-Fenrir' ||
+        activeVoiceKey === 'gemini-Puck' ||
+        activeVoiceKey.startsWith('liturgical-') ||
+        activeVoiceKey.startsWith('saint-');
+
+      // Use installed Microsoft David for Gospel only when user selected 'david' (or default voice fallback) rather than a custom Gemini male lector
+      if (activeVoiceKey === 'david' || (currentPart.id === 'gospel' && !isUserMaleServerVoice && !this.isExplicitInstalledSystemVoice(activeVoiceKey))) {
         const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
-        if (davidVoice) {
+        if (davidVoice && activeVoiceKey === 'david') {
           const playedDavid = await this.speakWithLocalVoiceChunks(
             cleanText,
             davidVoice,
@@ -1815,10 +1855,12 @@ export class SacredReader {
         }
       }
 
-      // Determine voice to use for server TTS (Kore is the default female voice)
+      // Determine voice to use for server TTS (Gemini Neural Voices)
       let targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
       if (currentPart.id === 'gospel' || currentPart.gender === 'male') {
-        targetVoiceForPart = 'gemini-Charon';
+        targetVoiceForPart = isUserMaleServerVoice || this.isExplicitInstalledSystemVoice(activeVoiceKey)
+          ? activeVoiceKey
+          : 'liturgical-deacon';
       } else {
         targetVoiceForPart = activeVoiceKey === 'david' ? 'gemini-Kore' : (activeVoiceKey || 'gemini-Kore');
       }

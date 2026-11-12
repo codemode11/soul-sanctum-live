@@ -17,7 +17,8 @@ import {
   CURATED_CATHOLIC_ARTICLES,
   CatholicArticleItem,
   fetchCatholicRssArticlesForSource,
-  fetchFullCatholicArticleContent
+  fetchFullCatholicArticleContent,
+  isLiveCatholicArticle
 } from '../data/catholicRssArticles';
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
@@ -42,8 +43,16 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
   const [lastRefreshedAt, setLastRefreshedAt] = useState<number>(Date.now());
   const [refreshStatusMessage, setRefreshStatusMessage] = useState<string | null>(null);
-  const [activeDayKey, setActiveDayKey] = useState<string>(() => new Date().toISOString().slice(0, 10));
+  const [isStatusFallback, setIsStatusFallback] = useState<boolean>(false);
+  const getLocalDayKey = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
+  const [activeDayKey, setActiveDayKey] = useState<string>(getLocalDayKey);
   const [showAllFeedItems, setShowAllFeedItems] = useState<boolean>(false);
+
+  const perSourceSeqRef = useRef<Record<string, number>>({});
+  const requestedArticleIdRef = useRef<string | null>(initialArticleId || null);
 
   const [articlesBySource, setArticlesBySource] = useState<Record<string, CatholicArticleItem[]>>(() => {
     const todayFormatted = new Date().toLocaleDateString('en-US', {
@@ -78,11 +87,13 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       setSelectedSourceId(initialSourceId);
       const list = articlesBySource[initialSourceId] || [];
       if (initialArticleId) {
+        requestedArticleIdRef.current = initialArticleId;
         const idx = list.findIndex(a => a.id === initialArticleId);
         const targetIdx = idx >= 0 ? idx : 0;
         setSelectedArticleIndex(targetIdx);
         selectedIndexRef.current = targetIdx;
       } else {
+        requestedArticleIdRef.current = null;
         setSelectedArticleIndex(0);
         selectedIndexRef.current = 0;
       }
@@ -93,10 +104,16 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
   }, [initialSourceId, initialArticleId]);
 
   const loadSourceFeed = async (sourceId: string, isManualRefresh: boolean = false) => {
+    const seq = (perSourceSeqRef.current[sourceId] || 0) + 1;
+    perSourceSeqRef.current[sourceId] = seq;
+
     setIsLoading(true);
+    setIsStatusFallback(false);
     setRefreshStatusMessage('Refreshing live RSS feed…');
     try {
       const items = await fetchCatholicRssArticlesForSource(sourceId, isManualRefresh);
+      if (perSourceSeqRef.current[sourceId] !== seq) return;
+
       if (items && items.length > 0) {
         setArticlesBySource(prev => ({
           ...prev,
@@ -105,30 +122,60 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         const now = Date.now();
         setLastRefreshedAt(now);
 
-        if (isManualRefresh) {
+        const targetArticleId = requestedArticleIdRef.current;
+        if (targetArticleId) {
+          const matchedIdx = items.findIndex(a => a.id === targetArticleId);
+          requestedArticleIdRef.current = null;
+          const idxToUse = matchedIdx >= 0 ? matchedIdx : 0;
+          selectedIndexRef.current = idxToUse;
+          setSelectedArticleIndex(idxToUse);
+        } else if (isManualRefresh) {
           if (isReadingAloud) SacredReader.stop();
           selectedIndexRef.current = 0;
           setSelectedArticleIndex(0);
         }
 
+        const liveCount = items.filter(isLiveCatholicArticle).length;
         const timeStr = new Date(now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         const latestTitle = items[0]?.title || '';
         const previewTitle = latestTitle.length > 45 ? `${latestTitle.slice(0, 45)}…` : latestTitle;
-        setRefreshStatusMessage(
-          `✓ Feed refreshed at ${timeStr} (${items.length} articles loaded) — Latest: "${previewTitle}"`
-        );
+
+        if (liveCount > 0) {
+          setIsStatusFallback(false);
+          setRefreshStatusMessage(
+            `✓ Live feed refreshed at ${timeStr} (${liveCount} live / ${items.length} total) — Latest: "${previewTitle}"`
+          );
+        } else {
+          setIsStatusFallback(true);
+          setRefreshStatusMessage(
+            `Live RSS unreachable at ${timeStr} — showing verified Catholic archive`
+          );
+        }
       }
     } catch {
-      setRefreshStatusMessage('Refreshed from verified Catholic archive');
+      if (perSourceSeqRef.current[sourceId] === seq) {
+        setIsStatusFallback(true);
+        setRefreshStatusMessage('Live RSS temporarily unavailable — showing verified Catholic archive');
+      }
     } finally {
-      setIsLoading(false);
+      if (perSourceSeqRef.current[sourceId] === seq) {
+        setIsLoading(false);
+      }
     }
   };
 
   const handleRefreshAllFeeds = async () => {
     setIsRefreshingAll(true);
+    setIsStatusFallback(false);
     setRefreshStatusMessage('Refreshing all 9 Catholic RSS feeds…');
     if (isReadingAloud) SacredReader.stop();
+
+    const seqs: Record<string, number> = {};
+    for (const src of CATHOLIC_RSS_SOURCES) {
+      const next = (perSourceSeqRef.current[src.id] || 0) + 1;
+      perSourceSeqRef.current[src.id] = next;
+      seqs[src.id] = next;
+    }
 
     try {
       const results = await Promise.all(
@@ -138,12 +185,15 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         })
       );
 
+      let totalLiveSynced = 0;
       let totalSynced = 0;
       const updatedMap: Record<string, CatholicArticleItem[]> = {};
       for (const res of results) {
+        if (perSourceSeqRef.current[res.sourceId] !== seqs[res.sourceId]) continue;
         if (res.items && res.items.length > 0) {
           updatedMap[res.sourceId] = res.items;
           totalSynced += res.items.length;
+          totalLiveSynced += res.items.filter(isLiveCatholicArticle).length;
         }
       }
 
@@ -152,6 +202,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         ...updatedMap
       }));
 
+      requestedArticleIdRef.current = null;
       selectedIndexRef.current = 0;
       setSelectedArticleIndex(0);
 
@@ -161,9 +212,18 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       const activeItems = updatedMap[selectedSourceId] || articlesBySource[selectedSourceId] || [];
       const latestTitle = activeItems[0]?.title || '';
       const previewTitle = latestTitle.length > 45 ? `${latestTitle.slice(0, 45)}…` : latestTitle;
-      setRefreshStatusMessage(
-        `✓ All 9 feeds refreshed at ${timeStr} (${totalSynced} total articles synced) — Latest: "${previewTitle}"`
-      );
+
+      if (totalLiveSynced > 0) {
+        setIsStatusFallback(false);
+        setRefreshStatusMessage(
+          `✓ All 9 feeds refreshed at ${timeStr} (${totalLiveSynced} live articles synced) — Latest: "${previewTitle}"`
+        );
+      } else {
+        setIsStatusFallback(true);
+        setRefreshStatusMessage(
+          `Live RSS feeds unreachable at ${timeStr} — showing verified Catholic archive (${totalSynced} articles)`
+        );
+      }
     } finally {
       setIsRefreshingAll(false);
     }
@@ -174,35 +234,44 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
     loadSourceFeed(selectedSourceId, true);
   }, [selectedSourceId]);
 
-  // Pre-fetch all 9 feeds in the background on initial mount so switching tabs is instant
+  // Pre-fetch remaining feeds sequentially in small batches after mount so active source isn't starved
   useEffect(() => {
     let mounted = true;
     const prefetchAll = async () => {
-      for (const src of CATHOLIC_RSS_SOURCES) {
+      const others = CATHOLIC_RSS_SOURCES.filter(src => src.id !== selectedSourceId);
+      for (let i = 0; i < others.length; i += 2) {
         if (!mounted) break;
-        if (src.id === selectedSourceId) continue;
-        fetchCatholicRssArticlesForSource(src.id, false)
-          .then(items => {
-            if (mounted && items && items.length > 0) {
-              setArticlesBySource(prev => ({
-                ...prev,
-                [src.id]: items
-              }));
+        const batch = others.slice(i, i + 2);
+        await Promise.all(
+          batch.map(async src => {
+            const seq = (perSourceSeqRef.current[src.id] || 0) + 1;
+            perSourceSeqRef.current[src.id] = seq;
+            try {
+              const items = await fetchCatholicRssArticlesForSource(src.id, false);
+              if (mounted && perSourceSeqRef.current[src.id] === seq && items && items.length > 0) {
+                setArticlesBySource(prev => ({
+                  ...prev,
+                  [src.id]: items
+                }));
+              }
+            } catch {
+              // Ignore prefetch errors silently
             }
           })
-          .catch(() => {});
+        );
       }
     };
-    prefetchAll();
+    const timer = setTimeout(prefetchAll, 600);
     return () => {
       mounted = false;
+      clearTimeout(timer);
     };
   }, []);
 
   // Automatic daily feed refresh check (every 60s and when tab regains focus)
   useEffect(() => {
     const checkDailyRollover = () => {
-      const todayKey = new Date().toISOString().slice(0, 10);
+      const todayKey = getLocalDayKey();
       if (todayKey !== activeDayKey) {
         setActiveDayKey(todayKey);
         handleRefreshAllFeeds();
@@ -429,7 +498,13 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
             {activeSourceMeta.tagline}
           </div>
           {refreshStatusMessage && (
-            <div className="px-2.5 py-1 rounded-md bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 font-cinzel text-[11px] font-semibold">
+            <div
+              className={`px-2.5 py-1 rounded-md font-cinzel text-[11px] font-semibold border ${
+                isStatusFallback
+                  ? 'bg-amber-950/80 border-amber-500/40 text-amber-200'
+                  : 'bg-emerald-950/80 border-emerald-500/40 text-emerald-200'
+              }`}
+            >
               {refreshStatusMessage}
             </div>
           )}

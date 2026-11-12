@@ -66,7 +66,20 @@ app.get('/api/catholic-ai/health', (_req, res) => {
     hasGeminiKey: !!process.env.GEMINI_API_KEY,
     hasOpenAIKey: !!process.env.OPENAI_API_KEY,
     supportedProviders: ['openai', 'gemini', 'auto'],
-    supportedAiTtsVoices: ['Puck', 'Charon', 'Kore', 'Fenrir', 'Zephyr'],
+    supportedAiTtsVoices: [
+      'Puck',
+      'Charon',
+      'Kore',
+      'Fenrir',
+      'Zephyr',
+      'persona-ava',
+      'persona-sonia',
+      'persona-clara',
+      'persona-grace',
+      'liturgical-deacon',
+      'liturgical-monk',
+      'liturgical-scholar',
+    ],
   });
 });
 
@@ -180,7 +193,188 @@ function resolveRegionalLocaleForVoice(chosenVoice: string): string {
   return 'en-US';
 }
 
-// Dedicated Multi-Voice Text-to-Speech Endpoint (Supports Kore, OpenAI TTS, and Multi-Regional Neural TTS)
+type GeminiPrebuiltVoice = 'Kore' | 'Puck' | 'Charon' | 'Fenrir' | 'Zephyr';
+
+function resolveGeminiTtsVoiceSpec(chosenVoice: string): {
+  prebuiltVoice: GeminiPrebuiltVoice;
+  style: string;
+} {
+  const exactSpecs: Record<string, { prebuiltVoice: GeminiPrebuiltVoice; style: string }> = {
+    'gemini-Kore': {
+      prebuiltVoice: 'Kore',
+      style: 'Warm, serene, reverent female Catholic lector reading with clear, gentle cadence',
+    },
+    Kore: {
+      prebuiltVoice: 'Kore',
+      style: 'Warm, serene, reverent female Catholic lector reading with clear, gentle cadence',
+    },
+    'gemini-Puck': {
+      prebuiltVoice: 'Puck',
+      style: 'Bright, articulate, lively tenor reader with clear theological diction',
+    },
+    Puck: {
+      prebuiltVoice: 'Puck',
+      style: 'Bright, articulate, lively tenor reader with clear theological diction',
+    },
+    'gemini-Charon': {
+      prebuiltVoice: 'Charon',
+      style: 'Deep, solemn, contemplative monastic bass speaking with reverent authority',
+    },
+    Charon: {
+      prebuiltVoice: 'Charon',
+      style: 'Deep, solemn, contemplative monastic bass speaking with reverent authority',
+    },
+    'gemini-Fenrir': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Warm, resonant Benedictine baritone reading Sacred Scripture steadily',
+    },
+    Fenrir: {
+      prebuiltVoice: 'Fenrir',
+      style: 'Warm, resonant Benedictine baritone reading Sacred Scripture steadily',
+    },
+    'gemini-Zephyr': {
+      prebuiltVoice: 'Zephyr',
+      style: 'Smooth, balanced, peaceful liturgical reader with gentle phrasing',
+    },
+    Zephyr: {
+      prebuiltVoice: 'Zephyr',
+      style: 'Smooth, balanced, peaceful liturgical reader with gentle phrasing',
+    },
+    'persona-ava': {
+      prebuiltVoice: 'Kore',
+      style: 'Gentle, heartfelt, peaceful female devotional voice praying softly and unhurriedly',
+    },
+    'persona-sonia': {
+      prebuiltVoice: 'Kore',
+      style: 'Poised, formal, serene cathedral nun reading Sacred Scripture with calm reverence',
+    },
+    'persona-clara': {
+      prebuiltVoice: 'Zephyr',
+      style: 'Soft, hushed, meditative contemplative female voice suited for Eucharistic adoration',
+    },
+    'persona-grace': {
+      prebuiltVoice: 'Kore',
+      style: 'Warm, compassionate, expressive Catholic narrator telling lives of the saints',
+    },
+    'liturgical-deacon': {
+      prebuiltVoice: 'Charon',
+      style: 'Solemn, authoritative, reverent Catholic cathedral deacon proclaiming the Holy Gospel',
+    },
+    'liturgical-monk': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Deep, unhurried, peaceful Benedictine abbot reading monastic lectio divina',
+    },
+    'liturgical-scholar': {
+      prebuiltVoice: 'Puck',
+      style: 'Crisp, scholarly, lucid Catholic theologian explaining Scripture and doctrine',
+    },
+    'saint-thomas-aquinas': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Deep, measured, contemplative medieval Dominican theologian speaking with calm clarity',
+    },
+    'saint-john-chrysostom': {
+      prebuiltVoice: 'Puck',
+      style: 'Eloquent, vibrant golden-mouthed Church Father preaching with spiritual warmth',
+    },
+    'saint-augustine': {
+      prebuiltVoice: 'Charon',
+      style: 'Soulful, deeply reflective Latin Church Father speaking with humility and depth',
+    },
+    'saint-jerome': {
+      prebuiltVoice: 'Charon',
+      style: 'Austere, firm, resonant monastic biblical scholar speaking with conviction',
+    },
+    'pope-saint-gregory': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Paternal, solemn, pastoral Supreme Pontiff speaking with gentle gravity',
+    },
+    'saint-ambrose': {
+      prebuiltVoice: 'Puck',
+      style: 'Vigorous, commanding Roman bishop speaking with clarity and apostolic firmness',
+    },
+    'saint-cyril': {
+      prebuiltVoice: 'Charon',
+      style: 'Authoritative, resolute Eastern Patriarch explaining doctrine clearly',
+    },
+    'venerable-bede': {
+      prebuiltVoice: 'Zephyr',
+      style: 'Gentle, serene monastic historian speaking with quiet scholarly devotion',
+    },
+    'saint-basil': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Dignified, ascetic Eastern bishop speaking with lucid spiritual wisdom',
+    },
+    'cornelius-a-lapide': {
+      prebuiltVoice: 'Puck',
+      style: 'Illuminating, clear Jesuit biblical exegete explaining Sacred Scripture',
+    },
+    'blessed-theophylact': {
+      prebuiltVoice: 'Zephyr',
+      style: 'Lyrical, reverent Byzantine archbishop offering Gospel commentary',
+    },
+    'saint-bonaventure': {
+      prebuiltVoice: 'Zephyr',
+      style: 'Warm, devotional, luminous Franciscan theologian speaking with seraphic love',
+    },
+    'saint-alphonsus': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Earnest, paternal, soulful Redemptorist pastor speaking tenderly to the heart',
+    },
+    'saint-bellarmine': {
+      prebuiltVoice: 'Charon',
+      style: 'Authoritative, articulate cardinal theologian explaining Catholic teaching clearly',
+    },
+    'saint-albert': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Wise, analytical Dominican teacher speaking with calm intellectual depth',
+    },
+    'general-lector': {
+      prebuiltVoice: 'Charon',
+      style: 'Solemn, reverent Catholic patristic lector',
+    },
+    'vatican-magisterium': {
+      prebuiltVoice: 'Fenrir',
+      style: 'Solemn, clear Magisterial reader proclaiming Church teaching',
+    },
+  };
+
+  if (exactSpecs[chosenVoice]) {
+    return exactSpecs[chosenVoice];
+  }
+
+  const lower = (chosenVoice || '').toLowerCase();
+  if (lower.includes('augustine') || lower.includes('jerome') || lower.includes('cyril') || lower.includes('bellarmine') || lower.includes('deacon') || lower.includes('charon')) {
+    return {
+      prebuiltVoice: 'Charon',
+      style: 'Deep, solemn, reverent Catholic male voice',
+    };
+  }
+  if (lower.includes('thomas') || lower.includes('gregory') || lower.includes('basil') || lower.includes('alphonsus') || lower.includes('albert') || lower.includes('monk') || lower.includes('fenrir')) {
+    return {
+      prebuiltVoice: 'Fenrir',
+      style: 'Warm, dignified Catholic male baritone voice',
+    };
+  }
+  if (lower.includes('chrysostom') || lower.includes('ambrose') || lower.includes('lapide') || lower.includes('scholar') || lower.includes('puck')) {
+    return {
+      prebuiltVoice: 'Puck',
+      style: 'Crisp, articulate Catholic tenor voice',
+    };
+  }
+  if (lower.includes('bede') || lower.includes('theophylact') || lower.includes('bonaventure') || lower.includes('clara') || lower.includes('zephyr')) {
+    return {
+      prebuiltVoice: 'Zephyr',
+      style: 'Smooth, serene, contemplative liturgical voice',
+    };
+  }
+
+  return {
+    prebuiltVoice: 'Kore',
+    style: 'Warm, serene, reverent female Catholic lector',
+  };
+}
+
+// Dedicated Multi-Voice Text-to-Speech Endpoint (Gemini Neural TTS -> OpenAI TTS -> Multi-Regional Proxy -> Web Speech)
 app.post('/api/tts', async (req, res) => {
   try {
     const { text, voiceName = 'gemini-Kore', apiKey } = req.body || {};
@@ -191,14 +385,14 @@ app.post('/api/tts', async (req, res) => {
     const chosenVoice = voiceName || 'gemini-Kore';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
     const locale = resolveRegionalLocaleForVoice(chosenVoice);
-    const cacheKey = `tts:v4:${chosenVoice}:${locale}:${apiKey ? 'custom' : 'default'}:${cleanText.slice(0, 1800)}`;
+    const cacheKey = `tts:v5:${chosenVoice}:${locale}:${apiKey ? 'custom' : 'default'}:${cleanText.slice(0, 1800)}`;
 
     const cached = ttsMemoryCache.get(cacheKey);
     if (cached) {
       return res.json(cached);
     }
 
-    // 1. Optional OpenAI Neural Text-to-Speech (tts-1) if custom OpenAI key is provided
+    // 1. Optional OpenAI Neural Text-to-Speech (tts-1) if custom OpenAI key is explicitly supplied or configured
     const openAiKey = apiKey || process.env.OPENAI_API_KEY;
     if (openAiKey) {
       try {
@@ -217,10 +411,13 @@ app.post('/api/tts', async (req, res) => {
           'persona-ava': 'nova',
           'persona-grace': 'shimmer',
           'persona-sonia': 'fable',
-          'persona-jenny': 'nova',
           'persona-clara': 'shimmer',
+          'persona-jenny': 'nova',
           'persona-aria': 'alloy',
           'persona-samantha': 'nova',
+          'liturgical-deacon': 'onyx',
+          'liturgical-monk': 'echo',
+          'liturgical-scholar': 'alloy',
         };
 
         const targetVoice = voiceMap[chosenVoice] || 'shimmer';
@@ -240,6 +437,10 @@ app.post('/api/tts', async (req, res) => {
           voiceName: chosenVoice,
           provider: 'openai-tts',
         };
+        if (ttsMemoryCache.size > 150) {
+          const oldestKey = ttsMemoryCache.keys().next().value;
+          if (oldestKey) ttsMemoryCache.delete(oldestKey);
+        }
         ttsMemoryCache.set(cacheKey, payload);
         return res.json(payload);
       } catch (err: any) {
@@ -247,7 +448,96 @@ app.post('/api/tts', async (req, res) => {
       }
     }
 
-    // 2. Primary: Multi-Regional Neural Speech Synthesis (distinct voices for Kore, Puck, Charon, Fenrir, Zephyr & Personas)
+    // 2. Primary Server Neural TTS: Gemini TTS (with prebuilt voices + style direction)
+    const geminiFailureNotes: string[] = [];
+    if (process.env.GEMINI_API_KEY) {
+      const spec = resolveGeminiTtsVoiceSpec(chosenVoice);
+      const textSnippet = cleanText.slice(0, 1800);
+
+      const attemptGeminiTts = async (
+        useMetadata: boolean,
+        modelName: string,
+        apiVersion?: string
+      ) => {
+        const aiClient = getGenAI(apiVersion);
+        const ttsResponse = await aiClient.models.generateContent({
+          model: modelName,
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                useMetadata
+                  ? {
+                      text: textSnippet,
+                      speechMetadata: {
+                        style: spec.style,
+                      },
+                    }
+                  : {
+                      text: `Read aloud in a ${spec.style} style: ${textSnippet}`,
+                    },
+              ],
+            },
+          ],
+          config: {
+            responseModalities: ['AUDIO'],
+            speechConfig: {
+              voiceConfig: {
+                prebuiltVoiceConfig: {
+                  voiceName: spec.prebuiltVoice,
+                },
+              },
+            },
+          },
+        });
+
+        const inlinePart = ttsResponse.candidates?.[0]?.content?.parts?.find(
+          (p: any) => p?.inlineData?.data
+        );
+        return inlinePart?.inlineData;
+      };
+
+      const attempts: Array<{ useMeta: boolean; model: string; apiVersion?: string }> = [
+        { useMeta: false, model: 'gemini-3.8-flash-lite-tts' },
+        { useMeta: true, model: 'gemini-3.8-flash-lite-tts', apiVersion: 'v1alpha' },
+        { useMeta: false, model: 'gemini-3.8-flash-tts' },
+        { useMeta: false, model: 'gemini-2.5-flash-preview-tts' },
+      ];
+
+      for (const cfg of attempts) {
+        try {
+          const inlineData = await attemptGeminiTts(cfg.useMeta, cfg.model, cfg.apiVersion);
+          if (inlineData?.data) {
+            const rawBuffer = Buffer.from(inlineData.data, 'base64');
+            const mimeType = inlineData.mimeType || '';
+            const hasRiffHeader = rawBuffer.length >= 4 && rawBuffer.subarray(0, 4).toString('ascii') === 'RIFF';
+            const isWav = mimeType.toLowerCase().includes('wav') || hasRiffHeader;
+            const finalBuffer = isWav ? rawBuffer : wrapPcm24kMonoToWav(rawBuffer, 24000);
+            const payload = {
+              audioUrl: `data:audio/wav;base64,${finalBuffer.toString('base64')}`,
+              voiceName: chosenVoice,
+              provider: `gemini-tts-${spec.prebuiltVoice.toLowerCase()}`,
+            };
+            if (ttsMemoryCache.size > 150) {
+              const oldestKey = ttsMemoryCache.keys().next().value;
+              if (oldestKey) ttsMemoryCache.delete(oldestKey);
+            }
+            ttsMemoryCache.set(cacheKey, payload);
+            return res.json(payload);
+          }
+          geminiFailureNotes.push(`${cfg.model}(${cfg.apiVersion || 'default'}): no inlineData`);
+        } catch (err: any) {
+          const msg = `${cfg.model}(${cfg.apiVersion || 'default'},meta=${cfg.useMeta}): ${String(err?.message || err).slice(0, 110)}`;
+          geminiFailureNotes.push(msg);
+          console.warn('[TTS] Gemini Neural TTS attempt failed:', msg);
+        }
+      }
+    }
+
+    // 3. Fallback: Multi-Regional Neural Speech Synthesis proxy
+    if (geminiFailureNotes.length > 0) {
+      res.setHeader('X-TTS-Gemini-Fallback', geminiFailureNotes.join(' | ').replace(/[\r\n]/g, ' '));
+    }
     try {
       const sentences = splitTextIntoSentences(cleanText, 190).slice(0, 20);
 
@@ -290,7 +580,7 @@ app.post('/api/tts', async (req, res) => {
       console.warn('[TTS] Regional TTS proxy skipped:', err?.message || err);
     }
 
-    // 3. Final fallback to Web Speech
+    // 4. Final fallback to Web Speech
     return res.json({ fallbackWebSpeech: true, voiceName: chosenVoice });
   } catch (err: any) {
     console.warn('[TTS] Server TTS fallback:', err?.message || err);
@@ -538,31 +828,53 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   ]
 };
 
-async function fetchUpstreamRssXml(url: string): Promise<string> {
-  // First attempt with standard fetch (avoids Cloudflare 403 on sites like Catholic World Report & CERC)
+async function fetchUpstreamRssXml(url: string, bypassCache: boolean = true): Promise<string> {
+  const noCacheHeaders: Record<string, string> = {
+    'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
+    ...(bypassCache
+      ? {
+          'Cache-Control': 'no-cache, no-store, max-age=0',
+          'Pragma': 'no-cache',
+        }
+      : {}),
+  };
+
+  // Attempt 1: Standard fetch (avoids Cloudflare TLS/UA challenge on several Catholic sites)
+  let needsUaFallback = false;
   try {
     const res1 = await fetch(url, {
-      headers: {
-        'Accept': 'application/rss+xml, application/xml, text/xml, */*'
-      },
-      signal: AbortSignal.timeout(4500)
+      cache: 'no-store',
+      headers: noCacheHeaders,
+      signal: AbortSignal.timeout(5500),
     });
     if (res1.ok) {
       const txt1 = await res1.text();
       if (txt1 && (/<item[\s>]/i.test(txt1) || /<entry[\s>]/i.test(txt1))) {
         return txt1;
       }
+      needsUaFallback = true;
+    } else if (res1.status === 403 || res1.status === 406 || res1.status === 429) {
+      needsUaFallback = true;
+    } else {
+      throw new Error(`HTTP ${res1.status}`);
     }
-  } catch {
-    // Fallback to browser UA below
+  } catch (err: any) {
+    // Only do UA fallback if blocked rather than doubling total timeout on dead/slow hosts
+    if (!needsUaFallback && err?.name !== 'TimeoutError' && err?.name !== 'AbortError') {
+      needsUaFallback = true;
+    }
+    if (!needsUaFallback) {
+      throw err;
+    }
   }
 
   const res2 = await fetch(url, {
+    cache: 'no-store',
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-      'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+      ...noCacheHeaders,
     },
-    signal: AbortSignal.timeout(4500)
+    signal: AbortSignal.timeout(5500),
   });
   if (!res2.ok) {
     throw new Error(`HTTP ${res2.status}`);
@@ -574,40 +886,106 @@ async function fetchUpstreamRssXml(url: string): Promise<string> {
   return txt2;
 }
 
+function extractFeedItemTimestamp(itemXml: string, channelDateMs: number): number {
+  const dateMatch =
+    itemXml.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i) ||
+    itemXml.match(/<dc:date[^>]*>([\s\S]*?)<\/dc:date>/i) ||
+    itemXml.match(/<published[^>]*>([\s\S]*?)<\/published>/i) ||
+    itemXml.match(/<updated[^>]*>([\s\S]*?)<\/updated>/i);
+  if (dateMatch && dateMatch[1]) {
+    const clean = dateMatch[1].replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1').trim();
+    const parsed = Date.parse(clean);
+    if (!Number.isNaN(parsed)) return parsed;
+  }
+  return channelDateMs;
+}
+
+function extractFeedItemTitleKey(itemXml: string): string {
+  const m =
+    itemXml.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) ||
+    itemXml.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  return m ? m[1].trim().toLowerCase() : '';
+}
+
 app.get('/api/catholic-rss', async (req, res) => {
   try {
     const sourceKey = typeof req.query.source === 'string' ? req.query.source : 'st-paul-center';
+    const forceRefresh = req.query.refresh === '1' || req.query.refresh === 'true';
     const candidateUrls = SERVER_CATHOLIC_RSS_FEEDS[sourceKey] || SERVER_CATHOLIC_RSS_FEEDS['st-paul-center'];
 
-    const collectedItems: string[] = [];
+    const results = await Promise.allSettled(
+      candidateUrls.map(async (targetUrl) => {
+        const xml = await fetchUpstreamRssXml(targetUrl, forceRefresh || true);
+        const channelBuildMatch =
+          xml.match(/<lastBuildDate[^>]*>([\s\S]*?)<\/lastBuildDate>/i) ||
+          xml.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i);
+        const channelDateMs =
+          channelBuildMatch && channelBuildMatch[1] && !Number.isNaN(Date.parse(channelBuildMatch[1].trim()))
+            ? Date.parse(channelBuildMatch[1].trim())
+            : 0;
+
+        const itemMatches = xml.match(/<(?:item|entry)[\s>][\s\S]*?<\/(?:item|entry)>/gi) || [];
+        return itemMatches.map((itemXml, index) => {
+          const ts = extractFeedItemTimestamp(itemXml, channelDateMs);
+          // Inject channel date if an RSS item omitted <pubDate> (e.g. Catholic Answers)
+          const normalizedXml =
+            ts > 0 &&
+            !/<(?:pubDate|dc:date|published|updated)[\s>]/i.test(itemXml) &&
+            /<\/(?:item|entry)>/i.test(itemXml)
+              ? itemXml.replace(
+                  /<\/(?:item|entry)>/i,
+                  `<pubDate>${new Date(ts).toUTCString()}</pubDate></item>`
+                )
+              : itemXml;
+          return {
+            xml: normalizedXml,
+            ts,
+            index,
+            titleKey: extractFeedItemTitleKey(itemXml),
+          };
+        });
+      })
+    );
+
+    const collected: { xml: string; ts: number; index: number; titleKey: string }[] = [];
+    const seenTitles = new Set<string>();
     let lastErr: any = null;
 
-    for (const targetUrl of candidateUrls) {
-      try {
-        const xml = await fetchUpstreamRssXml(targetUrl);
-        const itemMatches = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) || [];
-        for (const itemXml of itemMatches) {
-          collectedItems.push(itemXml);
+    for (const r of results) {
+      if (r.status === 'fulfilled') {
+        for (const entry of r.value) {
+          if (entry.titleKey && seenTitles.has(entry.titleKey)) continue;
+          if (entry.titleKey) seenTitles.add(entry.titleKey);
+          collected.push(entry);
         }
-        if (collectedItems.length >= 15) {
-          break;
-        }
-      } catch (err: any) {
-        lastErr = err;
+      } else {
+        lastErr = r.reason;
       }
     }
 
-    if (collectedItems.length === 0) {
+    if (collected.length === 0) {
       throw lastErr || new Error('No RSS items returned from upstream feed');
     }
 
-    const combinedXml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>${sourceKey}</title>${collectedItems.slice(0, 30).join('\n')}</channel></rss>`;
+    // Sort strictly newest-first so fresh 2026 dispatches always appear before stale archive feeds
+    collected.sort((a, b) => {
+      if (b.ts !== a.ts) return b.ts - a.ts;
+      return a.index - b.index;
+    });
+
+    const combinedXml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>${sourceKey}</title>${collected
+      .slice(0, 30)
+      .map(c => c.xml)
+      .join('\n')}</channel></rss>`;
 
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     return res.send(combinedXml);
   } catch (err: any) {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     return res.status(502).json({ error: err?.message || 'RSS fetch error' });
   }
 });

@@ -43,6 +43,12 @@ import { InMemoriamView } from './components/InMemoriamView';
 import { PodcastEpisode } from './types';
 import { getTopVaticanHeadline } from './data/news';
 import { SacredReader } from './utils/speech';
+import {
+  CatholicArticleItem,
+  CURATED_CATHOLIC_ARTICLES,
+  fetchCatholicRssArticlesForSource,
+  isLiveCatholicArticle
+} from './data/catholicRssArticles';
 
 import { getMassReadingsForDate } from './data/massReadings';
 import { LITURGICAL_COLORS_INFO } from './data/liturgicalCalendar';
@@ -283,6 +289,32 @@ export default function App() {
   const [activeVaticanArticleId, setActiveVaticanArticleId] = useState<string | null>(null);
   const [activeCatholicArticleSourceId, setActiveCatholicArticleSourceId] = useState<string | null>(null);
   const [activeCatholicArticleId, setActiveCatholicArticleId] = useState<string | null>(null);
+  const [featuredMastheadArticle, setFeaturedMastheadArticle] = useState<CatholicArticleItem>(
+    () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'cerc-curated-1') || CURATED_CATHOLIC_ARTICLES[0]
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadFeaturedArticle = async () => {
+      const preferredSources = ['aleteia', 'st-paul-center', 'ncregister', 'cerc'];
+      for (const srcId of preferredSources) {
+        try {
+          const items = await fetchCatholicRssArticlesForSource(srcId, true);
+          const liveItem = items.find(isLiveCatholicArticle);
+          if (!cancelled && liveItem) {
+            setFeaturedMastheadArticle(liveItem);
+            return;
+          }
+        } catch {
+          // Try next source
+        }
+      }
+    };
+    loadFeaturedArticle();
+    return () => {
+      cancelled = true;
+    };
+  }, [currentDateStr]);
 
   // Audio state for Catholic Podcasts
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
@@ -548,32 +580,35 @@ export default function App() {
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
-                  CATHOLIC ARTICLES
+                  CATHOLIC ARTICLES • {featuredMastheadArticle.sourceName}
                 </span>
               </div>
               
               {/* Full Lead Headline */}
               <h2 
                 onClick={() => {
-                  setActiveCatholicArticleSourceId('cerc');
-                  setActiveCatholicArticleId('cerc-curated-1');
+                  setActiveCatholicArticleSourceId(featuredMastheadArticle.sourceId);
+                  setActiveCatholicArticleId(featuredMastheadArticle.id);
                   handleSelectTab('catholic-articles');
                 }}
                 className="font-serif text-lg sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.98)] tracking-tight cursor-pointer transition-colors"
               >
-                How the Catholic Church Built Western Civilization
+                {featuredMastheadArticle.title}
               </h2>
 
               {/* Subtitle & Call to Action */}
-              <p className="text-xs sm:text-sm md:text-base text-stone-100 font-serif italic max-w-3xl mx-auto leading-relaxed pt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                A historical survey of how Catholic monasteries, cathedral schools, and papal charters gave birth to the university system, modern charitable healthcare, and the scientific method.
+              <p className="text-xs sm:text-sm md:text-base text-stone-100 font-serif italic max-w-3xl mx-auto leading-relaxed pt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-2">
+                {featuredMastheadArticle.summary}
               </p>
 
-              <div className="pt-1.5 sm:pt-2 flex items-center justify-center sm:justify-end gap-3">
+              <div className="pt-1.5 sm:pt-2 flex items-center justify-center sm:justify-between gap-3">
+                <span className="hidden sm:inline text-xs font-serif text-amber-200/80">
+                  {featuredMastheadArticle.publishedDate} • {featuredMastheadArticle.author}
+                </span>
                 <button
                   onClick={() => {
-                    setActiveCatholicArticleSourceId('cerc');
-                    setActiveCatholicArticleId('cerc-curated-1');
+                    setActiveCatholicArticleSourceId(featuredMastheadArticle.sourceId);
+                    setActiveCatholicArticleId(featuredMastheadArticle.id);
                     handleSelectTab('catholic-articles');
                   }}
                   className="inline-flex items-center min-h-[38px] px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"

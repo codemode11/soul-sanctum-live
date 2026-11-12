@@ -145,11 +145,15 @@ function stripHtmlAndFormatParagraphs(html: string): string {
     .trim();
 }
 
+export function isLiveCatholicArticle(article: CatholicArticleItem): boolean {
+  return article.id.includes('-live-');
+}
+
 export function parseRssXmlToArticles(
   xmlText: string,
   source: CatholicRssSource
 ): CatholicArticleItem[] {
-  const articles: CatholicArticleItem[] = [];
+  const parsedWithTs: { item: CatholicArticleItem; ts: number; order: number }[] = [];
   const seenTitles = new Set<string>();
   const rawItems = xmlText.includes('<item')
     ? xmlText.split(/<item[\s>]/i).slice(1)
@@ -166,20 +170,33 @@ export function parseRssXmlToArticles(
     const titleMatch =
       raw.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) ||
       raw.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-    const linkMatch =
+    const linkTextMatch =
       raw.match(/<link><!\[CDATA\[([\s\S]*?)\]\]><\/link>/i) ||
-      raw.match(/<link[^>]*>([\s\S]*?)<\/link>/i);
+      raw.match(/<link[^>]*>([^<\s][^<]*)<\/link>/i);
+    const atomLinkMatch =
+      raw.match(/<link[^>]*rel=["']alternate["'][^>]*href=["']([^"']+)["'][^>]*\/?>/i) ||
+      raw.match(/<link[^>]*href=["']([^"']+)["'][^>]*rel=["']alternate["'][^>]*\/?>/i) ||
+      raw.match(/<link(?![^>]*rel=["']self["'])[^>]*href=["']([^"']+)["'][^>]*\/?>/i);
     const descMatch =
       raw.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/i) ||
-      raw.match(/<description[^>]*>([\s\S]*?)<\/description>/i);
+      raw.match(/<description[^>]*>([\s\S]*?)<\/description>/i) ||
+      raw.match(/<summary><!\[CDATA\[([\s\S]*?)\]\]><\/summary>/i) ||
+      raw.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i);
     const contentMatch =
       raw.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/i) ||
-      raw.match(/<content:encoded[^>]*>([\s\S]*?)<\/content:encoded>/i);
+      raw.match(/<content:encoded[^>]*>([\s\S]*?)<\/content:encoded>/i) ||
+      raw.match(/<content(?:\s[^>]*)?><!\[CDATA\[([\s\S]*?)\]\]><\/content>/i) ||
+      raw.match(/<content(?:\s[^>]*)?>([\s\S]*?)<\/content>/i);
     const creatorMatch =
       raw.match(/<dc:creator><!\[CDATA\[([\s\S]*?)\]\]><\/dc:creator>/i) ||
       raw.match(/<dc:creator[^>]*>([\s\S]*?)<\/dc:creator>/i) ||
+      raw.match(/<author>\s*<name[^>]*>([\s\S]*?)<\/name>[\s\S]*?<\/author>/i) ||
       raw.match(/<author[^>]*>([\s\S]*?)<\/author>/i);
-    const pubDateMatch = raw.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i);
+    const pubDateMatch =
+      raw.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i) ||
+      raw.match(/<dc:date[^>]*>([\s\S]*?)<\/dc:date>/i) ||
+      raw.match(/<published[^>]*>([\s\S]*?)<\/published>/i) ||
+      raw.match(/<updated[^>]*>([\s\S]*?)<\/updated>/i);
 
     const mediaMatch =
       raw.match(/<media:content[^>]+url=["']([^"']+\.(?:jpg|jpeg|png|webp)[^"']*)["']/i) ||
@@ -198,7 +215,8 @@ export function parseRssXmlToArticles(
     const normalizedTitleKey = rawTitle.toLowerCase();
     if (seenTitles.has(normalizedTitleKey)) continue;
 
-    const link = linkMatch ? decodeHtmlEntities(linkMatch[1]).trim() : source.websiteUrl;
+    const extractedLink = linkTextMatch?.[1] || atomLinkMatch?.[1] || '';
+    const link = extractedLink ? decodeHtmlEntities(extractedLink).trim() : source.websiteUrl;
     const rawDesc = descMatch ? descMatch[1] : '';
     const rawFullContent = contentMatch ? contentMatch[1] : rawDesc;
 
@@ -224,9 +242,12 @@ export function parseRssXmlToArticles(
     }
 
     let publishedDate = todayFormatted;
+    let timestampMs = 0;
     if (pubDateMatch && pubDateMatch[1]) {
-      const parsedDate = new Date(pubDateMatch[1].trim());
-      if (!isNaN(parsedDate.getTime()) && parsedDate.getFullYear() >= 2025) {
+      const cleanedDateStr = decodeHtmlEntities(pubDateMatch[1]).trim();
+      const parsedDate = new Date(cleanedDateStr);
+      if (!isNaN(parsedDate.getTime()) && parsedDate.getFullYear() >= 2020) {
+        timestampMs = parsedDate.getTime();
         publishedDate = parsedDate.toLocaleDateString('en-US', {
           month: 'long',
           day: 'numeric',
@@ -238,24 +259,33 @@ export function parseRssXmlToArticles(
     const wordCount = activeBody.split(/\s+/).length;
     const mins = Math.max(3, Math.min(15, Math.round(wordCount / 180)));
 
-    articles.push({
-      id: `${source.id}-live-${articles.length}-${encodeURIComponent(rawTitle).slice(0, 24)}`,
-      sourceId: source.id,
-      sourceName: source.name,
-      title: rawTitle,
-      author: rawAuthor,
-      publishedDate,
-      readTime: `${mins} min read`,
-      summary: cleanSummary.slice(0, 340) + (cleanSummary.length > 340 ? '…' : ''),
-      content: activeBody,
-      link,
-      imageUrl: mediaMatch ? mediaMatch[1] : undefined,
-      categories: categoryMatches.slice(0, 4),
-      isFullContentLoaded: wordCount >= 320
+    parsedWithTs.push({
+      ts: timestampMs,
+      order: i,
+      item: {
+        id: `${source.id}-live-${parsedWithTs.length}-${encodeURIComponent(rawTitle).slice(0, 24)}`,
+        sourceId: source.id,
+        sourceName: source.name,
+        title: rawTitle,
+        author: rawAuthor,
+        publishedDate,
+        readTime: `${mins} min read`,
+        summary: cleanSummary.slice(0, 340) + (cleanSummary.length > 340 ? '…' : ''),
+        content: activeBody,
+        link,
+        imageUrl: mediaMatch ? mediaMatch[1] : undefined,
+        categories: categoryMatches.slice(0, 4),
+        isFullContentLoaded: wordCount >= 320
+      }
     });
   }
 
-  return articles;
+  parsedWithTs.sort((a, b) => {
+    if (b.ts !== a.ts) return b.ts - a.ts;
+    return a.order - b.order;
+  });
+
+  return parsedWithTs.map(entry => entry.item);
 }
 
 /**
@@ -588,14 +618,14 @@ export async function fetchCatholicRssArticlesForSource(
   const fullFallbackList = [...primaryCurated, ...otherCurated];
 
   try {
-    const cacheBuster = forceRefresh ? `&refresh=1&_t=${Date.now()}` : `&_d=${new Date().toISOString().slice(0, 10)}`;
+    const cacheBuster = forceRefresh ? `&refresh=1&_t=${Date.now()}` : `&_t=${Math.floor(Date.now() / 60000)}`;
     const res = await fetch(`/api/catholic-rss?source=${encodeURIComponent(sourceId)}${cacheBuster}`, {
       cache: 'no-store',
       headers: {
-        'Cache-Control': 'no-cache',
+        'Cache-Control': 'no-cache, no-store, max-age=0',
         Pragma: 'no-cache'
       },
-      signal: AbortSignal.timeout(9000)
+      signal: AbortSignal.timeout(15000)
     });
     if (!res.ok) throw new Error(`Status ${res.status}`);
     const xml = await res.text();
