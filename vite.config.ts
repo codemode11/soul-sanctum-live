@@ -10,15 +10,6 @@ import {
   searchCatholicInternet,
   WebResearchSource,
 } from './src/utils/catholicInternetResearch.js';
-import {
-  MAGISTERIUM_AI_SYSTEM_PROMPT,
-  MagisteriumCitation,
-  MagisteriumMcpTrace,
-  callMagisteriumDirectApi,
-  executeMagisteriumMcpTool,
-  extractMagisteriumMetadataAndCleanReply,
-  handleMagisteriumMcpRpc,
-} from './src/utils/magisteriumAiEngine.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -52,43 +43,6 @@ function vaticanNewsPlugin() {
   return {
     name: 'vatican-news-plugin',
     configureServer(server: any) {
-      server.middlewares.use('/api/mcp/magisterium', async (req: any, res: any) => {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        if (req.method === 'OPTIONS') {
-          res.statusCode = 204;
-          res.end();
-          return;
-        }
-        try {
-          let rpcBody: any = { jsonrpc: '2.0', id: 1, method: 'tools/list' };
-          if (req.method === 'GET') {
-            const urlObj = new URL(req.url || '', 'http://localhost');
-            rpcBody = {
-              jsonrpc: '2.0',
-              id: 1,
-              method: urlObj.searchParams.get('method') || 'tools/list',
-            };
-          } else if (req.body && typeof req.body === 'object') {
-            rpcBody = req.body;
-          }
-          const result = await handleMagisteriumMcpRpc(rpcBody, process.env.MAGISTERIUM_API_KEY);
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.end(JSON.stringify(result));
-        } catch (err: any) {
-          res.statusCode = 500;
-          res.setHeader('Content-Type', 'application/json; charset=utf-8');
-          res.end(
-            JSON.stringify({
-              jsonrpc: '2.0',
-              id: null,
-              error: { code: -32603, message: err?.message || 'MCP error' },
-            })
-          );
-        }
-      });
-
       server.middlewares.use('/api/catholic-ai', async (req: any, res: any) => {
         // Handle CORS preflight
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -107,7 +61,6 @@ function vaticanNewsPlugin() {
             const history = body?.history || [];
             const userMemory = typeof body?.userMemory === 'string' ? body.userMemory.trim() : '';
             const enableWebResearch = body?.enableWebResearch !== false;
-            const enableMagisteriumMcp = body?.enableMagisteriumMcp !== false;
             const provider = typeof body?.provider === 'string' ? body.provider : 'openai';
 
             if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
@@ -130,40 +83,11 @@ function vaticanNewsPlugin() {
               }
             }
 
-            // 2. Invoke Magisterium AI MCP Server (`mcp://magisterium-ai · Tool: query_magisterium_corpus`)
-            let magisteriumCitations: MagisteriumCitation[] = [];
-            let relatedQuestions: string[] = [];
-            let mcpTrace: MagisteriumMcpTrace | undefined;
-            let mcpContextBlock = '';
-
-            const shouldInvokeMagisteriumMcp = enableMagisteriumMcp || provider === 'magisterium';
-            if (shouldInvokeMagisteriumMcp) {
-              try {
-                const mcpResult = await executeMagisteriumMcpTool({
-                  query: cleanQuestion,
-                  apiKey: process.env.MAGISTERIUM_API_KEY,
-                });
-                mcpContextBlock = mcpResult.contextBlock;
-                magisteriumCitations = mcpResult.citations;
-                relatedQuestions = mcpResult.relatedQuestions;
-                mcpTrace = mcpResult.mcpTrace;
-              } catch (err) {
-                console.warn('Magisterium MCP tool error in vite:', err);
-              }
-            }
-
-            const baseInstruction = shouldInvokeMagisteriumMcp
-              ? `${CATHOLIC_AI_SYSTEM_INSTRUCTION}\n\n${MAGISTERIUM_AI_SYSTEM_PROMPT}`
+            const effectiveSystemInstruction = userMemory
+              ? `${CATHOLIC_AI_SYSTEM_INSTRUCTION}\n\nUSER STYLE & TRANSLATION PREFERENCES (Use these preferences ONLY to format your tone and Bible translation choice while answering the user's exact question; NEVER let past topics override the current question):\n${userMemory}`
               : CATHOLIC_AI_SYSTEM_INSTRUCTION;
 
-            const effectiveSystemInstruction = userMemory
-              ? `${baseInstruction}\n\nUSER STYLE & TRANSLATION PREFERENCES (Use these preferences ONLY to format your tone and Bible translation choice while answering the user's exact question; NEVER let past topics override the current question):\n${userMemory}`
-              : baseInstruction;
-
             let promptWithResearch = `USER QUESTION TO ANSWER DIRECTLY AND SPECIFICALLY:\n"${cleanQuestion}"`;
-            if (mcpContextBlock) {
-              promptWithResearch += `\n\n${mcpContextBlock}`;
-            }
             if (webSources.length > 0) {
               const researchSnippets = webSources
                 .map((s, idx) => `[Source ${idx + 1}: ${s.title} (${s.url})]\n${s.snippet}`)
@@ -173,116 +97,66 @@ function vaticanNewsPlugin() {
             }
 
             let reply = '';
-            let usedProvider = provider === 'magisterium' ? 'magisterium' : provider === 'gemini' ? 'gemini' : 'openai';
-            let usedModel =
-              provider === 'magisterium'
-                ? 'magisterium-1 (Free Tier)'
-                : provider === 'gemini'
-                ? 'gemini-3-flash-preview'
-                : 'gpt-4o + Magisterium AI MCP';
+            let usedProvider = provider === 'gemini' ? 'gemini' : 'openai';
+            let usedModel = provider === 'gemini' ? 'gemini-3-flash-preview' : 'gpt-4o';
             let lastError: any = null;
 
-            // 3A. Standalone Magisterium AI Direct API call if MAGISTERIUM_API_KEY is configured
-            const magisteriumApiKey = process.env.MAGISTERIUM_API_KEY || '';
-            if (
-              provider === 'magisterium' &&
-              magisteriumApiKey &&
-              magisteriumApiKey !== 'MY_MAGISTERIUM_API_KEY'
-            ) {
-              try {
-                const directResult = await callMagisteriumDirectApi({
-                  apiKey: magisteriumApiKey,
-                  systemInstruction: effectiveSystemInstruction,
-                  history,
-                  prompt: promptWithResearch,
-                });
-                if (directResult && directResult.reply) {
-                  reply = directResult.reply;
-                  magisteriumCitations = directResult.magisteriumCitations;
-                  relatedQuestions = directResult.relatedQuestions;
-                  mcpTrace = directResult.mcpTrace || mcpTrace;
-                  usedProvider = 'magisterium';
-                  usedModel = directResult.model;
+            const apiKey = process.env.GEMINI_API_KEY;
+            if (!apiKey) {
+              throw new Error('GEMINI_API_KEY is not configured in the environment.');
+            }
+
+            const ai = new GoogleGenAI({
+              apiKey,
+              httpOptions: {
+                headers: {
+                  'User-Agent': 'aistudio-build',
+                },
+              },
+            });
+
+            const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
+            if (Array.isArray(history)) {
+              for (const item of history.slice(-6)) {
+                if (item && item.content && typeof item.content === 'string') {
+                  contents.push({
+                    role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
+                    parts: [{ text: item.content }],
+                  });
                 }
-              } catch (err: any) {
-                lastError = err;
               }
             }
 
-            // 3B. ChatGPT + Magisterium AI MCP Execution Path
-            if (!reply) {
-              const apiKey = process.env.GEMINI_API_KEY;
-              if (!apiKey) {
-                throw new Error('GEMINI_API_KEY is not configured in the environment.');
-              }
+            contents.push({
+              role: 'user',
+              parts: [{ text: promptWithResearch }],
+            });
 
-              const ai = new GoogleGenAI({
-                apiKey,
-                httpOptions: {
-                  headers: {
-                    'User-Agent': 'aistudio-build',
+            const candidateModels = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+
+            for (const modelName of candidateModels) {
+              try {
+                const response = await ai.models.generateContent({
+                  model: modelName,
+                  contents,
+                  config: {
+                    systemInstruction: effectiveSystemInstruction,
+                    temperature: 0.3,
                   },
-                },
-              });
-
-              const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
-              if (Array.isArray(history)) {
-                for (const item of history.slice(-6)) {
-                  if (item && item.content && typeof item.content === 'string') {
-                    contents.push({
-                      role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
-                      parts: [{ text: item.content }],
-                    });
+                });
+                if (response && response.text) {
+                  reply = response.text;
+                  if (provider === 'openai') {
+                    usedProvider = 'openai';
+                    usedModel = 'gpt-4o';
+                  } else {
+                    usedProvider = 'gemini';
+                    usedModel = modelName;
                   }
+                  break;
                 }
-              }
-
-              contents.push({
-                role: 'user',
-                parts: [{ text: promptWithResearch }],
-              });
-
-              const candidateModels = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-2.0-flash'];
-
-              for (const modelName of candidateModels) {
-                try {
-                  const response = await ai.models.generateContent({
-                    model: modelName,
-                    contents,
-                    config: {
-                      systemInstruction: effectiveSystemInstruction,
-                      temperature: 0.3,
-                    },
-                  });
-                  if (response && response.text) {
-                    if (shouldInvokeMagisteriumMcp) {
-                      const extracted = extractMagisteriumMetadataAndCleanReply(response.text, cleanQuestion);
-                      reply = extracted.reply;
-                      if (extracted.magisteriumCitations.length > 0) {
-                        magisteriumCitations = extracted.magisteriumCitations;
-                      }
-                      if (extracted.relatedQuestions.length > 0) {
-                        relatedQuestions = extracted.relatedQuestions;
-                      }
-                    } else {
-                      reply = response.text;
-                    }
-
-                    if (provider === 'openai') {
-                      usedProvider = 'openai';
-                      usedModel = shouldInvokeMagisteriumMcp ? 'gpt-4o + Magisterium AI MCP' : 'gpt-4o';
-                    } else if (provider === 'magisterium') {
-                      usedProvider = 'magisterium';
-                      usedModel = 'magisterium-1 (Free Tier)';
-                    } else {
-                      usedProvider = 'gemini';
-                      usedModel = modelName;
-                    }
-                    break;
-                  }
-                } catch (err: any) {
-                  lastError = err;
-                }
+              } catch (err: any) {
+                lastError = err;
               }
             }
 
@@ -294,9 +168,6 @@ function vaticanNewsPlugin() {
             res.end(JSON.stringify({
               reply: reply || 'No response generated from the Catholic Assistant.',
               webSources,
-              magisteriumCitations,
-              relatedQuestions,
-              mcpTrace,
               provider: usedProvider,
               model: usedModel,
             }));
@@ -313,11 +184,10 @@ function vaticanNewsPlugin() {
           const promptParam = urlObj.searchParams.get('prompt');
           if (!promptParam) {
             res.setHeader('Content-Type', 'application/json; charset=utf-8');
-            res.end(JSON.stringify({ status: 'ok', defaultProvider: 'openai', mcpServer: 'magisterium-ai-mcp', hasKey: !!process.env.GEMINI_API_KEY }));
+            res.end(JSON.stringify({ status: 'ok', defaultProvider: 'openai', hasKey: !!process.env.GEMINI_API_KEY }));
             return;
           }
           const enableWebResearchParam = urlObj.searchParams.get('enableWebResearch');
-          const enableMagisteriumMcpParam = urlObj.searchParams.get('enableMagisteriumMcp');
           const userMemoryParam = urlObj.searchParams.get('userMemory') || '';
           const providerParam = urlObj.searchParams.get('provider') || 'openai';
           const historyParam = urlObj.searchParams.get('history');
@@ -334,7 +204,6 @@ function vaticanNewsPlugin() {
             userMemory: userMemoryParam,
             provider: providerParam,
             enableWebResearch: enableWebResearchParam !== 'false',
-            enableMagisteriumMcp: enableMagisteriumMcpParam !== 'false',
             history: parsedHistory,
           });
           return;

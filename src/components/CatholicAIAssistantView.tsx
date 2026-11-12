@@ -28,12 +28,6 @@ import {
   searchCatholicInternet,
   synthesizeResearchResponse,
 } from '../utils/catholicInternetResearch';
-import {
-  MagisteriumCitation,
-  MagisteriumMcpTrace,
-  buildFallbackMagisterialCitations,
-  buildFallbackRelatedQuestions,
-} from '../utils/magisteriumAiEngine';
 
 export interface ChatMessage {
   id: string;
@@ -41,14 +35,11 @@ export interface ChatMessage {
   content: string;
   timestamp: number;
   webSources?: WebResearchSource[];
-  magisteriumCitations?: MagisteriumCitation[];
-  relatedQuestions?: string[];
-  mcpTrace?: MagisteriumMcpTrace;
   provider?: string;
   model?: string;
 }
 
-export type AIEngine = 'openai' | 'gemini' | 'magisterium' | 'auto';
+export type AIEngine = 'openai' | 'gemini' | 'auto';
 export type AIPersona = 'scholarly' | 'catechism' | 'patristic' | 'apologetics' | 'spiritual';
 
 export type PreferredBibleEdition = 'NABRE' | 'Douay-Rheims' | 'RSV-CE' | 'Knox / Latin Vulgate';
@@ -88,10 +79,6 @@ const AI_ENGINE_SPECS: Record<AIEngine, { name: string; label: string }> = {
   openai: {
     name: 'ChatGPT (OpenAI GPT-4o)',
     label: 'ChatGPT (GPT-4o)'
-  },
-  magisterium: {
-    name: 'Magisterium AI Standalone (Free Tier)',
-    label: 'Magisterium AI'
   },
   gemini: {
     name: 'Soul Sanctum AI (Gemini)',
@@ -167,28 +154,14 @@ function createDefaultWelcomeMessage(engine: AIEngine = 'openai'): ChatMessage {
   return {
     id: `welcome-${Date.now()}`,
     role: 'assistant',
-    content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** — powered by **ChatGPT (OpenAI GPT-4o)** as the default engine with **Magisterium AI** connected as a **Model Context Protocol (MCP) Server** (\`mcp://magisterium-ai/corpus\`).
+    content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** — powered by **ChatGPT (OpenAI GPT-4o)** as your default theological research engine.
 
-How **ChatGPT + Magisterium AI MCP** works together:
-* **Primary Engine — ChatGPT (GPT-4o)**: Synthesizes deep theological, scriptural, and historical inquiries in a clear, scholarly voice tailored to your learned preferences.
-* **MCP Tool Layer — Magisterium AI (Free Tier · 28,000+ Church Documents)**: Automatically invokes \`query_magisterium_corpus\` and \`verify_ccc_and_canon_citations\` across the *Catechism of the Catholic Church (CCC)*, the 21 Ecumenical Councils, Papal Encyclicals, *Denzinger*, the *1983 Code of Canon Law*, and *Summa Theologiae*.
-
-Your **Previous Chats** and **Learned Preferences** stay saved in the left memory panel, and every response includes verified **Magisterium AI MCP Citations** and clickable **Related Magisterial Inquiries**.`,
+How this assistant supports your study:
+* **Direct & Relevant Theological Synthesis**: Answers your exact questions directly with specific citations from the *Catechism of the Catholic Church (CCC)*, Sacred Scripture, the Church Fathers, and the 21 Ecumenical Councils.
+* **Persistent Chat History & Adaptive Memory**: Your **Previous Chats** and **Learned Preferences** (preferred Bible translation, theological depth, and favorite topics) stay saved in the left memory panel across sessions.`,
     timestamp: Date.now(),
     provider: engine,
-    model: 'gpt-4o + Magisterium AI MCP',
-    mcpTrace: {
-      serverName: 'magisterium-ai-mcp',
-      protocolVersion: '2024-11-05',
-      tier: 'free-tier',
-      toolsInvoked: ['query_magisterium_corpus', 'verify_ccc_and_canon_citations'],
-      documentsRetrieved: 28000
-    },
-    relatedQuestions: [
-      'How does the Council of Trent and CCC 1374–1376 define Transubstantiation and the Real Presence?',
-      'How does Vatican II (Dei Verbum §§ 9–10) explain the unity of Sacred Scripture, Sacred Tradition, and the Magisterium?',
-      'What are the Magisterial teachings of Lumen Gentium Chapter VIII on the Blessed Virgin Mary?'
-    ]
+    model: 'gpt-4o',
   };
 }
 
@@ -353,7 +326,6 @@ export const CatholicAIAssistantView: React.FC = () => {
   const [inputPrompt, setInputPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isWebResearchEnabled, setIsWebResearchEnabled] = useState(true);
-  const [isMagisteriumMcpEnabled, setIsMagisteriumMcpEnabled] = useState(true);
   const [selectedEngine, setSelectedEngine] = useState<AIEngine>('openai');
   const [selectedPersona, setSelectedPersona] = useState<AIPersona>(() => activeSession?.persona || memoryProfile.favoredPersona || 'scholarly');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -518,7 +490,11 @@ export const CatholicAIAssistantView: React.FC = () => {
     setErrorMessage(null);
     setActiveSessionId(session.id);
     setSelectedPersona(session.persona || memoryProfile.favoredPersona);
-    setSelectedEngine(session.engine || 'openai');
+    const validEngine: AIEngine =
+      session.engine === 'openai' || session.engine === 'gemini' || session.engine === 'auto'
+        ? session.engine
+        : 'openai';
+    setSelectedEngine(validEngine);
   };
 
   const handleDeleteSession = (e: React.MouseEvent, sessionId: string) => {
@@ -604,7 +580,7 @@ export const CatholicAIAssistantView: React.FC = () => {
       content: `**Laudetur Jesus Christus!** This conversation thread has been reset while your previous chats and learned preferences remain safely stored in the memory panel.`,
       timestamp: Date.now(),
       provider: selectedEngine,
-      model: selectedEngine === 'openai' ? 'gpt-4o + Magisterium AI MCP' : 'gemini-3-flash-preview'
+      model: selectedEngine === 'openai' ? 'gpt-4o' : 'gemini-3-flash-preview'
     };
     setSessions(prev =>
       prev.map(s =>
@@ -666,14 +642,11 @@ export const CatholicAIAssistantView: React.FC = () => {
       let data: {
         reply?: string;
         webSources?: WebResearchSource[];
-        magisteriumCitations?: MagisteriumCitation[];
-        relatedQuestions?: string[];
-        mcpTrace?: MagisteriumMcpTrace;
         provider?: string;
         model?: string;
       } | null = null;
 
-      // 1. Primary POST request with clean user question + ChatGPT default engine + Magisterium AI MCP Server
+      // 1. Primary POST request with clean user question + ChatGPT default engine
       try {
         const postRes = await fetch('/api/catholic-ai', {
           method: 'POST',
@@ -687,7 +660,6 @@ export const CatholicAIAssistantView: React.FC = () => {
             history: historyPayload,
             userMemory: userMemoryString,
             enableWebResearch: isWebResearchEnabled,
-            enableMagisteriumMcp: isMagisteriumMcpEnabled,
             provider: selectedEngine,
           }),
         });
@@ -710,9 +682,7 @@ export const CatholicAIAssistantView: React.FC = () => {
             promptToSend
           )}&userMemory=${encodeURIComponent(
             userMemoryString
-          )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}&enableMagisteriumMcp=${
-            isMagisteriumMcpEnabled ? 'true' : 'false'
-          }&provider=${selectedEngine}`;
+          )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}&provider=${selectedEngine}`;
 
           const getRes = await fetch(queryUrl, {
             method: 'GET',
@@ -733,53 +703,22 @@ export const CatholicAIAssistantView: React.FC = () => {
       }
 
       if (data && data.reply) {
-        const mcpActive = isMagisteriumMcpEnabled || (data.provider || selectedEngine) === 'magisterium';
-        const resolvedCitations =
-          data.magisteriumCitations && data.magisteriumCitations.length > 0
-            ? data.magisteriumCitations
-            : mcpActive
-            ? buildFallbackMagisterialCitations(data.reply, promptToSend)
-            : undefined;
         const assistantMsg: ChatMessage = {
           id: `assistant-${Date.now()}`,
           role: 'assistant',
           content: data.reply,
           timestamp: Date.now(),
           webSources: data.webSources || [],
-          magisteriumCitations: resolvedCitations,
-          relatedQuestions:
-            data.relatedQuestions && data.relatedQuestions.length > 0
-              ? data.relatedQuestions
-              : mcpActive
-              ? buildFallbackRelatedQuestions(promptToSend)
-              : undefined,
-          mcpTrace:
-            data.mcpTrace ||
-            (mcpActive
-              ? {
-                  serverName: 'magisterium-ai-mcp',
-                  protocolVersion: '2024-11-05',
-                  tier: 'free-tier',
-                  toolsInvoked: ['query_magisterium_corpus', 'verify_ccc_and_canon_citations'],
-                  documentsRetrieved: resolvedCitations?.length || 3,
-                }
-              : undefined),
           provider: data.provider || selectedEngine,
           model:
             data.model ||
-            (selectedEngine === 'openai'
-              ? isMagisteriumMcpEnabled
-                ? 'gpt-4o + Magisterium AI MCP'
-                : 'gpt-4o'
-              : selectedEngine === 'magisterium'
-              ? 'magisterium-1 (Free Tier)'
-              : 'gemini-3.8-flash'),
+            (selectedEngine === 'openai' ? 'gpt-4o' : 'gemini-3-flash-preview'),
         };
         appendMessageToActiveSession(targetSessionId, assistantMsg);
         return;
       }
 
-      // 3. Direct Client-Side Live Internet & Magisterium AI MCP Fallback
+      // 3. Direct Client-Side Live Internet Fallback
       const liveWebSources = isWebResearchEnabled
         ? await searchCatholicInternet(promptToSend)
         : [];
@@ -792,29 +731,14 @@ export const CatholicAIAssistantView: React.FC = () => {
         isSpecificMatch ? matchedCanned : undefined
       );
 
-      const fallbackCitations = isMagisteriumMcpEnabled
-        ? buildFallbackMagisterialCitations(synthesizedReply, promptToSend)
-        : undefined;
-
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
         content: synthesizedReply,
         timestamp: Date.now(),
         webSources: liveWebSources,
-        magisteriumCitations: fallbackCitations,
-        relatedQuestions: isMagisteriumMcpEnabled ? buildFallbackRelatedQuestions(promptToSend) : undefined,
-        mcpTrace: isMagisteriumMcpEnabled
-          ? {
-              serverName: 'magisterium-ai-mcp',
-              protocolVersion: '2024-11-05',
-              tier: 'free-tier',
-              toolsInvoked: ['query_magisterium_corpus'],
-              documentsRetrieved: fallbackCitations?.length || 3,
-            }
-          : undefined,
         provider: selectedEngine,
-        model: selectedEngine === 'openai' ? 'gpt-4o + Magisterium AI MCP' : 'gemini-3.8-flash'
+        model: selectedEngine === 'openai' ? 'gpt-4o' : 'gemini-3-flash-preview'
       };
       appendMessageToActiveSession(targetSessionId, assistantMsg);
     } catch (err: any) {
@@ -831,29 +755,14 @@ export const CatholicAIAssistantView: React.FC = () => {
         isSpecificMatch ? matchedCanned : undefined
       );
 
-      const fallbackCitations = isMagisteriumMcpEnabled
-        ? buildFallbackMagisterialCitations(synthesizedReply, promptToSend)
-        : undefined;
-
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
         content: synthesizedReply,
         timestamp: Date.now(),
         webSources: liveWebSources,
-        magisteriumCitations: fallbackCitations,
-        relatedQuestions: isMagisteriumMcpEnabled ? buildFallbackRelatedQuestions(promptToSend) : undefined,
-        mcpTrace: isMagisteriumMcpEnabled
-          ? {
-              serverName: 'magisterium-ai-mcp',
-              protocolVersion: '2024-11-05',
-              tier: 'free-tier',
-              toolsInvoked: ['query_magisterium_corpus'],
-              documentsRetrieved: fallbackCitations?.length || 3,
-            }
-          : undefined,
         provider: selectedEngine,
-        model: selectedEngine === 'openai' ? 'gpt-4o + Magisterium AI MCP' : 'gemini-3.8-flash'
+        model: selectedEngine === 'openai' ? 'gpt-4o' : 'gemini-3-flash-preview'
       };
       appendMessageToActiveSession(targetSessionId, assistantMsg);
     } finally {
@@ -987,11 +896,9 @@ export const CatholicAIAssistantView: React.FC = () => {
           <div className="space-y-1.5 text-left">
             {/* Line 1: Clean Unboxed Metadata */}
             <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-600 font-serif flex-wrap">
-              <strong className="text-amber-900 font-cinzel font-bold">{AI_ENGINE_SPECS[selectedEngine].name}</strong>
-              <span aria-hidden="true">·</span>
-              <span className="font-cinzel font-bold text-amber-800 text-xs">
-                Magisterium AI MCP ({isMagisteriumMcpEnabled ? 'Connected · Free Tier' : 'Paused'})
-              </span>
+              <strong className="text-amber-900 font-cinzel font-bold">
+                {(AI_ENGINE_SPECS[selectedEngine] || AI_ENGINE_SPECS.openai).name}
+              </strong>
               <span aria-hidden="true">·</span>
               <span className="italic text-stone-700">{AI_PERSONA_SPECS[selectedPersona].title}</span>
               <span aria-hidden="true">·</span>
@@ -1006,7 +913,7 @@ export const CatholicAIAssistantView: React.FC = () => {
             </h2>
           </div>
 
-          {/* Line 3: Daylight Action Controls & Magisterium AI MCP Server Toggle */}
+          {/* Line 3: Daylight Action Controls */}
           <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
             <div className="flex flex-wrap items-center gap-2">
               <button
@@ -1036,39 +943,9 @@ export const CatholicAIAssistantView: React.FC = () => {
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>New Chat</span>
               </button>
-
-              {/* 1-Click Magisterium AI MCP Connection Toggle */}
-              <button
-                type="button"
-                onClick={() => setIsMagisteriumMcpEnabled(prev => !prev)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
-                  isMagisteriumMcpEnabled
-                    ? 'bg-amber-900/10 text-amber-950 border-amber-700/60 shadow-2xs'
-                    : 'bg-white hover:bg-stone-50 text-stone-600 border-stone-300'
-                }`}
-                title="Toggle Magisterium AI Model Context Protocol (MCP) Server for ChatGPT"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-                <span>
-                  {isMagisteriumMcpEnabled
-                    ? 'Magisterium AI MCP: Connected (Free Tier)'
-                    : 'Connect Magisterium AI MCP'}
-                </span>
-              </button>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <a
-                href="https://www.magisterium.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-1.5 rounded-lg bg-white hover:bg-[#F6F2E9] border border-stone-300 text-amber-950 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap shrink-0"
-                title="Open official Magisterium AI web portal in a new tab"
-              >
-                <span>Magisterium.com</span>
-                <ExternalLink className="w-3 h-3 text-amber-800" />
-              </a>
-
               <button
                 type="button"
                 onClick={() => setIsSettingsOpen(prev => !prev)}
@@ -1112,7 +989,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                   onChange={(e) => setSelectedEngine(e.target.value as AIEngine)}
                   className="w-full bg-white text-stone-900 text-xs font-serif rounded-lg p-2.5 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer"
                 >
-                  {(['openai', 'magisterium', 'gemini', 'auto'] as AIEngine[]).map((eng) => (
+                  {(['openai', 'gemini', 'auto'] as AIEngine[]).map((eng) => (
                     <option key={eng} value={eng}>
                       {AI_ENGINE_SPECS[eng].name}
                     </option>
@@ -1192,25 +1069,9 @@ export const CatholicAIAssistantView: React.FC = () => {
               </div>
             </div>
 
-            {/* MCP Server & Internet Research Toggles */}
+            {/* Internet Research Toggle */}
             <div className="pt-2 border-t border-stone-300/70 flex flex-wrap items-center justify-between gap-3">
               <div className="flex flex-wrap items-center gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setIsMagisteriumMcpEnabled(prev => !prev)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer border flex items-center gap-2 whitespace-nowrap shrink-0 ${
-                    isMagisteriumMcpEnabled
-                      ? 'bg-amber-50 border-amber-600/60 text-amber-950'
-                      : 'bg-white border-stone-300 text-stone-600'
-                  }`}
-                >
-                  <BookOpen className={`w-3.5 h-3.5 ${isMagisteriumMcpEnabled ? 'text-amber-800' : 'text-stone-400'}`} />
-                  <span>
-                    MCP Server (<code>mcp://magisterium-ai</code>):{' '}
-                    <strong>{isMagisteriumMcpEnabled ? 'Connected (Free Tier)' : 'Disconnected'}</strong>
-                  </span>
-                </button>
-
                 <button
                   type="button"
                   onClick={() => setIsWebResearchEnabled(prev => !prev)}
@@ -1226,7 +1087,7 @@ export const CatholicAIAssistantView: React.FC = () => {
               </div>
 
               <span className="text-[11px] font-serif text-stone-600">
-                ChatGPT automatically queries the Magisterium AI MCP server and remembers your preferences across sessions.
+                ChatGPT remembers your style and Bible translation preferences across sessions.
               </span>
             </div>
           </div>
@@ -1499,19 +1360,13 @@ export const CatholicAIAssistantView: React.FC = () => {
                       <div className="flex items-center justify-between pb-2.5 mb-3.5 border-b border-stone-200/80 text-xs text-stone-600 font-cinzel">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-amber-950">
-                            {msg.provider === 'magisterium'
-                              ? 'Magisterium AI Standalone'
-                              : msg.provider === 'gemini'
+                            {msg.provider === 'gemini'
                               ? 'Soul Sanctum Assistant (Gemini)'
                               : 'ChatGPT (OpenAI GPT-4o)'}
                           </span>
                           <span aria-hidden="true">·</span>
                           <span className="text-stone-600 font-serif italic">
-                            {msg.mcpTrace || (isMagisteriumMcpEnabled && msg.provider !== 'gemini')
-                              ? 'with Magisterium AI MCP (query_magisterium_corpus)'
-                              : msg.provider === 'magisterium'
-                              ? '28,000+ Magisterial Documents Corpus'
-                              : 'Theological Synthesis'}
+                            Theological &amp; Scriptural Synthesis
                           </span>
                         </div>
 
@@ -1563,51 +1418,6 @@ export const CatholicAIAssistantView: React.FC = () => {
                       renderFormattedContent(msg.content)
                     )}
 
-                    {/* Magisterium AI MCP Server Citations */}
-                    {!isUser && msg.magisteriumCitations && msg.magisteriumCitations.length > 0 && (
-                      <div className="mt-5 p-4 rounded-xl bg-[#FAF7F0] border border-[#DFD5C0] space-y-2.5 text-left">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-950">
-                            <BookOpen className="w-3.5 h-3.5 text-amber-800 shrink-0" />
-                            <span>Magisterium AI MCP · Retrieved Magisterial Corpus Citations</span>
-                          </div>
-                          <span className="text-[11px] font-mono text-amber-900/80">
-                            mcp://magisterium-ai · {msg.mcpTrace?.toolsInvoked?.[0] || 'query_magisterium_corpus'}
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                          {msg.magisteriumCitations.map((cit, cIdx) => (
-                            <a
-                              key={cIdx}
-                              href={cit.url || 'https://www.vatican.va'}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-3 rounded-lg bg-white hover:bg-[#FDFBF7] border border-stone-200/90 hover:border-amber-700/60 transition-all group flex flex-col justify-between gap-1.5"
-                            >
-                              <div className="space-y-1">
-                                <div className="flex items-start justify-between gap-2">
-                                  <span className="font-cinzel text-xs font-bold text-amber-950 leading-snug">
-                                    {cit.title}
-                                  </span>
-                                  <ExternalLink className="w-3 h-3 text-amber-800 shrink-0 mt-0.5 group-hover:translate-x-0.5 transition-transform" />
-                                </div>
-                                <div className="text-[11px] font-cinzel font-semibold text-amber-900">
-                                  {cit.reference}
-                                  {cit.author ? ` · ${cit.author}` : ''}
-                                  {cit.year ? ` (${cit.year})` : ''}
-                                </div>
-                                {cit.snippet && (
-                                  <p className="text-xs font-serif text-stone-700 line-clamp-2 leading-relaxed">
-                                    &ldquo;{cit.snippet}&rdquo;
-                                  </p>
-                                )}
-                              </div>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
                     {/* Live Web & Internet Sources Consulted */}
                     {!isUser && msg.webSources && msg.webSources.length > 0 && (
                       <div className="mt-4 p-3.5 rounded-xl bg-[#FAF8F3] border border-[#E5DEC9] space-y-2 text-left">
@@ -1636,36 +1446,13 @@ export const CatholicAIAssistantView: React.FC = () => {
                       </div>
                     )}
 
-                    {/* Magisterium AI Related Follow-up Questions */}
-                    {!isUser && msg.relatedQuestions && msg.relatedQuestions.length > 0 && (
-                      <div className="mt-4 pt-3 border-t border-stone-200/80 space-y-2 text-left">
-                        <div className="text-[11px] font-cinzel font-bold text-amber-950 flex items-center gap-1.5">
-                          <Sparkles className="w-3.5 h-3.5 text-amber-800" />
-                          <span>Related Magisterial Inquiries</span>
-                        </div>
-                        <div className="flex flex-col sm:flex-row flex-wrap gap-2">
-                          {msg.relatedQuestions.map((rq, rqIdx) => (
-                            <button
-                              key={rqIdx}
-                              type="button"
-                              disabled={isLoading}
-                              onClick={() => handleSubmit(undefined, rq)}
-                              className="text-left px-3 py-2 rounded-lg bg-[#FAF8F3] hover:bg-[#F2EBD9] border border-[#E5DEC9] hover:border-amber-700/60 text-xs font-serif text-stone-800 hover:text-stone-950 transition-all cursor-pointer disabled:opacity-50"
-                            >
-                              {rq}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
                     {/* Footer source note on assistant messages */}
                     {!isUser && !msg.id.startsWith('welcome') && (
                       <div className="mt-4 pt-2.5 border-t border-stone-200/80 flex items-center justify-between text-xs text-stone-500 italic font-serif">
                         <span className="flex items-center gap-1.5">
                           <Globe className="w-3 h-3 text-amber-800" />
                           <span>
-                            Grounded in Magisterium AI &amp; the Deposit of Faith · Tailored to your preferences ({memoryProfile.preferredBible})
+                            Grounded in Sacred Scripture, Sacred Tradition &amp; the Catechism · Tailored to your preferences ({memoryProfile.preferredBible})
                           </span>
                         </span>
                         <span className="not-italic font-mono text-[11px] tabular-nums">
@@ -1684,7 +1471,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                 <RefreshCw className="w-4 h-4 text-amber-800 animate-spin shrink-0" />
                 <div className="space-y-0.5 text-left">
                   <span className="text-xs sm:text-sm font-serif italic text-stone-900 font-semibold block">
-                    Consulting {AI_ENGINE_SPECS[selectedEngine].name} &amp; Vatican sources...
+                    Consulting {(AI_ENGINE_SPECS[selectedEngine] || AI_ENGINE_SPECS.openai).name} &amp; Vatican sources...
                   </span>
                   <span className="text-[11px] text-stone-600 font-serif block">
                     Cross-referencing Sacred Scripture ({memoryProfile.preferredBible}), Catechism (CCC), and your learned preferences.
