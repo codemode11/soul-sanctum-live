@@ -480,35 +480,18 @@ export const CatholicAIAssistantView: React.FC = () => {
     return nextProfile;
   };
 
-  // Build structured memory summary string to send to the AI Assistant
-  const buildUserMemoryContextString = (profile: UserMemoryProfile): string => {
-    const topTopics = Object.entries(profile.topicWeights)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-      .map(([topic, count]) => `${topic} (${count} inquiries)`);
-
-    const recentSessionTitles = sessions
-      .filter(s => s.title !== 'New Theological Inquiry')
-      .slice(0, 6)
-      .map(s => s.title);
-
+  // Build structured memory summary string to send to the AI Assistant (style & translation preferences only)
+  const buildUserMemoryContextString = (profile: UserMemoryProfile, personaUsed: AIPersona): string => {
+    const personaSpec = AI_PERSONA_SPECS[personaUsed] || AI_PERSONA_SPECS.scholarly;
     const lines: string[] = [
+      `- Active Research Mode & Persona: ${personaSpec.title} (${personaSpec.systemPromptSuffix})`,
       `- Preferred Catholic Bible Translation: ${profile.preferredBible}`,
       `- Preferred Theological Depth & Style: ${profile.preferredDepth}`,
-      `- Favored Theological Persona: ${AI_PERSONA_SPECS[profile.favoredPersona]?.title || 'Theological Scholar'}`,
+      `- STRICT RELEVANCE RULE: Answer ONLY the user's current question directly. Do NOT bring up unrelated past topics.`,
     ];
 
-    if (topTopics.length > 0) {
-      lines.push(`- Core Theological Interests (learned from past chats): ${topTopics.join(', ')}`);
-    }
-    if (profile.favoriteSaintsAndDoctors.length > 0) {
-      lines.push(`- Favored Saints, Church Fathers & Doctors: ${profile.favoriteSaintsAndDoctors.join(', ')}`);
-    }
     if (profile.customNotes.length > 0) {
-      lines.push(`- Explicit User Preferences & Notes: ${profile.customNotes.join(' | ')}`);
-    }
-    if (recentSessionTitles.length > 0) {
-      lines.push(`- Recent Past Chat Topics Explored by User: ${recentSessionTitles.join('; ')}`);
+      lines.push(`- Explicit User Formatting/Style Notes: ${profile.customNotes.join(' | ')}`);
     }
 
     return lines.join('\n');
@@ -621,7 +604,7 @@ export const CatholicAIAssistantView: React.FC = () => {
       content: `**Laudetur Jesus Christus!** This conversation thread has been reset while your previous chats and learned preferences remain safely stored in the memory panel.`,
       timestamp: Date.now(),
       provider: selectedEngine,
-      model: selectedEngine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.8-flash'
+      model: selectedEngine === 'openai' ? 'gpt-4o + Magisterium AI MCP' : 'gemini-3-flash-preview'
     };
     setSessions(prev =>
       prev.map(s =>
@@ -672,16 +655,13 @@ export const CatholicAIAssistantView: React.FC = () => {
 
     // Update learned user preferences from this inquiry
     const updatedProfile = learnFromUserPrompt(promptToSend, selectedPersona);
-    const userMemoryString = buildUserMemoryContextString(updatedProfile);
+    const userMemoryString = buildUserMemoryContextString(updatedProfile, selectedPersona);
 
     try {
       const historyPayload = activeSession.messages
         .filter(m => !m.id.startsWith('welcome'))
-        .slice(-8)
+        .slice(-6)
         .map(m => ({ role: m.role, content: m.content.slice(0, 800) }));
-
-      const personaInstruction = AI_PERSONA_SPECS[selectedPersona].systemPromptSuffix;
-      const augmentedPrompt = `${promptToSend}\n\n[Persona Instruction: ${personaInstruction} Preferred Bible Translation: ${updatedProfile.preferredBible}. Preferred Style: ${updatedProfile.preferredDepth}.]`;
 
       let data: {
         reply?: string;
@@ -693,7 +673,7 @@ export const CatholicAIAssistantView: React.FC = () => {
         model?: string;
       } | null = null;
 
-      // 1. Primary POST request with ChatGPT default engine + Magisterium AI MCP Server enabled
+      // 1. Primary POST request with clean user question + ChatGPT default engine + Magisterium AI MCP Server
       try {
         const postRes = await fetch('/api/catholic-ai', {
           method: 'POST',
@@ -703,7 +683,7 @@ export const CatholicAIAssistantView: React.FC = () => {
           },
           credentials: 'same-origin',
           body: JSON.stringify({
-            prompt: augmentedPrompt,
+            prompt: promptToSend,
             history: historyPayload,
             userMemory: userMemoryString,
             enableWebResearch: isWebResearchEnabled,
@@ -727,7 +707,7 @@ export const CatholicAIAssistantView: React.FC = () => {
       if (!data) {
         try {
           const queryUrl = `/api/catholic-ai?prompt=${encodeURIComponent(
-            augmentedPrompt
+            promptToSend
           )}&userMemory=${encodeURIComponent(
             userMemoryString
           )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}&enableMagisteriumMcp=${

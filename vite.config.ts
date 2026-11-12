@@ -5,7 +5,11 @@ import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
 import { GoogleGenAI } from '@google/genai';
-import { searchCatholicInternet, WebResearchSource } from './src/utils/catholicInternetResearch.js';
+import {
+  cleanUserQuestion,
+  searchCatholicInternet,
+  WebResearchSource,
+} from './src/utils/catholicInternetResearch.js';
 import {
   MAGISTERIUM_AI_SYSTEM_PROMPT,
   MagisteriumCitation,
@@ -35,17 +39,14 @@ const CATHOLIC_RSS_FEEDS: Record<string, string> = {
 const CATHOLIC_AI_SYSTEM_INSTRUCTION = `You are the Soul Sanctum Catholic Assistant, an authoritative, reverent, scholarly, and pastoral Catholic theological research assistant.
 
 CORE GUIDING PRINCIPLES:
+0. STRICT QUESTION RELEVANCE (MANDATORY): You MUST answer ONLY, DIRECTLY, and SPECIFICALLY the exact question asked by the user. NEVER provide an answer that is unrelated to the user's question, NEVER change the subject, and NEVER output generic filler. If any retrieved search snippet or background context does not directly address the user's specific question, ignore that snippet completely and answer the user's actual question directly.
 1. Ground every answer firmly in the Deposit of Faith: Sacred Scripture, Sacred Tradition, and the living Magisterium of the Catholic Church.
-2. Prominently cite the Catechism of the Catholic Church (CCC) with specific paragraph numbers (e.g., CCC 1324-1327 for the Holy Eucharist, CCC 963-975 for the Blessed Virgin Mary, CCC 1422-1498 for Penance and Reconciliation, CCC 1987-2029 for Grace and Justification).
-3. Quote and reference Sacred Scripture (using accurate Catholic editions such as NABRE, Douay-Rheims, or RSV-CE) with explicit chapter and verse.
-4. Reference the Church Fathers (such as St. Augustine, St. John Chrysostom, St. Irenaeus of Lyons, St. Ignatius of Antioch, St. Justin Martyr) and Doctors of the Church (especially St. Thomas Aquinas' Summa Theologiae, St. Alphonsus Liguori, St. Robert Bellarmine, St. Teresa of Ávila, St. John of the Cross, St. Francis de Sales).
-5. Clearly distinguish the hierarchy of theological certainty:
-   - De Fide Dogma (solemnly defined dogmas required for divine and Catholic faith, e.g. Trinity, Incarnation, Real Presence, Immaculate Conception, Assumption)
-   - Doctrinal teachings of the Ordinary and Universal Magisterium (requiring religious submission of intellect and will)
-   - Theological opinions and legitimate schools of thought within Catholic orthodoxy (e.g., Thomism vs. Scotism vs. Molinism)
-   - Approved private revelations (e.g., Fátima, Lourdes, Divine Mercy) which are worthy of pious belief but not binding on Catholic faith.
-6. Tone: Courteous, pastoral, humble, deeply reverent, charitable, lucid, and spiritually uplifting. Avoid secular polemics while remaining completely orthodox and unapologetically faithful to the Apostolic See and Catholic dogma.
-7. Formatting: Use structured headers, bulleted doctrinal points, and clear source attributions (Scripture, CCC, Patristics, Councils) so the seeker can study and verify the Church's teachings.`;
+2. Prominently cite the Catechism of the Catholic Church (CCC) with specific paragraph numbers relevant to the user's exact question.
+3. Quote and reference Sacred Scripture (using accurate Catholic editions such as NABRE, Douay-Rheims, or RSV-CE) with explicit chapter and verse relevant to the user's question.
+4. Reference the Church Fathers and Doctors of the Church where directly relevant to the user's topic.
+5. Clearly distinguish the hierarchy of theological certainty (De Fide Dogma, Ordinary and Universal Magisterium, theological schools of thought, and approved private revelations).
+6. Tone: Courteous, pastoral, humble, deeply reverent, charitable, lucid, and spiritually uplifting.
+7. Formatting: Use structured headers, bulleted doctrinal points, and clear source attributions directly answering the user's question.`;
 
 function vaticanNewsPlugin() {
   return {
@@ -117,12 +118,13 @@ function vaticanNewsPlugin() {
             }
 
             const trimmedPrompt = prompt.trim();
+            const cleanQuestion = cleanUserQuestion(trimmedPrompt);
 
-            // 1. Perform real-time Catholic web research
+            // 1. Perform real-time Catholic web research (strictly filtered for relevance to cleanQuestion)
             let webSources: WebResearchSource[] = [];
             if (enableWebResearch) {
               try {
-                webSources = await searchCatholicInternet(trimmedPrompt);
+                webSources = await searchCatholicInternet(cleanQuestion);
               } catch (err) {
                 console.warn('Web research query error in vite:', err);
               }
@@ -138,7 +140,7 @@ function vaticanNewsPlugin() {
             if (shouldInvokeMagisteriumMcp) {
               try {
                 const mcpResult = await executeMagisteriumMcpTool({
-                  query: trimmedPrompt,
+                  query: cleanQuestion,
                   apiKey: process.env.MAGISTERIUM_API_KEY,
                 });
                 mcpContextBlock = mcpResult.contextBlock;
@@ -155,10 +157,10 @@ function vaticanNewsPlugin() {
               : CATHOLIC_AI_SYSTEM_INSTRUCTION;
 
             const effectiveSystemInstruction = userMemory
-              ? `${baseInstruction}\n\nUSER MEMORY & LEARNED PREFERENCES PROFILE:\n${userMemory}\nAdapt your tone, Scripture translation choice, theological depth, and patristic/saint references naturally to honor these learned user preferences.`
+              ? `${baseInstruction}\n\nUSER STYLE & TRANSLATION PREFERENCES (Use these preferences ONLY to format your tone and Bible translation choice while answering the user's exact question; NEVER let past topics override the current question):\n${userMemory}`
               : baseInstruction;
 
-            let promptWithResearch = trimmedPrompt;
+            let promptWithResearch = `USER QUESTION TO ANSWER DIRECTLY AND SPECIFICALLY:\n"${cleanQuestion}"`;
             if (mcpContextBlock) {
               promptWithResearch += `\n\n${mcpContextBlock}`;
             }
@@ -167,7 +169,7 @@ function vaticanNewsPlugin() {
                 .map((s, idx) => `[Source ${idx + 1}: ${s.title} (${s.url})]\n${s.snippet}`)
                 .join('\n\n');
 
-              promptWithResearch += `\n\n--- REAL-TIME INTERNET RESEARCH FINDINGS ---\n${researchSnippets}\n------------------------------------------\n(Synthesize the Magisterium AI MCP Corpus documents and real-time web research findings together with authentic Catholic doctrine, Sacred Scripture, CCC citations, and Church Fathers.)`;
+              promptWithResearch += `\n\n--- SUPPLEMENTARY WEB RESEARCH (Use ONLY if directly relevant to "${cleanQuestion}"; ignore completely if not relevant) ---\n${researchSnippets}\n------------------------------------------`;
             }
 
             let reply = '';
@@ -176,7 +178,7 @@ function vaticanNewsPlugin() {
               provider === 'magisterium'
                 ? 'magisterium-1 (Free Tier)'
                 : provider === 'gemini'
-                ? 'gemini-3.8-flash'
+                ? 'gemini-3-flash-preview'
                 : 'gpt-4o + Magisterium AI MCP';
             let lastError: any = null;
 
@@ -225,7 +227,7 @@ function vaticanNewsPlugin() {
 
               const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
               if (Array.isArray(history)) {
-                for (const item of history.slice(-10)) {
+                for (const item of history.slice(-6)) {
                   if (item && item.content && typeof item.content === 'string') {
                     contents.push({
                       role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
@@ -240,7 +242,7 @@ function vaticanNewsPlugin() {
                 parts: [{ text: promptWithResearch }],
               });
 
-              const candidateModels = ['gemini-3.8-flash', 'gemini-3.1-flash-lite'];
+              const candidateModels = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-2.0-flash'];
 
               for (const modelName of candidateModels) {
                 try {
@@ -249,11 +251,12 @@ function vaticanNewsPlugin() {
                     contents,
                     config: {
                       systemInstruction: effectiveSystemInstruction,
+                      temperature: 0.3,
                     },
                   });
                   if (response && response.text) {
                     if (shouldInvokeMagisteriumMcp) {
-                      const extracted = extractMagisteriumMetadataAndCleanReply(response.text, trimmedPrompt);
+                      const extracted = extractMagisteriumMetadataAndCleanReply(response.text, cleanQuestion);
                       reply = extracted.reply;
                       if (extracted.magisteriumCitations.length > 0) {
                         magisteriumCitations = extracted.magisteriumCitations;
