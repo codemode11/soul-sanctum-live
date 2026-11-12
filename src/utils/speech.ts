@@ -875,6 +875,48 @@ export class SacredReader {
   private static selectedRecitationVoiceId: RecitationVoiceId = typeof localStorage !== 'undefined' 
     ? ((localStorage.getItem('soul_sanctum_recitation_voice') as RecitationVoiceId) || 'ava-grace') 
     : 'ava-grace';
+  private static activeSelectedVoiceKey: string = typeof localStorage !== 'undefined'
+    ? (localStorage.getItem('soul_sanctum_active_voice') || 'gemini-Kore')
+    : 'gemini-Kore';
+
+  public static getActiveLectorVoiceKey(): string {
+    return this.activeSelectedVoiceKey;
+  }
+
+  public static setActiveLectorVoiceKey(voiceKey: string): void {
+    this.activeSelectedVoiceKey = voiceKey;
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('soul_sanctum_active_voice', voiceKey);
+    }
+  }
+
+  public static getVoiceConfigForActiveKey(voiceKey: string, gender: 'female' | 'male'): { voice: SpeechSynthesisVoice | null; pitch: number; rate: number } {
+    if (voiceKey.startsWith('gemini-')) {
+      const gName = voiceKey.replace('gemini-', '');
+      return this.getAudioConfigForSignature(gName);
+    }
+    if (voiceKey.startsWith('saint-')) {
+      const s = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceKey);
+      if (s) {
+        const { voice } = this.getVoiceForSaint(s.id);
+        return { voice, pitch: s.pitch, rate: s.rate };
+      }
+    }
+    if (voiceKey.startsWith('persona-')) {
+      const p = SACRED_FEMALE_PERSONAS.find(f => f.id === voiceKey);
+      if (p) {
+        const { voice } = this.getVoiceForAvaGrace();
+        return { voice, pitch: p.pitch, rate: p.rate };
+      }
+    }
+    if (this.synth) {
+      const sysVoice = this.synth.getVoices().find(v => v.name === voiceKey);
+      if (sysVoice) {
+        return { voice: sysVoice, pitch: 1.0, rate: this.currentRate };
+      }
+    }
+    return this.getVoiceForGender(gender);
+  }
 
   public static getRecitationVoice(): RecitationVoiceId {
     if (typeof localStorage !== 'undefined') {
@@ -1168,6 +1210,57 @@ export class SacredReader {
     SACRED_MALE_SAINT_PERSONAS.forEach(p => {
       localStorage.removeItem(`soul_sanctum_saint_voice_${p.id}`);
     });
+  }
+
+  public static getAudioConfigForSignature(voiceName: string): { voice: SpeechSynthesisVoice | null; pitch: number; rate: number } {
+    if (!this.synth && typeof window !== 'undefined') {
+      this.synth = window.speechSynthesis;
+    }
+    const all = this.synth ? this.synth.getVoices() : [];
+
+    // Filter non-robotic voices
+    const nonRobotic = all.filter(v => !['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper'].some(r => v.name.toLowerCase().includes(r)));
+    const female = nonRobotic.filter(v => isFemaleVoiceName(v.name));
+    const male = nonRobotic.filter(v => isMaleVoiceName(v.name));
+
+    if (voiceName === 'Kore') {
+      // Female serene soprano (Pitch 1.25)
+      const match = female.find(v => v.name.toLowerCase().includes('ava') || v.name.toLowerCase().includes('grace') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('google us english')) || female[0] || nonRobotic[0] || null;
+      // Exclude SAPI5 voice locking if only 1 voice exists so browser pitch modulation applies
+      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (female[0] || null);
+      return { voice: voiceToUse, pitch: 1.28, rate: 0.90 };
+    }
+
+    if (voiceName === 'Puck') {
+      // High energetic tenor male (Pitch 1.40)
+      const match = male.find(v => v.name.toLowerCase().includes('daniel') || v.name.toLowerCase().includes('ryan') || v.name.toLowerCase().includes('aaron') || v.name.toLowerCase().includes('alex')) || male[1] || male[0] || nonRobotic[1] || null;
+      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (male[0] || null);
+      return { voice: voiceToUse, pitch: 1.40, rate: 1.02 };
+    }
+
+    if (voiceName === 'Charon') {
+      // Deep solemn monastic bass male (Pitch 0.55)
+      const match = male.find(v => v.name.toLowerCase().includes('fred') || v.name.toLowerCase().includes('richard') || v.name.toLowerCase().includes('david')) || male[2] || male[0] || nonRobotic[2] || null;
+      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (male[0] || null);
+      return { voice: voiceToUse, pitch: 0.55, rate: 0.80 };
+    }
+
+    if (voiceName === 'Fenrir') {
+      // Monastic resonant baritone male (Pitch 0.70)
+      const match = male.find(v => v.name.toLowerCase().includes('mark') || v.name.toLowerCase().includes('thomas') || v.name.toLowerCase().includes('charles') || v.name.toLowerCase().includes('brian')) || male[1] || male[0] || null;
+      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (male[0] || null);
+      return { voice: voiceToUse, pitch: 0.70, rate: 0.84 };
+    }
+
+    if (voiceName === 'Zephyr') {
+      // Smooth UK/regional contemplative voice (Pitch 0.95)
+      const ukOrAu = nonRobotic.filter(v => v.lang.toLowerCase().includes('gb') || v.lang.toLowerCase().includes('au') || v.name.toLowerCase().includes('uk') || v.name.toLowerCase().includes('oliver') || v.name.toLowerCase().includes('george'));
+      const match = ukOrAu[0] || nonRobotic[3] || nonRobotic[0] || null;
+      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : null;
+      return { voice: voiceToUse, pitch: 0.95, rate: 0.88 };
+    }
+
+    return { voice: nonRobotic[0] || null, pitch: 1.0, rate: 0.90 };
   }
 
   public static setSelectedFemaleVoiceName(voiceNameOrId: string) {

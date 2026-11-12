@@ -341,6 +341,7 @@ export const DivineOfficeView: React.FC = () => {
             { key: 'compline' as const, line1: 'Night', line2: 'Prayer', Icon: Moon },
           ].map(({ key, line1, line2, Icon }) => {
             const isHovered = hoveredHourKey === key;
+            const isSelected = selectedHourKey === key;
             return (
               <button
                 key={key}
@@ -349,22 +350,24 @@ export const DivineOfficeView: React.FC = () => {
                 onMouseEnter={() => setHoveredHourKey(key)}
                 onMouseLeave={() => setHoveredHourKey(null)}
                 style={{
-                  backgroundColor: isHovered ? '#8B5A2B' : 'transparent',
-                  borderColor: isHovered ? '#5A381C' : '#9CA3AF',
-                  outlineColor: isHovered ? '#5A381C' : 'transparent',
-                  color: '#000000',
+                  backgroundColor: '#FFFFFF',
+                  borderColor: isSelected ? '#8B5A2B' : isHovered ? '#6B4423' : '#D1D5DB',
                 }}
-                className="w-full px-1.5 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[10.5px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center text-center gap-1 sm:gap-2 border border-stone-400/80 outline-1 outline-offset-1 overflow-hidden"
+                className={`w-full px-1.5 sm:px-3.5 py-2 sm:py-2.5 rounded-lg text-[10.5px] sm:text-xs font-bold transition-all cursor-pointer flex items-center justify-center text-center gap-1 sm:gap-2 border overflow-hidden bg-white shadow-xs ${
+                  isSelected
+                    ? 'ring-2 ring-[#8B5A2B] ring-offset-1 border-[#8B5A2B] shadow-md scale-[1.02]'
+                    : 'hover:border-[#6B4423] hover:shadow-xs'
+                }`}
               >
                 <Icon
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-amber-500"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0"
                   style={{
-                    color: '#D4AF37',
+                    color: isSelected ? '#B45309' : '#D4AF37',
                     strokeWidth: 2.4,
-                    filter: 'drop-shadow(0 1px 1.5px rgba(0,0,0,0.45))',
+                    filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.15))',
                   }}
                 />
-                <span style={{ color: '#000000' }} className="w-[54px] sm:w-[64px] shrink-0 font-bold tracking-normal leading-tight text-center flex flex-col items-center justify-center">
+                <span style={{ color: '#1C120C' }} className="w-[54px] sm:w-[64px] shrink-0 font-bold tracking-normal leading-tight text-center flex flex-col items-center justify-center">
                   <span className="block whitespace-nowrap">{line1}</span>
                   {line2 && <span className="block whitespace-nowrap">{line2}</span>}
                 </span>

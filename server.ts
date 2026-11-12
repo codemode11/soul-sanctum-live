@@ -57,7 +57,121 @@ app.get('/api/catholic-ai/health', (_req, res) => {
     hasGeminiKey: !!process.env.GEMINI_API_KEY,
     hasOpenAIKey: !!process.env.OPENAI_API_KEY,
     supportedProviders: ['gemini', 'openai', 'magisterium', 'auto'],
+    supportedAiTtsVoices: ['Puck', 'Charon', 'Kore', 'Fenrir', 'Zephyr'],
   });
+});
+
+// Dedicated Gemini AI Text-to-Speech Endpoint with robust model handling and Web Speech fallback
+app.post('/api/tts', async (req, res) => {
+  try {
+    const { text, voiceName = 'Kore', apiKey } = req.body || {};
+    if (!text || typeof text !== 'string' || !text.trim()) {
+      return res.status(400).json({ error: 'Text prompt is required for TTS.' });
+    }
+
+    const chosenVoice = voiceName || 'Kore';
+
+    // 1. Primary: OpenAI Neural Text-to-Speech (tts-1) with 6 high-definition human voices
+    const openAiKey = apiKey || process.env.OPENAI_API_KEY;
+    if (openAiKey) {
+      try {
+        const openai = new OpenAI({ apiKey: openAiKey });
+        const voiceMap: Record<string, 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer'> = {
+          Kore: 'shimmer',
+          Puck: 'alloy',
+          Charon: 'onyx',
+          Fenrir: 'echo',
+          Zephyr: 'fable',
+          'persona-ava': 'shimmer',
+          'persona-aria': 'nova',
+          'persona-sonia': 'fable',
+          'persona-clara': 'nova',
+          'saint-thomas-aquinas': 'echo',
+          'saint-john-chrysostom': 'alloy',
+          'saint-augustine': 'onyx',
+          'saint-jerome': 'onyx',
+          'pope-saint-gregory': 'echo',
+          'saint-ambrose': 'fable',
+          'saint-cyril': 'onyx',
+          'venerable-bede': 'fable',
+          'saint-basil': 'echo',
+          'saint-bonaventure': 'alloy',
+          'saint-alphonsus': 'echo',
+          'saint-bellarmine': 'onyx',
+          'saint-albert': 'echo',
+          'ava-grace': 'shimmer',
+          david: 'onyx',
+        };
+
+        const targetVoice = voiceMap[chosenVoice] || (chosenVoice.toLowerCase().includes('saint') || chosenVoice.toLowerCase().includes('charon') || chosenVoice.toLowerCase().includes('fenrir') ? 'onyx' : 'shimmer');
+        const isDeepVoice = targetVoice === 'onyx' || chosenVoice === 'Charon' || chosenVoice === 'saint-jerome';
+
+        const mp3Response = await openai.audio.speech.create({
+          model: 'tts-1',
+          voice: targetVoice,
+          input: text.slice(0, 800),
+          speed: isDeepVoice ? 0.88 : 0.95,
+        });
+
+        const buffer = Buffer.from(await mp3Response.arrayBuffer());
+        const base64Audio = buffer.toString('base64');
+        return res.json({
+          audioUrl: `data:audio/mp3;base64,${base64Audio}`,
+          voiceName: chosenVoice,
+          provider: 'openai-tts',
+        });
+      } catch (err: any) {
+        console.warn('[TTS] OpenAI Neural TTS skipped:', err?.message || err);
+      }
+    }
+
+    // 2. Secondary: Gemini 3.8 Flash Lite TTS
+    const voiceStyles: Record<string, string> = {
+      Kore: 'serene, gentle, devotional soprano Catholic lector',
+      Puck: 'lively, bright, articulate young tenor lector',
+      Charon: 'deep, solemn, authoritative bass baritone monk',
+      Fenrir: 'resonant, powerful, monastic Benedictine baritone',
+      Zephyr: 'smooth, calm, contemplative UK liturgical reader',
+    };
+
+    if (process.env.GEMINI_API_KEY) {
+      const ai = getGenAI();
+      const promptText = text.slice(0, 800);
+      const candidateModels = ['gemini-3.8-flash-lite-tts', 'gemini-3.8-flash-tts'];
+
+      for (const modelName of candidateModels) {
+        try {
+          const promptWithStyle = `Read this liturgical text in a ${voiceStyles[chosenVoice] || 'reverent Catholic'} tone:\n\n${promptText}`;
+          const response = await ai.models.generateContent({
+            model: modelName,
+            contents: promptWithStyle,
+            config: {
+              responseModalities: ['AUDIO'],
+            },
+          });
+
+          const partData = response.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+          if (partData?.data) {
+            const base64Audio = partData.data;
+            const mimeType = partData.mimeType || 'audio/wav';
+            return res.json({
+              audioUrl: `data:${mimeType};base64,${base64Audio}`,
+              voiceName: chosenVoice,
+              provider: 'gemini-tts',
+            });
+          }
+        } catch {
+          // Fallback
+        }
+      }
+    }
+
+    // 3. Web Speech synthesis fallback
+    return res.json({ fallbackWebSpeech: true, voiceName: chosenVoice });
+  } catch (err: any) {
+    console.warn('[TTS] Server TTS fallback:', err?.message || err);
+    return res.json({ fallbackWebSpeech: true, voiceName: req.body?.voiceName || 'Kore' });
+  }
 });
 
 // Dedicated Catholic Theological AI Research Endpoint (supports both GET query params and POST JSON body)
