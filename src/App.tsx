@@ -472,7 +472,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen relative flex flex-col bg-stone-950 text-stone-900 selection:bg-amber-300 selection:text-amber-950">
+    <div className="min-h-screen relative flex flex-col overflow-x-clip bg-stone-950 text-stone-900 selection:bg-amber-300 selection:text-amber-950">
       
       {/* Fixed Full-Website Sacred Sanctum Background: Centered and Enlarged */}
       <div className="fixed inset-0 z-0 select-none pointer-events-none overflow-hidden flex flex-col items-center justify-start px-4 sm:px-6 lg:px-8">
@@ -669,7 +669,7 @@ export default function App() {
           >
             
             {/* Left-Side Liturgical Menu */}
-            <div className="shrink-0 transition-all duration-300">
+            <div className="shrink-0 md:self-stretch transition-all duration-300">
               <Navigation
                 activeTab={activeTab}
                 onSelectTab={(tab) => {

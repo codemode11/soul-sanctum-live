@@ -127,11 +127,14 @@ export const Navigation: React.FC<NavigationProps> = ({
   isAndroidPreviewMode = false,
   isFullScreen = false
 }) => {
+  const asideRef = useRef<HTMLElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sliderTrackRef = useRef<HTMLDivElement>(null);
   const scrollPosRef = useRef<number>(0);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [isDraggingSlider, setIsDraggingSlider] = useState<boolean>(false);
+  const [desktopMaxHeightPx, setDesktopMaxHeightPx] = useState<number | null>(null);
 
   const updateProgressFromElement = useCallback((el: HTMLDivElement | null) => {
     if (!el) return;
@@ -149,11 +152,57 @@ export const Navigation: React.FC<NavigationProps> = ({
   };
 
   useEffect(() => {
+    const updateLayoutBounds = () => {
+      const cardEl = cardRef.current;
+      if (isFullScreen || typeof window === 'undefined' || window.innerWidth < 768) {
+        if (cardEl) {
+          cardEl.style.maxHeight = '';
+          cardEl.style.visibility = '';
+        }
+        setDesktopMaxHeightPx(null);
+        updateProgressFromElement(sidebarRef.current);
+        return;
+      }
+
+      const asideEl = asideRef.current;
+      if (!asideEl) {
+        updateProgressFromElement(sidebarRef.current);
+        return;
+      }
+
+      const rect = asideEl.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const screenMargin = 24;
+      const defaultMax = Math.max(0, vh - screenMargin * 2);
+
+      // Keep the Index strictly inside the top/bottom 24px screen margins at every scroll position
+      const availableBelowTop = Math.max(0, Math.floor(vh - rect.top - screenMargin));
+      const nextMax =
+        rect.top > screenMargin
+          ? Math.min(defaultMax, availableBelowTop)
+          : defaultMax;
+
+      if (cardEl) {
+        cardEl.style.maxHeight = `${nextMax}px`;
+        cardEl.style.visibility = nextMax < 64 ? 'hidden' : 'visible';
+      }
+
+      setDesktopMaxHeightPx((prev) => (prev === nextMax ? prev : nextMax));
+      updateProgressFromElement(sidebarRef.current);
+    };
+
+    updateLayoutBounds();
+    window.addEventListener('scroll', updateLayoutBounds, { passive: true });
+    window.addEventListener('resize', updateLayoutBounds);
+    return () => {
+      window.removeEventListener('scroll', updateLayoutBounds);
+      window.removeEventListener('resize', updateLayoutBounds);
+    };
+  }, [isFullScreen, updateProgressFromElement]);
+
+  useLayoutEffect(() => {
     updateProgressFromElement(sidebarRef.current);
-    const onResize = () => updateProgressFromElement(sidebarRef.current);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [updateProgressFromElement]);
+  }, [desktopMaxHeightPx, updateProgressFromElement]);
 
   const dragOffsetRef = useRef<number>(22);
 
@@ -578,16 +627,23 @@ export const Navigation: React.FC<NavigationProps> = ({
   return (
     <>
       {/* 1. Desktop and Tablet Sticky Left-Side Navigation with Music-Style Slider */}
-      <aside className={`hidden w-72 lg:w-80 shrink-0 ${
-        isFullScreen
-          ? 'md:flex md:flex-col h-full'
-          : 'md:block sticky top-6 self-start'
-      }`}>
-        <div className={`relative bg-stone-950/90 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex flex-col overflow-hidden ${
+      <aside
+        ref={asideRef}
+        className={`hidden w-72 lg:w-80 shrink-0 ${
           isFullScreen
-            ? 'h-full max-h-full rounded-none border-y-0 border-l-0'
-            : 'rounded-xl max-h-[calc(100vh-3rem)]'
-        }`}>
+            ? 'md:flex md:flex-col h-full'
+            : 'md:block md:sticky md:top-6 self-start'
+        }`}
+      >
+        <div
+          ref={cardRef}
+          style={!isFullScreen && desktopMaxHeightPx !== null ? { maxHeight: `${desktopMaxHeightPx}px` } : undefined}
+          className={`relative bg-stone-950/90 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex flex-col overflow-hidden ${
+            isFullScreen
+              ? 'h-full max-h-full rounded-none border-y-0 border-l-0'
+              : 'rounded-xl max-h-[calc(100vh-3rem)]'
+          }`}
+        >
           <div className="flex items-stretch flex-1 min-h-0 overflow-hidden">
             <div 
               ref={sidebarRef}
