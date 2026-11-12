@@ -727,6 +727,9 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
 export function isFemaleVoiceName(vName: string): boolean {
   const lower = vName.toLowerCase();
 
+  // Zira is strictly blocked from lector use
+  if (lower.includes('zira')) return false;
+
   // Explicit male names must never match as female
   const explicitMale = [
     'david', 'george', 'james', 'richard', 'daniel', 'ryan', 'guy',
@@ -746,7 +749,7 @@ export function isFemaleVoiceName(vName: string): boolean {
     'google us english', 'google uk english female', 'siri', 'cortana',
     'jenny', 'aria', 'guyana', 'libby', 'natasha', 'stephanie',
     'cindy', 'olivia', 'emma', 'chloe', 'zoe', 'alice',
-    'kate', 'mary', 'sally', 'alva', 'kendra', 'kimberly', 'joanna', 'salli', 'zira'
+    'kate', 'mary', 'sally', 'alva', 'kendra', 'kimberly', 'joanna', 'salli'
   ];
   return femaleKeywords.some(f => lower.includes(f));
 }
