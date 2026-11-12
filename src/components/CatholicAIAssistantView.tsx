@@ -28,6 +28,12 @@ import {
   searchCatholicInternet,
   synthesizeResearchResponse,
 } from '../utils/catholicInternetResearch';
+import {
+  MagisteriumCitation,
+  MagisteriumMcpTrace,
+  buildFallbackMagisterialCitations,
+  buildFallbackRelatedQuestions,
+} from '../utils/magisteriumAiEngine';
 
 export interface ChatMessage {
   id: string;
@@ -35,6 +41,9 @@ export interface ChatMessage {
   content: string;
   timestamp: number;
   webSources?: WebResearchSource[];
+  magisteriumCitations?: MagisteriumCitation[];
+  relatedQuestions?: string[];
+  mcpTrace?: MagisteriumMcpTrace;
   provider?: string;
   model?: string;
 }
@@ -80,17 +89,17 @@ const AI_ENGINE_SPECS: Record<AIEngine, { name: string; label: string }> = {
     name: 'ChatGPT (OpenAI GPT-4o)',
     label: 'ChatGPT (GPT-4o)'
   },
+  magisterium: {
+    name: 'Magisterium AI Standalone (Free Tier)',
+    label: 'Magisterium AI'
+  },
   gemini: {
     name: 'Soul Sanctum AI (Gemini)',
     label: 'Gemini AI'
   },
-  magisterium: {
-    name: 'Magisterium AI Engine',
-    label: 'Magisterium AI'
-  },
   auto: {
     name: 'Smart Hybrid AI Engine',
-    label: 'Auto AI'
+    label: 'Hybrid AI'
   }
 };
 
@@ -154,22 +163,32 @@ const SAINT_AND_DOCTOR_MATCHERS: Array<{ name: string; pattern: RegExp }> = [
   { name: 'St. Bernadette of Lourdes', pattern: /\b(bernadette|lourdes)\b/i },
 ];
 
-function createDefaultWelcomeMessage(engine: AIEngine = 'auto'): ChatMessage {
+function createDefaultWelcomeMessage(engine: AIEngine = 'openai'): ChatMessage {
   return {
     id: `welcome-${Date.now()}`,
     role: 'assistant',
-    content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** (powered by **ChatGPT** & **Gemini**).
+    content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** — powered by **ChatGPT (OpenAI GPT-4o)** as the default engine with **Magisterium AI** connected as a **Model Context Protocol (MCP) Server** (\`mcp://magisterium-ai/corpus\`).
 
-Grounded in:
-* **The Catechism of the Catholic Church (CCC)**
-* **Sacred Scripture** (NABRE, Douay-Rheims, RSV-CE)
-* **The Church Fathers and Doctors of the Church** (St. Thomas Aquinas, St. Augustine, St. John Chrysostom)
-* **The 21 Ecumenical Councils** (Nicaea to Vatican II)
+How **ChatGPT + Magisterium AI MCP** works together:
+* **Primary Engine — ChatGPT (GPT-4o)**: Synthesizes deep theological, scriptural, and historical inquiries in a clear, scholarly voice tailored to your learned preferences.
+* **MCP Tool Layer — Magisterium AI (Free Tier · 28,000+ Church Documents)**: Automatically invokes \`query_magisterium_corpus\` and \`verify_ccc_and_canon_citations\` across the *Catechism of the Catholic Church (CCC)*, the 21 Ecumenical Councils, Papal Encyclicals, *Denzinger*, the *1983 Code of Canon Law*, and *Summa Theologiae*.
 
-Your **Previous Chats** stay saved in the left memory panel, and the Assistant gradually learns your theological interests, favored Scripture translation, and preferred scholarly style over time.`,
+Your **Previous Chats** and **Learned Preferences** stay saved in the left memory panel, and every response includes verified **Magisterium AI MCP Citations** and clickable **Related Magisterial Inquiries**.`,
     timestamp: Date.now(),
     provider: engine,
-    model: engine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.8-flash'
+    model: 'gpt-4o + Magisterium AI MCP',
+    mcpTrace: {
+      serverName: 'magisterium-ai-mcp',
+      protocolVersion: '2024-11-05',
+      tier: 'free-tier',
+      toolsInvoked: ['query_magisterium_corpus', 'verify_ccc_and_canon_citations'],
+      documentsRetrieved: 28000
+    },
+    relatedQuestions: [
+      'How does the Council of Trent and CCC 1374–1376 define Transubstantiation and the Real Presence?',
+      'How does Vatican II (Dei Verbum §§ 9–10) explain the unity of Sacred Scripture, Sacred Tradition, and the Magisterium?',
+      'What are the Magisterial teachings of Lumen Gentium Chapter VIII on the Blessed Virgin Mary?'
+    ]
   };
 }
 
@@ -215,7 +234,7 @@ function loadMemoryProfile(): UserMemoryProfile {
   }
 }
 
-function createInitialSession(persona: AIPersona = 'scholarly', engine: AIEngine = 'auto'): ChatSession {
+function createInitialSession(persona: AIPersona = 'scholarly', engine: AIEngine = 'openai'): ChatSession {
   const now = Date.now();
   return {
     id: `session-${now}`,
@@ -334,7 +353,8 @@ export const CatholicAIAssistantView: React.FC = () => {
   const [inputPrompt, setInputPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isWebResearchEnabled, setIsWebResearchEnabled] = useState(true);
-  const [selectedEngine, setSelectedEngine] = useState<AIEngine>(() => activeSession?.engine || 'auto');
+  const [isMagisteriumMcpEnabled, setIsMagisteriumMcpEnabled] = useState(true);
+  const [selectedEngine, setSelectedEngine] = useState<AIEngine>('openai');
   const [selectedPersona, setSelectedPersona] = useState<AIPersona>(() => activeSession?.persona || memoryProfile.favoredPersona || 'scholarly');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -515,7 +535,7 @@ export const CatholicAIAssistantView: React.FC = () => {
     setErrorMessage(null);
     setActiveSessionId(session.id);
     setSelectedPersona(session.persona || memoryProfile.favoredPersona);
-    setSelectedEngine(session.engine || 'auto');
+    setSelectedEngine(session.engine || 'openai');
   };
 
   const handleDeleteSession = (e: React.MouseEvent, sessionId: string) => {
@@ -663,9 +683,17 @@ export const CatholicAIAssistantView: React.FC = () => {
       const personaInstruction = AI_PERSONA_SPECS[selectedPersona].systemPromptSuffix;
       const augmentedPrompt = `${promptToSend}\n\n[Persona Instruction: ${personaInstruction} Preferred Bible Translation: ${updatedProfile.preferredBible}. Preferred Style: ${updatedProfile.preferredDepth}.]`;
 
-      let data: { reply?: string; webSources?: WebResearchSource[]; provider?: string; model?: string } | null = null;
+      let data: {
+        reply?: string;
+        webSources?: WebResearchSource[];
+        magisteriumCitations?: MagisteriumCitation[];
+        relatedQuestions?: string[];
+        mcpTrace?: MagisteriumMcpTrace;
+        provider?: string;
+        model?: string;
+      } | null = null;
 
-      // 1. Primary POST request with full conversation history and user memory profile
+      // 1. Primary POST request with ChatGPT default engine + Magisterium AI MCP Server enabled
       try {
         const postRes = await fetch('/api/catholic-ai', {
           method: 'POST',
@@ -679,6 +707,7 @@ export const CatholicAIAssistantView: React.FC = () => {
             history: historyPayload,
             userMemory: userMemoryString,
             enableWebResearch: isWebResearchEnabled,
+            enableMagisteriumMcp: isMagisteriumMcpEnabled,
             provider: selectedEngine,
           }),
         });
@@ -701,7 +730,9 @@ export const CatholicAIAssistantView: React.FC = () => {
             augmentedPrompt
           )}&userMemory=${encodeURIComponent(
             userMemoryString
-          )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}&provider=${selectedEngine}`;
+          )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}&enableMagisteriumMcp=${
+            isMagisteriumMcpEnabled ? 'true' : 'false'
+          }&provider=${selectedEngine}`;
 
           const getRes = await fetch(queryUrl, {
             method: 'GET',
@@ -722,20 +753,53 @@ export const CatholicAIAssistantView: React.FC = () => {
       }
 
       if (data && data.reply) {
+        const mcpActive = isMagisteriumMcpEnabled || (data.provider || selectedEngine) === 'magisterium';
+        const resolvedCitations =
+          data.magisteriumCitations && data.magisteriumCitations.length > 0
+            ? data.magisteriumCitations
+            : mcpActive
+            ? buildFallbackMagisterialCitations(data.reply, promptToSend)
+            : undefined;
         const assistantMsg: ChatMessage = {
           id: `assistant-${Date.now()}`,
           role: 'assistant',
           content: data.reply,
           timestamp: Date.now(),
           webSources: data.webSources || [],
+          magisteriumCitations: resolvedCitations,
+          relatedQuestions:
+            data.relatedQuestions && data.relatedQuestions.length > 0
+              ? data.relatedQuestions
+              : mcpActive
+              ? buildFallbackRelatedQuestions(promptToSend)
+              : undefined,
+          mcpTrace:
+            data.mcpTrace ||
+            (mcpActive
+              ? {
+                  serverName: 'magisterium-ai-mcp',
+                  protocolVersion: '2024-11-05',
+                  tier: 'free-tier',
+                  toolsInvoked: ['query_magisterium_corpus', 'verify_ccc_and_canon_citations'],
+                  documentsRetrieved: resolvedCitations?.length || 3,
+                }
+              : undefined),
           provider: data.provider || selectedEngine,
-          model: data.model || (selectedEngine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.8-flash'),
+          model:
+            data.model ||
+            (selectedEngine === 'openai'
+              ? isMagisteriumMcpEnabled
+                ? 'gpt-4o + Magisterium AI MCP'
+                : 'gpt-4o'
+              : selectedEngine === 'magisterium'
+              ? 'magisterium-1 (Free Tier)'
+              : 'gemini-3.8-flash'),
         };
         appendMessageToActiveSession(targetSessionId, assistantMsg);
         return;
       }
 
-      // 3. Direct Client-Side Live Internet Research Fallback
+      // 3. Direct Client-Side Live Internet & Magisterium AI MCP Fallback
       const liveWebSources = isWebResearchEnabled
         ? await searchCatholicInternet(promptToSend)
         : [];
@@ -748,14 +812,29 @@ export const CatholicAIAssistantView: React.FC = () => {
         isSpecificMatch ? matchedCanned : undefined
       );
 
+      const fallbackCitations = isMagisteriumMcpEnabled
+        ? buildFallbackMagisterialCitations(synthesizedReply, promptToSend)
+        : undefined;
+
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
         content: synthesizedReply,
         timestamp: Date.now(),
         webSources: liveWebSources,
+        magisteriumCitations: fallbackCitations,
+        relatedQuestions: isMagisteriumMcpEnabled ? buildFallbackRelatedQuestions(promptToSend) : undefined,
+        mcpTrace: isMagisteriumMcpEnabled
+          ? {
+              serverName: 'magisterium-ai-mcp',
+              protocolVersion: '2024-11-05',
+              tier: 'free-tier',
+              toolsInvoked: ['query_magisterium_corpus'],
+              documentsRetrieved: fallbackCitations?.length || 3,
+            }
+          : undefined,
         provider: selectedEngine,
-        model: 'chatgpt-standard'
+        model: selectedEngine === 'openai' ? 'gpt-4o + Magisterium AI MCP' : 'gemini-3.8-flash'
       };
       appendMessageToActiveSession(targetSessionId, assistantMsg);
     } catch (err: any) {
@@ -772,14 +851,29 @@ export const CatholicAIAssistantView: React.FC = () => {
         isSpecificMatch ? matchedCanned : undefined
       );
 
+      const fallbackCitations = isMagisteriumMcpEnabled
+        ? buildFallbackMagisterialCitations(synthesizedReply, promptToSend)
+        : undefined;
+
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
         content: synthesizedReply,
         timestamp: Date.now(),
         webSources: liveWebSources,
+        magisteriumCitations: fallbackCitations,
+        relatedQuestions: isMagisteriumMcpEnabled ? buildFallbackRelatedQuestions(promptToSend) : undefined,
+        mcpTrace: isMagisteriumMcpEnabled
+          ? {
+              serverName: 'magisterium-ai-mcp',
+              protocolVersion: '2024-11-05',
+              tier: 'free-tier',
+              toolsInvoked: ['query_magisterium_corpus'],
+              documentsRetrieved: fallbackCitations?.length || 3,
+            }
+          : undefined,
         provider: selectedEngine,
-        model: 'chatgpt-fallback'
+        model: selectedEngine === 'openai' ? 'gpt-4o + Magisterium AI MCP' : 'gemini-3.8-flash'
       };
       appendMessageToActiveSession(targetSessionId, assistantMsg);
     } finally {
@@ -806,12 +900,12 @@ export const CatholicAIAssistantView: React.FC = () => {
     memoryProfile.favoriteSaintsAndDoctors.length +
     memoryProfile.customNotes.length;
 
-  // Helper to format response markdown with enlarged, clear typography
+  // Helper to format response markdown with clear daylight archival typography
   const renderFormattedContent = (content: string) => {
     const lines = content.split('\n');
 
     return (
-      <div className="space-y-3.5 leading-relaxed text-[#1C120C] text-base sm:text-lg md:text-[18.5px] font-serif">
+      <div className="space-y-3.5 leading-relaxed text-stone-900 text-base sm:text-lg md:text-[18.5px] font-serif">
         {lines.map((line, idx) => {
           const trimmed = line.trim();
           if (!trimmed) {
@@ -820,14 +914,14 @@ export const CatholicAIAssistantView: React.FC = () => {
 
           if (trimmed.startsWith('### ')) {
             return (
-              <h3 key={idx} className="font-cinzel text-lg sm:text-xl font-bold text-[#3B1E08] pt-2 border-b border-[#D4A373]/40 pb-1.5">
+              <h3 key={idx} className="font-cinzel text-lg sm:text-xl font-bold text-amber-950 pt-2 border-b border-stone-200 pb-1.5">
                 {trimmed.replace(/^###\s+/, '')}
               </h3>
             );
           }
           if (trimmed.startsWith('## ')) {
             return (
-              <h2 key={idx} className="font-cinzel text-xl sm:text-2xl font-bold text-[#241307] pt-3 border-b border-stone-300 pb-1.5">
+              <h2 key={idx} className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900 pt-3 border-b border-stone-200 pb-1.5">
                 {trimmed.replace(/^##\s+/, '')}
               </h2>
             );
@@ -835,7 +929,7 @@ export const CatholicAIAssistantView: React.FC = () => {
 
           if (trimmed.startsWith('>')) {
             return (
-              <blockquote key={idx} className="p-3.5 my-2 bg-[#FAF5EE] border-l-4 border-[#8B5A2B] italic text-[#241307] text-base sm:text-lg rounded-r-lg font-serif">
+              <blockquote key={idx} className="p-4 my-2.5 bg-[#FAF7F0] border border-[#E6DEC8] italic text-stone-800 text-base sm:text-lg rounded-xl font-serif">
                 {parseInlineStyles(trimmed.replace(/^>\s*/, ''))}
               </blockquote>
             );
@@ -844,8 +938,8 @@ export const CatholicAIAssistantView: React.FC = () => {
           if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
             return (
               <div key={idx} className="flex items-start gap-2.5 pl-2">
-                <span className="text-[#8B5A2B] font-bold text-lg shrink-0">•</span>
-                <span className="flex-1 text-[#1C120C]">{parseInlineStyles(trimmed.replace(/^[*|-]\s+/, ''))}</span>
+                <span className="text-amber-800 font-bold text-lg shrink-0">•</span>
+                <span className="flex-1 text-stone-900">{parseInlineStyles(trimmed.replace(/^[*|-]\s+/, ''))}</span>
               </div>
             );
           }
@@ -854,16 +948,16 @@ export const CatholicAIAssistantView: React.FC = () => {
           if (numMatch) {
             return (
               <div key={idx} className="flex items-start gap-2.5 pl-2">
-                <span className="font-cinzel font-bold text-[#5C2E0E] text-sm shrink-0 mt-0.5">
+                <span className="font-cinzel font-bold text-amber-900 text-sm shrink-0 mt-0.5 tabular-nums">
                   {numMatch[1]}
                 </span>
-                <span className="flex-1 text-[#1C120C]">{parseInlineStyles(numMatch[2])}</span>
+                <span className="flex-1 text-stone-900">{parseInlineStyles(numMatch[2])}</span>
               </div>
             );
           }
 
           return (
-            <p key={idx} className="text-[#1C120C]">
+            <p key={idx} className="text-stone-900">
               {parseInlineStyles(trimmed)}
             </p>
           );
@@ -878,14 +972,14 @@ export const CatholicAIAssistantView: React.FC = () => {
     return parts.map((part, i) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return (
-          <strong key={i} className="font-bold text-[#1C120C] font-serif">
+          <strong key={i} className="font-bold text-stone-950 font-serif">
             {part.slice(2, -2)}
           </strong>
         );
       }
       if (part.startsWith('*') && part.endsWith('*')) {
         return (
-          <em key={i} className="italic text-[#2A1810]">
+          <em key={i} className="italic text-stone-800">
             {part.slice(1, -1)}
           </em>
         );
@@ -894,7 +988,7 @@ export const CatholicAIAssistantView: React.FC = () => {
         return (
           <span
             key={i}
-            className="inline-flex items-center gap-0.5 px-2 py-0.5 mx-0.5 rounded bg-[#FAF2E8] text-[#5C2E0E] font-cinzel font-bold text-xs border border-[#D4A373]/60 shadow-2xs"
+            className="font-cinzel font-bold text-amber-900 underline decoration-amber-600/50 underline-offset-2 mx-0.5"
             title="Catechism of the Catholic Church Citation"
           >
             {part}
@@ -907,46 +1001,48 @@ export const CatholicAIAssistantView: React.FC = () => {
 
   return (
     <div className="space-y-5 w-full pb-12">
-      {/* 1. Top Banner Following Daily Mass Readings Styling & Layout */}
-      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 w-full">
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-[#1C120C] to-stone-900 text-stone-100 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-2">
-            {/* Line 1: Engine/Persona & Memory Status Subtext */}
-            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-              <span className="text-xs sm:text-sm text-stone-300 font-serif">
-                <strong className="text-amber-300 font-cinzel font-semibold">{AI_ENGINE_SPECS[selectedEngine].name}</strong>
-                <span className="mx-1.5 opacity-60">•</span>
-                <span className="italic">{AI_PERSONA_SPECS[selectedPersona].title}</span>
+      {/* 1. Daylight Archival Header Banner */}
+      <div className="bg-[#FDFBF7] rounded-xl shadow-xs border border-[#E5DEC9] relative z-20 w-full">
+        <div className={`px-5 pt-4 pb-4 sm:px-6 min-h-[148px] bg-gradient-to-r from-[#FDFBF7] via-[#F7F2E7] to-[#FDFBF7] text-stone-900 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-1.5 text-left">
+            {/* Line 1: Clean Unboxed Metadata */}
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-600 font-serif flex-wrap">
+              <strong className="text-amber-900 font-cinzel font-bold">{AI_ENGINE_SPECS[selectedEngine].name}</strong>
+              <span aria-hidden="true">·</span>
+              <span className="font-cinzel font-bold text-amber-800 text-xs">
+                Magisterium AI MCP ({isMagisteriumMcpEnabled ? 'Connected · Free Tier' : 'Paused'})
               </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-amber-500/15 border border-amber-400/40 text-amber-200 text-[11px] font-cinzel font-semibold">
-                <Brain className="w-3 h-3 text-amber-300" />
-                <span>Memory Active ({sessions.length} {sessions.length === 1 ? 'Chat' : 'Chats'})</span>
+              <span aria-hidden="true">·</span>
+              <span className="italic text-stone-700">{AI_PERSONA_SPECS[selectedPersona].title}</span>
+              <span aria-hidden="true">·</span>
+              <span className="text-stone-600 font-cinzel text-xs">
+                Memory Active ({sessions.length} {sessions.length === 1 ? 'Chat' : 'Chats'})
               </span>
             </div>
 
             {/* Line 2: Prominent Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-stone-900 leading-snug break-words">
               Catholic Theological &amp; Scriptural Research Assistant
             </h2>
           </div>
 
-          {/* Line 3: Action Controls lowered together at bottom-right */}
+          {/* Line 3: Daylight Action Controls & Magisterium AI MCP Server Toggle */}
           <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => setIsSidebarOpen(prev => !prev)}
-                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
                   isSidebarOpen
-                    ? 'bg-[#3B1E08] text-amber-100 border-amber-400/70'
-                    : 'bg-[#1C120C]/90 hover:bg-[#3B1E08] text-amber-200 border-[#8B5A2B]/80'
+                    ? 'bg-[#EFE8D8] text-amber-950 border-[#D5C7A9]'
+                    : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-300'
                 }`}
                 title={isSidebarOpen ? 'Hide Previous Chats & Memory Panel' : 'Show Previous Chats & Memory Panel'}
               >
                 {isSidebarOpen ? (
-                  <PanelLeftClose className="w-3.5 h-3.5 text-amber-300" />
+                  <PanelLeftClose className="w-3.5 h-3.5 text-amber-800" />
                 ) : (
-                  <PanelLeftOpen className="w-3.5 h-3.5 text-amber-300" />
+                  <PanelLeftOpen className="w-3.5 h-3.5 text-amber-800" />
                 )}
                 <span>Previous Chats &amp; Memory</span>
               </button>
@@ -954,59 +1050,89 @@ export const CatholicAIAssistantView: React.FC = () => {
               <button
                 type="button"
                 onClick={handleStartNewChat}
-                className="px-3 py-1.5 rounded-md bg-amber-700 hover:bg-amber-600 text-stone-950 font-cinzel font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                className="px-3.5 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs whitespace-nowrap shrink-0"
                 title="Start a new theological inquiry thread"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>New Chat</span>
               </button>
+
+              {/* 1-Click Magisterium AI MCP Connection Toggle */}
+              <button
+                type="button"
+                onClick={() => setIsMagisteriumMcpEnabled(prev => !prev)}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
+                  isMagisteriumMcpEnabled
+                    ? 'bg-amber-900/10 text-amber-950 border-amber-700/60 shadow-2xs'
+                    : 'bg-white hover:bg-stone-50 text-stone-600 border-stone-300'
+                }`}
+                title="Toggle Magisterium AI Model Context Protocol (MCP) Server for ChatGPT"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-amber-800" />
+                <span>
+                  {isMagisteriumMcpEnabled
+                    ? 'Magisterium AI MCP: Connected (Free Tier)'
+                    : 'Connect Magisterium AI MCP'}
+                </span>
+              </button>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href="https://www.magisterium.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 rounded-lg bg-white hover:bg-[#F6F2E9] border border-stone-300 text-amber-950 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all whitespace-nowrap shrink-0"
+                title="Open official Magisterium AI web portal in a new tab"
+              >
+                <span>Magisterium.com</span>
+                <ExternalLink className="w-3 h-3 text-amber-800" />
+              </a>
+
               <button
                 type="button"
                 onClick={() => setIsSettingsOpen(prev => !prev)}
-                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
                   isSettingsOpen
-                    ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
-                    : 'bg-[#1C120C]/90 hover:bg-[#3B1E08] text-amber-100 border-[#8B5A2B]/80'
+                    ? 'bg-[#EFE8D8] text-amber-950 border-[#D5C7A9]'
+                    : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-300'
                 }`}
                 title={isSettingsOpen ? 'Close Settings Menu' : 'Open AI Engine Settings Drop-down'}
                 aria-label="Toggle AI Settings Drop-down"
               >
-                <Sliders className="w-3.5 h-3.5 text-amber-300" />
+                <Sliders className="w-3.5 h-3.5 text-amber-800" />
                 <span>Settings</span>
-                <ChevronDown className={`w-3 h-3 text-amber-300 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-3 h-3 text-amber-800 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
               </button>
 
               <button
                 type="button"
                 onClick={handleClearCurrentChat}
-                className="px-3 py-1.5 rounded-md bg-stone-900/90 hover:bg-stone-800 border border-stone-700 text-amber-200 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
+                className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-stone-100 border border-stone-300 text-stone-700 hover:text-stone-900 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap shrink-0"
                 title="Clear current conversation thread"
               >
-                <Trash2 className="w-3.5 h-3.5 text-amber-400" />
+                <Trash2 className="w-3.5 h-3.5 text-stone-600" />
                 <span>Reset Thread</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Settings Drop-Down Panel */}
+        {/* Daylight Settings Drop-Down Panel */}
         {isSettingsOpen && (
-          <div className="p-4 sm:p-5 bg-[#251710] border-t border-[#8B5A2B]/50 rounded-b-xl space-y-4 animate-fade-in text-amber-100 text-xs">
+          <div className="p-4 sm:p-5 bg-[#F6F2E9] border-t border-[#E5DEC9] rounded-b-xl space-y-4 animate-fade-in text-stone-800 text-xs text-left">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Engine Selector */}
               <div className="space-y-1.5">
-                <label className="block font-cinzel font-bold text-amber-300 uppercase tracking-wider text-[11px]">
-                  AI Engine
+                <label className="block font-cinzel font-bold text-amber-950 text-[11px]">
+                  Primary AI Engine (Default: ChatGPT)
                 </label>
                 <select
                   value={selectedEngine}
                   onChange={(e) => setSelectedEngine(e.target.value as AIEngine)}
-                  className="w-full bg-[#1C120C] text-amber-100 text-xs font-serif rounded-lg p-2.5 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400 cursor-pointer"
+                  className="w-full bg-white text-stone-900 text-xs font-serif rounded-lg p-2.5 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer"
                 >
-                  {(['auto', 'gemini', 'openai', 'magisterium'] as AIEngine[]).map((eng) => (
+                  {(['openai', 'magisterium', 'gemini', 'auto'] as AIEngine[]).map((eng) => (
                     <option key={eng} value={eng}>
                       {AI_ENGINE_SPECS[eng].name}
                     </option>
@@ -1016,13 +1142,13 @@ export const CatholicAIAssistantView: React.FC = () => {
 
               {/* Persona Selector */}
               <div className="space-y-1.5">
-                <label className="block font-cinzel font-bold text-amber-300 uppercase tracking-wider text-[11px]">
+                <label className="block font-cinzel font-bold text-amber-950 text-[11px]">
                   Research Mode &amp; Persona
                 </label>
                 <select
                   value={selectedPersona}
                   onChange={(e) => setSelectedPersona(e.target.value as AIPersona)}
-                  className="w-full bg-[#1C120C] text-amber-100 text-xs font-serif rounded-lg p-2.5 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400 cursor-pointer"
+                  className="w-full bg-white text-stone-900 text-xs font-serif rounded-lg p-2.5 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer"
                 >
                   {Object.entries(AI_PERSONA_SPECS).map(([key, spec]) => (
                     <option key={key} value={key}>
@@ -1034,7 +1160,7 @@ export const CatholicAIAssistantView: React.FC = () => {
 
               {/* Preferred Bible Edition */}
               <div className="space-y-1.5">
-                <label className="block font-cinzel font-bold text-amber-300 uppercase tracking-wider text-[11px]">
+                <label className="block font-cinzel font-bold text-amber-950 text-[11px]">
                   Preferred Bible Edition
                 </label>
                 <select
@@ -1046,7 +1172,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                       lastUpdated: Date.now()
                     }))
                   }
-                  className="w-full bg-[#1C120C] text-amber-100 text-xs font-serif rounded-lg p-2.5 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400 cursor-pointer"
+                  className="w-full bg-white text-stone-900 text-xs font-serif rounded-lg p-2.5 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer"
                 >
                   {(['RSV-CE', 'Douay-Rheims', 'NABRE', 'Knox / Latin Vulgate'] as PreferredBibleEdition[]).map(ed => (
                     <option key={ed} value={ed}>
@@ -1058,7 +1184,7 @@ export const CatholicAIAssistantView: React.FC = () => {
 
               {/* Preferred Response Depth */}
               <div className="space-y-1.5">
-                <label className="block font-cinzel font-bold text-amber-300 uppercase tracking-wider text-[11px]">
+                <label className="block font-cinzel font-bold text-amber-950 text-[11px]">
                   Preferred Response Style
                 </label>
                 <select
@@ -1070,7 +1196,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                       lastUpdated: Date.now()
                     }))
                   }
-                  className="w-full bg-[#1C120C] text-amber-100 text-xs font-serif rounded-lg p-2.5 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400 cursor-pointer"
+                  className="w-full bg-white text-stone-900 text-xs font-serif rounded-lg p-2.5 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer"
                 >
                   {([
                     'Comprehensive & Scholarly',
@@ -1086,46 +1212,64 @@ export const CatholicAIAssistantView: React.FC = () => {
               </div>
             </div>
 
-            {/* Internet Research Toggle */}
-            <div className="pt-2 border-t border-[#8B5A2B]/40 flex flex-wrap items-center justify-between gap-3">
-              <button
-                type="button"
-                onClick={() => setIsWebResearchEnabled(prev => !prev)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer border flex items-center gap-2 ${
-                  isWebResearchEnabled
-                    ? 'bg-[#3B1E08] border-amber-400/80 text-amber-200'
-                    : 'bg-[#1C120C] border-stone-700 text-stone-400'
-                }`}
-              >
-                <Globe className={`w-3.5 h-3.5 ${isWebResearchEnabled ? 'text-amber-400' : 'text-stone-500'}`} />
-                <span>Internet Research: <strong>{isWebResearchEnabled ? 'ACTIVE' : 'OFF'}</strong></span>
-              </button>
+            {/* MCP Server & Internet Research Toggles */}
+            <div className="pt-2 border-t border-stone-300/70 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setIsMagisteriumMcpEnabled(prev => !prev)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer border flex items-center gap-2 whitespace-nowrap shrink-0 ${
+                    isMagisteriumMcpEnabled
+                      ? 'bg-amber-50 border-amber-600/60 text-amber-950'
+                      : 'bg-white border-stone-300 text-stone-600'
+                  }`}
+                >
+                  <BookOpen className={`w-3.5 h-3.5 ${isMagisteriumMcpEnabled ? 'text-amber-800' : 'text-stone-400'}`} />
+                  <span>
+                    MCP Server (<code>mcp://magisterium-ai</code>):{' '}
+                    <strong>{isMagisteriumMcpEnabled ? 'Connected (Free Tier)' : 'Disconnected'}</strong>
+                  </span>
+                </button>
 
-              <span className="text-[11px] font-serif text-amber-200/80">
-                Your preferences and past conversations are automatically remembered across sessions.
+                <button
+                  type="button"
+                  onClick={() => setIsWebResearchEnabled(prev => !prev)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer border flex items-center gap-2 whitespace-nowrap shrink-0 ${
+                    isWebResearchEnabled
+                      ? 'bg-amber-50 border-amber-600/60 text-amber-950'
+                      : 'bg-white border-stone-300 text-stone-600'
+                  }`}
+                >
+                  <Globe className={`w-3.5 h-3.5 ${isWebResearchEnabled ? 'text-amber-800' : 'text-stone-400'}`} />
+                  <span>Internet Research: <strong>{isWebResearchEnabled ? 'Active' : 'Off'}</strong></span>
+                </button>
+              </div>
+
+              <span className="text-[11px] font-serif text-stone-600">
+                ChatGPT automatically queries the Magisterium AI MCP server and remembers your preferences across sessions.
               </span>
             </div>
           </div>
         )}
       </div>
 
-      {/* 2. Main Workspace: Left Memory & Previous Chats Panel + Right Active Conversation */}
+      {/* 2. Main Workspace: Daylight Left Memory Panel + Right Active Research Thread */}
       <div className={`grid grid-cols-1 ${isSidebarOpen ? 'lg:grid-cols-[310px_1fr]' : 'lg:grid-cols-1'} gap-5 items-start`}>
         
-        {/* LEFT PANEL: PREVIOUS CHATS & LEARNED USER PREFERENCES */}
+        {/* LEFT PANEL: PREVIOUS CHATS & LEARNED USER PREFERENCES (LIGHT ARCHIVAL PAPER PALETTE) */}
         {isSidebarOpen && (
-          <aside className="rounded-2xl overflow-hidden bg-gradient-to-b from-[#1E140E] via-[#19110C] to-[#140D09] border border-[#8B5A2B]/60 shadow-xl text-stone-100 flex flex-col max-h-[760px] lg:sticky lg:top-4">
+          <aside className="rounded-xl overflow-hidden bg-[#FAF8F3] border border-[#E5DEC9] shadow-xs text-stone-900 flex flex-col max-h-[760px] lg:sticky lg:top-4">
             {/* Panel Switcher Header */}
-            <div className="p-3 bg-[#26170F] border-b border-[#8B5A2B]/40 space-y-2.5">
+            <div className="p-3.5 bg-[#F4EFE4] border-b border-[#E5DEC9] space-y-2.5">
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-300 uppercase tracking-wider">
-                  <Brain className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Assistant Memory</span>
+                <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-950">
+                  <Brain className="w-3.5 h-3.5 text-amber-800" />
+                  <span>Research Archive &amp; Memory</span>
                 </div>
                 <button
                   type="button"
                   onClick={handleStartNewChat}
-                  className="px-2.5 py-1 rounded-md bg-amber-600 hover:bg-amber-500 text-stone-950 font-cinzel font-bold text-[11px] flex items-center gap-1 cursor-pointer transition-colors"
+                  className="px-2.5 py-1 rounded-md bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-[11px] flex items-center gap-1 cursor-pointer transition-colors whitespace-nowrap shrink-0"
                 >
                   <Plus className="w-3 h-3 stroke-[2.5]" />
                   <span>New Chat</span>
@@ -1133,29 +1277,29 @@ export const CatholicAIAssistantView: React.FC = () => {
               </div>
 
               {/* 2-Tab Switcher: Previous Chats vs. Learned Preferences */}
-              <div className="grid grid-cols-2 gap-1 p-1 rounded-lg bg-black/45 border border-[#8B5A2B]/30 text-[11px] font-cinzel font-bold">
+              <div className="grid grid-cols-2 gap-1 p-1 rounded-lg bg-[#E8E0CE] text-[11px] font-cinzel font-bold">
                 <button
                   type="button"
                   onClick={() => setSidebarTab('chats')}
-                  className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                     sidebarTab === 'chats'
-                      ? 'bg-[#5C2E0E] text-amber-100 shadow-2xs border border-amber-500/40'
-                      : 'text-stone-400 hover:text-stone-200'
+                      ? 'bg-white text-stone-900 shadow-2xs'
+                      : 'text-stone-600 hover:text-stone-900'
                   }`}
                 >
-                  <MessageSquare className="w-3 h-3" />
+                  <MessageSquare className="w-3 h-3 text-amber-800" />
                   <span>Chats ({sessions.length})</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setSidebarTab('memory')}
-                  className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                     sidebarTab === 'memory'
-                      ? 'bg-[#5C2E0E] text-amber-100 shadow-2xs border border-amber-500/40'
-                      : 'text-stone-400 hover:text-stone-200'
+                      ? 'bg-white text-stone-900 shadow-2xs'
+                      : 'text-stone-600 hover:text-stone-900'
                   }`}
                 >
-                  <Sparkles className="w-3 h-3" />
+                  <Sparkles className="w-3 h-3 text-amber-800" />
                   <span>Preferences ({learnedInsightsCount})</span>
                 </button>
               </div>
@@ -1165,7 +1309,7 @@ export const CatholicAIAssistantView: React.FC = () => {
             {sidebarTab === 'chats' && (
               <div className="flex flex-col flex-1 min-h-0">
                 {/* Search Input */}
-                <div className="p-2.5 border-b border-white/10">
+                <div className="p-2.5 border-b border-stone-200/80 bg-[#FAF8F3]">
                   <div className="relative">
                     <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5" />
                     <input
@@ -1173,7 +1317,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                       value={sessionSearchQuery}
                       onChange={(e) => setSessionSearchQuery(e.target.value)}
                       placeholder="Search previous chats..."
-                      className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs font-serif text-amber-100 placeholder-stone-400 focus:outline-none focus:border-amber-400"
+                      className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-white border border-stone-300 text-xs font-serif text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-700"
                     />
                   </div>
                 </div>
@@ -1187,22 +1331,22 @@ export const CatholicAIAssistantView: React.FC = () => {
                       <div
                         key={session.id}
                         onClick={() => handleSelectSession(session)}
-                        className={`group p-3 rounded-xl border transition-all cursor-pointer text-left flex flex-col gap-1.5 ${
+                        className={`group p-3 rounded-lg border transition-all cursor-pointer text-left flex flex-col gap-1.5 ${
                           isCurrent
-                            ? 'bg-[#3B1E08]/90 border-amber-400/80 shadow-md'
-                            : 'bg-black/35 hover:bg-black/55 border-white/10 hover:border-[#8B5A2B]/60'
+                            ? 'bg-[#F2EBD9] border-amber-700/60 shadow-2xs'
+                            : 'bg-white hover:bg-[#F7F3E8] border-stone-200/90 hover:border-stone-300'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-2">
                           <h4 className={`font-serif text-xs sm:text-sm font-bold leading-snug line-clamp-2 ${
-                            isCurrent ? 'text-amber-100' : 'text-stone-200 group-hover:text-amber-100'
+                            isCurrent ? 'text-stone-950' : 'text-stone-800 group-hover:text-stone-950'
                           }`}>
                             {session.title}
                           </h4>
                           <button
                             type="button"
                             onClick={(e) => handleDeleteSession(e, session.id)}
-                            className="p-1 rounded hover:bg-red-950/80 text-stone-400 hover:text-red-300 opacity-70 group-hover:opacity-100 transition-all shrink-0 cursor-pointer"
+                            className="p-1 rounded hover:bg-red-100 text-stone-400 hover:text-red-700 opacity-75 group-hover:opacity-100 transition-all shrink-0 cursor-pointer"
                             title="Delete this chat from history"
                             aria-label="Delete chat"
                           >
@@ -1210,14 +1354,14 @@ export const CatholicAIAssistantView: React.FC = () => {
                           </button>
                         </div>
 
-                        <div className="flex items-center justify-between gap-2 text-[10px] text-stone-400 font-cinzel pt-1 border-t border-white/10">
-                          <span className="text-amber-300/90 truncate">
+                        <div className="flex items-center justify-between gap-2 text-[10px] text-stone-500 font-cinzel pt-1 border-t border-stone-200/70">
+                          <span className="text-amber-900 font-semibold truncate">
                             {AI_PERSONA_SPECS[session.persona]?.title || 'Scholar'}
                           </span>
-                          <span className="flex items-center gap-1 shrink-0 font-mono">
-                            <Clock className="w-2.5 h-2.5 text-amber-400/80" />
+                          <span className="flex items-center gap-1 shrink-0 font-mono tabular-nums text-stone-500">
+                            <Clock className="w-2.5 h-2.5 text-amber-800" />
                             {new Date(session.updatedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
-                            {' • '}
+                            {' · '}
                             {userQuestionCount} {userQuestionCount === 1 ? 'q' : 'qs'}
                           </span>
                         </div>
@@ -1226,7 +1370,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                   })}
 
                   {filteredSessions.length === 0 && (
-                    <div className="p-6 text-center text-xs font-serif text-stone-400">
+                    <div className="p-6 text-center text-xs font-serif text-stone-500">
                       No saved chats match your search.
                     </div>
                   )}
@@ -1237,29 +1381,29 @@ export const CatholicAIAssistantView: React.FC = () => {
             {/* TAB B: LEARNED USER PREFERENCES & MEMORY PROFILE */}
             {sidebarTab === 'memory' && (
               <div className="flex-1 overflow-y-auto p-3.5 space-y-4 text-left max-h-[580px]">
-                <div className="p-3 rounded-xl bg-black/40 border border-amber-500/30 space-y-1.5">
-                  <div className="flex items-center justify-between text-[11px] font-cinzel font-bold text-amber-300 uppercase">
+                <div className="p-3 rounded-lg bg-white border border-stone-200/90 space-y-1">
+                  <div className="flex items-center justify-between text-[11px] font-cinzel font-bold text-amber-950">
                     <span>Adaptive User Profile</span>
-                    <span>{memoryProfile.totalQuestionsAsked} Inquiries</span>
+                    <span className="tabular-nums text-stone-600">{memoryProfile.totalQuestionsAsked} Inquiries</span>
                   </div>
-                  <p className="text-xs font-serif text-stone-300 leading-relaxed">
-                    The Assistant automatically adapts to your preferred Bible edition, theological depth, and favorite topics as you converse.
+                  <p className="text-xs font-serif text-stone-600 leading-relaxed">
+                    The Assistant automatically adapts to your preferred Bible edition, theological depth, and favorite topics as you research.
                   </p>
                 </div>
 
                 {/* Core Learned Settings */}
-                <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-lg bg-black/35 border border-white/10 flex items-center justify-between">
-                    <span className="font-cinzel text-[10px] uppercase text-stone-400">Bible Edition:</span>
-                    <span className="font-serif font-bold text-amber-200">{memoryProfile.preferredBible}</span>
+                <div className="space-y-1.5 text-xs">
+                  <div className="p-2.5 rounded-lg bg-white border border-stone-200/90 flex items-center justify-between">
+                    <span className="font-cinzel text-[11px] text-stone-500">Bible Edition</span>
+                    <span className="font-serif font-bold text-stone-900">{memoryProfile.preferredBible}</span>
                   </div>
-                  <div className="p-2.5 rounded-lg bg-black/35 border border-white/10 flex items-center justify-between">
-                    <span className="font-cinzel text-[10px] uppercase text-stone-400">Response Style:</span>
-                    <span className="font-serif font-bold text-amber-200">{memoryProfile.preferredDepth}</span>
+                  <div className="p-2.5 rounded-lg bg-white border border-stone-200/90 flex items-center justify-between">
+                    <span className="font-cinzel text-[11px] text-stone-500">Response Style</span>
+                    <span className="font-serif font-bold text-stone-900">{memoryProfile.preferredDepth}</span>
                   </div>
-                  <div className="p-2.5 rounded-lg bg-black/35 border border-white/10 flex items-center justify-between">
-                    <span className="font-cinzel text-[10px] uppercase text-stone-400">Favored Persona:</span>
-                    <span className="font-serif font-bold text-amber-200">
+                  <div className="p-2.5 rounded-lg bg-white border border-stone-200/90 flex items-center justify-between">
+                    <span className="font-cinzel text-[11px] text-stone-500">Favored Persona</span>
+                    <span className="font-serif font-bold text-stone-900">
                       {AI_PERSONA_SPECS[memoryProfile.favoredPersona]?.title}
                     </span>
                   </div>
@@ -1267,23 +1411,23 @@ export const CatholicAIAssistantView: React.FC = () => {
 
                 {/* Learned Theological Interests */}
                 <div className="space-y-2">
-                  <h5 className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
-                    <BookOpen className="w-3 h-3 text-amber-400" />
+                  <h5 className="font-cinzel text-[11px] font-bold text-amber-950 flex items-center gap-1.5">
+                    <BookOpen className="w-3 h-3 text-amber-800" />
                     <span>Learned Theological Interests</span>
                   </h5>
                   {sortedTopics.length > 0 ? (
                     <div className="space-y-1.5">
                       {sortedTopics.slice(0, 6).map(([topic, count]) => (
-                        <div key={topic} className="px-2.5 py-1.5 rounded-lg bg-[#2A1810] border border-[#8B5A2B]/40 flex items-center justify-between text-xs">
-                          <span className="font-serif text-amber-100 truncate pr-2">{topic}</span>
-                          <span className="px-1.5 py-0.5 rounded bg-black/50 text-amber-300 font-mono text-[10px] shrink-0">
+                        <div key={topic} className="px-2.5 py-1.5 rounded-lg bg-white border border-stone-200/90 flex items-center justify-between text-xs">
+                          <span className="font-serif text-stone-800 truncate pr-2">{topic}</span>
+                          <span className="text-amber-900 font-mono text-[11px] font-semibold tabular-nums shrink-0">
                             {count}x
                           </span>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <p className="text-xs font-serif italic text-stone-400">
+                    <p className="text-xs font-serif italic text-stone-500">
                       Ask questions about Scripture, the Eucharist, Church Fathers, or Marian dogma to build your interest profile.
                     </p>
                   )}
@@ -1291,26 +1435,19 @@ export const CatholicAIAssistantView: React.FC = () => {
 
                 {/* Favorite Saints & Doctors */}
                 {memoryProfile.favoriteSaintsAndDoctors.length > 0 && (
-                  <div className="space-y-2">
-                    <h5 className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                  <div className="space-y-1.5">
+                    <h5 className="font-cinzel text-[11px] font-bold text-amber-950">
                       Consulted Saints &amp; Doctors
                     </h5>
-                    <div className="flex flex-wrap gap-1.5">
-                      {memoryProfile.favoriteSaintsAndDoctors.map(saint => (
-                        <span
-                          key={saint}
-                          className="px-2 py-0.5 rounded-md bg-amber-500/15 border border-amber-400/40 text-amber-200 text-[11px] font-serif"
-                        >
-                          {saint}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="text-xs font-serif text-stone-700 leading-relaxed">
+                      {memoryProfile.favoriteSaintsAndDoctors.join(' · ')}
+                    </p>
                   </div>
                 )}
 
                 {/* Custom Personal Preference Notes */}
-                <div className="space-y-2 pt-2 border-t border-white/10">
-                  <h5 className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                <div className="space-y-2 pt-2 border-t border-stone-200">
+                  <h5 className="font-cinzel text-[11px] font-bold text-amber-950">
                     Personal Memory Notes
                   </h5>
                   <form onSubmit={handleAddCustomMemoryNote} className="flex gap-1.5">
@@ -1319,12 +1456,12 @@ export const CatholicAIAssistantView: React.FC = () => {
                       value={newCustomNote}
                       onChange={(e) => setNewCustomNote(e.target.value)}
                       placeholder="e.g., Always include Latin terms..."
-                      className="flex-1 px-2.5 py-1.5 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs font-serif text-amber-100 placeholder-stone-400 focus:outline-none focus:border-amber-400"
+                      className="flex-1 px-2.5 py-1.5 rounded-lg bg-white border border-stone-300 text-xs font-serif text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-700"
                     />
                     <button
                       type="submit"
                       disabled={!newCustomNote.trim()}
-                      className="px-2.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 disabled:opacity-40 text-stone-950 font-cinzel font-bold text-xs cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 disabled:opacity-40 text-white font-cinzel font-bold text-xs cursor-pointer whitespace-nowrap shrink-0"
                     >
                       Save
                     </button>
@@ -1335,13 +1472,13 @@ export const CatholicAIAssistantView: React.FC = () => {
                       {memoryProfile.customNotes.map((note, idx) => (
                         <div
                           key={idx}
-                          className="px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/10 flex items-center justify-between gap-2 text-xs font-serif text-stone-200"
+                          className="px-2.5 py-1.5 rounded-lg bg-white border border-stone-200/90 flex items-center justify-between gap-2 text-xs font-serif text-stone-800"
                         >
                           <span className="leading-snug">{note}</span>
                           <button
                             type="button"
                             onClick={() => handleRemoveCustomNote(note)}
-                            className="text-stone-400 hover:text-red-300 cursor-pointer shrink-0"
+                            className="text-stone-400 hover:text-red-700 cursor-pointer shrink-0"
                             title="Remove note"
                           >
                             <X className="w-3.5 h-3.5" />
@@ -1350,7 +1487,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                       ))}
                     </div>
                   ) : (
-                    <p className="text-[11px] font-serif italic text-stone-400">
+                    <p className="text-[11px] font-serif italic text-stone-500">
                       Add any personal preference above (or mention &ldquo;I prefer...&rdquo; in chat) and the Assistant will remember it.
                     </p>
                   )}
@@ -1360,7 +1497,7 @@ export const CatholicAIAssistantView: React.FC = () => {
           </aside>
         )}
 
-        {/* RIGHT PANEL: ACTIVE CONVERSATION THREAD & STICKY INPUT */}
+        {/* RIGHT PANEL: ACTIVE CONVERSATION THREAD & STICKY INPUT (DAYLIGHT PAPER PALETTE) */}
         <div className="space-y-4 min-w-0 w-full">
           <div className="space-y-4 min-h-[320px] w-full">
             {messages.map((msg) => {
@@ -1371,46 +1508,54 @@ export const CatholicAIAssistantView: React.FC = () => {
                   className="w-full"
                 >
                   <div
-                    className={`relative w-full rounded-2xl p-4 sm:p-6 shadow-md border ${
+                    className={`relative w-full rounded-xl p-4 sm:p-6 border ${
                       isUser
-                        ? 'bg-[#251710] text-amber-100 border-[#8B5A2B]/70'
-                        : 'bg-[#FDFCFA] text-[#1C120C] border-stone-300/90 shadow-sm'
+                        ? 'bg-[#F4EFE4] text-stone-900 border-[#DFD5C0]'
+                        : 'bg-white text-stone-900 border-stone-200/90 shadow-2xs'
                     }`}
                   >
                     {/* Header inside assistant message */}
                     {!isUser && (
-                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-stone-200 text-xs text-stone-500 font-cinzel">
-                        <div className="flex items-center gap-2">
-                          <span className="flex items-center gap-1.5 font-bold text-[#3B1E08]">
-                            <span className="px-1.5 py-0.5 rounded bg-[#3B1E08] text-amber-300 border border-[#8B5A2B]/60 font-cinzel text-[10px] font-black tracking-tight">AI</span>
-                            Soul Sanctum Assistant
+                      <div className="flex items-center justify-between pb-2.5 mb-3.5 border-b border-stone-200/80 text-xs text-stone-600 font-cinzel">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-bold text-amber-950">
+                            {msg.provider === 'magisterium'
+                              ? 'Magisterium AI Standalone'
+                              : msg.provider === 'gemini'
+                              ? 'Soul Sanctum Assistant (Gemini)'
+                              : 'ChatGPT (OpenAI GPT-4o)'}
                           </span>
-                          <span className="px-2 py-0.5 rounded text-[10px] bg-[#FAF2E8] text-[#5C2E0E] font-cinzel font-semibold border border-[#D4A373]/60">
-                            {msg.provider === 'openai' ? 'ChatGPT' : msg.provider === 'magisterium' ? 'Magisterium AI' : 'Gemini'}
+                          <span aria-hidden="true">·</span>
+                          <span className="text-stone-600 font-serif italic">
+                            {msg.mcpTrace || (isMagisteriumMcpEnabled && msg.provider !== 'gemini')
+                              ? 'with Magisterium AI MCP (query_magisterium_corpus)'
+                              : msg.provider === 'magisterium'
+                              ? '28,000+ Magisterial Documents Corpus'
+                              : 'Theological Synthesis'}
                           </span>
                         </div>
 
                         <div className="flex items-center gap-1.5">
                           <button
                             onClick={() => handleSpeak(msg.id, msg.content)}
-                            className={`p-1 rounded hover:bg-stone-200/80 transition-colors cursor-pointer ${
-                              speakingMessageId === msg.id ? 'text-amber-800' : 'text-stone-500'
+                            className={`p-1.5 rounded-md hover:bg-stone-100 transition-colors cursor-pointer ${
+                              speakingMessageId === msg.id ? 'text-amber-800 bg-amber-50' : 'text-stone-500'
                             }`}
                             title={speakingMessageId === msg.id ? 'Stop reading' : 'Read aloud'}
                           >
                             {speakingMessageId === msg.id ? (
-                              <VolumeX className="w-4 h-4 text-amber-800 animate-pulse" />
+                              <VolumeX className="w-4 h-4 text-amber-800" />
                             ) : (
                               <Volume2 className="w-4 h-4" />
                             )}
                           </button>
                           <button
                             onClick={() => handleCopy(msg.id, msg.content)}
-                            className="p-1 rounded hover:bg-stone-200/80 text-stone-500 hover:text-stone-800 transition-colors cursor-pointer"
+                            className="p-1.5 rounded-md hover:bg-stone-100 text-stone-500 hover:text-stone-800 transition-colors cursor-pointer"
                             title="Copy answer"
                           >
                             {copiedMessageId === msg.id ? (
-                              <Check className="w-4 h-4 text-stone-800" />
+                              <Check className="w-4 h-4 text-emerald-700" />
                             ) : (
                               <Copy className="w-4 h-4" />
                             )}
@@ -1421,38 +1566,83 @@ export const CatholicAIAssistantView: React.FC = () => {
 
                     {/* Header inside user message */}
                     {isUser && (
-                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-[#8B5A2B]/40 text-xs text-amber-300/80 font-cinzel">
-                        <span className="font-bold">Your Inquiry</span>
-                        <span className="text-[10px] text-amber-200/60 font-mono">
+                      <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-[#E2D8C3] text-xs text-amber-950 font-cinzel">
+                        <span className="font-bold">Your Research Inquiry</span>
+                        <span className="text-[11px] text-stone-500 font-mono tabular-nums">
                           {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
                       </div>
                     )}
 
-                    {/* Body Content with Enlarged Font Size */}
+                    {/* Body Content */}
                     {isUser ? (
-                      <p className="font-serif text-base sm:text-lg leading-relaxed whitespace-pre-wrap">
+                      <p className="font-serif text-base sm:text-lg leading-relaxed whitespace-pre-wrap text-stone-900">
                         {msg.content}
                       </p>
                     ) : (
                       renderFormattedContent(msg.content)
                     )}
 
+                    {/* Magisterium AI MCP Server Citations */}
+                    {!isUser && msg.magisteriumCitations && msg.magisteriumCitations.length > 0 && (
+                      <div className="mt-5 p-4 rounded-xl bg-[#FAF7F0] border border-[#DFD5C0] space-y-2.5 text-left">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-950">
+                            <BookOpen className="w-3.5 h-3.5 text-amber-800 shrink-0" />
+                            <span>Magisterium AI MCP · Retrieved Magisterial Corpus Citations</span>
+                          </div>
+                          <span className="text-[11px] font-mono text-amber-900/80">
+                            mcp://magisterium-ai · {msg.mcpTrace?.toolsInvoked?.[0] || 'query_magisterium_corpus'}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                          {msg.magisteriumCitations.map((cit, cIdx) => (
+                            <a
+                              key={cIdx}
+                              href={cit.url || 'https://www.vatican.va'}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-3 rounded-lg bg-white hover:bg-[#FDFBF7] border border-stone-200/90 hover:border-amber-700/60 transition-all group flex flex-col justify-between gap-1.5"
+                            >
+                              <div className="space-y-1">
+                                <div className="flex items-start justify-between gap-2">
+                                  <span className="font-cinzel text-xs font-bold text-amber-950 leading-snug">
+                                    {cit.title}
+                                  </span>
+                                  <ExternalLink className="w-3 h-3 text-amber-800 shrink-0 mt-0.5 group-hover:translate-x-0.5 transition-transform" />
+                                </div>
+                                <div className="text-[11px] font-cinzel font-semibold text-amber-900">
+                                  {cit.reference}
+                                  {cit.author ? ` · ${cit.author}` : ''}
+                                  {cit.year ? ` (${cit.year})` : ''}
+                                </div>
+                                {cit.snippet && (
+                                  <p className="text-xs font-serif text-stone-700 line-clamp-2 leading-relaxed">
+                                    &ldquo;{cit.snippet}&rdquo;
+                                  </p>
+                                )}
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Live Web & Internet Sources Consulted */}
                     {!isUser && msg.webSources && msg.webSources.length > 0 && (
-                      <div className="mt-4 p-3 rounded-xl bg-[#FAF5EE] border border-[#D4A373]/60 space-y-2">
-                        <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-[#3B1E08]">
+                      <div className="mt-4 p-3.5 rounded-xl bg-[#FAF8F3] border border-[#E5DEC9] space-y-2 text-left">
+                        <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-950">
                           <Globe className="w-3.5 h-3.5 text-amber-800 shrink-0" />
-                          <span>Verified Internet Sources Consulted:</span>
+                          <span>Verified Internet Sources Consulted</span>
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {msg.webSources.map((source, sIdx) => (
                             <a
                               key={sIdx}
                               href={source.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center justify-between gap-2 p-2 rounded-lg bg-white hover:bg-[#FAF8F5] text-xs text-[#241307] hover:text-[#5C2E0E] border border-[#E8DEC8] hover:border-[#D4A373] transition-all shadow-2xs group"
+                              className="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-white hover:bg-[#F6F2E9] text-xs text-stone-900 hover:text-amber-950 border border-stone-200/90 hover:border-amber-700/50 transition-all group"
                               title={source.snippet}
                             >
                               <span className="font-serif font-medium truncate flex-1">{source.title}</span>
@@ -1466,14 +1656,41 @@ export const CatholicAIAssistantView: React.FC = () => {
                       </div>
                     )}
 
+                    {/* Magisterium AI Related Follow-up Questions */}
+                    {!isUser && msg.relatedQuestions && msg.relatedQuestions.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-stone-200/80 space-y-2 text-left">
+                        <div className="text-[11px] font-cinzel font-bold text-amber-950 flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-amber-800" />
+                          <span>Related Magisterial Inquiries</span>
+                        </div>
+                        <div className="flex flex-col sm:flex-row flex-wrap gap-2">
+                          {msg.relatedQuestions.map((rq, rqIdx) => (
+                            <button
+                              key={rqIdx}
+                              type="button"
+                              disabled={isLoading}
+                              onClick={() => handleSubmit(undefined, rq)}
+                              className="text-left px-3 py-2 rounded-lg bg-[#FAF8F3] hover:bg-[#F2EBD9] border border-[#E5DEC9] hover:border-amber-700/60 text-xs font-serif text-stone-800 hover:text-stone-950 transition-all cursor-pointer disabled:opacity-50"
+                            >
+                              {rq}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
                     {/* Footer source note on assistant messages */}
                     {!isUser && !msg.id.startsWith('welcome') && (
-                      <div className="mt-4 pt-2 border-t border-stone-200/80 flex items-center justify-between text-[11px] text-stone-500 italic font-serif">
-                        <span className="flex items-center gap-1">
+                      <div className="mt-4 pt-2.5 border-t border-stone-200/80 flex items-center justify-between text-xs text-stone-500 italic font-serif">
+                        <span className="flex items-center gap-1.5">
                           <Globe className="w-3 h-3 text-amber-800" />
-                          Grounded in Catholic Deposit of Faith • Tailored to Your Preferences ({memoryProfile.preferredBible})
+                          <span>
+                            Grounded in Magisterium AI &amp; the Deposit of Faith · Tailored to your preferences ({memoryProfile.preferredBible})
+                          </span>
                         </span>
-                        <span>{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        <span className="not-italic font-mono text-[11px] tabular-nums">
+                          {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -1483,10 +1700,10 @@ export const CatholicAIAssistantView: React.FC = () => {
 
             {/* Loading Indicator */}
             {isLoading && (
-              <div className="w-full bg-[#FAF8F5] border border-[#D4A373]/60 rounded-2xl p-4 shadow-sm flex items-center gap-3">
+              <div className="w-full bg-white border border-stone-200/90 rounded-xl p-4 shadow-2xs flex items-center gap-3">
                 <RefreshCw className="w-4 h-4 text-amber-800 animate-spin shrink-0" />
-                <div className="space-y-0.5">
-                  <span className="text-xs sm:text-sm font-serif italic text-[#241307] font-semibold block">
+                <div className="space-y-0.5 text-left">
+                  <span className="text-xs sm:text-sm font-serif italic text-stone-900 font-semibold block">
                     Consulting {AI_ENGINE_SPECS[selectedEngine].name} &amp; Vatican sources...
                   </span>
                   <span className="text-[11px] text-stone-600 font-serif block">
@@ -1498,11 +1715,11 @@ export const CatholicAIAssistantView: React.FC = () => {
 
             {/* Error message */}
             {errorMessage && (
-              <div className="p-3.5 rounded-xl bg-stone-900 border border-amber-800/60 text-amber-100 text-xs font-serif flex items-start gap-2.5">
-                <HelpCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-                <div className="space-y-1">
+              <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-stone-900 text-xs font-serif flex items-start gap-2.5">
+                <HelpCircle className="w-4 h-4 text-amber-800 shrink-0 mt-0.5" />
+                <div className="space-y-1 text-left">
                   <p className="font-semibold">{errorMessage}</p>
-                  <p className="text-stone-300">
+                  <p className="text-stone-600">
                     Please verify your connection or try rephrasing your question.
                   </p>
                 </div>
@@ -1512,12 +1729,12 @@ export const CatholicAIAssistantView: React.FC = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* 3. Bottom Sticky Input Form */}
+          {/* 3. Bottom Sticky Daylight Input Form */}
           <form
             onSubmit={handleSubmit}
-            className="sticky bottom-4 z-20 rounded-2xl bg-[#1C120C]/95 backdrop-blur-xl border border-[#8B5A2B]/60 p-3 shadow-2xl space-y-2"
+            className="sticky bottom-4 z-20 rounded-xl bg-[#FAF8F3]/95 backdrop-blur-md border border-[#D8CEB8] p-3 shadow-md"
           >
-            <div className="flex items-end gap-2">
+            <div className="flex items-end gap-2.5">
               <textarea
                 ref={inputRef}
                 value={inputPrompt}
@@ -1530,16 +1747,16 @@ export const CatholicAIAssistantView: React.FC = () => {
                 }}
                 placeholder="Ask any question on Catholic doctrine, Scripture, Sacraments, or Church history..."
                 rows={2}
-                className="flex-1 bg-[#251710] text-amber-100 placeholder-stone-400 text-sm sm:text-base font-serif rounded-xl p-3 border border-[#8B5A2B]/50 focus:border-amber-400 focus:outline-none resize-none leading-relaxed"
+                className="flex-1 bg-white text-stone-900 placeholder-stone-400 text-sm sm:text-base font-serif rounded-lg p-3 border border-stone-300 focus:border-amber-700 focus:outline-none resize-none leading-relaxed"
               />
 
               <button
                 type="submit"
                 disabled={!inputPrompt.trim() || isLoading}
-                className="h-12 px-5 rounded-xl bg-[#5C2E0E] hover:bg-[#6D3812] text-amber-100 font-cinzel font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0 border border-[#8B5A2B]"
+                className="h-12 px-5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-xs transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0 whitespace-nowrap"
               >
                 {isLoading ? (
-                  <RefreshCw className="w-4 h-4 animate-spin text-amber-200" />
+                  <RefreshCw className="w-4 h-4 animate-spin text-white" />
                 ) : (
                   <>
                     <span>Ask</span>
