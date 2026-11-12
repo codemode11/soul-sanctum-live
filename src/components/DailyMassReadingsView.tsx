@@ -601,7 +601,7 @@ ${reading.gospel.text}`;
           ? 'border-red-700 ring-4 ring-red-500/30 shadow-xl bg-amber-50/95'
           : 'bg-white border-stone-200/90 shadow-sm'
       }`}>
-        <div className="border-b border-stone-200 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="border-b border-stone-200 pb-3 flex flex-row items-center justify-between gap-3">
           <div>
             <h3 className="font-serif text-2xl sm:text-[28px] font-bold text-red-950 tracking-normal leading-tight">
               The Holy Gospel
@@ -639,23 +639,17 @@ ${reading.gospel.text}`;
                 );
               }
             }}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg font-serif font-semibold text-xs sm:text-sm transition-all cursor-pointer border shrink-0 ${
+            className={`flex items-center justify-center p-2.5 rounded-lg transition-all cursor-pointer border shrink-0 ${
               isReadingAloud && playingPartId === 'gospel'
                 ? 'bg-red-800 hover:bg-red-700 text-white border-red-900 shadow-md'
                 : 'bg-[#F8F4ED] hover:bg-[#EFE6D5] text-red-950 border-[#D5C3AA] shadow-2xs'
             }`}
-            title="Listen to the Holy Gospel read by Microsoft David"
+            aria-label="Play or stop Gospel audio"
           >
             {isReadingAloud && playingPartId === 'gospel' ? (
-              <>
-                <VolumeX className="w-4 h-4 text-amber-200 animate-pulse" />
-                <span>Stop Gospel (Microsoft David)</span>
-              </>
+              <VolumeX className="w-4 h-4 text-amber-200 animate-pulse" />
             ) : (
-              <>
-                <Volume2 className="w-4 h-4 text-red-900" />
-                <span>Listen to Gospel (Microsoft David)</span>
-              </>
+              <Volume2 className="w-4 h-4 text-red-900" />
             )}
           </button>
         </div>

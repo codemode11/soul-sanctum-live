@@ -309,7 +309,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
               onChange={handleSelectVoiceChange}
               className="w-full bg-[#1C120C] text-stone-100 border border-[#8B5A2B]/60 rounded px-2.5 py-1.5 text-xs font-serif focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer appearance-none pr-7"
             >
-              <optgroup label="✨ Gemini 3.8 AI Prebuilt Voices">
+              <optgroup label="Gemini 3.8 AI Prebuilt Voices">
                 <option value="gemini-Kore">Kore — Serene Devotional Soprano (Default)</option>
                 <option value="gemini-Puck">Puck — Lively Young Tenor Lector</option>
                 <option value="gemini-Charon">Charon — Deep Monastic Bass</option>
@@ -317,7 +317,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                 <option value="gemini-Zephyr">Zephyr — Smooth UK Liturgical Reader</option>
               </optgroup>
 
-              <optgroup label="🕊️ Sacred Devotional Female Personas">
+              <optgroup label="Sacred Devotional Female Personas">
                 {SACRED_FEMALE_PERSONAS.map(p => (
                   <option key={p.id} value={p.id}>
                     {p.name}
@@ -326,7 +326,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
               </optgroup>
 
               {systemVoices.length > 0 && (
-                <optgroup label="🎙️ Device & Browser Installed Voices">
+                <optgroup label="Device & Browser Installed Voices">
                   {systemVoices
                     .filter(v => !v.name.toLowerCase().includes('mark'))
                     .map(v => (
