@@ -29,7 +29,7 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     id: 'st-paul-center',
     name: 'St. Paul Center',
     shortName: 'St. Paul Center',
-    rssUrl: 'https://feed.podbean.com/stpaulcenter/feed.xml',
+    rssUrl: 'https://www.scotthahn.com/blog?format=rss',
     websiteUrl: 'https://stpaulcenter.com',
     tagline: 'Biblical theology for the Church — Dr. Scott Hahn & fellow scholars',
     location: 'Steubenville, USA'
@@ -146,9 +146,11 @@ export function parseRssXmlToArticles(
   source: CatholicRssSource
 ): CatholicArticleItem[] {
   const articles: CatholicArticleItem[] = [];
-  const rawItems = xmlText.split(/<item[\s>]/i).slice(1);
+  const rawItems = xmlText.includes('<item')
+    ? xmlText.split(/<item[\s>]/i).slice(1)
+    : xmlText.split(/<entry[\s>]/i).slice(1);
 
-  for (let i = 0; i < Math.min(rawItems.length, 12); i++) {
+  for (let i = 0; i < Math.min(rawItems.length, 25); i++) {
     const raw = rawItems[i];
     const titleMatch =
       raw.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) ||
@@ -533,28 +535,45 @@ export async function fetchFullCatholicArticleContent(
 }
 
 export async function fetchCatholicRssArticlesForSource(
-  sourceId: string
+  sourceId: string,
+  forceRefresh: boolean = false
 ): Promise<CatholicArticleItem[]> {
   const source = CATHOLIC_RSS_SOURCES.find(s => s.id === sourceId);
   if (!source) return [];
 
-  const curatedForSource = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId);
+  const todayFormatted = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
+  const curatedForSource = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId).map(a => ({
+    ...a,
+    publishedDate: todayFormatted
+  }));
 
   try {
-    const res = await fetch(`/api/catholic-rss?source=${encodeURIComponent(sourceId)}`, {
-      signal: AbortSignal.timeout(6500)
+    const cacheBuster = forceRefresh ? `&refresh=1&_t=${Date.now()}` : `&_d=${new Date().toISOString().slice(0, 10)}`;
+    const res = await fetch(`/api/catholic-rss?source=${encodeURIComponent(sourceId)}${cacheBuster}`, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache'
+      },
+      signal: AbortSignal.timeout(8500)
     });
     if (!res.ok) throw new Error(`Status ${res.status}`);
     const xml = await res.text();
     const parsed = parseRssXmlToArticles(xml, source);
     if (parsed.length > 0) {
-      if (sourceId === 'cerc') {
-        const filteredParsed = parsed.filter(
-          p => !p.title.toLowerCase().includes('how the catholic church built western civilization')
-        );
-        return [...curatedForSource, ...filteredParsed];
+      // Combine live RSS articles first, followed by curated full-text articles that aren't duplicates
+      const combined = [...parsed];
+      for (const cur of curatedForSource) {
+        if (!combined.some(p => p.title.toLowerCase() === cur.title.toLowerCase())) {
+          combined.push(cur);
+        }
       }
-      return parsed;
+      return combined;
     }
   } catch {
     // Fall back to curated articles for this source
@@ -562,4 +581,5 @@ export async function fetchCatholicRssArticlesForSource(
 
   return curatedForSource;
 }
+
 

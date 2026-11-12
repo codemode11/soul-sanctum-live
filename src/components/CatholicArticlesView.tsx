@@ -36,6 +36,9 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
     initialSourceId || CATHOLIC_RSS_SOURCES[0].id
   );
   const [selectedArticleIndex, setSelectedArticleIndex] = useState<number>(0);
+  const [lastRefreshedAt, setLastRefreshedAt] = useState<number>(Date.now());
+  const [refreshStatusMessage, setRefreshStatusMessage] = useState<string | null>(null);
+  const [activeDayKey, setActiveDayKey] = useState<string>(() => new Date().toISOString().slice(0, 10));
 
   const [articlesBySource, setArticlesBySource] = useState<Record<string, CatholicArticleItem[]>>(() => {
     const initial: Record<string, CatholicArticleItem[]> = {};
@@ -66,24 +69,70 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
     }
   }, [initialSourceId, initialArticleId]);
 
-  const loadSourceFeed = async (sourceId: string) => {
+  const loadSourceFeed = async (sourceId: string, isManualRefresh: boolean = false) => {
     setIsLoading(true);
+    if (isManualRefresh) {
+      setRefreshStatusMessage(null);
+    }
     try {
-      const items = await fetchCatholicRssArticlesForSource(sourceId);
+      const items = await fetchCatholicRssArticlesForSource(sourceId, isManualRefresh);
       if (items && items.length > 0) {
+        const previousList = articlesBySource[sourceId] || [];
+        const currentDisplayedId = previousList[selectedArticleIndex]?.id;
+
         setArticlesBySource(prev => ({
           ...prev,
           [sourceId]: items
         }));
+        setLastRefreshedAt(Date.now());
+
+        if (isManualRefresh) {
+          if (isReadingAloud) SacredReader.stop();
+          // If the feed has multiple articles and the top article is identical to what was already on screen,
+          // advance to the next fresh article in the live feed so the user immediately sees a new article!
+          if (items.length > 1) {
+            const nextIdx =
+              items[0].id === currentDisplayedId
+                ? (selectedArticleIndex + 1) % items.length
+                : 0;
+            setSelectedArticleIndex(nextIdx);
+            setRefreshStatusMessage(
+              `Feed refreshed (${items.length} articles available) — now showing Article ${nextIdx + 1} of ${items.length}`
+            );
+          } else {
+            setSelectedArticleIndex(0);
+            setRefreshStatusMessage(`Feed refreshed — ${items.length} article loaded`);
+          }
+        }
       }
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Load feed when switching publication source
   useEffect(() => {
-    loadSourceFeed(selectedSourceId);
+    setRefreshStatusMessage(null);
+    loadSourceFeed(selectedSourceId, false);
   }, [selectedSourceId]);
+
+  // Automatic daily feed refresh check (every 60s and when tab regains focus)
+  useEffect(() => {
+    const checkDailyRollover = () => {
+      const todayKey = new Date().toISOString().slice(0, 10);
+      if (todayKey !== activeDayKey) {
+        setActiveDayKey(todayKey);
+        loadSourceFeed(selectedSourceId, true);
+      }
+    };
+
+    const interval = setInterval(checkDailyRollover, 60000);
+    window.addEventListener('focus', checkDailyRollover);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('focus', checkDailyRollover);
+    };
+  }, [activeDayKey, selectedSourceId]);
 
   useEffect(() => {
     const unsub = SacredReader.addListener((speaking) => {
@@ -209,7 +258,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
             <div className="flex items-center gap-2 group">
               <CatholicArticlesRssIcon className="w-4 h-4 text-amber-400" />
               <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-                Catholic Press & Theological Journals
+                Catholic Press &amp; Theological Journals
               </span>
             </div>
             <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
@@ -220,24 +269,31 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={() => loadSourceFeed(selectedSourceId)}
-            disabled={isLoading}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 border border-amber-500/40 text-amber-200 text-xs font-cinzel font-semibold transition-all cursor-pointer self-start shrink-0"
-            title="Refresh this RSS feed"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 text-amber-400 ${isLoading ? 'animate-spin' : ''}`} />
-            <span>{isLoading ? 'Refreshing...' : 'Refresh Feed'}</span>
-          </button>
+          <div className="flex flex-col items-start sm:items-end gap-1.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => loadSourceFeed(selectedSourceId, true)}
+              disabled={isLoading}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 active:scale-[0.99] border border-amber-500/40 text-amber-200 text-xs font-cinzel font-semibold transition-all cursor-pointer shrink-0"
+              title="Fetch latest daily articles and cycle to the next fresh dispatch"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 text-amber-400 ${isLoading ? 'animate-spin' : ''}`} />
+              <span>{isLoading ? 'Refreshing Feed...' : 'Refresh Feed'}</span>
+            </button>
+            <span className="text-[11px] font-serif text-amber-200/80">
+              Updated {new Date(lastRefreshedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {sourceArticles.length} {sourceArticles.length === 1 ? 'article' : 'articles'}
+            </span>
+          </div>
         </div>
 
-        {/* 10 Catholic Publications Filter Bar (Individual Sources Only) */}
+        {/* Catholic Publications Filter Bar */}
         <div className="flex flex-wrap gap-2 mt-5">
           {CATHOLIC_RSS_SOURCES.map(src => {
             const isSelected = selectedSourceId === src.id;
             return (
               <button
                 key={src.id}
+                type="button"
                 onClick={() => handleSelectSource(src.id)}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-cinzel transition-all cursor-pointer ${
                   isSelected
@@ -251,26 +307,31 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
           })}
         </div>
 
-        {/* Active Publication Info Strip */}
+        {/* Active Publication Info Strip & Refresh Confirmation */}
         <div className="mt-4 pt-3 border-t border-amber-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
           <div className="text-amber-100/90 font-serif italic">
             <strong className="not-italic font-cinzel text-amber-300">{activeSourceMeta.name}: </strong>
             {activeSourceMeta.tagline}
           </div>
+          {refreshStatusMessage && (
+            <div className="text-amber-300 font-cinzel text-[11px] font-semibold">
+              {refreshStatusMessage}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Single Full-Article Reader Card (One RSS Article at a Time) */}
       {currentArticle && (
         <article className="bg-white/85 backdrop-blur-xl backdrop-saturate-150 p-6 sm:p-8 md:p-10 rounded-2xl border border-white/80 ring-1 ring-inset ring-white/50 shadow-[0_8px_32px_0_rgba(120,90,50,0.14)] space-y-6">
-          {/* Top Navigation & Article Counter Bar */}
+          {/* Top Navigation & Article Counter + Quick Selector Bar */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3.5">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="px-3 py-1 rounded-md bg-amber-900 text-amber-50 font-bold font-cinzel text-xs shadow-2xs">
                 {currentArticle.sourceName}
               </span>
               {sourceArticles.length > 1 && (
-                <span className="text-xs font-cinzel font-semibold text-stone-500">
+                <span className="text-xs font-cinzel font-semibold text-stone-600">
                   • Article {selectedArticleIndex + 1} of {sourceArticles.length}
                 </span>
               )}
@@ -281,27 +342,47 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
               )}
             </div>
 
-            {/* Previous / Next Article Controls for Current Source */}
+            {/* Article Dropdown Jump + Previous / Next Article Controls */}
             {sourceArticles.length > 1 && (
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={handlePrevArticle}
-                  disabled={selectedArticleIndex === 0}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-40 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
-                  title="Previous article from this source"
+              <div className="flex flex-wrap items-center gap-2">
+                <select
+                  value={selectedArticleIndex}
+                  onChange={(e) => {
+                    if (isReadingAloud) SacredReader.stop();
+                    setSelectedArticleIndex(Number(e.target.value));
+                  }}
+                  aria-label="Select an article from this feed"
+                  className="max-w-[230px] sm:max-w-[280px] px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-serif truncate cursor-pointer focus:outline-none focus:border-amber-700"
                 >
-                  <ChevronLeft className="w-3.5 h-3.5 text-amber-800" />
-                  <span>Prev</span>
-                </button>
-                <button
-                  onClick={handleNextArticle}
-                  disabled={selectedArticleIndex >= sourceArticles.length - 1}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-40 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
-                  title="Next article from this source"
-                >
-                  <span>Next</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-amber-800" />
-                </button>
+                  {sourceArticles.map((art, idx) => (
+                    <option key={art.id} value={idx}>
+                      {idx + 1}. {art.title}
+                    </option>
+                  ))}
+                </select>
+
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={handlePrevArticle}
+                    disabled={selectedArticleIndex === 0}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-40 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
+                    title="Previous article from this source"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5 text-amber-800" />
+                    <span>Prev</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextArticle}
+                    disabled={selectedArticleIndex >= sourceArticles.length - 1}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-40 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
+                    title="Next article from this source"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-amber-800" />
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -329,6 +410,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
               {/* Listen & Copy Buttons */}
               <div className="flex items-center gap-2">
                 <button
+                  type="button"
                   onClick={() => handleToggleReadAloud(currentArticle)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                     isReadingAloud
@@ -346,6 +428,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => handleCopyArticle(currentArticle)}
                   className="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
                   title="Copy full article text"
@@ -404,6 +487,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
               </span>
               <div className="flex items-center gap-2">
                 <button
+                  type="button"
                   onClick={handlePrevArticle}
                   disabled={selectedArticleIndex === 0}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-40 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
@@ -412,6 +496,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
                   <span>Previous Article</span>
                 </button>
                 <button
+                  type="button"
                   onClick={handleNextArticle}
                   disabled={selectedArticleIndex >= sourceArticles.length - 1}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 disabled:opacity-40 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
@@ -427,4 +512,3 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
     </div>
   );
 };
-
