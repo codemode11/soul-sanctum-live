@@ -229,10 +229,10 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-serif font-semibold animate-pulse">
             <Mic className="w-3.5 h-3.5 text-amber-300" />
             <span>
-              {currentPartId === 'first-reading' && 'Lector — First Reading'}
-              {currentPartId === 'psalm' && 'Lector — Responsorial Psalm'}
-              {currentPartId === 'second-reading' && 'Lector — Second Reading'}
-              {currentPartId === 'gospel' && 'Lector — Holy Gospel (Microsoft David)'}
+              {currentPartId === 'first-reading' && (isPaused ? 'Lector Paused — First Reading' : 'Lector — First Reading')}
+              {currentPartId === 'psalm' && (isPaused ? 'Lector Paused — Responsorial Psalm' : 'Lector — Responsorial Psalm')}
+              {currentPartId === 'second-reading' && (isPaused ? 'Lector Paused — Second Reading' : 'Lector — Second Reading')}
+              {currentPartId === 'gospel' && (isPaused ? 'Lector Paused — Holy Gospel (Microsoft David)' : 'Lector — Holy Gospel (Microsoft David)')}
               {!currentPartId && (isPaused ? 'Lector Paused' : 'Lector Proclaiming')}
             </span>
           </div>
@@ -246,6 +246,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
         <div className="flex items-center gap-2">
           {!isSpeaking ? (
             <button
+              type="button"
               onClick={onPlay}
               className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#8B5A2B]/60 text-white font-serif font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer hover:scale-102 active:scale-98"
               title="Start Lector Reading"
@@ -255,7 +256,14 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
             </button>
           ) : isPaused ? (
             <button
-              onClick={onResume || SacredReader.resume}
+              type="button"
+              onClick={() => {
+                if (onResume) {
+                  onResume();
+                } else {
+                  SacredReader.resume();
+                }
+              }}
               className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-sky-700 hover:bg-sky-600 text-white font-serif font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer"
               title="Resume Reading"
             >
@@ -264,7 +272,14 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
             </button>
           ) : (
             <button
-              onClick={onPause || SacredReader.pause}
+              type="button"
+              onClick={() => {
+                if (onPause) {
+                  onPause();
+                } else {
+                  SacredReader.pause();
+                }
+              }}
               className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 font-serif font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer border border-[#8B5A2B]/50"
               title="Pause Reading"
             >
@@ -275,7 +290,14 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
 
           {isSpeaking && (
             <button
-              onClick={onStop || SacredReader.stop}
+              type="button"
+              onClick={() => {
+                if (onStop) {
+                  onStop();
+                } else {
+                  SacredReader.stop();
+                }
+              }}
               className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 font-serif font-medium text-xs transition-all cursor-pointer border border-stone-600"
               title="Stop Lector"
             >

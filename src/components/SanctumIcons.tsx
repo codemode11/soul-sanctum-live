@@ -675,10 +675,10 @@ export const RosaryAndChapletIcon: React.FC<IconProps> = ({ className = 'w-4 h-4
 );
 
 /**
- * 7. Marian Apparitions icon: Our Lady of Lourdes and Saint Bernadette.
- * Depicts the incomparable beauty of Our Lady of Lourdes with celestial halo, flowing veil,
- * blue sash, and golden roses at her feet. When hovered on, Mary's arms open with maternal grace,
- * and Saint Bernadette (one female child) kneels reverently before her across the sacred distance.
+ * 7. Marian Apparitions icon: Saint Bernadette (child) and Our Lady of Lourdes.
+ * The kneeling child appears first in prayer at the grotto; then the Blessed Virgin Mary
+ * appears in radiant celestial light with her halo, flowing veil, blue sash, golden roses,
+ * and hands joined in prayer with her golden Rosary.
  */
 export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h-4' }) => (
   <svg 
@@ -689,99 +689,182 @@ export const MaryPrayingOutlineIcon: React.FC<IconProps> = ({ className = 'w-4 h
     strokeLinecap="round" 
     strokeLinejoin="round" 
     className={`${className} overflow-visible`}
-    aria-label="Marian Apparitions — Our Lady of Lourdes and Saint Bernadette"
+    aria-label="Marian Apparitions — Saint Bernadette and the Blessed Virgin Mary"
   >
-    {/* Subtle Grotto Rock Arch framing Our Lady */}
+    {/* Subtle Grotto Rock Arch & Riverbank Ground */}
     <path 
-      d="M10.0 1.5 C16.5 1.0, 22.8 4.5, 22.8 12.0 C22.8 17.5, 20.5 21.5, 17.5 22.5" 
+      d="M10.2 1.5 C16.5 1.0, 22.8 4.5, 22.8 12.0 C22.8 17.5, 20.5 21.5, 17.5 22.5" 
       stroke="currentColor" 
-      strokeWidth="0.8" 
-      opacity="0.25" 
+      strokeWidth="0.85" 
+      opacity="0.3" 
       strokeDasharray="1.5 2" 
     />
+    <path d="M1.2 22.4c3.8-.4 8.2-.4 11.8 0" strokeWidth="1.2" opacity="0.6" />
 
-    {/* Celestial Radiant Halo behind Our Lady of Lourdes */}
-    <circle cx="15.2" cy="3.5" r="3.2" strokeWidth="0.75" stroke="currentColor" opacity="0.55" />
-    <circle cx="15.2" cy="3.5" r="4.0" strokeWidth="0.55" stroke="#FEF08A" strokeDasharray="0.8 1.4" opacity="0.75" />
-
-    {/* Our Lady's serene, tenderly bowed oval head */}
-    <path 
-      d="M15.2 1.8c-1.0 0-1.75.8-1.75 1.85 0 1.15.75 2.0 1.75 2.0s1.75-.85 1.75-2.0c0-1.05-.75-1.85-1.75-1.85z" 
-      strokeWidth="1.2" 
-      fill="currentColor" 
-      fillOpacity="0.12" 
-    />
-
-    {/* Flowing white veil (maforion) draping over her shoulders */}
-    <path d="M13.6 2.6C12.7 4.0 12.4 5.6 12.6 7.4c.2 1.6.6 3.0 1.0 4.2" strokeWidth="1.1" />
-    <path d="M16.8 2.6C17.7 4.0 18.0 5.6 17.8 7.4c-.2 1.6-.6 3.0-1.0 4.2" strokeWidth="1.1" />
-
-    {/* Slender neck & graceful bodice */}
-    <path d="M14.6 5.4c0 .6.2 1.0.6 1.0s.6-.4.6-1.0" strokeWidth="0.85" />
-    <path d="M13.4 6.5c-.2 1.2.2 2.5.5 4.0" strokeWidth="1.1" />
-    <path d="M17.0 6.5c.2 1.2-.2 2.5-.5 4.0" strokeWidth="1.1" />
-
-    {/* Distinct Lourdes Blue Sash tied at waist */}
-    <path d="M13.6 8.5c1.0.35 2.1.35 3.1 0" stroke="#38BDF8" strokeWidth="1.1" />
-    <path d="M14.2 8.7v3.0" stroke="#38BDF8" strokeWidth="0.85" />
-
-    {/* Cascading immaculate white gown */}
-    <path d="M13.4 10.5c-.5 2.5-1.1 5.4-1.3 9.0" strokeWidth="1.2" />
-    <path d="M17.0 10.5c.5 2.5 1.1 5.4 1.3 9.0" strokeWidth="1.2" />
-    <path d="M14.6 11.0c-.2 2.6-.4 5.2-.5 8.5" strokeWidth="0.75" opacity="0.5" />
-    <path d="M15.8 11.0c.2 2.6.4 5.2.5 8.5" strokeWidth="0.75" opacity="0.5" />
-    <path d="M12.1 19.5c1.8.4 4.4.4 6.2 0" strokeWidth="1.1" />
-
-    {/* Golden Roses at Mary's feet (distinct to Lourdes) */}
-    <circle cx="13.8" cy="19.8" r="0.75" fill="#FEF08A" stroke="#F59E0B" strokeWidth="0.4" />
-    <circle cx="16.6" cy="19.8" r="0.75" fill="#FEF08A" stroke="#F59E0B" strokeWidth="0.4" />
-
-    {/* Resting State: Hands joined in prayer with golden Lourdes Rosary hanging from arm */}
-    <g className="sanctum-lourdes-mary-folded">
-      <path d="M15.2 6.8v3.2" strokeWidth="1.2" />
-      <path d="M14.4 8.0l.8-1.2.8 1.2" strokeWidth="1.1" />
-      {/* Golden Lourdes Rosary hanging from right arm */}
-      <path d="M15.8 8.0c.6 1.4.6 2.8.2 4.0l-.2 1.0" stroke="#FEF08A" strokeWidth="0.8" strokeDasharray="0.8 0.8" />
-      <path d="M15.7 13.0v1.0M15.3 13.5h.8" stroke="#FEF08A" strokeWidth="0.6" />
-    </g>
-
-    {/* Hover State 1: Mary's arms outstretched in maternal grace with descending rays */}
-    <g className="sanctum-lourdes-mary-outstretched">
-      {/* Left arm reaching gracefully toward Bernadette */}
-      <path d="M13.2 6.6 C11.2 7.4, 9.0 8.6, 7.2 10.4" strokeWidth="1.3" />
-      <path d="M8.8 9.6 C8.4 10.6, 9.0 11.3, 9.7 11.0 C10.6 10.5, 11.5 9.4, 12.2 8.4" strokeWidth="0.85" opacity="0.7" />
-      <path d="M7.2 10.4 C6.6 10.8, 6.8 11.6, 7.4 11.4 C8.0 11.2, 8.6 10.7, 9.2 10.0" strokeWidth="1.0" />
-
-      {/* Right arm extending outward in blessing */}
-      <path d="M17.2 6.6 C18.8 7.4, 20.6 8.6, 22.0 10.4" strokeWidth="1.3" />
-      <path d="M22.0 10.4 C22.5 10.8, 22.3 11.6, 21.7 11.4 C21.1 11.2, 20.5 10.7, 19.9 10.0" strokeWidth="1.0" />
-
-      {/* Golden rays of grace streaming across the distance to Bernadette */}
-      <line x1="7.6" y1="11.8" x2="5.6" y2="16.2" strokeWidth="0.7" stroke="#FEF08A" opacity="0.75" strokeDasharray="1.2 1.4" />
-      <line x1="10.2" y1="11.8" x2="8.0" y2="17.0" strokeWidth="0.7" stroke="#FEF08A" opacity="0.75" strokeDasharray="1.2 1.4" />
-      <line x1="12.8" y1="12.2" x2="10.5" y2="17.8" strokeWidth="0.7" stroke="#FEF08A" opacity="0.75" strokeDasharray="1.2 1.4" />
-    </g>
-
-    {/* Hover State 2: Saint Bernadette (one female child) kneeling reverently across the distance */}
+    {/* 1. First: The Young Lady (14-year-old Saint Bernadette) clearly kneeling in prayer */}
     <g className="sanctum-lourdes-bernadette">
-      {/* Rocky riverbank ground */}
-      <path d="M1.5 22.5c3.5-.4 7.5-.4 10.5 0" strokeWidth="1.2" opacity="0.5" />
+      {/* Flowing feminine hair & white Pyrenean headscarf/capeline draping down her back */}
+      <path
+        d="M6.2 8.9 C4.4 8.9, 3.1 10.3, 2.9 12.6 C2.8 13.9, 3.1 15.1, 3.7 15.8 L5.3 15.2 C5.0 13.8, 5.1 12.0, 6.2 10.6 Z"
+        fill="#FFFFFF"
+        fillOpacity="0.9"
+        stroke="#E2E8F0"
+        strokeWidth="0.95"
+      />
+      {/* Long dark hair tress beneath headscarf */}
+      <path
+        d="M4.6 11.4 C3.9 12.8, 3.8 14.5, 4.2 15.9"
+        stroke="#78350F"
+        strokeWidth="1.1"
+        strokeLinecap="round"
+      />
 
-      {/* Bernadette's head with French Pyrenean peasant shawl/hood */}
-      <circle cx="5.2" cy="15.8" r="1.15" strokeWidth="1.1" fill="currentColor" fillOpacity="0.18" />
-      <path d="M4.2 16.5c-.3.8-.2 1.8.2 2.6" strokeWidth="0.9" />
+      {/* Young lady's serene head tilted upward toward Our Lady */}
+      <circle
+        cx="6.3"
+        cy="10.7"
+        r="1.6"
+        fill="#FEF3C7"
+        stroke="#D97706"
+        strokeWidth="0.85"
+      />
 
-      {/* Modest shawl & bodice */}
-      <path d="M4.4 16.8c.4.8 1.0 1.4 1.8 1.6" strokeWidth="1.0" />
+      {/* Slender neck, modest white shawl (fichu), and fitted feminine bodice */}
+      <path
+        d="M5.0 12.4 L7.1 12.4 L7.4 16.0 L4.7 16.0 Z"
+        fill="currentColor"
+        fillOpacity="0.28"
+        stroke="currentColor"
+        strokeWidth="1.1"
+      />
+      {/* Crossed white shawl over shoulders */}
+      <path
+        d="M4.9 12.4 C5.5 13.6, 6.4 14.2, 7.3 14.5"
+        stroke="#FFFFFF"
+        strokeWidth="1.05"
+      />
 
-      {/* Small hands joined in prayer with taper/rosary point */}
-      <path d="M5.8 17.4l1.2-.5" strokeWidth="1.0" />
-      <circle cx="7.2" cy="16.8" r="0.4" fill="#FEF08A" stroke="none" />
+      {/* Unmistakable Kneeling Posture:
+          - Front knee planted on the ground at (8.0, 21.8)
+          - Long flared skirt & lower legs folded horizontally backward along the ground to (1.9, 21.8)
+          - Tucked foot visible at the back left (1.3, 20.5 -> 1.6, 22.1) */}
+      <path
+        d="M4.7 16.0 L7.3 16.0 L8.3 21.8 L1.9 21.8 C1.8 20.5, 2.5 19.4, 4.1 18.8 Z"
+        fill="currentColor"
+        fillOpacity="0.24"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      {/* Clear knee bend & horizontal lower-leg fold line inside the kneeling skirt */}
+      <path
+        d="M6.8 16.2 L8.1 21.7 L2.1 21.7"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.3 18.9 L6.9 20.6"
+        stroke="currentColor"
+        strokeWidth="0.8"
+        opacity="0.65"
+      />
+      {/* Petite foot tucked behind the kneeling skirt on the left */}
+      <path
+        d="M1.9 20.6 C1.2 20.8, 1.1 21.8, 1.8 22.2"
+        stroke="currentColor"
+        strokeWidth="1.15"
+        strokeLinecap="round"
+      />
 
-      {/* Kneeling skirt on the riverbank */}
-      <path d="M4.2 19.4c-.4.8-.2 1.6.4 2.2l-.6.6" strokeWidth="1.0" />
-      <path d="M5.4 19.8l1.2.9l-.6 1.5" strokeWidth="1.0" />
-      <path d="M3.2 22.2h5.0" strokeWidth="1.1" opacity="0.7" />
+      {/* Bent arm & praying hands lifted reverently toward the Grotto */}
+      <path
+        d="M6.4 13.2 L7.3 15.1 L9.3 13.3"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.8 13.7 L9.6 12.9"
+        stroke="#FEF3C7"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+      />
+
+      {/* Small Rosary dangling from her praying hands */}
+      <path d="M9.3 13.5c.25 1.25.15 2.45-.15 3.45" stroke="#FACC15" strokeWidth="0.85" strokeDasharray="0.65 0.75" />
+      <circle cx="9.1" cy="17.4" r="0.45" fill="#FEF08A" stroke="none" />
+    </g>
+
+    {/* 2. Then: The Blessed Virgin Mary (Our Lady of Lourdes) in her authentic Lourdes colors */}
+    <g className="sanctum-lourdes-mary">
+      {/* Celestial Golden Halo behind Our Lady of Lourdes */}
+      <circle cx="16.2" cy="3.6" r="3.2" fill="#FEF08A" fillOpacity="0.18" stroke="#FACC15" strokeWidth="0.85" />
+      <circle cx="16.2" cy="3.6" r="4.0" stroke="#FEF08A" strokeWidth="0.6" strokeDasharray="0.8 1.3" opacity="0.9" />
+
+      {/* Flowing Immaculate White Veil (Maforion) draping over her head and shoulders */}
+      <path
+        d="M16.2 1.2 C14.1 1.2, 13.0 3.2, 13.2 6.8 C13.3 9.2, 13.6 11.4, 14.0 13.2 L18.4 13.2 C18.8 11.4, 19.1 9.2, 19.2 6.8 C19.4 3.2, 18.3 1.2, 16.2 1.2 Z"
+        fill="#FFFFFF"
+        fillOpacity="0.92"
+        stroke="#F8FAFC"
+        strokeWidth="1.1"
+      />
+
+      {/* Cascading Immaculate White Gown */}
+      <path
+        d="M14.4 6.4 L18.0 6.4 L19.3 19.3 C17.3 19.7, 15.1 19.7, 13.1 19.3 Z"
+        fill="#FFFFFF"
+        fillOpacity="0.96"
+        stroke="#E2E8F0"
+        strokeWidth="1.05"
+      />
+      {/* Subtle vertical pleats on the white gown */}
+      <path d="M15.4 10.6c-.15 2.6-.3 5.2-.4 8.5" stroke="#CBD5E1" strokeWidth="0.65" />
+      <path d="M17.0 10.6c.15 2.6.3 5.2.4 8.5" stroke="#CBD5E1" strokeWidth="0.65" />
+
+      {/* Our Lady's serene face & neck */}
+      <path 
+        d="M16.2 1.9c-.9 0-1.55.72-1.55 1.7 0 1.05.65 1.85 1.55 1.85s1.55-.8 1.55-1.85c0-.98-.65-1.7-1.55-1.7z" 
+        fill="#FEF3C7" 
+        stroke="#D97706" 
+        strokeWidth="0.75" 
+      />
+
+      {/* Distinct Lourdes Sky-Blue Sash around waist with two long flowing blue ribbons */}
+      <path
+        d="M14.3 9.2 C15.5 9.55, 16.9 9.55, 18.1 9.2"
+        stroke="#0284C7"
+        strokeWidth="1.65"
+        strokeLinecap="round"
+      />
+      <path
+        d="M14.3 9.2 C15.5 9.55, 16.9 9.55, 18.1 9.2"
+        stroke="#38BDF8"
+        strokeWidth="1.0"
+        strokeLinecap="round"
+      />
+      {/* Two long Lourdes blue sash tails hanging down the front of the white dress */}
+      <path d="M15.5 9.5 L15.1 17.8" stroke="#0284C7" strokeWidth="1.35" strokeLinecap="round" />
+      <path d="M16.7 9.5 L17.0 17.8" stroke="#38BDF8" strokeWidth="1.35" strokeLinecap="round" />
+
+      {/* White sleeves & hands joined reverently in prayer at her breast (not outstretched) */}
+      <path d="M14.3 6.8 C14.6 7.8, 15.3 8.3, 16.2 7.4" stroke="#CBD5E1" strokeWidth="1.15" />
+      <path d="M18.1 6.8 C17.8 7.8, 17.1 8.3, 16.2 7.4" stroke="#CBD5E1" strokeWidth="1.15" />
+      <path d="M15.5 7.9 L16.2 6.7 L16.9 7.9 Z" fill="#FEF3C7" stroke="#D97706" strokeWidth="0.7" />
+
+      {/* Lourdes Rosary: Golden chain with white beads hanging from her right arm */}
+      <path d="M17.0 7.9c.55 1.4.55 2.8.15 4.1l-.15 1.0" stroke="#FACC15" strokeWidth="0.85" />
+      <path d="M17.0 7.9c.55 1.4.55 2.8.15 4.1" stroke="#FFFFFF" strokeWidth="0.8" strokeDasharray="0.45 0.9" />
+      <path d="M17.0 13.0v1.1M16.55 13.55h.9" stroke="#FACC15" strokeWidth="0.75" />
+
+      {/* Two Golden Yellow Roses resting on each of Our Lady's feet */}
+      <circle cx="14.7" cy="19.6" r="0.85" fill="#FACC15" stroke="#D97706" strokeWidth="0.45" />
+      <circle cx="14.7" cy="19.6" r="0.35" fill="#FEF08A" stroke="none" />
+      <circle cx="17.7" cy="19.6" r="0.85" fill="#FACC15" stroke="#D97706" strokeWidth="0.45" />
+      <circle cx="17.7" cy="19.6" r="0.35" fill="#FEF08A" stroke="none" />
     </g>
   </svg>
 );
@@ -918,16 +1001,21 @@ export const NovenaHands9Icon: React.FC<IconProps> = ({ className = 'w-4 h-4' })
     </g>
 
     {/* === CANDLE WICKS === */}
-    <line x1="5.5" y1="7.5" x2="5.5" y2="8.9" strokeWidth="1.2" />
-    <line x1="12.0" y1="7.5" x2="12.0" y2="8.9" strokeWidth="1.2" />
-    <line x1="19.0" y1="7.5" x2="19.0" y2="8.9" strokeWidth="1.2" />
+    <line x1="5.5" y1="7.5" x2="5.5" y2="8.8" strokeWidth="1.15" />
+    <line x1="12.0" y1="7.5" x2="12.0" y2="8.8" strokeWidth="1.15" />
+    <line x1="19.0" y1="7.5" x2="19.0" y2="8.8" strokeWidth="1.15" />
 
-    {/* === ROMAN NUMERAL "I" CANDLE (LEFT, WITHOUT SERIFS) === */}
-    <line x1="5.5" y1="8.9" x2="5.5" y2="21.2" strokeWidth="2.2" />
+    {/* === TRAJAN ROMAN NUMERAL "IX" (CHISELED BRACKETED SERIFS & CLASSICAL PROPORTIONS) === */}
+    <g className="sanctum-trajan-ix" fill="currentColor" stroke="none">
+      {/* Trajan "I": Classical Roman column stem with entasis and flared concave bracketed serifs */}
+      <path d="M 3.1 8.8 H 7.9 V 9.35 C 6.85 9.35 6.45 9.8 6.4 11.1 L 6.35 15.1 L 6.4 19.1 C 6.45 20.4 6.85 20.85 7.9 20.85 V 21.4 H 3.1 V 20.85 C 4.15 20.85 4.55 20.4 4.6 19.1 L 4.65 15.1 L 4.6 11.1 C 4.55 9.8 4.15 9.35 3.1 9.35 Z" />
 
-    {/* === ROMAN NUMERAL "X" CANDLES (RIGHT, WITHOUT SERIFS) === */}
-    <line x1="12.0" y1="8.9" x2="19.0" y2="21.2" strokeWidth="2.15" />
-    <line x1="19.0" y1="8.9" x2="12.0" y2="21.2" strokeWidth="2.15" />
+      {/* Trajan "X" — Primary monumental down-stroke (top-left 12.0 to bottom-right 19.0) with flared Trajan serifs */}
+      <path d="M 9.8 8.8 H 14.3 V 9.35 C 13.35 9.35 13.05 9.65 13.45 10.35 L 19.75 19.65 C 20.15 20.3 20.55 20.85 21.35 20.85 V 21.4 H 16.65 V 20.85 C 17.6 20.85 17.85 20.5 17.45 19.85 L 11.15 10.55 C 10.75 9.9 10.4 9.35 9.8 9.35 Z" />
+
+      {/* Trajan "X" — Secondary slender hairline cross-stroke (top-right 19.0 to bottom-left 12.0) with flared Trajan serifs */}
+      <path d="M 16.95 8.8 H 21.05 V 9.35 C 20.25 9.35 19.8 9.75 19.35 10.45 L 12.8 19.85 C 12.35 20.5 12.65 20.85 13.65 20.85 V 21.4 H 9.95 V 20.85 C 10.75 20.85 11.2 20.4 11.65 19.7 L 18.2 10.3 C 18.65 9.65 18.35 9.35 16.95 9.35 Z" />
+    </g>
   </svg>
 );
 

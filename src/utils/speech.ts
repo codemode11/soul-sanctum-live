@@ -783,7 +783,7 @@ export class SacredReader {
   private static startKeepAlive(): void {
     if (this.keepAliveTimer) clearInterval(this.keepAliveTimer);
     this.keepAliveTimer = setInterval(() => {
-      if (this.synth && this.synth.speaking && !this.synth.paused) {
+      if (!SacredReader.isPausedState && this.synth && this.synth.speaking && !this.synth.paused) {
         this.synth.pause();
         this.synth.resume();
       }
@@ -817,9 +817,31 @@ export class SacredReader {
     };
   }
 
+  private static currentPartIdState: string | undefined = undefined;
+  private static pauseWaitResolvers: (() => void)[] = [];
+
   private static notify(speaking: boolean, currentPartId?: string) {
     this.isSpeakingState = speaking;
-    this.listeners.forEach(l => l(speaking, currentPartId));
+    if (!speaking) {
+      this.currentPartIdState = undefined;
+    } else if (currentPartId !== undefined) {
+      this.currentPartIdState = currentPartId;
+    }
+    const partToSend = speaking ? this.currentPartIdState : undefined;
+    this.listeners.forEach(l => l(speaking, partToSend));
+  }
+
+  private static flushPauseWaiters(): void {
+    const waiters = this.pauseWaitResolvers.splice(0);
+    waiters.forEach(r => r());
+  }
+
+  private static async waitIfPaused(token: number): Promise<void> {
+    while (this.isPausedState && this.activePlaybackToken === token) {
+      await new Promise<void>(resolve => {
+        this.pauseWaitResolvers.push(resolve);
+      });
+    }
   }
 
   private static activeAudioElement: HTMLAudioElement | null = null;
@@ -890,6 +912,7 @@ export class SacredReader {
     if (chunks.length === 0) return false;
 
     for (let i = 0; i < chunks.length; i++) {
+      await this.waitIfPaused(token);
       if (this.activePlaybackToken !== token) return true;
 
       const chunkOk = await new Promise<boolean>((resolve) => {
@@ -1033,9 +1056,11 @@ export class SacredReader {
     let nextUrlPromise: Promise<string | null> | null = this.fetchServerTtsAudioUrl(chunks[0], voiceName);
 
     for (let i = 0; i < chunks.length; i++) {
+      await this.waitIfPaused(token);
       if (this.activePlaybackToken !== token) return true;
 
       const currentUrl = nextUrlPromise ? await nextUrlPromise : await this.fetchServerTtsAudioUrl(chunks[i], voiceName);
+      await this.waitIfPaused(token);
       if (this.activePlaybackToken !== token) return true;
 
       // Start prefetching chunk i + 1 in the background while chunk i plays
@@ -1076,6 +1101,13 @@ export class SacredReader {
           resolve(false);
         };
 
+        if (this.isPausedState) {
+          if (i === 0 && onFirstChunkPlay) {
+            onFirstChunkPlay();
+          }
+          return;
+        }
+
         audio.play().catch(() => {
           resolve(false);
         });
@@ -1090,101 +1122,100 @@ export class SacredReader {
   }
 
   private static getSynth(): SpeechSynthesis | null {
-    if (!this.synth && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      this.synth = window.speechSynthesis;
+    if (!SacredReader.synth && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      SacredReader.synth = window.speechSynthesis;
     }
-    return this.synth;
+    return SacredReader.synth;
   }
 
   public static pause(): void {
-    if (this.activeAudioElement) {
-      this.activeAudioElement.pause();
-      this.isPausedState = true;
-      this.notify(true, undefined);
-      return;
+    SacredReader.isPausedState = true;
+    if (SacredReader.activeAudioElement) {
+      try {
+        SacredReader.activeAudioElement.pause();
+      } catch {}
     }
-    const s = this.getSynth();
+    const s = SacredReader.getSynth();
     if (s && s.speaking) {
-      s.pause();
-      this.isPausedState = true;
-      this.notify(true, undefined);
+      try {
+        s.pause();
+      } catch {}
     }
+    SacredReader.notify(true, SacredReader.currentPartIdState);
   }
 
   public static resume(): void {
-    if (this.activeAudioElement && this.isPausedState) {
-      this.activeAudioElement.play().catch(() => {});
-      this.isPausedState = false;
-      this.notify(true, undefined);
-      return;
+    SacredReader.isPausedState = false;
+    SacredReader.flushPauseWaiters();
+    if (SacredReader.activeAudioElement) {
+      SacredReader.activeAudioElement.play().catch(() => {});
     }
-    const s = this.getSynth();
-    if (s && s.paused) {
-      s.resume();
-      this.isPausedState = false;
-      this.notify(true, undefined);
+    const s = SacredReader.getSynth();
+    if (s && (s.paused || s.speaking)) {
+      try {
+        s.resume();
+      } catch {}
     }
+    SacredReader.notify(true, SacredReader.currentPartIdState);
   }
 
   public static isPaused(): boolean {
-    if (this.activeAudioElement) {
-      return this.isPausedState;
-    }
-    const s = this.getSynth();
-    return s ? s.paused : false;
+    return SacredReader.isPausedState;
   }
 
   private static currentRate: number = typeof localStorage !== 'undefined' ? parseFloat(localStorage.getItem('soul_sanctum_speech_rate') || '0.93') : 0.93;
 
   public static setPlaybackRate(rate: number): void {
-    this.currentRate = rate;
+    SacredReader.currentRate = rate;
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('soul_sanctum_speech_rate', rate.toString());
     }
-    if (this.activeAudioElement) {
-      this.activeAudioElement.playbackRate = rate;
+    if (SacredReader.activeAudioElement) {
+      SacredReader.activeAudioElement.playbackRate = rate;
     }
   }
 
   public static getPlaybackRate(): number {
-    return this.currentRate;
+    return SacredReader.currentRate;
   }
 
   public static isSpeaking(): boolean {
-    if (this.activeAudioElement) {
-      return !this.activeAudioElement.paused && !this.activeAudioElement.ended;
+    if (SacredReader.isPausedState) return true;
+    if (SacredReader.activeAudioElement) {
+      return !SacredReader.activeAudioElement.paused && !SacredReader.activeAudioElement.ended;
     }
-    const s = this.getSynth();
-    return s ? s.speaking || this.isSpeakingState : this.isSpeakingState;
+    const s = SacredReader.getSynth();
+    return s ? s.speaking || SacredReader.isSpeakingState : SacredReader.isSpeakingState;
   }
 
   public static stop(): void {
-    this.activePlaybackToken++;
-    this.isSequenceActive = false;
-    this.sequenceQueue = [];
-    this.currentPartIndexState = -1;
-    this.isPausedState = false;
-    if (this.pauseTimer) {
-      clearTimeout(this.pauseTimer);
-      this.pauseTimer = null;
+    SacredReader.activePlaybackToken++;
+    SacredReader.isSequenceActive = false;
+    SacredReader.sequenceQueue = [];
+    SacredReader.currentPartIndexState = -1;
+    SacredReader.isPausedState = false;
+    SacredReader.flushPauseWaiters();
+    if (SacredReader.pauseTimer) {
+      clearTimeout(SacredReader.pauseTimer);
+      SacredReader.pauseTimer = null;
     }
-    this.stopKeepAlive();
-    if (this.activeAudioElement) {
+    SacredReader.stopKeepAlive();
+    if (SacredReader.activeAudioElement) {
       try {
-        this.activeAudioElement.onended = null;
-        this.activeAudioElement.onerror = null;
-        this.activeAudioElement.onplay = null;
-        this.activeAudioElement.pause();
-        this.activeAudioElement.currentTime = 0;
+        SacredReader.activeAudioElement.onended = null;
+        SacredReader.activeAudioElement.onerror = null;
+        SacredReader.activeAudioElement.onplay = null;
+        SacredReader.activeAudioElement.pause();
+        SacredReader.activeAudioElement.currentTime = 0;
       } catch {}
-      this.activeAudioElement = null;
+      SacredReader.activeAudioElement = null;
     }
-    const s = this.getSynth();
+    const s = SacredReader.getSynth();
     if (s) {
       s.cancel();
-      this.notify(false);
+      SacredReader.notify(false);
     } else {
-      this.notify(false);
+      SacredReader.notify(false);
     }
   }
 

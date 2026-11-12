@@ -61,53 +61,59 @@ function splitTextIntoSentences(text: string, maxChunkLen: number = 190): string
   return chunks.filter(c => c.length > 0);
 }
 
-function resolveGeminiPrebuiltVoice(chosenVoice: string): 'Kore' | 'Puck' | 'Charon' | 'Fenrir' | 'Zephyr' {
-  const validPrebuiltVoices = ['Puck', 'Charon', 'Kore', 'Fenrir', 'Zephyr'] as const;
-  const cleanVoiceName = (chosenVoice || 'Kore').replace(/^gemini-/, '');
-  if ((validPrebuiltVoices as readonly string[]).includes(cleanVoiceName)) {
-    return cleanVoiceName as 'Kore' | 'Puck' | 'Charon' | 'Fenrir' | 'Zephyr';
+function resolveRegionalLocaleForVoice(chosenVoice: string): string {
+  const localeMap: Record<string, string> = {
+    'gemini-Kore': 'en-US',
+    Kore: 'en-US',
+    'gemini-Puck': 'en-AU',
+    Puck: 'en-AU',
+    'gemini-Charon': 'en-GB',
+    Charon: 'en-GB',
+    'gemini-Fenrir': 'en-CA',
+    Fenrir: 'en-CA',
+    'gemini-Zephyr': 'en-IE',
+    Zephyr: 'en-IE',
+    'persona-ava': 'en-US',
+    'persona-grace': 'en-IE',
+    'persona-sonia': 'en-GB',
+    'persona-jenny': 'en-CA',
+    'persona-clara': 'en-AU',
+    'persona-aria': 'en-ZA',
+    'persona-samantha': 'en-IN',
+    'kokoro-af_heart': 'en-US',
+    'kokoro-af_bella': 'en-CA',
+    'kokoro-af_sky': 'en-AU',
+    'kokoro-bf_emma': 'en-GB',
+    'kokoro-am_adam': 'en-US',
+    'kokoro-am_michael': 'en-CA',
+    'kokoro-bm_george': 'en-GB',
+    'kokoro-bm_fable': 'en-IE',
+  };
+
+  if (localeMap[chosenVoice]) {
+    return localeMap[chosenVoice];
   }
+
   const lower = (chosenVoice || '').toLowerCase();
-  if (
-    lower.includes('charon') ||
-    lower.includes('jerome') ||
-    lower.includes('augustine') ||
-    lower.includes('cyril') ||
-    lower.includes('bellarmine') ||
-    lower.includes('david') ||
-    lower.includes('gospel') ||
-    lower === 'male'
-  ) {
-    return 'Charon';
+  if (lower.includes('augustine') || lower.includes('jerome') || lower.includes('bede') || lower.includes('sonia') || lower.includes('charon')) {
+    return 'en-GB';
   }
-  if (
-    lower.includes('fenrir') ||
-    lower.includes('thomas') ||
-    lower.includes('basil') ||
-    lower.includes('gregory') ||
-    lower.includes('alphonsus') ||
-    lower.includes('albert')
-  ) {
-    return 'Fenrir';
+  if (lower.includes('thomas') || lower.includes('ambrose') || lower.includes('grace') || lower.includes('zephyr')) {
+    return 'en-IE';
   }
-  if (
-    lower.includes('puck') ||
-    lower.includes('chrysostom') ||
-    lower.includes('bonaventure') ||
-    lower.includes('lapide')
-  ) {
-    return 'Puck';
+  if (lower.includes('chrysostom') || lower.includes('basil') || lower.includes('clara') || lower.includes('puck')) {
+    return 'en-AU';
   }
-  if (
-    lower.includes('zephyr') ||
-    lower.includes('bede') ||
-    lower.includes('ambrose') ||
-    lower.includes('theophylact') ||
-    lower.includes('sonia')
-  ) {
-    return 'Zephyr';
+  if (lower.includes('gregory') || lower.includes('leo') || lower.includes('jenny') || lower.includes('fenrir')) {
+    return 'en-CA';
   }
-  return 'Kore';
+  if (lower.includes('cyril') || lower.includes('athanasius') || lower.includes('aria')) {
+    return 'en-ZA';
+  }
+  if (lower.includes('bonaventure') || lower.includes('bernard') || lower.includes('samantha')) {
+    return 'en-IN';
+  }
+  return 'en-US';
 }
 
 export default async function handler(req: any, res: any) {
@@ -129,66 +135,33 @@ export default async function handler(req: any, res: any) {
 
     const chosenVoice = voiceName || 'gemini-Kore';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
-    const targetPrebuiltVoice = resolveGeminiPrebuiltVoice(chosenVoice);
+    const locale = resolveRegionalLocaleForVoice(chosenVoice);
 
-    // 1. Primary: Gemini 3.8 Flash Lite TTS ('Kore', 'Charon', 'Puck', 'Fenrir', 'Zephyr')
-    if (process.env.GEMINI_API_KEY && !apiKey) {
-      const ai = new GoogleGenAI({
-        apiKey: process.env.GEMINI_API_KEY,
-        apiVersion: 'v1beta',
-        httpOptions: {
-          headers: { 'User-Agent': 'aistudio-build' },
-        },
-      });
-
-      for (const modelName of ['gemini-3.8-flash-lite-tts', 'gemini-2.5-flash-preview-tts']) {
-        try {
-          const response = await ai.models.generateContent({
-            model: modelName,
-            contents: [{ role: 'user', parts: [{ text: cleanText.slice(0, 1800) }] }],
-            config: {
-              responseModalities: ['AUDIO'],
-              speechConfig: {
-                voiceConfig: {
-                  prebuiltVoiceConfig: { voiceName: targetPrebuiltVoice },
-                },
-              },
-            },
-          });
-
-          const partData = response.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-          if (partData?.data) {
-            const rawMime = (partData.mimeType || 'audio/wav').toLowerCase();
-            const audioUrl =
-              rawMime.includes('l16') || rawMime.includes('pcm')
-                ? `data:audio/wav;base64,${wrapPcm24kMonoToWav(Buffer.from(partData.data, 'base64'), 24000).toString('base64')}`
-                : `data:${partData.mimeType || 'audio/wav'};base64,${partData.data}`;
-
-            return res.status(200).json({
-              audioUrl,
-              voiceName: `gemini-${targetPrebuiltVoice}`,
-              provider: `gemini-tts-${targetPrebuiltVoice}`,
-            });
-          }
-        } catch {
-          // Try next model
-        }
-      }
-    }
-
-    // 2. Secondary: OpenAI Neural TTS
+    // 1. Optional: OpenAI Neural TTS if custom key is provided
     const openAiKey = apiKey || process.env.OPENAI_API_KEY;
     if (openAiKey) {
       try {
         const openai = new OpenAI({ apiKey: openAiKey });
         const voiceMap: Record<string, 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer'> = {
+          'gemini-Kore': 'shimmer',
           Kore: 'shimmer',
+          'gemini-Puck': 'alloy',
           Puck: 'alloy',
+          'gemini-Charon': 'onyx',
           Charon: 'onyx',
+          'gemini-Fenrir': 'echo',
           Fenrir: 'echo',
+          'gemini-Zephyr': 'fable',
           Zephyr: 'fable',
+          'persona-ava': 'nova',
+          'persona-grace': 'shimmer',
+          'persona-sonia': 'fable',
+          'persona-jenny': 'nova',
+          'persona-clara': 'shimmer',
+          'persona-aria': 'alloy',
+          'persona-samantha': 'nova',
         };
-        const targetVoice = voiceMap[targetPrebuiltVoice] || 'shimmer';
+        const targetVoice = voiceMap[chosenVoice] || 'shimmer';
         const mp3Response = await openai.audio.speech.create({
           model: 'tts-1',
           voice: targetVoice,
@@ -206,15 +179,7 @@ export default async function handler(req: any, res: any) {
       }
     }
 
-    // 3. Tertiary: Fast Parallel Multi-Regional Neural TTS
-    const localeByVoice: Record<string, string> = {
-      Kore: 'en-US',
-      Puck: 'en-AU',
-      Charon: 'en-GB',
-      Fenrir: 'en-CA',
-      Zephyr: 'en-IE',
-    };
-    const locale = localeByVoice[targetPrebuiltVoice] || 'en-US';
+    // 2. Primary: Multi-Regional Neural TTS
     const sentences = splitTextIntoSentences(cleanText, 190).slice(0, 20);
     const chunkBuffers = await Promise.all(
       sentences.map(async (chunkText) => {

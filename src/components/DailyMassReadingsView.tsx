@@ -75,6 +75,7 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
   };
 
   const [isReadingAloud, setIsReadingAloud] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [playingPartId, setPlayingPartId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [isCalendarPickerOpen, setIsCalendarPickerOpen] = useState(false);
@@ -84,6 +85,7 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
   useEffect(() => {
     const unsub = SacredReader.addListener((speaking, partId) => {
       setIsReadingAloud(speaking);
+      setIsPaused(speaking ? SacredReader.isPaused() : false);
       setPlayingPartId(speaking ? (partId || null) : null);
     });
     return () => {
@@ -391,13 +393,22 @@ ${reading.gospel.text}`;
           <div className="px-5 py-4 sm:px-6 min-h-[164px] bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-between gap-3 rounded-b-xl animate-fadeIn">
           <LectorControlsBar
             onPlay={handleToggleReadAloud}
+            onPause={() => {
+              SacredReader.pause();
+              setIsPaused(true);
+            }}
+            onResume={() => {
+              SacredReader.resume();
+              setIsPaused(false);
+            }}
             onStop={() => {
               SacredReader.stop();
               setIsReadingAloud(false);
+              setIsPaused(false);
               setPlayingPartId(null);
             }}
             isSpeaking={isReadingAloud}
-            isPaused={SacredReader.isPaused()}
+            isPaused={isPaused}
             currentPartId={playingPartId}
           />
           <div className="flex items-center justify-between text-xs text-stone-700 pt-1">
