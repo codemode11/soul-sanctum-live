@@ -26,7 +26,15 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   title = 'Sacred Lector Audio Proclamation'
 }) => {
   const [systemVoices, setSystemVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoiceId, setSelectedVoiceId] = useState<string>('gemini-Kore');
+  const [selectedVoiceId, setSelectedVoiceId] = useState<string>(() => {
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem('soul_sanctum_active_voice');
+      if (saved && !saved.toLowerCase().includes('zira') && saved !== 'zira') {
+        return saved;
+      }
+    }
+    return 'gemini-Kore';
+  });
   const [selectedVoiceLabel, setSelectedVoiceLabel] = useState<string>('Kore (Serene AI Soprano)');
   const [currentRate, setCurrentRate] = useState<number>(() => SacredReader.getPlaybackRate());
   const [showSettings, setShowSettings] = useState(false);

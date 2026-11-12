@@ -922,17 +922,27 @@ export class SacredReader {
     ? ((localStorage.getItem('soul_sanctum_recitation_voice') as RecitationVoiceId) || 'ava-grace') 
     : 'ava-grace';
   private static activeSelectedVoiceKey: string = typeof localStorage !== 'undefined'
-    ? (localStorage.getItem('soul_sanctum_active_voice') || 'gemini-Kore')
+    ? (() => {
+        const saved = localStorage.getItem('soul_sanctum_active_voice');
+        if (!saved || saved.toLowerCase().includes('zira') || saved === 'zira') {
+          return 'gemini-Kore';
+        }
+        return saved;
+      })()
     : 'gemini-Kore';
 
   public static getActiveLectorVoiceKey(): string {
+    if (!this.activeSelectedVoiceKey || this.activeSelectedVoiceKey.toLowerCase().includes('zira')) {
+      return 'gemini-Kore';
+    }
     return this.activeSelectedVoiceKey;
   }
 
   public static setActiveLectorVoiceKey(voiceKey: string): void {
-    this.activeSelectedVoiceKey = voiceKey;
+    const finalKey = !voiceKey || voiceKey.toLowerCase().includes('zira') ? 'gemini-Kore' : voiceKey;
+    this.activeSelectedVoiceKey = finalKey;
     if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('soul_sanctum_active_voice', voiceKey);
+      localStorage.setItem('soul_sanctum_active_voice', finalKey);
     }
   }
 
