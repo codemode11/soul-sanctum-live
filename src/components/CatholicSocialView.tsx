@@ -68,7 +68,7 @@ export const CatholicSocialView: React.FC = () => {
       label: 'EWTN North America (US & Canada)',
       location: 'Irondale, Alabama • Eastern / Central Time Feed',
       streamUrl: ewtnEpgMap['canada']?.mediaUrl || 'https://cdn3.wowza.com/1/YW5wSWZiRGd2eFlU/bGV0aVBq/hls/live/playlist.m3u8',
-      fallbackStreamUrl: ewtnEpgMap['united-states']?.mediaUrl || 'https://cdn3.wowza.com/1/QjRzVXJtVml5SUVx/WGJRSWxz/hls/live/playlist.m3u8',
+      fallbackStreamUrl: 'https://cdn3.wowza.com/1/T2NXeHF6UGlGbHY3/WFluRldQ/hls/live/playlist.m3u8',
       portalUrl: 'https://www.ewtn.com/live/tv/united-states',
       youtubeUrl: 'https://www.youtube.com/@EWTN/streams',
       schedule: 'Daily Mass at 8:00 AM, 12:00 PM & 7:00 PM ET • The World Over • EWTN News Nightly'

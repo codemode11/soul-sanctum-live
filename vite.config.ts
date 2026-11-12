@@ -58,6 +58,7 @@ function vaticanNewsPlugin() {
           try {
             const prompt = body?.prompt;
             const history = body?.history || [];
+            const userMemory = typeof body?.userMemory === 'string' ? body.userMemory.trim() : '';
             const enableWebResearch = body?.enableWebResearch !== false;
 
             if (!prompt || typeof prompt !== 'string' || !prompt.trim()) {
@@ -95,7 +96,7 @@ function vaticanNewsPlugin() {
 
             const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
             if (Array.isArray(history)) {
-              for (const item of history.slice(-6)) {
+              for (const item of history.slice(-10)) {
                 if (item && item.content && typeof item.content === 'string') {
                   contents.push({
                     role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
@@ -104,6 +105,10 @@ function vaticanNewsPlugin() {
                 }
               }
             }
+
+            const effectiveSystemInstruction = userMemory
+              ? `${CATHOLIC_AI_SYSTEM_INSTRUCTION}\n\nUSER MEMORY & LEARNED PREFERENCES PROFILE:\n${userMemory}\nAdapt your tone, Scripture translation choice, theological depth, and patristic/saint references naturally to honor these learned user preferences.`
+              : CATHOLIC_AI_SYSTEM_INSTRUCTION;
 
             let promptWithResearch = trimmedPrompt;
             if (webSources.length > 0) {
@@ -119,7 +124,7 @@ function vaticanNewsPlugin() {
               parts: [{ text: promptWithResearch }],
             });
 
-            const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
+            const candidateModels = ['gemini-3.8-flash', 'gemini-3.1-flash-lite'];
             let reply = '';
             let lastError: any = null;
 
@@ -129,7 +134,7 @@ function vaticanNewsPlugin() {
                   model: modelName,
                   contents,
                   config: {
-                    systemInstruction: CATHOLIC_AI_SYSTEM_INSTRUCTION,
+                    systemInstruction: effectiveSystemInstruction,
                   },
                 });
                 if (response && response.text) {
@@ -167,6 +172,7 @@ function vaticanNewsPlugin() {
             return;
           }
           const enableWebResearchParam = urlObj.searchParams.get('enableWebResearch');
+          const userMemoryParam = urlObj.searchParams.get('userMemory') || '';
           const historyParam = urlObj.searchParams.get('history');
           let parsedHistory: any[] = [];
           if (historyParam) {
@@ -178,6 +184,7 @@ function vaticanNewsPlugin() {
           }
           processRequest({
             prompt: promptParam,
+            userMemory: userMemoryParam,
             enableWebResearch: enableWebResearchParam !== 'false',
             history: parsedHistory,
           });

@@ -1,32 +1,33 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Sparkles, 
-  Send, 
-  BookOpen, 
-  Copy, 
-  Check, 
-  Volume2, 
-  VolumeX, 
-  Trash2, 
-  Scroll, 
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import {
+  Send,
+  Copy,
+  Check,
+  Volume2,
+  VolumeX,
+  Trash2,
   HelpCircle,
   RefreshCw,
   Search,
   ExternalLink,
-  ChevronRight,
   ChevronDown,
   Globe,
-  Settings,
-  Key,
   Sliders,
-  CheckCircle2
+  MessageSquare,
+  Plus,
+  Brain,
+  Clock,
+  Sparkles,
+  BookOpen,
+  PanelLeftClose,
+  PanelLeftOpen,
+  X
 } from 'lucide-react';
 import {
   WebResearchSource,
   searchCatholicInternet,
   synthesizeResearchResponse,
 } from '../utils/catholicInternetResearch';
-import { DoveWithHaloIcon, BetterScrollIcon } from './SanctumIcons';
 
 export interface ChatMessage {
   id: string;
@@ -40,6 +41,39 @@ export interface ChatMessage {
 
 export type AIEngine = 'openai' | 'gemini' | 'magisterium' | 'auto';
 export type AIPersona = 'scholarly' | 'catechism' | 'patristic' | 'apologetics' | 'spiritual';
+
+export type PreferredBibleEdition = 'NABRE' | 'Douay-Rheims' | 'RSV-CE' | 'Knox / Latin Vulgate';
+export type PreferredResponseDepth =
+  | 'Comprehensive & Scholarly'
+  | 'Concise & Catechetical'
+  | 'Pastoral & Contemplative'
+  | 'Apologetics & Scriptural';
+
+export interface ChatSession {
+  id: string;
+  title: string;
+  createdAt: number;
+  updatedAt: number;
+  persona: AIPersona;
+  engine: AIEngine;
+  messages: ChatMessage[];
+}
+
+export interface UserMemoryProfile {
+  preferredBible: PreferredBibleEdition;
+  preferredDepth: PreferredResponseDepth;
+  favoredPersona: AIPersona;
+  topicWeights: Record<string, number>;
+  favoriteSaintsAndDoctors: string[];
+  customNotes: string[];
+  personaCounts: Record<AIPersona, number>;
+  totalQuestionsAsked: number;
+  lastUpdated: number;
+}
+
+const SESSIONS_STORAGE_KEY = 'sanctum_catholic_ai_sessions_v1';
+const ACTIVE_SESSION_ID_KEY = 'sanctum_catholic_ai_active_session_v1';
+const MEMORY_PROFILE_STORAGE_KEY = 'sanctum_catholic_ai_memory_profile_v1';
 
 const AI_ENGINE_SPECS: Record<AIEngine, { name: string; label: string }> = {
   openai: {
@@ -82,6 +116,132 @@ const AI_PERSONA_SPECS: Record<AIPersona, { title: string; systemPromptSuffix: s
     systemPromptSuffix: 'Adopt a deeply pastoral, contemplative tone offering practical spiritual application for the soul.'
   }
 };
+
+const TOPIC_MATCHERS: Array<{ topic: string; keywords: RegExp }> = [
+  { topic: 'Holy Eucharist & Real Presence', keywords: /\b(eucharist|transubstantiation|mass|communion|blessed sacrament|adoration|host|chalice|consecration|liturgy)\b/i },
+  { topic: 'Sacred Scripture & Exegesis', keywords: /\b(bible|scripture|gospel|old testament|new testament|psalm|genesis|exodus|isaiah|matthew|mark|luke|john|paul|romans|revelation|verse|parable)\b/i },
+  { topic: 'Blessed Virgin Mary & Mariology', keywords: /\b(mary|marian|our lady|immaculate conception|assumption|rosary|lourdes|fatima|guadalupe|theotokos|magnificat|queen of heaven|medjugorje)\b/i },
+  { topic: 'Church Fathers & Patristics', keywords: /\b(church fathers|patristic|augustine|chrysostom|irenaeus|ignatius|justin martyr|jerome|ambrose|athanasius|basil|gregory|cyril)\b/i },
+  { topic: 'Thomistic Theology & Philosophy', keywords: /\b(thomas aquinas|summa|thomistic|aristotle|natural law|metaphysics|essence|substance|accidents|act and potency|five ways|scholastic)\b/i },
+  { topic: 'Sacraments & Moral Theology', keywords: /\b(sacrament|baptism|confirmation|confession|penance|reconciliation|anointing|matrimony|marriage|holy orders|priesthood|sin|mortal|venial|virtue|grace)\b/i },
+  { topic: 'Church History & Ecumenical Councils', keywords: /\b(council|nicaea|trent|vatican ii|chalcedon|ephesus|pope|papacy|history|crusade|reformation|inquisition|magisterium|dogma|canon)\b/i },
+  { topic: 'Catholic Apologetics', keywords: /\b(sola scriptura|sola fide|protestant|orthodox|apologetics|objection|purgatory|indulgence|intercession|idolatry|papal infallibility)\b/i },
+  { topic: 'Prayer & Interior Spiritual Life', keywords: /\b(prayer|contemplation|meditation|novena|lectio divina|dark night|detachment|humility|discernment|examen|breviary|divine office)\b/i },
+  { topic: 'Lives of the Saints', keywords: /\b(saint|st\.|martyr|canonization|miracle|patron|padre pio|therese|francis|benedict|kolbe|faustina|newman|sheen)\b/i },
+];
+
+const SAINT_AND_DOCTOR_MATCHERS: Array<{ name: string; pattern: RegExp }> = [
+  { name: 'St. Thomas Aquinas', pattern: /\b(thomas aquinas|aquinas|summa theologiae)\b/i },
+  { name: 'St. Augustine of Hippo', pattern: /\b(augustine)\b/i },
+  { name: 'St. John Chrysostom', pattern: /\b(chrysostom)\b/i },
+  { name: 'St. Jerome', pattern: /\b(jerome|vulgate)\b/i },
+  { name: 'St. Athanasius', pattern: /\b(athanasius)\b/i },
+  { name: 'St. Ignatius of Antioch', pattern: /\b(ignatius of antioch)\b/i },
+  { name: 'St. Irenaeus of Lyons', pattern: /\b(irenaeus)\b/i },
+  { name: 'St. Teresa of Ávila', pattern: /\b(teresa of avila|teresa of ávila|interior castle)\b/i },
+  { name: 'St. John of the Cross', pattern: /\b(john of the cross|dark night of the soul)\b/i },
+  { name: 'St. Thérèse of Lisieux', pattern: /\b(therese of lisieux|thérèse|little flower)\b/i },
+  { name: 'St. Francis de Sales', pattern: /\b(francis de sales|devout life)\b/i },
+  { name: 'St. Alphonsus Liguori', pattern: /\b(alphonsus liguori|liguori)\b/i },
+  { name: 'St. Louis de Montfort', pattern: /\b(louis de montfort|montfort|true devotion)\b/i },
+  { name: 'St. Maximilian Kolbe', pattern: /\b(maximilian kolbe|kolbe|immaculata)\b/i },
+  { name: 'St. Padre Pio', pattern: /\b(padre pio|pio of pietrelcina)\b/i },
+  { name: 'St. Faustina Kowalska', pattern: /\b(faustina|divine mercy)\b/i },
+  { name: 'St. John Henry Newman', pattern: /\b(john henry newman|cardinal newman)\b/i },
+  { name: 'Pope Benedict XVI', pattern: /\b(benedict xvi|ratzinger)\b/i },
+  { name: 'St. John Paul II', pattern: /\b(john paul ii|wojtyla)\b/i },
+  { name: 'Ven. Fulton J. Sheen', pattern: /\b(fulton sheen|archbishop sheen)\b/i },
+  { name: 'St. Bernadette of Lourdes', pattern: /\b(bernadette|lourdes)\b/i },
+];
+
+function createDefaultWelcomeMessage(engine: AIEngine = 'auto'): ChatMessage {
+  return {
+    id: `welcome-${Date.now()}`,
+    role: 'assistant',
+    content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** (powered by **ChatGPT** & **Gemini**).
+
+Grounded in:
+* **The Catechism of the Catholic Church (CCC)**
+* **Sacred Scripture** (NABRE, Douay-Rheims, RSV-CE)
+* **The Church Fathers and Doctors of the Church** (St. Thomas Aquinas, St. Augustine, St. John Chrysostom)
+* **The 21 Ecumenical Councils** (Nicaea to Vatican II)
+
+Your **Previous Chats** stay saved in the left memory panel, and the Assistant gradually learns your theological interests, favored Scripture translation, and preferred scholarly style over time.`,
+    timestamp: Date.now(),
+    provider: engine,
+    model: engine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.8-flash'
+  };
+}
+
+function getDefaultMemoryProfile(): UserMemoryProfile {
+  return {
+    preferredBible: 'RSV-CE',
+    preferredDepth: 'Comprehensive & Scholarly',
+    favoredPersona: 'scholarly',
+    topicWeights: {},
+    favoriteSaintsAndDoctors: [],
+    customNotes: [],
+    personaCounts: {
+      scholarly: 1,
+      catechism: 0,
+      patristic: 0,
+      apologetics: 0,
+      spiritual: 0
+    },
+    totalQuestionsAsked: 0,
+    lastUpdated: Date.now()
+  };
+}
+
+function loadMemoryProfile(): UserMemoryProfile {
+  if (typeof window === 'undefined') return getDefaultMemoryProfile();
+  try {
+    const raw = localStorage.getItem(MEMORY_PROFILE_STORAGE_KEY);
+    if (!raw) return getDefaultMemoryProfile();
+    const parsed = JSON.parse(raw);
+    return {
+      ...getDefaultMemoryProfile(),
+      ...parsed,
+      topicWeights: parsed?.topicWeights || {},
+      favoriteSaintsAndDoctors: Array.isArray(parsed?.favoriteSaintsAndDoctors) ? parsed.favoriteSaintsAndDoctors : [],
+      customNotes: Array.isArray(parsed?.customNotes) ? parsed.customNotes : [],
+      personaCounts: {
+        ...getDefaultMemoryProfile().personaCounts,
+        ...(parsed?.personaCounts || {})
+      }
+    };
+  } catch {
+    return getDefaultMemoryProfile();
+  }
+}
+
+function createInitialSession(persona: AIPersona = 'scholarly', engine: AIEngine = 'auto'): ChatSession {
+  const now = Date.now();
+  return {
+    id: `session-${now}`,
+    title: 'New Theological Inquiry',
+    createdAt: now,
+    updatedAt: now,
+    persona,
+    engine,
+    messages: [createDefaultWelcomeMessage(engine)]
+  };
+}
+
+function loadSavedSessions(): ChatSession[] {
+  if (typeof window === 'undefined') return [createInitialSession()];
+  try {
+    const raw = localStorage.getItem(SESSIONS_STORAGE_KEY);
+    if (!raw) return [createInitialSession()];
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return parsed;
+    }
+    return [createInitialSession()];
+  } catch {
+    return [createInitialSession()];
+  }
+}
 
 // Offline fallback answers grounded strictly in the Catechism and Scripture
 const OFFLINE_THEOLOGICAL_KNOWLEDGE: Record<string, string> = {
@@ -139,39 +299,43 @@ Catholic doctrine rests firmly on the unified foundation of **Sacred Scripture**
 * **Sacred Scripture** is interpreted in the living heart of the Church in light of the Church Fathers and the 21 Ecumenical Councils.`;
 }
 
+function summarizeTitleFromPrompt(prompt: string): string {
+  const clean = prompt.replace(/\s+/g, ' ').trim();
+  if (clean.length <= 44) return clean;
+  return clean.slice(0, 42).trim() + '…';
+}
+
 export const CatholicAIAssistantView: React.FC = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>(() => {
-    return [
-      {
-        id: 'welcome',
-        role: 'assistant',
-        content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** (powered by **ChatGPT** & **Gemini**).
-
-Grounded in:
-* **The Catechism of the Catholic Church (CCC)**
-* **Sacred Scripture** (NABRE, Douay-Rheims, RSV-CE)
-* **The Church Fathers and Doctors of the Church** (St. Thomas Aquinas, St. Augustine, St. John Chrysostom)
-* **The 21 Ecumenical Councils** (Nicaea to Vatican II)
-
-Feel free to ask any question on Catholic dogma, Scripture, moral theology, or Church history.`,
-        timestamp: Date.now(),
-        provider: 'openai',
-        model: 'gpt-4o-mini'
+  const [memoryProfile, setMemoryProfile] = useState<UserMemoryProfile>(loadMemoryProfile);
+  const [sessions, setSessions] = useState<ChatSession[]>(loadSavedSessions);
+  const [activeSessionId, setActiveSessionId] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const savedId = localStorage.getItem(ACTIVE_SESSION_ID_KEY);
+      const loaded = loadSavedSessions();
+      if (savedId && loaded.some(s => s.id === savedId)) {
+        return savedId;
       }
-    ];
+      return loaded[0].id;
+    }
+    return '';
   });
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [sidebarTab, setSidebarTab] = useState<'chats' | 'memory'>('chats');
+  const [sessionSearchQuery, setSessionSearchQuery] = useState<string>('');
+  const [newCustomNote, setNewCustomNote] = useState<string>('');
+
+  const activeSession = useMemo(() => {
+    return sessions.find(s => s.id === activeSessionId) || sessions[0];
+  }, [sessions, activeSessionId]);
+
+  const messages = activeSession?.messages || [];
 
   const [inputPrompt, setInputPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isWebResearchEnabled, setIsWebResearchEnabled] = useState(true);
-  const [selectedEngine, setSelectedEngine] = useState<AIEngine>('openai');
-  const [selectedPersona, setSelectedPersona] = useState<AIPersona>('scholarly');
-  const [customOpenAiKey, setCustomOpenAiKey] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('sanctum_openai_api_key') || '';
-    }
-    return '';
-  });
+  const [selectedEngine, setSelectedEngine] = useState<AIEngine>(() => activeSession?.engine || 'auto');
+  const [selectedPersona, setSelectedPersona] = useState<AIPersona>(() => activeSession?.persona || memoryProfile.favoredPersona || 'scholarly');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
@@ -180,19 +344,214 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  // Persist sessions to localStorage whenever they change
+  useEffect(() => {
+    if (typeof window !== 'undefined' && sessions.length > 0) {
+      try {
+        localStorage.setItem(SESSIONS_STORAGE_KEY, JSON.stringify(sessions.slice(0, 60)));
+      } catch {
+        // ignore storage quota errors
+      }
+    }
+  }, [sessions]);
+
+  // Persist activeSessionId
+  useEffect(() => {
+    if (typeof window !== 'undefined' && activeSessionId) {
+      try {
+        localStorage.setItem(ACTIVE_SESSION_ID_KEY, activeSessionId);
+      } catch {
+        // ignore
+      }
+    }
+  }, [activeSessionId]);
+
+  // Persist memoryProfile
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(MEMORY_PROFILE_STORAGE_KEY, JSON.stringify(memoryProfile));
+      } catch {
+        // ignore
+      }
+    }
+  }, [memoryProfile]);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isLoading]);
+  }, [messages.length, isLoading]);
 
-  const handleSaveCustomKey = (key: string) => {
-    setCustomOpenAiKey(key);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('sanctum_openai_api_key', key);
+  // Gradually learn user preferences from each question and interaction
+  const learnFromUserPrompt = (promptText: string, personaUsed: AIPersona): UserMemoryProfile => {
+    const nextProfile: UserMemoryProfile = {
+      ...memoryProfile,
+      topicWeights: { ...memoryProfile.topicWeights },
+      favoriteSaintsAndDoctors: [...memoryProfile.favoriteSaintsAndDoctors],
+      customNotes: [...memoryProfile.customNotes],
+      personaCounts: { ...memoryProfile.personaCounts },
+      totalQuestionsAsked: (memoryProfile.totalQuestionsAsked || 0) + 1,
+      lastUpdated: Date.now(),
+    };
+
+    // 1. Update persona usage counts & determine favored persona
+    nextProfile.personaCounts[personaUsed] = (nextProfile.personaCounts[personaUsed] || 0) + 1;
+    let topPersona: AIPersona = nextProfile.favoredPersona;
+    let maxCount = -1;
+    (Object.keys(nextProfile.personaCounts) as AIPersona[]).forEach((p) => {
+      if (nextProfile.personaCounts[p] > maxCount) {
+        maxCount = nextProfile.personaCounts[p];
+        topPersona = p;
+      }
+    });
+    nextProfile.favoredPersona = topPersona;
+
+    // 2. Detect preferred Bible translation if mentioned
+    if (/\b(douay[-\s]?rheims|dra|drb)\b/i.test(promptText)) {
+      nextProfile.preferredBible = 'Douay-Rheims';
+    } else if (/\b(rsv[-\s]?ce|revised standard)\b/i.test(promptText)) {
+      nextProfile.preferredBible = 'RSV-CE';
+    } else if (/\b(nabre|new american bible)\b/i.test(promptText)) {
+      nextProfile.preferredBible = 'NABRE';
+    } else if (/\b(vulgate|knox)\b/i.test(promptText)) {
+      nextProfile.preferredBible = 'Knox / Latin Vulgate';
     }
+
+    // 3. Detect preferred response depth if mentioned
+    if (/\b(brief|briefly|concise|short answer|in a few sentences|summary)\b/i.test(promptText)) {
+      nextProfile.preferredDepth = 'Concise & Catechetical';
+    } else if (/\b(in[-\s]?depth|detailed|scholarly|comprehensive|thorough|exhaustively)\b/i.test(promptText)) {
+      nextProfile.preferredDepth = 'Comprehensive & Scholarly';
+    } else if (/\b(meditation|prayerful|contemplative|spiritual reflection|pastoral)\b/i.test(promptText)) {
+      nextProfile.preferredDepth = 'Pastoral & Contemplative';
+    } else if (/\b(apologetics|defend|protestant|objection|debate)\b/i.test(promptText)) {
+      nextProfile.preferredDepth = 'Apologetics & Scriptural';
+    }
+
+    // 4. Increment theological topic weights
+    for (const matcher of TOPIC_MATCHERS) {
+      if (matcher.keywords.test(promptText)) {
+        nextProfile.topicWeights[matcher.topic] = (nextProfile.topicWeights[matcher.topic] || 0) + 1;
+      }
+    }
+
+    // 5. Extract favorite Saints, Church Fathers, and Doctors
+    for (const saint of SAINT_AND_DOCTOR_MATCHERS) {
+      if (saint.pattern.test(promptText) && !nextProfile.favoriteSaintsAndDoctors.includes(saint.name)) {
+        nextProfile.favoriteSaintsAndDoctors = [saint.name, ...nextProfile.favoriteSaintsAndDoctors].slice(0, 12);
+      }
+    }
+
+    // 6. Extract explicit user preference statements ("I prefer...", "Remember that...", "My patron saint is...", "Always...")
+    const explicitPrefMatch = promptText.match(
+      /(?:i\s+prefer|please\s+remember|remember\s+that\s+i|my\s+patron\s+saint\s+is|i\s+am\s+studying|always\s+include|i\s+love\s+reading)[^.!?]{3,90}/i
+    );
+    if (explicitPrefMatch) {
+      const note = explicitPrefMatch[0].trim();
+      if (note && !nextProfile.customNotes.some(n => n.toLowerCase() === note.toLowerCase())) {
+        nextProfile.customNotes = [note, ...nextProfile.customNotes].slice(0, 10);
+      }
+    }
+
+    setMemoryProfile(nextProfile);
+    return nextProfile;
+  };
+
+  // Build structured memory summary string to send to the AI Assistant
+  const buildUserMemoryContextString = (profile: UserMemoryProfile): string => {
+    const topTopics = Object.entries(profile.topicWeights)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([topic, count]) => `${topic} (${count} inquiries)`);
+
+    const recentSessionTitles = sessions
+      .filter(s => s.title !== 'New Theological Inquiry')
+      .slice(0, 6)
+      .map(s => s.title);
+
+    const lines: string[] = [
+      `- Preferred Catholic Bible Translation: ${profile.preferredBible}`,
+      `- Preferred Theological Depth & Style: ${profile.preferredDepth}`,
+      `- Favored Theological Persona: ${AI_PERSONA_SPECS[profile.favoredPersona]?.title || 'Theological Scholar'}`,
+    ];
+
+    if (topTopics.length > 0) {
+      lines.push(`- Core Theological Interests (learned from past chats): ${topTopics.join(', ')}`);
+    }
+    if (profile.favoriteSaintsAndDoctors.length > 0) {
+      lines.push(`- Favored Saints, Church Fathers & Doctors: ${profile.favoriteSaintsAndDoctors.join(', ')}`);
+    }
+    if (profile.customNotes.length > 0) {
+      lines.push(`- Explicit User Preferences & Notes: ${profile.customNotes.join(' | ')}`);
+    }
+    if (recentSessionTitles.length > 0) {
+      lines.push(`- Recent Past Chat Topics Explored by User: ${recentSessionTitles.join('; ')}`);
+    }
+
+    return lines.join('\n');
+  };
+
+  const handleStartNewChat = () => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setSpeakingMessageId(null);
+    setErrorMessage(null);
+
+    const freshSession = createInitialSession(selectedPersona, selectedEngine);
+    setSessions(prev => [freshSession, ...prev]);
+    setActiveSessionId(freshSession.id);
+    setInputPrompt('');
+  };
+
+  const handleSelectSession = (session: ChatSession) => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    setSpeakingMessageId(null);
+    setErrorMessage(null);
+    setActiveSessionId(session.id);
+    setSelectedPersona(session.persona || memoryProfile.favoredPersona);
+    setSelectedEngine(session.engine || 'auto');
+  };
+
+  const handleDeleteSession = (e: React.MouseEvent, sessionId: string) => {
+    e.stopPropagation();
+    setSessions(prev => {
+      const remaining = prev.filter(s => s.id !== sessionId);
+      if (remaining.length === 0) {
+        const fallback = createInitialSession(selectedPersona, selectedEngine);
+        setActiveSessionId(fallback.id);
+        return [fallback];
+      }
+      if (activeSessionId === sessionId) {
+        setActiveSessionId(remaining[0].id);
+      }
+      return remaining;
+    });
+  };
+
+  const handleAddCustomMemoryNote = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = newCustomNote.trim();
+    if (!trimmed) return;
+    setMemoryProfile(prev => ({
+      ...prev,
+      customNotes: [trimmed, ...prev.customNotes.filter(n => n.toLowerCase() !== trimmed.toLowerCase())].slice(0, 12),
+      lastUpdated: Date.now()
+    }));
+    setNewCustomNote('');
+  };
+
+  const handleRemoveCustomNote = (noteToRemove: string) => {
+    setMemoryProfile(prev => ({
+      ...prev,
+      customNotes: prev.customNotes.filter(n => n !== noteToRemove),
+      lastUpdated: Date.now()
+    }));
   };
 
   const handleCopy = async (id: string, text: string) => {
@@ -231,29 +590,55 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
     window.speechSynthesis.speak(utterance);
   };
 
-  const handleClearChat = () => {
+  const handleClearCurrentChat = () => {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
     setSpeakingMessageId(null);
-    setMessages([
-      {
-        id: 'welcome',
-        role: 'assistant',
-        content: `**Laudetur Jesus Christus!** The Catholic Assistant has been reset. What Catholic theological question, Scripture passage, or doctrine would you like to explore today?`,
-        timestamp: Date.now(),
-        provider: selectedEngine,
-        model: selectedEngine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.1-flash'
-      }
-    ]);
+    const resetMsg: ChatMessage = {
+      id: `welcome-${Date.now()}`,
+      role: 'assistant',
+      content: `**Laudetur Jesus Christus!** This conversation thread has been reset while your previous chats and learned preferences remain safely stored in the memory panel.`,
+      timestamp: Date.now(),
+      provider: selectedEngine,
+      model: selectedEngine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.8-flash'
+    };
+    setSessions(prev =>
+      prev.map(s =>
+        s.id === activeSession.id
+          ? { ...s, title: 'New Theological Inquiry', updatedAt: Date.now(), messages: [resetMsg] }
+          : s
+      )
+    );
+  };
+
+  const appendMessageToActiveSession = (targetSessionId: string, newMsg: ChatMessage, newTitle?: string) => {
+    setSessions(prev => {
+      const updated = prev.map(s => {
+        if (s.id !== targetSessionId) return s;
+        return {
+          ...s,
+          title: newTitle || s.title,
+          persona: selectedPersona,
+          engine: selectedEngine,
+          updatedAt: Date.now(),
+          messages: [...s.messages, newMsg]
+        };
+      });
+      return [...updated].sort((a, b) => b.updatedAt - a.updatedAt);
+    });
   };
 
   const handleSubmit = async (e?: React.FormEvent, customQuestion?: string) => {
     if (e) e.preventDefault();
     const promptToSend = (customQuestion || inputPrompt).trim();
-    if (!promptToSend || isLoading) return;
+    if (!promptToSend || isLoading || !activeSession) return;
 
     setErrorMessage(null);
+    const targetSessionId = activeSession.id;
+    const isFirstUserMessage = !activeSession.messages.some(m => m.role === 'user');
+    const nextTitle = isFirstUserMessage ? summarizeTitleFromPrompt(promptToSend) : activeSession.title;
+
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
@@ -261,74 +646,78 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
       timestamp: Date.now()
     };
 
-    setMessages(prev => [...prev, userMsg]);
+    appendMessageToActiveSession(targetSessionId, userMsg, nextTitle);
     setInputPrompt('');
     setIsLoading(true);
 
+    // Update learned user preferences from this inquiry
+    const updatedProfile = learnFromUserPrompt(promptToSend, selectedPersona);
+    const userMemoryString = buildUserMemoryContextString(updatedProfile);
+
     try {
-      const historyPayload = messages
-        .filter(m => m.id !== 'welcome')
-        .slice(-4)
-        .map(m => ({ role: m.role, content: m.content.slice(0, 600) }));
+      const historyPayload = activeSession.messages
+        .filter(m => !m.id.startsWith('welcome'))
+        .slice(-8)
+        .map(m => ({ role: m.role, content: m.content.slice(0, 800) }));
 
       const personaInstruction = AI_PERSONA_SPECS[selectedPersona].systemPromptSuffix;
-      const augmentedPrompt = `${promptToSend}\n\n[Persona Instruction: ${personaInstruction}]`;
+      const augmentedPrompt = `${promptToSend}\n\n[Persona Instruction: ${personaInstruction} Preferred Bible Translation: ${updatedProfile.preferredBible}. Preferred Style: ${updatedProfile.preferredDepth}.]`;
 
       let data: { reply?: string; webSources?: WebResearchSource[]; provider?: string; model?: string } | null = null;
 
-      // 1. GET request
+      // 1. Primary POST request with full conversation history and user memory profile
       try {
-        const queryUrl = `/api/catholic-ai?prompt=${encodeURIComponent(
-          augmentedPrompt
-        )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}&provider=${selectedEngine}&apiKey=${encodeURIComponent(
-          customOpenAiKey
-        )}`;
-
-        const getRes = await fetch(queryUrl, {
-          method: 'GET',
-          headers: { Accept: 'application/json' },
+        const postRes = await fetch('/api/catholic-ai', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
           credentials: 'same-origin',
+          body: JSON.stringify({
+            prompt: augmentedPrompt,
+            history: historyPayload,
+            userMemory: userMemoryString,
+            enableWebResearch: isWebResearchEnabled,
+            provider: selectedEngine,
+          }),
         });
 
-        const contentType = getRes.headers.get('content-type') || '';
-        if (getRes.ok && contentType.includes('application/json')) {
-          const parsed = await getRes.json();
+        const postContentType = postRes.headers.get('content-type') || '';
+        if (postRes.ok && postContentType.includes('application/json')) {
+          const parsed = await postRes.json();
           if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
             data = parsed;
           }
         }
       } catch {
-        // Proceed to POST fallback
+        // Proceed to GET fallback
       }
 
-      // 2. Fallback POST request
+      // 2. Fallback GET request
       if (!data) {
         try {
-          const postRes = await fetch('/api/catholic-ai', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
+          const queryUrl = `/api/catholic-ai?prompt=${encodeURIComponent(
+            augmentedPrompt
+          )}&userMemory=${encodeURIComponent(
+            userMemoryString
+          )}&enableWebResearch=${isWebResearchEnabled ? 'true' : 'false'}&provider=${selectedEngine}`;
+
+          const getRes = await fetch(queryUrl, {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
             credentials: 'same-origin',
-            body: JSON.stringify({
-              prompt: augmentedPrompt,
-              history: historyPayload,
-              enableWebResearch: isWebResearchEnabled,
-              provider: selectedEngine,
-              apiKey: customOpenAiKey,
-            }),
           });
 
-          const postContentType = postRes.headers.get('content-type') || '';
-          if (postRes.ok && postContentType.includes('application/json')) {
-            const parsed = await postRes.json();
+          const contentType = getRes.headers.get('content-type') || '';
+          if (getRes.ok && contentType.includes('application/json')) {
+            const parsed = await getRes.json();
             if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
               data = parsed;
             }
           }
         } catch {
-          // Proceed to live client-side Internet research fallback
+          // Proceed to client-side research synthesis fallback
         }
       }
 
@@ -340,9 +729,9 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
           timestamp: Date.now(),
           webSources: data.webSources || [],
           provider: data.provider || selectedEngine,
-          model: data.model || (selectedEngine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.1-flash'),
+          model: data.model || (selectedEngine === 'openai' ? 'gpt-4o-mini' : 'gemini-3.8-flash'),
         };
-        setMessages(prev => [...prev, assistantMsg]);
+        appendMessageToActiveSession(targetSessionId, assistantMsg);
         return;
       }
 
@@ -368,7 +757,7 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
         provider: selectedEngine,
         model: 'chatgpt-standard'
       };
-      setMessages(prev => [...prev, assistantMsg]);
+      appendMessageToActiveSession(targetSessionId, assistantMsg);
     } catch (err: any) {
       console.warn('Issue contacting Catholic AI:', err);
       const liveWebSources = isWebResearchEnabled
@@ -392,11 +781,30 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
         provider: selectedEngine,
         model: 'chatgpt-fallback'
       };
-      setMessages(prev => [...prev, assistantMsg]);
+      appendMessageToActiveSession(targetSessionId, assistantMsg);
     } finally {
       setIsLoading(false);
     }
   };
+
+  const filteredSessions = useMemo(() => {
+    const q = sessionSearchQuery.trim().toLowerCase();
+    if (!q) return sessions;
+    return sessions.filter(
+      s =>
+        s.title.toLowerCase().includes(q) ||
+        s.messages.some(m => m.content.toLowerCase().includes(q))
+    );
+  }, [sessions, sessionSearchQuery]);
+
+  const sortedTopics = useMemo(() => {
+    return Object.entries(memoryProfile.topicWeights).sort((a, b) => b[1] - a[1]);
+  }, [memoryProfile.topicWeights]);
+
+  const learnedInsightsCount =
+    sortedTopics.length +
+    memoryProfile.favoriteSaintsAndDoctors.length +
+    memoryProfile.customNotes.length;
 
   // Helper to format response markdown with enlarged, clear typography
   const renderFormattedContent = (content: string) => {
@@ -410,7 +818,6 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
             return <div key={idx} className="h-1.5" />;
           }
 
-          // Headers ### or ##
           if (trimmed.startsWith('### ')) {
             return (
               <h3 key={idx} className="font-cinzel text-lg sm:text-xl font-bold text-[#3B1E08] pt-2 border-b border-[#D4A373]/40 pb-1.5">
@@ -426,7 +833,6 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
             );
           }
 
-          // Blockquotes
           if (trimmed.startsWith('>')) {
             return (
               <blockquote key={idx} className="p-3.5 my-2 bg-[#FAF5EE] border-l-4 border-[#8B5A2B] italic text-[#241307] text-base sm:text-lg rounded-r-lg font-serif">
@@ -435,7 +841,6 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
             );
           }
 
-          // Bullet point * or -
           if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
             return (
               <div key={idx} className="flex items-start gap-2.5 pl-2">
@@ -445,7 +850,6 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
             );
           }
 
-          // Numbered list
           const numMatch = trimmed.match(/^(\d+\.)\s+(.*)/);
           if (numMatch) {
             return (
@@ -458,7 +862,6 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
             );
           }
 
-          // Standard paragraph
           return (
             <p key={idx} className="text-[#1C120C]">
               {parseInlineStyles(trimmed)}
@@ -508,12 +911,16 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 w-full">
         <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-[#1C120C] to-stone-900 text-stone-100 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           <div className="space-y-2">
-            {/* Line 1: Engine/Persona Subtext */}
-            <div className="flex items-center gap-2 sm:gap-3 flex-wrap sm:flex-nowrap overflow-hidden">
-              <span className="text-xs sm:text-sm text-stone-300 font-serif sm:whitespace-nowrap">
+            {/* Line 1: Engine/Persona & Memory Status Subtext */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
+              <span className="text-xs sm:text-sm text-stone-300 font-serif">
                 <strong className="text-amber-300 font-cinzel font-semibold">{AI_ENGINE_SPECS[selectedEngine].name}</strong>
                 <span className="mx-1.5 opacity-60">•</span>
                 <span className="italic">{AI_PERSONA_SPECS[selectedPersona].title}</span>
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-amber-500/15 border border-amber-400/40 text-amber-200 text-[11px] font-cinzel font-semibold">
+                <Brain className="w-3 h-3 text-amber-300" />
+                <span>Memory Active ({sessions.length} {sessions.length === 1 ? 'Chat' : 'Chats'})</span>
               </span>
             </div>
 
@@ -524,39 +931,71 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
           </div>
 
           {/* Line 3: Action Controls lowered together at bottom-right */}
-          <div className="flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
-            <button
-              type="button"
-              onClick={() => setIsSettingsOpen(prev => !prev)}
-              className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs ${
-                isSettingsOpen
-                  ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
-                  : 'bg-[#1C120C]/90 hover:bg-[#3B1E08] text-amber-100 border-[#8B5A2B]/80'
-              }`}
-              title={isSettingsOpen ? 'Close Settings Menu' : 'Open AI Engine Settings Drop-down'}
-              aria-label="Toggle AI Settings Drop-down"
-            >
-              <Sliders className="w-3.5 h-3.5 text-amber-300" />
-              <span>Settings</span>
-              <ChevronDown className={`w-3 h-3 text-amber-300 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
-            </button>
+          <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsSidebarOpen(prev => !prev)}
+                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs ${
+                  isSidebarOpen
+                    ? 'bg-[#3B1E08] text-amber-100 border-amber-400/70'
+                    : 'bg-[#1C120C]/90 hover:bg-[#3B1E08] text-amber-200 border-[#8B5A2B]/80'
+                }`}
+                title={isSidebarOpen ? 'Hide Previous Chats & Memory Panel' : 'Show Previous Chats & Memory Panel'}
+              >
+                {isSidebarOpen ? (
+                  <PanelLeftClose className="w-3.5 h-3.5 text-amber-300" />
+                ) : (
+                  <PanelLeftOpen className="w-3.5 h-3.5 text-amber-300" />
+                )}
+                <span>Previous Chats &amp; Memory</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={handleClearChat}
-              className="px-3 py-1.5 rounded-md bg-stone-900/90 hover:bg-stone-800 border border-stone-700 text-amber-200 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
-              title="Reset conversation thread"
-            >
-              <Trash2 className="w-3.5 h-3.5 text-amber-400" />
-              <span>Reset</span>
-            </button>
+              <button
+                type="button"
+                onClick={handleStartNewChat}
+                className="px-3 py-1.5 rounded-md bg-amber-700 hover:bg-amber-600 text-stone-950 font-cinzel font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
+                title="Start a new theological inquiry thread"
+              >
+                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span>New Chat</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(prev => !prev)}
+                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border shadow-2xs ${
+                  isSettingsOpen
+                    ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
+                    : 'bg-[#1C120C]/90 hover:bg-[#3B1E08] text-amber-100 border-[#8B5A2B]/80'
+                }`}
+                title={isSettingsOpen ? 'Close Settings Menu' : 'Open AI Engine Settings Drop-down'}
+                aria-label="Toggle AI Settings Drop-down"
+              >
+                <Sliders className="w-3.5 h-3.5 text-amber-300" />
+                <span>Settings</span>
+                <ChevronDown className={`w-3 h-3 text-amber-300 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              <button
+                type="button"
+                onClick={handleClearCurrentChat}
+                className="px-3 py-1.5 rounded-md bg-stone-900/90 hover:bg-stone-800 border border-stone-700 text-amber-200 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all cursor-pointer"
+                title="Clear current conversation thread"
+              >
+                <Trash2 className="w-3.5 h-3.5 text-amber-400" />
+                <span>Reset Thread</span>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Settings Drop-Down Panel */}
         {isSettingsOpen && (
           <div className="p-4 sm:p-5 bg-[#251710] border-t border-[#8B5A2B]/50 rounded-b-xl space-y-4 animate-fade-in text-amber-100 text-xs">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Engine Selector */}
               <div className="space-y-1.5">
                 <label className="block font-cinzel font-bold text-amber-300 uppercase tracking-wider text-[11px]">
@@ -567,7 +1006,7 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
                   onChange={(e) => setSelectedEngine(e.target.value as AIEngine)}
                   className="w-full bg-[#1C120C] text-amber-100 text-xs font-serif rounded-lg p-2.5 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400 cursor-pointer"
                 >
-                  {(['openai', 'gemini', 'magisterium', 'auto'] as AIEngine[]).map((eng) => (
+                  {(['auto', 'gemini', 'openai', 'magisterium'] as AIEngine[]).map((eng) => (
                     <option key={eng} value={eng}>
                       {AI_ENGINE_SPECS[eng].name}
                     </option>
@@ -592,10 +1031,63 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
                   ))}
                 </select>
               </div>
+
+              {/* Preferred Bible Edition */}
+              <div className="space-y-1.5">
+                <label className="block font-cinzel font-bold text-amber-300 uppercase tracking-wider text-[11px]">
+                  Preferred Bible Edition
+                </label>
+                <select
+                  value={memoryProfile.preferredBible}
+                  onChange={(e) =>
+                    setMemoryProfile(prev => ({
+                      ...prev,
+                      preferredBible: e.target.value as PreferredBibleEdition,
+                      lastUpdated: Date.now()
+                    }))
+                  }
+                  className="w-full bg-[#1C120C] text-amber-100 text-xs font-serif rounded-lg p-2.5 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400 cursor-pointer"
+                >
+                  {(['RSV-CE', 'Douay-Rheims', 'NABRE', 'Knox / Latin Vulgate'] as PreferredBibleEdition[]).map(ed => (
+                    <option key={ed} value={ed}>
+                      {ed}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Preferred Response Depth */}
+              <div className="space-y-1.5">
+                <label className="block font-cinzel font-bold text-amber-300 uppercase tracking-wider text-[11px]">
+                  Preferred Response Style
+                </label>
+                <select
+                  value={memoryProfile.preferredDepth}
+                  onChange={(e) =>
+                    setMemoryProfile(prev => ({
+                      ...prev,
+                      preferredDepth: e.target.value as PreferredResponseDepth,
+                      lastUpdated: Date.now()
+                    }))
+                  }
+                  className="w-full bg-[#1C120C] text-amber-100 text-xs font-serif rounded-lg p-2.5 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400 cursor-pointer"
+                >
+                  {([
+                    'Comprehensive & Scholarly',
+                    'Concise & Catechetical',
+                    'Pastoral & Contemplative',
+                    'Apologetics & Scriptural'
+                  ] as PreferredResponseDepth[]).map(depth => (
+                    <option key={depth} value={depth}>
+                      {depth}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            {/* Internet Research Toggle & Custom OpenAI Key */}
-            <div className="pt-2 border-t border-[#8B5A2B]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            {/* Internet Research Toggle */}
+            <div className="pt-2 border-t border-[#8B5A2B]/40 flex flex-wrap items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={() => setIsWebResearchEnabled(prev => !prev)}
@@ -609,209 +1101,456 @@ Feel free to ask any question on Catholic dogma, Scripture, moral theology, or C
                 <span>Internet Research: <strong>{isWebResearchEnabled ? 'ACTIVE' : 'OFF'}</strong></span>
               </button>
 
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <Key className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <input
-                  type="password"
-                  value={customOpenAiKey}
-                  onChange={(e) => handleSaveCustomKey(e.target.value)}
-                  placeholder="Optional OpenAI Key (sk-...)"
-                  className="w-full sm:w-60 bg-[#1C120C] text-amber-100 placeholder-stone-500 text-xs font-mono rounded-lg p-2 border border-[#8B5A2B]/60 focus:outline-none focus:border-amber-400"
-                />
-              </div>
+              <span className="text-[11px] font-serif text-amber-200/80">
+                Your preferences and past conversations are automatically remembered across sessions.
+              </span>
             </div>
           </div>
         )}
       </div>
 
-      {/* 2. Conversation Thread */}
-      <div className="space-y-4 min-h-[320px] w-full">
-        {messages.map((msg) => {
-          const isUser = msg.role === 'user';
-          return (
-            <div
-              key={msg.id}
-              className="w-full"
-            >
-              <div
-                className={`relative w-full rounded-2xl p-4 sm:p-6 shadow-md border ${
-                  isUser
-                    ? 'bg-[#251710] text-amber-100 border-[#8B5A2B]/70'
-                    : 'bg-[#FDFCFA] text-[#1C120C] border-stone-300/90 shadow-sm'
-                }`}
-              >
-                {/* Header inside assistant message */}
-                {!isUser && (
-                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-stone-200 text-xs text-stone-500 font-cinzel">
-                    <div className="flex items-center gap-2">
-                      <span className="flex items-center gap-1.5 font-bold text-[#3B1E08]">
-                        <span className="px-1.5 py-0.5 rounded bg-[#3B1E08] text-amber-300 border border-[#8B5A2B]/60 font-cinzel text-[10px] font-black tracking-tight">AI</span>
-                        Soul Sanctum Assistant
-                      </span>
-                      <span className="px-2 py-0.5 rounded text-[10px] bg-[#FAF2E8] text-[#5C2E0E] font-cinzel font-semibold border border-[#D4A373]/60">
-                        {msg.provider === 'openai' ? 'ChatGPT' : msg.provider === 'magisterium' ? 'Magisterium AI' : 'Gemini'}
-                      </span>
-                    </div>
+      {/* 2. Main Workspace: Left Memory & Previous Chats Panel + Right Active Conversation */}
+      <div className={`grid grid-cols-1 ${isSidebarOpen ? 'lg:grid-cols-[310px_1fr]' : 'lg:grid-cols-1'} gap-5 items-start`}>
+        
+        {/* LEFT PANEL: PREVIOUS CHATS & LEARNED USER PREFERENCES */}
+        {isSidebarOpen && (
+          <aside className="rounded-2xl overflow-hidden bg-gradient-to-b from-[#1E140E] via-[#19110C] to-[#140D09] border border-[#8B5A2B]/60 shadow-xl text-stone-100 flex flex-col max-h-[760px] lg:sticky lg:top-4">
+            {/* Panel Switcher Header */}
+            <div className="p-3 bg-[#26170F] border-b border-[#8B5A2B]/40 space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-300 uppercase tracking-wider">
+                  <Brain className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Assistant Memory</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleStartNewChat}
+                  className="px-2.5 py-1 rounded-md bg-amber-600 hover:bg-amber-500 text-stone-950 font-cinzel font-bold text-[11px] flex items-center gap-1 cursor-pointer transition-colors"
+                >
+                  <Plus className="w-3 h-3 stroke-[2.5]" />
+                  <span>New Chat</span>
+                </button>
+              </div>
 
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={() => handleSpeak(msg.id, msg.content)}
-                        className={`p-1 rounded hover:bg-stone-200/80 transition-colors cursor-pointer ${
-                          speakingMessageId === msg.id ? 'text-amber-800' : 'text-stone-500'
-                        }`}
-                        title={speakingMessageId === msg.id ? 'Stop reading' : 'Read aloud'}
-                      >
-                        {speakingMessageId === msg.id ? (
-                          <VolumeX className="w-4 h-4 text-amber-800 animate-pulse" />
-                        ) : (
-                          <Volume2 className="w-4 h-4" />
-                        )}
-                      </button>
-                      <button
-                        onClick={() => handleCopy(msg.id, msg.content)}
-                        className="p-1 rounded hover:bg-stone-200/80 text-stone-500 hover:text-stone-800 transition-colors cursor-pointer"
-                        title="Copy answer"
-                      >
-                        {copiedMessageId === msg.id ? (
-                          <Check className="w-4 h-4 text-stone-800" />
-                        ) : (
-                          <Copy className="w-4 h-4" />
-                        )}
-                      </button>
-                    </div>
+              {/* 2-Tab Switcher: Previous Chats vs. Learned Preferences */}
+              <div className="grid grid-cols-2 gap-1 p-1 rounded-lg bg-black/45 border border-[#8B5A2B]/30 text-[11px] font-cinzel font-bold">
+                <button
+                  type="button"
+                  onClick={() => setSidebarTab('chats')}
+                  className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    sidebarTab === 'chats'
+                      ? 'bg-[#5C2E0E] text-amber-100 shadow-2xs border border-amber-500/40'
+                      : 'text-stone-400 hover:text-stone-200'
+                  }`}
+                >
+                  <MessageSquare className="w-3 h-3" />
+                  <span>Chats ({sessions.length})</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSidebarTab('memory')}
+                  className={`py-1.5 px-2 rounded-md flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                    sidebarTab === 'memory'
+                      ? 'bg-[#5C2E0E] text-amber-100 shadow-2xs border border-amber-500/40'
+                      : 'text-stone-400 hover:text-stone-200'
+                  }`}
+                >
+                  <Sparkles className="w-3 h-3" />
+                  <span>Preferences ({learnedInsightsCount})</span>
+                </button>
+              </div>
+            </div>
+
+            {/* TAB A: PREVIOUS CHATS LIST */}
+            {sidebarTab === 'chats' && (
+              <div className="flex flex-col flex-1 min-h-0">
+                {/* Search Input */}
+                <div className="p-2.5 border-b border-white/10">
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5" />
+                    <input
+                      type="text"
+                      value={sessionSearchQuery}
+                      onChange={(e) => setSessionSearchQuery(e.target.value)}
+                      placeholder="Search previous chats..."
+                      className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs font-serif text-amber-100 placeholder-stone-400 focus:outline-none focus:border-amber-400"
+                    />
                   </div>
-                )}
+                </div>
 
-                {/* Header inside user message */}
-                {isUser && (
-                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-[#8B5A2B]/40 text-xs text-amber-300/80 font-cinzel">
-                    <span className="font-bold">Your Inquiry</span>
-                    <span className="text-[10px] text-amber-200/60 font-mono">
-                      {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                {/* Scrollable Sessions List */}
+                <div className="flex-1 overflow-y-auto p-2.5 space-y-2 max-h-[520px]">
+                  {filteredSessions.map((session) => {
+                    const isCurrent = session.id === activeSession?.id;
+                    const userQuestionCount = session.messages.filter(m => m.role === 'user').length;
+                    return (
+                      <div
+                        key={session.id}
+                        onClick={() => handleSelectSession(session)}
+                        className={`group p-3 rounded-xl border transition-all cursor-pointer text-left flex flex-col gap-1.5 ${
+                          isCurrent
+                            ? 'bg-[#3B1E08]/90 border-amber-400/80 shadow-md'
+                            : 'bg-black/35 hover:bg-black/55 border-white/10 hover:border-[#8B5A2B]/60'
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <h4 className={`font-serif text-xs sm:text-sm font-bold leading-snug line-clamp-2 ${
+                            isCurrent ? 'text-amber-100' : 'text-stone-200 group-hover:text-amber-100'
+                          }`}>
+                            {session.title}
+                          </h4>
+                          <button
+                            type="button"
+                            onClick={(e) => handleDeleteSession(e, session.id)}
+                            className="p-1 rounded hover:bg-red-950/80 text-stone-400 hover:text-red-300 opacity-70 group-hover:opacity-100 transition-all shrink-0 cursor-pointer"
+                            title="Delete this chat from history"
+                            aria-label="Delete chat"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 text-[10px] text-stone-400 font-cinzel pt-1 border-t border-white/10">
+                          <span className="text-amber-300/90 truncate">
+                            {AI_PERSONA_SPECS[session.persona]?.title || 'Scholar'}
+                          </span>
+                          <span className="flex items-center gap-1 shrink-0 font-mono">
+                            <Clock className="w-2.5 h-2.5 text-amber-400/80" />
+                            {new Date(session.updatedAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                            {' • '}
+                            {userQuestionCount} {userQuestionCount === 1 ? 'q' : 'qs'}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {filteredSessions.length === 0 && (
+                    <div className="p-6 text-center text-xs font-serif text-stone-400">
+                      No saved chats match your search.
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* TAB B: LEARNED USER PREFERENCES & MEMORY PROFILE */}
+            {sidebarTab === 'memory' && (
+              <div className="flex-1 overflow-y-auto p-3.5 space-y-4 text-left max-h-[580px]">
+                <div className="p-3 rounded-xl bg-black/40 border border-amber-500/30 space-y-1.5">
+                  <div className="flex items-center justify-between text-[11px] font-cinzel font-bold text-amber-300 uppercase">
+                    <span>Adaptive User Profile</span>
+                    <span>{memoryProfile.totalQuestionsAsked} Inquiries</span>
+                  </div>
+                  <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                    The Assistant automatically adapts to your preferred Bible edition, theological depth, and favorite topics as you converse.
+                  </p>
+                </div>
+
+                {/* Core Learned Settings */}
+                <div className="space-y-2 text-xs">
+                  <div className="p-2.5 rounded-lg bg-black/35 border border-white/10 flex items-center justify-between">
+                    <span className="font-cinzel text-[10px] uppercase text-stone-400">Bible Edition:</span>
+                    <span className="font-serif font-bold text-amber-200">{memoryProfile.preferredBible}</span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/35 border border-white/10 flex items-center justify-between">
+                    <span className="font-cinzel text-[10px] uppercase text-stone-400">Response Style:</span>
+                    <span className="font-serif font-bold text-amber-200">{memoryProfile.preferredDepth}</span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-black/35 border border-white/10 flex items-center justify-between">
+                    <span className="font-cinzel text-[10px] uppercase text-stone-400">Favored Persona:</span>
+                    <span className="font-serif font-bold text-amber-200">
+                      {AI_PERSONA_SPECS[memoryProfile.favoredPersona]?.title}
                     </span>
                   </div>
-                )}
+                </div>
 
-                {/* Body Content with Enlarged Font Size */}
-                {isUser ? (
-                  <p className="font-serif text-base sm:text-lg leading-relaxed whitespace-pre-wrap">
-                    {msg.content}
-                  </p>
-                ) : (
-                  renderFormattedContent(msg.content)
-                )}
-
-                {/* Live Web & Internet Sources Consulted */}
-                {!isUser && msg.webSources && msg.webSources.length > 0 && (
-                  <div className="mt-4 p-3 rounded-xl bg-[#FAF5EE] border border-[#D4A373]/60 space-y-2">
-                    <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-[#3B1E08]">
-                      <Globe className="w-3.5 h-3.5 text-amber-800 shrink-0" />
-                      <span>Verified Internet Sources Consulted:</span>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
-                      {msg.webSources.map((source, sIdx) => (
-                        <a
-                          key={sIdx}
-                          href={source.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-between gap-2 p-2 rounded-lg bg-white hover:bg-[#FAF8F5] text-xs text-[#241307] hover:text-[#5C2E0E] border border-[#E8DEC8] hover:border-[#D4A373] transition-all shadow-2xs group"
-                          title={source.snippet}
-                        >
-                          <span className="font-serif font-medium truncate flex-1">{source.title}</span>
-                          <span className="text-[10px] text-amber-900 font-mono shrink-0 flex items-center gap-1">
-                            <span>{source.domain}</span>
-                            <ExternalLink className="w-3 h-3 text-amber-800 group-hover:translate-x-0.5 transition-transform" />
+                {/* Learned Theological Interests */}
+                <div className="space-y-2">
+                  <h5 className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300 flex items-center gap-1.5">
+                    <BookOpen className="w-3 h-3 text-amber-400" />
+                    <span>Learned Theological Interests</span>
+                  </h5>
+                  {sortedTopics.length > 0 ? (
+                    <div className="space-y-1.5">
+                      {sortedTopics.slice(0, 6).map(([topic, count]) => (
+                        <div key={topic} className="px-2.5 py-1.5 rounded-lg bg-[#2A1810] border border-[#8B5A2B]/40 flex items-center justify-between text-xs">
+                          <span className="font-serif text-amber-100 truncate pr-2">{topic}</span>
+                          <span className="px-1.5 py-0.5 rounded bg-black/50 text-amber-300 font-mono text-[10px] shrink-0">
+                            {count}x
                           </span>
-                        </a>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs font-serif italic text-stone-400">
+                      Ask questions about Scripture, the Eucharist, Church Fathers, or Marian dogma to build your interest profile.
+                    </p>
+                  )}
+                </div>
+
+                {/* Favorite Saints & Doctors */}
+                {memoryProfile.favoriteSaintsAndDoctors.length > 0 && (
+                  <div className="space-y-2">
+                    <h5 className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                      Consulted Saints &amp; Doctors
+                    </h5>
+                    <div className="flex flex-wrap gap-1.5">
+                      {memoryProfile.favoriteSaintsAndDoctors.map(saint => (
+                        <span
+                          key={saint}
+                          className="px-2 py-0.5 rounded-md bg-amber-500/15 border border-amber-400/40 text-amber-200 text-[11px] font-serif"
+                        >
+                          {saint}
+                        </span>
                       ))}
                     </div>
                   </div>
                 )}
 
-                {/* Footer source note on assistant messages */}
-                {!isUser && msg.id !== 'welcome' && (
-                  <div className="mt-4 pt-2 border-t border-stone-200/80 flex items-center justify-between text-[11px] text-stone-500 italic font-serif">
-                    <span className="flex items-center gap-1">
-                      <Globe className="w-3 h-3 text-amber-800" />
-                      Grounded in Catholic Deposit of Faith &amp; Online Research
-                    </span>
-                    <span>{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                  </div>
-                )}
+                {/* Custom Personal Preference Notes */}
+                <div className="space-y-2 pt-2 border-t border-white/10">
+                  <h5 className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                    Personal Memory Notes
+                  </h5>
+                  <form onSubmit={handleAddCustomMemoryNote} className="flex gap-1.5">
+                    <input
+                      type="text"
+                      value={newCustomNote}
+                      onChange={(e) => setNewCustomNote(e.target.value)}
+                      placeholder="e.g., Always include Latin terms..."
+                      className="flex-1 px-2.5 py-1.5 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs font-serif text-amber-100 placeholder-stone-400 focus:outline-none focus:border-amber-400"
+                    />
+                    <button
+                      type="submit"
+                      disabled={!newCustomNote.trim()}
+                      className="px-2.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 disabled:opacity-40 text-stone-950 font-cinzel font-bold text-xs cursor-pointer"
+                    >
+                      Save
+                    </button>
+                  </form>
+
+                  {memoryProfile.customNotes.length > 0 ? (
+                    <div className="space-y-1.5 pt-1">
+                      {memoryProfile.customNotes.map((note, idx) => (
+                        <div
+                          key={idx}
+                          className="px-2.5 py-1.5 rounded-lg bg-black/40 border border-white/10 flex items-center justify-between gap-2 text-xs font-serif text-stone-200"
+                        >
+                          <span className="leading-snug">{note}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveCustomNote(note)}
+                            className="text-stone-400 hover:text-red-300 cursor-pointer shrink-0"
+                            title="Remove note"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-[11px] font-serif italic text-stone-400">
+                      Add any personal preference above (or mention &ldquo;I prefer...&rdquo; in chat) and the Assistant will remember it.
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
-
-        {/* Loading Indicator */}
-        {isLoading && (
-          <div className="w-full bg-[#FAF8F5] border border-[#D4A373]/60 rounded-2xl p-4 shadow-sm flex items-center gap-3">
-            <RefreshCw className="w-4 h-4 text-amber-800 animate-spin shrink-0" />
-            <div className="space-y-0.5">
-              <span className="text-xs sm:text-sm font-serif italic text-[#241307] font-semibold block">
-                Consulting {AI_ENGINE_SPECS[selectedEngine].name} &amp; Vatican sources...
-              </span>
-              <span className="text-[11px] text-stone-600 font-serif block">
-                Cross-referencing Sacred Scripture, Catechism (CCC), and Church Fathers.
-              </span>
-            </div>
-          </div>
-        )}
-
-        {/* Error message */}
-        {errorMessage && (
-          <div className="p-3.5 rounded-xl bg-stone-900 border border-amber-800/60 text-amber-100 text-xs font-serif flex items-start gap-2.5">
-            <HelpCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-semibold">{errorMessage}</p>
-              <p className="text-stone-300">
-                Please verify your connection or try rephrasing your question.
-              </p>
-            </div>
-          </div>
-        )}
-
-        <div ref={messagesEndRef} />
-      </div>
-
-      {/* 3. Bottom Sticky Input Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="sticky bottom-4 z-20 rounded-2xl bg-[#1C120C]/95 backdrop-blur-xl border border-[#8B5A2B]/60 p-3 shadow-2xl space-y-2"
-      >
-        <div className="flex items-end gap-2">
-          <textarea
-            ref={inputRef}
-            value={inputPrompt}
-            onChange={(e) => setInputPrompt(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSubmit();
-              }
-            }}
-            placeholder="Ask any question on Catholic doctrine, Scripture, Sacraments, or Church history..."
-            rows={2}
-            className="flex-1 bg-[#251710] text-amber-100 placeholder-stone-400 text-sm sm:text-base font-serif rounded-xl p-3 border border-[#8B5A2B]/50 focus:border-amber-400 focus:outline-none resize-none leading-relaxed"
-          />
-
-          <button
-            type="submit"
-            disabled={!inputPrompt.trim() || isLoading}
-            className="h-12 px-5 rounded-xl bg-[#5C2E0E] hover:bg-[#6D3812] text-amber-100 font-cinzel font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0 border border-[#8B5A2B]"
-          >
-            {isLoading ? (
-              <RefreshCw className="w-4 h-4 animate-spin text-amber-200" />
-            ) : (
-              <>
-                <span>Ask</span>
-                <Send className="w-3.5 h-3.5" />
-              </>
             )}
-          </button>
+          </aside>
+        )}
+
+        {/* RIGHT PANEL: ACTIVE CONVERSATION THREAD & STICKY INPUT */}
+        <div className="space-y-4 min-w-0 w-full">
+          <div className="space-y-4 min-h-[320px] w-full">
+            {messages.map((msg) => {
+              const isUser = msg.role === 'user';
+              return (
+                <div
+                  key={msg.id}
+                  className="w-full"
+                >
+                  <div
+                    className={`relative w-full rounded-2xl p-4 sm:p-6 shadow-md border ${
+                      isUser
+                        ? 'bg-[#251710] text-amber-100 border-[#8B5A2B]/70'
+                        : 'bg-[#FDFCFA] text-[#1C120C] border-stone-300/90 shadow-sm'
+                    }`}
+                  >
+                    {/* Header inside assistant message */}
+                    {!isUser && (
+                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-stone-200 text-xs text-stone-500 font-cinzel">
+                        <div className="flex items-center gap-2">
+                          <span className="flex items-center gap-1.5 font-bold text-[#3B1E08]">
+                            <span className="px-1.5 py-0.5 rounded bg-[#3B1E08] text-amber-300 border border-[#8B5A2B]/60 font-cinzel text-[10px] font-black tracking-tight">AI</span>
+                            Soul Sanctum Assistant
+                          </span>
+                          <span className="px-2 py-0.5 rounded text-[10px] bg-[#FAF2E8] text-[#5C2E0E] font-cinzel font-semibold border border-[#D4A373]/60">
+                            {msg.provider === 'openai' ? 'ChatGPT' : msg.provider === 'magisterium' ? 'Magisterium AI' : 'Gemini'}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            onClick={() => handleSpeak(msg.id, msg.content)}
+                            className={`p-1 rounded hover:bg-stone-200/80 transition-colors cursor-pointer ${
+                              speakingMessageId === msg.id ? 'text-amber-800' : 'text-stone-500'
+                            }`}
+                            title={speakingMessageId === msg.id ? 'Stop reading' : 'Read aloud'}
+                          >
+                            {speakingMessageId === msg.id ? (
+                              <VolumeX className="w-4 h-4 text-amber-800 animate-pulse" />
+                            ) : (
+                              <Volume2 className="w-4 h-4" />
+                            )}
+                          </button>
+                          <button
+                            onClick={() => handleCopy(msg.id, msg.content)}
+                            className="p-1 rounded hover:bg-stone-200/80 text-stone-500 hover:text-stone-800 transition-colors cursor-pointer"
+                            title="Copy answer"
+                          >
+                            {copiedMessageId === msg.id ? (
+                              <Check className="w-4 h-4 text-stone-800" />
+                            ) : (
+                              <Copy className="w-4 h-4" />
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Header inside user message */}
+                    {isUser && (
+                      <div className="flex items-center justify-between pb-2 mb-3 border-b border-[#8B5A2B]/40 text-xs text-amber-300/80 font-cinzel">
+                        <span className="font-bold">Your Inquiry</span>
+                        <span className="text-[10px] text-amber-200/60 font-mono">
+                          {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Body Content with Enlarged Font Size */}
+                    {isUser ? (
+                      <p className="font-serif text-base sm:text-lg leading-relaxed whitespace-pre-wrap">
+                        {msg.content}
+                      </p>
+                    ) : (
+                      renderFormattedContent(msg.content)
+                    )}
+
+                    {/* Live Web & Internet Sources Consulted */}
+                    {!isUser && msg.webSources && msg.webSources.length > 0 && (
+                      <div className="mt-4 p-3 rounded-xl bg-[#FAF5EE] border border-[#D4A373]/60 space-y-2">
+                        <div className="flex items-center gap-1.5 text-xs font-cinzel font-bold text-[#3B1E08]">
+                          <Globe className="w-3.5 h-3.5 text-amber-800 shrink-0" />
+                          <span>Verified Internet Sources Consulted:</span>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                          {msg.webSources.map((source, sIdx) => (
+                            <a
+                              key={sIdx}
+                              href={source.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between gap-2 p-2 rounded-lg bg-white hover:bg-[#FAF8F5] text-xs text-[#241307] hover:text-[#5C2E0E] border border-[#E8DEC8] hover:border-[#D4A373] transition-all shadow-2xs group"
+                              title={source.snippet}
+                            >
+                              <span className="font-serif font-medium truncate flex-1">{source.title}</span>
+                              <span className="text-[10px] text-amber-900 font-mono shrink-0 flex items-center gap-1">
+                                <span>{source.domain}</span>
+                                <ExternalLink className="w-3 h-3 text-amber-800 group-hover:translate-x-0.5 transition-transform" />
+                              </span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Footer source note on assistant messages */}
+                    {!isUser && !msg.id.startsWith('welcome') && (
+                      <div className="mt-4 pt-2 border-t border-stone-200/80 flex items-center justify-between text-[11px] text-stone-500 italic font-serif">
+                        <span className="flex items-center gap-1">
+                          <Globe className="w-3 h-3 text-amber-800" />
+                          Grounded in Catholic Deposit of Faith • Tailored to Your Preferences ({memoryProfile.preferredBible})
+                        </span>
+                        <span>{new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Loading Indicator */}
+            {isLoading && (
+              <div className="w-full bg-[#FAF8F5] border border-[#D4A373]/60 rounded-2xl p-4 shadow-sm flex items-center gap-3">
+                <RefreshCw className="w-4 h-4 text-amber-800 animate-spin shrink-0" />
+                <div className="space-y-0.5">
+                  <span className="text-xs sm:text-sm font-serif italic text-[#241307] font-semibold block">
+                    Consulting {AI_ENGINE_SPECS[selectedEngine].name} &amp; Vatican sources...
+                  </span>
+                  <span className="text-[11px] text-stone-600 font-serif block">
+                    Cross-referencing Sacred Scripture ({memoryProfile.preferredBible}), Catechism (CCC), and your learned preferences.
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Error message */}
+            {errorMessage && (
+              <div className="p-3.5 rounded-xl bg-stone-900 border border-amber-800/60 text-amber-100 text-xs font-serif flex items-start gap-2.5">
+                <HelpCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                  <p className="font-semibold">{errorMessage}</p>
+                  <p className="text-stone-300">
+                    Please verify your connection or try rephrasing your question.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* 3. Bottom Sticky Input Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="sticky bottom-4 z-20 rounded-2xl bg-[#1C120C]/95 backdrop-blur-xl border border-[#8B5A2B]/60 p-3 shadow-2xl space-y-2"
+          >
+            <div className="flex items-end gap-2">
+              <textarea
+                ref={inputRef}
+                value={inputPrompt}
+                onChange={(e) => setInputPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+                placeholder="Ask any question on Catholic doctrine, Scripture, Sacraments, or Church history..."
+                rows={2}
+                className="flex-1 bg-[#251710] text-amber-100 placeholder-stone-400 text-sm sm:text-base font-serif rounded-xl p-3 border border-[#8B5A2B]/50 focus:border-amber-400 focus:outline-none resize-none leading-relaxed"
+              />
+
+              <button
+                type="submit"
+                disabled={!inputPrompt.trim() || isLoading}
+                className="h-12 px-5 rounded-xl bg-[#5C2E0E] hover:bg-[#6D3812] text-amber-100 font-cinzel font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-lg transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0 border border-[#8B5A2B]"
+              >
+                {isLoading ? (
+                  <RefreshCw className="w-4 h-4 animate-spin text-amber-200" />
+                ) : (
+                  <>
+                    <span>Ask</span>
+                    <Send className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 };

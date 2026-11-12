@@ -110,9 +110,7 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
                 setTriedFallback(true);
                 setActiveHlsUrl(fallbackStreamUrl);
               } else {
-                setHasError(true);
-                setIsLoading(false);
-                hls.destroy();
+                hls.startLoad();
               }
               break;
             case Hls.ErrorTypes.MEDIA_ERROR:

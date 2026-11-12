@@ -304,6 +304,7 @@ app.all('/api/catholic-ai', async (req, res) => {
   try {
     let prompt: string | undefined;
     let history: any[] = [];
+    let userMemory: string | undefined;
     let enableWebResearch = true;
     let provider = 'auto'; // 'gemini' | 'openai' | 'magisterium' | 'auto'
     let customApiKey: string | undefined;
@@ -323,6 +324,9 @@ app.all('/api/catholic-ai', async (req, res) => {
       if (typeof req.query.provider === 'string') {
         provider = req.query.provider;
       }
+      if (typeof req.query.userMemory === 'string' && req.query.userMemory.trim()) {
+        userMemory = req.query.userMemory.trim();
+      }
       if (typeof req.query.apiKey === 'string' && req.query.apiKey.trim()) {
         customApiKey = req.query.apiKey.trim();
       }
@@ -337,6 +341,7 @@ app.all('/api/catholic-ai', async (req, res) => {
       const body = req.body || {};
       prompt = body.prompt;
       history = Array.isArray(body.history) ? body.history : [];
+      userMemory = typeof body.userMemory === 'string' ? body.userMemory.trim() : undefined;
       enableWebResearch = body.enableWebResearch !== false;
       provider = body.provider || 'auto';
       customApiKey = typeof body.apiKey === 'string' ? body.apiKey.trim() : undefined;
@@ -359,6 +364,11 @@ app.all('/api/catholic-ai', async (req, res) => {
       }
     }
 
+    // Prepare system instruction enriched with learned user preferences & memory
+    const effectiveSystemInstruction = userMemory
+      ? `${CATHOLIC_AI_SYSTEM_INSTRUCTION}\n\nUSER MEMORY & LEARNED PREFERENCES PROFILE:\n${userMemory}\nAdapt your tone, Scripture translation choice, theological depth, and patristic/saint references naturally to honor these learned user preferences.`
+      : CATHOLIC_AI_SYSTEM_INSTRUCTION;
+
     // Prepare prompt with real-time web research findings
     let promptWithResearch = trimmedPrompt;
     if (webSources.length > 0) {
@@ -371,7 +381,7 @@ app.all('/api/catholic-ai', async (req, res) => {
 
     let reply = '';
     let usedProvider = 'gemini';
-    let usedModel = 'gemini-3.1-flash-lite';
+    let usedModel = 'gemini-3.8-flash';
     let lastError: any = null;
 
     // 2. OpenAI (ChatGPT) Execution Path
@@ -380,11 +390,11 @@ app.all('/api/catholic-ai', async (req, res) => {
       try {
         const openai = new OpenAI({ apiKey: openAiKey });
         const messagesPayload: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-          { role: 'system', content: CATHOLIC_AI_SYSTEM_INSTRUCTION },
+          { role: 'system', content: effectiveSystemInstruction },
         ];
 
         if (Array.isArray(history)) {
-          for (const item of history.slice(-6)) {
+          for (const item of history.slice(-10)) {
             if (item && item.content && typeof item.content === 'string') {
               messagesPayload.push({
                 role: item.role === 'assistant' || item.role === 'model' ? 'assistant' : 'user',
@@ -420,7 +430,7 @@ app.all('/api/catholic-ai', async (req, res) => {
       const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
 
       if (Array.isArray(history)) {
-        for (const item of history.slice(-6)) {
+        for (const item of history.slice(-10)) {
           if (item && item.content && typeof item.content === 'string') {
             contents.push({
               role: item.role === 'assistant' || item.role === 'model' ? 'model' : 'user',
@@ -435,7 +445,7 @@ app.all('/api/catholic-ai', async (req, res) => {
         parts: [{ text: promptWithResearch }],
       });
 
-      const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
+      const candidateModels = ['gemini-3.8-flash', 'gemini-3.1-flash-lite'];
 
       for (const modelName of candidateModels) {
         try {
@@ -443,7 +453,7 @@ app.all('/api/catholic-ai', async (req, res) => {
             model: modelName,
             contents,
             config: {
-              systemInstruction: CATHOLIC_AI_SYSTEM_INSTRUCTION,
+              systemInstruction: effectiveSystemInstruction,
             },
           });
           if (response && response.text) {
