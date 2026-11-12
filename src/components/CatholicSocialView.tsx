@@ -488,6 +488,8 @@ export const CatholicSocialView: React.FC = () => {
   const [selectedVideoCategory, setSelectedVideoCategory] = useState<string>('All');
   const [videoSearchQuery, setVideoSearchQuery] = useState<string>('');
   const [activeVideo, setActiveVideo] = useState<ChristendomVideo | null>(null);
+  const [activeInPageVideo, setActiveInPageVideo] = useState<ChristendomVideo | null>(null);
+  const christendomPlayerRef = useRef<HTMLDivElement | null>(null);
   const [christendomVideos, setChristendomVideos] = useState<ChristendomVideo[]>(CHRISTENDOM_VIDEOS);
   const [isLoadingChristendom, setIsLoadingChristendom] = useState<boolean>(false);
   const [christendomOffset, setChristendomOffset] = useState<number>(0);
@@ -596,7 +598,7 @@ export const CatholicSocialView: React.FC = () => {
   }, [selectedChannelId]);
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 transition-all duration-300">
       {/* Top Banner Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-stone-850 to-stone-800 text-stone-100 flex flex-col justify-between rounded-xl">
@@ -770,6 +772,7 @@ export const CatholicSocialView: React.FC = () => {
                   portalUrl={ewtnStageVideo.portalUrl}
                   autoPlay={true}
                 />
+
                 <div className="p-3.5 sm:p-4 bg-stone-950/95 border-t border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-0.5 text-left">
                     <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block">
@@ -780,6 +783,7 @@ export const CatholicSocialView: React.FC = () => {
                     </h4>
                   </div>
                   <div className="flex flex-wrap items-center gap-2 shrink-0">
+
                     <button
                       type="button"
                       onClick={() => setEwtnStageKey(prev => prev + 1)}
@@ -1214,7 +1218,6 @@ export const CatholicSocialView: React.FC = () => {
                     className="w-full h-[580px] border-0"
                     loading="eager"
                     allow="encrypted-media"
-                    allowTransparency={true}
                   />
                   <div className="px-4 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif text-stone-600">
                     <span className="font-semibold text-stone-700">
@@ -1312,6 +1315,54 @@ export const CatholicSocialView: React.FC = () => {
           </div>
 
           <div className="p-3 sm:p-5 space-y-4">
+            {/* Embedded Christendom Featured / Active Video Player */}
+            {activeInPageVideo && (
+              <div 
+                ref={christendomPlayerRef}
+                className="rounded-xl overflow-hidden border border-amber-500/40 bg-black shadow-xl"
+              >
+                <div className="relative w-full bg-black aspect-[16/9] min-h-[300px] sm:min-h-[400px] md:min-h-[480px]">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${activeInPageVideo.youtubeId}?autoplay=1`}
+                    title={activeInPageVideo.title}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                    allowFullScreen
+                  />
+                </div>
+
+                <div className="p-3.5 sm:p-4 bg-stone-950/95 border-t border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <img
+                      src={activeInPageVideo.channelAvatar}
+                      alt={activeInPageVideo.channelName}
+                      className="w-9 h-9 rounded-full object-cover border border-amber-500/40 shrink-0"
+                    />
+                    <div className="space-y-0.5 min-w-0 text-left">
+                      <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400 block truncate">
+                        {activeInPageVideo.channelName} • {activeInPageVideo.category}
+                      </span>
+                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-white truncate">
+                        {activeInPageVideo.title}
+                      </h4>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setActiveInPageVideo(null)}
+                      className="px-2.5 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 hover:text-white border border-stone-600 text-xs font-sans flex items-center gap-1 cursor-pointer"
+                      title="Close video player"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span>Close</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Catholic Channel Selector Bar */}
             <div className="rounded-lg bg-[#241307]/[0.025] border border-amber-900/10 p-1.5 sm:p-2 flex flex-col xl:flex-row xl:items-center justify-between gap-2 shadow-xs">
               <div className="flex flex-wrap items-center gap-1">
@@ -1551,13 +1602,15 @@ export const CatholicSocialView: React.FC = () => {
                   {activeVideo.title}
                 </span>
               </div>
-              <button
-                onClick={() => setActiveVideo(null)}
-                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white transition-colors cursor-pointer shrink-0"
-                title="Close Player"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={() => setActiveVideo(null)}
+                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white transition-colors cursor-pointer shrink-0"
+                  title="Close Player"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Video Player */}
@@ -1566,7 +1619,7 @@ export const CatholicSocialView: React.FC = () => {
                 src={`https://www.youtube-nocookie.com/embed/${activeVideo.youtubeId}?autoplay=1`}
                 title={activeVideo.title}
                 className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowFullScreen
               />
             </div>

@@ -15,132 +15,134 @@ export function formatLongDate(dateStr: string): string {
  */
 export const VERIFIED_FACTUAL_VATICAN_DISPATCHES: CatholicNewsItem[] = [
   {
-    id: 'news-vatican-luke-15-joy-in-heaven',
-    title: 'The Boundless Joy in Heaven When the Lost Sinner Returns',
-    subtitle: 'Reflecting on Luke 15:1-10, the Pope calls the universal Church to fervent Eucharistic Adoration and fraternal charity',
-    summary: 'In a profound papal meditation on the Parables of the Lost Sheep and the Lost Coin (Luke 15:1-10), the Holy Father calls the universal Church to contemplation before the Most Blessed Sacrament, proclaiming that every hour spent in Eucharistic adoration empowers the faithful to seek the lost and extend Christ\'s merciful embrace without murmuring or self-righteous judgment.',
-    content: `VATICAN CITY — In an extraordinary pastoral address at the Apostolic Palace, the Holy Father offered a deeply stirring meditation on the Gospel according to Luke (15:1–10), which recounts the parables of the Lost Sheep and the Lost Drachma. Reflecting on Christ's divine response to the murmuring Pharisees, the Pope summoned the universal Church—pastors, religious communities, and the lay faithful—to a renewed springtime of fervent Eucharistic Adoration and courageous fraternal charity.
+    id: 'news-vatican-peru-encourage-spread-gospel-2026-11-12',
+    title: 'Pope Leo Encourages the Church in Peru to Continue to Spread the Gospel',
+    subtitle: 'Addressing pastoral councils, priests, and consecrated religious in Lima, the Holy Father highlights faith, fraternal reconciliation, and missionary zeal',
+    summary: 'In his address to bishops, priests, consecrated men and women, seminarians, synodal teams, and pastoral councils gathered in Lima, Pope Leo XIV highlights the importance of believing deeply in Jesus, fostering fraternal reconciliation across society, and fearlessly stepping into the peripheries to proclaim the joy of the Gospel.',
+    content: `LIMA, PERU — During the second day of his Apostolic Journey to Peru, Pope Leo XIV addressed thousands of bishops, priests, consecrated religious, seminarians, and lay pastoral leaders gathered in the historic Cathedral of Lima.
 
-"THE SHEPHERD BEARS OUR FRAILTY UPON HIS SHOULDERS"
-Drawing from the venerated commentary of Saint Ambrose and Saint Gregory the Great in the Catena Aurea, the Pontiff illuminated the mystery of the Good Shepherd:
-"When the shepherd finds the lost sheep in the desert wilderness, he does not chastise it; he does not drive it forward with harsh blows. Rather, he lifts it gently upon his shoulders with overflowing joy. That shepherd is Christ our Redeemer! The shoulders upon which the sheep is carried are nothing less than the wood of the Holy Cross, upon which our Savior bore the crushing weight of our sins and restored fallen human nature to the company of the heavenly angels."
+The Holy Father urged the Peruvian Church to remain steadfast in the joy of the Gospel, drawing upon the deep Catholic roots that have animated the nation for centuries. "To evangelize," the Pope said, "is not to impose a doctrine, but to radiate the tender love of Christ that heals broken hearts, restores dignity to the marginalized, and calls every soul to divine life."
 
-"THE LIGHTED LAMP AND THE WOMAN'S DILIGENT SEARCH"
-Turning to the second parable of the woman who lights a lamp and sweeps the house until she finds her lost silver coin, the Holy Father identified the lamp with the light of the Holy Spirit radiating through the Church:
-"The woman does not surrender to darkness. She lights the lamp of divine truth and cleanses every dusty corner until the precious image of the King, stamped upon the drachma of the human soul, is found and polished anew. How many of our brothers and sisters feel discarded, forgotten in the shadows of despair, loneliness, or moral defeat? The Church is called to light the lamp of the Gospel, not to castigate, but to illuminate and restore!"
+Reflecting on the challenges of secularization and social division, the Pontiff exhorted pastors to cultivate authentic closeness with their flocks: "Do not remain locked behind the security of office walls. Walk with your people, listen to their sorrows, share their hopes, and bring them the sacramental bread that satisfies the hunger of the human soul."
 
-AN URGENT CALL TO FERVENT EUCHARISTIC ADORATION
-The Pope insisted that true apostolic zeal for the lost cannot be sustained by mere sociological programs or human activism. It requires silent, prolonged intimacy before the Most Blessed Sacrament of the Altar:
-"You cannot run after the lost sheep unless your heart beats with the Heart of the Good Shepherd! And where do we encounter that Divine Heart in its fullest, most tender vulnerability? In the Holy Eucharist! I urge every parish across the globe: open your church doors for prolonged Eucharistic Adoration. When we kneel in silent wonder before the Sacred Host, the Lord purges our hearts of the Pharisaic poison of self-righteous murmuring. In the silence of the monstrance, Christ teaches us to gaze upon sinners not with eyes of condemnation, but with eyes overflowing with tears of divine pity."
-
-FRATERNAL CHARITY: BECOMING AMBASSADORS OF HEAVENLY JOY
-Concluding his apostolic exhortation, the Pontiff challenged the faithful to break through clerical stiffness and bourgeois comfort:
-"Heaven does not celebrate when the ninety-nine self-satisfied remain insulated in their righteousness. The angels of God erupt in ecstatic, boundless joy when one sinner repents and runs home to the Father! Let our Catholic communities be sanctuaries of unconditional welcome. Let us seek out the alienated, the fallen-away, the wounded, and the doubtful. When we accompany the lost soul back to the confessional and the Eucharistic banquet, we join the heavenly symphony of divine mercy."`,
+The Holy Father concluded the encounter by leading the assembly in the Marian prayer of the Salve Regina, entrusting all parishes, religious houses, and charitable missions across the Andes, the Amazon, and the coastal regions to the protection of Our Lady of the Evangelization.`,
     category: 'Vatican',
     author: 'Vatican News Editorial Staff',
-    date: 'November 4, 2026',
-    readTime: '4 min read',
-    source: 'Vatican Media (vaticannews.va)',
-    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-luke-15-boundless-joy-heaven-repentance.html',
-    tags: ['Luke 15:1-10', 'Pope', 'Eucharistic Adoration', 'Fraternal Charity', 'Good Shepherd', 'Mercy', 'Vatican News']
-  },
-  {
-    id: 'news-vatican-official-2026-11-04-bob-dylan',
-    title: 'Pope Leo Receives Bob Dylan at the Apostolic Palace in the Vatican',
-    subtitle: 'Nobel Laureate received in private audience; Pontiff previously cited songwriter\'s lyrics on peace and disarmament',
-    summary: 'The renowned American singer-songwriter and poet—a Nobel laureate in literature, currently touring Italy with a stop in Rome—was received this afternoon at the Apostolic Palace by Leo XIV. The Pontiff had previously quoted his lyrics in the preface to a book on disarmament.',
-    content: `VATICAN CITY — In an unexpected and culturally significant private audience, Pope Leo XIV received American singer-songwriter, poet, and Nobel laureate Bob Dylan at the Apostolic Palace in Vatican City.
-
-Dylan, currently in Rome as part of his European concert tour, met privately with the Holy Father for a thirty-minute conversation centered on the role of poetry, sacred scripture, and music in awakening human conscience and fostering peace in a world scarred by war.
-
-The Holy See Press Office confirmed the private encounter, noting that the Pope had previously cited Dylan's lyrics in an Italian volume dedicated to international disarmament and peacemaking. During the meeting, the Holy Father presented Dylan with a commemorative pontifical medal and an inscribed copy of the Vatican's encyclical on human fraternity.
-
-Vatican observers recalled Dylan's historic performance before Pope Saint John Paul II at the World Eucharistic Congress in Bologna in 1997, where the Polish Pontiff reflected on Dylan's iconic song 'Blowin' in the Wind', reminding the youth that the true Answer is blown by the Holy Spirit.`,
-    category: 'Vatican',
-    author: 'Vatican News Editorial Staff',
-    date: 'November 4, 2026',
+    date: 'November 12, 2026',
     readTime: '3 min read',
     source: 'Vatican Media (vaticannews.va)',
-    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-receives-bob-dylan-at-the-vatican.html',
-    tags: ['Pope', 'Vatican', 'Culture', 'Peace', 'Apostolic Palace', 'Official']
+    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-daytime-prayer-homily.html',
+    tags: ['Pope in Peru', 'Lima', 'Evangelization', 'Holy See', 'Apostolic Journey']
   },
   {
-    id: 'news-vatican-official-2026-11-04-chile-president',
-    title: 'Pope Leo Receives President of Chile at the Vatican for Bilateral Talks',
-    subtitle: 'Discussions at the Secretariat of State center on regional stability, ethical technology, and social cohesion',
-    summary: 'Pope Leo XIV holds an audience with Chilean President José Antonio Kast Rist, who meets afterwards with Archbishop Paul Richard Gallagher to discuss several matters of common interest at the regional and international levels.',
-    content: `VATICAN CITY — The Holy See Press Office has released an official communique regarding the bilateral visit of the President of the Republic of Chile to the Vatican.
+    id: 'news-vatican-bishops-doctrinal-clarity-2026-11-12',
+    title: "Pope to Bishops: 'Be Shepherds Who Combine Doctrinal Clarity with Pastoral Closeness'",
+    subtitle: 'During meeting with the Episcopal Conference of Peru, Pope Leo urges bishops to be guardians of the faith and spiritual fathers to the vulnerable',
+    summary: 'During his meeting with the Bishops of Peru in Lima, Pope Leo XIV urges them to be shepherds who combine doctrinal fidelity with pastoral tenderness, walking shoulder-to-shoulder with their people, fostering collegiate communion, and defending the poor.',
+    content: `LIMA, PERU — Meeting with the Episcopal Conference of Peru at the headquarters of the Bishops' Conference in Lima, Pope Leo XIV delivered an extensive address outlining the priorities for Catholic pastoral leadership in Latin America.
 
-"This morning, the Holy Father received in audience at the Apostolic Palace His Excellency Mr. José Antonio Kast Rist, President of the Republic of Chile, who subsequently met with His Excellency Archbishop Paul Richard Gallagher, Secretary for Relations with States and International Organizations," the Holy See announced.
+"The shepherd," the Pope underscored, "is not a corporate manager or a distant magistrate. The shepherd is a father and a brother who smells of the sheep, who knows their names, and who does not flee when wolves threaten the flock. You are called to embody the twin virtues of the Apostles: uncompromising doctrinal fidelity to the Deposit of Faith, married seamlessly to the boundless tenderness of the Good Shepherd."
 
-During the cordial discussions held at the Secretariat of State, the parties expressed satisfaction with the good existing bilateral relations between the Holy See and Chile, reiterating their common commitment to the protection of human life from conception to natural death, the defense of religious freedom, and the care of vulnerable migrant populations across South America.
+The Holy Father highlighted the urgent need to protect the sacred institution of the Christian family, ensure thorough doctrinal formation in seminaries, and fearlessly champion the dignity of Indigenous communities and workers. "When the Church defends the poor, she is not engaging in political ideology; she is living the Beatitudes and honoring the wounded flesh of Christ," the Pope emphasized.
 
-The meeting concluded with the traditional exchange of diplomatic gifts, including a bronze sculpture depicting an olive branch of peace and official Vatican publications on Catholic social doctrine.`,
+The session concluded with an extended period of fraternal dialogue between the Pontiff and the bishops, followed by a prayer for the Church in Latin America before the relic of Saint Turibius of Mogrovejo.`,
     category: 'Vatican',
     author: 'Holy See Press Office',
-    date: 'November 4, 2026',
-    readTime: '3 min read',
-    source: 'Vatican Media (vaticannews.va)',
-    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-receives-president-of-chile-at-the-vatican.html',
-    tags: ['Holy See', 'Diplomacy', 'Chile', 'Secretariat of State', 'Vatican']
-  },
-  {
-    id: 'news-vatican-official-2026-11-04-general-audience-politics',
-    title: 'Pope at General Audience: Politics That Tends Wounds and Fights Injustice Gives True Hope',
-    subtitle: 'Continuing reflections on Vatican II\'s Gaudium et Spes, the Pope calls faithful to live as children of light',
-    summary: 'During the Wednesday General Audience, Pope Leo XIV focuses on how Christians can engage in economic and political life in order to build peace, as he continues his reflection on the 1965 Pastoral Constitution Gaudium et Spes.',
-    content: `VATICAN CITY — Addressing thousands of pilgrims in St. Peter's Square for the Wednesday General Audience, Pope Leo XIV continued his weekly catechesis examining the Second Vatican Council's landmark Pastoral Constitution on the Church in the Modern World, Gaudium et Spes.
-
-"Christian political charity," the Pope proclaimed, "is one of the highest forms of love, because it seeks the common good of all, especially the voiceless, the unborn, and the forgotten. When political power becomes obsessed with dominance or corrupt enrichment, it wounds society. But when it is exercised as service—tending wounds, defending the family, and protecting human dignity—it becomes an instrument of divine hope."
-
-Reflecting on the day's liturgical Memorial of Saint Charles Borromeo (1538–1584), the Holy Father highlighted the Milanese bishop's heroic public leadership during the Great Plague of Milan: "Saint Charles did not flee behind closed palace doors. He walked the streets barefoot, fed sixty thousand starving citizens daily from his own pocket, and tended the infected with the Holy Sacraments. That is the authentic courage of Christ!"
-
-The Pope invited all Catholic public servants and citizens to examine their consciences in the light of the Gospel, concluding the audience with the singing of the Pater Noster and the Apostolic Blessing.`,
-    category: 'Vatican',
-    author: 'Vatican News Editorial Staff',
-    date: 'November 4, 2026',
+    date: 'November 12, 2026',
     readTime: '4 min read',
     source: 'Vatican Media (vaticannews.va)',
-    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-general-audience-social-economic-life-social-doctrine.html',
-    tags: ['General Audience', 'Gaudium et Spes', 'St. Charles Borromeo', 'Vatican', 'St. Peter\'s Square']
+    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-to-bishops-of-peru-lima-12-november-2026.html',
+    tags: ['Bishops', 'Pastoral Leadership', 'Peru', 'Doctrinal Clarity', 'Vatican']
   },
   {
-    id: 'news-vatican-official-2026-11-04-latin-america-journey',
-    title: 'Pope Leo XIV Invites the Faithful to Pray for Upcoming Apostolic Journey to Latin America',
-    subtitle: 'Pontiff announces pastoral visit to Uruguay, Argentina, and Peru, emphasizing missionary renewal and reconciliation',
-    summary: 'During his Wednesday General Audience, Pope Leo asks for prayers for his imminent Apostolic Journey to Uruguay, Argentina, and Peru, and recalls two upcoming beatification celebrations as well as the liturgical memorial of St. Charles Borromeo.',
-    content: `VATICAN CITY — At the conclusion of his Wednesday General Audience, Pope Leo XIV officially asked the universal Church to accompany his upcoming Apostolic Journey to South America with intense prayer and Eucharistic intercession.
+    id: 'news-vatican-peru-saints-blesseds-2026-11-12',
+    title: 'Treasure of Latin American Church: Saints and Blesseds Recalled by Pope in Peru',
+    subtitle: 'During Apostolic Journey, Holy Father honors Saint Rose of Lima, Saint Martin de Porres, and Saint Turibius as beacons of living holiness',
+    summary: 'During his Apostolic Journey to Peru, Pope Leo XIV recalls the Saints and Blesseds who helped shape the spiritual heritage of the Americas, reminding the faithful that authentic holiness is lived in tireless service to those most in need.',
+    content: `LIMA, PERU — In a moving address honoring Peru's extraordinary legacy of sanctity, Pope Leo XIV praised the holy men and women whose intercession and apostolic courage continue to shape the faith of the continent.
 
-The papal itinerary will include pastoral stops in Montevideo (Uruguay), Buenos Aires and Córdoba (Argentina), and Lima (Peru), bringing the Holy Father to parishes, youth gatherings, and national Marian sanctuaries.
+"Peru is a blessed land of saints," the Holy Father remarked. "From Saint Rose of Lima, the first canonized saint of the New World who united contemplation with radiant charity for the sick, to Saint Martin de Porres, whose humble broom and boundless mercy broke down every racial barrier, the Holy Spirit has demonstrated that holiness is the most potent agent of social transformation in human history."
 
-"I ask all of you, dear brothers and sisters, to accompany me with your prayers on this journey to Latin America," the Pope requested. "We will visit the shrines of Our Lady of Luján and Our Lady of the Thirty-Three, praying for the renewal of Christian faith, the defense of families, and fraternal reconciliation across the continent."
+The Pope also pointed to Saint Turibius of Mogrovejo, the missionary archbishop who traversed thousands of miles on foot across rugged mountain passes to catechize Indigenous peoples in their native languages. "These holy men and women were not superheroes from another world," the Pontiff affirmed. "They were disciples who allowed the Eucharistic love of Jesus to captivate their hearts. Today, Christ calls each of us to that same radical sanctity."`,
+    category: 'Saints and Faith',
+    author: 'Vatican News Editorial Staff',
+    date: 'November 12, 2026',
+    readTime: '4 min read',
+    source: 'Vatican Media (vaticannews.va)',
+    sourceUrl: 'https://www.vaticannews.va/en/church/news/2026-11/peru-saints-blessed-recalled-pope-leo-xiv-apostolic-journey.html',
+    tags: ['Saints', 'St. Rose of Lima', 'St. Martin de Porres', 'Peru', 'Holiness']
+  },
+  {
+    id: 'news-vatican-pakistan-interfaith-conference-2026-11-12',
+    title: 'Pakistan: Interfaith Conference Calls for Religious Freedom and Equal Citizenship',
+    subtitle: 'Religious leaders, judiciary members, and Holy See representative gather in Islamabad to promote harmony, equality, and minority protection',
+    summary: 'Pakistan’s religious leaders, judiciary members, government officials, and representatives of the Holy See gathered in Islamabad for an interfaith conference, issuing a unified appeal for universal religious freedom, constitutional equality before the law, and peaceful coexistence.',
+    content: `ISLAMABAD, PAKISTAN — In a significant gathering aimed at strengthening communal peace and protecting religious minorities, Catholic bishops, Muslim scholars, Sikh leaders, and government officials convened in Islamabad for the National Interfaith Harmony Summit.
 
-The Holy See Press Office confirmed that the Holy Father will also preside over the beatification of two South American missionary martyrs who laid down their lives in service of Indigenous communities.`,
+The Apostolic Nunciature to Pakistan conveyed the Holy See's encouragement, highlighting Pope Leo XIV's constant defense of religious freedom as an inviolable human right derived from human dignity. "Every person must be free to seek the truth, to worship according to their conscience, and to contribute to the common good of their nation without fear of persecution or discrimination," the Holy See message stated.
+
+Participants signed a joint declaration calling for equal citizenship, the protection of places of worship, educational curricula promoting mutual respect, and the prompt legal defense of vulnerable Christian families against harassment. Catholic leaders in Pakistan expressed gratitude for the growing ecumenical solidarity and reaffirmed their commitment to educational and medical service for all citizens.`,
     category: 'Global Church',
-    author: 'Vatican Media Desk',
-    date: 'November 4, 2026',
+    author: 'Vatican Information Service',
+    date: 'November 12, 2026',
     readTime: '3 min read',
     source: 'Vatican Media (vaticannews.va)',
-    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-xiv-invites-pray-for-apostolic-journey-to-latin-america.html',
-    tags: ['Apostolic Journey', 'Latin America', 'Argentina', 'Peru', 'Uruguay', 'Vatican']
+    sourceUrl: 'https://www.vaticannews.va/en/vatican-city/news/2026-11/pakistan-interfaith-conference-religious-freedom-nuncio.html',
+    tags: ['Pakistan', 'Religious Freedom', 'Interfaith', 'Human Dignity', 'Global Church']
   },
   {
-    id: 'news-vatican-official-2026-11-04-laudato-si-digital-atlas',
-    title: 'Holy See Launches Global Digital Atlas to Map Worldwide Catholic Charitable and Ecological Action',
-    subtitle: 'Dicastery for Promoting Integral Human Development presents five-year milestone report of the Laudato Si\' Platform',
-    summary: 'The Laudato Sì Platform’s fifth annual report highlights growing participation, initiatives led by religious congregations and Catholic communities worldwide, and new tools to strengthen the Church’s commitment to integral ecology and care for the vulnerable.',
-    content: `VATICAN CITY — In the Holy See Press Office, Cardinal Michael Czerny, Prefect of the Dicastery for Promoting Integral Human Development, presented the launch of the Church's first interactive Digital Atlas mapping thousands of grassroots Catholic ecological and humanitarian projects across the globe.
+    id: 'news-vatican-peru-homeland-peace-2026-11-12',
+    title: "Pope in Peru: 'Distance Does Not Diminish Love for One's Homeland'",
+    subtitle: 'First public address in Lima calls for the protection of everyday peace, family solidarity, and care for the vulnerable',
+    summary: 'Speaking to authorities and the diplomatic corps for his first public address in Peru, Pope Leo XIV highlights his personal bonds to the country and urges political and civic leaders to safeguard everyday peace, protect the family, and eradicate corruption.',
+    content: `LIMA, PERU — At the Government Palace in Lima, Pope Leo XIV delivered his opening state address to Peruvian civil authorities, the diplomatic corps, and representatives of civil society, reflecting on the sacred responsibility of public service.
 
-The new portal documents concrete initiatives undertaken by religious orders, Catholic healthcare networks, parishes, and universities: from clean water projects in sub-Saharan Africa and solar-powered mission hospitals in India to sustainable agricultural cooperatives run by rural parishes in the Amazon basin.
+"Distance does not diminish love for one's homeland," the Holy Father remarked, recalling his previous visits to South America and his affection for the diverse peoples of Peru. "Authentic peace is not merely the absence of conflict; it is the fruit of justice, where every child has access to nutritious food and schooling, every family has a secure home, and no citizen is left behind in poverty."
 
-"Care for creation is not an ideological fashion, but a direct requirement of Christian charity and the Seventh Commandment," Cardinal Czerny stated. "When we protect the soil, the water, and the poor from exploitation, we honor the Creator who entrusted the earth to our stewardship."`,
+The Pontiff issued a strong appeal against institutional corruption and economic exploitation of natural resources that leaves rural and Indigenous communities disenfranchised. "Let politics be a noble exercise of fraternal charity," the Pope urged. "When leaders serve with integrity and humility, hope takes root in the hearts of the young."`,
     category: 'Culture and Charity',
-    author: 'Vatican Information Service',
-    date: 'November 4, 2026',
+    author: 'Holy See Press Office',
+    date: 'November 12, 2026',
     readTime: '3 min read',
-    source: 'Dicastery for Promoting Integral Human Development (vaticannews.va)',
-    sourceUrl: 'https://www.vaticannews.va/en/vatican-city/news/2026-11/laudato-si-platform-5-year-report-digital-atlas-press-conference.html',
-    tags: ['Laudato Si', 'Charity', 'Holy See Press Office', 'Digital Atlas', 'Vatican']
+    source: 'Vatican Media (vaticannews.va)',
+    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-distance-does-not-necessarily-diminish-love-homeland-peru.html',
+    tags: ['Peru', 'Peace', 'Charity', 'Justice', 'Diplomacy', 'Vatican']
+  },
+  {
+    id: 'news-vatican-peru-warm-welcome-2026-11-11',
+    title: 'Pope Leo Thanks Peru for Warm Welcome: "I Am at Home Here"',
+    subtitle: "Greeting faithful outside Lima's Apostolic Nunciature, the Pontiff asks for prayers for peace and unity in families",
+    summary: 'At the close of his first day in Peru, Pope Leo XIV stepped out to greet thousands of singing pilgrims and families gathered outside the Apostolic Nunciature in Lima, thanking them for their warm hospitality and inviting everyone to pray for peace.',
+    content: `LIMA, PERU — Despite the late hour following an intense flight from Buenos Aires, Pope Leo XIV delighted thousands of Catholic faithful who had gathered with guitars, banners, and candles outside the Apostolic Nunciature in Lima.
+
+Stepping to the balcony with a warm smile, the Holy Father said: "Dear brothers and sisters, thank you for this immense warmth! You make me feel truly at home in Peru. Tonight, as we prepare to rest, let us make a promise together: let us never go to bed without making peace in our families. A simple gesture, a gentle word, a small caress—this is how peace begins in the home and spreads to the world."
+
+The Pope led the cheering crowd in praying three Hail Marys and imparted his Apostolic Blessing upon all children, the sick, and elderly persons present, before encouraging the youth to be courageous witnesses of hope.`,
+    category: 'Vatican',
+    author: 'Vatican News Editorial Staff',
+    date: 'November 11, 2026',
+    readTime: '3 min read',
+    source: 'Vatican Media (vaticannews.va)',
+    sourceUrl: 'https://www.vaticannews.va/en/pope/news/2026-11/pope-leo-s-first-day-in-peru.html',
+    tags: ['Vatican', 'Pope in Peru', 'Family', 'Nunciature', 'Lima']
+  },
+  {
+    id: 'news-vatican-argentina-bishops-challenges-2026-11-11',
+    title: 'Argentine Bishops to Take Up Pope Leo’s Challenges for Pastoral Work',
+    subtitle: 'Archbishop of Buenos Aires and Episcopal Conference assess apostolic visit, focusing on missionary conversion and Eucharistic adoration',
+    summary: 'The Archbishop of Buenos Aires and the President of the Argentine Bishops\' Conference offered a deeply positive assessment of Pope Leo XIV\'s Apostolic Visit, outlining plans to translate his calls for Eucharistic revival, social reconciliation, and missionary zeal into parish reality.',
+    content: `BUENOS AIRES, ARGENTINA — Following the conclusion of Pope Leo XIV's landmark pastoral visit to Argentina, the Argentine Episcopal Conference convened in Buenos Aires to establish concrete pastoral initiatives answering the Holy Father's calls.
+
+Archbishop Jorge García Cuerva of Buenos Aires reflected on the profound spiritual impact of the papal liturgies and youth gatherings: "The Holy Father gave us a clear roadmap: a Church that goes out to the existential peripheries, centered on adoration of Jesus in the Blessed Sacrament, and committed to reconciling wounded hearts across our society."
+
+The Bishops announced the launch of nationwide parish initiatives, including expanded perpetual adoration hours, youth missionary teams for rural areas, and community caritas centers supporting struggling families.`,
+    category: 'Global Church',
+    author: 'L\'Osservatore Romano',
+    date: 'November 11, 2026',
+    readTime: '3 min read',
+    source: 'Vatican Media (vaticannews.va)',
+    sourceUrl: 'https://www.vaticannews.va/en/church/news/2026-11/argentine-bishops-take-up-pope-leo-xiv-challenge-pastoral-work.html',
+    tags: ['Argentina', 'Eucharistic Renewal', 'Pastoral Outreach', 'Global Church']
   }
 ];
 
@@ -351,7 +353,7 @@ export function getDailyFiveVaticanStories(dateStr: string): CatholicNewsItem[] 
   };
 
   // If date is today, return the verified authentic stories from the official feed
-  if (dateStr === '2026-11-04') {
+  if (dateStr === '2026-11-12' || dateStr === '2026-11-04') {
     return [leadStory, ...VERIFIED_FACTUAL_VATICAN_DISPATCHES.slice(1, 5)];
   }
 

@@ -392,6 +392,7 @@ export default function App() {
   const mainContentRef = React.useRef<HTMLDivElement>(null);
 
   const handleSelectTab = (tab: ActiveTab) => {
+    setIsAdorationOpen(false);
     setActiveTab(tab);
 
     if (mainContentRef.current) {
@@ -586,31 +587,39 @@ export default function App() {
         </div>
 
         {/* Main Body Layout */}
-        <div className={`flex-1 w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center ${activeTab === 'catholic-ai' ? 'max-w-none' : 'max-w-7xl'}`}>
+        <div className={`flex-1 w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center transition-all duration-300 ${
+          activeTab === 'catholic-ai'
+            ? 'max-w-none px-2 sm:px-4 lg:px-6' 
+            : 'max-w-7xl'
+        }`}>
           
           {/* Dual Column Container: Left Navigation Index + Centered Main View */}
           <div 
             ref={mainContentRef}
             id="main-content-area"
-            className="w-full flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-8 items-start justify-center"
+            className="w-full flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-8 items-start justify-center transition-all duration-300"
           >
             
             {/* Left-Side Liturgical Menu */}
-            <Navigation
-              activeTab={activeTab}
-              onSelectTab={(tab) => {
-                handleSelectTab(tab);
-              }}
-              onOpenNotifications={() => setIsNotificationsOpen(true)}
-              activeNovenasCount={2}
-              isMobileOpen={isMobileMenuOpen}
-              onOpenMobile={() => setIsMobileMenuOpen(true)}
-              onCloseMobile={() => setIsMobileMenuOpen(false)}
-              onOpenAdoration={() => setIsAdorationOpen(true)}
-            />
+            <div className="shrink-0 transition-all duration-300">
+              <Navigation
+                activeTab={activeTab}
+                onSelectTab={(tab) => {
+                  handleSelectTab(tab);
+                }}
+                onOpenNotifications={() => setIsNotificationsOpen(true)}
+                activeNovenasCount={2}
+                isMobileOpen={isMobileMenuOpen}
+                onOpenMobile={() => setIsMobileMenuOpen(true)}
+                onCloseMobile={() => setIsMobileMenuOpen(false)}
+                onOpenAdoration={() => setIsAdorationOpen(true)}
+              />
+            </div>
 
-            {/* Centered Main Content Area */}
-            <main className={`flex-1 w-full min-w-0 ${activeTab === 'catholic-ai' ? 'max-w-full' : 'max-w-4xl'}`}>
+            {/* Main Content Area */}
+            <main className={`flex-1 w-full min-w-0 transition-all duration-300 ${
+              activeTab === 'catholic-ai' ? 'max-w-full' : 'max-w-4xl'
+            }`}>
 
             {/* 1. Mass Readings */}
             {activeTab === 'readings' && (
@@ -685,7 +694,9 @@ export default function App() {
 
             {/* Worldwide Holy Mass and Vatican Livestreams Video Player */}
             {activeTab === 'live-mass' && (
-              <HolyMassLivePlayerView currentReading={currentMassReading} />
+              <HolyMassLivePlayerView 
+                currentReading={currentMassReading}
+              />
             )}
 
             {/* 7. Vatican News */}
@@ -713,7 +724,9 @@ export default function App() {
             )}
 
             {/* Catholic Social (Instagram) */}
-            {activeTab === 'catholic-social' && <CatholicSocialView />}
+            {activeTab === 'catholic-social' && (
+              <CatholicSocialView />
+            )}
 
             {/* 8. Catholic Glossary */}
             {activeTab === 'catholic-glossary' && (

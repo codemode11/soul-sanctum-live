@@ -88,37 +88,37 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-xl animate-fadeIn">
+    <div className="fixed inset-0 z-50 overflow-y-auto flex animate-fadeIn p-3 sm:p-6 bg-black/85 backdrop-blur-xl items-center justify-center">
       {/* Sanctum Glow Backdrop */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.18)_0%,transparent_75%)] pointer-events-none" />
 
-      <div className="relative w-full max-w-5xl rounded-xl overflow-hidden border border-amber-400/30 shadow-[0_25px_70px_rgba(0,0,0,0.85)] bg-gradient-to-b from-stone-950 via-[#141210] to-stone-950 text-stone-100 flex flex-col max-h-[92vh]">
+      <div className="relative w-full overflow-hidden border-amber-400/30 bg-gradient-to-b from-stone-950 via-[#141210] to-stone-950 text-stone-100 flex flex-col max-w-5xl rounded-xl border shadow-[0_25px_70px_rgba(0,0,0,0.85)] max-h-[92vh]">
         
         {/* Top Liturgical Gold Accent Bar */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-amber-600 via-amber-300 to-amber-600 shadow-md" />
+        <div className="h-1.5 w-full bg-gradient-to-r from-amber-600 via-amber-300 to-amber-600 shadow-md shrink-0" />
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-amber-500/20 bg-stone-900/60 backdrop-blur-md">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-700 flex items-center justify-center shadow-md text-stone-950">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-amber-500/20 bg-stone-900/60 backdrop-blur-md shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-700 flex items-center justify-center shadow-md text-stone-950 shrink-0">
               <Sparkles className="w-5 h-5 text-stone-950 fill-stone-950" />
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="font-cinzel text-xs uppercase tracking-widest text-amber-300 font-semibold">
                   Perpetual Adoration
                 </span>
-                <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30">
+                <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 hidden sm:inline-block">
                   Sacramentum Caritatis
                 </span>
               </div>
-              <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-wide">
+              <h2 className="font-serif text-lg sm:text-2xl font-bold text-white tracking-wide truncate">
                 Sanctum of the Blessed Sacrament
               </h2>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handlePlaySanctumChime}
               className="p-2 rounded-lg text-amber-200 hover:text-white bg-black/40 hover:bg-black/60 border border-white/15 transition-all cursor-pointer"
@@ -238,7 +238,7 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
           </div>
 
           {/* Main Visual Altar Card */}
-          <div className="relative rounded-xl overflow-hidden border border-amber-500/30 shadow-2xl bg-black aspect-[16/9] max-h-[420px] w-full group">
+          <div className="relative rounded-xl overflow-hidden border border-amber-500/30 shadow-2xl bg-black w-full group aspect-[16/9] max-h-[420px]">
             {altarMode === 'ewtn-live' ? (
               <EwtnLiveVideoPlayer
                 key={ewtnChapel}

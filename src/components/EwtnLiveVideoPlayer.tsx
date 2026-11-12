@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Hls from 'hls.js';
-import { Play, Pause, Volume2, VolumeX, Maximize2, RefreshCw, ExternalLink, Tv } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize2, Minimize2, RefreshCw, ExternalLink, Tv } from 'lucide-react';
 
 interface EwtnLiveVideoPlayerProps {
   streamUrl?: string;
@@ -21,6 +21,7 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
   portalUrl = 'https://www.ewtn.com/live/tv',
   autoPlay = true
 }) => {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hlsRef = useRef<Hls | null>(null);
 
@@ -31,6 +32,42 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [reloadNonce, setReloadNonce] = useState(0);
+  const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
+  const [isOverlayFullscreen, setIsOverlayFullscreen] = useState(false);
+
+  const isEffectiveFullScreen = isNativeFullscreen || isOverlayFullscreen;
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      const fsEl =
+        document.fullscreenElement ||
+        (document as unknown as { webkitFullscreenElement?: Element | null }).webkitFullscreenElement ||
+        null;
+      setIsNativeFullscreen(Boolean(fsEl));
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    document.addEventListener('webkitfullscreenchange', handleFsChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFsChange);
+      document.removeEventListener('webkitfullscreenchange', handleFsChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isOverlayFullscreen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOverlayFullscreen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOverlayFullscreen]);
 
   // Sync active stream URL when channel changes
   useEffect(() => {
@@ -184,23 +221,70 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
   };
 
   const handleFullscreen = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.requestFullscreen) {
-      video.requestFullscreen().catch(() => {});
+    const fsEl =
+      document.fullscreenElement ||
+      (document as unknown as { webkitFullscreenElement?: Element | null }).webkitFullscreenElement ||
+      null;
+
+    if (fsEl || isOverlayFullscreen) {
+      if (fsEl) {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        } else if ((document as unknown as { webkitExitFullscreen?: () => void }).webkitExitFullscreen) {
+          (document as unknown as { webkitExitFullscreen: () => void }).webkitExitFullscreen();
+        }
+      }
+      setIsOverlayFullscreen(false);
+      return;
     }
+
+    const container = containerRef.current;
+    const video = videoRef.current;
+
+    if (container?.requestFullscreen) {
+      container.requestFullscreen().catch(() => {
+        if (video?.requestFullscreen) {
+          video.requestFullscreen().catch(() => setIsOverlayFullscreen(true));
+        } else {
+          setIsOverlayFullscreen(true);
+        }
+      });
+      return;
+    }
+
+    const webkitContainer = container as unknown as { webkitRequestFullscreen?: () => void } | null;
+    if (webkitContainer?.webkitRequestFullscreen) {
+      try {
+        webkitContainer.webkitRequestFullscreen();
+        return;
+      } catch {
+        // Fallback below
+      }
+    }
+
+    const iosVideo = video as unknown as { webkitEnterFullscreen?: () => void } | null;
+    if (iosVideo?.webkitEnterFullscreen) {
+      try {
+        iosVideo.webkitEnterFullscreen();
+        return;
+      } catch {
+        // Fallback below
+      }
+    }
+
+    setIsOverlayFullscreen(true);
   };
 
   // If no HLS stream is active (or HLS failed and embedUrl fallback is available), render the live iframe player
   if ((!activeHlsUrl || hasError) && embedUrl) {
     return (
-      <div className="relative aspect-video w-full bg-black overflow-hidden">
+      <div className="relative w-full aspect-video bg-black overflow-hidden">
         <iframe
           key={`${embedUrl}-${reloadNonce}`}
           src={embedUrl}
           title={title}
           className="w-full h-full border-0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
         />
@@ -209,12 +293,22 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
   }
 
   return (
-    <div className="relative aspect-video w-full bg-black group select-none overflow-hidden">
+    <div
+      ref={containerRef}
+      className={
+        isOverlayFullscreen
+          ? 'fixed inset-0 z-[9999] w-screen h-[100dvh] bg-black group select-none overflow-hidden'
+          : isNativeFullscreen
+            ? 'relative w-full h-full bg-black group select-none overflow-hidden'
+            : 'relative w-full aspect-video bg-black group select-none overflow-hidden'
+      }
+    >
       <video
         ref={videoRef}
         className="w-full h-full object-contain bg-black cursor-pointer"
         playsInline
         onClick={handleTogglePlay}
+        onDoubleClick={handleFullscreen}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onVolumeChange={() => {
@@ -351,13 +445,27 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
             <button
               type="button"
               onClick={handleFullscreen}
-              className="p-1.5 rounded-md bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white cursor-pointer transition-colors"
-              title="Fullscreen"
+              className="p-2 rounded-md bg-black/65 hover:bg-amber-500 text-amber-200 hover:text-stone-950 border border-amber-400/50 cursor-pointer transition-colors shadow-md"
+              title={isEffectiveFullScreen ? 'Exit Full Screen' : 'Full Screen'}
+              aria-label={isEffectiveFullScreen ? 'Exit Full Screen' : 'Full Screen'}
             >
-              <Maximize2 className="w-3.5 h-3.5" />
+              {isEffectiveFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
             </button>
           </div>
         </div>
+      )}
+
+      {/* Keep Exit/Toggle Full Screen arrows button visible if an error happens while expanded */}
+      {hasError && (
+        <button
+          type="button"
+          onClick={handleFullscreen}
+          className="absolute bottom-3 right-3 z-30 p-2 rounded-md bg-black/75 hover:bg-amber-500 text-amber-200 hover:text-stone-950 border border-amber-400/50 cursor-pointer transition-colors shadow-md"
+          title={isEffectiveFullScreen ? 'Exit Full Screen' : 'Full Screen'}
+          aria-label={isEffectiveFullScreen ? 'Exit Full Screen' : 'Full Screen'}
+        >
+          {isEffectiveFullScreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+        </button>
       )}
     </div>
   );

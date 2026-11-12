@@ -94,9 +94,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
   const loadSourceFeed = async (sourceId: string, isManualRefresh: boolean = false) => {
     setIsLoading(true);
-    if (isManualRefresh) {
-      setRefreshStatusMessage('Refreshing live RSS feed…');
-    }
+    setRefreshStatusMessage('Refreshing live RSS feed…');
     try {
       const items = await fetchCatholicRssArticlesForSource(sourceId, isManualRefresh);
       if (items && items.length > 0) {
@@ -111,18 +109,17 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
           if (isReadingAloud) SacredReader.stop();
           selectedIndexRef.current = 0;
           setSelectedArticleIndex(0);
-          const timeStr = new Date(now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-          const latestTitle = items[0]?.title || '';
-          const previewTitle = latestTitle.length > 45 ? `${latestTitle.slice(0, 45)}…` : latestTitle;
-          setRefreshStatusMessage(
-            `✓ Feed refreshed at ${timeStr} (${items.length} articles loaded) — Latest: "${previewTitle}"`
-          );
         }
+
+        const timeStr = new Date(now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const latestTitle = items[0]?.title || '';
+        const previewTitle = latestTitle.length > 45 ? `${latestTitle.slice(0, 45)}…` : latestTitle;
+        setRefreshStatusMessage(
+          `✓ Feed refreshed at ${timeStr} (${items.length} articles loaded) — Latest: "${previewTitle}"`
+        );
       }
     } catch {
-      if (isManualRefresh) {
-        setRefreshStatusMessage('Refreshed from verified Catholic archive');
-      }
+      setRefreshStatusMessage('Refreshed from verified Catholic archive');
     } finally {
       setIsLoading(false);
     }
@@ -174,7 +171,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
   // Load feed when switching publication source
   useEffect(() => {
-    loadSourceFeed(selectedSourceId, false);
+    loadSourceFeed(selectedSourceId, true);
   }, [selectedSourceId]);
 
   // Pre-fetch all 9 feeds in the background on initial mount so switching tabs is instant

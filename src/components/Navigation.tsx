@@ -103,6 +103,7 @@ interface NavigationProps {
   onCloseMobile?: () => void;
   onOpenAdoration?: () => void;
   isAndroidPreviewMode?: boolean;
+  isFullScreen?: boolean;
 }
 
 export interface NavItem {
@@ -123,7 +124,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   onOpenMobile,
   onCloseMobile,
   onOpenAdoration,
-  isAndroidPreviewMode = false
+  isAndroidPreviewMode = false,
+  isFullScreen = false
 }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
   const sliderTrackRef = useRef<HTMLDivElement>(null);
@@ -576,8 +578,16 @@ export const Navigation: React.FC<NavigationProps> = ({
   return (
     <>
       {/* 1. Desktop and Tablet Sticky Left-Side Navigation with Music-Style Slider */}
-      <aside className="hidden md:block w-72 lg:w-80 shrink-0 sticky top-6 self-start">
-        <div className="relative rounded-xl bg-stone-950/80 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex flex-col max-h-[calc(100vh-3rem)] overflow-hidden">
+      <aside className={`hidden w-72 lg:w-80 shrink-0 ${
+        isFullScreen
+          ? 'md:flex md:flex-col h-full'
+          : 'md:block sticky top-6 self-start'
+      }`}>
+        <div className={`relative bg-stone-950/90 backdrop-blur-2xl border border-amber-500/25 shadow-[0_20px_50px_rgba(0,0,0,0.85)] text-stone-100 flex flex-col overflow-hidden ${
+          isFullScreen
+            ? 'h-full max-h-full rounded-none border-y-0 border-l-0'
+            : 'rounded-xl max-h-[calc(100vh-3rem)]'
+        }`}>
           <div className="flex items-stretch flex-1 min-h-0 overflow-hidden">
             <div 
               ref={sidebarRef}
@@ -693,7 +703,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
       {/* 3. Mobile Centered Index Drawer */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3">
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-3">
           {/* Backdrop */}
           <div 
             onClick={onCloseMobile}
