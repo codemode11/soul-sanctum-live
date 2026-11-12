@@ -727,6 +727,94 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         shortDescription: "Cousin of St. David of Wales who founded the monastery of Caer Gybi (Holyhead) on Anglesey."
       }
     ]
+  },
+  '11-12': {
+    id: 'saint-frances-xavier-cabrini-12',
+    name: 'St. Frances Xavier Cabrini',
+    feastDate: 'November 12',
+    month: 11,
+    day: 12,
+    title: 'Virgin, Foundress of the Missionary Sisters of the Sacred Heart of Jesus (1850–1917)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (Feast of St. Frances Xavier Cabrini)",
+    patronage: ['Immigrants and Displaced Persons', 'Hospital Administrators', 'Orphans', 'Travelers', 'Seekers of the Sacred Heart'],
+    symbols: ['The Sacred Heart of Jesus', 'Crucifix and Rosary', 'Religious Habit and Veil with White Ruff', 'Ocean Vessel and Traveling Trunk', 'Model of Columbus Hospital'],
+    quote: {
+      text: 'I will go anywhere and do anything in order to communicate the love of Jesus to those who do not know Him or have forgotten Him. I can do all things in Him who strengthens me.',
+      source: "St. Frances Xavier Cabrini, Letters to the Missionary Sisters of the Sacred Heart of Jesus"
+    },
+    biography: [
+      "According to Butler's Lives of the Saints, Saint Frances Xavier Cabrini—reverently invoked throughout the Americas and Italy as Mother Cabrini—was born on July 15, 1850, in Sant'Angelo Lodigiano, Lombardy, Italy, the youngest of thirteen children of devout farmer Agostino Cabrini and his wife Stella. Born two months prematurely as a flock of white doves circled her parents' farmhouse, young Frances was frail in physical constitution yet possessed an ardent, indomitable spirit. From childhood her heart burned to follow in the footsteps of Saint Francis Xavier as a missionary to China. When two religious orders declined her application because of her fragile health, she placed her total confidence in the Sacred Heart of Jesus; urged by her bishop, in 1880 she founded the Missionary Sisters of the Sacred Heart of Jesus in an abandoned Franciscan friary at Codogno.",
+      "In 1887, Mother Cabrini travelled to Rome seeking papal approval to send her sisters to the missions of the Far East. In a providential audience, Pope Leo XIII discerned God's higher design for her apostolic life, uttering the famous words: 'Not to the East, Cabrini, but to the West! Go to the United States, where thousands of Italian immigrants are wandering like sheep without a shepherd.' Obeying the Holy Father with absolute filial trust, Mother Cabrini and six sisters sailed across the stormy Atlantic, arriving in New York Harbor on March 31, 1889. Finding neither convent, school, nor institutional funds awaiting them, she met initial opposition and poverty with radiant faith, repeatedly declaring: 'Jesus will provide!'",
+      "Over the next twenty-eight years, despite lifelong bronchial frailty, Mother Cabrini crossed the ocean twenty-four times, traversed the Andes on a mule, and journeyed tirelessly across the United States, Central America, South America, and Europe. Relying wholly on the infinite love of the Sacred Heart, she founded sixty-seven schools, orphanages, free clinics, academies, and major hospitals—including Columbus Hospital in New York and Columbus Hospital in Chicago. She insisted that authentic Catholic education must shape the heart for God as well as the intellect for the world. In Seattle in 1909, she became a naturalized United States citizen. Mother Cabrini died peacefully in Chicago on December 22, 1917, while packaging Christmas gifts for poor children. On July 7, 1946, Pope Pius XII canonized her as the first United States citizen saint, and in 1950 solemnly proclaimed her the Universal Patroness of Immigrants."
+    ],
+    prayer: 'Almighty and merciful God, who called Saint Frances Xavier Cabrini from Italy to the Americas to announce the boundless charity of the Sacred Heart to immigrants, orphans, and the sick, grant through her intercession that we, too, may find in Christ the strength to welcome the stranger, heal the brokenhearted, and tirelessly build your Kingdom of peace. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: 'Frances_Xavier_Cabrini',
+    imageUrl: '/assets/aistudio/image_580bae0b.png',
+    companionSaints: [
+      {
+        name: 'St. Josaphat Kuncevyč',
+        title: 'Archbishop of Polotsk and Martyr for Church Unity',
+        dates: 'c. 1580–1623',
+        shortDescription: "Basilian monk and Archbishop who shed his blood at Vitebsk to reconcile Eastern Orthodox Christians with the See of Saint Peter, praying with his dying breath for his attackers."
+      },
+      {
+        name: 'Pope St. Martin I',
+        title: 'Supreme Pontiff and Martyr',
+        dates: 'd. 655',
+        shortDescription: "Holy Pope who convened the Lateran Council of 649 to defend the two wills of Christ against the Monothelite heresy, endured imprisonment and starvation, and died a martyr in exile."
+      },
+      {
+        name: 'St. Stanislaus Kostka',
+        title: 'Jesuit Novice and Patron of Youth',
+        dates: '1550–1568',
+        shortDescription: "Noble Polish youth who walked hundreds of miles on foot to Rome to enter the Society of Jesus, dying on the Feast of the Assumption at age seventeen with his heart burning with divine love."
+      }
+    ]
+  },
+  '11-13': {
+    id: 'saint-frances-xavier-cabrini-13',
+    name: 'St. Frances Xavier Cabrini',
+    feastDate: 'November 13',
+    month: 11,
+    day: 13,
+    title: 'Virgin, Foundress of the Missionary Sisters of the Sacred Heart of Jesus (1850–1917)',
+    butlerVolume: "Butler's Lives of the Saints — Vol. XI (Memorial of St. Frances Xavier Cabrini)",
+    patronage: ['Immigrants and Displaced Persons', 'Hospital Administrators', 'Orphans', 'Travelers', 'Seekers of the Sacred Heart'],
+    symbols: ['The Sacred Heart of Jesus', 'Crucifix and Rosary', 'Religious Habit and Veil with White Ruff', 'Ocean Vessel and Traveling Trunk', 'Model of Columbus Hospital'],
+    quote: {
+      text: 'I will go anywhere and do anything in order to communicate the love of Jesus to those who do not know Him or have forgotten Him. I can do all things in Him who strengthens me.',
+      source: "St. Frances Xavier Cabrini, Letters to the Missionary Sisters of the Sacred Heart of Jesus"
+    },
+    biography: [
+      "According to Butler's Lives of the Saints, Saint Frances Xavier Cabrini—reverently invoked throughout the Americas and Italy as Mother Cabrini—was born on July 15, 1850, in Sant'Angelo Lodigiano, Lombardy, Italy, the youngest of thirteen children of devout farmer Agostino Cabrini and his wife Stella. Born two months prematurely as a flock of white doves circled her parents' farmhouse, young Frances was frail in physical constitution yet possessed an ardent, indomitable spirit. From childhood her heart burned to follow in the footsteps of Saint Francis Xavier as a missionary to China. When two religious orders declined her application because of her fragile health, she placed her total confidence in the Sacred Heart of Jesus; urged by her bishop, in 1880 she founded the Missionary Sisters of the Sacred Heart of Jesus in an abandoned Franciscan friary at Codogno.",
+      "In 1887, Mother Cabrini travelled to Rome seeking papal approval to send her sisters to the missions of the Far East. In a providential audience, Pope Leo XIII discerned God's higher design for her apostolic life, uttering the famous words: 'Not to the East, Cabrini, but to the West! Go to the United States, where thousands of Italian immigrants are wandering like sheep without a shepherd.' Obeying the Holy Father with absolute filial trust, Mother Cabrini and six sisters sailed across the stormy Atlantic, arriving in New York Harbor on March 31, 1889. Finding neither convent, school, nor institutional funds awaiting them, she met initial opposition and poverty with radiant faith, repeatedly declaring: 'Jesus will provide!'",
+      "Over the next twenty-eight years, despite lifelong bronchial frailty, Mother Cabrini crossed the ocean twenty-four times, traversed the Andes on a mule, and journeyed tirelessly across the United States, Central America, South America, and Europe. Relying wholly on the infinite love of the Sacred Heart, she founded sixty-seven schools, orphanages, free clinics, academies, and major hospitals—including Columbus Hospital in New York and Columbus Hospital in Chicago. She insisted that authentic Catholic education must shape the heart for God as well as the intellect for the world. In Seattle in 1909, she became a naturalized United States citizen. Mother Cabrini died peacefully in Chicago on December 22, 1917, while packaging Christmas gifts for poor children. On July 7, 1946, Pope Pius XII canonized her as the first United States citizen saint, and in 1950 solemnly proclaimed her the Universal Patroness of Immigrants."
+    ],
+    prayer: 'Almighty and merciful God, who called Saint Frances Xavier Cabrini from Italy to the Americas to announce the boundless charity of the Sacred Heart to immigrants, orphans, and the sick, grant through her intercession that we, too, may find in Christ the strength to welcome the stranger, heal the brokenhearted, and tirelessly build your Kingdom of peace. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.',
+    liturgicalColor: 'White',
+    wikiSlug: 'Frances_Xavier_Cabrini',
+    imageUrl: '/assets/aistudio/image_580bae0b.png',
+    companionSaints: [
+      {
+        name: 'St. Josaphat Kuncevyč',
+        title: 'Archbishop of Polotsk and Martyr for Church Unity',
+        dates: 'c. 1580–1623',
+        shortDescription: "Basilian monk and Archbishop who shed his blood at Vitebsk to reconcile Eastern Orthodox Christians with the See of Saint Peter, praying with his dying breath for his attackers."
+      },
+      {
+        name: 'Pope St. Martin I',
+        title: 'Supreme Pontiff and Martyr',
+        dates: 'd. 655',
+        shortDescription: "Holy Pope who convened the Lateran Council of 649 to defend the two wills of Christ against the Monothelite heresy, endured imprisonment and starvation, and died a martyr in exile."
+      },
+      {
+        name: 'St. Stanislaus Kostka',
+        title: 'Jesuit Novice and Patron of Youth',
+        dates: '1550–1568',
+        shortDescription: "Noble Polish youth who walked hundreds of miles on foot to Rome to enter the Society of Jesus, dying on the Feast of the Assumption at age seventeen with his heart burning with divine love."
+      }
+    ]
   }
 };
 
@@ -902,7 +990,9 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
     setImgError(false);
     setResolvedSaintImageUrl(selectedSaint.imageUrl);
 
-    const isLocalSaintAsset = selectedSaint.imageUrl?.startsWith('/images/saints/');
+    const isLocalSaintAsset =
+      selectedSaint.imageUrl?.startsWith('/images/saints/') ||
+      selectedSaint.imageUrl?.startsWith('/assets/');
     if (isLocalSaintAsset) {
       return;
     }

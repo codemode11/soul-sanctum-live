@@ -558,15 +558,15 @@ export const KNOWN_NOVEMBER_DAYS: Record<number, Partial<LiturgicalDayInfo>> = {
     }
   },
   12: {
-    title: 'Memorial of St. Josaphat, Bishop and Martyr',
+    title: 'Memorial of St. Frances Xavier Cabrini, Virgin',
     rank: 'Memorial',
-    color: 'red',
-    saintName: 'St. Josaphat Kuncevyč',
+    color: 'white',
+    saintName: 'St. Frances Xavier Cabrini',
     historicalEvent: {
-      year: '1623 AD',
-      title: 'Martyrdom of Saint Josaphat for Church Unity',
-      description: 'Ruthenian Catholic Archbishop of Polotsk was martyred in Vitebsk while striving to reunite Eastern Orthodox Christians with the See of Saint Peter.',
-      significance: 'Patron saint of Christian ecumenism and Ukrainian Catholics.'
+      year: '1946 AD',
+      title: 'St. Frances Xavier Cabrini — Universal Patroness of Immigrants',
+      description: 'Foundress of the Missionary Sisters of the Sacred Heart of Jesus and first naturalized United States citizen saint, who built 67 hospitals, schools, and orphanages across North and South America.',
+      significance: 'First US Citizen Saint; Patroness of Immigrants, Hospital Administrators, and Displaced Persons.'
     }
   },
   13: {
