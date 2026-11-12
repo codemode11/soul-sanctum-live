@@ -33,7 +33,8 @@ import {
   getDailyVaticanNews, 
   formatLongDate,
   fetchLiveVaticanNews,
-  VERIFIED_FACTUAL_VATICAN_DISPATCHES
+  VERIFIED_FACTUAL_VATICAN_DISPATCHES,
+  HISTORICAL_VATICAN_ARCHIVE
 } from '../data/news';
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
@@ -118,25 +119,27 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
     }
   }, [currentDateStr]);
 
-  const [refreshOffset, setRefreshOffset] = useState(0);
+  const [showAllDispatches, setShowAllDispatches] = useState(false);
 
   const handleRefreshVaticanFeed = async (isManual: boolean = false) => {
     setIsFetchingLive(true);
+    if (isManual && isReadingAloud) {
+      SacredReader.stop();
+    }
     try {
-      const live = await fetchLiveVaticanNews();
+      const live = await fetchLiveVaticanNews(isManual);
       if (live && live.length > 0) {
         setLiveStories(live);
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const latestTitle = live[0]?.title || '';
+        const preview = latestTitle.length > 40 ? `${latestTitle.slice(0, 40)}…` : latestTitle;
+        setLastLiveSync(
+          `✓ Holy See feed refreshed at ${timeStr} (${live.length} live dispatches — Latest: "${preview}")`
+        );
+      } else {
+        setLastLiveSync('Synced with Holy See archive');
       }
-      if (isManual) {
-        setRefreshOffset(prev => prev + 1);
-      }
-      setLastLiveSync(
-        `✓ Feed refreshed at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`
-      );
     } catch {
-      if (isManual) {
-        setRefreshOffset(prev => prev + 1);
-      }
       setLastLiveSync('Synced with Holy See archive');
     } finally {
       setIsFetchingLive(false);
@@ -148,65 +151,82 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
     handleRefreshVaticanFeed(false);
   }, []);
 
-  // Retrieve 5 fresh daily Vatican stories for the selected date (rotates when manually refreshed)
-  const fiveDailyStories = useMemo(() => {
-    const baseFive = getDailyFiveVaticanStories(selectedDate);
+  // Combined Vatican stories: fresh live dispatches first, then verified and historical dispatches
+  const allVaticanStories = useMemo(() => {
+    const list: CatholicNewsItem[] = [];
+    const seenTitles = new Set<string>();
+
     if (liveStories && liveStories.length > 0) {
-      const pool = [...liveStories, ...baseFive];
-      const uniquePool: CatholicNewsItem[] = [];
-      const seenTitles = new Set<string>();
-      for (const s of pool) {
-        if (!seenTitles.has(s.title)) {
-          seenTitles.add(s.title);
-          uniquePool.push(s);
+      for (const item of liveStories) {
+        const norm = item.title.toLowerCase().trim();
+        if (!seenTitles.has(norm)) {
+          seenTitles.add(norm);
+          list.push(item);
         }
       }
-      if (uniquePool.length <= 5) return uniquePool;
-      const rotated: CatholicNewsItem[] = [];
-      for (let i = 0; i < 5; i++) {
-        rotated.push(uniquePool[(i + refreshOffset) % uniquePool.length]);
-      }
-      return rotated;
     }
-    return baseFive;
-  }, [selectedDate, liveStories, refreshOffset]);
 
-  // Full news list including the 5 daily stories and broader archive
-  const allDailyNews = useMemo(() => {
-    const base = getDailyVaticanNews(selectedDate);
-    const sourceList = liveStories && liveStories.length > 0
-      ? [...fiveDailyStories, ...liveStories, ...base]
-      : [...fiveDailyStories, ...base];
-
-    const seenIds = new Set<string>();
-    const seenTitles = new Set<string>();
-    const uniqueList: CatholicNewsItem[] = [];
-
-    for (const item of sourceList) {
-      if (!seenIds.has(item.id) && !seenTitles.has(item.title)) {
-        seenIds.add(item.id);
-        seenTitles.add(item.title);
-        uniqueList.push(item);
+    for (const item of VERIFIED_FACTUAL_VATICAN_DISPATCHES) {
+      const norm = item.title.toLowerCase().trim();
+      if (!seenTitles.has(norm)) {
+        seenTitles.add(norm);
+        list.push(item);
       }
     }
-    return uniqueList;
-  }, [selectedDate, liveStories, fiveDailyStories]);
+
+    for (const item of HISTORICAL_VATICAN_ARCHIVE) {
+      const norm = item.title.toLowerCase().trim();
+      if (!seenTitles.has(norm)) {
+        seenTitles.add(norm);
+        list.push(item);
+      }
+    }
+
+    return list;
+  }, [liveStories]);
+
+  const categories = ['All', 'Vatican', 'Global Church', 'Saints and Faith', 'Eucharist and Devotion', 'Culture and Charity'];
+
+  const filteredDispatches = useMemo(() => {
+    return allVaticanStories.filter(item => {
+      const matchesCat = selectedCategory === 'All' || item.category === selectedCategory;
+      const matchesSearch = !searchQuery.trim() ||
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesCat && matchesSearch;
+    });
+  }, [allVaticanStories, selectedCategory, searchQuery]);
+
+  const leadDispatch: CatholicNewsItem | undefined = filteredDispatches[0];
+  const feedDispatches: CatholicNewsItem[] = filteredDispatches.slice(1);
+  const visibleFeedDispatches: CatholicNewsItem[] = showAllDispatches ? feedDispatches : feedDispatches.slice(0, 8);
+
+  const archiveStories = useMemo(() => {
+    return HISTORICAL_VATICAN_ARCHIVE.filter(item => {
+      const matchesCat = selectedCategory === 'All' || item.category === selectedCategory;
+      const matchesSearch = !searchQuery.trim() ||
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.summary.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesCat && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery]);
 
   const [activeArticle, setActiveArticle] = useState<CatholicNewsItem | null>(() => {
     if (initialArticleId) {
-      return allDailyNews.find(n => n.id === initialArticleId) || fiveDailyStories[0];
+      return allVaticanStories.find(n => n.id === initialArticleId) || null;
     }
     return null;
   });
 
   useEffect(() => {
     if (initialArticleId) {
-      const found = allDailyNews.find(n => n.id === initialArticleId);
+      const found = allVaticanStories.find(n => n.id === initialArticleId);
       if (found) {
         setActiveArticle(found);
       }
     }
-  }, [initialArticleId, allDailyNews]);
+  }, [initialArticleId, allVaticanStories]);
 
   // Clean up speech on unmount
   useEffect(() => {
@@ -218,31 +238,6 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
       SacredReader.stop();
     };
   }, []);
-
-  const categories = ['All', 'Vatican', 'Global Church', 'Saints and Faith', 'Eucharist and Devotion', 'Culture and Charity'];
-
-  const filteredFiveStories = useMemo(() => {
-    return fiveDailyStories.filter(item => {
-      const matchesCat = selectedCategory === 'All' || item.category === selectedCategory;
-      const matchesSearch = !searchQuery.trim() ||
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCat && matchesSearch;
-    });
-  }, [fiveDailyStories, selectedCategory, searchQuery]);
-
-  const archiveStories = useMemo(() => {
-    const fiveIds = new Set(fiveDailyStories.map(s => s.id));
-    const fiveTitles = new Set(fiveDailyStories.map(s => s.title));
-    return allDailyNews.filter(item => !fiveIds.has(item.id) && !fiveTitles.has(item.title) && (
-      (selectedCategory === 'All' || item.category === selectedCategory) &&
-      (!searchQuery.trim() ||
-        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())))
-    ));
-  }, [allDailyNews, fiveDailyStories, selectedCategory, searchQuery]);
 
   const handleSelectDate = (dateStr: string) => {
     setSelectedDate(dateStr);
@@ -279,21 +274,10 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
   const dateFormatted = formatLongDate(selectedDate);
 
-  // Quick date jump pills for November dates
-  const quickDates = [
-    { label: 'Nov 1 • All Saints', date: '2026-11-01' },
-    { label: 'Nov 2 • All Souls', date: '2026-11-02' },
-    { label: 'Nov 3 • St. Martin', date: '2026-11-03' },
-    { label: 'Nov 4 • St. Charles', date: '2026-11-04' },
-    { label: 'Nov 5 • Lk 15', date: '2026-11-05' },
-    { label: 'Nov 6', date: '2026-11-06' },
-    { label: 'Nov 7', date: '2026-11-07' }
-  ];
-
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
 
-      {/* 1. TOP BANNER: Vatican News and Church Dispatches + Settings Toggle for Archive */}
+      {/* 1. TOP BANNER: Vatican News and Church Dispatches + Historical Archive Toggle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
         <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -301,43 +285,44 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
               <div className="flex items-center gap-2">
                 <Globe className="w-5 h-5 text-amber-400" />
                 <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-                  Acta Apostolicae Sedis & Vatican News
+                  Acta Apostolicae Sedis &amp; Vatican News
                 </span>
               </div>
               <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
                 Vatican News and Church Dispatches
               </h2>
               <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
-                Updated daily with reports covering the Holy Father&apos;s homily, Dicastery directives, Saint of the Day, Eucharistic renewal, and works of mercy.
+                Updated daily with real-time reports covering the Holy Father&apos;s homily, Dicastery directives, Saint of the Day, Eucharistic renewal, and works of mercy.
               </p>
             </div>
 
-            {/* Refresh Feed & Settings Toggle Buttons */}
-            <div className="flex flex-col items-end gap-1.5 self-end sm:self-start shrink-0">
+            {/* Refresh Feed & Historical Archive Toggle Buttons */}
+            <div className="flex flex-col items-start sm:items-end gap-1.5 shrink-0">
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => handleRefreshVaticanFeed(true)}
-                  className="h-8 inline-flex items-center gap-1.5 px-3 rounded-md bg-amber-500 hover:bg-amber-400 text-stone-950 font-cinzel text-xs font-bold transition-all cursor-pointer shadow-xs"
+                  className="h-8 inline-flex items-center gap-1.5 px-3.5 rounded-md bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-stone-950 font-cinzel text-xs font-bold transition-all cursor-pointer shadow-xs"
                   title="Refresh live Vatican News RSS feed"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 text-stone-950 ${isFetchingLive ? 'animate-spin' : ''}`} />
                   <span>{isFetchingLive ? 'Refreshing…' : 'Refresh Feed'}</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => setIsTopSettingsOpen(prev => !prev)}
                   aria-expanded={isTopSettingsOpen}
-                  className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+                  className={`h-8 inline-flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border ${
                     isTopSettingsOpen
-                      ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
-                      : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
-                  }`}
-                  title={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
-                  aria-label={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
+                      ? 'bg-amber-950 text-amber-100 border-amber-500 ring-1 ring-amber-500/40'
+                      : 'bg-stone-850 hover:bg-stone-800 text-stone-200 border-amber-900/60 hover:border-amber-600/70'
+                  } text-xs font-cinzel font-semibold`}
+                  title={isTopSettingsOpen ? 'Hide Historical Archive' : 'Show Historical Archive'}
                 >
-                  <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                  <BookOpen className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <span>{isTopSettingsOpen ? 'Hide Archive' : 'Historical Archive'}</span>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                    className={`w-3.5 h-3.5 text-amber-400 shrink-0 transition-transform duration-200 ${
                       isTopSettingsOpen ? 'rotate-180' : ''
                     }`}
                   />
@@ -349,30 +334,58 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
             </div>
           </div>
 
-          {/* Categories Filter Bar */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {categories.map(c => (
-              <button
-                key={c}
-                onClick={() => setSelectedCategory(c)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-cinzel transition-all cursor-pointer ${
-                  selectedCategory === c
-                    ? 'bg-amber-400 text-amber-950 font-bold shadow-xs'
-                    : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-                }`}
-              >
-                {c}
-              </button>
-            ))}
+          {/* Search bar & Categories Filter Bar */}
+          <div className="mt-4 space-y-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex-1 min-w-[240px] max-w-md flex items-center gap-2 bg-stone-950/70 border border-amber-800/40 rounded-lg px-3 py-1.5">
+                <Search className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search dispatches (Pope, Peru, peace, adoration...)"
+                  className="bg-transparent text-amber-100 placeholder-stone-400 text-xs font-serif w-full focus:outline-none"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="text-stone-400 hover:text-white"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+              <div className="text-xs text-amber-200/80 font-serif">
+                {filteredDispatches.length} dispatches available
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {categories.map(c => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setSelectedCategory(c)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-cinzel transition-all cursor-pointer ${
+                    selectedCategory === c
+                      ? 'bg-amber-400 text-amber-950 font-bold shadow-xs'
+                      : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Collapsible Panel: Holy See Archive & Global Church Reports */}
+        {/* Collapsible Panel: Historical Vatican Archive */}
         {isTopSettingsOpen && (
-          <div className="p-5 sm:p-6 bg-white/75 backdrop-blur-md border-t border-stone-200/80 space-y-4 animate-fadeIn">
+          <div className="p-5 sm:p-6 bg-white/85 backdrop-blur-md border-t border-stone-200/80 space-y-4 animate-fadeIn">
             <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
               <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-800 uppercase tracking-wide">
-                Holy See Archive & Global Church Reports
+                Holy See Historical Archive &amp; Magisterial Catechesis
               </h3>
               <span className="text-xs text-stone-500 font-serif">
                 {archiveStories.length} archived articles
@@ -385,7 +398,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                   <article
                     key={item.id}
                     onClick={() => setActiveArticle(item)}
-                    className="bg-white/80 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-stone-200 hover:bg-white transition-all cursor-pointer space-y-2.5 group shadow-2xs"
+                    className="bg-white/90 backdrop-blur-md p-4 sm:p-5 rounded-xl border border-stone-200 hover:bg-white transition-all cursor-pointer space-y-2.5 group shadow-2xs"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
                       <span className="px-2 py-0.5 rounded-full bg-stone-200 text-stone-800 font-semibold font-cinzel text-[10px]">
@@ -394,30 +407,13 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                       <span className="text-stone-500 text-xs">{item.date} • {item.readTime}</span>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3.5 items-start">
-                      {item.imageUrl && (
-                        <div className="w-full sm:w-36 h-24 shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative">
-                          <img
-                            src={item.imageUrl}
-                            alt={item.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            loading="lazy"
-                            onError={(e) => {
-                              const container = e.currentTarget.parentElement;
-                              if (container) container.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                      )}
-                      <div className="space-y-1 flex-1">
-                        <h4 className="font-cinzel text-base sm:text-lg font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
-                          {toCurvedQuotes(item.title)}
-                        </h4>
-
-                        <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
-                          {toCurvedQuotes(item.summary)}
-                        </p>
-                      </div>
+                    <div className="space-y-1">
+                      <h4 className="font-cinzel text-base sm:text-lg font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
+                        {toCurvedQuotes(item.title)}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
+                        {toCurvedQuotes(item.summary)}
+                      </p>
                     </div>
 
                     <div className="flex items-center justify-between pt-1 text-xs text-stone-500">
@@ -439,47 +435,42 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         )}
       </div>
 
-      {/* 2. TODAY'S FIVE VATICAN STORIES */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
-            <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900 uppercase tracking-wide">
-              Today&apos;s Vatican Dispatches ({dateFormatted})
-            </h3>
+      {/* 2. BREAKING / LEAD VATICAN DISPATCH */}
+      {leadDispatch && (
+        <section className="space-y-3">
+          <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-600 animate-pulse" />
+              <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900 uppercase tracking-wide">
+                Latest Breaking Holy See Dispatch
+              </h3>
+            </div>
+            <span className="text-xs font-serif italic text-amber-950">
+              {leadDispatch.date} • {leadDispatch.source}
+            </span>
           </div>
-          <span className="text-xs font-serif italic text-amber-950">
-            Official Vatican Dispatches
-          </span>
-        </div>
 
-        {filteredFiveStories.map((item, index) => (
-          <article
-            key={item.id}
-            className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-5 sm:p-6 rounded-2xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] hover:bg-white/75 transition-all space-y-3 group flex flex-col gap-3 relative"
-          >
-            {/* Dispatch Badge */}
+          <article className="bg-white/75 backdrop-blur-xl backdrop-saturate-150 p-6 sm:p-7 rounded-2xl border border-white/80 ring-1 ring-inset ring-white/50 shadow-[0_8px_32px_0_rgba(120,90,50,0.14)] space-y-4 group">
             <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-              <span className="px-2.5 py-0.5 rounded-md bg-amber-900 text-amber-50 font-bold font-cinzel text-[11px] shadow-2xs">
-                {FIVE_STORY_BADGES[index] || item.category}
+              <span className="px-3 py-1 rounded-md bg-amber-900 text-amber-50 font-bold font-cinzel text-xs shadow-2xs">
+                {leadDispatch.category} • Top Dispatch
               </span>
               <div className="flex items-center gap-3 text-stone-500">
-                <span className="font-serif italic">{item.date}</span>
+                <span className="font-serif italic">{leadDispatch.date}</span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
-                  {item.readTime}
+                  {leadDispatch.readTime}
                 </span>
               </div>
             </div>
 
-            {/* Main Content & Thumbnail */}
-            <div className="flex flex-col md:flex-row gap-4 items-start">
-              {item.imageUrl && (
-                <div className="w-full md:w-44 h-32 shrink-0 rounded-xl overflow-hidden bg-stone-200 border border-stone-300 relative group-hover:shadow-md transition-all">
+            <div className="flex flex-col md:flex-row gap-5 items-start">
+              {leadDispatch.imageUrl && (
+                <div className="w-full md:w-56 h-40 shrink-0 rounded-xl overflow-hidden bg-stone-200 border border-stone-300 relative group-hover:shadow-md transition-all">
                   <img
-                    src={item.imageUrl}
-                    alt={item.title}
+                    src={leadDispatch.imageUrl}
+                    alt={leadDispatch.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                     onError={(e) => {
@@ -493,35 +484,30 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                 </div>
               )}
 
-              <div className="space-y-1.5 flex-1">
-                <h4 
-                  onClick={() => setActiveArticle(item)}
-                  className="font-cinzel text-lg sm:text-xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer"
+              <div className="space-y-2 flex-1">
+                <h4
+                  onClick={() => setActiveArticle(leadDispatch)}
+                  className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer leading-tight"
                 >
-                  {toCurvedQuotes(item.title)}
+                  {toCurvedQuotes(leadDispatch.title)}
                 </h4>
                 <p className="text-xs text-amber-900 font-serif-sacred italic">
-                  {toCurvedQuotes(item.subtitle)}
+                  {toCurvedQuotes(leadDispatch.subtitle)}
                 </p>
-                <p className="text-xs sm:text-sm text-stone-700 font-serif-sacred leading-relaxed pl-3 border-l-2 border-amber-800/60 line-clamp-3">
-                  {toCurvedQuotes(item.summary)}
+                <p className="text-sm text-stone-700 font-serif-sacred leading-relaxed pl-3 border-l-2 border-amber-800/60 line-clamp-4">
+                  {toCurvedQuotes(leadDispatch.summary)}
                 </p>
               </div>
             </div>
 
-            {/* Actions Bar: Audio, Copy, Read More */}
-            <div className="flex flex-wrap items-center justify-between pt-2 border-t border-stone-200/60 text-xs text-stone-500 gap-2">
-              <div className="flex items-center gap-2">
-                <span className="font-medium text-stone-600">Source: {item.source}</span>
-              </div>
+            <div className="flex flex-wrap items-center justify-between pt-3 border-t border-stone-200/70 text-xs text-stone-500 gap-2">
+              <span className="font-medium text-stone-600">Source: {leadDispatch.source}</span>
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleToggleReadAloud(item);
-                  }}
-                  className="px-2.5 py-1 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
+                  type="button"
+                  onClick={() => handleToggleReadAloud(leadDispatch)}
+                  className="px-3 py-1.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
                   title="Listen to story"
                 >
                   <Volume2 className="w-3.5 h-3.5 text-amber-800" />
@@ -529,11 +515,9 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                 </button>
 
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCopyArticle(item);
-                  }}
-                  className="px-2.5 py-1 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
+                  type="button"
+                  onClick={() => handleCopyArticle(leadDispatch)}
+                  className="px-3 py-1.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 text-xs font-medium flex items-center gap-1 transition-colors cursor-pointer"
                   title="Copy text"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -541,17 +525,126 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                 </button>
 
                 <button
-                  onClick={() => setActiveArticle(item)}
-                  className="px-3 py-1 rounded-md bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                  type="button"
+                  onClick={() => setActiveArticle(leadDispatch)}
+                  className="px-3.5 py-1.5 rounded-md bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
                 >
-                  <span>Read Full</span>
+                  <span>Read Full Dispatch</span>
                   <BookOpen className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
           </article>
-        ))}
-      </div>
+        </section>
+      )}
+
+      {/* 3. LIVE VATICAN DISPATCHES STREAM */}
+      {feedDispatches.length > 0 && (
+        <section className="space-y-4 pt-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-200/80 pb-2.5">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-pulse" />
+              <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900 uppercase tracking-wide">
+                Live Vatican Dispatches Stream ({filteredDispatches.length} Stories Available)
+              </h3>
+            </div>
+            {feedDispatches.length > 8 && (
+              <button
+                type="button"
+                onClick={() => setShowAllDispatches(prev => !prev)}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-cinzel font-semibold cursor-pointer transition-colors"
+              >
+                <span>{showAllDispatches ? 'Show Top 8 Only' : `View All ${filteredDispatches.length} Dispatches`}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showAllDispatches ? 'rotate-180' : ''}`} />
+              </button>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {visibleFeedDispatches.map((item, index) => (
+              <article
+                key={item.id}
+                className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-5 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs hover:bg-white/75 transition-all flex flex-col justify-between gap-3 group"
+              >
+                <div className="space-y-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span className="px-2 py-0.5 rounded-md bg-amber-900/90 text-amber-50 font-bold font-cinzel text-[10px]">
+                      {item.category}
+                    </span>
+                    <span className="text-stone-500 text-[11px] font-serif">
+                      {item.date} • {item.readTime}
+                    </span>
+                  </div>
+
+                  <div className="flex gap-3 items-start">
+                    {item.imageUrl && (
+                      <div className="w-24 h-20 shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative">
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                          onError={(e) => {
+                            const container = e.currentTarget.parentElement;
+                            if (container) container.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div className="space-y-1 flex-1">
+                      <h4
+                        onClick={() => setActiveArticle(item)}
+                        className="font-cinzel text-sm sm:text-base font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer line-clamp-2"
+                      >
+                        {toCurvedQuotes(item.title)}
+                      </h4>
+                      <p className="text-xs text-stone-600 font-serif-sacred line-clamp-2">
+                        {toCurvedQuotes(item.summary)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-2 border-t border-stone-200/60 text-xs text-stone-500">
+                  <span className="text-[11px] truncate max-w-[130px]">{item.author}</span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => handleToggleReadAloud(item)}
+                      className="p-1 rounded bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300"
+                      title="Listen"
+                    >
+                      <Volume2 className="w-3.5 h-3.5 text-amber-800" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveArticle(item)}
+                      className="px-2.5 py-1 rounded bg-stone-900 hover:bg-stone-800 text-white font-cinzel text-[11px] font-semibold flex items-center gap-1"
+                    >
+                      <span>Read</span>
+                      <BookOpen className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {!showAllDispatches && feedDispatches.length > 8 && (
+            <div className="flex justify-center pt-2">
+              <button
+                type="button"
+                onClick={() => setShowAllDispatches(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-900 hover:bg-amber-850 text-amber-50 font-cinzel text-xs font-bold transition-all shadow-sm cursor-pointer"
+              >
+                <Globe className="w-4 h-4 text-amber-300" />
+                <span>View All {filteredDispatches.length} Live Vatican Dispatches</span>
+                <ChevronDown className="w-4 h-4 text-amber-300" />
+              </button>
+            </div>
+          )}
+        </section>
+      )}
 
       {/* 3. OFFICIAL EMBEDDED VATICAN NEWS WIDGET */}
       <section className="bg-white rounded-2xl border border-stone-200/90 shadow-md overflow-hidden">

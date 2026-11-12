@@ -233,29 +233,48 @@ export const CATHOLIC_NEWS_DATABASE: CatholicNewsItem[] = [
   ...HISTORICAL_VATICAN_ARCHIVE
 ];
 
+function decodeVaticanXmlEntities(str: string): string {
+  return str
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/&#8217;|&#039;|&apos;|&rsquo;/g, "'")
+    .replace(/&#8216;|&lsquo;/g, "'")
+    .replace(/&#8220;|&quot;|&ldquo;/g, '"')
+    .replace(/&#8221;|&rdquo;/g, '"')
+    .replace(/&#8211;|&ndash;/g, '–')
+    .replace(/&#8212;|&mdash;/g, '—')
+    .replace(/&#8230;|&hellip;/g, '…')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#x([0-9a-fA-F]+);/g, (_m, hex) => String.fromCharCode(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_m, dec) => String.fromCharCode(parseInt(dec, 10)));
+}
+
 /**
  * Parses Vatican News RSS XML into strictly factual CatholicNewsItem objects
  */
 export function parseVaticanNewsXml(xmlText: string): CatholicNewsItem[] {
   const items: CatholicNewsItem[] = [];
-  const itemMatches = xmlText.split('<item>').slice(1);
+  const itemMatches = xmlText.split(/<item[\s>]/i).slice(1);
 
   for (let i = 0; i < itemMatches.length; i++) {
     const raw = itemMatches[i];
-    const titleMatch = raw.match(/<title><!\[CDATA\[(.*?)\]\]><\/title>/) || raw.match(/<title>(.*?)<\/title>/);
-    const linkMatch = raw.match(/<link>(.*?)<\/link>/);
-    const descMatch = raw.match(/<description><!\[CDATA\[(.*?)\]\]><\/description>/s) || raw.match(/<description>(.*?)<\/description>/s);
-    const pubDateMatch = raw.match(/<pubDate>(.*?)<\/pubDate>/);
-    const imageMatch = raw.match(/<media:content[^>]+url=["']([^"']+)["']/);
+    const titleMatch = raw.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) || raw.match(/<title>([\s\S]*?)<\/title>/i);
+    const linkMatch = raw.match(/<link>([\s\S]*?)<\/link>/i);
+    const descMatch = raw.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/i) || raw.match(/<description>([\s\S]*?)<\/description>/i);
+    const pubDateMatch = raw.match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
+    const imageMatch = raw.match(/<media:content[^>]+url=["']([^"']+)["']/i) || raw.match(/<enclosure[^>]+url=["']([^"']+)["']/i);
 
-    const title = titleMatch ? titleMatch[1].trim() : '';
-    const link = linkMatch ? linkMatch[1].trim() : '';
+    const title = titleMatch ? decodeVaticanXmlEntities(titleMatch[1]).trim() : '';
+    const link = linkMatch ? decodeVaticanXmlEntities(linkMatch[1]).trim() : '';
     const rawDesc = descMatch ? descMatch[1] : '';
-    const cleanDesc = rawDesc
-      .replace(/<a[^>]*>.*?<\/a>/gi, '')
-      .replace(/<[^>]+>/g, '')
-      .replace(/&nbsp;/g, ' ')
-      .trim();
+    const cleanDesc = decodeVaticanXmlEntities(
+      rawDesc
+        .replace(/<a[^>]*>.*?<\/a>/gi, '')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&nbsp;/g, ' ')
+    ).trim();
     const pubDate = pubDateMatch ? pubDateMatch[1].trim() : '';
     const imageUrl = imageMatch ? imageMatch[1].trim() : undefined;
 
@@ -265,9 +284,13 @@ export function parseVaticanNewsXml(xmlText: string): CatholicNewsItem[] {
       else if (/saint|blessed|martyr|feast|relic|holy hour|prayer/i.test(title)) category = 'Saints and Faith';
       else if (/mission|bishop|diocese|parish|journey|latin america|asia|africa/i.test(title)) category = 'Global Church';
 
-      const dateStr = pubDate
-        ? new Date(pubDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-        : 'November 4, 2026';
+      let dateStr = 'November 12, 2026';
+      if (pubDate) {
+        const parsed = new Date(pubDate);
+        if (!isNaN(parsed.getTime())) {
+          dateStr = parsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+      }
 
       items.push({
         id: `vatican-live-${i}-${encodeURIComponent(link).substring(0, 24)}`,
@@ -294,13 +317,21 @@ export function parseVaticanNewsXml(xmlText: string): CatholicNewsItem[] {
 /**
  * Client-side fetch helper for real-time live official Vatican News
  */
-export async function fetchLiveVaticanNews(): Promise<CatholicNewsItem[]> {
+export async function fetchLiveVaticanNews(forceRefresh: boolean = false): Promise<CatholicNewsItem[]> {
   try {
-    const res = await fetch('/api/vatican-news', { signal: AbortSignal.timeout(4000) });
+    const cacheBuster = forceRefresh ? `?_t=${Date.now()}` : '';
+    const res = await fetch(`/api/vatican-news${cacheBuster}`, {
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache'
+      },
+      signal: AbortSignal.timeout(8000)
+    });
     if (!res.ok) throw new Error(`Vatican feed error: ${res.status}`);
     const xml = await res.text();
     const parsed = parseVaticanNewsXml(xml);
-    if (parsed.length >= 5) {
+    if (parsed.length > 0) {
       return parsed;
     }
     return VERIFIED_FACTUAL_VATICAN_DISPATCHES;

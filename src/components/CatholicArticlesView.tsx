@@ -109,12 +109,13 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
         if (isManualRefresh) {
           if (isReadingAloud) SacredReader.stop();
-          const nextIdx = items.length > 1 ? (selectedIndexRef.current + 1) % items.length : 0;
-          selectedIndexRef.current = nextIdx;
-          setSelectedArticleIndex(nextIdx);
+          selectedIndexRef.current = 0;
+          setSelectedArticleIndex(0);
           const timeStr = new Date(now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          const latestTitle = items[0]?.title || '';
+          const previewTitle = latestTitle.length > 45 ? `${latestTitle.slice(0, 45)}…` : latestTitle;
           setRefreshStatusMessage(
-            `✓ Feed refreshed at ${timeStr} (${items.length} articles available) — now showing Article ${nextIdx + 1} of ${items.length}`
+            `✓ Feed refreshed at ${timeStr} (${items.length} articles loaded) — Latest: "${previewTitle}"`
           );
         }
       }
@@ -154,16 +155,17 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         ...updatedMap
       }));
 
-      const activeItems = updatedMap[selectedSourceId] || articlesBySource[selectedSourceId] || [];
-      const nextIdx = activeItems.length > 1 ? (selectedIndexRef.current + 1) % activeItems.length : 0;
-      selectedIndexRef.current = nextIdx;
-      setSelectedArticleIndex(nextIdx);
+      selectedIndexRef.current = 0;
+      setSelectedArticleIndex(0);
 
       const now = Date.now();
       setLastRefreshedAt(now);
       const timeStr = new Date(now).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const activeItems = updatedMap[selectedSourceId] || articlesBySource[selectedSourceId] || [];
+      const latestTitle = activeItems[0]?.title || '';
+      const previewTitle = latestTitle.length > 45 ? `${latestTitle.slice(0, 45)}…` : latestTitle;
       setRefreshStatusMessage(
-        `✓ All 9 feeds refreshed at ${timeStr} (${totalSynced} total articles synced) — showing Article ${nextIdx + 1} of ${activeItems.length}`
+        `✓ All 9 feeds refreshed at ${timeStr} (${totalSynced} total articles synced) — Latest: "${previewTitle}"`
       );
     } finally {
       setIsRefreshingAll(false);
@@ -370,7 +372,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
                 type="button"
                 onClick={() => loadSourceFeed(selectedSourceId, true)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-stone-950 text-xs font-cinzel font-bold transition-all cursor-pointer shadow-sm shrink-0"
-                title="Refresh this publication's live RSS feed and advance to the next article"
+                title="Refresh this publication's live RSS feed for the latest articles"
               >
                 <RefreshCw className={`w-3.5 h-3.5 text-stone-950 ${isLoading ? 'animate-spin' : ''}`} />
                 <span>{isLoading ? 'Refreshing…' : 'Refresh Feed'}</span>
