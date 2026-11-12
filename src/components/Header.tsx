@@ -304,14 +304,14 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* Date & Liturgical Feast Controls: Stacked a little above Main Story on Mobile (ultra-transparent), Classic Right-Aligned on Desktop */}
-            <div className="mt-auto pt-6 sm:pt-0 sm:mt-0 flex flex-col items-start sm:items-end gap-1 text-xs w-full sm:w-auto self-stretch sm:self-start shrink-0 bg-black/20 sm:bg-transparent backdrop-blur-[2px] sm:backdrop-blur-none border border-amber-400/25 sm:border-none rounded-xl sm:rounded-none px-3.5 py-2 sm:p-0 shadow-sm sm:shadow-none">
+            {/* Date & Liturgical Feast Controls: Frosted Glass Card for High Contrast Across All Hero Backgrounds */}
+            <div className="relative z-20 mt-auto sm:mt-0 flex flex-col items-start sm:items-end gap-1.5 text-xs w-full sm:w-auto self-stretch sm:self-start shrink-0 bg-black/55 backdrop-blur-md border border-amber-400/35 rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3 shadow-[0_8px_24px_rgba(0,0,0,0.65)]">
               
               <div className="w-full sm:w-auto flex flex-wrap items-center justify-between sm:justify-end gap-2">
                 <div className="relative w-full sm:w-auto">
                   <div 
                     onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-                    className="flex items-center justify-between sm:justify-end gap-1.5 text-amber-100 sm:text-[#241307] hover:text-amber-200 sm:hover:text-[#5C2E0E] cursor-pointer transition-colors group select-none py-0.5 sm:py-1 px-0.5"
+                    className="flex items-center justify-between sm:justify-end gap-2 text-amber-100 hover:text-amber-200 cursor-pointer transition-colors group select-none py-0.5"
                     title="Open Catholic Liturgical Calendar (Feasts, Colors and Memorials)"
                     role="button"
                     tabIndex={0}
@@ -322,12 +322,12 @@ export const Header: React.FC<HeaderProps> = ({
                     }}
                   >
                     <div className="flex items-center gap-1.5">
-                      <CalendarIcon className="w-4 h-4 text-amber-300 sm:text-[#3B1E08] group-hover:scale-110 transition-transform drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] sm:drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] shrink-0" />
-                      <span className="font-serif font-bold text-sm sm:text-base text-amber-100 sm:text-[#241307] sm:group-hover:text-[#5C2E0E] drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)] sm:[text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
+                      <CalendarIcon className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] shrink-0" />
+                      <span className="font-serif font-bold text-sm sm:text-base text-amber-100 group-hover:text-amber-200 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
                         {formattedDate}
                       </span>
                     </div>
-                    <ChevronDown className={`w-4 h-4 text-amber-300 sm:text-[#3B1E08] transition-transform duration-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] sm:drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)] ${isCalendarOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-amber-300 transition-transform duration-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] ${isCalendarOpen ? 'rotate-180' : ''}`} />
                   </div>
 
                   <LiturgicalCalendarPicker
@@ -340,13 +340,13 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               {/* Liturgical Day Title Below Current Date */}
-              <div className="flex flex-col items-start sm:items-end gap-0.5 text-left sm:text-right sm:pr-6 w-full sm:w-auto">
-                <span className="font-serif font-bold text-xs sm:text-sm text-stone-100 sm:text-[#241307] leading-snug whitespace-normal sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)] sm:[text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
+              <div className="flex flex-col items-start sm:items-end gap-0.5 text-left sm:text-right w-full sm:w-auto">
+                <span className="font-serif font-bold text-xs sm:text-sm text-stone-100 leading-snug whitespace-normal sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
                   {mainTitlePart}
                 </span>
 
                 {memorialPart && (
-                  <span className="font-serif font-bold not-italic text-xs sm:text-sm text-amber-200 sm:text-[#3B1E08] leading-snug whitespace-normal sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)] sm:[text-shadow:0_1px_4px_rgba(255,255,255,0.95),0_0_10px_rgba(255,252,240,0.85)]">
+                  <span className="font-serif font-bold not-italic text-xs sm:text-sm text-amber-200 leading-snug whitespace-normal sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
                     {memorialPart}
                   </span>
                 )}
