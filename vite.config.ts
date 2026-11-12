@@ -4,9 +4,10 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import {
   cleanUserQuestion,
+  isEssayRequest,
   searchCatholicInternet,
   WebResearchSource,
 } from './src/utils/catholicInternetResearch.js';
@@ -27,17 +28,21 @@ const CATHOLIC_RSS_FEEDS: Record<string, string> = {
   'sign-org': 'https://sign.org/feed/'
 };
 
-const CATHOLIC_AI_SYSTEM_INSTRUCTION = `You are the Soul Sanctum Catholic Assistant, an authoritative, reverent, scholarly, and pastoral Catholic theological research assistant.
+const CATHOLIC_AI_SYSTEM_INSTRUCTION = `You are the Soul Sanctum Catholic Assistant, an authoritative, reverent, scholarly, and pastoral Catholic theological research and essay-writing assistant.
 
 CORE GUIDING PRINCIPLES:
-0. STRICT QUESTION RELEVANCE (MANDATORY): You MUST answer ONLY, DIRECTLY, and SPECIFICALLY the exact question asked by the user. NEVER provide an answer that is unrelated to the user's question, NEVER change the subject, and NEVER output generic filler. If any retrieved search snippet or background context does not directly address the user's specific question, ignore that snippet completely and answer the user's actual question directly.
-1. Ground every answer firmly in the Deposit of Faith: Sacred Scripture, Sacred Tradition, and the living Magisterium of the Catholic Church.
-2. Prominently cite the Catechism of the Catholic Church (CCC) with specific paragraph numbers relevant to the user's exact question.
-3. Quote and reference Sacred Scripture (using accurate Catholic editions such as NABRE, Douay-Rheims, or RSV-CE) with explicit chapter and verse relevant to the user's question.
-4. Reference the Church Fathers and Doctors of the Church where directly relevant to the user's topic.
-5. Clearly distinguish the hierarchy of theological certainty (De Fide Dogma, Ordinary and Universal Magisterium, theological schools of thought, and approved private revelations).
-6. Tone: Courteous, pastoral, humble, deeply reverent, charitable, lucid, and spiritually uplifting.
-7. Formatting: Use structured headers, bulleted doctrinal points, and clear source attributions directly answering the user's question.`;
+0. STRICT QUESTION RELEVANCE (MANDATORY): You MUST answer ONLY, DIRECTLY, and SPECIFICALLY the exact question or essay prompt asked by the user. NEVER provide an answer that is unrelated to the user's question, NEVER change the subject, and NEVER output generic filler.
+1. ESSAY WRITING & ACADEMIC COMPOSITIONS (MANDATORY WHEN REQUESTED): Whenever the user asks you to write an essay, paper, article, treatise, or composition (or when the user's preferred style is Essay Mode), you MUST write a complete, flowing, multi-paragraph scholarly essay rather than a short bulleted summary. Every essay MUST include:
+   - A clear, compelling Essay Title (## Title).
+   - An Introduction paragraph that introduces the topic and states a clear theological/historical thesis.
+   - Well-developed Body Paragraphs written in eloquent, cohesive prose with smooth transitions, deep analysis, and inline citations.
+   - A strong Conclusion paragraph synthesizing the argument.
+   - A dedicated "### Sources & Works Cited" section at the end listing the exact Sacred Scripture passages, Catechism of the Catholic Church (CCC) paragraphs, Papal Encyclicals, Ecumenical Councils, Patristic works, and historical/web sources cited in the essay.
+2. Ground every answer and essay firmly in the Deposit of Faith: Sacred Scripture, Sacred Tradition, and the living Magisterium of the Catholic Church.
+3. Prominently cite the Catechism of the Catholic Church (CCC) with specific paragraph numbers relevant to the user's exact topic.
+4. Quote and reference Sacred Scripture (using accurate Catholic editions such as NABRE, Douay-Rheims, or RSV-CE) with explicit chapter and verse relevant to the user's topic.
+5. Reference the Church Fathers, Doctors of the Church, and Ecumenical Councils where directly relevant to the user's topic.
+6. Tone: Courteous, scholarly, pastoral, deeply reverent, lucid, and spiritually uplifting.`;
 
 function vaticanNewsPlugin() {
   return {
@@ -72,33 +77,25 @@ function vaticanNewsPlugin() {
 
             const trimmedPrompt = prompt.trim();
             const cleanQuestion = cleanUserQuestion(trimmedPrompt);
+            const wantsEssay = isEssayRequest(trimmedPrompt, userMemory);
 
-            // 1. Perform real-time Catholic web research (strictly filtered for relevance to cleanQuestion)
-            let webSources: WebResearchSource[] = [];
-            if (enableWebResearch) {
-              try {
-                webSources = await searchCatholicInternet(cleanQuestion);
-              } catch (err) {
-                console.warn('Web research query error in vite:', err);
-              }
-            }
+            // Run live Catholic web research in parallel so essay generation starts immediately
+            const webSourcesPromise: Promise<WebResearchSource[]> = enableWebResearch
+              ? searchCatholicInternet(cleanQuestion).catch(() => [])
+              : Promise.resolve([]);
 
             const effectiveSystemInstruction = userMemory
-              ? `${CATHOLIC_AI_SYSTEM_INSTRUCTION}\n\nUSER STYLE & TRANSLATION PREFERENCES (Use these preferences ONLY to format your tone and Bible translation choice while answering the user's exact question; NEVER let past topics override the current question):\n${userMemory}`
+              ? `${CATHOLIC_AI_SYSTEM_INSTRUCTION}\n\nUSER STYLE & TRANSLATION PREFERENCES (Use these preferences ONLY to format your tone, essay structure, and Bible translation choice while answering the user's exact topic; NEVER let past topics override the current question):\n${userMemory}`
               : CATHOLIC_AI_SYSTEM_INSTRUCTION;
 
-            let promptWithResearch = `USER QUESTION TO ANSWER DIRECTLY AND SPECIFICALLY:\n"${cleanQuestion}"`;
-            if (webSources.length > 0) {
-              const researchSnippets = webSources
-                .map((s, idx) => `[Source ${idx + 1}: ${s.title} (${s.url})]\n${s.snippet}`)
-                .join('\n\n');
-
-              promptWithResearch += `\n\n--- SUPPLEMENTARY WEB RESEARCH (Use ONLY if directly relevant to "${cleanQuestion}"; ignore completely if not relevant) ---\n${researchSnippets}\n------------------------------------------`;
-            }
+            const promptForModel = wantsEssay
+              ? `USER ESSAY REQUEST (Write a complete, well-structured, multi-paragraph scholarly essay directly on this exact topic, complete with Title, Introduction & Thesis, cohesive Body Paragraphs in flowing prose, Conclusion, and a formal "### Sources & Works Cited" section at the end):\n"${trimmedPrompt}"`
+              : `USER QUESTION TO ANSWER DIRECTLY AND SPECIFICALLY (Include a "### Sources & References" section at the end citing the specific Scripture, Catechism, and historical sources used):\n"${trimmedPrompt}"`;
 
             let reply = '';
+            let groundingSources: WebResearchSource[] = [];
             let usedProvider = provider === 'gemini' ? 'gemini' : 'openai';
-            let usedModel = provider === 'gemini' ? 'gemini-3-flash-preview' : 'gpt-4o';
+            let usedModel = provider === 'gemini' ? 'gemini-3.8-flash' : 'gpt-4o';
             let lastError: any = null;
 
             const apiKey = process.env.GEMINI_API_KEY;
@@ -129,10 +126,10 @@ function vaticanNewsPlugin() {
 
             contents.push({
               role: 'user',
-              parts: [{ text: promptWithResearch }],
+              parts: [{ text: promptForModel }],
             });
 
-            const candidateModels = ['gemini-3-flash-preview', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+            const candidateModels = ['gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-flash-latest'];
 
             for (const modelName of candidateModels) {
               try {
@@ -141,11 +138,36 @@ function vaticanNewsPlugin() {
                   contents,
                   config: {
                     systemInstruction: effectiveSystemInstruction,
-                    temperature: 0.3,
+                    ...(modelName === 'gemini-3.8-flash'
+                      ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
+                      : {}),
+                    ...(enableWebResearch ? { tools: [{ googleSearch: {} }] } : {}),
                   },
                 });
                 if (response && response.text) {
                   reply = response.text;
+                  const chunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
+                  if (Array.isArray(chunks)) {
+                    for (const chunk of chunks) {
+                      const uri = chunk?.web?.uri;
+                      const title = chunk?.web?.title;
+                      if (uri && title && !groundingSources.some((s) => s.url === uri)) {
+                        let domain = 'web';
+                        try {
+                          domain = new URL(uri).hostname.replace(/^www\./, '');
+                        } catch {
+                          domain = 'web';
+                        }
+                        groundingSources.push({
+                          title,
+                          url: uri,
+                          snippet: `Verified web source cited for "${cleanQuestion}"`,
+                          domain,
+                        });
+                      }
+                    }
+                  }
+
                   if (provider === 'openai') {
                     usedProvider = 'openai';
                     usedModel = 'gpt-4o';
@@ -156,7 +178,39 @@ function vaticanNewsPlugin() {
                   break;
                 }
               } catch (err: any) {
-                lastError = err;
+                try {
+                  const fallbackRes = await ai.models.generateContent({
+                    model: modelName,
+                    contents,
+                    config: {
+                      systemInstruction: effectiveSystemInstruction,
+                      ...(modelName === 'gemini-3.8-flash'
+                        ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
+                        : {}),
+                    },
+                  });
+                  if (fallbackRes && fallbackRes.text) {
+                    reply = fallbackRes.text;
+                    if (provider === 'openai') {
+                      usedProvider = 'openai';
+                      usedModel = 'gpt-4o';
+                    } else {
+                      usedProvider = 'gemini';
+                      usedModel = modelName;
+                    }
+                    break;
+                  }
+                } catch (retryErr: any) {
+                  lastError = retryErr;
+                }
+              }
+            }
+
+            const fetchedWebSources = await webSourcesPromise;
+            const mergedWebSources: WebResearchSource[] = [...groundingSources];
+            for (const src of fetchedWebSources) {
+              if (!mergedWebSources.some((s) => s.url === src.url) && mergedWebSources.length < 6) {
+                mergedWebSources.push(src);
               }
             }
 
@@ -167,7 +221,7 @@ function vaticanNewsPlugin() {
             res.setHeader('Content-Type', 'application/json; charset=utf-8');
             res.end(JSON.stringify({
               reply: reply || 'No response generated from the Catholic Assistant.',
-              webSources,
+              webSources: mergedWebSources,
               provider: usedProvider,
               model: usedModel,
             }));

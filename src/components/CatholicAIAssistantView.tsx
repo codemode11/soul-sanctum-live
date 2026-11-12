@@ -40,10 +40,11 @@ export interface ChatMessage {
 }
 
 export type AIEngine = 'openai' | 'gemini' | 'auto';
-export type AIPersona = 'scholarly' | 'catechism' | 'patristic' | 'apologetics' | 'spiritual';
+export type AIPersona = 'scholarly' | 'essay' | 'catechism' | 'patristic' | 'apologetics' | 'spiritual';
 
 export type PreferredBibleEdition = 'NABRE' | 'Douay-Rheims' | 'RSV-CE' | 'Knox / Latin Vulgate';
 export type PreferredResponseDepth =
+  | 'Essay & Academic Paper (with Sources)'
   | 'Comprehensive & Scholarly'
   | 'Concise & Catechetical'
   | 'Pastoral & Contemplative'
@@ -94,6 +95,10 @@ const AI_PERSONA_SPECS: Record<AIPersona, { title: string; systemPromptSuffix: s
   scholarly: {
     title: 'Theological Scholar',
     systemPromptSuffix: 'Provide a scholarly theological synthesis with precise CCC and Scripture citations.'
+  },
+  essay: {
+    title: 'Essay Writer (with Sources)',
+    systemPromptSuffix: 'Write a complete, flowing, multi-paragraph academic and theological essay with a clear Title, Introduction & Thesis, cohesive Body Paragraphs in eloquent prose, Conclusion, and a formal "### Sources & Works Cited" section at the end.'
   },
   catechism: {
     title: 'Catechism Focus',
@@ -154,11 +159,12 @@ function createDefaultWelcomeMessage(engine: AIEngine = 'openai'): ChatMessage {
   return {
     id: `welcome-${Date.now()}`,
     role: 'assistant',
-    content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** — powered by **ChatGPT (OpenAI GPT-4o)** as your default theological research engine.
+    content: `**Laudetur Jesus Christus!** Welcome to the **Catholic AI Assistant** — powered by **ChatGPT (OpenAI GPT-4o)** as your default theological research and essay-writing engine.
 
 How this assistant supports your study:
+* **Fast Essay Writing (with Sources)**: Ask me to write an essay on any topic (or click **Essay Mode (with Sources)** above) to generate a complete, multi-paragraph scholarly essay with an Introduction, Thesis, Body Paragraphs, Conclusion, and a **Sources & Works Cited** bibliography.
 * **Direct & Relevant Theological Synthesis**: Answers your exact questions directly with specific citations from the *Catechism of the Catholic Church (CCC)*, Sacred Scripture, the Church Fathers, and the 21 Ecumenical Councils.
-* **Persistent Chat History & Adaptive Memory**: Your **Previous Chats** and **Learned Preferences** (preferred Bible translation, theological depth, and favorite topics) stay saved in the left memory panel across sessions.`,
+* **Persistent Chat History & Adaptive Memory**: Your **Previous Chats** and **Learned Preferences** (preferred Bible translation, essay/response style, and favorite topics) stay saved in the left memory panel across sessions.`,
     timestamp: Date.now(),
     provider: engine,
     model: 'gpt-4o',
@@ -175,6 +181,7 @@ function getDefaultMemoryProfile(): UserMemoryProfile {
     customNotes: [],
     personaCounts: {
       scholarly: 1,
+      essay: 0,
       catechism: 0,
       patristic: 0,
       apologetics: 0,
@@ -413,7 +420,9 @@ export const CatholicAIAssistantView: React.FC = () => {
     }
 
     // 3. Detect preferred response depth if mentioned
-    if (/\b(brief|briefly|concise|short answer|in a few sentences|summary)\b/i.test(promptText)) {
+    if (/\b(essay|essays|write\s+a\s+paper|research\s+paper|treatise|composition)\b/i.test(promptText)) {
+      nextProfile.preferredDepth = 'Essay & Academic Paper (with Sources)';
+    } else if (/\b(brief|briefly|concise|short answer|in a few sentences|summary)\b/i.test(promptText)) {
       nextProfile.preferredDepth = 'Concise & Catechetical';
     } else if (/\b(in[-\s]?depth|detailed|scholarly|comprehensive|thorough|exhaustively)\b/i.test(promptText)) {
       nextProfile.preferredDepth = 'Comprehensive & Scholarly';
@@ -943,6 +952,35 @@ export const CatholicAIAssistantView: React.FC = () => {
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>New Chat</span>
               </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  const nextPersona: AIPersona = selectedPersona === 'essay' ? 'scholarly' : 'essay';
+                  setSelectedPersona(nextPersona);
+                  setMemoryProfile(prev => ({
+                    ...prev,
+                    preferredDepth:
+                      nextPersona === 'essay'
+                        ? 'Essay & Academic Paper (with Sources)'
+                        : 'Comprehensive & Scholarly',
+                    lastUpdated: Date.now(),
+                  }));
+                }}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
+                  selectedPersona === 'essay' || memoryProfile.preferredDepth === 'Essay & Academic Paper (with Sources)'
+                    ? 'bg-amber-900/15 text-amber-950 border-amber-700/70 shadow-2xs'
+                    : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-300'
+                }`}
+                title="Toggle Essay Mode so ChatGPT writes full multi-paragraph essays with Sources & Works Cited"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-amber-800" />
+                <span>
+                  {selectedPersona === 'essay' || memoryProfile.preferredDepth === 'Essay & Academic Paper (with Sources)'
+                    ? 'Essay Mode (with Sources): Active'
+                    : 'Essay Mode (with Sources)'}
+                </span>
+              </button>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
@@ -1056,6 +1094,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                   className="w-full bg-white text-stone-900 text-xs font-serif rounded-lg p-2.5 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer"
                 >
                   {([
+                    'Essay & Academic Paper (with Sources)',
                     'Comprehensive & Scholarly',
                     'Concise & Catechetical',
                     'Pastoral & Contemplative',
