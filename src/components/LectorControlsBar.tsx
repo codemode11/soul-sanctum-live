@@ -29,9 +29,15 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>(() => {
     if (typeof localStorage !== 'undefined') {
       const saved = localStorage.getItem('soul_sanctum_active_voice');
-      if (saved && !saved.toLowerCase().includes('zira') && saved !== 'zira') {
+      if (
+        saved &&
+        !saved.toLowerCase().includes('zira') &&
+        !saved.toLowerCase().includes('mark') &&
+        saved !== 'zira'
+      ) {
         return saved;
       }
+      localStorage.setItem('soul_sanctum_active_voice', 'gemini-Kore');
     }
     return 'gemini-Kore';
   });
@@ -48,9 +54,14 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   });
 
   useEffect(() => {
+    // Sync SacredReader active lector voice on mount so Kore is guaranteed when Zira was previously cached
+    SacredReader.setActiveLectorVoiceKey(selectedVoiceId || 'gemini-Kore');
+
     const updateVoices = () => {
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        const voices = window.speechSynthesis.getVoices();
+        const voices = window.speechSynthesis
+          .getVoices()
+          .filter(v => !v.name.toLowerCase().includes('mark'));
         setSystemVoices(voices);
       }
     };
@@ -62,8 +73,9 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   }, []);
 
   const playVoiceSample = async (voiceKey: string, customText?: string) => {
-    // 1. Stop active speech synthesis or audio
+    // 1. Stop active speech synthesis or audio and synchronously unlock HTMLAudioElement
     SacredReader.stop();
+    const unlockedAudio = SacredReader.unlockSharedAudio();
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       window.speechSynthesis.cancel();
     }
@@ -91,36 +103,51 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
       }
     }
 
+    // Check if the user explicitly selected an installed browser/OS voice (e.g. Microsoft David or Microsoft Zira)
+    const isInstalledLocalVoice =
+      !voiceKey.startsWith('gemini-') &&
+      !voiceKey.startsWith('kokoro-') &&
+      !voiceKey.startsWith('persona-') &&
+      !voiceKey.startsWith('saint-') &&
+      typeof window !== 'undefined' &&
+      'speechSynthesis' in window &&
+      window.speechSynthesis.getVoices().some(v => v.name === voiceKey);
+
     let playedServerAudio = false;
-    try {
-      const res = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: sampleText,
-          voiceName: voiceKey,
-          apiKey: customTtsApiKey || undefined,
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.audioUrl) {
-          const audio = new Audio(data.audioUrl);
-          audio.onplay = () => {
-            setActivePlayingVoice(voiceKey);
-            setIsTtsLoading(null);
-          };
-          audio.onended = () => setActivePlayingVoice(null);
-          audio.onerror = () => {
-            setActivePlayingVoice(null);
-            setIsTtsLoading(null);
-          };
-          await audio.play();
-          playedServerAudio = true;
+    if (!isInstalledLocalVoice) {
+      try {
+        const res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: sampleText,
+            voiceName: voiceKey,
+            apiKey: customTtsApiKey || undefined,
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.audioUrl) {
+            const audio = unlockedAudio || new Audio();
+            audio.volume = 1.0;
+            audio.src = data.audioUrl;
+            audio.playbackRate = currentRate;
+            audio.onplay = () => {
+              setActivePlayingVoice(voiceKey);
+              setIsTtsLoading(null);
+            };
+            audio.onended = () => setActivePlayingVoice(null);
+            audio.onerror = () => {
+              setActivePlayingVoice(null);
+              setIsTtsLoading(null);
+            };
+            await audio.play();
+            playedServerAudio = true;
+          }
         }
+      } catch {
+        // Fall back to Web Speech API only if server audio fails
       }
-    } catch {
-      // Fall back to Web Speech API
     }
 
     if (!playedServerAudio) {
@@ -281,8 +308,6 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
               onChange={handleSelectVoiceChange}
               className="w-full bg-[#1C120C] text-stone-100 border border-[#8B5A2B]/60 rounded px-2.5 py-1.5 text-xs font-serif focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer appearance-none pr-7"
             >
-
-
               <optgroup label="✨ Gemini 3.8 AI Prebuilt Voices">
                 <option value="gemini-Kore">Kore — Serene Devotional Soprano (Default)</option>
                 <option value="gemini-Puck">Puck — Lively Young Tenor Lector</option>
@@ -299,15 +324,15 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                 ))}
               </optgroup>
 
-
-
               {systemVoices.length > 0 && (
                 <optgroup label="🎙️ Device & Browser Installed Voices">
-                  {systemVoices.map(v => (
-                    <option key={v.name} value={v.name}>
-                      {v.name} ({v.lang})
-                    </option>
-                  ))}
+                  {systemVoices
+                    .filter(v => !v.name.toLowerCase().includes('mark'))
+                    .map(v => (
+                      <option key={v.name} value={v.name}>
+                        {v.name} ({v.lang})
+                      </option>
+                    ))}
                 </optgroup>
               )}
             </select>

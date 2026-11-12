@@ -823,7 +823,198 @@ export class SacredReader {
   }
 
   private static activeAudioElement: HTMLAudioElement | null = null;
+  private static sharedAudio: HTMLAudioElement | null = null;
   private static isPausedState = false;
+  private static activePlaybackToken = 0;
+
+  /**
+   * Synchronously unlocks a shared HTMLAudioElement during the user's click/tap gesture
+   * so that subsequent async playback after fetch('/api/tts') is never blocked by browser
+   * autoplay policies (which previously caused a silent catch -> fallback to Microsoft Zira).
+   */
+  public static unlockSharedAudio(): HTMLAudioElement | null {
+    if (typeof window === 'undefined' || typeof Audio === 'undefined') return null;
+    try {
+      if (!this.sharedAudio) {
+        this.sharedAudio = new Audio();
+        this.sharedAudio.preload = 'auto';
+      }
+      // Only play silent unlock frame if not currently playing real audio
+      if (this.sharedAudio.paused || this.sharedAudio.ended || !this.sharedAudio.src) {
+        this.sharedAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+        this.sharedAudio.volume = 0.01;
+        const p = this.sharedAudio.play();
+        if (p !== undefined) {
+          p.then(() => {
+            if (this.sharedAudio && this.sharedAudio.src.startsWith('data:audio/wav;base64,UklGRig')) {
+              this.sharedAudio.pause();
+              this.sharedAudio.currentTime = 0;
+              this.sharedAudio.volume = 1.0;
+            }
+          }).catch(() => {});
+        }
+      }
+      return this.sharedAudio;
+    } catch {
+      return null;
+    }
+  }
+
+  private static isExplicitInstalledSystemVoice(voiceKey: string): boolean {
+    if (!voiceKey) return false;
+    if (
+      voiceKey.startsWith('gemini-') ||
+      voiceKey.startsWith('kokoro-') ||
+      voiceKey.startsWith('persona-') ||
+      voiceKey.startsWith('saint-') ||
+      voiceKey === 'ava-grace' ||
+      voiceKey === 'david'
+    ) {
+      return false;
+    }
+    const s = this.getSynth();
+    if (!s) return false;
+    const voices = s.getVoices();
+    return voices.some(v => v.name === voiceKey);
+  }
+
+  private static splitIntoSpeechChunks(text: string, maxLen = 300): string[] {
+    const cleaned = text.replace(/\s+/g, ' ').trim();
+    if (!cleaned) return [];
+    if (cleaned.length <= maxLen) return [cleaned];
+
+    const sentences = cleaned.match(/[^.!?;]+[.!?;]+|\s*[^.!?;]+$/g) || [cleaned];
+    const chunks: string[] = [];
+    let current = '';
+
+    for (const rawSentence of sentences) {
+      const sentence = rawSentence.trim();
+      if (!sentence) continue;
+      if ((current + ' ' + sentence).trim().length <= maxLen) {
+        current = (current + ' ' + sentence).trim();
+      } else {
+        if (current) chunks.push(current);
+        if (sentence.length <= maxLen) {
+          current = sentence;
+        } else {
+          const words = sentence.split(' ');
+          let sub = '';
+          for (const w of words) {
+            if ((sub + ' ' + w).trim().length <= maxLen) {
+              sub = (sub + ' ' + w).trim();
+            } else {
+              if (sub) chunks.push(sub);
+              sub = w;
+            }
+          }
+          current = sub;
+        }
+      }
+    }
+    if (current) chunks.push(current);
+    return chunks;
+  }
+
+  private static async fetchServerTtsAudioUrl(chunkText: string, voiceName: string): Promise<string | null> {
+    const customApiKey = typeof localStorage !== 'undefined' ? (localStorage.getItem('sanctum_tts_api_key') || undefined) : undefined;
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: chunkText,
+            voiceName,
+            apiKey: customApiKey,
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.audioUrl) {
+            return data.audioUrl as string;
+          }
+        }
+      } catch {
+        // Retry once on network hiccup
+      }
+    }
+    return null;
+  }
+
+  private static async playServerTtsSequence(
+    fullText: string,
+    voiceName: string,
+    token: number,
+    onFirstChunkPlay?: () => void
+  ): Promise<boolean> {
+    // If the user explicitly selected a local installed browser voice (e.g., "Microsoft David..."),
+    // let Web Speech API speak that exact installed voice directly.
+    if (this.isExplicitInstalledSystemVoice(voiceName)) {
+      return false;
+    }
+
+    const chunks = this.splitIntoSpeechChunks(fullText, 300);
+    if (chunks.length === 0) return false;
+
+    // Prefetch first chunk immediately, and pipeline the next chunk while playing
+    let nextUrlPromise: Promise<string | null> | null = this.fetchServerTtsAudioUrl(chunks[0], voiceName);
+
+    for (let i = 0; i < chunks.length; i++) {
+      if (this.activePlaybackToken !== token) return true;
+
+      const currentUrl = nextUrlPromise ? await nextUrlPromise : await this.fetchServerTtsAudioUrl(chunks[i], voiceName);
+      if (this.activePlaybackToken !== token) return true;
+
+      // Start prefetching chunk i + 1 in the background while chunk i plays
+      if (i + 1 < chunks.length) {
+        nextUrlPromise = this.fetchServerTtsAudioUrl(chunks[i + 1], voiceName);
+      } else {
+        nextUrlPromise = null;
+      }
+
+      if (!currentUrl) {
+        return false;
+      }
+
+      const played = await new Promise<boolean>((resolve) => {
+        if (this.activePlaybackToken !== token) {
+          resolve(true);
+          return;
+        }
+        const audio = this.sharedAudio || new Audio();
+        this.sharedAudio = audio;
+        this.activeAudioElement = audio;
+        audio.volume = 1.0;
+        audio.src = currentUrl;
+        audio.playbackRate = this.currentRate;
+
+        audio.onplay = () => {
+          if (this.activePlaybackToken !== token) return;
+          if (i === 0 && onFirstChunkPlay) {
+            onFirstChunkPlay();
+          }
+        };
+
+        audio.onended = () => {
+          resolve(true);
+        };
+
+        audio.onerror = () => {
+          resolve(false);
+        };
+
+        audio.play().catch(() => {
+          resolve(false);
+        });
+      });
+
+      if (!played && this.activePlaybackToken === token) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 
   private static getSynth(): SpeechSynthesis | null {
     if (!this.synth && typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -895,6 +1086,7 @@ export class SacredReader {
   }
 
   public static stop(): void {
+    this.activePlaybackToken++;
     this.isSequenceActive = false;
     this.sequenceQueue = [];
     this.currentPartIndexState = -1;
@@ -906,6 +1098,9 @@ export class SacredReader {
     this.stopKeepAlive();
     if (this.activeAudioElement) {
       try {
+        this.activeAudioElement.onended = null;
+        this.activeAudioElement.onerror = null;
+        this.activeAudioElement.onplay = null;
         this.activeAudioElement.pause();
         this.activeAudioElement.currentTime = 0;
       } catch {}
@@ -920,14 +1115,14 @@ export class SacredReader {
     }
   }
 
-  private static selectedFemaleVoiceName: string | null = typeof localStorage !== 'undefined' ? (localStorage.getItem('soul_sanctum_female_voice') || 'persona-ava') : 'persona-ava';
+  private static selectedFemaleVoiceName: string | null = typeof localStorage !== 'undefined' ? (localStorage.getItem('soul_sanctum_female_voice') || 'gemini-Kore') : 'gemini-Kore';
   private static selectedRecitationVoiceId: RecitationVoiceId = typeof localStorage !== 'undefined' 
     ? ((localStorage.getItem('soul_sanctum_recitation_voice') as RecitationVoiceId) || 'ava-grace') 
     : 'ava-grace';
   private static activeSelectedVoiceKey: string = typeof localStorage !== 'undefined'
     ? (() => {
         const saved = localStorage.getItem('soul_sanctum_active_voice');
-        if (!saved || saved.toLowerCase().includes('zira') || saved === 'zira') {
+        if (!saved || saved.toLowerCase().includes('zira') || saved.toLowerCase().includes('mark') || saved === 'zira') {
           return 'gemini-Kore';
         }
         return saved;
@@ -935,14 +1130,14 @@ export class SacredReader {
     : 'gemini-Kore';
 
   public static getActiveLectorVoiceKey(): string {
-    if (!this.activeSelectedVoiceKey || this.activeSelectedVoiceKey.toLowerCase().includes('zira')) {
+    if (!this.activeSelectedVoiceKey || this.activeSelectedVoiceKey === 'zira') {
       return 'gemini-Kore';
     }
     return this.activeSelectedVoiceKey;
   }
 
   public static setActiveLectorVoiceKey(voiceKey: string): void {
-    const finalKey = !voiceKey || voiceKey.toLowerCase().includes('zira') ? 'gemini-Kore' : voiceKey;
+    const finalKey = !voiceKey || voiceKey === 'zira' ? 'gemini-Kore' : voiceKey;
     this.activeSelectedVoiceKey = finalKey;
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('soul_sanctum_active_voice', finalKey);
@@ -950,15 +1145,22 @@ export class SacredReader {
   }
 
   public static getVoiceConfigForActiveKey(voiceKey: string, gender: 'female' | 'male'): { voice: SpeechSynthesisVoice | null; pitch: number; rate: number } {
+    const s = this.getSynth();
+    if (s && voiceKey) {
+      const sysVoice = s.getVoices().find(v => v.name === voiceKey);
+      if (sysVoice) {
+        return { voice: sysVoice, pitch: 1.0, rate: this.currentRate };
+      }
+    }
     if (voiceKey.startsWith('gemini-')) {
       const gName = voiceKey.replace('gemini-', '');
       return this.getAudioConfigForSignature(gName);
     }
     if (voiceKey.startsWith('saint-')) {
-      const s = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceKey);
-      if (s) {
-        const { voice } = this.getVoiceForSaint(s.id);
-        return { voice, pitch: s.pitch, rate: s.rate };
+      const st = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceKey);
+      if (st) {
+        const { voice } = this.getVoiceForSaint(st.id);
+        return { voice, pitch: st.pitch, rate: st.rate };
       }
     }
     if (voiceKey.startsWith('persona-')) {
@@ -966,12 +1168,6 @@ export class SacredReader {
       if (p) {
         const { voice } = this.getVoiceForAvaGrace();
         return { voice, pitch: p.pitch, rate: p.rate };
-      }
-    }
-    if (this.synth) {
-      const sysVoice = this.synth.getVoices().find(v => v.name === voiceKey);
-      if (sysVoice) {
-        return { voice: sysVoice, pitch: 1.0, rate: this.currentRate };
       }
     }
     return this.getVoiceForGender(gender);
@@ -985,7 +1181,7 @@ export class SacredReader {
         return saved;
       }
     }
-    // Default and Prioritized: Ava Grace
+    // Default and Prioritized: Ava Grace / Kore
     return 'ava-grace';
   }
 
@@ -997,11 +1193,8 @@ export class SacredReader {
   }
 
   /**
-   * High-fidelity voice matching for Ava Grace.
-   * Prioritizes:
-   * 1. Voice containing 'ava' (Apple Ava Premium, Microsoft Ava Online, etc.)
-   * 2. Voice containing 'grace'
-   * 3. Serene, natural female voices (Jenny, Aria, Sonia, Samantha, Victoria, Google US English)
+   * High-fidelity voice matching for Ava Grace / Kore fallback.
+   * Strictly excludes Microsoft Zira and Microsoft Mark so Zira never hijacks Kore.
    */
   public static getVoiceForAvaGrace(): { voice: SpeechSynthesisVoice | null; pitch: number; rate: number } {
     if (!this.synth && typeof window !== 'undefined') {
@@ -1017,24 +1210,23 @@ export class SacredReader {
     }
     const all = this.cachedVoices.length > 0 ? this.cachedVoices : [];
 
-    // Strictly exclude ALL male voices (Microsoft David, Mark, etc.) and robotic dispatchers
-    const femaleVoices = all.filter(v => {
+    // Strictly exclude ALL male voices, Microsoft Zira, Microsoft Mark, and robotic dispatchers
+    const nonZiraFemale = all.filter(v => {
       const n = v.name.toLowerCase();
+      if (n.includes('zira') || n.includes('mark')) return false;
       if (isMaleVoiceName(n)) return false;
       return !['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper'].some(r => n.includes(r));
     });
 
-    const nonZiraFemale = femaleVoices.filter(v => !v.name.toLowerCase().includes('zira'));
+    // 1. Highest Priority: exact or partial match for "Ava" or "Kore"
+    let matched = nonZiraFemale.find(v => v.name.toLowerCase().includes('ava') || v.name.toLowerCase().includes('kore'));
 
-    // 1. Highest Priority: exact or partial match for "Ava" (Apple Ava, Edge Ava Online, en-US-AvaMultilingualNeural)
-    let matched = nonZiraFemale.find(v => v.name.toLowerCase().includes('ava'));
-
-    // 2. Second Priority: match for "Grace" (Apple Grace, Edge Grace Online, en-US-GraceNeural)
+    // 2. Second Priority: match for "Grace"
     if (!matched) {
       matched = nonZiraFemale.find(v => v.name.toLowerCase().includes('grace'));
     }
 
-    // 3. Third Priority: Natural/neural serene female voices (Google US English, Jenny, Aria, Sonia, etc.)
+    // 3. Third Priority: Natural/neural serene female voices
     if (!matched) {
       const sereneKeywords = [
         'google us english', 
@@ -1075,17 +1267,6 @@ export class SacredReader {
       matched = nonZiraFemale[0];
     }
 
-    // 6. If the system only has one installed female voice (never fall back to David/male!),
-    // use that female voice with Ava Grace's lifted serene soprano pitch (1.22) and devotional rate (0.89)
-    if (!matched && femaleVoices.length > 0) {
-      matched = femaleVoices.find(v => v.lang.toLowerCase().startsWith('en')) || femaleVoices[0];
-      return {
-        voice: matched,
-        pitch: 1.22,
-        rate: 0.89
-      };
-    }
-
     return {
       voice: matched || null,
       pitch: 1.08,
@@ -1115,13 +1296,13 @@ export class SacredReader {
       return name.includes('microsoft david') || (name.includes('david') && !isFemaleVoiceName(name));
     });
 
-    const roboticKeywords = ['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper'];
+    const roboticKeywords = ['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper', 'mark', 'zira'];
     const nonRobotic = all.filter(v => !roboticKeywords.some(r => v.name.toLowerCase().includes(r)));
     const englishMale = nonRobotic.filter(v => v.lang.toLowerCase().startsWith('en') && isMaleVoiceName(v.name));
     const anyMale = nonRobotic.filter(v => isMaleVoiceName(v.name));
 
     return {
-      voice: davidVoice || englishMale[0] || anyMale[0] || (all.length > 0 ? all[0] : null),
+      voice: davidVoice || englishMale[0] || anyMale[0] || (nonRobotic.length > 0 ? nonRobotic[0] : null),
       pitch: 1.0,
       rate: 0.92
     };
@@ -1161,8 +1342,8 @@ export class SacredReader {
       isSelected: currentSelection === p.id
     }));
 
-    // 2. Also append physical system TTS voices if available (excluding Zira, Serena, Victoria)
-    const roboticKeywords = ['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper', 'zira', 'serena', 'victoria'];
+    // 2. Also append physical system TTS voices if available (excluding Zira, Mark, Serena, Victoria)
+    const roboticKeywords = ['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper', 'zira', 'mark', 'serena', 'victoria'];
 
     const physicalVoices = (this.cachedVoices || []).filter(v => {
       const name = v.name.toLowerCase();
@@ -1190,9 +1371,9 @@ export class SacredReader {
       this.cachedVoices = this.synth.getVoices();
     }
     const allVoices = this.cachedVoices.length > 0 ? this.cachedVoices : [];
-    const nonRobotic = allVoices.filter(v => !['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper'].some(r => v.name.toLowerCase().includes(r)));
+    const nonRobotic = allVoices.filter(v => !['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper', 'mark', 'zira'].some(r => v.name.toLowerCase().includes(r)));
     const englishVoices = nonRobotic.filter(v => v.lang.toLowerCase().startsWith('en'));
-    const candidateVoices = englishVoices.length > 0 ? englishVoices : (nonRobotic.length > 0 ? nonRobotic : allVoices);
+    const candidateVoices = englishVoices.length > 0 ? englishVoices : nonRobotic;
 
     // Prioritize male voices first, followed by other natural regional voices
     const maleVoices = candidateVoices.filter(v => isMaleVoiceName(v.name));
@@ -1277,46 +1458,35 @@ export class SacredReader {
     }
     const all = this.synth ? this.synth.getVoices() : [];
 
-    // Filter non-robotic voices
-    const nonRobotic = all.filter(v => !['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper'].some(r => v.name.toLowerCase().includes(r)));
+    // Filter non-robotic voices and strictly exclude Zira and Mark
+    const nonRobotic = all.filter(v => !['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper', 'zira', 'mark'].some(r => v.name.toLowerCase().includes(r)));
     const female = nonRobotic.filter(v => isFemaleVoiceName(v.name));
     const male = nonRobotic.filter(v => isMaleVoiceName(v.name));
 
     if (voiceName === 'Kore') {
-      // Female serene soprano (Pitch 1.25)
       const match = female.find(v => v.name.toLowerCase().includes('ava') || v.name.toLowerCase().includes('grace') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('google us english')) || female[0] || nonRobotic[0] || null;
-      // Exclude SAPI5 voice locking if only 1 voice exists so browser pitch modulation applies
-      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (female[0] || null);
-      return { voice: voiceToUse, pitch: 1.28, rate: 0.90 };
+      return { voice: match, pitch: 1.24, rate: 0.90 };
     }
 
     if (voiceName === 'Puck') {
-      // High energetic tenor male (Pitch 1.40)
       const match = male.find(v => v.name.toLowerCase().includes('daniel') || v.name.toLowerCase().includes('ryan') || v.name.toLowerCase().includes('aaron') || v.name.toLowerCase().includes('alex')) || male[1] || male[0] || nonRobotic[1] || null;
-      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (male[0] || null);
-      return { voice: voiceToUse, pitch: 1.40, rate: 1.02 };
+      return { voice: match, pitch: 1.35, rate: 1.02 };
     }
 
     if (voiceName === 'Charon') {
-      // Deep solemn monastic bass male (Pitch 0.55)
       const match = male.find(v => v.name.toLowerCase().includes('fred') || v.name.toLowerCase().includes('richard') || v.name.toLowerCase().includes('david')) || male[2] || male[0] || nonRobotic[2] || null;
-      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (male[0] || null);
-      return { voice: voiceToUse, pitch: 0.55, rate: 0.80 };
+      return { voice: match, pitch: 0.65, rate: 0.84 };
     }
 
     if (voiceName === 'Fenrir') {
-      // Monastic resonant baritone male (Pitch 0.70)
-      const match = male.find(v => v.name.toLowerCase().includes('mark') || v.name.toLowerCase().includes('thomas') || v.name.toLowerCase().includes('charles') || v.name.toLowerCase().includes('brian')) || male[1] || male[0] || null;
-      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : (male[0] || null);
-      return { voice: voiceToUse, pitch: 0.70, rate: 0.84 };
+      const match = male.find(v => v.name.toLowerCase().includes('thomas') || v.name.toLowerCase().includes('charles') || v.name.toLowerCase().includes('brian') || v.name.toLowerCase().includes('david')) || male[1] || male[0] || null;
+      return { voice: match, pitch: 0.75, rate: 0.86 };
     }
 
     if (voiceName === 'Zephyr') {
-      // Smooth UK/regional contemplative voice (Pitch 0.95)
       const ukOrAu = nonRobotic.filter(v => v.lang.toLowerCase().includes('gb') || v.lang.toLowerCase().includes('au') || v.name.toLowerCase().includes('uk') || v.name.toLowerCase().includes('oliver') || v.name.toLowerCase().includes('george'));
-      const match = ukOrAu[0] || nonRobotic[3] || nonRobotic[0] || null;
-      const voiceToUse = (match && !match.name.toLowerCase().includes('microsoft')) ? match : null;
-      return { voice: voiceToUse, pitch: 0.95, rate: 0.88 };
+      const match = ukOrAu[0] || nonRobotic[0] || null;
+      return { voice: match, pitch: 0.95, rate: 0.90 };
     }
 
     return { voice: nonRobotic[0] || null, pitch: 1.0, rate: 0.90 };
@@ -1334,14 +1504,14 @@ export class SacredReader {
       this.setSelectedFemaleVoiceName(voiceIdOrName);
     }
     const voiceInfo = this.getAvailableFemaleVoices().find(v => v.id === (voiceIdOrName || this.selectedFemaleVoiceName) || v.isSelected);
-    const rawName = voiceInfo ? voiceInfo.name.replace(/\(.*?\)/g, '').replace(/Installed:/g, '').trim() : 'Sister Sonia';
+    const rawName = voiceInfo ? voiceInfo.name.replace(/\(.*?\)/g, '').replace(/Installed:/g, '').trim() : 'Kore';
     const text = `Peace be with you. This is ${rawName} proclaiming God's word.`;
     this.speak(text, undefined, 'female');
   }
 
   public static cycleNextFemaleVoice(): string {
     const voices = this.getAvailableFemaleVoices();
-    if (voices.length === 0) return 'Sister Sonia';
+    if (voices.length === 0) return 'Kore';
     
     const currentIndex = voices.findIndex(v => v.isSelected);
     const nextIndex = (currentIndex + 1) % voices.length;
@@ -1354,7 +1524,7 @@ export class SacredReader {
 
   /**
    * Find natural human voice matching the requested gender ('female' or 'male').
-   * Prioritizes Ava Grace for female and Microsoft David for male.
+   * Prioritizes Kore / Ava Grace for female and Microsoft David for male.
    */
   public static getVoiceForGender(gender: 'female' | 'male'): { voice: SpeechSynthesisVoice | null; pitch: number; rate: number } {
     if (gender === 'female') {
@@ -1366,7 +1536,7 @@ export class SacredReader {
 
   /**
    * Speak a single passage with requested voice or rate.
-   * Prioritizes Ava Grace by default unless specified otherwise.
+   * Uses Gemini 3.8 Kore ('gemini-Kore') by default via /api/tts unless an explicit system voice is selected.
    */
   public static async speak(
     text: string, 
@@ -1375,53 +1545,44 @@ export class SacredReader {
     customRate?: number
   ): Promise<void> {
     this.stop();
+    this.unlockSharedAudio();
+    const token = this.activePlaybackToken;
 
     const cleanText = prepareLiturgicalTextForSpeech(text);
     if (!cleanText) return;
 
-    let targetVoiceKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+    const activeKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+    let targetVoiceKey = activeKey;
     if (voiceOrGenderOrRate === 'david' || voiceOrGenderOrRate === 'male') {
-      targetVoiceKey = 'gemini-Kore';
+      targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey) ? activeKey : 'gemini-Charon';
     } else if (voiceOrGenderOrRate === 'ava-grace' || voiceOrGenderOrRate === 'female') {
-      targetVoiceKey = 'gemini-Kore';
+      targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey) ? activeKey : (activeKey.startsWith('gemini-') || activeKey.startsWith('persona-') ? activeKey : 'gemini-Kore');
     }
 
-    try {
-      const res = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: cleanText.slice(0, 800),
-          voiceName: targetVoiceKey,
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.audioUrl) {
-          const audio = new Audio(data.audioUrl);
-          audio.onplay = () => this.notify(true);
-          audio.onended = () => {
-            this.notify(false);
-            if (onEnd) onEnd();
-          };
-          audio.onerror = () => {
-            this.notify(false);
-            if (onEnd) onEnd();
-          };
-          await audio.play();
-          return;
-        }
+    const playedServer = await this.playServerTtsSequence(
+      cleanText,
+      targetVoiceKey,
+      token,
+      () => this.notify(true)
+    );
+
+    if (playedServer) {
+      if (this.activePlaybackToken === token) {
+        this.activeAudioElement = null;
+        this.notify(false);
+        if (onEnd) onEnd();
       }
-    } catch {
-      // Fall through to Web Speech API
+      return;
     }
+
+    if (this.activePlaybackToken !== token) return;
 
     if (!this.synth && typeof window !== 'undefined') {
       this.synth = window.speechSynthesis;
     }
     if (!this.synth) return;
 
-    let voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceKey, 'female');
+    const voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceKey, voiceOrGenderOrRate === 'male' || voiceOrGenderOrRate === 'david' ? 'male' : 'female');
     const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : customRate;
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
@@ -1453,26 +1614,30 @@ export class SacredReader {
 
   /**
    * Speak multiple parts in sequence, alternating voices per part:
-   * First Reading by a woman, Responsorial Psalm by a woman, Gospel by a man.
+   * First Reading by Kore (woman), Responsorial Psalm by Kore (woman), Gospel by Charon/David (man).
    */
   public static speakLiturgicalSequence(
     parts: SpeechPart[],
     onEnd?: () => void,
     onPartStart?: (part: SpeechPart, index: number) => void,
-    overrideVoice?: RecitationVoiceId
+    _overrideVoice?: RecitationVoiceId
   ): void {
     if (parts.length === 0) return;
 
     this.stop();
+    this.unlockSharedAudio();
+    const token = this.activePlaybackToken;
     this.isSequenceActive = true;
     this.sequenceQueue = [...parts];
 
     const activeVoiceKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
 
     const playNext = async (index: number) => {
-      if (!this.isSequenceActive || index >= this.sequenceQueue.length) {
-        this.stop();
-        if (onEnd) onEnd();
+      if (!this.isSequenceActive || this.activePlaybackToken !== token || index >= this.sequenceQueue.length) {
+        if (this.activePlaybackToken === token) {
+          this.stop();
+          if (onEnd) onEnd();
+        }
         return;
       }
 
@@ -1487,71 +1652,53 @@ export class SacredReader {
       }
 
       // Determine voice to use for this part:
-      // First Reading, Psalm, Second Reading -> Kore (gemini-Kore)
-      // Holy Gospel -> Charon (or user's selected male voice)
-      let targetVoiceForPart = activeVoiceKey && (
-        activeVoiceKey.startsWith('kokoro-') || 
-        activeVoiceKey.startsWith('gemini-') || 
-        activeVoiceKey.startsWith('persona-') || 
-        activeVoiceKey.startsWith('saint-')
-      ) ? activeVoiceKey : 'gemini-Kore';
+      // First Reading, Psalm, Second Reading -> Kore ('gemini-Kore') unless user explicitly chose another voice
+      // Holy Gospel -> Charon ('gemini-Charon') or explicit male system voice
+      let targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
 
       if (currentPart.id === 'gospel' || currentPart.gender === 'male') {
-        const isUserMaleChoice = activeVoiceKey && (
-          activeVoiceKey.includes('David') ||
-          activeVoiceKey.includes('Charon') || 
-          activeVoiceKey.includes('Fenrir') || 
-          activeVoiceKey.includes('Puck') || 
+        if (this.isExplicitInstalledSystemVoice(activeVoiceKey) && isMaleVoiceName(activeVoiceKey)) {
+          targetVoiceForPart = activeVoiceKey;
+        } else if (
+          activeVoiceKey.includes('Charon') ||
+          activeVoiceKey.includes('Fenrir') ||
+          activeVoiceKey.includes('Puck') ||
           activeVoiceKey.includes('Zephyr')
-        );
-        targetVoiceForPart = activeVoiceKey?.includes('David') ? 'gemini-Charon' : (isUserMaleChoice ? activeVoiceKey : 'gemini-Charon');
+        ) {
+          targetVoiceForPart = activeVoiceKey;
+        } else {
+          targetVoiceForPart = 'gemini-Charon';
+        }
       } else {
-        // For female parts (First Reading, Psalm, Second Reading), respect any selected female voice (Kore, persona-*, etc.)
         targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
       }
 
-      // 1. Try server-side neural cloud audio (Kokoro / Gemini / OpenAI / Regional Neural)
-      try {
-        const res = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: cleanText.slice(0, 800),
-            voiceName: targetVoiceForPart,
-          }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.audioUrl) {
-            const audio = new Audio(data.audioUrl);
-            this.activeAudioElement = audio;
-            audio.playbackRate = this.currentRate;
-            audio.onplay = () => {
-              if (!this.isSequenceActive) return;
-              this.notify(true, currentPart.id);
-              if (onPartStart) onPartStart(currentPart, index);
-            };
-            audio.onended = () => {
-              if (!this.isSequenceActive) return;
-              this.activeAudioElement = null;
-              this.pauseTimer = setTimeout(() => {
-                if (this.isSequenceActive) playNext(index + 1);
-              }, 400);
-            };
-            audio.onerror = () => {
-              if (!this.isSequenceActive) return;
-              this.activeAudioElement = null;
-              playNext(index + 1);
-            };
-            await audio.play();
-            return;
-          }
+      // 1. Play via server-side Gemini 3.8 TTS (Kore / Charon) with chunked prefetching
+      const playedServer = await this.playServerTtsSequence(
+        cleanText,
+        targetVoiceForPart,
+        token,
+        () => {
+          if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+          this.notify(true, currentPart.id);
+          if (onPartStart) onPartStart(currentPart, index);
         }
-      } catch {
-        // Fall through to client Web Speech synthesis
+      );
+
+      if (playedServer) {
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+        this.activeAudioElement = null;
+        this.pauseTimer = setTimeout(() => {
+          if (this.isSequenceActive && this.activePlaybackToken === token) {
+            playNext(index + 1);
+          }
+        }, 350);
+        return;
       }
 
-      // 2. Client Web Speech synthesis fallback
+      if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+
+      // 2. Client Web Speech synthesis fallback (for explicit local installed voices like Microsoft David)
       if (!this.synth && typeof window !== 'undefined') {
         this.synth = window.speechSynthesis;
       }
@@ -1570,7 +1717,7 @@ export class SacredReader {
       this.activeUtterance = utterance;
 
       utterance.onstart = () => {
-        if (!this.isSequenceActive) return;
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
         this.startKeepAlive();
         this.notify(true, currentPart.id);
         if (onPartStart) onPartStart(currentPart, index);
@@ -1578,9 +1725,9 @@ export class SacredReader {
 
       utterance.onend = () => {
         this.stopKeepAlive();
-        if (!this.isSequenceActive) return;
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
         this.pauseTimer = setTimeout(() => {
-          if (this.isSequenceActive) {
+          if (this.isSequenceActive && this.activePlaybackToken === token) {
             playNext(index + 1);
           }
         }, 400);
@@ -1588,7 +1735,7 @@ export class SacredReader {
 
       utterance.onerror = () => {
         this.stopKeepAlive();
-        if (!this.isSequenceActive) return;
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
         playNext(index + 1);
       };
 
@@ -1643,40 +1790,28 @@ export class SacredReader {
     const text = customQuote || `${persona.saintName}: "${persona.sampleQuote}"`;
 
     this.stop();
+    this.unlockSharedAudio();
+    const token = this.activePlaybackToken;
 
     const cleanText = prepareLiturgicalTextForSpeech(text);
 
-    try {
-      const res = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: cleanText.slice(0, 600),
-          voiceName: personaId,
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.audioUrl) {
-          const audio = new Audio(data.audioUrl);
-          audio.onplay = () => this.notify(true, persona.id);
-          audio.onended = () => {
-            this.notify(false);
-            if (onEnd) onEnd();
-          };
-          audio.onerror = () => {
-            this.notify(false);
-            if (onEnd) onEnd();
-          };
-          await audio.play();
-          return;
-        }
+    const playedServer = await this.playServerTtsSequence(
+      cleanText,
+      personaId,
+      token,
+      () => this.notify(true, persona.id)
+    );
+
+    if (playedServer) {
+      if (this.activePlaybackToken === token) {
+        this.activeAudioElement = null;
+        this.notify(false);
+        if (onEnd) onEnd();
       }
-    } catch {
-      // Fall through to Web Speech API
+      return;
     }
 
-    if (!this.synth) return;
+    if (this.activePlaybackToken !== token || !this.synth) return;
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
     const { voice, pitch, rate } = this.getVoiceForSaint(persona.id);
@@ -1715,43 +1850,31 @@ export class SacredReader {
     onEnd?: () => void
   ): Promise<void> {
     this.stop();
+    this.unlockSharedAudio();
+    const token = this.activePlaybackToken;
 
     const cleanText = prepareLiturgicalTextForSpeech(text);
     if (!cleanText) return;
 
     const persona = getSaintReaderPersona(saintName);
 
-    try {
-      const res = await fetch('/api/tts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: cleanText.slice(0, 800),
-          voiceName: persona.id,
-        }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.audioUrl) {
-          const audio = new Audio(data.audioUrl);
-          audio.onplay = () => this.notify(true, persona.id);
-          audio.onended = () => {
-            this.notify(false);
-            if (onEnd) onEnd();
-          };
-          audio.onerror = () => {
-            this.notify(false);
-            if (onEnd) onEnd();
-          };
-          await audio.play();
-          return;
-        }
+    const playedServer = await this.playServerTtsSequence(
+      cleanText,
+      persona.id,
+      token,
+      () => this.notify(true, persona.id)
+    );
+
+    if (playedServer) {
+      if (this.activePlaybackToken === token) {
+        this.activeAudioElement = null;
+        this.notify(false);
+        if (onEnd) onEnd();
       }
-    } catch {
-      // Fall through
+      return;
     }
 
-    if (!this.synth) return;
+    if (this.activePlaybackToken !== token || !this.synth) return;
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
     const { voice, pitch, rate } = this.getVoiceForSaint(saintName);
@@ -1792,15 +1915,19 @@ export class SacredReader {
     preferredVoice?: RecitationVoiceId
   ): void {
     this.stop();
+    this.unlockSharedAudio();
+    const token = this.activePlaybackToken;
     const sections = parseCommentaryBySaints(commentary);
     if (sections.length === 0) return;
 
     this.isSequenceActive = true;
 
     const playSection = async (idx: number) => {
-      if (!this.isSequenceActive || idx >= sections.length) {
-        this.stop();
-        if (onEnd) onEnd();
+      if (!this.isSequenceActive || this.activePlaybackToken !== token || idx >= sections.length) {
+        if (this.activePlaybackToken === token) {
+          this.stop();
+          if (onEnd) onEnd();
+        }
         return;
       }
 
@@ -1811,44 +1938,30 @@ export class SacredReader {
         return;
       }
 
-      // Try server-side TTS
-      try {
-        const res = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: cleanText.slice(0, 800),
-            voiceName: sec.persona ? sec.persona.id : 'saint-augustine',
-          }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.audioUrl) {
-            const audio = new Audio(data.audioUrl);
-            audio.onplay = () => {
-              if (!this.isSequenceActive) return;
-              this.notify(true, sec.id);
-              if (onSectionStart) onSectionStart(sec, idx, sections.length);
-            };
-            audio.onended = () => {
-              if (!this.isSequenceActive) return;
-              this.pauseTimer = setTimeout(() => {
-                if (this.isSequenceActive) playSection(idx + 1);
-              }, 500);
-            };
-            audio.onerror = () => {
-              if (!this.isSequenceActive) return;
-              playSection(idx + 1);
-            };
-            await audio.play();
-            return;
-          }
+      const voiceKey = sec.persona ? sec.persona.id : 'gemini-Kore';
+      const playedServer = await this.playServerTtsSequence(
+        cleanText,
+        voiceKey,
+        token,
+        () => {
+          if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+          this.notify(true, sec.id);
+          if (onSectionStart) onSectionStart(sec, idx, sections.length);
         }
-      } catch {
-        // Fall through
+      );
+
+      if (playedServer) {
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+        this.activeAudioElement = null;
+        this.pauseTimer = setTimeout(() => {
+          if (this.isSequenceActive && this.activePlaybackToken === token) {
+            playSection(idx + 1);
+          }
+        }, 450);
+        return;
       }
 
-      if (!this.synth) return;
+      if (!this.isSequenceActive || this.activePlaybackToken !== token || !this.synth) return;
 
       const utterance = new SpeechSynthesisUtterance(cleanText);
       const voiceConfig = this.getVoiceForCurrentRecitation(preferredVoice);
@@ -1860,7 +1973,7 @@ export class SacredReader {
       this.activeUtterance = utterance;
 
       utterance.onstart = () => {
-        if (!this.isSequenceActive) return;
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
         this.startKeepAlive();
         this.notify(true, sec.id);
         if (onSectionStart) onSectionStart(sec, idx, sections.length);
@@ -1868,9 +1981,9 @@ export class SacredReader {
 
       utterance.onend = () => {
         this.stopKeepAlive();
-        if (!this.isSequenceActive) return;
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
         this.pauseTimer = setTimeout(() => {
-          if (this.isSequenceActive) {
+          if (this.isSequenceActive && this.activePlaybackToken === token) {
             playSection(idx + 1);
           }
         }, 550);
@@ -1878,7 +1991,7 @@ export class SacredReader {
 
       utterance.onerror = () => {
         this.stopKeepAlive();
-        if (!this.isSequenceActive) return;
+        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
         playSection(idx + 1);
       };
 
