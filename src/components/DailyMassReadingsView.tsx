@@ -22,7 +22,8 @@ import {
   SpeechPart, 
   formatFirstReadingIntro, 
   formatGospelIntro,
-  formatResponsorialPsalmForSpeech
+  formatResponsorialPsalmForSpeech,
+  extractBookFromCitation
 } from '../utils/speech';
 import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
@@ -193,21 +194,25 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
       setIsReadingAloud(false);
       setPlayingPartId(null);
     } else {
-      const activeVoice = SacredReader.getRecitationVoice();
-      const readingAndPsalmGender = activeVoice === 'david' ? 'male' : 'female';
       const parts: SpeechPart[] = [
         {
           id: 'first-reading',
           title: 'First Reading',
-          gender: readingAndPsalmGender,
+          gender: 'female',
           text: `${formatFirstReadingIntro(reading.firstReading.citation)} ${reading.firstReading.text}. The Word of the Lord. Thanks be to God.`
         },
         {
           id: 'psalm',
           title: 'Responsorial Psalm',
-          gender: readingAndPsalmGender,
+          gender: 'female',
           text: formatResponsorialPsalmForSpeech(reading.responsorialPsalm, reading.alleluia)
         },
+        ...(reading.secondReading ? [{
+          id: 'second-reading',
+          title: 'Second Reading',
+          gender: 'female' as const,
+          text: `The second reading is taken from ${extractBookFromCitation(reading.secondReading.citation)}. ${reading.secondReading.text}. The Word of the Lord. Thanks be to God.`
+        }] : []),
         {
           id: 'gospel',
           title: 'The Holy Gospel',

@@ -277,10 +277,7 @@ export const RECITATION_VOICES: RecitationVoiceOption[] = [
 ];
 
 export const SACRED_FEMALE_PERSONAS: FemaleVoiceProfile[] = [
-  { id: 'persona-ava', name: 'Ava Grace (Devotional and Serene • Prioritized Voice)', description: 'Luminous, clear, serene devotional cadence', pitch: 1.04, rate: 0.92, voiceKeyword: 'ava' },
-  { id: 'persona-aria', name: 'Aria Devotional (Serene Natural Melodic Contemplation)', description: 'Natural neural melodic cadence for prayer', pitch: 1.02, rate: 0.90, voiceKeyword: 'aria' },
-  { id: 'persona-sonia', name: 'Sister Sonia (British Cathedral Cadence • High Soprano)', description: 'Solemn, serene UK soprano cadence', pitch: 1.15, rate: 0.88, voiceKeyword: 'sonia' },
-  { id: 'persona-clara', name: 'Clara Sanctuary (Lectio Divina • Soft Balanced Tone)', description: 'Soft, natural, peaceful acoustic balance', pitch: 1.05, rate: 0.90, voiceKeyword: 'clara' }
+  { id: 'persona-sonia', name: 'Sister Sonia (British Cathedral Cadence • High Soprano)', description: 'Solemn, serene UK soprano cadence', pitch: 1.15, rate: 0.88, voiceKeyword: 'sonia' }
 ];
 
 export interface SaintReaderPersona {
@@ -732,14 +729,14 @@ export function isFemaleVoiceName(vName: string): boolean {
 
   // Explicit male names must never match as female
   const explicitMale = [
-    'david', 'mark', 'george', 'james', 'richard', 'daniel', 'ryan', 'guy',
+    'david', 'george', 'james', 'richard', 'daniel', 'ryan', 'guy',
     'christopher', 'eric', 'steffan', 'andrew', 'brian', 'william', 'fred',
     'alex', 'thomas', 'charles', 'connor', 'oliver', 'arthur', 'aaron', 'tom',
     'google uk english male'
   ];
   if (explicitMale.some(m => lower.includes(m))) return false;
 
-  // Explicit female names or indicators - Google US English is strictly female in Chrome!
+  // Explicit female names or indicators
   const femaleKeywords = [
     'female', 'woman', 'girl', 'ava', 'grace', 'serena', 'victoria', 
     'samantha', 'karen', 'moira', 'fiona', 'tessa', 'veena', 
@@ -756,8 +753,9 @@ export function isFemaleVoiceName(vName: string): boolean {
 
 export function isMaleVoiceName(vName: string): boolean {
   const lower = vName.toLowerCase();
+  if (lower.includes('zira')) return false;
   const explicitMale = [
-    'david', 'mark', 'george', 'james', 'richard', 'daniel', 'ryan', 'guy',
+    'david', 'george', 'james', 'richard', 'daniel', 'ryan', 'guy',
     'christopher', 'eric', 'steffan', 'andrew', 'brian', 'william', 'fred',
     'alex', 'thomas', 'charles', 'connor', 'oliver', 'arthur', 'aaron', 'tom',
     'google uk english male', 'male', 'man'
@@ -821,22 +819,52 @@ export class SacredReader {
     this.listeners.forEach(l => l(speaking, currentPartId));
   }
 
+  private static activeAudioElement: HTMLAudioElement | null = null;
+  private static isPausedState = false;
+
+  private static getSynth(): SpeechSynthesis | null {
+    if (!this.synth && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      this.synth = window.speechSynthesis;
+    }
+    return this.synth;
+  }
+
   public static pause(): void {
-    if (this.synth && this.synth.speaking) {
-      this.synth.pause();
+    if (this.activeAudioElement) {
+      this.activeAudioElement.pause();
+      this.isPausedState = true;
+      this.notify(true, undefined);
+      return;
+    }
+    const s = this.getSynth();
+    if (s && s.speaking) {
+      s.pause();
+      this.isPausedState = true;
       this.notify(true, undefined);
     }
   }
 
   public static resume(): void {
-    if (this.synth && this.synth.paused) {
-      this.synth.resume();
+    if (this.activeAudioElement && this.isPausedState) {
+      this.activeAudioElement.play().catch(() => {});
+      this.isPausedState = false;
+      this.notify(true, undefined);
+      return;
+    }
+    const s = this.getSynth();
+    if (s && s.paused) {
+      s.resume();
+      this.isPausedState = false;
       this.notify(true, undefined);
     }
   }
 
   public static isPaused(): boolean {
-    return this.synth ? this.synth.paused : false;
+    if (this.activeAudioElement) {
+      return this.isPausedState;
+    }
+    const s = this.getSynth();
+    return s ? s.paused : false;
   }
 
   private static currentRate: number = typeof localStorage !== 'undefined' ? parseFloat(localStorage.getItem('soul_sanctum_speech_rate') || '0.93') : 0.93;
@@ -846,6 +874,9 @@ export class SacredReader {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('soul_sanctum_speech_rate', rate.toString());
     }
+    if (this.activeAudioElement) {
+      this.activeAudioElement.playbackRate = rate;
+    }
   }
 
   public static getPlaybackRate(): number {
@@ -853,20 +884,35 @@ export class SacredReader {
   }
 
   public static isSpeaking(): boolean {
-    return this.synth ? this.synth.speaking || this.isSpeakingState : false;
+    if (this.activeAudioElement) {
+      return !this.activeAudioElement.paused && !this.activeAudioElement.ended;
+    }
+    const s = this.getSynth();
+    return s ? s.speaking || this.isSpeakingState : this.isSpeakingState;
   }
 
   public static stop(): void {
     this.isSequenceActive = false;
     this.sequenceQueue = [];
     this.currentPartIndexState = -1;
+    this.isPausedState = false;
     if (this.pauseTimer) {
       clearTimeout(this.pauseTimer);
       this.pauseTimer = null;
     }
     this.stopKeepAlive();
-    if (this.synth) {
-      this.synth.cancel();
+    if (this.activeAudioElement) {
+      try {
+        this.activeAudioElement.pause();
+        this.activeAudioElement.currentTime = 0;
+      } catch {}
+      this.activeAudioElement = null;
+    }
+    const s = this.getSynth();
+    if (s) {
+      s.cancel();
+      this.notify(false);
+    } else {
       this.notify(false);
     }
   }
@@ -1309,30 +1355,60 @@ export class SacredReader {
    * Speak a single passage with requested voice or rate.
    * Prioritizes Ava Grace by default unless specified otherwise.
    */
-  public static speak(
+  public static async speak(
     text: string, 
     onEnd?: () => void, 
     voiceOrGenderOrRate?: 'ava-grace' | 'david' | 'female' | 'male' | number,
     customRate?: number
-  ): void {
-    if (!this.synth) return;
-
+  ): Promise<void> {
     this.stop();
 
     const cleanText = prepareLiturgicalTextForSpeech(text);
     if (!cleanText) return;
 
-    let voiceConfig: { voice: SpeechSynthesisVoice | null; pitch: number; rate: number };
-
+    let targetVoiceKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
     if (voiceOrGenderOrRate === 'david' || voiceOrGenderOrRate === 'male') {
-      voiceConfig = this.getVoiceForDavid();
+      targetVoiceKey = 'gemini-Kore';
     } else if (voiceOrGenderOrRate === 'ava-grace' || voiceOrGenderOrRate === 'female') {
-      voiceConfig = this.getVoiceForAvaGrace();
-    } else {
-      // Prioritize active recitation voice (Ava Grace by default)
-      voiceConfig = this.getVoiceForCurrentRecitation();
+      targetVoiceKey = 'gemini-Kore';
     }
 
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: cleanText.slice(0, 800),
+          voiceName: targetVoiceKey,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.audioUrl) {
+          const audio = new Audio(data.audioUrl);
+          audio.onplay = () => this.notify(true);
+          audio.onended = () => {
+            this.notify(false);
+            if (onEnd) onEnd();
+          };
+          audio.onerror = () => {
+            this.notify(false);
+            if (onEnd) onEnd();
+          };
+          await audio.play();
+          return;
+        }
+      }
+    } catch {
+      // Fall through to Web Speech API
+    }
+
+    if (!this.synth && typeof window !== 'undefined') {
+      this.synth = window.speechSynthesis;
+    }
+    if (!this.synth) return;
+
+    let voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceKey, 'female');
     const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : customRate;
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
@@ -1372,15 +1448,15 @@ export class SacredReader {
     onPartStart?: (part: SpeechPart, index: number) => void,
     overrideVoice?: RecitationVoiceId
   ): void {
-    if (!this.synth || parts.length === 0) return;
+    if (parts.length === 0) return;
 
     this.stop();
     this.isSequenceActive = true;
     this.sequenceQueue = [...parts];
 
-    const activeRecitationVoice = overrideVoice || this.getRecitationVoice();
+    const activeVoiceKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
 
-    const playNext = (index: number) => {
+    const playNext = async (index: number) => {
       if (!this.isSequenceActive || index >= this.sequenceQueue.length) {
         this.stop();
         if (onEnd) onEnd();
@@ -1397,17 +1473,82 @@ export class SacredReader {
         return;
       }
 
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      
-      // Each liturgical part specifies its gender:
-      // Default: First Reading and Responsorial Psalm ('female' -> Ava Grace), Gospel ('male' -> David).
-      // If overrideVoice === 'david' is explicitly passed, use David.
-      let voiceConfig: { voice: SpeechSynthesisVoice | null; pitch: number; rate: number };
-      if (overrideVoice === 'david') {
-        voiceConfig = this.getVoiceForDavid();
+      // Determine voice to use for this part:
+      // First Reading, Psalm, Second Reading -> Kore (gemini-Kore)
+      // Holy Gospel -> Charon (or user's selected male voice)
+      let targetVoiceForPart = activeVoiceKey && (
+        activeVoiceKey.startsWith('kokoro-') || 
+        activeVoiceKey.startsWith('gemini-') || 
+        activeVoiceKey.startsWith('persona-') || 
+        activeVoiceKey.startsWith('saint-')
+      ) ? activeVoiceKey : 'gemini-Kore';
+
+      if (currentPart.id === 'gospel' || currentPart.gender === 'male') {
+        const isUserMaleChoice = activeVoiceKey && (
+          activeVoiceKey.includes('David') ||
+          activeVoiceKey.includes('Charon') || 
+          activeVoiceKey.includes('Fenrir') || 
+          activeVoiceKey.includes('Puck') || 
+          activeVoiceKey.includes('Zephyr')
+        );
+        targetVoiceForPart = activeVoiceKey?.includes('David') ? 'gemini-Charon' : (isUserMaleChoice ? activeVoiceKey : 'gemini-Charon');
       } else {
-        voiceConfig = this.getVoiceForGender(currentPart.gender);
+        // For female parts (First Reading, Psalm, Second Reading), respect any selected female voice (Kore, persona-*, etc.)
+        targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
       }
+
+      // 1. Try server-side neural cloud audio (Kokoro / Gemini / OpenAI / Regional Neural)
+      try {
+        const res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: cleanText.slice(0, 800),
+            voiceName: targetVoiceForPart,
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.audioUrl) {
+            const audio = new Audio(data.audioUrl);
+            this.activeAudioElement = audio;
+            audio.playbackRate = this.currentRate;
+            audio.onplay = () => {
+              if (!this.isSequenceActive) return;
+              this.notify(true, currentPart.id);
+              if (onPartStart) onPartStart(currentPart, index);
+            };
+            audio.onended = () => {
+              if (!this.isSequenceActive) return;
+              this.activeAudioElement = null;
+              this.pauseTimer = setTimeout(() => {
+                if (this.isSequenceActive) playNext(index + 1);
+              }, 400);
+            };
+            audio.onerror = () => {
+              if (!this.isSequenceActive) return;
+              this.activeAudioElement = null;
+              playNext(index + 1);
+            };
+            await audio.play();
+            return;
+          }
+        }
+      } catch {
+        // Fall through to client Web Speech synthesis
+      }
+
+      // 2. Client Web Speech synthesis fallback
+      if (!this.synth && typeof window !== 'undefined') {
+        this.synth = window.speechSynthesis;
+      }
+      if (!this.synth) {
+        playNext(index + 1);
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      const voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceForPart, currentPart.gender);
 
       if (voiceConfig.voice) utterance.voice = voiceConfig.voice;
       utterance.pitch = voiceConfig.pitch;
@@ -1438,9 +1579,7 @@ export class SacredReader {
         playNext(index + 1);
       };
 
-      if (this.synth) {
-        this.synth.speak(utterance);
-      }
+      this.synth.speak(utterance);
     };
 
     playNext(0);
@@ -1455,19 +1594,17 @@ export class SacredReader {
 
   /**
    * Returns the descriptive name of the voice currently assigned to a Saint or persona.
-   * Strictly uses Microsoft David.
    */
   public static getSaintAssignedVoiceName(saintId?: string): string {
     const { voice } = this.getVoiceForSaint(saintId);
     if (voice) {
       return voice.name;
     }
-    return 'Microsoft David (English US)';
+    return 'Resonant Neural Lector (Server Voice)';
   }
 
   /**
-   * Dedicated voice for Catholic Bible Commentary expositions:
-   * Prioritizes Ava Grace (or Microsoft David if selected).
+   * Dedicated voice for Catholic Bible Commentary expositions.
    */
   public static getVoiceForSaint(saintOrAuthor?: string, overrideVoice?: RecitationVoiceId): { 
     voice: SpeechSynthesisVoice | null; 
@@ -1486,16 +1623,49 @@ export class SacredReader {
   }
 
   /**
-   * Preview a Saint's quotation using Microsoft David.
+   * Preview a Saint's quotation using server-side TTS.
    */
-  public static previewSaintVoice(personaId: string, customQuote?: string, onEnd?: () => void): void {
+  public static async previewSaintVoice(personaId: string, customQuote?: string, onEnd?: () => void): Promise<void> {
     const persona = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === personaId) || SACRED_MALE_SAINT_PERSONAS[0];
     const text = customQuote || `${persona.saintName}: "${persona.sampleQuote}"`;
 
-    if (!this.synth) return;
     this.stop();
 
-    const utterance = new SpeechSynthesisUtterance(prepareLiturgicalTextForSpeech(text));
+    const cleanText = prepareLiturgicalTextForSpeech(text);
+
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: cleanText.slice(0, 600),
+          voiceName: personaId,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.audioUrl) {
+          const audio = new Audio(data.audioUrl);
+          audio.onplay = () => this.notify(true, persona.id);
+          audio.onended = () => {
+            this.notify(false);
+            if (onEnd) onEnd();
+          };
+          audio.onerror = () => {
+            this.notify(false);
+            if (onEnd) onEnd();
+          };
+          await audio.play();
+          return;
+        }
+      }
+    } catch {
+      // Fall through to Web Speech API
+    }
+
+    if (!this.synth) return;
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     const { voice, pitch, rate } = this.getVoiceForSaint(persona.id);
     if (voice) utterance.voice = voice;
     utterance.pitch = pitch;
@@ -1524,21 +1694,54 @@ export class SacredReader {
   }
 
   /**
-   * Speaks a single saint's commentary excerpt using Microsoft David.
+   * Speaks a single saint's commentary excerpt using server-side TTS or Web Speech.
    */
-  public static speakSingleSaintExposition(
+  public static async speakSingleSaintExposition(
     saintName: string, 
     text: string, 
     onEnd?: () => void
-  ): void {
-    if (!this.synth) return;
+  ): Promise<void> {
     this.stop();
 
     const cleanText = prepareLiturgicalTextForSpeech(text);
     if (!cleanText) return;
 
+    const persona = getSaintReaderPersona(saintName);
+
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: cleanText.slice(0, 800),
+          voiceName: persona.id,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.audioUrl) {
+          const audio = new Audio(data.audioUrl);
+          audio.onplay = () => this.notify(true, persona.id);
+          audio.onended = () => {
+            this.notify(false);
+            if (onEnd) onEnd();
+          };
+          audio.onerror = () => {
+            this.notify(false);
+            if (onEnd) onEnd();
+          };
+          await audio.play();
+          return;
+        }
+      }
+    } catch {
+      // Fall through
+    }
+
+    if (!this.synth) return;
+
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    const { voice, pitch, rate, persona } = this.getVoiceForSaint(saintName);
+    const { voice, pitch, rate } = this.getVoiceForSaint(saintName);
 
     if (voice) utterance.voice = voice;
     utterance.pitch = pitch;
@@ -1567,7 +1770,7 @@ export class SacredReader {
   }
 
   /**
-   * Proclaims the complete Catholic Bible Commentary using prioritized voice (Ava Grace or Microsoft David).
+   * Proclaims the complete Catholic Bible Commentary using server-side TTS sequence.
    */
   public static speakCommentaryBySaints(
     commentary: BibleCommentary,
@@ -1575,18 +1778,13 @@ export class SacredReader {
     onEnd?: () => void,
     preferredVoice?: RecitationVoiceId
   ): void {
-    if (!this.synth) return;
-
     this.stop();
     const sections = parseCommentaryBySaints(commentary);
     if (sections.length === 0) return;
 
     this.isSequenceActive = true;
 
-    // Use preferred recitation voice (Ava Grace by default or Microsoft David)
-    const voiceConfig = this.getVoiceForCurrentRecitation(preferredVoice);
-
-    const playSection = (idx: number) => {
+    const playSection = async (idx: number) => {
       if (!this.isSequenceActive || idx >= sections.length) {
         this.stop();
         if (onEnd) onEnd();
@@ -1600,11 +1798,51 @@ export class SacredReader {
         return;
       }
 
+      // Try server-side TTS
+      try {
+        const res = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: cleanText.slice(0, 800),
+            voiceName: sec.persona ? sec.persona.id : 'saint-augustine',
+          }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.audioUrl) {
+            const audio = new Audio(data.audioUrl);
+            audio.onplay = () => {
+              if (!this.isSequenceActive) return;
+              this.notify(true, sec.id);
+              if (onSectionStart) onSectionStart(sec, idx, sections.length);
+            };
+            audio.onended = () => {
+              if (!this.isSequenceActive) return;
+              this.pauseTimer = setTimeout(() => {
+                if (this.isSequenceActive) playSection(idx + 1);
+              }, 500);
+            };
+            audio.onerror = () => {
+              if (!this.isSequenceActive) return;
+              playSection(idx + 1);
+            };
+            await audio.play();
+            return;
+          }
+        }
+      } catch {
+        // Fall through
+      }
+
+      if (!this.synth) return;
+
       const utterance = new SpeechSynthesisUtterance(cleanText);
+      const voiceConfig = this.getVoiceForCurrentRecitation(preferredVoice);
 
       if (voiceConfig.voice) utterance.voice = voiceConfig.voice;
-      utterance.pitch = voiceConfig.pitch; // 1.0
-      utterance.rate = voiceConfig.rate;   // 0.92
+      utterance.pitch = voiceConfig.pitch;
+      utterance.rate = voiceConfig.rate;
 
       this.activeUtterance = utterance;
 
@@ -1622,7 +1860,7 @@ export class SacredReader {
           if (this.isSequenceActive) {
             playSection(idx + 1);
           }
-        }, 550); // Natural pause between sections
+        }, 550);
       };
 
       utterance.onerror = () => {
@@ -1631,9 +1869,7 @@ export class SacredReader {
         playSection(idx + 1);
       };
 
-      if (this.synth) {
-        this.synth.speak(utterance);
-      }
+      this.synth.speak(utterance);
     };
 
     playSection(0);

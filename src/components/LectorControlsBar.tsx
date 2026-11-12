@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Pause, Play, Square, Settings2, Mic, User, Gauge, Sparkles, Scroll, ChevronDown } from 'lucide-react';
+import { Volume2, VolumeX, Pause, Play, Square, Settings2, Mic, User, Gauge, Sparkles, Scroll, ChevronDown, Key, CheckCircle2 } from 'lucide-react';
 import { SacredReader, SACRED_MALE_SAINT_PERSONAS, SACRED_FEMALE_PERSONAS } from '../utils/speech';
 
 interface LectorControlsBarProps {
@@ -32,6 +32,12 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   const [showSettings, setShowSettings] = useState(false);
   const [activePlayingVoice, setActivePlayingVoice] = useState<string | null>(null);
   const [isTtsLoading, setIsTtsLoading] = useState<string | null>(null);
+  const [customTtsApiKey, setCustomTtsApiKey] = useState<string>(() => {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('sanctum_tts_api_key') || '';
+    }
+    return '';
+  });
 
   useEffect(() => {
     const updateVoices = () => {
@@ -57,46 +63,63 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
     setIsTtsLoading(voiceKey);
     setActivePlayingVoice(null);
 
-    // If it's a Gemini voice
-    if (voiceKey.startsWith('gemini-')) {
-      const gVoiceName = voiceKey.replace('gemini-', '');
-      const sampleText = customText || `Laudetur Jesus Christus! Proclaiming sacred Scripture with the Gemini 3.8 ${gVoiceName} voice.`;
-
-      let playedServerAudio = false;
-      try {
-        const res = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: sampleText,
-            voiceName: gVoiceName,
-          }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.audioUrl) {
-            const audio = new Audio(data.audioUrl);
-            audio.onplay = () => {
-              setActivePlayingVoice(voiceKey);
-              setIsTtsLoading(null);
-            };
-            audio.onended = () => setActivePlayingVoice(null);
-            audio.onerror = () => {
-              setActivePlayingVoice(null);
-              setIsTtsLoading(null);
-            };
-            await audio.play();
-            playedServerAudio = true;
-          }
-        }
-      } catch {
-        // Fallback to Web Speech API
+    // Get appropriate sample text for previewing the voice
+    let sampleText = customText;
+    if (!sampleText) {
+      if (voiceKey.startsWith('kokoro-')) {
+        const kName = voiceKey.replace('kokoro-', '').replace('_', ' ');
+        sampleText = `Laudetur Jesus Christus! Proclaiming sacred Scripture with the Kokoro ${kName} neural voice.`;
+      } else if (voiceKey.startsWith('gemini-')) {
+        const gName = voiceKey.replace('gemini-', '');
+        sampleText = `Laudetur Jesus Christus! Proclaiming sacred Scripture with the ${gName} voice.`;
+      } else if (voiceKey.startsWith('saint-')) {
+        const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
+        sampleText = saint ? `${saint.saintName}: "${saint.sampleQuote}"` : 'Laudetur Jesus Christus!';
+      } else if (voiceKey.startsWith('persona-')) {
+        const persona = SACRED_FEMALE_PERSONAS.find(p => p.id === voiceKey);
+        sampleText = persona ? `${persona.name}. Proclaiming the holy word in quiet contemplation.` : 'Laudetur Jesus Christus!';
+      } else {
+        sampleText = `Laudetur Jesus Christus! Proclaiming sacred Scripture.`;
       }
+    }
 
-      if (!playedServerAudio && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        setIsTtsLoading(null);
+    let playedServerAudio = false;
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: sampleText,
+          voiceName: voiceKey,
+          apiKey: customTtsApiKey || undefined,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.audioUrl) {
+          const audio = new Audio(data.audioUrl);
+          audio.onplay = () => {
+            setActivePlayingVoice(voiceKey);
+            setIsTtsLoading(null);
+          };
+          audio.onended = () => setActivePlayingVoice(null);
+          audio.onerror = () => {
+            setActivePlayingVoice(null);
+            setIsTtsLoading(null);
+          };
+          await audio.play();
+          playedServerAudio = true;
+        }
+      }
+    } catch {
+      // Fall back to Web Speech API
+    }
+
+    if (!playedServerAudio) {
+      setIsTtsLoading(null);
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
         const utterance = new SpeechSynthesisUtterance(sampleText);
-        const voiceConfig = SacredReader.getAudioConfigForSignature(gVoiceName);
+        const voiceConfig = SacredReader.getVoiceConfigForActiveKey(voiceKey, 'female');
         if (voiceConfig.voice) utterance.voice = voiceConfig.voice;
         utterance.pitch = voiceConfig.pitch;
         utterance.rate = voiceConfig.rate;
@@ -106,73 +129,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
         utterance.onerror = () => setActivePlayingVoice(null);
 
         window.speechSynthesis.speak(utterance);
-      } else {
-        setIsTtsLoading(null);
       }
-      return;
-    }
-
-    // If it's a Patristic Saint persona
-    if (voiceKey.startsWith('saint-')) {
-      const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
-      const textToSay = saint ? `${saint.saintName}: ${saint.sampleQuote}` : 'Laudetur Jesus Christus!';
-      
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        setIsTtsLoading(null);
-        const utterance = new SpeechSynthesisUtterance(textToSay);
-        if (saint) {
-          utterance.pitch = saint.pitch;
-          utterance.rate = saint.rate;
-        }
-        utterance.onstart = () => setActivePlayingVoice(voiceKey);
-        utterance.onend = () => setActivePlayingVoice(null);
-        utterance.onerror = () => setActivePlayingVoice(null);
-
-        window.speechSynthesis.speak(utterance);
-      } else {
-        setIsTtsLoading(null);
-      }
-      return;
-    }
-
-    // If it's a Devotional Female persona
-    if (voiceKey.startsWith('persona-')) {
-      const persona = SACRED_FEMALE_PERSONAS.find(p => p.id === voiceKey);
-      const textToSay = persona ? `${persona.name}. Proclaiming the holy word in quiet contemplation.` : 'Laudetur Jesus Christus!';
-      
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        setIsTtsLoading(null);
-        const utterance = new SpeechSynthesisUtterance(textToSay);
-        if (persona) {
-          utterance.pitch = persona.pitch;
-          utterance.rate = persona.rate;
-        }
-        utterance.onstart = () => setActivePlayingVoice(voiceKey);
-        utterance.onend = () => setActivePlayingVoice(null);
-        utterance.onerror = () => setActivePlayingVoice(null);
-
-        window.speechSynthesis.speak(utterance);
-      } else {
-        setIsTtsLoading(null);
-      }
-      return;
-    }
-
-    // Default System installed voice
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      setIsTtsLoading(null);
-      const matchedSysVoice = systemVoices.find(v => v.name === voiceKey);
-      const utterance = new SpeechSynthesisUtterance('Laudetur Jesus Christus! Proclaiming sacred Scripture.');
-      if (matchedSysVoice) utterance.voice = matchedSysVoice;
-      utterance.rate = currentRate;
-
-      utterance.onstart = () => setActivePlayingVoice(voiceKey);
-      utterance.onend = () => setActivePlayingVoice(null);
-      utterance.onerror = () => setActivePlayingVoice(null);
-
-      window.speechSynthesis.speak(utterance);
-    } else {
-      setIsTtsLoading(null);
     }
   };
 
@@ -182,6 +139,17 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
     SacredReader.setActiveLectorVoiceKey(val);
 
     // Label lookup
+    const kokoroMap: Record<string, string> = {
+      'kokoro-af_heart': 'Kokoro Heart — Warm Devotional Female',
+      'kokoro-af_bella': 'Kokoro Bella — Expressive Female Reader',
+      'kokoro-af_sky': 'Kokoro Sky — Luminous Bright Female',
+      'kokoro-bf_emma': 'Kokoro Emma — British Cathedral Soprano',
+      'kokoro-am_adam': 'Kokoro Adam — American Tenor Lector',
+      'kokoro-am_michael': 'Kokoro Michael — Deep Resonant Bass',
+      'kokoro-bm_george': 'Kokoro George — Deep Monastic British Bass',
+      'kokoro-bm_fable': 'Kokoro Fable — Smooth Liturgical British Lector',
+    };
+
     const geminiMap: Record<string, string> = {
       'gemini-Kore': 'Kore (Serene Devotional Soprano)',
       'gemini-Puck': 'Puck (Lively Young Tenor)',
@@ -190,7 +158,10 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
       'gemini-Zephyr': 'Zephyr (Smooth UK Liturgical Reader)'
     };
 
-    if (geminiMap[val]) {
+    if (kokoroMap[val]) {
+      setSelectedVoiceLabel(kokoroMap[val]);
+      SacredReader.setRecitationVoice('ava-grace');
+    } else if (geminiMap[val]) {
       setSelectedVoiceLabel(geminiMap[val]);
       SacredReader.setRecitationVoice('ava-grace');
     } else if (val.startsWith('saint-')) {
@@ -302,15 +273,17 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
               onChange={handleSelectVoiceChange}
               className="w-full bg-[#1C120C] text-stone-100 border border-[#8B5A2B]/60 rounded px-2.5 py-1.5 text-xs font-serif focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer appearance-none pr-7"
             >
+
+
               <optgroup label="✨ Gemini 3.8 AI Prebuilt Voices">
-                <option value="gemini-Kore">Kore — Serene Devotional Soprano</option>
+                <option value="gemini-Kore">Kore — Serene Devotional Soprano (Default)</option>
                 <option value="gemini-Puck">Puck — Lively Young Tenor Lector</option>
                 <option value="gemini-Charon">Charon — Deep Monastic Bass</option>
                 <option value="gemini-Fenrir">Fenrir — Resonant Benedictine Baritone</option>
                 <option value="gemini-Zephyr">Zephyr — Smooth UK Liturgical Reader</option>
               </optgroup>
 
-              <optgroup label="🕊️ Sacred Devotional Personas">
+              <optgroup label="🕊️ Sacred Devotional Female Personas">
                 {SACRED_FEMALE_PERSONAS.map(p => (
                   <option key={p.id} value={p.id}>
                     {p.name}
@@ -318,13 +291,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                 ))}
               </optgroup>
 
-              <optgroup label="🏛️ Church Fathers & Doctors of the Church (16 Personas)">
-                {SACRED_MALE_SAINT_PERSONAS.map(s => (
-                  <option key={s.id} value={s.id}>
-                    {s.saintName} — {s.timbreDescription}
-                  </option>
-                ))}
-              </optgroup>
+
 
               {systemVoices.length > 0 && (
                 <optgroup label="🎙️ Device & Browser Installed Voices">
@@ -446,6 +413,37 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                   </button>
                 );
               })}
+            </div>
+          </div>
+
+          {/* Neural Cloud Speech Key Input */}
+          <div className="pt-2.5 border-t border-[#8B5A2B]/40 space-y-1.5">
+            <div className="flex items-center justify-between text-[11px] text-amber-200">
+              <span className="font-semibold flex items-center gap-1.5">
+                <Key className="w-3.5 h-3.5 text-amber-400" />
+                <span>Neural Voice API Key (OpenAI / Google Cloud TTS):</span>
+              </span>
+              <span className="text-stone-400 italic">Optional • Unlocks 6 HD Neural Voices</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="password"
+                value={customTtsApiKey}
+                onChange={(e) => {
+                  setCustomTtsApiKey(e.target.value);
+                  if (typeof localStorage !== 'undefined') {
+                    localStorage.setItem('sanctum_tts_api_key', e.target.value);
+                  }
+                }}
+                placeholder="Paste OpenAI API Key (sk-...) for HD Neural Voices"
+                className="grow bg-[#120A05] text-amber-100 placeholder-stone-500 border border-[#8B5A2B]/60 rounded px-2.5 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400"
+              />
+              {customTtsApiKey && (
+                <span className="text-emerald-400 text-xs font-semibold flex items-center gap-1 shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Key Saved</span>
+                </span>
+              )}
             </div>
           </div>
 
