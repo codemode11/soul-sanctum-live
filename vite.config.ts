@@ -16,24 +16,80 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
-  'aleteia': ['https://aleteia.org/feed/'],
-  'ncregister': ['https://www.ncregister.com/feeds/general-news.xml'],
-  'cbcp': ['https://cbcpnews.net/cbcpnews/feed/', 'https://www.vaticannews.va/en.rss.xml'],
-  'catholic-digest': ['https://www.catholicdigest.com/feed/', 'https://aleteia.org/feed/'],
-  'catholic-insight': [
-    'https://www.catholicworldreport.com/feed/',
-    'https://crisismagazine.com/feed',
-    'https://catholicinsight.com/feed/'
-  ],
-  'catholic-answers': ['https://www.catholic.com/feeds/magazine/rss'],
-  'word-on-fire': ['https://www.wordonfire.org/articles/feed/'],
   'st-paul-center': [
-    'https://www.scotthahn.com/blog?format=rss',
+    'https://catholicexchange.com/feed/',
     'https://www.catholicworldreport.com/feed/'
   ],
-  'cerc': ['https://catholiceducation.org/feed/', 'https://crisismagazine.com/feed'],
-  'sign-org': ['https://sign.org/feed/']
+  'catholic-answers': [
+    'https://www.catholic.com/feeds/magazine/rss',
+    'https://catholicexchange.com/feed/'
+  ],
+  'word-on-fire': [
+    'https://www.wordonfire.org/articles/feed/'
+  ],
+  'catholic-insight': [
+    'https://www.catholicworldreport.com/feed/',
+    'https://crisismagazine.com/feed/'
+  ],
+  'aleteia': [
+    'https://aleteia.org/feed/'
+  ],
+  'sign-org': [
+    'https://spiritualdirection.com/feed',
+    'https://catholicexchange.com/feed/'
+  ],
+  'ncregister': [
+    'https://www.ncregister.com/feeds/general-news.xml',
+    'https://www.catholicnewsagency.com/rss/news.xml'
+  ],
+  'catholic-digest': [
+    'https://www.catholicdigest.com/feed/',
+    'https://aleteia.org/feed/'
+  ],
+  'cerc': [
+    'https://catholiceducation.org/feed/',
+    'https://crisismagazine.com/feed/'
+  ],
+  'cbcp': [
+    'https://cbcpnews.net/cbcpnews/feed/',
+    'https://www.vaticannews.va/en.rss.xml'
+  ]
 };
+
+async function fetchViteUpstreamRssXml(url: string): Promise<string> {
+  try {
+    const res1 = await fetch(url, {
+      headers: {
+        'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+      },
+      signal: AbortSignal.timeout(4500)
+    });
+    if (res1.ok) {
+      const txt1 = await res1.text();
+      if (txt1 && (/<item[\s>]/i.test(txt1) || /<entry[\s>]/i.test(txt1))) {
+        return txt1;
+      }
+    }
+  } catch {
+    // Fallback below
+  }
+
+  const res2 = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+      'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+    },
+    signal: AbortSignal.timeout(4500)
+  });
+  if (!res2.ok) {
+    throw new Error(`HTTP ${res2.status}`);
+  }
+  const txt2 = await res2.text();
+  if (!txt2 || (!/<item[\s>]/i.test(txt2) && !/<entry[\s>]/i.test(txt2))) {
+    throw new Error('Invalid RSS XML');
+  }
+  return txt2;
+}
 
 const CATHOLIC_AI_SYSTEM_INSTRUCTION = `You are the Soul Sanctum Catholic Assistant, an authoritative, reverent, scholarly, and pastoral Catholic theological research and essay-writing assistant.
 
@@ -255,6 +311,7 @@ function vaticanNewsPlugin() {
           const xml = await response.text();
           res.setHeader('Content-Type', 'application/xml; charset=utf-8');
           res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
           res.end(xml);
         } catch (err: any) {
           res.statusCode = 500;
@@ -265,39 +322,20 @@ function vaticanNewsPlugin() {
       server.middlewares.use('/api/catholic-rss', async (req: any, res: any) => {
         try {
           const urlObj = new URL(req.url || '', 'http://localhost');
-          const sourceKey = urlObj.searchParams.get('source') || 'aleteia';
-          const isRefresh = urlObj.searchParams.get('refresh') === '1';
-          const candidateUrls = CATHOLIC_RSS_FEEDS[sourceKey];
-          if (!candidateUrls || candidateUrls.length === 0) {
-            res.statusCode = 400;
-            res.end(JSON.stringify({ error: 'Unknown RSS source' }));
-            return;
-          }
+          const sourceKey = urlObj.searchParams.get('source') || 'st-paul-center';
+          const candidateUrls = CATHOLIC_RSS_FEEDS[sourceKey] || CATHOLIC_RSS_FEEDS['st-paul-center'];
 
-          let validXml = '';
+          const collectedItems: string[] = [];
           let lastErr: any = null;
 
-          for (const baseTargetUrl of candidateUrls) {
+          for (const targetUrl of candidateUrls) {
             try {
-              const targetUrl = isRefresh
-                ? `${baseTargetUrl}${baseTargetUrl.includes('?') ? '&' : '?'}_cb=${Date.now()}`
-                : baseTargetUrl;
-
-              const response = await fetch(targetUrl, {
-                headers: {
-                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-                  'Accept': 'application/rss+xml, application/xml, text/xml, */*',
-                  'Cache-Control': 'no-cache, no-store, must-revalidate',
-                  'Pragma': 'no-cache'
-                },
-                signal: AbortSignal.timeout(5500)
-              });
-              if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
+              const xml = await fetchViteUpstreamRssXml(targetUrl);
+              const itemMatches = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) || [];
+              for (const itemXml of itemMatches) {
+                collectedItems.push(itemXml);
               }
-              const xml = await response.text();
-              if (xml && (/<item[\s>]/i.test(xml) || /<entry[\s>]/i.test(xml))) {
-                validXml = xml;
+              if (collectedItems.length >= 15) {
                 break;
               }
             } catch (err: any) {
@@ -305,14 +343,16 @@ function vaticanNewsPlugin() {
             }
           }
 
-          if (!validXml) {
+          if (collectedItems.length === 0) {
             throw lastErr || new Error('No RSS items returned from upstream feed');
           }
+
+          const combinedXml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>${sourceKey}</title>${collectedItems.slice(0, 30).join('\n')}</channel></rss>`;
 
           res.setHeader('Content-Type', 'application/xml; charset=utf-8');
           res.setHeader('Access-Control-Allow-Origin', '*');
           res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-          res.end(validXml);
+          res.end(combinedXml);
         } catch (err: any) {
           res.statusCode = 502;
           res.setHeader('Content-Type', 'application/json');

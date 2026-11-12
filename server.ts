@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
@@ -151,14 +152,6 @@ function resolveRegionalLocaleForVoice(chosenVoice: string): string {
     'persona-clara': 'en-AU',
     'persona-aria': 'en-ZA',
     'persona-samantha': 'en-IN',
-    'kokoro-af_heart': 'en-US',
-    'kokoro-af_bella': 'en-CA',
-    'kokoro-af_sky': 'en-AU',
-    'kokoro-bf_emma': 'en-GB',
-    'kokoro-am_adam': 'en-US',
-    'kokoro-am_michael': 'en-CA',
-    'kokoro-bm_george': 'en-GB',
-    'kokoro-bm_fable': 'en-IE',
   };
 
   if (localeMap[chosenVoice]) {
@@ -187,7 +180,7 @@ function resolveRegionalLocaleForVoice(chosenVoice: string): string {
   return 'en-US';
 }
 
-// Dedicated Multi-Voice Text-to-Speech Endpoint
+// Dedicated Multi-Voice Text-to-Speech Endpoint (Supports Kore, OpenAI TTS, and Multi-Regional Neural TTS)
 app.post('/api/tts', async (req, res) => {
   try {
     const { text, voiceName = 'gemini-Kore', apiKey } = req.body || {};
@@ -198,7 +191,7 @@ app.post('/api/tts', async (req, res) => {
     const chosenVoice = voiceName || 'gemini-Kore';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
     const locale = resolveRegionalLocaleForVoice(chosenVoice);
-    const cacheKey = `regional:${chosenVoice}:${locale}:${apiKey ? 'custom' : 'default'}:${cleanText.slice(0, 1800)}`;
+    const cacheKey = `tts:v4:${chosenVoice}:${locale}:${apiKey ? 'custom' : 'default'}:${cleanText.slice(0, 1800)}`;
 
     const cached = ttsMemoryCache.get(cacheKey);
     if (cached) {
@@ -505,58 +498,98 @@ app.all('/api/catholic-ai', async (req, res) => {
 });
 
 const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
-  'aleteia': ['https://aleteia.org/feed/'],
-  'ncregister': ['https://www.ncregister.com/feeds/general-news.xml'],
-  'cbcp': ['https://cbcpnews.net/cbcpnews/feed/', 'https://www.vaticannews.va/en.rss.xml'],
-  'catholic-digest': ['https://www.catholicdigest.com/feed/', 'https://aleteia.org/feed/'],
-  'catholic-insight': [
-    'https://www.catholicworldreport.com/feed/',
-    'https://crisismagazine.com/feed',
-    'https://catholicinsight.com/feed/'
-  ],
-  'catholic-answers': ['https://www.catholic.com/feeds/magazine/rss'],
-  'word-on-fire': ['https://www.wordonfire.org/articles/feed/'],
   'st-paul-center': [
-    'https://www.scotthahn.com/blog?format=rss',
+    'https://catholicexchange.com/feed/',
     'https://www.catholicworldreport.com/feed/'
   ],
-  'cerc': ['https://catholiceducation.org/feed/', 'https://crisismagazine.com/feed'],
-  'sign-org': ['https://sign.org/feed/']
+  'catholic-answers': [
+    'https://www.catholic.com/feeds/magazine/rss',
+    'https://catholicexchange.com/feed/'
+  ],
+  'word-on-fire': [
+    'https://www.wordonfire.org/articles/feed/'
+  ],
+  'catholic-insight': [
+    'https://www.catholicworldreport.com/feed/',
+    'https://crisismagazine.com/feed/'
+  ],
+  'aleteia': [
+    'https://aleteia.org/feed/'
+  ],
+  'sign-org': [
+    'https://spiritualdirection.com/feed',
+    'https://catholicexchange.com/feed/'
+  ],
+  'ncregister': [
+    'https://www.ncregister.com/feeds/general-news.xml',
+    'https://www.catholicnewsagency.com/rss/news.xml'
+  ],
+  'catholic-digest': [
+    'https://www.catholicdigest.com/feed/',
+    'https://aleteia.org/feed/'
+  ],
+  'cerc': [
+    'https://catholiceducation.org/feed/',
+    'https://crisismagazine.com/feed/'
+  ],
+  'cbcp': [
+    'https://cbcpnews.net/cbcpnews/feed/',
+    'https://www.vaticannews.va/en.rss.xml'
+  ]
 };
+
+async function fetchUpstreamRssXml(url: string): Promise<string> {
+  // First attempt with standard fetch (avoids Cloudflare 403 on sites like Catholic World Report & CERC)
+  try {
+    const res1 = await fetch(url, {
+      headers: {
+        'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+      },
+      signal: AbortSignal.timeout(4500)
+    });
+    if (res1.ok) {
+      const txt1 = await res1.text();
+      if (txt1 && (/<item[\s>]/i.test(txt1) || /<entry[\s>]/i.test(txt1))) {
+        return txt1;
+      }
+    }
+  } catch {
+    // Fallback to browser UA below
+  }
+
+  const res2 = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+      'Accept': 'application/rss+xml, application/xml, text/xml, */*'
+    },
+    signal: AbortSignal.timeout(4500)
+  });
+  if (!res2.ok) {
+    throw new Error(`HTTP ${res2.status}`);
+  }
+  const txt2 = await res2.text();
+  if (!txt2 || (!/<item[\s>]/i.test(txt2) && !/<entry[\s>]/i.test(txt2))) {
+    throw new Error('Invalid RSS XML');
+  }
+  return txt2;
+}
 
 app.get('/api/catholic-rss', async (req, res) => {
   try {
-    const sourceKey = typeof req.query.source === 'string' ? req.query.source : 'aleteia';
-    const isRefresh = req.query.refresh === '1';
-    const candidateUrls = SERVER_CATHOLIC_RSS_FEEDS[sourceKey];
-    if (!candidateUrls || candidateUrls.length === 0) {
-      return res.status(400).json({ error: 'Unknown RSS source' });
-    }
+    const sourceKey = typeof req.query.source === 'string' ? req.query.source : 'st-paul-center';
+    const candidateUrls = SERVER_CATHOLIC_RSS_FEEDS[sourceKey] || SERVER_CATHOLIC_RSS_FEEDS['st-paul-center'];
 
-    let validXml = '';
+    const collectedItems: string[] = [];
     let lastErr: any = null;
 
-    for (const baseTargetUrl of candidateUrls) {
+    for (const targetUrl of candidateUrls) {
       try {
-        const targetUrl = isRefresh
-          ? `${baseTargetUrl}${baseTargetUrl.includes('?') ? '&' : '?'}_cb=${Date.now()}`
-          : baseTargetUrl;
-
-        const response = await fetch(targetUrl, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-            'Accept': 'application/rss+xml, application/xml, text/xml, */*',
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache'
-          },
-          signal: AbortSignal.timeout(5500)
-        });
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+        const xml = await fetchUpstreamRssXml(targetUrl);
+        const itemMatches = xml.match(/<item[\s>][\s\S]*?<\/item>/gi) || [];
+        for (const itemXml of itemMatches) {
+          collectedItems.push(itemXml);
         }
-        const xml = await response.text();
-        if (xml && (/<item[\s>]/i.test(xml) || /<entry[\s>]/i.test(xml))) {
-          validXml = xml;
+        if (collectedItems.length >= 15) {
           break;
         }
       } catch (err: any) {
@@ -564,16 +597,178 @@ app.get('/api/catholic-rss', async (req, res) => {
       }
     }
 
-    if (!validXml) {
+    if (collectedItems.length === 0) {
       throw lastErr || new Error('No RSS items returned from upstream feed');
     }
+
+    const combinedXml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>${sourceKey}</title>${collectedItems.slice(0, 30).join('\n')}</channel></rss>`;
 
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
-    return res.send(validXml);
+    return res.send(combinedXml);
   } catch (err: any) {
     return res.status(502).json({ error: err?.message || 'RSS fetch error' });
+  }
+});
+
+app.get('/api/vatican-news', async (_req, res) => {
+  try {
+    const xml = await fetchUpstreamRssXml('https://www.vaticannews.va/en.rss.xml');
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    return res.send(xml);
+  } catch (err: any) {
+    return res.status(500).json({ error: err?.message || 'Vatican RSS error' });
+  }
+});
+
+app.get('/api/catholic-article-full', async (req, res) => {
+  try {
+    const articleUrl = typeof req.query.url === 'string' ? req.query.url : '';
+    if (!articleUrl || !/^https?:\/\//i.test(articleUrl)) {
+      return res.status(400).json({ error: 'Invalid article URL' });
+    }
+
+    let html = '';
+    try {
+      const r1 = await fetch(articleUrl, {
+        headers: {
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9'
+        },
+        signal: AbortSignal.timeout(7000)
+      });
+      if (r1.ok) {
+        html = await r1.text();
+      }
+    } catch {
+      // Try browser UA next
+    }
+
+    if (!html) {
+      const r2 = await fetch(articleUrl, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9'
+        },
+        signal: AbortSignal.timeout(7000)
+      });
+      if (!r2.ok) {
+        throw new Error(`HTTP ${r2.status}`);
+      }
+      html = await r2.text();
+    }
+
+    const decodeEntities = (str: string): string =>
+      str
+        .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+        .replace(/&#8217;|&#039;|&apos;|&rsquo;/g, "'")
+        .replace(/&#8216;|&lsquo;/g, "'")
+        .replace(/&#8220;|&quot;|&ldquo;/g, '"')
+        .replace(/&#8221;|&rdquo;/g, '"')
+        .replace(/&#8211;|&ndash;/g, '–')
+        .replace(/&#8212;|&mdash;/g, '—')
+        .replace(/&#8230;|&hellip;/g, '…')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&nbsp;|&#160;/g, ' ')
+        .replace(/&#x([0-9a-fA-F]+);/g, (_m, hex) => String.fromCharCode(parseInt(hex, 16)))
+        .replace(/&#(\d+);/g, (_m, dec) => String.fromCharCode(parseInt(dec, 10)));
+
+    const ogImageMatch =
+      html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i) ||
+      html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+    const ogImage = ogImageMatch ? decodeEntities(ogImageMatch[1].trim()) : undefined;
+
+    let extractedText = '';
+    const ldJsonMatches = Array.from(
+      html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)
+    );
+    for (const match of ldJsonMatches) {
+      try {
+        const parsed = JSON.parse(match[1].trim());
+        const candidates = Array.isArray(parsed)
+          ? parsed
+          : parsed['@graph'] && Array.isArray(parsed['@graph'])
+            ? parsed['@graph']
+            : [parsed];
+        for (const item of candidates) {
+          if (item && typeof item.articleBody === 'string' && item.articleBody.trim().length > 400) {
+            extractedText = decodeEntities(item.articleBody.trim())
+              .replace(/\r\n/g, '\n')
+              .replace(/\n{3,}/g, '\n\n');
+            break;
+          }
+        }
+        if (extractedText.length > 400) break;
+      } catch {
+        // ignore malformed JSON-LD
+      }
+    }
+
+    const cleanHtml = html
+      .replace(/<script[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[\s\S]*?<\/style>/gi, '')
+      .replace(/<noscript[\s\S]*?<\/noscript>/gi, '')
+      .replace(/<svg[\s\S]*?<\/svg>/gi, '')
+      .replace(/<nav[\s\S]*?<\/nav>/gi, '')
+      .replace(/<footer[\s\S]*?<\/footer>/gi, '')
+      .replace(/<aside[\s\S]*?<\/aside>/gi, '')
+      .replace(/<form[\s\S]*?<\/form>/gi, '');
+
+    const articleMatch =
+      cleanHtml.match(/<div[^>]+class=["'][^"']*(?:entry-content|post-content|article-content|article-body|td-post-content|single-content|c-article-content)[^"']*["'][^>]*>([\s\S]*?)<\/div>\s*(?:<footer|<div[^>]+class=["'][^"']*(?:post-footer|sharedaddy|related|tags|author-box))/i) ||
+      cleanHtml.match(/<article[^>]*>([\s\S]*?)<\/article>/i) ||
+      cleanHtml.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
+
+    const scopeHtml = articleMatch ? articleMatch[1] : cleanHtml;
+
+    const blocks: string[] = [];
+    const blockRegex = /<(p|h2|h3|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+    let m: RegExpExecArray | null;
+    const boilerplatePatterns = /^(?:read more|related:|also read:|subscribe to|sign up for|follow us on|share this|click here|advertisement|copyright ©|all rights reserved|support .* journalism|donate today|already a subscriber)/i;
+
+    while ((m = blockRegex.exec(scopeHtml)) !== null) {
+      const tag = m[1].toLowerCase();
+      const text = decodeEntities(
+        m[2]
+          .replace(/<br\s*\/?>/gi, '\n')
+          .replace(/<[^>]+>/g, '')
+          .replace(/\s+/g, ' ')
+          .trim()
+      );
+      if (!text) continue;
+      if (boilerplatePatterns.test(text)) continue;
+      if (tag === 'p' && text.length < 35 && !/[.!?"]$/.test(text)) continue;
+      if (blocks.includes(text)) continue;
+
+      if (tag === 'h2' || tag === 'h3') {
+        blocks.push(`\n${text}`);
+      } else if (tag === 'blockquote') {
+        blocks.push(`“${text.replace(/^["“]|["”]$/g, '')}”`);
+      } else {
+        blocks.push(text);
+      }
+    }
+
+    const htmlParagraphsText = blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+    const finalContent =
+      htmlParagraphsText.length > extractedText.length * 0.75 && htmlParagraphsText.length > 350
+        ? htmlParagraphsText
+        : extractedText || htmlParagraphsText;
+
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return res.json({
+      content: finalContent,
+      imageUrl: ogImage
+    });
+  } catch (err: any) {
+    return res.status(502).json({ error: err?.message || 'Article fetch error' });
   }
 });
 

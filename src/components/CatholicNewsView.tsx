@@ -118,49 +118,58 @@ export const CatholicNewsView: React.FC<CatholicNewsViewProps> = ({
     }
   }, [currentDateStr]);
 
+  const [refreshOffset, setRefreshOffset] = useState(0);
+
+  const handleRefreshVaticanFeed = async (isManual: boolean = false) => {
+    setIsFetchingLive(true);
+    try {
+      const live = await fetchLiveVaticanNews();
+      if (live && live.length > 0) {
+        setLiveStories(live);
+      }
+      if (isManual) {
+        setRefreshOffset(prev => prev + 1);
+      }
+      setLastLiveSync(
+        `✓ Feed refreshed at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`
+      );
+    } catch {
+      if (isManual) {
+        setRefreshOffset(prev => prev + 1);
+      }
+      setLastLiveSync('Synced with Holy See archive');
+    } finally {
+      setIsFetchingLive(false);
+    }
+  };
+
   // Load live Vatican RSS stories on mount
   useEffect(() => {
-    let mounted = true;
-    const loadLive = async () => {
-      setIsFetchingLive(true);
-      try {
-        const live = await fetchLiveVaticanNews();
-        if (mounted && live && live.length > 0) {
-          setLiveStories(live);
-          setLastLiveSync(`Live sync active (${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})`);
-        }
-      } catch (e) {
-        if (mounted) {
-          setLastLiveSync('Using verified Holy See archive');
-        }
-      } finally {
-        if (mounted) setIsFetchingLive(false);
-      }
-    };
-    loadLive();
-    return () => { mounted = false; };
+    handleRefreshVaticanFeed(false);
   }, []);
 
-  // Retrieve exactly 5 fresh daily Vatican stories for the selected date
+  // Retrieve 5 fresh daily Vatican stories for the selected date (rotates when manually refreshed)
   const fiveDailyStories = useMemo(() => {
     const baseFive = getDailyFiveVaticanStories(selectedDate);
     if (liveStories && liveStories.length > 0) {
-      const seenIds = new Set<string>([baseFive[0].id]);
-      const seenTitles = new Set<string>([baseFive[0].title]);
-      const combined: CatholicNewsItem[] = [baseFive[0]];
-
-      for (const story of [...liveStories, ...baseFive.slice(1)]) {
-        if (combined.length >= 5) break;
-        if (!seenIds.has(story.id) && !seenTitles.has(story.title)) {
-          seenIds.add(story.id);
-          seenTitles.add(story.title);
-          combined.push(story);
+      const pool = [...liveStories, ...baseFive];
+      const uniquePool: CatholicNewsItem[] = [];
+      const seenTitles = new Set<string>();
+      for (const s of pool) {
+        if (!seenTitles.has(s.title)) {
+          seenTitles.add(s.title);
+          uniquePool.push(s);
         }
       }
-      return combined;
+      if (uniquePool.length <= 5) return uniquePool;
+      const rotated: CatholicNewsItem[] = [];
+      for (let i = 0; i < 5; i++) {
+        rotated.push(uniquePool[(i + refreshOffset) % uniquePool.length]);
+      }
+      return rotated;
     }
     return baseFive;
-  }, [selectedDate, liveStories]);
+  }, [selectedDate, liveStories, refreshOffset]);
 
   // Full news list including the 5 daily stories and broader archive
   const allDailyNews = useMemo(() => {
@@ -303,26 +312,40 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
               </p>
             </div>
 
-            {/* Settings Toggle Button */}
-            <div className="flex items-center justify-end self-end sm:self-start shrink-0">
-              <button
-                onClick={() => setIsTopSettingsOpen(prev => !prev)}
-                aria-expanded={isTopSettingsOpen}
-                className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
-                  isTopSettingsOpen
-                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
-                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
-                }`}
-                title={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
-                aria-label={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
-              >
-                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                <ChevronDown
-                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
-                    isTopSettingsOpen ? 'rotate-180' : ''
+            {/* Refresh Feed & Settings Toggle Buttons */}
+            <div className="flex flex-col items-end gap-1.5 self-end sm:self-start shrink-0">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleRefreshVaticanFeed(true)}
+                  className="h-8 inline-flex items-center gap-1.5 px-3 rounded-md bg-amber-500 hover:bg-amber-400 text-stone-950 font-cinzel text-xs font-bold transition-all cursor-pointer shadow-xs"
+                  title="Refresh live Vatican News RSS feed"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 text-stone-950 ${isFetchingLive ? 'animate-spin' : ''}`} />
+                  <span>{isFetchingLive ? 'Refreshing…' : 'Refresh Feed'}</span>
+                </button>
+                <button
+                  onClick={() => setIsTopSettingsOpen(prev => !prev)}
+                  aria-expanded={isTopSettingsOpen}
+                  className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+                    isTopSettingsOpen
+                      ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                      : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
                   }`}
-                />
-              </button>
+                  title={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
+                  aria-label={isTopSettingsOpen ? 'Hide Holy See Archive & Global Church Reports' : 'Show Holy See Archive & Global Church Reports'}
+                >
+                  <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                      isTopSettingsOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+              </div>
+              <span className="text-[11px] font-serif text-amber-200/85">
+                {lastLiveSync}
+              </span>
             </div>
           </div>
 

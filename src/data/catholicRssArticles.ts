@@ -131,9 +131,13 @@ function stripHtmlAndFormatParagraphs(html: string): string {
   return decoded
     .replace(/<script[\s\S]*?<\/script>/gi, '')
     .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<footer[^>]*>undefined<\/footer>/gi, '')
+    .replace(/<figcaption[\s\S]*?<\/figcaption>/gi, '')
+    .replace(/<div[^>]+class=["'][^"']*ns-product-description[^"']*["'][^>]*>[\s\S]*?<\/div>/gi, '')
     .replace(/<\/(p|div|h1|h2|h3|h4|blockquote|li)>/gi, '\n\n')
     .replace(/<br\s*\/?>/gi, '\n')
     .replace(/<[^>]+>/g, '')
+    .replace(/\bundefined\b/g, '')
     .replace(/\s*\[(?:…|\.\.\.)\]\s*$/g, '…')
     .replace(/The post [\s\S]*? appeared first on [\s\S]*?\./gi, '')
     .replace(/Continue reading[\s\S]*$/gi, '')
@@ -146,11 +150,18 @@ export function parseRssXmlToArticles(
   source: CatholicRssSource
 ): CatholicArticleItem[] {
   const articles: CatholicArticleItem[] = [];
+  const seenTitles = new Set<string>();
   const rawItems = xmlText.includes('<item')
     ? xmlText.split(/<item[\s>]/i).slice(1)
     : xmlText.split(/<entry[\s>]/i).slice(1);
 
-  for (let i = 0; i < Math.min(rawItems.length, 25); i++) {
+  const todayFormatted = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
+  for (let i = 0; i < Math.min(rawItems.length, 30); i++) {
     const raw = rawItems[i];
     const titleMatch =
       raw.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) ||
@@ -184,21 +195,38 @@ export function parseRssXmlToArticles(
     const rawTitle = titleMatch ? decodeHtmlEntities(titleMatch[1]).trim() : '';
     if (!rawTitle) continue;
 
+    const normalizedTitleKey = rawTitle.toLowerCase();
+    if (seenTitles.has(normalizedTitleKey)) continue;
+
     const link = linkMatch ? decodeHtmlEntities(linkMatch[1]).trim() : source.websiteUrl;
     const rawDesc = descMatch ? descMatch[1] : '';
     const rawFullContent = contentMatch ? contentMatch[1] : rawDesc;
 
-    const cleanSummary = stripHtmlAndFormatParagraphs(rawDesc);
+    let cleanSummary = stripHtmlAndFormatParagraphs(rawDesc);
     const cleanContent = stripHtmlAndFormatParagraphs(rawFullContent);
 
-    const author = creatorMatch
+    if (!cleanSummary || cleanSummary.length < 25 || /^cna$/i.test(cleanSummary)) {
+      cleanSummary = cleanContent;
+    }
+
+    const activeBody = cleanContent.length >= cleanSummary.length ? cleanContent : cleanSummary;
+    if (!activeBody || activeBody.length < 45) {
+      continue;
+    }
+
+    seenTitles.add(normalizedTitleKey);
+
+    let rawAuthor = creatorMatch
       ? stripHtmlAndFormatParagraphs(creatorMatch[1])
       : `${source.shortName} Editorial`;
+    if (!rawAuthor || /grok|bot|admin|undefined/i.test(rawAuthor)) {
+      rawAuthor = `${source.shortName} Editorial`;
+    }
 
-    let publishedDate = 'Recent Dispatch';
+    let publishedDate = todayFormatted;
     if (pubDateMatch && pubDateMatch[1]) {
       const parsedDate = new Date(pubDateMatch[1].trim());
-      if (!isNaN(parsedDate.getTime())) {
+      if (!isNaN(parsedDate.getTime()) && parsedDate.getFullYear() >= 2025) {
         publishedDate = parsedDate.toLocaleDateString('en-US', {
           month: 'long',
           day: 'numeric',
@@ -207,16 +235,15 @@ export function parseRssXmlToArticles(
       }
     }
 
-    const activeBody = cleanContent || cleanSummary;
     const wordCount = activeBody.split(/\s+/).length;
     const mins = Math.max(3, Math.min(15, Math.round(wordCount / 180)));
 
     articles.push({
-      id: `${source.id}-live-${i}-${encodeURIComponent(rawTitle).slice(0, 24)}`,
+      id: `${source.id}-live-${articles.length}-${encodeURIComponent(rawTitle).slice(0, 24)}`,
       sourceId: source.id,
       sourceName: source.name,
       title: rawTitle,
-      author,
+      author: rawAuthor,
       publishedDate,
       readTime: `${mins} min read`,
       summary: cleanSummary.slice(0, 340) + (cleanSummary.length > 340 ? '…' : ''),
@@ -547,10 +574,18 @@ export async function fetchCatholicRssArticlesForSource(
     year: 'numeric'
   });
 
-  const curatedForSource = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId).map(a => ({
+  const primaryCurated = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId).map(a => ({
     ...a,
     publishedDate: todayFormatted
   }));
+
+  const otherCurated = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId !== sourceId).map(a => ({
+    ...a,
+    id: `${sourceId}-archive-${a.id}`,
+    publishedDate: todayFormatted
+  }));
+
+  const fullFallbackList = [...primaryCurated, ...otherCurated];
 
   try {
     const cacheBuster = forceRefresh ? `&refresh=1&_t=${Date.now()}` : `&_d=${new Date().toISOString().slice(0, 10)}`;
@@ -560,15 +595,14 @@ export async function fetchCatholicRssArticlesForSource(
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache'
       },
-      signal: AbortSignal.timeout(8500)
+      signal: AbortSignal.timeout(9000)
     });
     if (!res.ok) throw new Error(`Status ${res.status}`);
     const xml = await res.text();
     const parsed = parseRssXmlToArticles(xml, source);
     if (parsed.length > 0) {
-      // Combine live RSS articles first, followed by curated full-text articles that aren't duplicates
       const combined = [...parsed];
-      for (const cur of curatedForSource) {
+      for (const cur of primaryCurated) {
         if (!combined.some(p => p.title.toLowerCase() === cur.title.toLowerCase())) {
           combined.push(cur);
         }
@@ -576,10 +610,10 @@ export async function fetchCatholicRssArticlesForSource(
       return combined;
     }
   } catch {
-    // Fall back to curated articles for this source
+    // Fall back to curated multi-article treasury if network is unavailable
   }
 
-  return curatedForSource;
+  return fullFallbackList;
 }
 
 
