@@ -231,7 +231,8 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
             <span>
               {currentPartId === 'first-reading' && 'Lector — First Reading'}
               {currentPartId === 'psalm' && 'Lector — Responsorial Psalm'}
-              {currentPartId === 'gospel' && 'Lector — Holy Gospel'}
+              {currentPartId === 'second-reading' && 'Lector — Second Reading'}
+              {currentPartId === 'gospel' && 'Lector — Holy Gospel (Microsoft David)'}
               {!currentPartId && (isPaused ? 'Lector Paused' : 'Lector Proclaiming')}
             </span>
           </div>

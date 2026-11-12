@@ -610,6 +610,54 @@ ${reading.gospel.text}`;
               {reading.gospel.citation}
             </p>
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (isReadingAloud && playingPartId === 'gospel') {
+                SacredReader.stop();
+                setIsReadingAloud(false);
+                setPlayingPartId(null);
+              } else {
+                setIsReadingAloud(true);
+                setPlayingPartId('gospel');
+                SacredReader.speakLiturgicalSequence(
+                  [
+                    {
+                      id: 'gospel',
+                      title: 'The Holy Gospel',
+                      gender: 'male',
+                      text: `${formatGospelIntro(reading.gospel.citation)} Glory to You, O Lord. ${reading.gospel.text}. The Gospel of the Lord. Praise to You, Lord Jesus Christ.`
+                    }
+                  ],
+                  () => {
+                    setIsReadingAloud(false);
+                    setPlayingPartId(null);
+                  },
+                  (part) => {
+                    setPlayingPartId(part.id || null);
+                  }
+                );
+              }
+            }}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg font-serif font-semibold text-xs sm:text-sm transition-all cursor-pointer border shrink-0 ${
+              isReadingAloud && playingPartId === 'gospel'
+                ? 'bg-red-800 hover:bg-red-700 text-white border-red-900 shadow-md'
+                : 'bg-[#F8F4ED] hover:bg-[#EFE6D5] text-red-950 border-[#D5C3AA] shadow-2xs'
+            }`}
+            title="Listen to the Holy Gospel read by Microsoft David"
+          >
+            {isReadingAloud && playingPartId === 'gospel' ? (
+              <>
+                <VolumeX className="w-4 h-4 text-amber-200 animate-pulse" />
+                <span>Stop Gospel (Microsoft David)</span>
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-4 h-4 text-red-900" />
+                <span>Listen to Gospel (Microsoft David)</span>
+              </>
+            )}
+          </button>
         </div>
 
         <div className="font-serif-sacred text-stone-900 whitespace-pre-line sacred-drop-cap" style={scriptureStyle}>

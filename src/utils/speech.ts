@@ -860,6 +860,79 @@ export class SacredReader {
     }
   }
 
+  private static getInstalledDavidVoice(): SpeechSynthesisVoice | null {
+    const s = this.getSynth();
+    if (!s) return null;
+    const liveVoices = s.getVoices();
+    if (liveVoices && liveVoices.length > 0) {
+      this.cachedVoices = liveVoices;
+    }
+    const all = this.cachedVoices.length > 0 ? this.cachedVoices : [];
+    return (
+      all.find(v => v.name.toLowerCase().includes('microsoft david')) ||
+      all.find(v => v.name.toLowerCase().includes('david') && !isFemaleVoiceName(v.name)) ||
+      null
+    );
+  }
+
+  private static async speakWithLocalVoiceChunks(
+    fullText: string,
+    voice: SpeechSynthesisVoice,
+    pitch: number,
+    rate: number,
+    token: number,
+    onFirstChunkStart?: () => void
+  ): Promise<boolean> {
+    const s = this.getSynth();
+    if (!s) return false;
+
+    const chunks = this.splitIntoSpeechChunks(fullText, 240);
+    if (chunks.length === 0) return false;
+
+    for (let i = 0; i < chunks.length; i++) {
+      if (this.activePlaybackToken !== token) return true;
+
+      const chunkOk = await new Promise<boolean>((resolve) => {
+        if (this.activePlaybackToken !== token) {
+          resolve(true);
+          return;
+        }
+        const utterance = new SpeechSynthesisUtterance(chunks[i]);
+        utterance.voice = voice;
+        utterance.lang = voice.lang || 'en-US';
+        utterance.pitch = pitch;
+        utterance.rate = rate;
+        this.activeUtterance = utterance;
+
+        utterance.onstart = () => {
+          if (this.activePlaybackToken !== token) return;
+          this.startKeepAlive();
+          if (i === 0 && onFirstChunkStart) {
+            onFirstChunkStart();
+          }
+        };
+
+        utterance.onend = () => {
+          this.stopKeepAlive();
+          resolve(true);
+        };
+
+        utterance.onerror = () => {
+          this.stopKeepAlive();
+          resolve(false);
+        };
+
+        s.speak(utterance);
+      });
+
+      if (!chunkOk && this.activePlaybackToken === token) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   private static isExplicitInstalledSystemVoice(voiceKey: string): boolean {
     if (!voiceKey) return false;
     if (
@@ -1554,6 +1627,23 @@ export class SacredReader {
     const activeKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
     let targetVoiceKey = activeKey;
     if (voiceOrGenderOrRate === 'david' || voiceOrGenderOrRate === 'male') {
+      const davidVoice = this.getInstalledDavidVoice();
+      if (davidVoice) {
+        const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : (customRate || this.currentRate || 0.92);
+        const playedDavid = await this.speakWithLocalVoiceChunks(
+          cleanText,
+          davidVoice,
+          1.0,
+          rateOverride,
+          token,
+          () => this.notify(true)
+        );
+        if (playedDavid && this.activePlaybackToken === token) {
+          this.notify(false);
+          if (onEnd) onEnd();
+          return;
+        }
+      }
       targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey) ? activeKey : 'gemini-Charon';
     } else if (voiceOrGenderOrRate === 'ava-grace' || voiceOrGenderOrRate === 'female') {
       targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey) ? activeKey : (activeKey.startsWith('gemini-') || activeKey.startsWith('persona-') ? activeKey : 'gemini-Kore');
@@ -1614,7 +1704,7 @@ export class SacredReader {
 
   /**
    * Speak multiple parts in sequence, alternating voices per part:
-   * First Reading by Kore (woman), Responsorial Psalm by Kore (woman), Gospel by Charon/David (man).
+   * First Reading by Kore (woman), Responsorial Psalm by Kore (woman), Holy Gospel by Microsoft David.
    */
   public static speakLiturgicalSequence(
     parts: SpeechPart[],
@@ -1651,29 +1741,44 @@ export class SacredReader {
         return;
       }
 
-      // Determine voice to use for this part:
-      // First Reading, Psalm, Second Reading -> Kore ('gemini-Kore') unless user explicitly chose another voice
-      // Holy Gospel -> Charon ('gemini-Charon') or explicit male system voice
-      let targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
-
+      // Holy Gospel is always proclaimed by Microsoft David (if installed on the system)
       if (currentPart.id === 'gospel' || currentPart.gender === 'male') {
-        if (this.isExplicitInstalledSystemVoice(activeVoiceKey) && isMaleVoiceName(activeVoiceKey)) {
-          targetVoiceForPart = activeVoiceKey;
-        } else if (
-          activeVoiceKey.includes('Charon') ||
-          activeVoiceKey.includes('Fenrir') ||
-          activeVoiceKey.includes('Puck') ||
-          activeVoiceKey.includes('Zephyr')
-        ) {
-          targetVoiceForPart = activeVoiceKey;
-        } else {
-          targetVoiceForPart = 'gemini-Charon';
+        const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
+        if (davidVoice) {
+          const playedDavid = await this.speakWithLocalVoiceChunks(
+            cleanText,
+            davidVoice,
+            1.0,
+            this.currentRate || 0.92,
+            token,
+            () => {
+              if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+              this.notify(true, currentPart.id);
+              if (onPartStart) onPartStart(currentPart, index);
+            }
+          );
+
+          if (playedDavid) {
+            if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+            this.pauseTimer = setTimeout(() => {
+              if (this.isSequenceActive && this.activePlaybackToken === token) {
+                playNext(index + 1);
+              }
+            }, 350);
+            return;
+          }
         }
+      }
+
+      // Determine voice to use for server TTS (First Reading, Psalm, Second Reading -> Kore; Gospel fallback -> Charon)
+      let targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
+      if (currentPart.id === 'gospel' || currentPart.gender === 'male') {
+        targetVoiceForPart = 'gemini-Charon';
       } else {
         targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
       }
 
-      // 1. Play via server-side Gemini 3.8 TTS (Kore / Charon) with chunked prefetching
+      // 1. Play via server-side Gemini 3.8 TTS (Kore for First Reading/Psalm) with chunked prefetching
       const playedServer = await this.playServerTtsSequence(
         cleanText,
         targetVoiceForPart,
@@ -1698,7 +1803,7 @@ export class SacredReader {
 
       if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
 
-      // 2. Client Web Speech synthesis fallback (for explicit local installed voices like Microsoft David)
+      // 2. Client Web Speech synthesis fallback
       if (!this.synth && typeof window !== 'undefined') {
         this.synth = window.speechSynthesis;
       }
