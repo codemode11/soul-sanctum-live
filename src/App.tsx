@@ -46,8 +46,7 @@ import { SacredReader } from './utils/speech';
 import {
   CatholicArticleItem,
   CURATED_CATHOLIC_ARTICLES,
-  fetchCatholicRssArticlesForSource,
-  isLiveCatholicArticle
+  fetchCatholicRssArticlesForSource
 } from './data/catholicRssArticles';
 
 import { getMassReadingsForDate } from './data/massReadings';
@@ -92,14 +91,14 @@ export default function App() {
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
-      const stored = localStorage.getItem('sanctum_establishing_image_v5');
+      const stored = localStorage.getItem('sanctum_establishing_image_v6');
       if (!stored) {
-        localStorage.setItem('sanctum_establishing_image_v5', 'faith-scholarship-science');
-        return 'faith-scholarship-science';
+        localStorage.setItem('sanctum_establishing_image_v6', 'pope-leo-peru-homecoming');
+        return 'pope-leo-peru-homecoming';
       }
       return stored;
     } catch {
-      return 'faith-scholarship-science';
+      return 'pope-leo-peru-homecoming';
     }
   });
 
@@ -148,7 +147,7 @@ export default function App() {
   const handleSelectEstablishingImage = (img: NiepokalanowHighResImage) => {
     setActiveEstablishingImageId(img.id);
     try {
-      localStorage.setItem('sanctum_establishing_image_v5', img.id);
+      localStorage.setItem('sanctum_establishing_image_v6', img.id);
     } catch {
       // ignore storage errors
     }
@@ -290,24 +289,31 @@ export default function App() {
   const [activeCatholicArticleSourceId, setActiveCatholicArticleSourceId] = useState<string | null>(null);
   const [activeCatholicArticleId, setActiveCatholicArticleId] = useState<string | null>(null);
   const [featuredMastheadArticle, setFeaturedMastheadArticle] = useState<CatholicArticleItem>(
-    () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'cerc-curated-1') || CURATED_CATHOLIC_ARTICLES[0]
+    () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'aleteia-peru-homecoming') || CURATED_CATHOLIC_ARTICLES[0]
   );
 
   useEffect(() => {
     let cancelled = false;
     const loadFeaturedArticle = async () => {
-      const preferredSources = ['aleteia', 'st-paul-center', 'ncregister', 'cerc'];
-      for (const srcId of preferredSources) {
-        try {
-          const items = await fetchCatholicRssArticlesForSource(srcId, true);
-          const liveItem = items.find(isLiveCatholicArticle);
-          if (!cancelled && liveItem) {
-            setFeaturedMastheadArticle(liveItem);
-            return;
-          }
-        } catch {
-          // Try next source
+      try {
+        const items = await fetchCatholicRssArticlesForSource('aleteia', true);
+        const peruStory = items.find(
+          item =>
+            item.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
+            item.title.toLowerCase().includes('what a homecoming')
+        );
+        if (!cancelled && peruStory) {
+          setFeaturedMastheadArticle({
+            ...peruStory,
+            author: 'Kathleen N. Hattrup',
+            publishedDate: 'November 12, 2026',
+            readTime: '6 min read',
+            imageUrl: '/images/sacred-art/pope_leo_lima_peru.jpg',
+            imageCredit: 'SIMONE RISOLUTI | VATICAN MEDIA | AFP'
+          });
         }
+      } catch {
+        // Keep curated Peru homecoming story
       }
     };
     loadFeaturedArticle();
@@ -514,6 +520,26 @@ export default function App() {
               {/* Subtle bottom edge feathering so the priest remains completely visible */}
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
             </div>
+          ) : activeEstablishingImage.id === 'pope-leo-peru-homecoming' ? (
+            <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
+              <img
+                src={activeEstablishingImage.imageUrl}
+                alt={activeEstablishingImage.title}
+                decoding="async"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('img.aleteia.org')) {
+                    target.src = 'https://img.aleteia.org/tr:w-1600,q-85/2026/11/AMPTPN1126-pope-leo-xiv-government-palace-plaza-mayor-lima-peru-2026-000_D78H9KF.jpg';
+                  } else {
+                    target.src = '/images/sacred-art/faith_scholarship_peaceful_sky.jpg?v=3';
+                  }
+                }}
+                className="w-full h-full mx-auto object-cover object-[50%_20%] brightness-[0.97] contrast-[1.05] transform-gpu"
+              />
+              {/* Subtle bottom gradient behind Main Story card */}
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-stone-950/85 to-transparent pointer-events-none" />
+            </div>
           ) : (
             <div className="relative w-full h-[80vh] sm:h-[100vh] -mt-6 sm:-mt-20 flex items-center justify-center overflow-hidden transform-gpu">
               <img
@@ -601,9 +627,9 @@ export default function App() {
                 {featuredMastheadArticle.summary}
               </p>
 
-              <div className="pt-1.5 sm:pt-2 flex items-center justify-center sm:justify-between gap-3">
-                <span className="hidden sm:inline text-xs font-serif text-amber-200/80">
-                  {featuredMastheadArticle.publishedDate} • {featuredMastheadArticle.author}
+              <div className="pt-1.5 sm:pt-2 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 sm:gap-3">
+                <span className="text-[11px] sm:text-xs font-serif text-amber-200/90">
+                  By {featuredMastheadArticle.author} • {featuredMastheadArticle.publishedDate} • {featuredMastheadArticle.readTime}
                 </span>
                 <button
                   onClick={() => {
@@ -618,6 +644,13 @@ export default function App() {
                 </button>
               </div>
             </div>
+            {(featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort) && (
+              <div className="max-w-4xl mx-auto mt-1.5 px-2 text-right">
+                <span className="text-[10px] sm:text-[11px] font-cinzel tracking-wider uppercase text-amber-100/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
+                  Credit: {featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort}
+                </span>
+              </div>
+            )}
           </div>
         </div>
 

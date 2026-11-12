@@ -15,6 +15,18 @@ export interface NiepokalanowHighResImage {
 
 export const NIEPOKALANOW_HIGH_RES_IMAGES: NiepokalanowHighResImage[] = [
   {
+    id: 'pope-leo-peru-homecoming',
+    title: "What a homecoming! Pope’s arrival in Peru hits all the right notes — Lima, Peru (November 11, 2026)",
+    shortLabel: '0. Pope Leo XIV Homecoming in Peru',
+    resolution: '1600 × 1067 High-Res',
+    imageUrl: '/images/sacred-art/pope_leo_lima_peru.jpg',
+    description: 'Pope Leo XIV greets guests alongside Peru’s President Keiko Fujimori during a welcome ceremony at the Government Palace in Lima on November 11, 2026.',
+    attributionText: 'Credit: SIMONE RISOLUTI | VATICAN MEDIA | AFP',
+    creditShort: 'SIMONE RISOLUTI | VATICAN MEDIA | AFP',
+    attributionUrl: 'https://aleteia.org/2026/11/12/what-a-homecoming-popes-arrival-in-peru-hits-all-the-right-notes/',
+    objectPosition: '50% 20%'
+  },
+  {
     id: 'faith-scholarship-science',
     title: 'How the Catholic Church Built Western Civilization — Faith, Scholarship, and Scientific Discovery',
     shortLabel: '1. Faith, Scholarship & Scientific Discovery',

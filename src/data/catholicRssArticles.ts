@@ -20,6 +20,7 @@ export interface CatholicArticleItem {
   content: string;
   link: string;
   imageUrl?: string;
+  imageCredit?: string;
   categories: string[];
   isFullContentLoaded?: boolean;
 }
@@ -293,6 +294,47 @@ export function parseRssXmlToArticles(
  * readable in its entirety inside the website.
  */
 export const CURATED_CATHOLIC_ARTICLES: CatholicArticleItem[] = [
+  // Featured Main Story — Aleteia
+  {
+    id: 'aleteia-peru-homecoming',
+    sourceId: 'aleteia',
+    sourceName: 'Aleteia',
+    title: 'What a homecoming! Pope’s arrival in Peru hits all the right notes',
+    author: 'Kathleen N. Hattrup',
+    publishedDate: 'November 12, 2026',
+    readTime: '6 min read',
+    summary: '“Today I understand how much of this land remains with me and how much of my own story also belongs to you,” said Pope Leo XIV when he met with the country’s leaders at the Gran Teatro Nacional in Lima on November 11, 2026.',
+    content: `“Today I understand how much of this land remains with me and how much of my own story also belongs to you,” said Pope Leo XIV when he met with the country’s leaders at the Gran Teatro Nacional in Lima on November 11, 2026. Upon his arrival in his adopted homeland, the American-Peruvian Pope delivered a deeply personal speech, drawing on his firsthand experience as a missionary and bishop. He painted a picture of social vulnerabilities, drawing attention to the populations most exposed to violence and environmental risks.
+
+His arrival Wednesday evening might be remembered as something of a Peruvian Papal Pandemonium: an estimated 3 million people lined the streets of Lima to get a glimpse of this Vicar of Christ who is very much their own.
+
+Pope Leo XIV went to the government palace, where he was welcomed by President Keiko Fujimori, and listened to a children’s choir sing the Vatican anthem followed by the Peruvian national anthem. He appeared visibly moved as he sang along with the Peruvian anthem, an explicit sign of his attachment to his Peruvian nationality. He approached and embraced members of another children’s choir featuring young musicians with disabilities, before proceeding to the Gran Teatro Nacional for a meeting with officials that began forty minutes behind schedule.
+
+In a warm speech, President Keiko Fujimori paid tribute to the long missionary service of “Padre Roberto” in the country, rejoicing at his return as Pope to bring “a message of faith, hope, and peace.” Welcoming elected officials from across political parties in the hall, she noted that the Pope’s historic visit represents an opportunity for national reconciliation.
+
+“This return visit holds a very special meaning for me,” the Pope said. “My history with Peru began long before the Lord entrusted me with the Diocese of Chiclayo. For decades, I shared in the lives of its people, listened to their concerns, and learned from their faith. Many opened the doors of their homes to me, shared their table with me—and, of course, some good ceviche—and made me feel like one of their own. In 2015, I received Peruvian citizenship. That act symbolized a bond that this people had been weaving into my life long before. I recognize in those years a part of the journey through which the Lord was forming me as a shepherd. If I were granted the chance to relive those years, I would do so with joy, embracing both their happy moments and their difficulties. That is why I can tell you, with deep gratitude, that I am also returning to my homeland.”
+
+Restoring trust
+
+Addressing Peruvian leaders, the Holy Father expressed his desire that the Social Doctrine of the Church serve as a guide to enlighten and direct the efforts of all who work for the common good, urging a spirit of attentive listening that sees real human faces behind every statistic.
+
+“Democratic life implies recognizing that no one has all the answers and that differences do not prevent us from sharing a sincere concern for the good of the country,” Pope Leo XIV told the assembly. “I would like to encourage everyone to cultivate honesty, integrity, and a willingness to engage with others—qualities that sustain trust among people and give strength to the life of institutions.”
+
+Everyday peace
+
+Referring to painful chapters in Peru’s history, the pontiff stated: “Past events deserve to be treated with justice and sensitivity, leaving room for harmony to grow and for differences to be addressed with respect.” Calling for everyday peace for families troubled by violent crime, he affirmed: “For families, peace has a very concrete meaning: going out to work without fear, caring for one’s children, and returning home with peace of mind. These are simple aspirations, but no one should be deprived of them.”
+
+He voiced special concern for farmers, fishermen, small business owners, and Peruvian women—particularly those running community soup kitchens—praying that they may live free from violence and exploitation. Turning to stewardship of creation and the Amazon rainforest, he urged care for the environment and the communities who depend upon the land, recalling the solidarity shown during the 2017 El Niño floods.
+
+“At the well of Saint Rose of Lima, generations of Peruvians have placed their petitions and hopes,” Pope Leo XIV concluded. “Today, from here, I too would like to place my prayer into that blessed well. Through the intercession of the Blessed Virgin Mary, Saint Rose, and all the saints and blessed of this land, I ask the Lord that the love of Christ may help you to recognize in every Peruvian a brother or sister, and in each one, yet another reason to love your homeland. May God bless Peru and all its people.”
+
+Before turning in for the night, the Pope stepped out to spontaneously greet the joyful crowds gathered outside the Apostolic Nunciature, asking for their prayers for peace and reconciliation—and smilingly adding that they could continue the fiesta for a little longer, though not all night long, “or there won’t be peace in the morning!”`,
+    link: 'https://aleteia.org/2026/11/12/what-a-homecoming-popes-arrival-in-peru-hits-all-the-right-notes/',
+    imageUrl: '/images/sacred-art/pope_leo_lima_peru.jpg',
+    imageCredit: 'SIMONE RISOLUTI | VATICAN MEDIA | AFP',
+    categories: ['Church', 'Peru', 'Pope Leo XIV'],
+    isFullContentLoaded: true
+  },
   // 1. Aleteia
   {
     id: 'aleteia-curated-1',
@@ -631,7 +673,24 @@ export async function fetchCatholicRssArticlesForSource(
     const xml = await res.text();
     const parsed = parseRssXmlToArticles(xml, source);
     if (parsed.length > 0) {
-      const combined = [...parsed];
+      const combined = parsed.map(item => {
+        const matchedCurated = primaryCurated.find(
+          cur =>
+            (cur.link && item.link && item.link.replace(/\/$/, '') === cur.link.replace(/\/$/, '')) ||
+            item.title.toLowerCase() === cur.title.toLowerCase()
+        );
+        if (matchedCurated) {
+          return {
+            ...item,
+            readTime: matchedCurated.readTime || item.readTime,
+            imageUrl: matchedCurated.imageUrl || item.imageUrl,
+            imageCredit: matchedCurated.imageCredit || item.imageCredit,
+            content: matchedCurated.content.length > item.content.length ? matchedCurated.content : item.content,
+            isFullContentLoaded: matchedCurated.isFullContentLoaded || item.isFullContentLoaded
+          };
+        }
+        return item;
+      });
       for (const cur of primaryCurated) {
         if (!combined.some(p => p.title.toLowerCase() === cur.title.toLowerCase())) {
           combined.push(cur);

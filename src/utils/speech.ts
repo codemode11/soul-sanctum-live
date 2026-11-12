@@ -493,19 +493,19 @@ export function getSaintReaderPersona(nameOrExcerpt: string): SaintReaderPersona
   if (norm.includes('chrysostom')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-john-chrysostom')!;
   if (norm.includes('augustine')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-augustine')!;
   if (norm.includes('jerome')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-jerome')!;
-  if (norm.includes('gregory')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'pope-saint-gregory')!;
-  if (norm.includes('ambrose')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-ambrose')!;
-  if (norm.includes('cyril')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-cyril')!;
-  if (norm.includes('bede')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'venerable-bede')!;
-  if (norm.includes('basil')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-basil')!;
+  if (norm.includes('gregory') || norm.includes('leo')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'pope-saint-gregory')!;
+  if (norm.includes('ambrose') || norm.includes('hilary') || norm.includes('gaudentius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-ambrose')!;
+  if (norm.includes('cyril') || norm.includes('athanasius') || norm.includes('irenaeus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-cyril')!;
+  if (norm.includes('bede') || norm.includes('alcuin') || norm.includes('remigius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'venerable-bede')!;
+  if (norm.includes('basil') || norm.includes('damascene') || norm.includes('maximus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-basil')!;
   if (norm.includes('lapide')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'cornelius-a-lapide')!;
-  if (norm.includes('theophylact')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'blessed-theophylact')!;
-  if (norm.includes('bonaventure')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bonaventure')!;
-  if (norm.includes('alphonsus') || norm.includes('liguori')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-alphonsus')!;
-  if (norm.includes('bellarmine') || norm.includes('robert')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bellarmine')!;
-  if (norm.includes('albert')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-albert')!;
+  if (norm.includes('theophylact') || norm.includes('titus') || norm.includes('theodoret') || norm.includes('theodotus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'blessed-theophylact')!;
+  if (norm.includes('bonaventure') || norm.includes('bernard') || norm.includes('ephrem')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bonaventure')!;
+  if (norm.includes('alphonsus') || norm.includes('liguori') || norm.includes('caesarius') || norm.includes('chromatius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-alphonsus')!;
+  if (norm.includes('bellarmine') || norm.includes('robert') || norm.includes('cyprian') || norm.includes('fulgentius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bellarmine')!;
+  if (norm.includes('albert') || norm.includes('origen') || norm.includes('eusebius') || norm.includes('rabanus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-albert')!;
   if (norm.includes('thomas') || norm.includes('aquinas') || norm.includes('catena')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-thomas-aquinas')!;
-  if (norm.includes('vatican') || norm.includes('catechism') || norm.includes('ccc') || norm.includes('magisterium') || norm.includes('benedict') || norm.includes('francis') || norm.includes('john paul')) {
+  if (norm.includes('vatican') || norm.includes('catechism') || norm.includes('ccc') || norm.includes('magisterium') || norm.includes('benedict') || norm.includes('francis') || norm.includes('john paul') || norm.includes('trent') || norm.includes('pius')) {
     return {
       id: 'vatican-magisterium',
       saintName: 'Vatican Magisterial Teaching',
@@ -517,6 +517,15 @@ export function getSaintReaderPersona(nameOrExcerpt: string): SaintReaderPersona
       voiceKeywords: ['david', 'daniel', 'en-us'],
       sampleQuote: 'The Sacred Liturgy is the summit toward which the activity of the Church is directed.'
     };
+  }
+  // Deterministically assign any other cited ecclesiastical writer across distinct Saint personas
+  const namedPool = SACRED_MALE_SAINT_PERSONAS.filter(p => p.id !== 'general-lector');
+  if (norm.trim().length > 0 && namedPool.length > 0) {
+    let hash = 0;
+    for (let i = 0; i < norm.length; i++) {
+      hash = (hash * 31 + norm.charCodeAt(i)) >>> 0;
+    }
+    return namedPool[hash % namedPool.length];
   }
   return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'general-lector')!;
 }
@@ -980,6 +989,12 @@ export class SacredReader {
       voiceKey.startsWith('persona-') ||
       voiceKey.startsWith('liturgical-') ||
       voiceKey.startsWith('saint-') ||
+      voiceKey.startsWith('pope-') ||
+      voiceKey.startsWith('venerable-') ||
+      voiceKey.startsWith('cornelius-') ||
+      voiceKey.startsWith('blessed-') ||
+      voiceKey === 'vatican-magisterium' ||
+      voiceKey === 'general-lector' ||
       voiceKey === 'ava-grace' ||
       voiceKey === 'david'
     ) {
@@ -1066,9 +1081,12 @@ export class SacredReader {
       return false;
     }
 
-    const chunkMaxLen = 360;
+    const chunkMaxLen = 950;
     const chunks = this.splitIntoSpeechChunks(fullText, chunkMaxLen);
     if (chunks.length === 0) return false;
+
+    const saintPersona = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceName);
+    const rateMultiplier = saintPersona ? Math.max(0.92, Math.min(1.06, saintPersona.rate / 0.90)) : 1.0;
 
     // Prefetch first chunk immediately, and pipeline the next chunk while playing
     let nextUrlPromise: Promise<string | null> | null = this.fetchServerTtsAudioUrl(chunks[0], voiceName);
@@ -1102,7 +1120,7 @@ export class SacredReader {
         this.activeAudioElement = audio;
         audio.volume = 1.0;
         audio.src = currentUrl;
-        audio.playbackRate = this.currentRate;
+        audio.playbackRate = Math.max(0.7, Math.min(1.35, this.currentRate * rateMultiplier));
 
         audio.onplay = () => {
           if (this.activePlaybackToken !== token) return;
@@ -1281,12 +1299,10 @@ export class SacredReader {
       const gName = voiceKey.replace('gemini-', '');
       return this.getAudioConfigForSignature(gName);
     }
-    if (voiceKey.startsWith('saint-')) {
-      const st = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceKey);
-      if (st) {
-        const { voice } = this.getVoiceForSaint(st.id);
-        return { voice, pitch: st.pitch, rate: st.rate };
-      }
+    const directSaint = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceKey);
+    if (directSaint) {
+      const { voice } = this.getVoiceForSaint(directSaint.id);
+      return { voice, pitch: directSaint.pitch, rate: directSaint.rate };
     }
     if (voiceKey.startsWith('persona-')) {
       const p = SACRED_FEMALE_PERSONAS.find(f => f.id === voiceKey);
@@ -1965,11 +1981,50 @@ export class SacredReader {
     persona: SaintReaderPersona; 
   } {
     const persona = getSaintReaderPersona(saintOrAuthor || '');
-    const voiceConfig = this.getVoiceForCurrentRecitation(overrideVoice);
+    const s = this.getSynth();
+    if (!s) {
+      const fallback = this.getVoiceForCurrentRecitation(overrideVoice);
+      return {
+        voice: fallback.voice,
+        pitch: persona.pitch,
+        rate: persona.rate,
+        persona
+      };
+    }
+
+    const liveVoices = s.getVoices();
+    if (liveVoices && liveVoices.length > 0) {
+      this.cachedVoices = liveVoices;
+    }
+    const all = this.cachedVoices.length > 0 ? this.cachedVoices : [];
+    const nonRobotic = all.filter(v => !['espeak', 'robot', 'mechanical', 'klatt', 'synth', 'speech-dispatcher', 'mbrola', 'bad', 'whisper', 'mark', 'zira'].some(r => v.name.toLowerCase().includes(r)));
+    const maleEnglish = nonRobotic.filter(v => v.lang.toLowerCase().startsWith('en') && isMaleVoiceName(v.name));
+    const malePool = maleEnglish.length > 0 ? maleEnglish : nonRobotic.filter(v => isMaleVoiceName(v.name));
+
+    const customVoiceId = this.getCustomSaintVoice(persona.id);
+    let matched: SpeechSynthesisVoice | undefined;
+    if (customVoiceId) {
+      matched = nonRobotic.find(v => v.name === customVoiceId);
+    }
+
+    const profile = SAINT_PROFILE_MAP[persona.id];
+    const keywords = [...(persona.voiceKeywords || []), ...(profile?.preferredKeywords || [])];
+    if (!matched && malePool.length > 0) {
+      for (const kw of keywords) {
+        matched = malePool.find(v => v.name.toLowerCase().includes(kw) || v.lang.toLowerCase().includes(kw));
+        if (matched) break;
+      }
+    }
+    if (!matched && malePool.length > 0) {
+      const slot = profile ? profile.slot : 0;
+      matched = malePool[slot % malePool.length];
+    }
+
+    const baseVoice = matched || this.getVoiceForDavid().voice || this.getVoiceForCurrentRecitation(overrideVoice).voice;
     return {
-      voice: voiceConfig.voice,
-      pitch: voiceConfig.pitch,
-      rate: voiceConfig.rate,
+      voice: baseVoice,
+      pitch: persona.pitch,
+      rate: persona.rate,
       persona
     };
   }
@@ -2130,7 +2185,10 @@ export class SacredReader {
         return;
       }
 
-      const voiceKey = sec.persona ? sec.persona.id : 'gemini-Kore';
+      const isFramingSection = sec.id === 'intro' || sec.id === 'practical-application';
+      const voiceKey = isFramingSection
+        ? ((preferredVoice || this.getRecitationVoice()) === 'david' ? 'liturgical-deacon' : 'gemini-Kore')
+        : (sec.persona ? sec.persona.id : 'liturgical-scholar');
       const playedServer = await this.playServerTtsSequence(
         cleanText,
         voiceKey,
@@ -2156,7 +2214,9 @@ export class SacredReader {
       if (!this.isSequenceActive || this.activePlaybackToken !== token || !this.synth) return;
 
       const utterance = new SpeechSynthesisUtterance(cleanText);
-      const voiceConfig = this.getVoiceForCurrentRecitation(preferredVoice);
+      const voiceConfig = isFramingSection
+        ? this.getVoiceForCurrentRecitation(preferredVoice)
+        : this.getVoiceForSaint(sec.persona?.id || sec.saintName, preferredVoice);
 
       if (voiceConfig.voice) utterance.voice = voiceConfig.voice;
       utterance.pitch = voiceConfig.pitch;

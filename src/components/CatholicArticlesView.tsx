@@ -88,7 +88,13 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       const list = articlesBySource[initialSourceId] || [];
       if (initialArticleId) {
         requestedArticleIdRef.current = initialArticleId;
-        const idx = list.findIndex(a => a.id === initialArticleId);
+        const idx = list.findIndex(
+          a =>
+            a.id === initialArticleId ||
+            (initialArticleId === 'aleteia-peru-homecoming' &&
+              (a.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
+                a.title.toLowerCase().includes('what a homecoming')))
+        );
         const targetIdx = idx >= 0 ? idx : 0;
         setSelectedArticleIndex(targetIdx);
         selectedIndexRef.current = targetIdx;
@@ -124,7 +130,14 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
         const targetArticleId = requestedArticleIdRef.current;
         if (targetArticleId) {
-          const matchedIdx = items.findIndex(a => a.id === targetArticleId);
+          const matchedIdx = items.findIndex(
+            a =>
+              a.id === targetArticleId ||
+              (targetArticleId.includes('what-a-homecoming') || targetArticleId === 'aleteia-peru-homecoming'
+                ? a.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
+                  a.title.toLowerCase().includes('what a homecoming')
+                : false)
+          );
           requestedArticleIdRef.current = null;
           const idxToUse = matchedIdx >= 0 ? matchedIdx : 0;
           selectedIndexRef.current = idxToUse;
@@ -710,19 +723,26 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
           {/* Optional Article Image */}
           {currentArticle.imageUrl && (
-            <div className="rounded-xl overflow-hidden border border-stone-300 bg-stone-950/5 shadow-sm">
-              <img
-                key={currentArticle.imageUrl}
-                src={currentArticle.imageUrl}
-                alt={currentArticle.title}
-                className="w-full h-auto max-h-[520px] object-contain mx-auto block"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  const container = e.currentTarget.parentElement;
-                  if (container) container.style.display = 'none';
-                }}
-              />
+            <div className="space-y-1.5">
+              <div className="rounded-xl overflow-hidden border border-stone-300 bg-stone-950/5 shadow-sm">
+                <img
+                  key={currentArticle.imageUrl}
+                  src={currentArticle.imageUrl}
+                  alt={currentArticle.title}
+                  className="w-full h-auto max-h-[520px] object-contain mx-auto block"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const container = e.currentTarget.parentElement;
+                    if (container) container.style.display = 'none';
+                  }}
+                />
+              </div>
+              {currentArticle.imageCredit && (
+                <p className="text-[11px] font-cinzel tracking-wider uppercase text-stone-500 text-right">
+                  Credit: {currentArticle.imageCredit}
+                </p>
+              )}
             </div>
           )}
 

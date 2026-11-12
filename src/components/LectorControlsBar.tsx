@@ -86,7 +86,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
       } else if (voiceKey.startsWith('gemini-')) {
         const gName = voiceKey.replace('gemini-', '');
         sampleText = `Laudetur Jesus Christus! Proclaiming sacred Scripture with the ${gName} voice.`;
-      } else if (voiceKey.startsWith('saint-')) {
+      } else if (voiceKey.startsWith('saint-') || SACRED_MALE_SAINT_PERSONAS.some(s => s.id === voiceKey)) {
         const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
         sampleText = saint ? `${saint.saintName}: "${saint.sampleQuote}"` : 'Laudetur Jesus Christus!';
       } else if (voiceKey.startsWith('persona-')) {
@@ -107,6 +107,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
         !voiceKey.startsWith('persona-') &&
         !voiceKey.startsWith('liturgical-') &&
         !voiceKey.startsWith('saint-') &&
+        !SACRED_MALE_SAINT_PERSONAS.some(s => s.id === voiceKey) &&
         typeof window !== 'undefined' &&
         'speechSynthesis' in window &&
         window.speechSynthesis.getVoices().some(v => v.name === voiceKey));
@@ -188,7 +189,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
     } else if (geminiMap[val]) {
       setSelectedVoiceLabel(geminiMap[val]);
       SacredReader.setRecitationVoice('ava-grace');
-    } else if (val.startsWith('saint-')) {
+    } else if (val.startsWith('saint-') || SACRED_MALE_SAINT_PERSONAS.some(p => p.id === val)) {
       const s = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === val);
       if (s) setSelectedVoiceLabel(`${s.saintName} (${s.title})`);
       SacredReader.setRecitationVoice('david');

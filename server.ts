@@ -193,7 +193,29 @@ function resolveRegionalLocaleForVoice(chosenVoice: string): string {
   return 'en-US';
 }
 
-type GeminiPrebuiltVoice = 'Kore' | 'Puck' | 'Charon' | 'Fenrir' | 'Zephyr';
+type GeminiPrebuiltVoice =
+  | 'Kore'
+  | 'Puck'
+  | 'Charon'
+  | 'Fenrir'
+  | 'Zephyr'
+  | 'Aoede'
+  | 'Leda'
+  | 'Vindemiatrix'
+  | 'Despina'
+  | 'Orus'
+  | 'Algenib'
+  | 'Algieba'
+  | 'Alnilam'
+  | 'Enceladus'
+  | 'Iapetus'
+  | 'Rasalgethi'
+  | 'Sadachbia'
+  | 'Sadaltager'
+  | 'Schedar'
+  | 'Achird'
+  | 'Umbriel'
+  | 'Zubenelgenubi';
 
 function resolveGeminiTtsVoiceSpec(chosenVoice: string): {
   prebuiltVoice: GeminiPrebuiltVoice;
@@ -241,99 +263,99 @@ function resolveGeminiTtsVoiceSpec(chosenVoice: string): {
       style: 'Smooth, balanced, peaceful liturgical reader with gentle phrasing',
     },
     'persona-ava': {
-      prebuiltVoice: 'Kore',
-      style: 'Gentle, heartfelt, peaceful female devotional voice praying softly and unhurriedly',
+      prebuiltVoice: 'Aoede',
+      style: 'Gentle, heartfelt, melodic female devotional voice praying softly and unhurriedly',
     },
     'persona-sonia': {
-      prebuiltVoice: 'Kore',
-      style: 'Poised, formal, serene cathedral nun reading Sacred Scripture with calm reverence',
+      prebuiltVoice: 'Vindemiatrix',
+      style: 'Poised, gentle, mature cathedral nun reading Sacred Scripture with calm reverence',
     },
     'persona-clara': {
-      prebuiltVoice: 'Zephyr',
-      style: 'Soft, hushed, meditative contemplative female voice suited for Eucharistic adoration',
+      prebuiltVoice: 'Leda',
+      style: 'Soft, delicate, meditative contemplative female voice suited for Eucharistic adoration',
     },
     'persona-grace': {
-      prebuiltVoice: 'Kore',
-      style: 'Warm, compassionate, expressive Catholic narrator telling lives of the saints',
+      prebuiltVoice: 'Despina',
+      style: 'Warm, smooth, compassionate Catholic narrator telling lives of the saints',
     },
     'liturgical-deacon': {
-      prebuiltVoice: 'Charon',
-      style: 'Solemn, authoritative, reverent Catholic cathedral deacon proclaiming the Holy Gospel',
+      prebuiltVoice: 'Orus',
+      style: 'Firm, solemn, authoritative Catholic cathedral deacon proclaiming the Holy Gospel',
     },
     'liturgical-monk': {
-      prebuiltVoice: 'Fenrir',
-      style: 'Deep, unhurried, peaceful Benedictine abbot reading monastic lectio divina',
+      prebuiltVoice: 'Algenib',
+      style: 'Deep, unhurried, resonant Benedictine abbot reading monastic lectio divina',
     },
     'liturgical-scholar': {
-      prebuiltVoice: 'Puck',
-      style: 'Crisp, scholarly, lucid Catholic theologian explaining Scripture and doctrine',
+      prebuiltVoice: 'Sadaltager',
+      style: 'Knowledgeable, crisp, lucid Catholic theologian explaining Scripture and doctrine',
     },
     'saint-thomas-aquinas': {
-      prebuiltVoice: 'Fenrir',
+      prebuiltVoice: 'Orus',
       style: 'Deep, measured, contemplative medieval Dominican theologian speaking with calm clarity',
     },
     'saint-john-chrysostom': {
-      prebuiltVoice: 'Puck',
+      prebuiltVoice: 'Rasalgethi',
       style: 'Eloquent, vibrant golden-mouthed Church Father preaching with spiritual warmth',
     },
     'saint-augustine': {
-      prebuiltVoice: 'Charon',
-      style: 'Soulful, deeply reflective Latin Church Father speaking with humility and depth',
+      prebuiltVoice: 'Algenib',
+      style: 'Soulful, gravelly, deeply reflective Latin Church Father speaking with humility and depth',
     },
     'saint-jerome': {
-      prebuiltVoice: 'Charon',
+      prebuiltVoice: 'Umbriel',
       style: 'Austere, firm, resonant monastic biblical scholar speaking with conviction',
     },
     'pope-saint-gregory': {
-      prebuiltVoice: 'Fenrir',
-      style: 'Paternal, solemn, pastoral Supreme Pontiff speaking with gentle gravity',
+      prebuiltVoice: 'Iapetus',
+      style: 'Paternal, solemn, clear Supreme Pontiff speaking with gentle gravity',
     },
     'saint-ambrose': {
-      prebuiltVoice: 'Puck',
-      style: 'Vigorous, commanding Roman bishop speaking with clarity and apostolic firmness',
+      prebuiltVoice: 'Algieba',
+      style: 'Smooth, commanding Roman bishop speaking with clarity and apostolic firmness',
     },
     'saint-cyril': {
-      prebuiltVoice: 'Charon',
+      prebuiltVoice: 'Alnilam',
       style: 'Authoritative, resolute Eastern Patriarch explaining doctrine clearly',
     },
     'venerable-bede': {
-      prebuiltVoice: 'Zephyr',
-      style: 'Gentle, serene monastic historian speaking with quiet scholarly devotion',
+      prebuiltVoice: 'Schedar',
+      style: 'Even, serene monastic historian speaking with quiet scholarly devotion',
     },
     'saint-basil': {
-      prebuiltVoice: 'Fenrir',
+      prebuiltVoice: 'Enceladus',
       style: 'Dignified, ascetic Eastern bishop speaking with lucid spiritual wisdom',
     },
     'cornelius-a-lapide': {
-      prebuiltVoice: 'Puck',
-      style: 'Illuminating, clear Jesuit biblical exegete explaining Sacred Scripture',
+      prebuiltVoice: 'Sadaltager',
+      style: 'Knowledgeable, illuminating Jesuit biblical exegete explaining Sacred Scripture',
     },
     'blessed-theophylact': {
-      prebuiltVoice: 'Zephyr',
-      style: 'Lyrical, reverent Byzantine archbishop offering Gospel commentary',
+      prebuiltVoice: 'Achird',
+      style: 'Warm, lyrical, reverent Byzantine archbishop offering Gospel commentary',
     },
     'saint-bonaventure': {
-      prebuiltVoice: 'Zephyr',
-      style: 'Warm, devotional, luminous Franciscan theologian speaking with seraphic love',
+      prebuiltVoice: 'Sadachbia',
+      style: 'Luminous, devotional Franciscan theologian speaking with seraphic warmth',
     },
     'saint-alphonsus': {
-      prebuiltVoice: 'Fenrir',
-      style: 'Earnest, paternal, soulful Redemptorist pastor speaking tenderly to the heart',
+      prebuiltVoice: 'Zubenelgenubi',
+      style: 'Earnest, paternal, pastoral Redemptorist doctor speaking tenderly to the heart',
     },
     'saint-bellarmine': {
-      prebuiltVoice: 'Charon',
-      style: 'Authoritative, articulate cardinal theologian explaining Catholic teaching clearly',
+      prebuiltVoice: 'Iapetus',
+      style: 'Authoritative, articulate cardinal apologist explaining Catholic teaching clearly',
     },
     'saint-albert': {
-      prebuiltVoice: 'Fenrir',
-      style: 'Wise, analytical Dominican teacher speaking with calm intellectual depth',
+      prebuiltVoice: 'Rasalgethi',
+      style: 'Wise, analytical Dominican doctor speaking with calm intellectual depth',
     },
     'general-lector': {
-      prebuiltVoice: 'Charon',
+      prebuiltVoice: 'Schedar',
       style: 'Solemn, reverent Catholic patristic lector',
     },
     'vatican-magisterium': {
-      prebuiltVoice: 'Fenrir',
+      prebuiltVoice: 'Sadaltager',
       style: 'Solemn, clear Magisterial reader proclaiming Church teaching',
     },
   };
@@ -343,29 +365,68 @@ function resolveGeminiTtsVoiceSpec(chosenVoice: string): {
   }
 
   const lower = (chosenVoice || '').toLowerCase();
-  if (lower.includes('augustine') || lower.includes('jerome') || lower.includes('cyril') || lower.includes('bellarmine') || lower.includes('deacon') || lower.includes('charon')) {
-    return {
-      prebuiltVoice: 'Charon',
-      style: 'Deep, solemn, reverent Catholic male voice',
-    };
+  if (lower.includes('augustine') || lower.includes('monk')) {
+    return { prebuiltVoice: 'Algenib', style: 'Soulful, deep Catholic patristic voice' };
   }
-  if (lower.includes('thomas') || lower.includes('gregory') || lower.includes('basil') || lower.includes('alphonsus') || lower.includes('albert') || lower.includes('monk') || lower.includes('fenrir')) {
-    return {
-      prebuiltVoice: 'Fenrir',
-      style: 'Warm, dignified Catholic male baritone voice',
-    };
+  if (lower.includes('jerome')) {
+    return { prebuiltVoice: 'Umbriel', style: 'Austere, resonant monastic scholar voice' };
   }
-  if (lower.includes('chrysostom') || lower.includes('ambrose') || lower.includes('lapide') || lower.includes('scholar') || lower.includes('puck')) {
-    return {
-      prebuiltVoice: 'Puck',
-      style: 'Crisp, articulate Catholic tenor voice',
-    };
+  if (lower.includes('cyril')) {
+    return { prebuiltVoice: 'Alnilam', style: 'Firm, authoritative Patriarch voice' };
   }
-  if (lower.includes('bede') || lower.includes('theophylact') || lower.includes('bonaventure') || lower.includes('clara') || lower.includes('zephyr')) {
-    return {
-      prebuiltVoice: 'Zephyr',
-      style: 'Smooth, serene, contemplative liturgical voice',
-    };
+  if (lower.includes('thomas') || lower.includes('deacon')) {
+    return { prebuiltVoice: 'Orus', style: 'Measured, firm theological voice' };
+  }
+  if (lower.includes('gregory') || lower.includes('bellarmine')) {
+    return { prebuiltVoice: 'Iapetus', style: 'Paternal, clear ecclesiastical voice' };
+  }
+  if (lower.includes('chrysostom') || lower.includes('albert')) {
+    return { prebuiltVoice: 'Rasalgethi', style: 'Eloquent, scholarly Church Father voice' };
+  }
+  if (lower.includes('ambrose')) {
+    return { prebuiltVoice: 'Algieba', style: 'Smooth, commanding bishop voice' };
+  }
+  if (lower.includes('basil')) {
+    return { prebuiltVoice: 'Enceladus', style: 'Ascetic, contemplative bishop voice' };
+  }
+  if (lower.includes('bede')) {
+    return { prebuiltVoice: 'Schedar', style: 'Even, serene monastic historian voice' };
+  }
+  if (lower.includes('lapide') || lower.includes('scholar')) {
+    return { prebuiltVoice: 'Sadaltager', style: 'Crisp, knowledgeable exegete voice' };
+  }
+  if (lower.includes('theophylact')) {
+    return { prebuiltVoice: 'Achird', style: 'Warm, lyrical Byzantine voice' };
+  }
+  if (lower.includes('bonaventure')) {
+    return { prebuiltVoice: 'Sadachbia', style: 'Luminous, warm Franciscan voice' };
+  }
+  if (lower.includes('alphonsus')) {
+    return { prebuiltVoice: 'Zubenelgenubi', style: 'Earnest, pastoral doctor voice' };
+  }
+  if (lower.includes('charon')) {
+    return { prebuiltVoice: 'Charon', style: 'Deep, solemn Catholic male voice' };
+  }
+  if (lower.includes('fenrir')) {
+    return { prebuiltVoice: 'Fenrir', style: 'Warm Catholic male baritone voice' };
+  }
+  if (lower.includes('puck')) {
+    return { prebuiltVoice: 'Puck', style: 'Crisp, articulate Catholic tenor voice' };
+  }
+  if (lower.includes('clara')) {
+    return { prebuiltVoice: 'Leda', style: 'Soft, serene, contemplative liturgical voice' };
+  }
+  if (lower.includes('sonia')) {
+    return { prebuiltVoice: 'Vindemiatrix', style: 'Calm, mature cathedral contemplative voice' };
+  }
+  if (lower.includes('grace')) {
+    return { prebuiltVoice: 'Despina', style: 'Warm, compassionate Catholic narrator voice' };
+  }
+  if (lower.includes('ava')) {
+    return { prebuiltVoice: 'Aoede', style: 'Gentle, heartfelt female devotional voice' };
+  }
+  if (lower.includes('zephyr')) {
+    return { prebuiltVoice: 'Zephyr', style: 'Smooth, balanced liturgical reader' };
   }
 
   return {
@@ -457,7 +518,8 @@ app.post('/api/tts', async (req, res) => {
       const attemptGeminiTts = async (
         useMetadata: boolean,
         modelName: string,
-        apiVersion?: string
+        voiceToUse: string,
+        apiVersion: string = 'v1alpha'
       ) => {
         const aiClient = getGenAI(apiVersion);
         const ttsResponse = await aiClient.models.generateContent({
@@ -474,7 +536,7 @@ app.post('/api/tts', async (req, res) => {
                       },
                     }
                   : {
-                      text: `Read aloud in a ${spec.style} style: ${textSnippet}`,
+                      text: textSnippet,
                     },
               ],
             },
@@ -484,7 +546,7 @@ app.post('/api/tts', async (req, res) => {
             speechConfig: {
               voiceConfig: {
                 prebuiltVoiceConfig: {
-                  voiceName: spec.prebuiltVoice,
+                  voiceName: voiceToUse,
                 },
               },
             },
@@ -497,16 +559,52 @@ app.post('/api/tts', async (req, res) => {
         return inlinePart?.inlineData;
       };
 
-      const attempts: Array<{ useMeta: boolean; model: string; apiVersion?: string }> = [
-        { useMeta: false, model: 'gemini-3.8-flash-lite-tts' },
-        { useMeta: true, model: 'gemini-3.8-flash-lite-tts', apiVersion: 'v1alpha' },
-        { useMeta: false, model: 'gemini-3.8-flash-tts' },
-        { useMeta: false, model: 'gemini-2.5-flash-preview-tts' },
+      const isCoreVoice = ['Kore', 'Puck', 'Charon', 'Fenrir', 'Zephyr'].includes(spec.prebuiltVoice);
+      const isFemaleVoice = ['Aoede', 'Leda', 'Vindemiatrix', 'Despina', 'Kore', 'Zephyr'].includes(spec.prebuiltVoice);
+      const safeCoreVoice = isFemaleVoice ? 'Kore' : 'Charon';
+
+      // Use flagship gemini-3.8-flash-tts for rich persona Voice Design / distinct Saint characters,
+      // and gemini-3.8-flash-lite-tts for fast standard reading (both on v1alpha for speechConfig/speechMetadata).
+      const isSaintOrCustomPersona =
+        chosenVoice.startsWith('saint-') ||
+        chosenVoice.startsWith('pope-') ||
+        chosenVoice.startsWith('venerable-') ||
+        chosenVoice.startsWith('cornelius-') ||
+        chosenVoice.startsWith('blessed-') ||
+        chosenVoice.startsWith('persona-') ||
+        chosenVoice.startsWith('liturgical-') ||
+        chosenVoice === 'vatican-magisterium' ||
+        chosenVoice === 'general-lector';
+
+      const primaryModel = isSaintOrCustomPersona ? 'gemini-3.8-flash-tts' : 'gemini-3.8-flash-lite-tts';
+      const secondaryModel = isSaintOrCustomPersona ? 'gemini-3.8-flash-lite-tts' : 'gemini-3.8-flash-tts';
+
+      const attempts: Array<{ useMeta: boolean; model: string; voice: string; isSecondaryModel?: boolean }> = [
+        {
+          useMeta: true,
+          model: primaryModel,
+          voice: spec.prebuiltVoice,
+        },
+        {
+          useMeta: true,
+          model: secondaryModel,
+          voice: spec.prebuiltVoice,
+          isSecondaryModel: true,
+        },
+        ...(!isCoreVoice
+          ? [
+              {
+                useMeta: true,
+                model: primaryModel,
+                voice: safeCoreVoice,
+              },
+            ]
+          : []),
       ];
 
       for (const cfg of attempts) {
         try {
-          const inlineData = await attemptGeminiTts(cfg.useMeta, cfg.model, cfg.apiVersion);
+          const inlineData = await attemptGeminiTts(cfg.useMeta, cfg.model, cfg.voice, 'v1alpha');
           if (inlineData?.data) {
             const rawBuffer = Buffer.from(inlineData.data, 'base64');
             const mimeType = inlineData.mimeType || '';
@@ -516,7 +614,7 @@ app.post('/api/tts', async (req, res) => {
             const payload = {
               audioUrl: `data:audio/wav;base64,${finalBuffer.toString('base64')}`,
               voiceName: chosenVoice,
-              provider: `gemini-tts-${spec.prebuiltVoice.toLowerCase()}`,
+              provider: `gemini-tts-${cfg.voice.toLowerCase()}`,
             };
             if (ttsMemoryCache.size > 150) {
               const oldestKey = ttsMemoryCache.keys().next().value;
@@ -525,11 +623,19 @@ app.post('/api/tts', async (req, res) => {
             ttsMemoryCache.set(cacheKey, payload);
             return res.json(payload);
           }
-          geminiFailureNotes.push(`${cfg.model}(${cfg.apiVersion || 'default'}): no inlineData`);
+          geminiFailureNotes.push(`${cfg.model}(${cfg.voice}): no inlineData`);
         } catch (err: any) {
-          const msg = `${cfg.model}(${cfg.apiVersion || 'default'},meta=${cfg.useMeta}): ${String(err?.message || err).slice(0, 110)}`;
+          const msg = `${cfg.model}(${cfg.voice}): ${String(err?.message || err).slice(0, 120)}`;
           geminiFailureNotes.push(msg);
           console.warn('[TTS] Gemini Neural TTS attempt failed:', msg);
+          // On 429 quota exhaustion, still allow trying the alternate model once (flash-tts <-> flash-lite-tts),
+          // then break before downgrading to a core voice with the same exhausted quota.
+          if (cfg.isSecondaryModel && (String(err?.message || err).includes('429') || String(err?.status) === '429')) {
+            break;
+          }
+          if (!cfg.isSecondaryModel && (String(err?.message || err).includes('429') || String(err?.status) === '429')) {
+            continue;
+          }
         }
       }
     }
@@ -569,11 +675,6 @@ app.post('/api/tts', async (req, res) => {
           voiceName: chosenVoice,
           provider: `google-translate-tts-${locale}`,
         };
-        if (ttsMemoryCache.size > 150) {
-          const oldestKey = ttsMemoryCache.keys().next().value;
-          if (oldestKey) ttsMemoryCache.delete(oldestKey);
-        }
-        ttsMemoryCache.set(cacheKey, payload);
         return res.json(payload);
       }
     } catch (err: any) {
