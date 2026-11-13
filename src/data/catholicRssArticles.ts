@@ -631,6 +631,18 @@ When humanity forgets that its existence, reason, and relational capacity are gi
 
 const fullArticleCache = new Map<string, { content: string; imageUrl?: string; readTime: string }>();
 
+export function clearFullArticleCache(): void {
+  fullArticleCache.clear();
+}
+
+export interface CatholicFeedFetchResult {
+  articles: CatholicArticleItem[];
+  isLive: boolean;
+  liveCount: number;
+  newestDate?: string;
+  error?: string;
+}
+
 export async function fetchFullCatholicArticleContent(
   articleUrl: string
 ): Promise<{ content: string; imageUrl?: string; readTime: string } | null> {
@@ -664,34 +676,31 @@ export async function fetchFullCatholicArticleContent(
   return null;
 }
 
-export async function fetchCatholicRssArticlesForSource(
+export async function fetchCatholicRssFeedWithStatus(
   sourceId: string,
   forceRefresh: boolean = false
-): Promise<CatholicArticleItem[]> {
+): Promise<CatholicFeedFetchResult> {
   const source = CATHOLIC_RSS_SOURCES.find(s => s.id === sourceId);
-  if (!source) return [];
+  if (!source) {
+    return { articles: [], isLive: false, liveCount: 0, error: 'Unknown publication source' };
+  }
 
-  const todayFormatted = new Date().toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  });
+  if (forceRefresh) {
+    clearFullArticleCache();
+  }
 
-  const primaryCurated = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId).map(a => ({
-    ...a,
-    publishedDate: todayFormatted
-  }));
-
+  const primaryCurated = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId);
   const otherCurated = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId !== sourceId).map(a => ({
     ...a,
-    id: `${sourceId}-archive-${a.id}`,
-    publishedDate: todayFormatted
+    id: `${sourceId}-archive-${a.id}`
   }));
 
   const fullFallbackList = [...primaryCurated, ...otherCurated];
 
   try {
-    const cacheBuster = forceRefresh ? `&refresh=1&_t=${Date.now()}` : `&_t=${Math.floor(Date.now() / 60000)}`;
+    const cacheBuster = forceRefresh
+      ? `&refresh=1&_t=${Date.now()}`
+      : `&_t=${Math.floor(Date.now() / 60000)}`;
     const res = await fetch(`/api/catholic-rss?source=${encodeURIComponent(sourceId)}${cacheBuster}`, {
       cache: 'no-store',
       headers: {
@@ -700,7 +709,16 @@ export async function fetchCatholicRssArticlesForSource(
       },
       signal: AbortSignal.timeout(15000)
     });
-    if (!res.ok) throw new Error(`Status ${res.status}`);
+    if (!res.ok) {
+      let msg = `HTTP ${res.status}`;
+      try {
+        const errJson = await res.json();
+        if (errJson?.error) msg = String(errJson.error);
+      } catch {
+        // Ignore non-JSON error body
+      }
+      throw new Error(msg);
+    }
     const xml = await res.text();
     const parsed = parseRssXmlToArticles(xml, source);
     if (parsed.length > 0) {
@@ -727,13 +745,35 @@ export async function fetchCatholicRssArticlesForSource(
           combined.push(cur);
         }
       }
-      return combined;
+      return {
+        articles: combined,
+        isLive: true,
+        liveCount: parsed.length,
+        newestDate: parsed[0]?.publishedDate
+      };
     }
-  } catch {
-    // Fall back to curated multi-article treasury if network is unavailable
+    return {
+      articles: fullFallbackList,
+      isLive: false,
+      liveCount: 0,
+      error: 'No RSS items returned by upstream feed'
+    };
+  } catch (err: any) {
+    return {
+      articles: fullFallbackList,
+      isLive: false,
+      liveCount: 0,
+      error: err?.message || 'Unable to reach live RSS feed'
+    };
   }
+}
 
-  return fullFallbackList;
+export async function fetchCatholicRssArticlesForSource(
+  sourceId: string,
+  forceRefresh: boolean = false
+): Promise<CatholicArticleItem[]> {
+  const result = await fetchCatholicRssFeedWithStatus(sourceId, forceRefresh);
+  return result.articles;
 }
 
 

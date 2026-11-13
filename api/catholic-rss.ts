@@ -18,16 +18,16 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
     'https://aleteia.org/feed/',
   ],
   'sign-org': [
+    'https://sign.org/feed/',
     'https://spiritualdirection.com/feed',
-    'https://catholicexchange.com/feed/',
   ],
   ncregister: [
     'https://www.ncregister.com/feeds/general-news.xml',
     'https://www.catholicnewsagency.com/rss/news.xml',
   ],
   'catholic-digest': [
+    'https://www.catholicdigest.com/wp-json/wp/v2/posts?per_page=12',
     'https://www.catholicdigest.com/feed/',
-    'https://aleteia.org/feed/',
   ],
   cerc: [
     'https://catholiceducation.org/feed/',
@@ -42,11 +42,70 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   ],
 };
 
+function escapeXmlCdata(str: string): string {
+  return String(str || '').replace(/\]\]>/g, ']]]]><![CDATA[>');
+}
+
+function wpPostsJsonToRssXml(jsonText: string, sourceTitle: string): string | null {
+  try {
+    const posts = JSON.parse(jsonText);
+    if (!Array.isArray(posts) || posts.length === 0) return null;
+
+    const itemsXml = posts
+      .map((post: any) => {
+        const title = post?.title?.rendered || '';
+        const link = post?.link || '';
+        if (!title || !link) return '';
+
+        const dateVal = post?.date_gmt || post?.date || '';
+        const parsedMs = dateVal
+          ? Date.parse(dateVal.endsWith('Z') || /[+-]\d{2}:\d{2}$/.test(dateVal) ? dateVal : `${dateVal}Z`)
+          : NaN;
+        const pubDate = !Number.isNaN(parsedMs) ? new Date(parsedMs).toUTCString() : new Date().toUTCString();
+
+        const authorName = post?._embedded?.author?.[0]?.name || `${sourceTitle} Editorial`;
+        const featuredMedia = post?._embedded?.['wp:featuredmedia']?.[0]?.source_url || '';
+        const excerptHtml = post?.excerpt?.rendered || '';
+        const contentHtml = post?.content?.rendered || excerptHtml;
+
+        return `<item>
+<title><![CDATA[${escapeXmlCdata(title)}]]></title>
+<link>${link.replace(/&/g, '&amp;')}</link>
+<dc:creator><![CDATA[${escapeXmlCdata(authorName)}]]></dc:creator>
+<pubDate>${pubDate}</pubDate>
+${featuredMedia ? `<media:content url="${featuredMedia.replace(/"/g, '&quot;')}" medium="image" />` : ''}
+<description><![CDATA[${escapeXmlCdata(excerptHtml)}]]></description>
+<content:encoded><![CDATA[${escapeXmlCdata(contentHtml)}]]></content:encoded>
+</item>`;
+      })
+      .filter(Boolean);
+
+    if (itemsXml.length === 0) return null;
+    return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/"><channel><title>${sourceTitle}</title>${itemsXml.join('\n')}</channel></rss>`;
+  } catch {
+    return null;
+  }
+}
+
 async function fetchUpstreamRssXml(url: string): Promise<string> {
+  const isWpJson = url.includes('/wp-json/');
   const noCacheHeaders: Record<string, string> = {
-    Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
+    Accept: isWpJson
+      ? 'application/json, */*'
+      : 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
     'Cache-Control': 'no-cache, no-store, max-age=0',
     Pragma: 'no-cache',
+  };
+
+  const parseFeedResponse = (rawText: string): string | null => {
+    if (!rawText) return null;
+    if (isWpJson && rawText.trim().startsWith('[')) {
+      return wpPostsJsonToRssXml(rawText, 'Catholic Digest');
+    }
+    if (/<item[\s>]/i.test(rawText) || /<entry[\s>]/i.test(rawText)) {
+      return rawText;
+    }
+    return null;
   };
 
   let needsUaFallback = false;
@@ -58,9 +117,8 @@ async function fetchUpstreamRssXml(url: string): Promise<string> {
     });
     if (res1.ok) {
       const txt1 = await res1.text();
-      if (txt1 && (/<item[\s>]/i.test(txt1) || /<entry[\s>]/i.test(txt1))) {
-        return txt1;
-      }
+      const parsed1 = parseFeedResponse(txt1);
+      if (parsed1) return parsed1;
       needsUaFallback = true;
     } else if (res1.status === 403 || res1.status === 406 || res1.status === 429) {
       needsUaFallback = true;
@@ -89,10 +147,11 @@ async function fetchUpstreamRssXml(url: string): Promise<string> {
     throw new Error(`HTTP ${res2.status}`);
   }
   const txt2 = await res2.text();
-  if (!txt2 || (!/<item[\s>]/i.test(txt2) && !/<entry[\s>]/i.test(txt2))) {
+  const parsed2 = parseFeedResponse(txt2);
+  if (!parsed2) {
     throw new Error('Invalid RSS XML');
   }
-  return txt2;
+  return parsed2;
 }
 
 function extractFeedItemTimestamp(itemXml: string, channelDateMs: number): number {
@@ -136,8 +195,13 @@ export default async function handler(req: any, res: any) {
     const candidateUrls =
       SERVER_CATHOLIC_RSS_FEEDS[sourceKey] || SERVER_CATHOLIC_RSS_FEEDS['st-paul-center'];
 
-    const results = await Promise.allSettled(
-      candidateUrls.map(async (targetUrl) => {
+    const collected: { xml: string; ts: number; index: number; titleKey: string }[] = [];
+    const seenTitles = new Set<string>();
+    let lastErr: any = null;
+
+    // Fetch candidate URLs in strict priority order so fallback feeds only activate if the primary feed fails or returns 0 items
+    for (const targetUrl of candidateUrls) {
+      try {
         const xml = await fetchUpstreamRssXml(targetUrl);
         const channelBuildMatch =
           xml.match(/<lastBuildDate[^>]*>([\s\S]*?)<\/lastBuildDate>/i) ||
@@ -150,7 +214,8 @@ export default async function handler(req: any, res: any) {
             : 0;
 
         const itemMatches = xml.match(/<(?:item|entry)[\s>][\s\S]*?<\/(?:item|entry)>/gi) || [];
-        return itemMatches.map((itemXml, index) => {
+        for (let index = 0; index < itemMatches.length; index++) {
+          const itemXml = itemMatches[index];
           const ts = extractFeedItemTimestamp(itemXml, channelDateMs);
           const normalizedXml =
             ts > 0 &&
@@ -161,29 +226,17 @@ export default async function handler(req: any, res: any) {
                   `<pubDate>${new Date(ts).toUTCString()}</pubDate></item>`
                 )
               : itemXml;
-          return {
-            xml: normalizedXml,
-            ts,
-            index,
-            titleKey: extractFeedItemTitleKey(itemXml),
-          };
-        });
-      })
-    );
-
-    const collected: { xml: string; ts: number; index: number; titleKey: string }[] = [];
-    const seenTitles = new Set<string>();
-    let lastErr: any = null;
-
-    for (const r of results) {
-      if (r.status === 'fulfilled') {
-        for (const entry of r.value) {
-          if (entry.titleKey && seenTitles.has(entry.titleKey)) continue;
-          if (entry.titleKey) seenTitles.add(entry.titleKey);
-          collected.push(entry);
+          const titleKey = extractFeedItemTitleKey(itemXml);
+          if (titleKey && seenTitles.has(titleKey)) continue;
+          if (titleKey) seenTitles.add(titleKey);
+          collected.push({ xml: normalizedXml, ts, index, titleKey });
         }
-      } else {
-        lastErr = r.reason;
+
+        if (collected.length > 0) {
+          break;
+        }
+      } catch (err) {
+        lastErr = err;
       }
     }
 
