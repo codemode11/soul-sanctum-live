@@ -180,7 +180,33 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
-      {/* Switcher Buttons: Treasury of Prayers precedes Community Prayer Wall per user request */}
+      {/* Prayer Requests Banner with Add Request CTA */}
+      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="space-y-1.5">
+          <div className="flex items-center gap-2">
+            <Flame className="w-5 h-5 text-amber-400" />
+            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+              Communion of Saints • Fraternal Intercession
+            </span>
+          </div>
+          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+            Community Prayer Requests Wall
+          </h2>
+          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
+            "Bear one another's burdens, and so fulfill the law of Christ" (Galatians 6:2). Post your intentions, pray a decade for a brother or sister in Christ, and light a vigil candle. (The intentions below are only templates.)
+          </p>
+        </div>
+
+        <button
+          onClick={() => setNewRequestModalOpen(true)}
+          className="px-5 py-3 rounded-lg bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start sm:self-auto"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Submit Intention</span>
+        </button>
+      </div>
+
+      {/* Switcher Buttons below the Prayer Requests Banner: Treasury of Prayers & Community Prayer Wall */}
       <div className="flex rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
         <button
           onClick={() => setActiveSection('treasury')}
@@ -213,61 +239,22 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
       {activeSection === 'wall' && (
         <div className="space-y-6">
           
-          {/* Banner with Add Request CTA */}
-          <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <Flame className="w-5 h-5 text-amber-400" />
-                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-                  Communion of Saints • Fraternal Intercession
-                </span>
-              </div>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-                Community Prayer Requests Wall
-              </h2>
-              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
-                "Bear one another's burdens, and so fulfill the law of Christ" (Galatians 6:2). Post your intentions, pray a decade for a brother or sister in Christ, and light a vigil candle. (The intentions below are only templates.)
-              </p>
-            </div>
-
-            <button
-              onClick={() => setNewRequestModalOpen(true)}
-              className="px-5 py-3 rounded-lg bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start sm:self-auto"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Submit Intention</span>
-            </button>
-          </div>
-
-          {/* Category Filter Pills and Search */}
-          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-                {categories.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                      selectedCategory === cat
-                        ? 'bg-amber-900 text-amber-50 shadow-xs'
-                        : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-
-              <div className="relative w-full sm:w-64">
-                <input
-                  type="text"
-                  placeholder="Search intentions..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full text-xs pl-8 pr-3 py-1.5 rounded-lg bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-700"
-                />
-                <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5" />
-              </div>
+          {/* Category Filter Pills */}
+          <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40">
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                    selectedCategory === cat
+                      ? 'bg-amber-900 text-amber-50 shadow-xs'
+                      : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -349,20 +336,10 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           
           {/* Prayers Selector List */}
           <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center justify-between gap-3">
               <span className="font-cinzel text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider text-stone-900">
                 Treasury of Catholic Prayers
               </span>
-              <div className="relative w-full sm:w-64">
-                <input
-                  type="text"
-                  placeholder="Search prayers..."
-                  value={prayerSearch}
-                  onChange={(e) => setPrayerSearch(e.target.value)}
-                  className="w-full text-xs pl-8 pr-3 py-1.5 rounded-lg bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-700"
-                />
-                <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5" />
-              </div>
             </div>
 
             <div className="flex items-center gap-2">

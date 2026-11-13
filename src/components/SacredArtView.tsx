@@ -168,8 +168,6 @@ export const SacredArtView: React.FC<SacredArtViewProps> = ({ initialArtId, init
               <span>Via Pulchritudinis</span>
               <span aria-hidden="true">·</span>
               <span>The Way of Beauty</span>
-              <span aria-hidden="true">·</span>
-              <span>Masterpiece {currentIndex + 1} of {filteredArt.length}</span>
             </div>
             <h1 className="font-serif text-2xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 tracking-tight">
               Sacred Gallery of the Masters

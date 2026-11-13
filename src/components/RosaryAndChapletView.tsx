@@ -15,7 +15,10 @@ import {
   Copy,
   Check,
   ShieldCheck,
-  Star
+  Star,
+  Settings,
+  ChevronDown,
+  X
 } from 'lucide-react';
 import { RosaryMysteryGroup } from '@/types';
 import { 
@@ -40,6 +43,7 @@ import { bellSynth } from '@/utils/audioSynth';
 
 export const RosaryAndChapletView: React.FC = () => {
   const [activeDevotion, setActiveDevotion] = useState<'divine-mercy' | 'faustina' | 'three-oclock' | 'rosary' | 'marian-promises' | 'angelus'>('divine-mercy');
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [copiedPromiseNum, setCopiedPromiseNum] = useState<number | null>(null);
   const [copiedMarianNum, setCopiedMarianNum] = useState<number | null>(null);
   const [copiedExcerptId, setCopiedExcerptId] = useState<string | null>(null);
@@ -296,6 +300,169 @@ export const RosaryAndChapletView: React.FC = () => {
   const progressPercent = Math.round(((currentStepNum + 1) / activeStepsList.length) * 100);
   const mercyProgressPercent = Math.round(((mercyStepIndex + 1) / mercySteps.length) * 100);
 
+  const renderSettingsToggleButton = (theme: 'dark' | 'light' = 'dark') => (
+    <button
+      type="button"
+      onClick={() => setIsSettingsOpen(prev => !prev)}
+      aria-expanded={isSettingsOpen}
+      className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border shadow-xs ${
+        theme === 'dark'
+          ? isSettingsOpen
+            ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+            : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+          : isSettingsOpen
+            ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+            : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+      }`}
+      title={isSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+      aria-label={isSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+    >
+      <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+      <ChevronDown
+        className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+          isSettingsOpen ? 'rotate-180' : ''
+        }`}
+      />
+    </button>
+  );
+
+  const renderSettingsDropdown = () => {
+    if (!isSettingsOpen) return null;
+    return (
+      <div className="p-3.5 sm:p-4 rounded-xl bg-white/80 backdrop-blur-xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/80 shadow-lg space-y-2.5 animate-fadeIn">
+        <div className="flex items-center justify-between px-1">
+          <div className="flex items-center gap-1.5 text-stone-800">
+            <Settings className="w-3.5 h-3.5 text-[#8B5A2B]" />
+            <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#4A2B17]">
+              Select Devotion or Prayer
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsSettingsOpen(false)}
+            className="px-2 py-0.5 rounded-md text-stone-500 hover:text-stone-900 hover:bg-stone-200/60 transition-colors cursor-pointer text-[11px] flex items-center gap-1 font-cinzel"
+            title="Close Settings"
+          >
+            <X className="w-3.5 h-3.5" />
+            <span>Close</span>
+          </button>
+        </div>
+
+        {/* Six-Button Devotion Picker: 3 Divine Mercy (Red) + 3 Marian (Blue) */}
+        <div className="grid grid-cols-3 sm:grid-cols-6 items-stretch rounded-xl bg-[#F4ECE1]/95 p-1 w-full shadow-inner border border-[#D5C3AE] gap-1">
+          {/* 1. Chaplet (Dark Red) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setActiveDevotion('divine-mercy');
+              handleReset();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+              activeDevotion === 'divine-mercy'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+          >
+            <span>Chaplet</span>
+          </button>
+
+          {/* 2. 14 Promises (Dark Red) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setActiveDevotion('faustina');
+              SacredReader.stop();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+              activeDevotion === 'faustina'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+          >
+            <span>14 Promises</span>
+          </button>
+
+          {/* 3. 3 O'Clock Prayer (Dark Red) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setActiveDevotion('three-oclock');
+              SacredReader.stop();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+              activeDevotion === 'three-oclock'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+          >
+            <span>3 O&apos;Clock Prayer</span>
+          </button>
+
+          {/* 4. Holy Rosary (Dark Blue - 1st Marian Button) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setActiveDevotion('rosary');
+              handleReset();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+              activeDevotion === 'rosary'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+          >
+            <span>Holy Rosary</span>
+          </button>
+
+          {/* 5. Promises of Mary (Dark Blue - 2nd Marian Button) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setActiveDevotion('marian-promises');
+              SacredReader.stop();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+              activeDevotion === 'marian-promises'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+          >
+            <span>Promises of Mary</span>
+          </button>
+
+          {/* 6. The Angelus (Dark Blue - 3rd Marian Button, no bell icon) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setActiveDevotion('angelus');
+              SacredReader.stop();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+              activeDevotion === 'angelus'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+            title="The Angelus"
+          >
+            <span>The Angelus</span>
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const renderThreeOClockCard = (highlighted = false) => (
     <div className={`relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EFE3D3]/85 via-[#E4D1B9]/80 to-[#D6BC9E]/85 backdrop-blur-2xl backdrop-saturate-150 border border-[#C8AD8D]/85 ${highlighted ? 'ring-2 ring-[#9C6D3E]/70 shadow-[0_12px_40px_rgba(92,58,30,0.18),inset_0_1px_2px_rgba(255,255,255,0.85)]' : 'ring-1 ring-[#C8AD8D]/80 shadow-[0_10px_32px_rgba(92,58,30,0.12),inset_0_1px_2px_rgba(255,255,255,0.85)]'} space-y-5 text-stone-900`}>
       {/* Ambient Warm Brown & Golden Rays behind Frosted Glass */}
@@ -313,7 +480,7 @@ export const RosaryAndChapletView: React.FC = () => {
           </h3>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+        <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto shrink-0">
           <button
             onClick={() => {
               if (isReadingThreeOClock) {
@@ -372,138 +539,38 @@ export const RosaryAndChapletView: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
-      
-      {/* Devotion Switcher Tabs: 3 Divine Mercy (Red) + 3 Marian (Blue) in equal-width buttons */}
-      <div className="grid grid-cols-3 sm:grid-cols-6 items-stretch rounded-xl bg-[#F4ECE1]/90 p-1 w-full shadow-lg border border-[#D5C3AE] backdrop-blur-md gap-1">
-        {/* 1. Chaplet (Dark Red) */}
-        <button
-          onClick={() => {
-            bellSynth.stopBells();
-            setAngelusBellStatus('');
-            setActiveDevotion('divine-mercy');
-            handleReset();
-          }}
-          className={`w-full min-w-0 py-2.5 sm:py-3 px-2 rounded-lg text-xs sm:text-[13px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
-            activeDevotion === 'divine-mercy'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
-              : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
-          }`}
-        >
-          <span>Chaplet</span>
-        </button>
-
-        {/* 2. 14 Promises (Dark Red) */}
-        <button
-          onClick={() => {
-            bellSynth.stopBells();
-            setAngelusBellStatus('');
-            setActiveDevotion('faustina');
-            SacredReader.stop();
-          }}
-          className={`w-full min-w-0 py-2.5 sm:py-3 px-2 rounded-lg text-xs sm:text-[13px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
-            activeDevotion === 'faustina'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
-              : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
-          }`}
-        >
-          <span>14 Promises</span>
-        </button>
-
-        {/* 3. 3 O'Clock Prayer (Dark Red) */}
-        <button
-          onClick={() => {
-            bellSynth.stopBells();
-            setAngelusBellStatus('');
-            setActiveDevotion('three-oclock');
-            SacredReader.stop();
-          }}
-          className={`w-full min-w-0 py-2.5 sm:py-3 px-2 rounded-lg text-xs sm:text-[13px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
-            activeDevotion === 'three-oclock'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
-              : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
-          }`}
-        >
-          <span>3 O&apos;Clock Prayer</span>
-        </button>
-
-        {/* 4. Holy Rosary (Dark Blue - 1st Marian Button) */}
-        <button
-          onClick={() => {
-            bellSynth.stopBells();
-            setAngelusBellStatus('');
-            setActiveDevotion('rosary');
-            handleReset();
-          }}
-          className={`w-full min-w-0 py-2.5 sm:py-3 px-2 rounded-lg text-xs sm:text-[13px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
-            activeDevotion === 'rosary'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
-              : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
-          }`}
-        >
-          <span>Holy Rosary</span>
-        </button>
-
-        {/* 5. Promises of Mary (Dark Blue - 2nd Marian Button) */}
-        <button
-          onClick={() => {
-            bellSynth.stopBells();
-            setAngelusBellStatus('');
-            setActiveDevotion('marian-promises');
-            SacredReader.stop();
-          }}
-          className={`w-full min-w-0 py-2.5 sm:py-3 px-2 rounded-lg text-xs sm:text-[13px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
-            activeDevotion === 'marian-promises'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
-              : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
-          }`}
-        >
-          <span>Promises of Mary</span>
-        </button>
-
-        {/* 6. The Angelus (Dark Blue - 3rd Marian Button, no bell icon) */}
-        <button
-          onClick={() => {
-            bellSynth.stopBells();
-            setAngelusBellStatus('');
-            setActiveDevotion('angelus');
-            SacredReader.stop();
-          }}
-          className={`w-full min-w-0 py-2.5 sm:py-3 px-2 rounded-lg text-xs sm:text-[13px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
-            activeDevotion === 'angelus'
-              ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
-              : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
-          }`}
-          title="The Angelus"
-        >
-          <span>The Angelus</span>
-        </button>
-      </div>
 
       {/* =========================================================================
           HOLY ROSARY VIEW
          ========================================================================= */}
       {activeDevotion === 'rosary' && (
-        <div className="space-y-6">
+        <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
-          {/* Continuous Leader Prayer Mode (Auto-Play) Banner */}
-          <div className="p-4 sm:p-6 rounded-xl bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 border border-amber-500/50 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="space-y-1 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start gap-2">
-                <span className="font-cinzel text-xs font-bold text-amber-300 uppercase tracking-widest">
-                  AUTOPLAY PRAYER MODE
+          {/* Holy Rosary Top Banner — Marian Blue with Subtle Yellow Watercolor Wash Accent */}
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/80 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+            <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
+            <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
+
+            <div className="relative z-10 space-y-1">
+              <div className="flex items-center gap-2 overflow-hidden">
+                <span className="font-cinzel text-xs font-bold text-blue-900 uppercase tracking-widest truncate">
+                  THE MOST HOLY ROSARY • AUTOPLAY PRAYER MODE
                 </span>
                 <button
                   onClick={() => setActiveDevotion('three-oclock')}
-                  className="px-2.5 py-0.5 rounded-full bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] font-cinzel font-bold tracking-wider transition-all cursor-pointer"
+                  className="px-2 py-0.5 rounded-full bg-blue-900/10 hover:bg-blue-900/20 border border-blue-400/50 text-[#172B69] text-[9px] font-cinzel font-bold tracking-wider transition-all cursor-pointer shrink-0"
                 >
                   3 O'Clock Prayer
                 </button>
               </div>
-              <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred">
+              <h3 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-stone-900 leading-tight line-clamp-1">
+                The Most Holy Rosary of the Blessed Virgin Mary
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-700 font-serif-sacred leading-snug line-clamp-1">
                 The leader continuously prays all prayers and mysteries sequentially without requiring manual bead presses.
               </p>
             </div>
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="relative z-10 h-8 flex items-center justify-between gap-2.5 mt-auto shrink-0">
               {!isAutoAdvancing ? (
                 <button
                   onClick={() => {
@@ -511,9 +578,9 @@ export const RosaryAndChapletView: React.FC = () => {
                     setSpokenAudioEnabled(true);
                     setIsAutoAdvancing(true);
                   }}
-                  className="flex items-center gap-2 px-5 py-3 rounded-lg bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-700 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-amber-400/60"
+                  className="h-8 flex items-center gap-1.5 px-3 rounded-md bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 font-cinzel font-bold text-[10px] sm:text-[11px] shadow-xs transition-all cursor-pointer border border-amber-300/80"
                 >
-                  <Play className="w-4 h-4 fill-current" />
+                  <Play className="w-3 h-3 fill-current" />
                   <span>START AUTOPLAY</span>
                 </button>
               ) : (
@@ -522,14 +589,17 @@ export const RosaryAndChapletView: React.FC = () => {
                     setIsAutoAdvancing(false);
                     SacredReader.stop();
                   }}
-                  className="flex items-center gap-2 px-5 py-3 rounded-lg bg-amber-700 hover:bg-amber-800 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-amber-400/60 animate-pulse"
+                  className="h-8 flex items-center gap-1.5 px-3 rounded-md bg-[#1E3A8A] hover:bg-[#172B69] text-amber-100 font-cinzel font-bold text-[10px] sm:text-[11px] shadow-xs transition-all cursor-pointer border border-amber-300 animate-pulse"
                 >
-                  <Pause className="w-4 h-4 fill-current" />
+                  <Pause className="w-3 h-3 fill-current" />
                   <span>Pause Continuous Prayer</span>
                 </button>
               )}
+              {renderSettingsToggleButton('light')}
             </div>
           </div>
+
+          {renderSettingsDropdown()}
 
           {/* Mystery Group Selector Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -548,26 +618,28 @@ export const RosaryAndChapletView: React.FC = () => {
                     setCountdown(autoAdvanceSeconds);
                     SacredReader.stop();
                   }}
-                  className={`p-3 rounded-lg text-left border transition-all cursor-pointer ${
+                  className={`p-2.5 sm:p-3 rounded-lg text-left border transition-all cursor-pointer min-w-0 ${
                     isSelected
-                      ? 'bg-amber-900 text-amber-50 border-amber-800 shadow-md ring-2 ring-amber-700/50'
-                      : 'bg-white hover:bg-stone-50 border-stone-200 text-stone-800'
+                      ? 'bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-white border-[#2B4C9E] shadow-md ring-2 ring-blue-400/60'
+                      : 'bg-white/80 hover:bg-[#EAF3FC]/90 border-[#BFD4EA] text-stone-800'
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-cinzel text-xs font-bold uppercase tracking-wider">
+                  <div className="flex items-center justify-between gap-1 min-w-0">
+                    <span className={`font-cinzel text-[11px] sm:text-xs font-bold uppercase tracking-normal truncate ${
+                      isSelected ? 'text-white' : 'text-[#172B69]'
+                    }`}>
                       {group}
                     </span>
                     {isToday && (
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-                        isSelected ? 'bg-amber-400 text-amber-950' : 'bg-amber-100 text-amber-900'
+                      <span className={`text-[8px] sm:text-[9px] leading-none px-1.5 py-0.5 rounded font-semibold shrink-0 ${
+                        isSelected ? 'bg-sky-200 text-[#0F1E4D]' : 'bg-blue-100 text-[#172B69]'
                       }`}>
                         Today
                       </span>
                     )}
                   </div>
                   <p className={`text-[11px] mt-1 line-clamp-1 font-serif-sacred ${
-                    isSelected ? 'text-amber-200' : 'text-stone-500'
+                    isSelected ? 'text-blue-200' : 'text-stone-600'
                   }`}>
                     {meta.traditionalDays.split('(')[0]}
                   </p>
@@ -577,26 +649,26 @@ export const RosaryAndChapletView: React.FC = () => {
           </div>
 
           {/* Interactive Prayer and Bead Deck */}
-          <div className="bg-white rounded-xl shadow-md border border-stone-200 overflow-hidden">
+          <div className="relative isolate overflow-hidden rounded-2xl bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/75 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)]">
             
             {/* Top Deck Info Bar */}
-            <div className="p-4 sm:p-6 bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 text-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="p-4 sm:p-6 bg-gradient-to-r from-[#0F1E4D] via-[#172B69] to-[#1E3A8A] text-white border-b border-blue-400/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-amber-950 text-[11px] font-bold uppercase tracking-wider">
+                  <span className="px-2.5 py-0.5 rounded-full bg-sky-200 text-[#0F1E4D] text-[11px] font-bold uppercase tracking-wider">
                     {ROSARY_MYSTERY_SETS[selectedMysteryGroup].title}
                   </span>
-                  <span className="text-xs text-stone-300">
+                  <span className="text-xs text-blue-200">
                     Step {rosaryStepIndex + 1} of {rosarySteps.length}
                   </span>
                 </div>
                 
-                <h3 className="font-cinzel text-lg sm:text-2xl font-bold text-amber-100">
+                <h3 className="font-cinzel text-lg sm:text-2xl font-bold text-white">
                   {currentRosaryStep.mysteryName || currentRosaryStep.prayerName}
                 </h3>
 
                 {currentRosaryStep.fruit && (
-                  <p className="text-xs text-amber-300 font-serif-sacred italic">
+                  <p className="text-xs text-sky-200 font-serif-sacred italic">
                     Spiritual Fruit: <span className="font-semibold">{currentRosaryStep.fruit}</span>
                   </p>
                 )}
@@ -605,12 +677,12 @@ export const RosaryAndChapletView: React.FC = () => {
               {/* Progress Counter Circle */}
               <div className="flex items-center gap-3">
                 <div className="text-right">
-                  <div className="text-xs text-stone-400 font-medium">Progress</div>
-                  <div className="text-xl font-bold font-cinzel text-amber-300">{progressPercent}%</div>
+                  <div className="text-xs text-blue-200 font-medium">Progress</div>
+                  <div className="text-xl font-bold font-cinzel text-sky-200">{progressPercent}%</div>
                 </div>
-                <div className="w-12 h-12 rounded-full border-4 border-stone-700 flex items-center justify-center text-xs font-bold text-amber-200 relative">
+                <div className="w-12 h-12 rounded-full border-4 border-blue-900 flex items-center justify-center text-xs font-bold text-sky-100 relative">
                   <div 
-                    className="absolute inset-0 rounded-full border-4 border-amber-400 transition-all duration-300"
+                    className="absolute inset-0 rounded-full border-4 border-sky-300 transition-all duration-300"
                     style={{ clipPath: `polygon(50% 50%, -50% -50%, ${progressPercent}% -50%, ${progressPercent}% ${progressPercent}%)` }}
                   />
                   <span>{rosaryStepIndex + 1}</span>
@@ -619,19 +691,19 @@ export const RosaryAndChapletView: React.FC = () => {
             </div>
 
             {/* Visual Bead Chain Preview (5 decades indicator) */}
-            <div className="px-4 py-2.5 bg-stone-100 border-b border-stone-200 overflow-x-auto no-scrollbar">
+            <div className="px-4 py-2.5 bg-[#E2EEFA]/85 border-b border-[#BFD4EA]/80 overflow-x-auto no-scrollbar">
               <div className="flex items-center justify-between min-w-[500px] gap-1">
                 {/* Intro beads */}
-                <div className="flex items-center gap-1 pr-3 border-r border-stone-300">
-                  <span className="text-[10px] text-stone-500 font-cinzel font-bold mr-1">Intro</span>
+                <div className="flex items-center gap-1 pr-3 border-r border-blue-300/70">
+                  <span className="text-[10px] text-[#172B69] font-cinzel font-bold mr-1">Intro</span>
                   {[0, 1, 2, 3, 4, 5, 6].map(idx => (
                     <button
                       key={idx}
                       onClick={() => selectRosaryStep(idx)}
                       className={`w-3.5 h-3.5 rounded-full transition-all cursor-pointer ${
                         rosaryStepIndex === idx 
-                          ? 'bg-amber-600 scale-125 ring-2 ring-amber-400' 
-                          : rosaryStepIndex > idx ? 'bg-amber-800' : 'bg-stone-300'
+                          ? 'bg-[#1E3A8A] scale-125 ring-2 ring-sky-400' 
+                          : rosaryStepIndex > idx ? 'bg-[#172B69]' : 'bg-blue-200 hover:bg-blue-300'
                       }`}
                       title={rosarySteps[idx]?.prayerName}
                     />
@@ -650,18 +722,18 @@ export const RosaryAndChapletView: React.FC = () => {
                     <div 
                       key={dec} 
                       className={`flex items-center gap-1 px-2 py-1 rounded-lg transition-colors ${
-                        isCurrentDecade ? 'bg-amber-200/60 ring-1 ring-amber-400' : ''
+                        isCurrentDecade ? 'bg-blue-200/75 ring-1 ring-blue-500' : ''
                       }`}
                     >
-                      <span className="text-[10px] font-bold text-stone-600 font-cinzel">D{dec}</span>
+                      <span className="text-[10px] font-bold text-[#172B69] font-cinzel">D{dec}</span>
                       
                       {/* Large Bead: Our Father */}
                       <button
                         onClick={() => ourFatherIdx !== -1 && selectRosaryStep(ourFatherIdx)}
                         className={`w-3 h-3 rounded-full cursor-pointer transition-all ${
                           isLargeCurrent
-                            ? 'bg-amber-500 scale-135 ring-2 ring-amber-300 shadow-xs'
-                            : isLargeDone ? 'bg-amber-800' : 'bg-amber-700/70 hover:bg-amber-700'
+                            ? 'bg-[#1E3A8A] scale-135 ring-2 ring-sky-400 shadow-xs'
+                            : isLargeDone ? 'bg-[#172B69]' : 'bg-blue-400/80 hover:bg-blue-500'
                         }`}
                         title={`Decade ${dec}: Our Father (Large Bead)`}
                       />
@@ -679,8 +751,8 @@ export const RosaryAndChapletView: React.FC = () => {
                               onClick={() => stepIdx !== -1 && selectRosaryStep(stepIdx)}
                               className={`w-2 h-2 rounded-full cursor-pointer transition-all ${
                                 isCurrent 
-                                  ? 'bg-amber-500 scale-150 ring-2 ring-amber-300' 
-                                  : isDone ? 'bg-amber-800' : 'bg-stone-300'
+                                  ? 'bg-[#1E3A8A] scale-150 ring-2 ring-sky-400' 
+                                  : isDone ? 'bg-[#172B69]' : 'bg-blue-200 hover:bg-blue-300'
                               }`}
                               title={`Decade ${dec}, Bead ${h + 1}`}
                             />
@@ -697,27 +769,27 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="p-6 sm:p-10 space-y-6">
               
               {/* Instruction Prompt */}
-              <div className="flex items-center justify-between text-xs text-amber-900 font-medium bg-amber-50/80 px-4 py-2.5 rounded-xl border border-amber-200/80">
+              <div className="flex items-center justify-between text-xs text-[#172B69] font-medium bg-white/75 backdrop-blur-md px-4 py-2.5 rounded-xl border border-blue-200/80 ring-1 ring-white/90">
                 <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-700" />
+                  <Sparkles className="w-4 h-4 text-[#1E3A8A]" />
                   <span className="font-semibold">{currentRosaryStep.instruction}</span>
                 </div>
                 {currentRosaryStep.beadInDecade && (
-                  <span className="font-cinzel font-bold text-amber-950">
+                  <span className="font-cinzel font-bold text-[#0F1E4D]">
                     Bead {currentRosaryStep.beadInDecade} of 10
                   </span>
                 )}
               </div>
 
               {/* Prayer Name and Latin Toggle */}
-              <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-                <h4 className="font-cinzel text-xl font-bold text-stone-900">
+              <div className="flex items-center justify-between border-b border-blue-200/70 pb-2">
+                <h4 className="font-cinzel text-xl font-bold text-[#172B69]">
                   {currentRosaryStep.prayerName}
                 </h4>
                 {currentRosaryStep.latinName && (
                   <button
                     onClick={() => setShowLatin(!showLatin)}
-                    className="text-xs font-semibold text-amber-800 hover:text-amber-950 px-2.5 py-1 rounded-md bg-stone-100 hover:bg-stone-200 transition-colors cursor-pointer"
+                    className="text-xs font-semibold text-[#172B69] hover:text-[#0F1E4D] px-2.5 py-1 rounded-md bg-white/80 hover:bg-white border border-blue-200/80 transition-colors cursor-pointer"
                   >
                     {showLatin ? 'View English' : 'View Latin'}
                   </button>
@@ -726,21 +798,21 @@ export const RosaryAndChapletView: React.FC = () => {
 
               {/* Scripture and Meditation (if decade start) */}
               {currentRosaryStep.mysteryName && (
-                <div className="relative p-4 rounded-xl bg-[#FAF8F5] shadow-2xs">
+                <div className="relative p-4 rounded-xl bg-[#F5F9FD] border border-blue-200/70 shadow-2xs">
                   <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
-                    <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
-                    <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
-                    <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
-                    <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-700 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-blue-500 m-0" style={{ margin: 0 }} />
                   </div>
                   <div className="space-y-2">
-                    <div className="text-xs font-bold uppercase tracking-wider text-amber-900 font-cinzel">
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#172B69] font-cinzel">
                       Scripture Contemplation
                     </div>
                     <p className="text-sm sm:text-base font-serif-sacred text-stone-800 italic">
                       "{ROSARY_MYSTERY_SETS[selectedMysteryGroup].mysteries.find((m: any) => m.name === currentRosaryStep.mysteryName)?.scriptureText}"
                     </p>
-                    <p className="text-xs text-stone-600 font-serif-sacred">
+                    <p className="text-xs text-blue-950/80 font-serif-sacred">
                       — {ROSARY_MYSTERY_SETS[selectedMysteryGroup].mysteries.find((m: any) => m.name === currentRosaryStep.mysteryName)?.meditation}
                     </p>
                   </div>
@@ -748,12 +820,12 @@ export const RosaryAndChapletView: React.FC = () => {
               )}
 
               {/* Prayer Text */}
-              <div className="font-serif-sacred text-stone-900 text-lg sm:text-2xl leading-relaxed whitespace-pre-line text-center py-2">
+              <div className="p-5 sm:p-6 rounded-xl bg-white/75 backdrop-blur-md border border-white/90 ring-1 ring-blue-200/80 shadow-xs font-serif-sacred text-stone-900 text-lg sm:text-2xl leading-relaxed whitespace-pre-line text-center">
                 {currentRosaryStep.prayerText}
               </div>
 
               {/* Step Navigation and Timed Auto-Advance Controls */}
-              <div className="pt-6 border-t border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="pt-6 border-t border-blue-200/70 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 
                 {/* Auto Advance and Prompts Controls */}
                 <div className="flex items-center gap-2">
@@ -766,18 +838,18 @@ export const RosaryAndChapletView: React.FC = () => {
                     }}
                     className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       isAutoAdvancing
-                        ? 'bg-amber-600 text-white animate-pulse'
-                        : 'bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300'
+                        ? 'bg-[#172B69] text-white animate-pulse'
+                        : 'bg-white/85 hover:bg-white text-[#172B69] border border-blue-300/80'
                     }`}
                   >
-                    {isAutoAdvancing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 text-amber-800" />}
+                    {isAutoAdvancing ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 text-[#1E3A8A]" />}
                     <span>{isAutoAdvancing ? (spokenAudioEnabled ? 'Praying...' : `Auto: ${countdown}s`) : 'Autoplay'}</span>
                   </button>
 
                   <select
                     value={prayerVoiceRate}
                     onChange={(e) => setPrayerVoiceRate(Number(e.target.value))}
-                    className="text-xs py-2 px-2.5 rounded-lg bg-stone-100 border border-stone-300 font-medium text-stone-700"
+                    className="text-xs py-2 px-2.5 rounded-lg bg-white/85 border border-blue-300/80 font-medium text-[#172B69]"
                     title="Prayer voice speed"
                   >
                     <option value={0.68}>Slow and Solemn</option>
@@ -793,11 +865,11 @@ export const RosaryAndChapletView: React.FC = () => {
                       else if (hasStartedRosary && !isAutoAdvancing) triggerAudioForStep(currentRosaryStep.prayerText);
                     }}
                     className={`flex items-center gap-1.5 px-3 py-2 rounded-lg border text-xs font-medium transition-colors cursor-pointer ${
-                      spokenAudioEnabled ? 'bg-amber-700 text-white border-amber-800 shadow-xs' : 'bg-stone-100 text-stone-600 border-stone-300'
+                      spokenAudioEnabled ? 'bg-[#172B69] text-white border-[#0F1E4D] shadow-xs' : 'bg-white/85 text-stone-600 border-blue-200/80'
                     }`}
                     title={spokenAudioEnabled ? 'Human voice praying aloud (Click to mute)' : 'Voice muted (Click to enable human voice)'}
                   >
-                    {spokenAudioEnabled ? <Volume2 className="w-4 h-4 text-amber-200" /> : <VolumeX className="w-4 h-4" />}
+                    {spokenAudioEnabled ? <Volume2 className="w-4 h-4 text-sky-200" /> : <VolumeX className="w-4 h-4" />}
                     <span>{spokenAudioEnabled ? 'Human Voice' : 'Muted'}</span>
                   </button>
                 </div>
@@ -806,7 +878,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 <div className="flex items-center gap-2 self-end sm:self-auto">
                   <button
                     onClick={handleReset}
-                    className="p-2.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-600 transition-colors cursor-pointer"
+                    className="p-2.5 rounded-lg bg-white/85 hover:bg-white text-[#172B69] border border-blue-200/80 transition-colors cursor-pointer"
                     title="Restart Rosary from Beginning"
                   >
                     <RotateCcw className="w-4 h-4" />
@@ -815,7 +887,7 @@ export const RosaryAndChapletView: React.FC = () => {
                   <button
                     onClick={handlePrevBead}
                     disabled={rosaryStepIndex === 0}
-                    className="flex items-center gap-1 px-4 py-2.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 disabled:opacity-40 text-xs font-semibold transition-colors cursor-pointer"
+                    className="flex items-center gap-1 px-4 py-2.5 rounded-lg bg-white/85 hover:bg-white text-[#172B69] border border-blue-200/80 disabled:opacity-40 text-xs font-semibold transition-colors cursor-pointer"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     <span>Previous</span>
@@ -823,7 +895,7 @@ export const RosaryAndChapletView: React.FC = () => {
 
                   <button
                     onClick={handleNextBead}
-                    className="flex items-center gap-1 px-6 py-2.5 rounded-lg bg-amber-900 hover:bg-amber-800 text-amber-100 font-semibold text-xs shadow-md transition-all cursor-pointer"
+                    className="flex items-center gap-1 px-6 py-2.5 rounded-lg bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-white border border-[#2B4C9E] font-semibold text-xs shadow-md transition-all cursor-pointer"
                   >
                     <span>Next Bead</span>
                     <ChevronRight className="w-4 h-4" />
@@ -846,29 +918,34 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="space-y-6">
           
           {/* 3:00 PM Hour of Great Mercy Banner */}
-          <div className="bg-gradient-to-r from-red-950 via-stone-900 to-red-900 rounded-xl p-6 sm:p-8 text-white shadow-md border border-red-900/40 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping" />
-                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-red-300">
+          <div className="sanctum-top-banner h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-red-950 via-stone-900 to-red-900 rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between overflow-hidden">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 overflow-hidden">
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0" />
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-red-300 truncate">
                   {DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyTitle}
                 </span>
               </div>
+              <h3 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-amber-100 leading-tight line-clamp-1">
+                The Chaplet of the Divine Mercy
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred italic leading-snug line-clamp-1">
+                "{DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyIntro}"
+              </p>
+            </div>
+            <div className="h-8 flex items-center justify-between gap-2.5 mt-auto shrink-0">
               <button
                 onClick={() => setActiveDevotion('three-oclock')}
-                className="px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-xs font-cinzel font-bold tracking-wider transition-all cursor-pointer self-start sm:self-auto flex items-center gap-1.5"
+                className="h-8 px-2.5 rounded-md bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <Sparkles className="w-3 h-3 text-amber-300" />
                 <span>Pray The 3 O'Clock Prayer</span>
               </button>
+              {renderSettingsToggleButton('dark')}
             </div>
-            <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-amber-100">
-              The Chaplet of the Divine Mercy
-            </h3>
-            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred italic leading-relaxed">
-              "{DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyIntro}"
-            </p>
           </div>
+
+          {renderSettingsDropdown()}
 
           {/* Interactive Divine Mercy Bead Deck */}
           <div className="bg-white rounded-xl shadow-md border border-stone-200 overflow-hidden">
@@ -896,9 +973,9 @@ export const RosaryAndChapletView: React.FC = () => {
                         setSpokenAudioEnabled(true);
                         setIsAutoAdvancing(true);
                       }}
-                      className="flex items-center gap-2 px-5 py-3 rounded-lg bg-gradient-to-r from-red-700 via-red-800 to-red-900 hover:from-red-600 hover:to-red-800 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-red-400/60"
+                      className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-gradient-to-r from-red-700 via-red-800 to-red-900 hover:from-red-600 hover:to-red-800 text-white font-cinzel font-bold text-[10px] sm:text-xs shadow-lg transition-all cursor-pointer border border-red-400/60"
                     >
-                      <Play className="w-4 h-4 fill-current" />
+                      <Play className="w-3.5 h-3.5 fill-current" />
                       <span>START AUTOPLAY</span>
                     </button>
                   ) : (
@@ -907,9 +984,9 @@ export const RosaryAndChapletView: React.FC = () => {
                         setIsAutoAdvancing(false);
                         SacredReader.stop();
                       }}
-                      className="flex items-center gap-2 px-5 py-3 rounded-lg bg-red-800 hover:bg-red-900 text-white font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border border-red-400/60 animate-pulse"
+                      className="flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-red-800 hover:bg-red-900 text-white font-cinzel font-bold text-[10px] sm:text-xs shadow-lg transition-all cursor-pointer border border-red-400/60 animate-pulse"
                     >
-                      <Pause className="w-4 h-4 fill-current" />
+                      <Pause className="w-3.5 h-3.5 fill-current" />
                       <span>Pause Continuous Prayer</span>
                     </button>
                   )}
@@ -924,7 +1001,7 @@ export const RosaryAndChapletView: React.FC = () => {
                         SacredReader.stop();
                       }
                     }}
-                    className={`flex items-center gap-2 px-5 py-3 rounded-lg font-cinzel font-bold text-xs sm:text-sm shadow-lg transition-all cursor-pointer border ${
+                    className={`flex items-center gap-1.5 px-4 py-2.5 rounded-lg font-cinzel font-bold text-[10px] sm:text-xs shadow-lg transition-all cursor-pointer border ${
                       isPlayingTrishShortSong
                         ? 'bg-amber-400 text-stone-950 border-amber-200 ring-2 ring-amber-300/60'
                         : 'bg-stone-900/90 hover:bg-stone-800 text-amber-200 border-amber-400/50'
@@ -933,12 +1010,12 @@ export const RosaryAndChapletView: React.FC = () => {
                   >
                     {isPlayingTrishShortSong ? (
                       <>
-                        <Pause className="w-4 h-4 fill-current" />
+                        <Pause className="w-3.5 h-3.5 fill-current" />
                         <span>CLOSE DIVINE MERCY IN SONG</span>
                       </>
                     ) : (
                       <>
-                        <Play className="w-4 h-4 fill-current text-amber-300" />
+                        <Play className="w-3.5 h-3.5 fill-current text-amber-300" />
                         <span>DIVINE MERCY IN SONG • TRISH SHORT</span>
                       </>
                     )}
@@ -1240,22 +1317,28 @@ export const RosaryAndChapletView: React.FC = () => {
          ========================================================================= */}
       {activeDevotion === 'faustina' && (
         <div className="relative isolate space-y-6 animate-fadeIn">
-          {/* Header Banner - Frosted Glass (Pink and wine colors removed) */}
-          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F7EFE4]/80 via-[#EFE3D2]/75 to-[#E8D7C1]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_36px_rgba(139,90,43,0.11),inset_0_1px_2px_rgba(255,255,255,0.95)] text-stone-900 space-y-3">
-            <div className="pointer-events-none absolute -top-12 -left-12 w-64 h-64 rounded-full bg-amber-200/35 blur-3xl z-0" />
-            <div className="pointer-events-none absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-amber-300/35 blur-3xl z-0" />
-            <div className="relative z-10 flex items-center gap-2">
-              <span className="font-cinzel text-xs font-bold text-[#8B5A2B] tracking-wider uppercase">
-                Saint Maria Faustina Kowalska • Vilnius and Kraków
-              </span>
+          {/* Header Banner — Patterned after the Chaplet of the Divine Mercy Banner */}
+          <div className="sanctum-top-banner h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-red-950 via-stone-900 to-red-900 rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between overflow-hidden">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 overflow-hidden">
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0" />
+                <span className="font-cinzel text-xs font-bold text-red-300 tracking-widest uppercase block truncate">
+                  Saint Maria Faustina Kowalska • Vilnius and Kraków
+                </span>
+              </div>
+              <h2 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-amber-100 leading-tight line-clamp-1">
+                The Diary and The 14 Promises of Jesus
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred italic leading-snug line-clamp-1">
+                "My Heart overflows with great mercy for souls... The graces of My mercy are drawn by means of one vessel only, and that is—trust" (Diary 1731).
+              </p>
             </div>
-            <h2 className="relative z-10 font-cinzel text-2xl sm:text-3xl font-bold text-stone-900 tracking-wide">
-              The Diary and The 14 Promises of Jesus
-            </h2>
-            <p className="relative z-10 text-xs sm:text-sm text-stone-700 font-serif-sacred max-w-2xl leading-relaxed">
-              "My Heart overflows with great mercy for souls... The graces of My mercy are drawn by means of one vessel only, and that is—trust" (Diary 1731). Discover the 14 extraordinary promises given by Christ to souls who recite the Chaplet of Divine Mercy, along with cornerstone passages from the Diary.
-            </p>
+            <div className="h-8 flex items-center justify-end mt-auto shrink-0">
+              {renderSettingsToggleButton('dark')}
+            </div>
           </div>
+
+          {renderSettingsDropdown()}
 
           {/* 14 PROMISES OF JESUS - Frosted Glass Container (Pink and wine colors removed) */}
           <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#F6EDE0]/80 via-[#EDE0CE]/75 to-[#E6D5BF]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/75 shadow-[0_12px_40px_rgba(139,90,43,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-6">
@@ -1572,6 +1655,29 @@ export const RosaryAndChapletView: React.FC = () => {
          ========================================================================= */}
       {activeDevotion === 'three-oclock' && (
         <div className="space-y-6 animate-in fade-in duration-300">
+          {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-red-950 via-stone-900 to-red-900 text-white shadow-md border border-red-900/40 flex flex-col justify-between">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 overflow-hidden">
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0" />
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-red-300 truncate">
+                  Hour of Great Mercy • 3:00 PM Devotion
+                </span>
+              </div>
+              <h2 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-amber-100 leading-tight line-clamp-1">
+                The Three O'Clock Prayer
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred italic leading-snug line-clamp-1">
+                "At three o'clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion" (Diary 1320).
+              </p>
+            </div>
+            <div className="h-8 flex items-center justify-end mt-auto shrink-0">
+              {renderSettingsToggleButton('dark')}
+            </div>
+          </div>
+
+          {renderSettingsDropdown()}
+
           {renderThreeOClockCard(true)}
         </div>
       )}
@@ -1582,25 +1688,28 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'marian-promises' && (
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
-          {/* Header Banner - Frosted Glass */}
-          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EAF3FC]/75 via-[#E2EEFA]/65 to-[#F5EFE5]/75 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/80 shadow-[0_12px_36px_rgba(30,64,120,0.10),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-3 text-stone-900">
-            <div className="pointer-events-none absolute -top-12 -left-12 w-64 h-64 rounded-full bg-sky-300/40 blur-3xl z-0" />
-            <div className="pointer-events-none absolute -bottom-12 -right-12 w-64 h-64 rounded-full bg-amber-200/40 blur-3xl z-0" />
+          {/* Header Banner - Frosted Glass with Standardized Size, 2-Line Full Title & Subtle Yellow Watercolor Wash Accent */}
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl h-[156px] sm:h-[164px] w-full px-5 py-3.5 sm:px-6 sm:py-4 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/80 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+            <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
+            <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
 
-            <div className="relative z-10 flex items-center gap-2.5">
-              <div>
-                <span className="text-[11px] font-cinzel font-bold tracking-widest text-blue-900 uppercase block">
-                  The Secret of the Rosary • Saint Louis-Marie de Montfort
-                </span>
-                <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
-                  The 15 Promises of Mary to Devotees of the Holy Rosary
-                </h3>
-              </div>
+            <div className="relative z-10 space-y-0.5">
+              <span className="text-[11px] sm:text-xs font-cinzel font-bold tracking-widest text-blue-900 uppercase block truncate">
+                The Secret of the Rosary • Saint Louis-Marie de Montfort
+              </span>
+              <h3 className="font-cinzel text-base sm:text-xl md:text-[22px] font-bold text-stone-900 leading-snug line-clamp-2">
+                The 15 Promises of Mary to Devotees of the Holy Rosary
+              </h3>
+              <p className="text-xs sm:text-sm font-serif text-stone-700 leading-snug line-clamp-1">
+                As revealed to Saint Dominic and Blessed Alan de la Roche, and compiled by Saint Louis-Marie Grignion de Montfort in <span className="italic text-blue-900 font-semibold">The Secret of the Rosary</span>.
+              </p>
             </div>
-            <p className="relative z-10 text-xs sm:text-sm font-serif text-stone-700 leading-relaxed max-w-3xl">
-              As revealed to Saint Dominic and Blessed Alan de la Roche, and compiled by Saint Louis-Marie Grignion de Montfort in his immortal spiritual classic <span className="italic text-blue-900 font-semibold">The Secret of the Rosary</span>.
-            </p>
+            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0">
+              {renderSettingsToggleButton('light')}
+            </div>
           </div>
+
+          {renderSettingsDropdown()}
 
           {/* 15 Promises Grid - Frosted Glass Container */}
           <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#ECF4FC]/75 via-[#E4EFFA]/65 to-[#F6EFE5]/75 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#C5D8EC]/80 shadow-[0_12px_40px_rgba(30,64,120,0.11),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-6">
@@ -1764,30 +1873,33 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'angelus' && (
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
-          {/* Header & Approved Chimes Console - Marian Blue Frosted Glass */}
-          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/75 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-5 text-stone-900">
-            <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/40 blur-3xl z-0" />
-            <div className="pointer-events-none absolute -bottom-14 -right-14 w-72 h-72 rounded-full bg-amber-200/40 blur-3xl z-0" />
+          {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/80 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+            <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
+            <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
 
-            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-blue-200/70 pb-5">
-              <div>
-                <span className="text-[11px] font-cinzel font-bold tracking-widest text-blue-900 uppercase block">
-                  Traditional 6:00 AM, 12:00 Noon &amp; 6:00 PM Marian Devotion
-                </span>
-                <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-stone-900">
-                  The Angelus (Angelus Domini)
-                </h3>
-              </div>
+            <div className="relative z-10 space-y-1">
+              <span className="text-xs font-cinzel font-bold tracking-widest text-blue-900 uppercase block truncate">
+                Traditional 6:00 AM, 12:00 Noon &amp; 6:00 PM Marian Devotion
+              </span>
+              <h3 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-stone-900 leading-tight line-clamp-1">
+                The Angelus (Angelus Domini)
+              </h3>
+              <p className="text-xs sm:text-sm font-serif text-stone-700 leading-snug line-clamp-1">
+                For centuries, at dawn (6:00 AM), noon (12:00 PM), and dusk (6:00 PM), the faithful pause their labor to venerate the Mystery of the Incarnation.
+              </p>
+            </div>
 
-              {/* Approved Sanctuary Chimes & Prayer Controls */}
-              <div className="flex flex-wrap items-center gap-2 self-start md:self-auto shrink-0">
+            {/* Bottom Row: Chimes & Prayer Controls on Left, Settings Toggle on Right */}
+            <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
                 <button
                   onClick={() => {
                     bellSynth.playNoonChimes();
                     setAngelusBellStatus('Playing Sanctuary Noon Chimes...');
                     setTimeout(() => setAngelusBellStatus(''), 5000);
                   }}
-                  className="px-4 py-2.5 rounded-xl bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 border border-amber-300/80 text-xs sm:text-sm font-cinzel font-bold flex items-center justify-center shadow-md transition-all cursor-pointer"
+                  className="h-8 px-2.5 rounded-md bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 border border-amber-300/80 text-[10px] sm:text-[11px] font-cinzel font-bold flex items-center justify-center shadow-xs transition-all cursor-pointer"
                   title="Play the approved Sanctuary Noon Chimes"
                 >
                   <span>Noon Chimes</span>
@@ -1804,19 +1916,19 @@ export const RosaryAndChapletView: React.FC = () => {
                       SacredReader.speak(fullSpeech, () => setIsReadingAngelus(false), 'female', 0.84);
                     }
                   }}
-                  className={`px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
+                  className={`h-8 px-2.5 rounded-md text-[10px] sm:text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
                     isReadingAngelus
                       ? 'bg-[#172B69] text-amber-100 border border-amber-300 animate-pulse'
                       : 'bg-white/80 hover:bg-white text-[#172B69] border border-blue-300/80'
                   }`}
                 >
-                  {isReadingAngelus ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-blue-800" />}
+                  {isReadingAngelus ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3 text-blue-800" />}
                   <span>{isReadingAngelus ? 'Stop Audio' : 'Listen to Prayer'}</span>
                 </button>
 
                 <button
                   onClick={() => setAngelusShowLatin(!angelusShowLatin)}
-                  className={`px-3 py-2.5 rounded-xl text-xs font-cinzel font-bold border transition-all cursor-pointer ${
+                  className={`h-8 px-2.5 rounded-md text-[10px] sm:text-[11px] font-cinzel font-bold border transition-all cursor-pointer ${
                     angelusShowLatin
                       ? 'bg-[#172B69] text-amber-200 border-amber-300'
                       : 'bg-white/80 hover:bg-white text-blue-950 border-blue-300/80'
@@ -1832,14 +1944,21 @@ export const RosaryAndChapletView: React.FC = () => {
                     setCopiedAngelus(true);
                     setTimeout(() => setCopiedAngelus(false), 2000);
                   }}
-                  className="p-2.5 rounded-xl bg-white/80 hover:bg-white text-blue-900 border border-blue-300/80 transition-colors cursor-pointer"
+                  className="h-8 px-2.5 rounded-md bg-white/80 hover:bg-white text-blue-900 border border-blue-300/80 transition-colors cursor-pointer flex items-center justify-center"
                   title="Copy The Angelus Prayer"
                 >
-                  {copiedAngelus ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                  {copiedAngelus ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                 </button>
               </div>
-            </div>
 
+              {renderSettingsToggleButton('light')}
+            </div>
+          </div>
+
+          {renderSettingsDropdown()}
+
+          {/* Angelus Versicles & Collect Card */}
+          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/75 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-5 text-stone-900">
             {/* Active Chimes Status Banner */}
             {angelusBellStatus && (
               <div className="relative z-10 px-4 py-3 rounded-xl bg-gradient-to-r from-[#172B69] via-[#1E3A8A] to-[#172B69] text-amber-100 border border-amber-300/80 shadow-md flex items-center justify-between gap-3">
@@ -1853,10 +1972,6 @@ export const RosaryAndChapletView: React.FC = () => {
                 </span>
               </div>
             )}
-
-            <p className="relative z-10 text-xs sm:text-sm font-serif text-stone-700 leading-relaxed">
-              For centuries, at dawn (6:00 AM), noon (12:00 PM), and dusk (6:00 PM), the faithful pause their labor to venerate the Mystery of the Incarnation—the moment the Eternal Word took flesh in the womb of the Blessed Virgin Mary.
-            </p>
 
             {/* Three Versicles & Hail Marys + Concluding Collect */}
             <div className="relative z-10 space-y-4">

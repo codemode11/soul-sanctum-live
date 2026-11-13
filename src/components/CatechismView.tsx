@@ -330,24 +330,8 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               </button>
             </div>
 
-            {/* Right: Settings, Audio, and Copy Action Buttons */}
+            {/* Right: Audio, Copy, and Settings Action Buttons */}
             <div className="flex items-center gap-2 shrink-0">
-              <button
-                type="button"
-                onClick={() => setIsSettingsOpen(prev => !prev)}
-                className={`h-8 px-2.5 sm:px-3 rounded-md text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs border ${
-                  isSettingsOpen
-                    ? 'bg-amber-700 text-white border-amber-400 ring-1 ring-amber-400/50'
-                    : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border-[#8B5A2B]/70 hover:border-amber-400/60'
-                }`}
-                title={isSettingsOpen ? 'Close Settings' : 'Open Settings (Topics & Daily Gospel Topics)'}
-                aria-label="Settings"
-              >
-                <Settings className={`w-3.5 h-3.5 text-amber-300 transition-transform duration-200 ${isSettingsOpen ? 'rotate-90 text-white' : ''}`} />
-                <span>Settings</span>
-                <ChevronDown className={`w-3 h-3 text-amber-300/80 transition-transform duration-150 ${isSettingsOpen ? 'rotate-180' : ''}`} />
-              </button>
-
               <button
                 onClick={handleToggleReadAloud}
                 className={`h-8 p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shadow-xs flex items-center justify-center shrink-0 ${
@@ -368,6 +352,26 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 aria-label="Copy Catechism text"
               >
                 {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(prev => !prev)}
+                aria-expanded={isSettingsOpen}
+                className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border shadow-xs ${
+                  isSettingsOpen
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+                }`}
+                title={isSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+                aria-label={isSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+              >
+                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                    isSettingsOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
             </div>
           </div>

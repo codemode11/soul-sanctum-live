@@ -470,11 +470,19 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   </p>
                 </div>
 
-                {/* Badges: Solemnity, Fasting, History */}
+                {/* Badges: History, Solemnity (Obligation), Fasting (Penance) */}
                 <div className="flex flex-wrap items-center gap-1 mt-1">
+                  {dayInfo.historicalEvent && (
+                    <span 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-medium leading-none bg-[#EFE6DC] text-[#341D10] border border-[#BFA287]/60" 
+                      title={dayInfo.historicalEvent.title}
+                    >
+                      {dayInfo.historicalEvent.year}
+                    </span>
+                  )}
                   {dayInfo.isHolyDay && (
                     <span 
-                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-bold leading-none bg-red-100/90 text-red-900 border border-red-300/50" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-bold leading-none bg-[#4A2B17] text-[#FAF4ED] border border-[#341D10]" 
                       title="Holy Day of Obligation"
                     >
                       Obligation
@@ -482,18 +490,10 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   )}
                   {dayInfo.isFastingDay && (
                     <span 
-                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs leading-none bg-purple-100/90 text-purple-900 border border-purple-300/50" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs leading-none bg-[#DECBB6] text-[#3B2213] border border-[#A78262]/70" 
                       title="Day of Penance / Abstinence"
                     >
                       Penance
-                    </span>
-                  )}
-                  {dayInfo.historicalEvent && (
-                    <span 
-                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-medium leading-none bg-[#EFE6DC] text-[#341D10] border border-[#BFA287]/60" 
-                      title={dayInfo.historicalEvent.title}
-                    >
-                      {dayInfo.historicalEvent.year}
                     </span>
                   )}
                 </div>
