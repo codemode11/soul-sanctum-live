@@ -558,15 +558,15 @@ export const KNOWN_NOVEMBER_DAYS: Record<number, Partial<LiturgicalDayInfo>> = {
     }
   },
   12: {
-    title: 'Memorial of St. Frances Xavier Cabrini, Virgin',
+    title: 'Memorial of St. Josaphat, Bishop and Martyr',
     rank: 'Memorial',
-    color: 'white',
-    saintName: 'St. Frances Xavier Cabrini',
+    color: 'red',
+    saintName: 'St. Josaphat Kuncevyč',
     historicalEvent: {
-      year: '1946 AD',
-      title: 'St. Frances Xavier Cabrini — Universal Patroness of Immigrants',
-      description: 'Foundress of the Missionary Sisters of the Sacred Heart of Jesus and first naturalized United States citizen saint, who built 67 hospitals, schools, and orphanages across North and South America.',
-      significance: 'First US Citizen Saint; Patroness of Immigrants, Hospital Administrators, and Displaced Persons.'
+      year: '1623 AD',
+      title: 'Martyrdom of Saint Josaphat Kuncevyč for Church Unity',
+      description: 'Ukrainian Greek Catholic Archbishop of Polotsk who labored tirelessly for visible communion with the Chair of Saint Peter and laid down his life for the unity of Christians in Vitebsk.',
+      significance: 'First saint of the Eastern Catholic Churches formally canonized in Rome (1867); Patron of Christian Unity.'
     }
   },
   13: {
@@ -582,15 +582,15 @@ export const KNOWN_NOVEMBER_DAYS: Record<number, Partial<LiturgicalDayInfo>> = {
     }
   },
   14: {
-    title: 'Optional Memorial of St. Gertrude the Great, Virgin',
+    title: 'Commemoration of St. Serapion of Algiers, Martyr',
     rank: 'Optional Memorial',
-    color: 'white',
-    saintName: 'St. Gertrude the Great',
+    color: 'red',
+    saintName: 'St. Serapion of Algiers',
     historicalEvent: {
-      year: '1302 AD',
-      title: 'Mystical Visions of the Sacred Heart of Jesus',
-      description: 'Benedictine nun Gertrude at Helfta recorded profound mystical revelations of the Sacred Heart centuries before St. Margaret Mary Alacoque.',
-      significance: 'Pioneer of Sacred Heart devotion and patroness of mystic theologians.'
+      year: '1240 AD',
+      title: 'Martyrdom of Saint Serapion of Algiers, Mercedarian Protomartyr',
+      description: 'English-born Mercedarian friar who joined Saint Peter Nolasco to ransom enslaved Christians, offered himself as a pledge hostage in Algiers, and was martyred on a saltire cross on November 14, 1240.',
+      significance: 'Protomartyr of the Order of Our Lady of Mercy and patron of ransomed captives.'
     }
   },
   15: {
@@ -606,15 +606,15 @@ export const KNOWN_NOVEMBER_DAYS: Record<number, Partial<LiturgicalDayInfo>> = {
     }
   },
   16: {
-    title: 'Optional Memorial of St. Margaret of Scotland / St. Gertrude',
+    title: 'Optional Memorial of St. Margaret of Scotland / St. Gertrude the Great',
     rank: 'Optional Memorial',
     color: 'white',
-    saintName: 'St. Margaret of Scotland',
+    saintName: 'St. Margaret of Scotland & St. Gertrude the Great',
     historicalEvent: {
-      year: '1093 AD',
-      title: 'Death of Queen Saint Margaret of Scotland',
-      description: 'Queen Margaret, mother of three Scottish kings, reformed the Church in Scotland, fed hundreds of poor daily, and promoted liturgical renewal.',
-      significance: 'Patroness of Scotland and royal charity.'
+      year: '1093 / 1302 AD',
+      title: 'Queen Saint Margaret of Scotland & Saint Gertrude the Great of Helfta',
+      description: 'Queen Margaret (1093) reformed the Church in Scotland and served the poor daily; Saint Gertrude the Great (1302), Benedictine-Cistercian mystic of Helfta Abbey, recorded profound visions of the Sacred Heart of Jesus.',
+      significance: 'Patroness of Scotland and herald of Sacred Heart devotion.'
     }
   },
   17: {
