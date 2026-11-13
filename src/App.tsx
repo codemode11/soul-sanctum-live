@@ -78,7 +78,7 @@ export default function App() {
   const [currentDateStr, setCurrentDateStr] = useState<string>(() => {
     return getTodayDateStr();
   });
-  const [activeTab, setActiveTab] = useState<ActiveTab>('readings');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('divine-office');
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isAngelusOpen, setIsAngelusOpen] = useState(false);
   const [isAdorationOpen, setIsAdorationOpen] = useState(false);
