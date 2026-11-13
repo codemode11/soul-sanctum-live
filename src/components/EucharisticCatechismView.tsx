@@ -575,12 +575,12 @@ export const EucharisticCatechismView: React.FC<EucharisticCatechismViewProps> =
                 >
                   {/* Top Editorial Kicker & Accession Header */}
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-2 text-[11px] font-cinzel tracking-wider uppercase text-slate-600 border-b border-[#D8CFC0] pb-2">
-                      <span className="font-bold text-slate-700 truncate flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-slate-500 shrink-0" />
-                        {m.location}, {m.country}
+                    <div className="flex items-start justify-between gap-2.5 text-[11px] font-cinzel tracking-wider uppercase text-slate-600 border-b border-[#D8CFC0] pb-2">
+                      <span className="font-bold text-slate-700 flex items-start gap-1.5 min-w-0 flex-1 leading-snug">
+                        <MapPin className="w-3 h-3 text-slate-500 shrink-0 mt-0.5" />
+                        <span>{m.location}, {m.country}</span>
                       </span>
-                      <span className="font-bold text-slate-900 shrink-0">
+                      <span className="font-bold text-slate-900 shrink-0 whitespace-nowrap leading-snug">
                         {m.year}
                       </span>
                     </div>
