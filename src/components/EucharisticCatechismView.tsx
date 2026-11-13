@@ -181,6 +181,30 @@ export const EucharisticCatechismView: React.FC<EucharisticCatechismViewProps> =
   const hasActiveFilters =
     quickCollection !== 'all' || selectedCountry !== 'All' || selectedType !== 'All' || selectedEra !== 'all';
 
+  const formatYearTwoLines = (year: string): React.ReactNode => {
+    const centuryMatch = year.match(/^(.+?)\s+(Century(?:\s+AD)?)$/i);
+    if (centuryMatch) {
+      return (
+        <>
+          <span className="block whitespace-nowrap">{centuryMatch[1]}</span>
+          <span className="block whitespace-nowrap">{centuryMatch[2]}</span>
+        </>
+      );
+    }
+
+    const centAbbrevMatch = year.match(/^(.+?Cent\.?[,/])\s*(.+)$/i);
+    if (centAbbrevMatch) {
+      return (
+        <>
+          <span className="block whitespace-nowrap">{centAbbrevMatch[1]}</span>
+          <span className="block whitespace-nowrap">{centAbbrevMatch[2]}</span>
+        </>
+      );
+    }
+
+    return <span className="whitespace-nowrap">{year}</span>;
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12">
       
@@ -580,8 +604,8 @@ export const EucharisticCatechismView: React.FC<EucharisticCatechismViewProps> =
                         <MapPin className="w-3 h-3 text-slate-500 shrink-0 mt-0.5" />
                         <span>{m.location}, {m.country}</span>
                       </span>
-                      <span className="font-bold text-slate-900 shrink-0 whitespace-nowrap leading-snug">
-                        {m.year}
+                      <span className="font-bold text-slate-900 shrink-0 text-right leading-snug">
+                        {formatYearTwoLines(m.year)}
                       </span>
                     </div>
 
@@ -718,7 +742,7 @@ export const EucharisticCatechismView: React.FC<EucharisticCatechismViewProps> =
                 </div>
                 <div className="space-y-0.5">
                   <dt className="font-cinzel text-[10px] uppercase tracking-wider text-slate-600">Documented Date</dt>
-                  <dd className="font-serif-sacred font-bold text-slate-900">{inspectedMiracle.year}</dd>
+                  <dd className="font-serif-sacred font-bold text-slate-900 leading-snug">{formatYearTwoLines(inspectedMiracle.year)}</dd>
                 </div>
                 <div className="space-y-0.5">
                   <dt className="font-cinzel text-[10px] uppercase tracking-wider text-slate-600">Phenomenon</dt>
