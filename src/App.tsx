@@ -23,7 +23,6 @@ import { PrayerWallAndTreasuryView } from './components/PrayerWallAndTreasuryVie
 import { NotificationsModal } from './components/NotificationsModal';
 import { AngelusModal } from './components/AngelusModal';
 import { SanctumAdorationModal } from './components/SanctumAdorationModal';
-import { ReflectionView } from './components/ReflectionView';
 import { VisioDivinaView } from './components/VisioDivinaView';
 import { CebuParishesModal } from './components/CebuParishesModal';
 import { MedjugorjeMessagesView } from './components/MedjugorjeMessagesView';
@@ -489,9 +488,7 @@ export default function App() {
                 decoding="async"
                 onError={(e) => {
                   const target = e.currentTarget;
-                  if (!target.src.includes('peaceful_sky_restored_masthead.jpg')) {
-                    target.src = '/assets/aistudio/peaceful_sky_restored_masthead.jpg';
-                  } else if (!target.src.includes('Faith__Scholarship__and_Scientific_Discovery_c472d047.png')) {
+                  if (!target.src.includes('Faith__Scholarship__and_Scientific_Discovery_c472d047.png')) {
                     target.src = '/assets/aistudio/Faith__Scholarship__and_Scientific_Discovery_c472d047.png';
                   }
                 }}
@@ -727,14 +724,6 @@ export default function App() {
 
             {/* Catholic Bibles (73-Book In-App Bibles & Modern Catholic Translations) */}
             {activeTab === 'catholic-bibles' && <CatholicBiblesView />}
-
-            {/* 5. Reflection (Daily Liturgical Meditation) */}
-            {activeTab === 'reflection' && (
-              <ReflectionView
-                reading={currentMassReading}
-                onSelectDate={(date) => setCurrentDateStr(date)}
-              />
-            )}
 
             {/* 6. Visio Divina */}
             {activeTab === 'visio-divina' && (

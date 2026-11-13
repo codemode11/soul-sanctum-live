@@ -4,8 +4,6 @@ import { TRUE_DEVOTION } from './spiritualBooks/trueDevotion';
 import { SECRET_OF_THE_ROSARY } from './spiritualBooks/secretOfTheRosary';
 import { INTERIOR_CASTLE } from './spiritualBooks/interiorCastle';
 import { DARK_NIGHT } from './spiritualBooks/darkNight';
-import { STORY_OF_A_SOUL } from './spiritualBooks/storyOfASoul';
-import { CONFESSIONS } from './spiritualBooks/confessions';
 import { PRACTICE_OF_THE_PRESENCE } from './spiritualBooks/practiceOfThePresence';
 import { UNIFORMITY_WITH_GODS_WILL } from './spiritualBooks/uniformityWithGodsWill';
 import { SPIRITUAL_COMBAT } from './spiritualBooks/spiritualCombat';
@@ -43,7 +41,6 @@ export type BookCategory =
   | 'devotion'
   | 'doctors'
   | 'saints'
-  | 'confessions'
   | 'prayer';
 
 export interface SpiritualBook {
@@ -73,8 +70,6 @@ export const SPIRITUAL_BOOKS: SpiritualBook[] = [
   SECRET_OF_THE_ROSARY,
   INTERIOR_CASTLE,
   DARK_NIGHT,
-  STORY_OF_A_SOUL,
-  CONFESSIONS,
   PRACTICE_OF_THE_PRESENCE,
   UNIFORMITY_WITH_GODS_WILL,
   SPIRITUAL_COMBAT,

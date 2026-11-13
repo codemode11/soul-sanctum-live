@@ -830,8 +830,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           { id: 'marian', label: 'Marian Consecration & Glories' },
           { id: 'doctors', label: 'Doctors of the Church' },
           { id: 'prayer', label: 'Prayer & Interior Life' },
-          { id: 'saints', label: 'Autobiographies of Saints' },
-          { id: 'confessions', label: 'Patristic Confessions' }
+          { id: 'saints', label: 'Autobiographies of Saints' }
         ].map(cat => (
           <button
             key={cat.id}

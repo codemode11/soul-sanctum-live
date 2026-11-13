@@ -73,7 +73,7 @@ export const CatholicBiblesView: React.FC = () => {
   const [selectedBookId, setSelectedBookId] = useState<string>('GEN');
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
   const [primaryTranslation, setPrimaryTranslation] = useState<CatholicBibleTranslationId>('webbe');
-  const [parallelTranslation, setParallelTranslation] = useState<CatholicBibleTranslationId>('vulgate');
+  const [parallelTranslation, setParallelTranslation] = useState<CatholicBibleTranslationId>('drc');
   const [isParallelMode, setIsParallelMode] = useState<boolean>(false);
   const [showHaydockNotes, setShowHaydockNotes] = useState<boolean>(true);
   const [activeTestamentFilter, setActiveTestamentFilter] = useState<'ALL' | 'OT' | 'NT' | 'DEUTERO'>('ALL');
@@ -159,17 +159,13 @@ export const CatholicBiblesView: React.FC = () => {
       explanatoryNotes: { verse: number; note: string }[];
     }> => {
       const labelForTranslation = (t: CatholicBibleTranslationId) =>
-        t === 'cpdv'
-          ? 'Catholic Public Domain Version (CPDV)'
-          : t === 'vulgate'
-          ? 'Vulgata Clementina (Clementine Latin Vulgate)'
-          : t === 'webbe'
+        t === 'webbe'
           ? 'World English Bible — Catholic Edition (WEB-CE)'
           : 'Douay-Rheims Catholic Bible (Challoner Revision)';
 
       const baseNotes = await fetchChapterExplanatoryNotes(book.id, chapterNum);
 
-      // 1. Direct static 73-Book JSON archive in /bibles/{translation}/{bookId}.json for all 4 Bibles ('drc', 'cpdv', 'webbe', 'vulgate')
+      // 1. Direct static 73-Book JSON archive in /bibles/{translation}/{bookId}.json for both Bibles ('drc', 'webbe')
       try {
         const cacheKey = `${translation}:${book.id}`;
         let bookChapters = staticBookJsonCache.get(cacheKey);
@@ -256,30 +252,6 @@ export const CatholicBiblesView: React.FC = () => {
                   explanatoryNotes: baseNotes.length > 0 ? baseNotes : extractedNotes
                 };
               }
-            }
-          }
-        } catch {
-          // Ignore
-        }
-      }
-
-      // 4. Direct client-side fallback for Clementine Latin Vulgate ('vulgate')
-      if (translation === 'vulgate') {
-        try {
-          const vulgResp = await fetch(
-            `https://bible-api.com/${encodeURIComponent(book.name)}+${chapterNum}?translation=clementine`
-          );
-          if (vulgResp.ok) {
-            const vulgData = await vulgResp.json();
-            if (Array.isArray(vulgData?.verses) && vulgData.verses.length > 0) {
-              return {
-                verses: vulgData.verses.map((v: any) => ({
-                  verse: Number(v.verse),
-                  text: String(v.text || '').replace(/\s+/g, ' ').trim()
-                })),
-                sourceLabel: 'Vulgata Clementina (Clementine Latin Vulgate)',
-                explanatoryNotes: baseNotes
-              };
             }
           }
         } catch {
@@ -451,7 +423,7 @@ export const CatholicBiblesView: React.FC = () => {
 
   const activeParallelTranslationMeta =
     CATHOLIC_BIBLE_TRANSLATIONS.find((t) => t.id === parallelTranslation) ||
-    CATHOLIC_BIBLE_TRANSLATIONS[3];
+    CATHOLIC_BIBLE_TRANSLATIONS[1];
 
   const scriptureStyle = {
     fontSize:

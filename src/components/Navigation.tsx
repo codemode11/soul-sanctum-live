@@ -26,7 +26,6 @@ import {
 } from 'lucide-react';
 import { 
   SaintWithHaloIcon,
-  RightFacingQuoteIcon,
   BetterScrollIcon,
   DoveWithHaloIcon,
   ThreePrayerBooksIcon,
@@ -66,7 +65,6 @@ export type ActiveTab =
   | 'catholic-ai'
   | 'divine-office'
   | 'catholic-bibles'
-  | 'reflection'
   | 'visio-divina'
   | 'wisdom'
   | 'quotations'
@@ -299,6 +297,13 @@ export const Navigation: React.FC<NavigationProps> = ({
   // 15. Prayer Requests (Icon: Three persons holding hands in prayer)
   const navItems: NavItem[] = [
     { 
+      id: 'divine-office', 
+      label: 'Divine Office', 
+      icon: DivineOfficeBreviaryIcon, 
+      tag: 'Breviary', 
+      subtext: 'Liturgy of the Hours Text and Audio' 
+    },
+    { 
       id: 'readings', 
       label: 'Mass Readings', 
       icon: MassReadingsBookFlipIcon, 
@@ -327,18 +332,11 @@ export const Navigation: React.FC<NavigationProps> = ({
       subtext: 'Pillars of Catholic Faith' 
     },
     { 
-      id: 'divine-office', 
-      label: 'Divine Office', 
-      icon: DivineOfficeBreviaryIcon, 
-      tag: 'Breviary', 
-      subtext: 'Liturgy of the Hours Text and Audio' 
-    },
-    { 
       id: 'catholic-bibles', 
       label: 'Holy Bible', 
       icon: CatholicBiblesBookIcon, 
       tag: 'Scripture', 
-      subtext: '73-Book WEB-CE, Douay-Rheims, CPDV, Vulgate, NABRE, RSV-CE & ESV-CE' 
+      subtext: '73-Book WEB-CE, Douay-Rheims, NABRE, RSV-CE & ESV-CE' 
     },
     { 
       id: 'bible-flashcards', 
@@ -346,13 +344,6 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: BibleFlashcardsIcon, 
       tag: 'Memory', 
       subtext: 'Scripture Memorization and Recall' 
-    },
-    { 
-      id: 'reflection', 
-      label: 'Reflection', 
-      icon: RightFacingQuoteIcon, 
-      tag: 'Meditation', 
-      subtext: 'Daily Patristic Meditation' 
     },
     { 
       id: 'visio-divina', 

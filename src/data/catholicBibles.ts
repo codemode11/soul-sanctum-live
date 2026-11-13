@@ -1,4 +1,4 @@
-export type CatholicBibleTranslationId = 'drc' | 'cpdv' | 'webbe' | 'vulgate';
+export type CatholicBibleTranslationId = 'drc' | 'webbe';
 
 export interface CatholicBibleTranslation {
   id: CatholicBibleTranslationId;
@@ -75,26 +75,6 @@ export const CATHOLIC_BIBLE_TRANSLATIONS: CatholicBibleTranslation[] = [
     imprimaturNote: 'Translated from the Latin Vulgate by the English College at Douai & Rheims; revised by Bishop Richard Challoner.',
     copyrightStatus: 'Public Domain Worldwide',
     description: 'The venerable English Catholic translation of the complete 73-book Latin Vulgate, prized for its doctrinal precision and sacred liturgical cadence.'
-  },
-  {
-    id: 'cpdv',
-    name: 'Catholic Public Domain Version',
-    shortName: 'Catholic Public Domain (CPDV)',
-    year: '2009',
-    language: 'English (Contemporary)',
-    imprimaturNote: 'Translated directly from the Pope Clement VIII Sixto-Clementine Latin Vulgate by Ronald L. Conte Jr.',
-    copyrightStatus: 'Public Domain Worldwide',
-    description: 'A clear, faithful modern-English translation of the official Sixto-Clementine Latin Vulgate containing all 73 books of the Catholic Canon.'
-  },
-  {
-    id: 'vulgate',
-    name: 'Vulgata Clementina (Latin Vulgate)',
-    shortName: 'Latin Vulgate (1592)',
-    year: '382 St. Jerome / 1592 Clementine',
-    language: 'Ecclesiastical Latin',
-    imprimaturNote: 'Declared authentic by the Ecumenical Council of Trent (Session IV, 1546); promulgated by Pope Clement VIII.',
-    copyrightStatus: 'Public Domain Worldwide',
-    description: 'St. Jerome’s historic Latin translation of Sacred Scripture used in the Roman Missal, Breviary, and Scholastic theology.'
   }
 ];
 
@@ -198,16 +178,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 27, text: 'And God created man to his own image: to the image of God he created him: male and female he created them.' },
       { verse: 31, text: 'And God saw all the things that he had made, and they were very good. And the evening and morning were the sixth day.' }
     ],
-    cpdv: [
-      { verse: 1, text: 'In the beginning, God created heaven and earth.' },
-      { verse: 2, text: 'But the earth was empty and unoccupied, and darknesses were over the face of the abyss; and so the Spirit of God was stirring over the waters.' },
-      { verse: 3, text: 'And God said, "Let there be light." And light was made.' },
-      { verse: 4, text: 'And God saw the light, that it was good; and so he divided the light from the darkness.' },
-      { verse: 5, text: 'And he called the light, ‘Day,’ and the darkness, ‘Night.’ And it became evening and morning, one day.' },
-      { verse: 26, text: 'And he said: "Let us make man to our image and likeness. And let him have dominion over the fishes of the sea, and the flying things of the air, and the beasts, and the entire earth, and every creeping thing that moves upon the earth."' },
-      { verse: 27, text: 'And God created man to his own image; to the image of God he created him; male and female he created them.' },
-      { verse: 31, text: 'And God saw all the things that he had made, and they were very good. And it became evening and morning, the sixth day.' }
-    ],
     webbe: [
       { verse: 1, text: 'In the beginning, God created the heavens and the earth.' },
       { verse: 2, text: 'The earth was formless and empty. Darkness was on the surface of the deep and God’s Spirit was hovering over the surface of the waters.' },
@@ -217,16 +187,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 26, text: 'God said, “Let’s make man in our image, after our likeness. Let them have dominion over the fish of the sea, and over the birds of the sky, and over the livestock, and over all the earth, and over every creeping thing that creeps on the earth.”' },
       { verse: 27, text: 'God created man in his own image. In God’s image he created him; male and female he created them.' },
       { verse: 31, text: 'God saw everything that he had made, and, behold, it was very good. There was evening and there was morning, a sixth day.' }
-    ],
-    vulgate: [
-      { verse: 1, text: 'In principio creavit Deus caelum et terram.' },
-      { verse: 2, text: 'Terra autem erat inanis et vacua, et tenebrae erant super faciem abyssi: et spiritus Dei ferebatur super aquas.' },
-      { verse: 3, text: 'Dixitque Deus: Fiat lux. Et facta est lux.' },
-      { verse: 4, text: 'Et vidit Deus lucem quod esset bona: et divisit lucem a tenebris.' },
-      { verse: 5, text: 'Appellavitque lucem Diem, et tenebras Noctem: factumque est vespere et mane, dies unus.' },
-      { verse: 26, text: 'Et ait: Faciamus hominem ad imaginem et similitudinem nostram: et praesit piscibus maris, et volatilibus caeli, et bestiis, universaeque terrae, omnique reptili, quod movetur in terra.' },
-      { verse: 27, text: 'Et creavit Deus hominem ad imaginem suam: ad imaginem Dei creavit illum, masculum et feminam creavit eos.' },
-      { verse: 31, text: 'Viditque Deus cuncta quae fecerat, et erant valde bona. Et factum est vespere et mane, dies sextus.' }
     ]
   },
   'TOB:12': {
@@ -239,15 +199,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 13, text: 'And because thou wast acceptable to God, it was necessary that temptation should prove thee.' },
       { verse: 15, text: 'For I am the angel Raphael, one of the seven, who stand before the Lord.' }
     ],
-    cpdv: [
-      { verse: 6, text: 'Time has arrived to return to him who sent me. Yet you should bless God, and narrate all his wondrous works.' },
-      { verse: 7, text: 'For it is good to hide the secret of a king, calculation-free, yet truly it is honorable to reveal and confess the works of God.' },
-      { verse: 8, text: 'Prayer with fasting and alms is good, more so than storing up treasures of gold.' },
-      { verse: 9, text: 'For almsgiving delivers from death, and the same is what purges sins and causes one to find mercy and everlasting life.' },
-      { verse: 12, text: 'When you prayed with tears, and buried the dead, and left behind your meal, and hid the dead by day in your house, and buried them by night, I offered your prayer to the Lord.' },
-      { verse: 13, text: 'And because you were acceptable to God, it was necessary that temptation should prove you.' },
-      { verse: 15, text: 'For I am the angel Raphael, one of the seven who stand before the Lord.' }
-    ],
     webbe: [
       { verse: 6, text: 'Then he called them both privately, and said to them, “Bless God, give him thanks, and magnify him, and give him thanks in the sight of all that live for the things which he has done with you.”' },
       { verse: 7, text: 'It is good to keep close the secret of a king, but it is honorable to reveal gloriously the works of God.' },
@@ -256,15 +207,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 12, text: 'Now, when you did pray, and Sarah your daughter-in-law, I brought the memorial of your prayer before the Holy One.' },
       { verse: 13, text: 'And because you did not hesitate to rise up and leave your dinner to go and cover the dead, your good deed was not hidden from me, but I was with you.' },
       { verse: 15, text: 'I am Raphael, one of the seven holy angels, who present the prayers of the saints, and who go in and out before the glory of the Holy One.' }
-    ],
-    vulgate: [
-      { verse: 6, text: 'Tempus est ergo ut revertar ad eum qui me misit: vos autem benedicite Deum, et narrate omnia mirabilia ejus.' },
-      { verse: 7, text: 'Etenim sacramentum regis abscondere bonum est: opera autem Dei revelare et confiteri honorificum est.' },
-      { verse: 8, text: 'Bona est oratio cum jejunio et eleemosyna, magis quam thesauros auri recondere:' },
-      { verse: 9, text: 'quoniam eleemosyna a morte liberat, et ipsa est quae purgat peccata, et facit invenire misericordiam et vitam aeternam.' },
-      { verse: 12, text: 'Quando orabas cum lacrimis, et sepeliebas mortuos, et derelinquebas prandium tuum, et mortuos abscondebas per diem in domo tua, et nocte sepeliebas eos, ego obtuli orationem tuam Domino.' },
-      { verse: 13, text: 'Et quia acceptus eras Deo, necesse fuit ut tentatio probaret te.' },
-      { verse: 15, text: 'Ego enim sum Raphael angelus, unus ex septem qui adstamus ante Dominum.' }
     ]
   },
   'WIS:3': {
@@ -278,16 +220,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 7, text: 'The just shall shine, and shall run to and fro like sparks among the reeds.' },
       { verse: 8, text: 'They shall judge nations, and rule over people, and their Lord shall reign for ever.' }
     ],
-    cpdv: [
-      { verse: 1, text: 'Yet the souls of the just are in the hand of God, and the torment of death shall not touch them.' },
-      { verse: 2, text: 'In the sight of the foolish, they seemed to die, and their departure was considered an affliction,' },
-      { verse: 3, text: 'and their going away from us, an utter destruction; yet they are in peace.' },
-      { verse: 4, text: 'And though in the sight of men they suffered torments, their hope is full of immortality.' },
-      { verse: 5, text: 'Having been afflicted in a few things, they shall be well-rewarded in many things, because God has tested them and found them worthy of himself.' },
-      { verse: 6, text: 'Like gold in the furnace, he has proved them, and like a sacrificial victim of a holocaust, he has received them, and in time there shall be respect for them.' },
-      { verse: 7, text: 'The just shall shine forth and shall dart about like sparks among the reeds.' },
-      { verse: 8, text: 'They shall judge nations and rule over peoples, and their Lord shall reign forever.' }
-    ],
     webbe: [
       { verse: 1, text: 'But the souls of the righteous are in the hand of God, and no torment will touch them.' },
       { verse: 2, text: 'In the eyes of the foolish they seemed to have died; and their departure was considered a disaster,' },
@@ -297,16 +229,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 6, text: 'He tested them like gold in the furnace, and he accepted them as a whole burnt offering.' },
       { verse: 7, text: 'In the time of their visitation they will shine out, and will run back and forth like sparks among the stubble.' },
       { verse: 8, text: 'They will judge nations and have dominion over peoples. The Lord will reign over them forever.' }
-    ],
-    vulgate: [
-      { verse: 1, text: 'Justorum autem animae in manu Dei sunt, et non tanget illos tormentum mortis.' },
-      { verse: 2, text: 'Visi sunt oculis insipientium mori, et aestimata est afflictio exitus illorum,' },
-      { verse: 3, text: 'et quod a nobis est iter, exterminium; illi autem sunt in pace.' },
-      { verse: 4, text: 'Et si coram hominibus tormenta passi sunt, spes illorum immortalitate plena est.' },
-      { verse: 5, text: 'In paucis vexati, in multis bene disponentur, quoniam Deus tentavit eos, et invenit illos dignos se.' },
-      { verse: 6, text: 'Tamquam aurum in fornace probavit illos, et quasi holocausta hostiam accepit illos, et in tempore erit respectus illorum.' },
-      { verse: 7, text: 'Fulgebunt justi, et tamquam scintillae in arundineto discurrent.' },
-      { verse: 8, text: 'Judicabunt nationes, et dominabuntur populis, et regnabit Dominus illorum in perpetuum.' }
     ]
   },
   'SIR:2': {
@@ -318,14 +240,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 5, text: 'For gold and silver are tried in the fire, but acceptable men in the furnace of humiliation.' },
       { verse: 6, text: 'Believe God, and he will recover thee: and direct thy way, and trust in him. Keep his fear, and grow old therein.' }
     ],
-    cpdv: [
-      { verse: 1, text: 'Son, when you approach the service of God, stand in justice and in fear, and prepare your soul for temptation.' },
-      { verse: 2, text: 'Humble your heart, and endure; incline your ear, and receive the words of understanding; and do not hurry in a time of clouds.' },
-      { verse: 3, text: 'Wait on God with patience: join yourself to God, and endure, so that your life may increase at the very end.' },
-      { verse: 4, text: 'Accept everything that will be brought upon you; and endure in sorrow, and have patience in your humiliation.' },
-      { verse: 5, text: 'For gold and silver are tested in the fire, while acceptable men are tested in the furnace of humiliation.' },
-      { verse: 6, text: 'Believe in God, and he will restore you; and direct your way, and trust in him. Keep his fear, and grow old in it.' }
-    ],
     webbe: [
       { verse: 1, text: 'My son, if you come to serve the Lord, prepare your soul for temptation.' },
       { verse: 2, text: 'Set your heart aright, and constantly endure. Don’t make haste in time of calamity.' },
@@ -333,14 +247,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 4, text: 'Accept whatever is brought upon you, and be longsuffering when you are changed to a low estate.' },
       { verse: 5, text: 'For gold is tried in the fire, and acceptable men in the furnace of adversity.' },
       { verse: 6, text: 'Put your trust in him, and he will help you. Order your ways aright, and set your hope in him.' }
-    ],
-    vulgate: [
-      { verse: 1, text: 'Fili, accedens ad servitutem Dei, sta in justitia et timore, et praepara animam tuam ad tentationem.' },
-      { verse: 2, text: 'Deprime cor tuum, et sustine: inclina aurem tuam, et suscipe verba intellectus: et ne festines in tempore obductionis.' },
-      { verse: 3, text: 'Sustine sustentationes Dei: conjunge te Deo, et sustine, ut crescat in novissimo vita tua.' },
-      { verse: 4, text: 'Omne quod tibi applicitum fuerit accipe: et in dolore sustine, et in humilitate tua patientiam habe:' },
-      { verse: 5, text: 'quoniam in igne probatur aurum et argentum, homines vero receptibiles in camino humiliationis.' },
-      { verse: 6, text: 'Crede Deo, et recuperabit te: et dirige viam tuam, et spera in illum: serva timorem illius, et in illo veterasce.' }
     ]
   },
   '2MA:12': {
@@ -350,23 +256,11 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 45, text: 'And because he considered that they who had fallen asleep with godliness, had great grace laid up for them.' },
       { verse: 46, text: 'It is therefore a holy and wholesome thought to pray for the dead, that they may be loosed from sins.' }
     ],
-    cpdv: [
-      { verse: 43, text: 'And making a collection, he sent twelve thousand drachmas of silver to Jerusalem for sacrifice to be offered for the sins of the dead, thinking well and religiously concerning the resurrection.' },
-      { verse: 44, text: '(For if he had not hoped that those who were slain would rise again, it would have seemed superfluous and vain to pray for the dead.)' },
-      { verse: 45, text: 'And because he considered that those who had fallen asleep with godliness had great grace stored up for them.' },
-      { verse: 46, text: 'Therefore, it is a holy and wholesome thought to pray for the dead, so that they may be loosed from sins.' }
-    ],
     webbe: [
       { verse: 43, text: 'When he had made a collection man by man to the sum of two thousand drachmas of silver, he sent it to Jerusalem to offer a sacrifice for sin, doing very well and finely in this, in that he took thought for the resurrection.' },
       { verse: 44, text: 'For if he weren’t expecting that those who had fallen would rise again, it would be superfluous and idle to pray for the dead.' },
       { verse: 45, text: 'But if he was looking to the splendid reward that is laid up for those who fall asleep in godliness, it was a holy and pious thought.' },
       { verse: 46, text: 'Therefore he made the atoning sacrifice for the dead, that they might be released from their sin.' }
-    ],
-    vulgate: [
-      { verse: 43, text: 'Et facta collatione, duodecim millia drachmas argenti misit Jerosolymam offerri pro peccatis mortuorum sacrificium, bene et religiose de resurrectione cogitans,' },
-      { verse: 44, text: '(nisi enim eos qui ceciderant resurrecturos speraret, superfluum videretur et vanum orare pro mortuis,)' },
-      { verse: 45, text: 'et quia considerabat quod hi qui cum pietate dormitionem acceperant, optimam haberent repositam gratiam.' },
-      { verse: 46, text: 'Sancta ergo et salubris est cogitatio pro defunctis exorare, ut a peccatis solvantur.' }
     ]
   },
   'PSA:23': {
@@ -378,14 +272,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 5, text: 'Thou hast prepared a table before me, against them that afflict me. Thou hast anointed my head with oil; and my chalice which inebriateth me, how goodly is it!' },
       { verse: 6, text: 'And thy mercy will follow me all the days of my life. And that I may dwell in the house of the Lord unto length of days.' }
     ],
-    cpdv: [
-      { verse: 1, text: 'The Lord directs me, and I shall lack nothing. He has stationed me in a place of pasture.' },
-      { verse: 2, text: 'He has educated me beside the waters of refreshment;' },
-      { verse: 3, text: 'he has converted my soul. He has led me along the paths of justice, for the sake of his own name.' },
-      { verse: 4, text: 'For even if I walk in the midst of the shadow of death, I will fear no evils, for you are with me. Your rod and your staff: these have consoled me.' },
-      { verse: 5, text: 'You have prepared a table in my sight, opposite those who trouble me. You have anointed my head with oil; and my chalice, which inebriates me, how clarifying it is!' },
-      { verse: 6, text: 'And your mercy will follow me all the days of my life. And so may I dwell in the house of the Lord for length of days.' }
-    ],
     webbe: [
       { verse: 1, text: 'The Lord is my shepherd: I shall lack nothing.' },
       { verse: 2, text: 'He makes me lie down in green pastures. He leads me beside still waters.' },
@@ -393,14 +279,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 4, text: 'Even though I walk through the valley of the shadow of death, I will fear no evil, for you are with me. Your rod and your staff, they comfort me.' },
       { verse: 5, text: 'You prepare a table before me in the presence of my enemies. You anoint my head with oil. My cup runs over.' },
       { verse: 6, text: 'Surely goodness and loving kindness shall follow me all the days of my life, and I will dwell in the Lord’s house forever.' }
-    ],
-    vulgate: [
-      { verse: 1, text: 'Dominus regit me, et nihil mihi deerit: in loco pascuae ibi me collocavit.' },
-      { verse: 2, text: 'Super aquam refectionis educavit me;' },
-      { verse: 3, text: 'animam meam convertit. Deduxit me super semitas justitiae propter nomen suum.' },
-      { verse: 4, text: 'Nam etsi ambulavero in medio umbrae mortis, non timebo mala, quoniam tu mecum es. Virga tua, et baculus tuus, ipsa me consolata sunt.' },
-      { verse: 5, text: 'Parasti in conspectu meo mensam adversus eos qui tribulant me; impinguasti in oleo caput meum: et calix meus inebrians, quam praeclarus est!' },
-      { verse: 6, text: 'Et misericordia tua subsequetur me omnibus diebus vitae meae, et ut inhabitem in domo Domini in longitudinem dierum.' }
     ]
   },
   'MAT:16': {
@@ -413,15 +291,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 18, text: 'And I say to thee: That thou art Peter; and upon this rock I will build my church, and the gates of hell shall not prevail against it.' },
       { verse: 19, text: 'And I will give to thee the keys of the kingdom of heaven. And whatsoever thou shalt bind upon earth, it shall be bound also in heaven: and whatsoever thou shalt loose upon earth, it shall be loosed also in heaven.' }
     ],
-    cpdv: [
-      { verse: 13, text: 'Then Jesus came into the parts of Caesarea Philippi; and he questioned his disciples, saying, "Who do men say that the Son of man is?"' },
-      { verse: 14, text: 'And they said, "Some say John the Baptist, and others say Elijah, and still others say Jeremiah or one of the prophets."' },
-      { verse: 15, text: 'Jesus said to them, "But who do you say that I am?"' },
-      { verse: 16, text: 'Simon Peter answered by saying, "You are the Christ, the Son of the living God."' },
-      { verse: 17, text: 'And in response, Jesus said to him: "Blessed are you, Simon son of Jonah. For flesh and blood has not revealed this to you, but my Father, who is in heaven.' },
-      { verse: 18, text: 'And I say to you, that you are Peter, and upon this rock I will build my Church, and the gates of Hell shall not prevail against it.' },
-      { verse: 19, text: 'And I will give to you the keys of the kingdom of heaven. And whatever you shall bind on earth shall be bound, even in heaven. And whatever you shall release on earth shall be released, even in heaven."' }
-    ],
     webbe: [
       { verse: 13, text: 'Now when Jesus came into the parts of Caesarea Philippi, he asked his disciples, saying, “Who do men say that I, the Son of Man, am?”' },
       { verse: 14, text: 'They said, “Some say John the Baptizer, some, Elijah, and others, Jeremiah, or one of the prophets.”' },
@@ -430,15 +299,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 17, text: 'Jesus answered him, “Blessed are you, Simon Bar Jonah, for flesh and blood has not revealed this to you, but my Father who is in heaven.' },
       { verse: 18, text: 'I also tell you that you are Peter, and on this rock I will build my assembly, and the gates of Hades will not prevail against it.' },
       { verse: 19, text: 'I will give to you the keys of the Kingdom of Heaven, and whatever you bind on earth will have been bound in heaven; and whatever you release on earth will have been released in heaven.”' }
-    ],
-    vulgate: [
-      { verse: 13, text: 'Venit autem Jesus in partes Caesareae Philippi: et interrogabat discipulos suos, dicens: Quem dicunt homines esse Filium hominis?' },
-      { verse: 14, text: 'At illi dixerunt: Alii Joannem Baptistam, alii autem Eliam, alii vero Jeremiam, aut unum ex prophetis.' },
-      { verse: 15, text: 'Dicit illis Jesus: Vos autem quem me esse dicitis?' },
-      { verse: 16, text: 'Respondens Simon Petrus dixit: Tu es Christus, Filius Dei vivi.' },
-      { verse: 17, text: 'Respondens autem Jesus, dixit ei: Beatus es, Simon Bar Jona: quia caro et sanguis non revelavit tibi, sed Pater meus, qui in caelis est.' },
-      { verse: 18, text: 'Et ego dico tibi, quia tu es Petrus, et super hanc petram aedificabo Ecclesiam meam, et portae inferi non praevalebunt adversus eam.' },
-      { verse: 19, text: 'Et tibi dabo claves regni caelorum. Et quodcumque ligaveris super terram, erit ligatum et in caelis: et quodcumque solveris super terram, erit solutum et in caelis.' }
     ]
   },
   'LUK:1': {
@@ -452,16 +312,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 47, text: 'And my spirit hath rejoiced in God my Saviour.' },
       { verse: 48, text: 'Because he hath regarded the humility of his handmaid; for behold from henceforth all generations shall call me blessed.' }
     ],
-    cpdv: [
-      { verse: 26, text: 'Then, in the sixth month, the angel Gabriel was sent constraint-free by God to a city of Galilee, named Nazareth,' },
-      { verse: 27, text: 'to a virgin betrothed to a man whose name was Joseph, of the house of David; and the name of the virgin was Mary.' },
-      { verse: 28, text: 'And the angel entered to her and said: "Hail, full of grace! The Lord is with you. Blessed are you among women."' },
-      { verse: 35, text: 'And in response, the angel said to her: "The Holy Spirit will come over you, and the power of the Most High will overshadow you. And because of this also, the Holy One who will be born of you shall be called the Son of God."' },
-      { verse: 38, text: 'Then Mary said: "Behold, the handmaid of the Lord. May it be done to me according to your word." And the angel departed from her.' },
-      { verse: 46, text: 'And Mary said: "My soul magnifies the Lord.' },
-      { verse: 47, text: 'And my spirit has exulted in God my Savior.' },
-      { verse: 48, text: 'Because he has gazed upon the humility of his handmaid. For behold, from this time forward, all generations shall call me blessed."' }
-    ],
     webbe: [
       { verse: 26, text: 'Now in the sixth month, the angel Gabriel was sent from God to a city of Galilee named Nazareth,' },
       { verse: 27, text: 'to a virgin pledged to be married to a man whose name was Joseph, of David’s house. The virgin’s name was Mary.' },
@@ -471,16 +321,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 46, text: 'Mary said, “My soul magnifies the Lord.' },
       { verse: 47, text: 'My spirit has rejoiced in God my Savior,' },
       { verse: 48, text: 'for he has looked at the humble state of his servant. For behold, from now on, all generations will call me blessed.”' }
-    ],
-    vulgate: [
-      { verse: 26, text: 'Et in mense sexto, missus est angelus Gabriel a Deo in civitatem Galilaeae, cui nomen Nazareth,' },
-      { verse: 27, text: 'ad virginem desponsatam viro, cui nomen erat Joseph, de domo David; et nomen virginis Maria.' },
-      { verse: 28, text: 'Et ingressus angelus ad eam dixit: Ave gratia plena; Dominus tecum: benedicta tu in mulieribus.' },
-      { verse: 35, text: 'Et respondens angelus dixit ei: Spiritus Sanctus superveniet in te, et virtus Altissimi obumbrabit tibi. Ideoque et quod nascetur ex te Sanctum, vocabitur Filius Dei.' },
-      { verse: 38, text: 'Dixit autem Maria: Ecce ancilla Domini; fiat mihi secundum verbum tuum. Et discessit ab illa angelus.' },
-      { verse: 46, text: 'Et ait Maria: Magnificat anima mea Dominum;' },
-      { verse: 47, text: 'et exsultavit spiritus meus in Deo salutari meo,' },
-      { verse: 48, text: 'quia respexit humilitatem ancillae suae; ecce enim ex hoc beatam me dicent omnes generationes.' }
     ]
   },
   'JHN:1': {
@@ -492,14 +332,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 5, text: 'And the light shineth in darkness, and the darkness did not comprehend it.' },
       { verse: 14, text: 'And the Word was made flesh, and dwelt among us, (and we saw his glory, the glory as it were of the only begotten of the Father,) full of grace and truth.' }
     ],
-    cpdv: [
-      { verse: 1, text: 'In the beginning was the Word, and the Word was with God, and the Word was God.' },
-      { verse: 2, text: 'He was in the beginning with God.' },
-      { verse: 3, text: 'All things were made through him, and without him was made nothing that has been made.' },
-      { verse: 4, text: 'In him was life, and the life was the light of men.' },
-      { verse: 5, text: 'And the light shines in the darkness, and the darkness did not comprehend it.' },
-      { verse: 14, text: 'And the Word was made flesh, and he dwelt among us. And we saw his glory, the glory as of the Only-Begotten of the Father, full of grace and truth.' }
-    ],
     webbe: [
       { verse: 1, text: 'In the beginning was the Word, and the Word was with God, and the Word was God.' },
       { verse: 2, text: 'The same was in the beginning with God.' },
@@ -507,14 +339,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 4, text: 'In him was life, and the life was the light of men.' },
       { verse: 5, text: 'The light shines in the darkness, and the darkness hasn’t overcome it.' },
       { verse: 14, text: 'The Word became flesh, and lived among us. We saw his glory, such glory as of the one and only Son of the Father, full of grace and truth.' }
-    ],
-    vulgate: [
-      { verse: 1, text: 'In principio erat Verbum, et Verbum erat apud Deum, et Deus erat Verbum.' },
-      { verse: 2, text: 'Hoc erat in principio apud Deum.' },
-      { verse: 3, text: 'Omnia per ipsum facta sunt: et sine ipso factum est nihil, quod factum est.' },
-      { verse: 4, text: 'In ipso vita erat, et vita erat lux hominum:' },
-      { verse: 5, text: 'et lux in tenebris lucet, et tenebrae eam non comprehenderunt.' },
-      { verse: 14, text: 'Et Verbum caro factum est, et habitavit in nobis: et vidimus gloriam ejus, gloriam quasi Unigeniti a Patre, plenum gratiae et veritatis.' }
     ]
   },
   'JHN:6': {
@@ -527,15 +351,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 56, text: 'For my flesh is meat indeed: and my blood is drink indeed.' },
       { verse: 57, text: 'He that eateth my flesh, and drinketh my blood, abideth in me, and I in him.' }
     ],
-    cpdv: [
-      { verse: 51, text: 'I am the living bread, who descended from heaven.' },
-      { verse: 52, text: 'If anyone eats from this bread, he shall live in eternity. And the bread that I will give is my flesh, for the life of the world.' },
-      { verse: 53, text: 'Therefore, the Jews debated among themselves, saying, "How can this man give us his flesh to eat?"' },
-      { verse: 54, text: 'Then Jesus said to them: "Amen, amen, I say to you, unless you eat the flesh of the Son of man and drink his blood, you will not have life in you.' },
-      { verse: 55, text: 'Whoever eats my flesh and drinks my blood has eternal life, and I will raise him up on the last day.' },
-      { verse: 56, text: 'For my flesh is true food, and my blood is true drink.' },
-      { verse: 57, text: 'Whoever eats my flesh and drinks my blood abides in me, and I in him."' }
-    ],
     webbe: [
       { verse: 51, text: 'I am the living bread which came down out of heaven. If anyone eats of this bread, he will live forever. Yes, the bread which I will give for the life of the world is my flesh.' },
       { verse: 52, text: 'The Jews therefore contended with one another, saying, “How can this man give us his flesh to eat?”' },
@@ -543,15 +358,6 @@ export const CURATED_BIBLE_CHAPTERS: Record<string, Record<CatholicBibleTranslat
       { verse: 54, text: 'He who eats my flesh and drinks my blood has eternal life, and I will raise him up at the last day.' },
       { verse: 55, text: 'For my flesh is food indeed, and my blood is drink indeed.' },
       { verse: 56, text: 'He who eats my flesh and drinks my blood lives in me, and I in him.”' }
-    ],
-    vulgate: [
-      { verse: 51, text: 'Ego sum panis vivus, qui de caelo descendi.' },
-      { verse: 52, text: 'Si quis manducaverit ex hoc pane, vivet in aeternum: et panis quem ego dabo, caro mea est pro mundi vita.' },
-      { verse: 53, text: 'Litigabant ergo Judaei ad invicem, dicentes: Quomodo potest hic nobis carnem suam dare ad manducandum?' },
-      { verse: 54, text: 'Dixit ergo eis Jesus: Amen, amen dico vobis: nisi manducaveritis carnem Filii hominis, et biberitis ejus sanguinem, non habebitis vitam in vobis.' },
-      { verse: 55, text: 'Qui manducat meam carnem, et bibit meum sanguinem, habet vitam aeternam: et ego resuscitabo eum in novissimo die.' },
-      { verse: 56, text: 'Caro enim mea vere est cibus: et sanguis meus vere est potus.' },
-      { verse: 57, text: 'Qui manducat meam carnem, et bibit meum sanguinem, in me manet, et ego in illo.' }
     ]
   }
 };
