@@ -289,36 +289,37 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-5 pb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-5 mb-12">
       
-      {/* Calendar Header Banner - Clear font sizes with narrowed line spacing */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.20)] bg-gradient-to-b from-[#E4D5C6] via-[#DBC9B7] to-[#E4D5C6] text-[#341D10] flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
+      {/* Calendar Header Banner — Slate Gray & Bleached Sand */}
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl border border-slate-700/80 shadow-md bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden">
+        <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
+        <div className="relative z-10">
           <div className="flex items-center gap-2">
-            <CalendarIcon className="w-5 h-5 text-[#5D371F]" />
-            <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5D371F] leading-none">
+            <CalendarIcon className="w-5 h-5 text-[#EAE2D3]" />
+            <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#DFD5C3] leading-none">
               Calendarium Romanum Generale
             </span>
           </div>
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#341D10] mt-1 tracking-wide leading-tight">
+          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5] mt-1 tracking-wide leading-tight">
             Liturgical Calendar and Feasts
           </h2>
-          <p className="text-sm sm:text-base text-[#5D371F] font-serif mt-1 leading-snug">
+          <p className="text-sm sm:text-base text-[#EAE2D3] font-serif mt-1 leading-snug">
             Liturgical seasons, colors, Solemnities, Feasts, Memorials, and Holy Days of Obligation.
           </p>
         </div>
 
         {/* Month & Year (2026–2030) Selector Buttons */}
-        <div className="flex flex-col sm:flex-row items-center gap-2">
-          <div className="flex items-center gap-1 bg-[#CBB5A0]/80 p-1.5 rounded-xl border border-[#BFA287]/90 shadow-2xs">
+        <div className="relative z-10 flex flex-col sm:flex-row items-center gap-2">
+          <div className="flex items-center gap-1 bg-slate-800/90 p-1.5 rounded-xl border border-slate-600/70 shadow-2xs">
             {[2026, 2027, 2028, 2029, 2030].map((yr) => (
               <button
                 key={yr}
                 onClick={() => setCurrentYear(yr)}
                 className={`px-2.5 py-1 rounded-lg font-cinzel text-xs font-bold transition-colors cursor-pointer ${
                   currentYear === yr
-                    ? 'bg-[#341D10] text-[#FAF4ED] shadow-2xs'
-                    : 'bg-[#EFE4D7]/80 hover:bg-[#FAF4ED] text-[#341D10]'
+                    ? 'bg-[#F4EFE6] text-slate-900 shadow-sm border border-[#DFD5C3]'
+                    : 'bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/60'
                 }`}
                 title={`View ${yr} Liturgical Calendar`}
               >
@@ -327,22 +328,22 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             ))}
           </div>
 
-          <div className="flex items-center gap-2 bg-[#CBB5A0]/80 p-1.5 rounded-xl border border-[#BFA287]/90 shadow-2xs">
+          <div className="flex items-center gap-2 bg-slate-800/90 p-1.5 rounded-xl border border-slate-600/70 shadow-2xs">
             <button
               onClick={handlePrevMonth}
-              className="p-2 rounded-lg bg-[#EFE4D7] hover:bg-[#FAF4ED] text-[#341D10] border border-[#A78262]/60 transition-colors cursor-pointer shadow-2xs"
+              className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs"
               title="Previous Month"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
 
-            <span className="font-cinzel text-base sm:text-lg font-bold text-[#341D10] min-w-36 text-center tracking-wide leading-tight">
+            <span className="font-cinzel text-base sm:text-lg font-bold text-[#FBF9F5] min-w-36 text-center tracking-wide leading-tight">
               {monthName} {currentYear}
             </span>
 
             <button
               onClick={handleNextMonth}
-              className="p-2 rounded-lg bg-[#EFE4D7] hover:bg-[#FAF4ED] text-[#341D10] border border-[#A78262]/60 transition-colors cursor-pointer shadow-2xs"
+              className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs"
               title="Next Month"
             >
               <ChevronRight className="w-4 h-4" />
@@ -351,21 +352,21 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
         </div>
       </div>
 
-      {/* Quick Jump Bar matching the drop-down calendar style */}
-      <div className="px-4 py-2.5 bg-[#CBB5A0]/85 border border-[#BFA287]/90 rounded-xl flex flex-wrap items-center justify-between gap-2.5 text-xs sm:text-sm">
+      {/* Quick Jump Bar & Liturgical Colors Legend */}
+      <div className="px-4 py-2.5 bg-[#F4EFE6]/90 backdrop-blur-md border border-[#D8CFC0] rounded-xl flex flex-wrap items-center justify-between gap-2.5 text-xs sm:text-sm shadow-2xs">
         <div className="flex items-center gap-2.5">
           <button
             onClick={handleJumpToToday}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs sm:text-sm font-serif font-bold bg-[#EFE4D7] text-[#341D10] hover:bg-[#FAF4ED] border border-[#A78262]/70 transition-all cursor-pointer shadow-2xs leading-none"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs sm:text-sm font-serif font-bold bg-[#FBF9F5] text-slate-900 hover:bg-[#EAE2D3] border border-[#C8BBA6] transition-all cursor-pointer shadow-2xs leading-none"
             title={`Select ${todayLabel}`}
           >
-            <Clock className="w-3.5 h-3.5 text-[#5D371F]" />
+            <Clock className="w-3.5 h-3.5 text-slate-600" />
             <span>{todayLabel}</span>
           </button>
 
           <button
             onClick={handleJumpToSunday}
-            className="px-2.5 py-1 text-xs sm:text-sm font-serif text-[#4D2C17] hover:text-[#25130A] font-bold underline cursor-pointer leading-none"
+            className="px-2.5 py-1 text-xs sm:text-sm font-serif text-slate-700 hover:text-slate-950 font-bold underline cursor-pointer leading-none"
             title={`Select ${nextSundayLabel}`}
           >
             {nextSundayLabel}
@@ -378,8 +379,8 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             const meta = LITURGICAL_COLORS_INFO[color];
             return (
               <div key={color} className="flex items-center gap-1.5" title={meta.meaning}>
-                <span className="w-2.5 h-2.5 rounded-full ring-1 ring-[#5D371F]/30" style={{ backgroundColor: meta.hex }} />
-                <span className="text-[#4D2C17] font-semibold">{meta.name}</span>
+                <span className="w-2.5 h-2.5 rounded-full ring-1 ring-slate-900/25" style={{ backgroundColor: meta.hex }} />
+                <span className="text-slate-700 font-semibold">{meta.name}</span>
               </div>
             );
           })}
@@ -387,7 +388,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
       </div>
 
       {/* Monthly Grid: Eight Rows with Four Squares Each (32 Squares Total) */}
-      <div className="rounded-xl p-3 sm:p-5 border border-[#A78262] shadow-sm bg-gradient-to-b from-[#E4D5C6]/70 via-[#DBC9B7]/50 to-[#E4D5C6]/70">
+      <div className="rounded-xl p-3 sm:p-5 border border-[#DFD6C7] shadow-xs bg-[#FBF9F5]/95 backdrop-blur-xl">
         
         {/* 8 Rows × 4 Squares Grid */}
         <div className="grid grid-cols-4 gap-2 sm:gap-2.5">
@@ -423,12 +424,12 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   setInspectedDay(dayInfo);
                   onSelectDate(dayInfo.date);
                 }}
-                className={`min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-white hover:bg-stone-50 text-[#3B2213] ${
+                className={`min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-gradient-to-br from-[#FBF9F5] via-[#F6F2EA] to-[#ECE5D5] hover:from-white hover:to-[#F4EFE6] text-slate-900 ${
                   isSelected
-                    ? 'border-2 border-[#341D10] ring-2 ring-[#8B5A2B]/60 shadow-md scale-[1.01] z-10'
+                    ? 'border-2 border-slate-800 ring-2 ring-slate-500/35 shadow-[0_8px_24px_rgba(51,65,85,0.16)] scale-[1.01] z-10'
                     : isToday
-                      ? 'border-2 border-[#8B5A2B] shadow-xs'
-                      : 'border border-[#D5C2B0]/90 hover:border-[#8B5A2B] shadow-2xs'
+                      ? 'border-2 border-slate-600 shadow-xs'
+                      : 'border border-[#D8CFC0] hover:border-slate-500 shadow-[0_3px_14px_rgba(51,65,85,0.06)]'
                 }`}
               >
                 {/* Date number, day of week, and color indicator */}
@@ -436,22 +437,22 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   <div className="flex items-center gap-1.5">
                     <span className={`font-bold font-cinzel leading-none ${
                       isSelected 
-                        ? 'w-6 h-6 rounded-full bg-[#341D10] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
+                        ? 'w-6 h-6 rounded-full bg-slate-900 text-[#FBF9F5] flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
                         : isToday 
-                          ? 'w-6 h-6 rounded-full bg-[#5D371F] text-white flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
+                          ? 'w-6 h-6 rounded-full bg-slate-700 text-[#FBF9F5] flex items-center justify-center text-xs sm:text-sm font-bold shadow-2xs' 
                           : isSunday 
-                            ? 'text-[#7A3E1B] text-sm sm:text-base' 
-                            : 'text-[#341D10] text-sm sm:text-base'
+                            ? 'text-slate-800 text-sm sm:text-base' 
+                            : 'text-slate-900 text-sm sm:text-base'
                     }`}>
                       {dayNum}
                     </span>
-                    <span className={`text-[11px] sm:text-xs font-cinzel font-bold tracking-wider uppercase ${isSunday ? 'text-[#7A3E1B]' : 'text-[#8B5A2B]'}`}>
+                    <span className={`text-[11px] sm:text-xs font-cinzel font-bold tracking-wider uppercase ${isSunday ? 'text-slate-800' : 'text-slate-600'}`}>
                       {weekdayShort}
                     </span>
                   </div>
 
                   <span 
-                    className="w-2.5 h-2.5 rounded-full ring-1 ring-[#5D371F]/40 shadow-2xs shrink-0" 
+                    className="w-2.5 h-2.5 rounded-full ring-1 ring-slate-900/25 shadow-2xs shrink-0" 
                     style={{ backgroundColor: colorMeta.hex }} 
                     title={`Color: ${colorMeta.name}`}
                   />
@@ -462,8 +463,8 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   <p 
                     className={`text-[12.5px] sm:text-[13.5px] font-serif line-clamp-2 leading-[1.18] tracking-tight ${
                       hasCelebratedSaintOrFeast 
-                        ? 'font-bold text-[#2A1409]' 
-                        : 'font-normal text-[#5D371F]'
+                        ? 'font-bold text-slate-900' 
+                        : 'font-normal text-slate-700'
                     }`}
                   >
                     {displayTitle}
@@ -474,7 +475,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 <div className="flex flex-wrap items-center gap-1 mt-1">
                   {dayInfo.historicalEvent && (
                     <span 
-                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-medium leading-none bg-[#EFE6DC] text-[#341D10] border border-[#BFA287]/60" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-medium leading-none bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6]" 
                       title={dayInfo.historicalEvent.title}
                     >
                       {dayInfo.historicalEvent.year}
@@ -482,7 +483,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   )}
                   {dayInfo.isHolyDay && (
                     <span 
-                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-bold leading-none bg-[#4A2B17] text-[#FAF4ED] border border-[#341D10]" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs font-bold leading-none bg-slate-800 text-[#F9F6F0] border border-slate-900" 
                       title="Holy Day of Obligation"
                     >
                       Obligation
@@ -490,7 +491,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   )}
                   {dayInfo.isFastingDay && (
                     <span 
-                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs leading-none bg-[#DECBB6] text-[#3B2213] border border-[#A78262]/70" 
+                      className="text-[9.5px] sm:text-[10px] px-1.5 py-0.5 rounded-xs leading-none bg-[#DFD5C3] text-slate-800 border border-[#C8BBA6]" 
                       title="Day of Penance / Abstinence"
                     >
                       Penance
@@ -523,21 +524,21 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                   setInspectedDay(nextDayInfo);
                   onSelectDate(nextDayInfo.date);
                 }}
-                className="min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-[#F8F3EC]/80 hover:bg-white text-[#5D371F] border border-dashed border-[#BFA287] shadow-2xs hover:border-[#8B5A2B]"
+                className="min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-[#F4EFE6]/70 hover:bg-[#FBF9F5] text-slate-700 border border-dashed border-[#C8BBA6] shadow-2xs hover:border-slate-500"
                 title={`Next Month: Click to view ${nextMonthShortName} ${nextDayNum}`}
               >
                 {/* Date number, day of week, and color indicator */}
                 <div className="flex items-center justify-between leading-none">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs sm:text-sm font-bold font-cinzel text-[#8B5A2B]">
+                    <span className="text-xs sm:text-sm font-bold font-cinzel text-slate-700">
                       {nextMonthShortName} {nextDayNum}
                     </span>
-                    <span className={`text-[10.5px] sm:text-xs font-cinzel font-semibold uppercase ${isNextSunday ? 'text-[#7A3E1B]' : 'text-[#8B5A2B]/80'}`}>
+                    <span className={`text-[10.5px] sm:text-xs font-cinzel font-semibold uppercase ${isNextSunday ? 'text-slate-700' : 'text-slate-500'}`}>
                       {nextWeekdayShort}
                     </span>
                   </div>
                   <span 
-                    className="w-2.5 h-2.5 rounded-full ring-1 ring-[#5D371F]/30 shadow-2xs shrink-0" 
+                    className="w-2.5 h-2.5 rounded-full ring-1 ring-slate-900/25 shadow-2xs shrink-0" 
                     style={{ backgroundColor: nextColorMeta.hex }} 
                     title={`Color: ${nextColorMeta.name}`}
                   />
@@ -545,14 +546,14 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
 
                 {/* Feast title */}
                 <div className="mt-1 flex-1">
-                  <p className="text-[12px] sm:text-[13px] font-serif line-clamp-2 leading-[1.18] tracking-tight text-[#6D482F]">
+                  <p className="text-[12px] sm:text-[13px] font-serif line-clamp-2 leading-[1.18] tracking-tight text-slate-600">
                     {nextDisplayTitle}
                   </p>
                 </div>
 
                 {/* Next month indicator badge */}
-                <div className="flex items-center justify-between text-[9.5px] sm:text-[10px] font-cinzel text-[#8B5A2B] pt-0.5">
-                  <span className="bg-[#EFE6DC] px-1.5 py-0.5 rounded text-[#5D371F] font-semibold border border-[#D5C2B0]/80">
+                <div className="flex items-center justify-between text-[9.5px] sm:text-[10px] font-cinzel text-slate-600 pt-0.5">
+                  <span className="bg-[#EAE2D3] px-1.5 py-0.5 rounded text-slate-700 font-semibold border border-[#D8CFC0]">
                     Next Month
                   </span>
                 </div>
@@ -563,31 +564,31 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
 
       </div>
 
-      {/* Day Details Drawer / Inspector in Harmonious Dark and Light Brown with narrowed line spacing and readable fonts */}
+      {/* Day Details Drawer / Inspector in Slate Gray & Bleached Sand */}
       {inspectedDay && (
-        <div className="bg-[#EFE4D7] rounded-xl p-6 sm:p-7 shadow-md border-2 border-[#8B5A2B]/60 text-[#341D10] space-y-4 animate-in fade-in">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#BFA287] pb-3.5">
+        <div className="bg-[#F9F6F0] rounded-xl p-6 sm:p-7 shadow-md border-2 border-slate-600/70 text-slate-900 space-y-4 animate-in fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D8CFC0] pb-3.5">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <span 
-                  className="px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-semibold uppercase font-cinzel shadow-2xs leading-none"
+                  className="px-2.5 py-0.5 rounded-full text-xs sm:text-sm font-semibold uppercase font-cinzel shadow-2xs leading-none ring-1 ring-slate-900/15"
                   style={{ 
                     backgroundColor: LITURGICAL_COLORS_INFO[inspectedDay.color].hex, 
-                    color: inspectedDay.color === 'white' ? '#451a03' : '#ffffff' 
+                    color: inspectedDay.color === 'white' ? '#0f172a' : '#ffffff' 
                   }}
                 >
                   {LITURGICAL_COLORS_INFO[inspectedDay.color].name} • {inspectedDay.rank}
                 </span>
-                <span className="text-xs sm:text-sm text-[#5D371F] font-serif font-bold leading-none">{inspectedDay.date}</span>
+                <span className="text-xs sm:text-sm text-slate-600 font-serif font-bold leading-none">{inspectedDay.date}</span>
               </div>
-              <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-[#341D10] leading-tight mt-0.5">
+              <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 leading-tight mt-0.5">
                 {inspectedDay.title}
               </h3>
             </div>
 
             <button
               onClick={() => onSelectDate(inspectedDay.date)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#5D371F] to-[#341D10] hover:from-[#734426] hover:to-[#4A2A17] text-[#FFFDF8] text-xs sm:text-sm font-cinzel font-bold shadow-xs transition-all cursor-pointer shrink-0 leading-none"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 text-[#F9F6F0] border border-slate-900 text-xs sm:text-sm font-cinzel font-bold shadow-xs transition-all cursor-pointer shrink-0 leading-none"
             >
               <BookOpen className="w-4 h-4" />
               <span>Read Day's Mass Readings</span>
@@ -596,51 +597,51 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
 
           {/* HISTORICAL CATHOLIC EVENT ON THIS DAY */}
           {inspectedDay.historicalEvent ? (
-            <div className="p-4 sm:p-5 rounded-xl bg-[#E5D5C4] border border-[#A78262] shadow-2xs space-y-2">
+            <div className="p-4 sm:p-5 rounded-xl bg-[#EFE9DC] border border-[#C8BBA6] shadow-2xs space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5D371F] font-cinzel flex items-center gap-1.5 leading-none">
-                  <Sparkles className="w-4 h-4 text-[#8B5A2B]" />
+                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700 font-cinzel flex items-center gap-1.5 leading-none">
+                  <Sparkles className="w-4 h-4 text-slate-600" />
                   This Day in Catholic History ({inspectedDay.historicalEvent.year})
                 </span>
-                <span className="text-xs sm:text-sm font-bold font-cinzel text-[#341D10] bg-[#D2BEAA] px-2 py-0.5 rounded-md border border-[#A78262]/50 leading-none">
+                <span className="text-xs sm:text-sm font-bold font-cinzel text-slate-900 bg-[#DFD5C3] px-2 py-0.5 rounded-md border border-[#C8BBA6] leading-none">
                   {inspectedDay.historicalEvent.year}
                 </span>
               </div>
-              <h4 className="font-cinzel font-bold text-base sm:text-lg md:text-xl text-[#341D10] leading-snug">
+              <h4 className="font-cinzel font-bold text-base sm:text-lg md:text-xl text-slate-900 leading-snug">
                 {inspectedDay.historicalEvent.title}
               </h4>
-              <p className="font-serif text-[#3B2213] text-sm sm:text-base md:text-[17px] leading-snug">
+              <p className="font-serif text-slate-800 text-sm sm:text-base md:text-[17px] leading-snug">
                 {inspectedDay.historicalEvent.description}
               </p>
               {inspectedDay.historicalEvent.significance && (
-                <p className="text-xs sm:text-sm font-serif italic pt-1 border-t border-[#BFA287]/60 leading-snug">
+                <p className="text-xs sm:text-sm font-serif italic text-slate-700 pt-1 border-t border-[#D8CFC0] leading-snug">
                   Ecclesial Significance: {inspectedDay.historicalEvent.significance}
                 </p>
               )}
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-[#F6EFE7] border border-[#D5C2B0] text-sm sm:text-base text-[#5D371F] font-serif leading-snug">
-              <span className="font-cinzel font-bold text-[#341D10] block mb-1 leading-tight">Liturgical Commemoration</span>
+            <div className="p-4 rounded-xl bg-[#FBF9F5] border border-[#D8CFC0] text-sm sm:text-base text-slate-700 font-serif leading-snug">
+              <span className="font-cinzel font-bold text-slate-900 block mb-1 leading-tight">Liturgical Commemoration</span>
               Each day in the Roman rite is consecrated to Christ through the Holy Sacrifice of the Mass and the Liturgy of the Hours celebrated worldwide.
             </div>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm font-serif leading-snug">
-            <div className="p-3 bg-[#F6EFE7] rounded-xl border border-[#D5C2B0]">
-              <span className="font-bold text-[#341D10] font-cinzel block text-xs sm:text-sm leading-tight">Liturgical Season:</span>
-              <p className="text-[#5D371F] mt-1 leading-snug">{inspectedDay.season}</p>
+            <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0]">
+              <span className="font-bold text-slate-900 font-cinzel block text-xs sm:text-sm leading-tight">Liturgical Season:</span>
+              <p className="text-slate-700 mt-1 leading-snug">{inspectedDay.season}</p>
             </div>
 
-            <div className="p-3 bg-[#F6EFE7] rounded-xl border border-[#D5C2B0]">
-              <span className="font-bold text-[#341D10] font-cinzel block text-xs sm:text-sm leading-tight">Precept and Obligation:</span>
-              <p className="text-[#5D371F] mt-1 leading-snug">
+            <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0]">
+              <span className="font-bold text-slate-900 font-cinzel block text-xs sm:text-sm leading-tight">Precept and Obligation:</span>
+              <p className="text-slate-700 mt-1 leading-snug">
                 {inspectedDay.isHolyDay ? 'Holy Day of Obligation (Mass Attendance Required)' : 'Standard Liturgical Day'}
               </p>
             </div>
 
-            <div className="p-3 bg-[#F6EFE7] rounded-xl border border-[#D5C2B0]">
-              <span className="font-bold text-[#341D10] font-cinzel block text-xs sm:text-sm leading-tight">Fast and Abstinence:</span>
-              <p className="text-[#5D371F] mt-1 leading-snug">
+            <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0]">
+              <span className="font-bold text-slate-900 font-cinzel block text-xs sm:text-sm leading-tight">Fast and Abstinence:</span>
+              <p className="text-slate-700 mt-1 leading-snug">
                 {inspectedDay.isFastingDay ? 'Traditional Friday Abstinence from Meat' : 'No specific fasting prescribed'}
               </p>
             </div>
@@ -652,19 +653,19 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
           UPCOMING SPECIAL RELIGIOUS EVENTS
           (TAKING CUE FROM THE VATICAN & THE ARCHDIOCESE OF CEBU)
          ===================================================================== */}
-      <div className="rounded-xl p-4 sm:p-5 border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.18)] bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] text-[#341D10] space-y-3.5">
+      <div className="rounded-xl p-4 sm:p-6 border border-[#DFD6C7] shadow-xs bg-[#FBF9F5]/95 backdrop-blur-xl text-slate-900 space-y-4">
         
         {/* Section Header */}
-        <div className="border-b border-[#BFA287] pb-3 space-y-2.5">
+        <div className="border-b border-[#D8CFC0] pb-3.5 space-y-2.5">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5">
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <Award className="w-5 h-5 text-[#6B3E1E]" />
-                <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#6B3E1E]">
+                <Award className="w-5 h-5 text-slate-600" />
+                <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
                   The Vatican (Holy See) &amp; Archdiocese of Cebu
                 </span>
               </div>
-              <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#24140B] leading-tight mt-0.5">
+              <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mt-0.5">
                 Upcoming Special Religious Events
               </h3>
             </div>
@@ -676,8 +677,8 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 onClick={() => setEventsFilter('all')}
                 className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
                   eventsFilter === 'all'
-                    ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
-                    : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+                    ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-2xs'
+                    : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-700 border-[#D8CFC0]'
                 }`}
               >
                 All Events ({NOVEMBER_SPECIAL_EVENTS.length})
@@ -687,8 +688,8 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 onClick={() => setEventsFilter('vatican')}
                 className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
                   eventsFilter === 'vatican'
-                    ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
-                    : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+                    ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-2xs'
+                    : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-700 border-[#D8CFC0]'
                 }`}
               >
                 Vatican
@@ -698,8 +699,8 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 onClick={() => setEventsFilter('cebu')}
                 className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
                   eventsFilter === 'cebu'
-                    ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B] shadow-2xs'
-                    : 'bg-white hover:bg-stone-50 text-[#341D10] border-[#BFA287]'
+                    ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-2xs'
+                    : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-700 border-[#D8CFC0]'
                 }`}
               >
                 Archdiocese of Cebu
@@ -709,8 +710,8 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 onClick={() => setEventsFilter('indulgences')}
                 className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
                   eventsFilter === 'indulgences'
-                    ? 'bg-[#6B3E1E] text-amber-50 border-[#4A2810] shadow-2xs'
-                    : 'bg-white hover:bg-stone-50 text-[#6B3E1E] border-[#BFA287]'
+                    ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-2xs'
+                    : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-700 border-[#D8CFC0]'
                 }`}
               >
                 Special Indulgences
@@ -718,25 +719,25 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             </div>
           </div>
 
-          <p className="text-sm sm:text-base font-serif text-[#4A2B17] leading-snug">
+          <p className="text-sm sm:text-base font-serif text-slate-700 leading-snug">
             Major November liturgical celebrations, Papal Masses in Rome, Archdiocesan feasts and cemetery vigils in Cebu, and the granting of special Plenary and Partial Indulgences by the Apostolic Penitentiary.
           </p>
         </div>
 
         {/* Summary Banner: Apostolic Penitentiary Norms for November Indulgences */}
-        <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-[#C8AD8D] shadow-2xs space-y-1.5">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] shadow-2xs space-y-1.5">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-2 text-[#6B3E1E]">
-              <Award className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
-              <h4 className="font-cinzel text-sm sm:text-base font-bold uppercase tracking-wider text-[#24140B]">
+            <div className="flex items-center gap-2 text-slate-700">
+              <Award className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-slate-600" />
+              <h4 className="font-cinzel text-sm sm:text-base font-bold uppercase tracking-wider text-slate-900">
                 Granting of Special November Indulgences • Apostolic Penitentiary Norms
               </h4>
             </div>
-            <span className="text-xs font-cinzel font-bold px-2.5 py-0.5 rounded-md bg-[#FAF0D9] text-[#7A4E1D] border border-[#E5C98B]">
+            <span className="text-xs font-cinzel font-bold px-2.5 py-0.5 rounded-md bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6]">
               Enchiridion Indulgentiarum, Norm 29
             </span>
           </div>
-          <p className="text-sm sm:text-base font-serif text-stone-800 leading-snug">
+          <p className="text-sm sm:text-base font-serif text-slate-700 leading-snug">
             To gain any <strong>Plenary Indulgence</strong> in November (such as the <strong>Nov 1–8 Cemetery Visit</strong> for the Holy Souls, the <strong>Nov 2 All Souls’ Day Church Visit</strong>, the <strong>Cathedral/Basilica Pilgrimage</strong>, or the <strong>Christ the King Public Consecration</strong>), the faithful must be in the state of grace with complete detachment from all sin, and fulfill the three usual conditions: <strong>(1) Sacramental Confession</strong> (within about 20 days), <strong>(2) Eucharistic Communion</strong>, and <strong>(3) Prayer for the Holy Father’s Intentions</strong> (one <em>Our Father</em> and one <em>Hail Mary</em>).
           </p>
         </div>
@@ -752,23 +753,23 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
           }).map(ev => (
             <div
               key={ev.id}
-              className="rounded-xl bg-white border border-[#C8B29B] shadow-xs overflow-hidden transition-all hover:border-[#8B5A2B]"
+              className="rounded-xl bg-[#FBF9F5] border border-[#D8CFC0] shadow-xs overflow-hidden transition-all hover:border-slate-500"
             >
               {/* Event Top Bar */}
-              <div className="px-4 py-2.5 bg-[#F6EFE7] border-b border-[#E5D5C4] flex flex-col md:flex-row md:items-center justify-between gap-2">
+              <div className="px-4 py-2.5 bg-[#F4EFE6] border-b border-[#D8CFC0] flex flex-col md:flex-row md:items-center justify-between gap-2">
                 <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-md bg-[#341D10] text-[#FAF4ED] font-cinzel text-xs sm:text-sm font-bold">
+                    <span className="px-2.5 py-0.5 rounded-md bg-slate-800 text-[#F9F6F0] font-cinzel text-xs sm:text-sm font-bold">
                       {ev.dateRange}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-md bg-[#EFE4D7] text-[#5D371F] border border-[#C8AD8D] font-cinzel text-xs sm:text-sm font-bold">
+                    <span className="px-2.5 py-0.5 rounded-md bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6] font-cinzel text-xs sm:text-sm font-bold">
                       {ev.authorityLabel}
                     </span>
-                    <span className="text-xs sm:text-sm font-serif italic text-[#6B3E1E] font-semibold">
+                    <span className="text-xs sm:text-sm font-serif italic text-slate-600 font-semibold">
                       • {ev.liturgicalRank}
                     </span>
                   </div>
-                  <h4 className="font-cinzel text-lg sm:text-xl font-bold text-[#24140B] leading-snug">
+                  <h4 className="font-cinzel text-lg sm:text-xl font-bold text-slate-900 leading-snug">
                     {ev.title}
                   </h4>
                 </div>
@@ -783,7 +784,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                     setCurrentMonth(m);
                     onSelectDate(ev.targetDateStr);
                   }}
-                  className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-[#FAF4ED] text-[#341D10] border border-[#A78262] font-cinzel text-xs sm:text-sm font-bold transition-all cursor-pointer self-start md:self-center shrink-0 shadow-2xs"
+                  className="px-3.5 py-1.5 rounded-lg bg-[#FBF9F5] hover:bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6] font-cinzel text-xs sm:text-sm font-bold transition-all cursor-pointer self-start md:self-center shrink-0 shadow-2xs"
                   title={`Open Mass Readings for ${ev.targetDateStr}`}
                 >
                   Open Date &amp; Readings →
@@ -791,26 +792,26 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
               </div>
 
               {/* Event Body: Vatican & Archdiocese of Cebu Columns + Special Indulgence Box */}
-              <div className="divide-y divide-[#E5D5C4]">
-                <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#E5D5C4]">
+              <div className="divide-y divide-[#D8CFC0]">
+                <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#D8CFC0]">
                   {/* Vatican Cue */}
-                  <div className="p-3.5 sm:p-4 bg-[#FAF7F2]/60 space-y-1">
-                    <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5D371F]">
-                      <Globe className="w-4 h-4 text-[#8B5A2B] shrink-0" />
+                  <div className="p-3.5 sm:p-4 bg-[#FBF9F5] space-y-1">
+                    <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700">
+                      <Globe className="w-4 h-4 text-slate-600 shrink-0" />
                       <span>From the Vatican (Holy See)</span>
                     </div>
-                    <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-snug">
+                    <p className="text-sm sm:text-base font-serif text-slate-700 leading-snug">
                       {ev.vaticanObservance}
                     </p>
                   </div>
 
                   {/* Archdiocese of Cebu Cue */}
-                  <div className="p-3.5 sm:p-4 bg-[#FAF7F2]/60 space-y-1">
-                    <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#5D371F]">
-                      <MapPin className="w-4 h-4 text-[#8B5A2B] shrink-0" />
+                  <div className="p-3.5 sm:p-4 bg-[#FBF9F5] space-y-1">
+                    <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700">
+                      <MapPin className="w-4 h-4 text-slate-600 shrink-0" />
                       <span>Archdiocese of Cebu</span>
                     </div>
-                    <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-snug">
+                    <p className="text-sm sm:text-base font-serif text-slate-700 leading-snug">
                       {ev.cebuObservance}
                     </p>
                   </div>
@@ -818,17 +819,17 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
 
                 {/* Special Indulgence Grant Box */}
                 {ev.indulgenceGrant && (
-                  <div className="p-3.5 sm:p-4 bg-gradient-to-r from-[#FAF0D9] via-[#FDF6E4] to-[#FAF0D9] space-y-1">
+                  <div className="p-3.5 sm:p-4 bg-[#EFE9DC] space-y-1">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#6E4518]">
-                        <Award className="w-4 h-4 text-[#B8860B] shrink-0" />
+                      <div className="flex items-center gap-1.5 font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-800">
+                        <Award className="w-4 h-4 text-slate-700 shrink-0" />
                         <span>Special Indulgence Granted: {ev.indulgenceGrant.summary}</span>
                       </div>
-                      <span className="px-2.5 py-0.5 rounded-md bg-white text-[#7A4E1D] border border-[#DFC07A] font-cinzel text-xs font-bold uppercase">
+                      <span className="px-2.5 py-0.5 rounded-md bg-[#FBF9F5] text-slate-800 border border-[#C8BBA6] font-cinzel text-xs font-bold uppercase">
                         {ev.indulgenceGrant.type}
                       </span>
                     </div>
-                    <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-snug">
+                    <p className="text-sm sm:text-base font-serif text-slate-800 leading-snug">
                       {ev.indulgenceGrant.prescribedWork}
                     </p>
                   </div>
@@ -841,23 +842,23 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
 
       {/* Parish Schedules Card */}
       {onOpenCebuParishes && (
-        <div className="bg-[#E4D7C8] rounded-xl p-5 sm:p-6 border border-[#8B5A2B]/40 text-[#2B1B12] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+        <div className="bg-slate-800 rounded-xl p-5 sm:p-6 border border-slate-700 text-[#F9F6F0] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
           <div className="flex items-center gap-3.5">
-            <span className="p-3 rounded-xl bg-[#D6C5B2] text-[#5C3418] border border-[#8B5A2B]/30 shrink-0 shadow-xs">
+            <span className="p-3 rounded-xl bg-slate-700/80 text-[#EAE2D3] border border-slate-600 shrink-0 shadow-xs">
               <Church className="w-5 h-5 sm:w-6 sm:h-6" />
             </span>
             <div>
-              <h4 className="font-cinzel text-base sm:text-lg font-bold text-[#24140B] leading-snug">
+              <h4 className="font-cinzel text-base sm:text-lg font-bold text-[#FBF9F5] leading-snug">
                 Archdiocese of Cebu • Holy Mass and Confession Schedules
               </h4>
-              <p className="text-xs sm:text-sm font-serif text-[#5C3D28] font-normal mt-0.5 leading-snug">
+              <p className="text-xs sm:text-sm font-serif text-[#DFD5C3] font-normal mt-0.5 leading-snug">
                 Basilica Minore del Santo Niño, Cebu Metropolitan Cathedral, Redemptorist Church, Carmelite Monastery, Shrine of San Roque and Guadalupe
               </p>
             </div>
           </div>
           <button
             onClick={onOpenCebuParishes}
-            className="px-4 py-2.5 rounded-lg bg-white hover:bg-stone-50 text-[#24140B] border border-[#8B5A2B]/40 text-xs sm:text-sm font-serif font-bold cursor-pointer whitespace-nowrap self-start sm:self-auto transition-all shadow-xs leading-none"
+            className="px-4 py-2.5 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-900 border border-[#DFD5C3] text-xs sm:text-sm font-cinzel font-bold cursor-pointer whitespace-nowrap self-start sm:self-auto transition-all shadow-xs leading-none"
           >
             Holy Mass &amp; Confession Schedules
           </button>
