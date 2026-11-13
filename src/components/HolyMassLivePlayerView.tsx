@@ -143,7 +143,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
       label: 'Apparition Sites',
       icon: <Heart className="w-4 h-4 text-blue-600" />,
       count: HOLY_MASS_LIVESTREAMS.filter(s => s.category === 'apparition').length,
-      desc: 'Lourdes & Fátima 24/7 Livestreams'
+      desc: 'Lourdes, Fátima, Guadalupe, Knock & More'
     }
   ].filter(c => c.id === 'all' || c.count > 0);
 
@@ -155,32 +155,6 @@ Live on Soul Sanctum Catholic Sanctuary.`;
     { id: 'europe', label: 'Europe & Shrines' },
     { id: 'asia-latam', label: 'Asia-Pacific & Australia' }
   ];
-
-  const getCategoryBadge = (cat: LiveStreamCategory) => {
-    switch (cat) {
-      case 'mass':
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-800 text-[10px] font-bold font-cinzel">
-            <Sparkles className="w-2.5 h-2.5 text-amber-600" />
-            <span>Holy Mass</span>
-          </span>
-        );
-      case 'adoration':
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/15 border border-red-500/30 text-red-800 text-[10px] font-bold font-cinzel">
-            <Flame className="w-2.5 h-2.5 text-red-600" />
-            <span>Eucharistic Adoration</span>
-          </span>
-        );
-      case 'apparition':
-        return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/15 border border-blue-500/30 text-blue-800 text-[10px] font-bold font-cinzel">
-            <Heart className="w-2.5 h-2.5 text-blue-600" />
-            <span>Apparition Site</span>
-          </span>
-        );
-    }
-  };
 
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-6 transition-all duration-300">
@@ -375,22 +349,22 @@ Live on Soul Sanctum Catholic Sanctuary.`;
       </div>
 
       {/* 2. Liturgical Companion & Devotions Card */}
-      <div className="rounded-xl bg-white/90 backdrop-blur-md border border-stone-200/90 shadow-md p-4 sm:p-5 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
+      <div className="rounded-xl bg-white/90 backdrop-blur-md border border-stone-200/90 shadow-md p-3.5 sm:p-4 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200 pb-2.5">
           <div className="text-left">
-            <span className="text-[10px] font-cinzel font-bold uppercase tracking-widest text-amber-900 block">
+            <span className="text-[10px] font-cinzel font-bold uppercase tracking-widest text-amber-900 block leading-tight">
               Accompanying Mass Devotions
             </span>
-            <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900">
+            <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900">
               Spiritual Communion, Today&apos;s Readings &amp; Votive Altar
             </h3>
           </div>
 
           {/* 3-Tab Switcher */}
-          <div className="flex rounded-lg bg-stone-100 p-1 text-xs font-cinzel font-semibold shrink-0 border border-stone-200">
+          <div className="flex rounded-lg bg-stone-100 p-0.5 text-[11px] font-cinzel font-semibold shrink-0 border border-stone-200">
             <button
               onClick={() => setActiveSideTab('communion')}
-              className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
+              className={`py-1 px-2.5 rounded-md transition-all cursor-pointer ${
                 activeSideTab === 'communion'
                   ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
                   : 'text-stone-700 hover:text-stone-900'
@@ -400,7 +374,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             </button>
             <button
               onClick={() => setActiveSideTab('readings')}
-              className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
+              className={`py-1 px-2.5 rounded-md transition-all cursor-pointer ${
                 activeSideTab === 'readings'
                   ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
                   : 'text-stone-700 hover:text-stone-900'
@@ -410,7 +384,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             </button>
             <button
               onClick={() => setActiveSideTab('candle')}
-              className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
+              className={`py-1 px-2.5 rounded-md transition-all cursor-pointer ${
                 activeSideTab === 'candle'
                   ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
                   : 'text-stone-700 hover:text-stone-900'
@@ -423,46 +397,46 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
         {/* Tab 1: Spiritual Communion Prayer */}
         {activeSideTab === 'communion' && (
-          <div className="p-4 sm:p-5 rounded-xl bg-gradient-to-br from-[#FAF6EE] to-white border border-amber-200/80 text-left">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+          <div className="p-3 sm:p-3.5 rounded-xl bg-gradient-to-br from-[#FAF6EE] to-white border border-amber-200/80 text-left">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 items-center">
               
               {/* Left Column (2/3): Prayer Text */}
-              <div className="md:col-span-2 space-y-2.5 border-r-0 md:border-r border-amber-200/70 md:pr-4">
-                <h4 className="font-serif text-base sm:text-lg font-bold text-stone-900 text-center">
+              <div className="md:col-span-2 space-y-1.5 border-r-0 md:border-r border-amber-200/70 md:pr-3.5">
+                <h4 className="font-serif text-sm sm:text-base font-bold text-stone-900 text-center">
                   Act of Spiritual Communion
                 </h4>
 
-                <div className="text-sm sm:text-base font-serif italic text-stone-900 leading-snug whitespace-pre-line text-center px-2">
+                <div className="text-xs sm:text-sm font-serif italic text-stone-900 leading-snug whitespace-pre-line text-center px-1">
                   {spiritualCommunionPrayer}
                 </div>
 
-                <div className="text-right pt-1">
-                  <span className="text-[11px] font-bold font-cinzel text-amber-900 uppercase">
+                <div className="text-right pt-0.5">
+                  <span className="text-[10.5px] font-bold font-cinzel text-amber-900 uppercase">
                     — St. Alphonsus Liguori
                   </span>
                 </div>
               </div>
 
               {/* Right Column (1/3): Audio Player & Spiritual Grace Note */}
-              <div className="space-y-3">
-                <div className="p-3 rounded-lg bg-white border border-amber-200 shadow-2xs space-y-2">
+              <div className="space-y-2.5">
+                <div className="p-2.5 rounded-lg bg-white border border-amber-200 shadow-2xs space-y-1.5">
                   <span className="text-[10px] font-cinzel font-bold text-amber-900 uppercase tracking-wider block">
                     Audio Prayer Recitation
                   </span>
                   <button
                     onClick={handleToggleSpiritualCommunionAudio}
-                    className={`w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
+                    className={`w-full inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
                       isPrayingSpiritualCommunion
                         ? 'bg-amber-900 border-amber-700 text-white shadow-xs'
                         : 'bg-stone-50 hover:bg-white border-stone-300 text-stone-800'
                     }`}
                   >
-                    <Volume2 className="w-4 h-4 text-amber-600" />
+                    <Volume2 className="w-3.5 h-3.5 text-amber-600" />
                     <span>{isPrayingSpiritualCommunion ? 'Stop Audio' : 'Listen to Prayer'}</span>
                   </button>
                 </div>
 
-                <p className="text-[11px] text-stone-600 font-serif leading-relaxed">
+                <p className="text-[11px] text-stone-600 font-serif leading-snug">
                   The Church grants rich spiritual graces to the faithful who, unable to receive Our Lord sacramentally, recite this prayer with deep faith and longing for Christ&apos;s Real Presence.
                 </p>
               </div>
@@ -473,29 +447,29 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
         {/* Tab 2: Mass Readings of the Day */}
         {activeSideTab === 'readings' && (
-          <div className="space-y-3 text-left">
-            <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-              <span className="text-xs font-bold font-cinzel text-amber-800 uppercase tracking-wider">
+          <div className="space-y-2.5 text-left">
+            <div className="flex items-center justify-between border-b border-stone-100 pb-1.5">
+              <span className="text-[11px] font-bold font-cinzel text-amber-800 uppercase tracking-wider">
                 Today&apos;s Liturgy of the Word
               </span>
-              <h4 className="font-serif text-sm font-bold text-stone-900">
+              <h4 className="font-serif text-xs sm:text-sm font-bold text-stone-900">
                 {currentReading?.liturgicalDay || 'Daily Mass Readings'}
               </h4>
             </div>
 
             {currentReading ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs sm:text-sm font-serif text-stone-800 leading-relaxed">
-                <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-1">
-                  <span className="font-bold font-cinzel text-[11px] text-stone-900 block uppercase">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs font-serif text-stone-800 leading-relaxed">
+                <div className="p-3 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-1">
+                  <span className="font-bold font-cinzel text-[10.5px] text-stone-900 block uppercase">
                     First Reading • {currentReading.firstReading.citation}
                   </span>
-                  <p className="line-clamp-5 text-stone-700 text-xs">
+                  <p className="line-clamp-4 text-stone-700 text-xs">
                     {currentReading.firstReading.text}
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/70 space-y-1">
-                  <span className="font-bold font-cinzel text-[11px] text-amber-950 block uppercase">
+                <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200/70 space-y-1">
+                  <span className="font-bold font-cinzel text-[10.5px] text-amber-950 block uppercase">
                     Responsorial Psalm • {currentReading.responsorialPsalm.citation}
                   </span>
                   <p className="italic font-semibold text-amber-950 text-xs">
@@ -503,11 +477,11 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-1">
-                  <span className="font-bold font-cinzel text-[11px] text-amber-900 block uppercase">
+                <div className="p-3 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-1">
+                  <span className="font-bold font-cinzel text-[10.5px] text-amber-900 block uppercase">
                     Holy Gospel • {currentReading.gospel.citation}
                   </span>
-                  <p className="line-clamp-5 text-stone-800 font-medium text-xs">
+                  <p className="line-clamp-4 text-stone-800 font-medium text-xs">
                     {currentReading.gospel.text}
                   </p>
                 </div>
@@ -522,11 +496,11 @@ Live on Soul Sanctum Catholic Sanctuary.`;
 
         {/* Tab 3: Light a Votive Candle */}
         {activeSideTab === 'candle' && (
-          <div className="p-4 sm:p-5 rounded-xl bg-stone-900 text-stone-100 border border-amber-500/30 space-y-3 text-left">
+          <div className="p-3.5 sm:p-4 rounded-xl bg-stone-900 text-stone-100 border border-amber-500/30 space-y-2.5 text-left">
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Flame className={`w-4 h-4 ${isCandleLit ? 'text-amber-400 animate-pulse' : 'text-stone-400'}`} />
-                <h4 className="font-cinzel text-sm sm:text-base font-bold text-amber-300">
+                <h4 className="font-cinzel text-sm font-bold text-amber-300">
                   Light a Votive Candle at the Altar
                 </h4>
               </div>
@@ -535,18 +509,18 @@ Live on Soul Sanctum Catholic Sanctuary.`;
               </span>
             </div>
 
-            <form onSubmit={handleLightCandle} className="flex flex-col sm:flex-row gap-2.5">
+            <form onSubmit={handleLightCandle} className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 value={candleIntention}
                 onChange={(e) => setCandleIntention(e.target.value)}
                 placeholder="Type your prayer petition or Thanksgiving intention..."
-                className="flex-1 text-xs px-3.5 py-2 rounded-lg bg-stone-800 border border-stone-700 text-stone-100 focus:outline-none focus:border-amber-400 font-serif"
+                className="flex-1 text-xs px-3 py-1.5 rounded-lg bg-stone-800 border border-stone-700 text-stone-100 focus:outline-none focus:border-amber-400 font-serif"
               />
               <button
                 type="submit"
                 disabled={!candleIntention.trim()}
-                className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border border-amber-600/70 disabled:opacity-40 text-amber-50 font-cinzel text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md shrink-0"
+                className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border border-amber-600/70 disabled:opacity-40 text-amber-50 font-cinzel text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md shrink-0"
               >
                 <Flame className="w-3.5 h-3.5 fill-current" />
                 <span>Offer Petition</span>
@@ -680,12 +654,9 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                 }`}
               >
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1 text-[10px] font-bold font-cinzel text-amber-800 uppercase tracking-wider">
-                      <MapPin className="w-2.5 h-2.5" />
-                      <span>{stream.country}</span>
-                    </div>
-                    {getCategoryBadge(stream.category)}
+                  <div className="flex items-center gap-1 text-[10px] font-bold font-cinzel text-amber-800 uppercase tracking-wider">
+                    <MapPin className="w-2.5 h-2.5" />
+                    <span>{stream.country}</span>
                   </div>
 
                   <div className="flex items-start gap-3">
