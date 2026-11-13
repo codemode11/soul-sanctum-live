@@ -706,7 +706,6 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
     prayer: 'Grant, we pray, almighty God, that the glorious intercession of the Four Crowned Martyrs and Bishop Saint Godfrey, who stood firm in confessing your name, may strengthen us in true faith and charity. Through Christ our Lord. Amen.',
     liturgicalColor: 'Red',
     wikiSlug: 'Four_Crowned_Martyrs',
-    imageUrl: '/images/saints/pope-saint-leo-great.jpg?v=20261102',
     companionSaints: [
       {
         name: 'St. Willehad of Bremen',
@@ -725,94 +724,6 @@ const BUTLER_LIVES_ENTRIES: Record<string, DailySaintEntry> = {
         title: 'Cornish Bishop and Abbot in Wales',
         dates: '6th Century',
         shortDescription: "Cousin of St. David of Wales who founded the monastery of Caer Gybi (Holyhead) on Anglesey."
-      }
-    ]
-  },
-  '11-12': {
-    id: 'saint-frances-xavier-cabrini-12',
-    name: 'St. Frances Xavier Cabrini',
-    feastDate: 'November 12',
-    month: 11,
-    day: 12,
-    title: 'Virgin, Foundress of the Missionary Sisters of the Sacred Heart of Jesus (1850–1917)',
-    butlerVolume: "Butler's Lives of the Saints — Vol. XI (Feast of St. Frances Xavier Cabrini)",
-    patronage: ['Immigrants and Displaced Persons', 'Hospital Administrators', 'Orphans', 'Travelers', 'Seekers of the Sacred Heart'],
-    symbols: ['The Sacred Heart of Jesus', 'Crucifix and Rosary', 'Religious Habit and Veil with White Ruff', 'Ocean Vessel and Traveling Trunk', 'Model of Columbus Hospital'],
-    quote: {
-      text: 'I will go anywhere and do anything in order to communicate the love of Jesus to those who do not know Him or have forgotten Him. I can do all things in Him who strengthens me.',
-      source: "St. Frances Xavier Cabrini, Letters to the Missionary Sisters of the Sacred Heart of Jesus"
-    },
-    biography: [
-      "According to Butler's Lives of the Saints, Saint Frances Xavier Cabrini—reverently invoked throughout the Americas and Italy as Mother Cabrini—was born on July 15, 1850, in Sant'Angelo Lodigiano, Lombardy, Italy, the youngest of thirteen children of devout farmer Agostino Cabrini and his wife Stella. Born two months prematurely as a flock of white doves circled her parents' farmhouse, young Frances was frail in physical constitution yet possessed an ardent, indomitable spirit. From childhood her heart burned to follow in the footsteps of Saint Francis Xavier as a missionary to China. When two religious orders declined her application because of her fragile health, she placed her total confidence in the Sacred Heart of Jesus; urged by her bishop, in 1880 she founded the Missionary Sisters of the Sacred Heart of Jesus in an abandoned Franciscan friary at Codogno.",
-      "In 1887, Mother Cabrini travelled to Rome seeking papal approval to send her sisters to the missions of the Far East. In a providential audience, Pope Leo XIII discerned God's higher design for her apostolic life, uttering the famous words: 'Not to the East, Cabrini, but to the West! Go to the United States, where thousands of Italian immigrants are wandering like sheep without a shepherd.' Obeying the Holy Father with absolute filial trust, Mother Cabrini and six sisters sailed across the stormy Atlantic, arriving in New York Harbor on March 31, 1889. Finding neither convent, school, nor institutional funds awaiting them, she met initial opposition and poverty with radiant faith, repeatedly declaring: 'Jesus will provide!'",
-      "Over the next twenty-eight years, despite lifelong bronchial frailty, Mother Cabrini crossed the ocean twenty-four times, traversed the Andes on a mule, and journeyed tirelessly across the United States, Central America, South America, and Europe. Relying wholly on the infinite love of the Sacred Heart, she founded sixty-seven schools, orphanages, free clinics, academies, and major hospitals—including Columbus Hospital in New York and Columbus Hospital in Chicago. She insisted that authentic Catholic education must shape the heart for God as well as the intellect for the world. In Seattle in 1909, she became a naturalized United States citizen. Mother Cabrini died peacefully in Chicago on December 22, 1917, while packaging Christmas gifts for poor children. On July 7, 1946, Pope Pius XII canonized her as the first United States citizen saint, and in 1950 solemnly proclaimed her the Universal Patroness of Immigrants."
-    ],
-    prayer: 'Almighty and merciful God, who called Saint Frances Xavier Cabrini from Italy to the Americas to announce the boundless charity of the Sacred Heart to immigrants, orphans, and the sick, grant through her intercession that we, too, may find in Christ the strength to welcome the stranger, heal the brokenhearted, and tirelessly build your Kingdom of peace. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.',
-    liturgicalColor: 'White',
-    wikiSlug: 'Frances_Xavier_Cabrini',
-    imageUrl: '/assets/aistudio/image_580bae0b.png',
-    companionSaints: [
-      {
-        name: 'St. Josaphat Kuncevyč',
-        title: 'Archbishop of Polotsk and Martyr for Church Unity',
-        dates: 'c. 1580–1623',
-        shortDescription: "Basilian monk and Archbishop who shed his blood at Vitebsk to reconcile Eastern Orthodox Christians with the See of Saint Peter, praying with his dying breath for his attackers."
-      },
-      {
-        name: 'Pope St. Martin I',
-        title: 'Supreme Pontiff and Martyr',
-        dates: 'd. 655',
-        shortDescription: "Holy Pope who convened the Lateran Council of 649 to defend the two wills of Christ against the Monothelite heresy, endured imprisonment and starvation, and died a martyr in exile."
-      },
-      {
-        name: 'St. Stanislaus Kostka',
-        title: 'Jesuit Novice and Patron of Youth',
-        dates: '1550–1568',
-        shortDescription: "Noble Polish youth who walked hundreds of miles on foot to Rome to enter the Society of Jesus, dying on the Feast of the Assumption at age seventeen with his heart burning with divine love."
-      }
-    ]
-  },
-  '11-13': {
-    id: 'saint-frances-xavier-cabrini-13',
-    name: 'St. Frances Xavier Cabrini',
-    feastDate: 'November 13',
-    month: 11,
-    day: 13,
-    title: 'Virgin, Foundress of the Missionary Sisters of the Sacred Heart of Jesus (1850–1917)',
-    butlerVolume: "Butler's Lives of the Saints — Vol. XI (Memorial of St. Frances Xavier Cabrini)",
-    patronage: ['Immigrants and Displaced Persons', 'Hospital Administrators', 'Orphans', 'Travelers', 'Seekers of the Sacred Heart'],
-    symbols: ['The Sacred Heart of Jesus', 'Crucifix and Rosary', 'Religious Habit and Veil with White Ruff', 'Ocean Vessel and Traveling Trunk', 'Model of Columbus Hospital'],
-    quote: {
-      text: 'I will go anywhere and do anything in order to communicate the love of Jesus to those who do not know Him or have forgotten Him. I can do all things in Him who strengthens me.',
-      source: "St. Frances Xavier Cabrini, Letters to the Missionary Sisters of the Sacred Heart of Jesus"
-    },
-    biography: [
-      "According to Butler's Lives of the Saints, Saint Frances Xavier Cabrini—reverently invoked throughout the Americas and Italy as Mother Cabrini—was born on July 15, 1850, in Sant'Angelo Lodigiano, Lombardy, Italy, the youngest of thirteen children of devout farmer Agostino Cabrini and his wife Stella. Born two months prematurely as a flock of white doves circled her parents' farmhouse, young Frances was frail in physical constitution yet possessed an ardent, indomitable spirit. From childhood her heart burned to follow in the footsteps of Saint Francis Xavier as a missionary to China. When two religious orders declined her application because of her fragile health, she placed her total confidence in the Sacred Heart of Jesus; urged by her bishop, in 1880 she founded the Missionary Sisters of the Sacred Heart of Jesus in an abandoned Franciscan friary at Codogno.",
-      "In 1887, Mother Cabrini travelled to Rome seeking papal approval to send her sisters to the missions of the Far East. In a providential audience, Pope Leo XIII discerned God's higher design for her apostolic life, uttering the famous words: 'Not to the East, Cabrini, but to the West! Go to the United States, where thousands of Italian immigrants are wandering like sheep without a shepherd.' Obeying the Holy Father with absolute filial trust, Mother Cabrini and six sisters sailed across the stormy Atlantic, arriving in New York Harbor on March 31, 1889. Finding neither convent, school, nor institutional funds awaiting them, she met initial opposition and poverty with radiant faith, repeatedly declaring: 'Jesus will provide!'",
-      "Over the next twenty-eight years, despite lifelong bronchial frailty, Mother Cabrini crossed the ocean twenty-four times, traversed the Andes on a mule, and journeyed tirelessly across the United States, Central America, South America, and Europe. Relying wholly on the infinite love of the Sacred Heart, she founded sixty-seven schools, orphanages, free clinics, academies, and major hospitals—including Columbus Hospital in New York and Columbus Hospital in Chicago. She insisted that authentic Catholic education must shape the heart for God as well as the intellect for the world. In Seattle in 1909, she became a naturalized United States citizen. Mother Cabrini died peacefully in Chicago on December 22, 1917, while packaging Christmas gifts for poor children. On July 7, 1946, Pope Pius XII canonized her as the first United States citizen saint, and in 1950 solemnly proclaimed her the Universal Patroness of Immigrants."
-    ],
-    prayer: 'Almighty and merciful God, who called Saint Frances Xavier Cabrini from Italy to the Americas to announce the boundless charity of the Sacred Heart to immigrants, orphans, and the sick, grant through her intercession that we, too, may find in Christ the strength to welcome the stranger, heal the brokenhearted, and tirelessly build your Kingdom of peace. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.',
-    liturgicalColor: 'White',
-    wikiSlug: 'Frances_Xavier_Cabrini',
-    imageUrl: '/assets/aistudio/image_580bae0b.png',
-    companionSaints: [
-      {
-        name: 'St. Josaphat Kuncevyč',
-        title: 'Archbishop of Polotsk and Martyr for Church Unity',
-        dates: 'c. 1580–1623',
-        shortDescription: "Basilian monk and Archbishop who shed his blood at Vitebsk to reconcile Eastern Orthodox Christians with the See of Saint Peter, praying with his dying breath for his attackers."
-      },
-      {
-        name: 'Pope St. Martin I',
-        title: 'Supreme Pontiff and Martyr',
-        dates: 'd. 655',
-        shortDescription: "Holy Pope who convened the Lateran Council of 649 to defend the two wills of Christ against the Monothelite heresy, endured imprisonment and starvation, and died a martyr in exile."
-      },
-      {
-        name: 'St. Stanislaus Kostka',
-        title: 'Jesuit Novice and Patron of Youth',
-        dates: '1550–1568',
-        shortDescription: "Noble Polish youth who walked hundreds of miles on foot to Rome to enter the Society of Jesus, dying on the Feast of the Assumption at age seventeen with his heart burning with divine love."
       }
     ]
   }
@@ -905,7 +816,9 @@ function resolveDailySaintEntry(month: number, day: number): DailySaintEntry {
     month,
     day,
     feastDate: exactMatch ? base.feastDate : `${monthName} ${day}`,
-    butlerVolume: base.butlerVolume || base.butlerReference || `Butler's Lives of the Saints — ${monthName} ${day}`,
+    butlerVolume: exactMatch
+      ? (base.butlerVolume || base.butlerReference || `Butler's Lives of the Saints — ${monthName} ${day}`)
+      : `Butler's Lives of the Saints — ${monthName} ${day}`,
     companionSaints:
       base.companionSaints && base.companionSaints.length > 0
         ? base.companionSaints.map(c => ({
@@ -1047,7 +960,11 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
   };
 
   const handleResetToToday = () => {
-    const today = getTodayParts();
+    const fallbackToday = getTodayParts();
+    const today = {
+      month: currentMonth ?? fallbackToday.month,
+      day: currentDay ?? fallbackToday.day
+    };
     setActiveMonth(today.month);
     setActiveDay(today.day);
     const nextSaint = resolveDailySaintEntry(today.month, today.day);
@@ -1150,30 +1067,57 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                 Saint of the Day
               </h1>
 
-              {/* Interactive Date Switcher aligned with Saint of the Day */}
-              <div className="inline-flex items-center bg-white/50 dark:bg-stone-900/55 backdrop-blur-md border border-white/70 dark:border-stone-700/70 rounded-xl p-1 shadow-xs self-start sm:self-end">
+              {/* Interactive Date Switcher & Directory Toggle aligned with Saint of the Day */}
+              <div className="flex flex-wrap items-center gap-2 self-start sm:self-end">
+                {(activeMonth !== (currentMonth ?? getTodayParts().month) ||
+                  activeDay !== (currentDay ?? getTodayParts().day)) && (
+                  <button
+                    onClick={handleResetToToday}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-800/90 hover:bg-amber-900 text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+                    title="Return to Today's Feast"
+                  >
+                    <span>Today</span>
+                  </button>
+                )}
+
                 <button
-                  onClick={() => handleShiftDay(-1)}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors cursor-pointer"
-                  title="Previous Day"
+                  onClick={() => setIsDirectoryOpen((prev) => !prev)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border text-xs font-semibold backdrop-blur-md shadow-xs transition-colors cursor-pointer ${
+                    isDirectoryOpen
+                      ? 'bg-amber-800 text-white border-amber-700'
+                      : 'bg-white/50 dark:bg-stone-900/55 border-white/70 dark:border-stone-700/70 text-stone-900 dark:text-stone-200 hover:bg-white/75 dark:hover:bg-stone-800/75'
+                  }`}
+                  title="Browse Butler's Saints Directory"
+                  aria-expanded={isDirectoryOpen}
                 >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span className="hidden sm:inline">Previous</span>
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Directory</span>
                 </button>
 
-                <div className="flex items-center gap-2 px-3.5 py-1.5 text-stone-950 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-900/15 dark:border-stone-700/60">
-                  <Calendar className="w-3.5 h-3.5 text-amber-800 dark:text-amber-400" />
-                  <span>{selectedSaint.feastDate}</span>
+                <div className="inline-flex items-center bg-white/50 dark:bg-stone-900/55 backdrop-blur-md border border-white/70 dark:border-stone-700/70 rounded-xl p-1 shadow-xs">
+                  <button
+                    onClick={() => handleShiftDay(-1)}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors cursor-pointer"
+                    title="Previous Day"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span className="hidden sm:inline">Previous</span>
+                  </button>
+
+                  <div className="flex items-center gap-2 px-3.5 py-1.5 text-stone-950 dark:text-stone-100 text-xs sm:text-sm font-serif font-bold border-x border-stone-900/15 dark:border-stone-700/60">
+                    <Calendar className="w-3.5 h-3.5 text-amber-800 dark:text-amber-400" />
+                    <span>{selectedSaint.feastDate}</span>
+                  </div>
+
+                  <button
+                    onClick={() => handleShiftDay(1)}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors cursor-pointer"
+                    title="Next Day"
+                  >
+                    <span className="hidden sm:inline">Next</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
-
-                <button
-                  onClick={() => handleShiftDay(1)}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-stone-900 dark:text-stone-200 hover:bg-white/60 dark:hover:bg-stone-800/70 transition-colors cursor-pointer"
-                  title="Next Day"
-                >
-                  <span className="hidden sm:inline">Next</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
               </div>
             </div>
           </div>
@@ -1289,7 +1233,7 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                       <span className="block">Vestments</span>
                     </dt>
                     <dd className="font-serif text-base text-stone-950 dark:text-stone-100 text-right whitespace-nowrap leading-none">
-                      {colorInfo.name.toLowerCase().includes('white') ? 'white, gold' : colorInfo.name.toLowerCase()}
+                      {colorInfo.name.toLowerCase().includes('white') ? 'White / Gold' : colorInfo.name}
                     </dd>
                   </div>
 

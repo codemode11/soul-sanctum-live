@@ -1215,7 +1215,6 @@ In 690, burning with apostolic zeal for the conversion of the pagan Frisians (mo
     liturgicalColor: 'red',
     wikiSlug: 'Four_Crowned_Martyrs',
     butlerReference: "Butler's Lives of the Saints, Vol. XI — November 8",
-    imageUrl: '/images/saints/pope-saint-leo-great.jpg?v=20261102',
     biography: `From Butler's Lives of the Saints (November 8): The Four Crowned Brothers (Santi Quattro Coronati)—Severus, Severianus, Carpophorus, and Victorinus—were four Christian brothers in Rome who held offices of trust under Emperor Diocletian, together with five Pannonian Christian sculptors (Claudius, Castorius, Symphorianus, Nicostratus, and Simplicius) who carved marble columns and statues for the Emperor's baths cleanly and skilfully in the name of Christ, yet steadfastly refused to carve a pagan idol of Aesculapius.
 
 Beaten to death with leaden scourges and enclosed in leaden coffins cast into the river in 306, their relics are venerated in the ancient titular Basilica of Santi Quattro Coronati on the Caelian Hill in Rome, restored by Pope Honorius I and Pope Leo IV. On this same day Alban Butler commemorates Saint Godfrey (Geoffrey), Bishop of Amiens (1066–1115), Benedictine Abbot of Nogent, who walked barefoot in the midst of winter to reconcile warring nobles and serve lepers at his own table.`,
@@ -1250,52 +1249,191 @@ Beaten to death with leaden scourges and enclosed in leaden coffins cast into th
     ]
   },
   {
-    id: 'saint-frances-xavier-cabrini-12',
-    name: 'St. Frances Xavier Cabrini',
-    title: 'Virgin, Foundress of the Missionary Sisters of the Sacred Heart of Jesus (1850–1917)',
+    id: 'dedication-lateran-basilica',
+    name: 'Dedication of the Lateran Basilica & St. Theodore Tiro',
+    title: 'Feast of the Mother and Head of All Churches in the World / Soldier and Martyr',
+    feastDate: 'November 9',
+    month: 11,
+    day: 9,
+    birthYear: '324 AD',
+    deathYear: 'c. 306 (St. Theodore)',
+    patronage: ['Cathedral of Rome', 'Church Unity with the See of Peter', 'Christian Soldiers'],
+    symbols: ['Facade of the Archbasilica of St. John Lateran', 'Crossed Papal Keys', 'Roman Shield and Palm'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Archbasilica_of_Saint_John_Lateran',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 9",
+    biography: `From Butler's Lives of the Saints (November 9): On this day the Catholic Church throughout the world celebrates the Feast of the Dedication of the Archbasilica of the Most Holy Savior in the Lateran, the Cathedral Church of the Bishop of Rome and the oldest papal basilica of Christendom—inscribed over its portal as Omnium Urbis et Orbis Ecclesiarum Mater et Caput ("Mother and Head of All Churches of the City and the World"). Donated to Pope St. Melchiades by Emperor Constantine and solemnly consecrated by Pope St. Sylvester I on November 9, 324, it stands as a living sign of the unity of all local Churches with the Chair of St. Peter.
+
+On this same day Alban Butler commemorates St. Theodore Tiro ("the Recruit"), a young Roman soldier stationed at Amasea in Pontus under Emperor Maximian who boldly confessed Christ, set fire to the pagan temple of Cybele, and endured the rack and flames on November 9, c. 306.`,
+    quote: {
+      text: 'The house of God is built upon the living stones of believers; yet this visible mother church of Rome proclaims to every nation that Christ is our cornerstone.',
+      source: "St. Bernard of Clairvaux & Butler's Lives of the Saints (November 9)"
+    },
+    prayer: `O God, who from living and chosen stones prepare an eternal dwelling for your majesty, increase in your Church the spirit of grace you have bestowed, so that by new growth your faithful people may ever build up the heavenly Jerusalem. Through Christ our Lord. Amen.`,
+    canonization: 'Universal Feast of the Lord; St. Theodore Tiro venerated from the 4th Century',
+    companionSaints: [
+      {
+        name: 'St. Theodore Tiro of Amasea',
+        title: 'Roman Soldier and Martyr',
+        lifespan: 'd. c. 306',
+        place: 'Amasea (Pontus), Asia Minor',
+        shortDescription: "From Butler's Lives of the Saints: Young Christian soldier who refused to sacrifice to pagan idols and suffered martyrdom by fire at Amasea; praised by St. Gregory of Nyssa."
+      },
+      {
+        name: 'St. Ursinus of Bourges',
+        title: 'First Bishop and Apostle of Berry',
+        lifespan: '3rd Century',
+        place: 'Bourges, France',
+        shortDescription: "From Butler's Lives of the Saints: Missionary bishop sent from Rome to evangelize Aquitaine and establish the ancient See of Bourges."
+      },
+      {
+        name: 'Bl. Elizabeth of the Trinity',
+        title: 'Discalced Carmelite Mystic',
+        lifespan: '1880–1906',
+        place: 'Dijon, France',
+        shortDescription: "Carmelite nun of Dijon whose spirituality of indwelling with the Most Holy Trinity inspired Pope St. John Paul II and countless contemplative souls."
+      }
+    ]
+  },
+  {
+    id: 'pope-saint-leo-the-great',
+    name: 'Pope St. Leo the Great',
+    title: 'Supreme Pontiff and Doctor of the Church',
+    feastDate: 'November 10',
+    month: 11,
+    day: 10,
+    birthYear: 'c. 400',
+    deathYear: '461',
+    patronage: ['Popes', 'Preachers and Theologians', 'Musicians and Chanters', 'Rome'],
+    symbols: ['Papal Tiara', 'Tome of Leo', 'Book and Crosier', 'Meeting with Attila the Hun'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Pope_Leo_I',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 10",
+    imageUrl: '/images/saints/pope-saint-leo-great.jpg?v=20261102',
+    biography: `From Butler's Lives of the Saints (November 10): Pope Saint Leo I, deservedly surnamed the Great, governed the Universal Church from 440 to 461 during the tempestuous decline of the Western Roman Empire. His celebrated Dogmatic Epistle to Flavian of Constantinople (the Tome of Leo), read before the six hundred thirty bishops at the Ecumenical Council of Chalcedon in 451, defined the Catholic dogma of the Incarnation—one Divine Person in two complete natures, divine and human—prompting the Fathers to exclaim: "Peter has spoken through Leo!"
+
+In 452 he went forth unarmed in pontifical robes to meet Attila the Hun at the River Mincio and turned him back from sacking Rome; three years later he mitigated the Vandal sack under Genseric, saving the lives of countless citizens and preserving the basilicas of St. Peter and St. Paul.`,
+    quote: {
+      text: 'Christian, acknowledge thy dignity, and becoming a partner in the Divine nature, refuse to return to the old baseness by degenerate conduct.',
+      source: "St. Leo the Great, Sermon 1 on the Nativity of the Lord (Butler's Lives of the Saints)"
+    },
+    prayer: `O God, who never allow the gates of hell to prevail against your Church, firmly founded on the apostolic rock, grant her, we pray, that through the intercession of Pope Saint Leo, she may stand firm in your truth and know the protection of lasting peace. Through Christ our Lord. Amen.`,
+    canonization: 'Pre-Congregation; Proclaimed Doctor of the Church by Pope Benedict XIV in 1754',
+    companionSaints: [
+      {
+        name: 'St. Andrew Avellino',
+        title: 'Theatine Priest and Confessor',
+        lifespan: '1521–1608',
+        place: 'Castronuovo, Milan, and Naples, Italy',
+        shortDescription: "From Butler's Lives of the Saints: Ecclesiastical lawyer who entered the Theatines, assisted St. Charles Borromeo in Milan, and died at the foot of the altar at age eighty-eight while beginning Mass."
+      },
+      {
+        name: 'St. Justus of Canterbury',
+        title: 'Fourth Archbishop of Canterbury',
+        lifespan: 'd. 627',
+        place: 'Rome, Rochester, and Canterbury, England',
+        shortDescription: "From Butler's Lives of the Saints: Roman Benedictine monk sent by Pope St. Gregory the Great in 601 to assist St. Augustine of Canterbury, becoming first Bishop of Rochester and later Archbishop of Canterbury."
+      },
+      {
+        name: 'Sts. Trypho, Respicius, and Nympha',
+        title: 'Martyrs of Nicaea and Sicily',
+        lifespan: 'd. c. 250',
+        place: 'Nicaea (Bithynia) and Rome',
+        shortDescription: "From Butler's Lives of the Saints: Early Christian martyrs under Emperor Decius whose relics are enshrined in the Church of the Holy Ghost and Sant'Agostino in Rome."
+      }
+    ]
+  },
+  {
+    id: 'saint-martin-of-tours',
+    name: 'St. Martin of Tours',
+    title: 'Bishop of Tours, Confessor, and Father of Western Monasticism',
+    feastDate: 'November 11',
+    month: 11,
+    day: 11,
+    birthYear: 'c. 316',
+    deathYear: '397',
+    patronage: ['Soldiers', 'The Poor and Beggars', 'Tailors', 'Reformed Alcoholics', 'France'],
+    symbols: ['Roman Cloak Divided with a Sword', 'Episcopal Mitre and Crosier', 'Goose'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Martin_of_Tours',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 11",
+    biography: `From Butler's Lives of the Saints (November 11, written by his disciple Sulpicius Severus): Born in Pannonia (modern Hungary) to pagan parents and enrolled against his will in the Roman imperial cavalry, Martin became a catechumen at ten. Outside the gates of Amiens on a bitter winter night, seeing a half-naked beggar shivering in the cold, Martin drew his sword, cut his heavy soldier's cloak in two, and wrapped half around the poor man. That night Christ appeared to him in a dream wearing the half-cloak and saying to the angels: "Martin, who is still but a catechumen, has clothed Me with this garment."
+
+Baptized soon after and released from military service as a "soldier of Christ," Martin became a disciple of St. Hilary of Poitiers, founded the first monastery in Gaul at Ligugé, and was acclaimed Bishop of Tours in 371. Founding the great Abbey of Marmoutier, he evangelized rural Gaul and died peacefully at Candes on November 8, 397, praying: "Lord, if I am still necessary to your people, I do not refuse the labor; your will be done."`,
+    quote: {
+      text: 'Lord, if I am still necessary to your people, I do not refuse the labor; your will be done.',
+      source: "Dying Prayer of St. Martin of Tours (Sulpicius Severus, Butler's Lives of the Saints)"
+    },
+    prayer: `O God, who are glorified in the Bishop Saint Martin both by his life and death, make new, we pray, the wonders of your grace in our hearts, that neither death nor life may separate us from your love. Through our Lord Jesus Christ, your Son. Amen.`,
+    canonization: 'Pre-Congregation (First Non-Martyr Confessor Solemnly Honored in the Western Church)',
+    companionSaints: [
+      {
+        name: 'St. Mennas (Menas) of Egypt',
+        title: 'Soldier and Martyr',
+        lifespan: 'd. c. 295',
+        place: 'Phrygia and Alexandria, Egypt',
+        shortDescription: "From Butler's Lives of the Saints: Egyptian Roman soldier who laid down his military belt to live as a desert hermit and returned publicly to confess Christ in the amphitheater."
+      },
+      {
+        name: 'St. Theodore the Studite',
+        title: 'Abbot and Confessor of Constantinople',
+        lifespan: '759–826',
+        place: 'Studion Monastery, Constantinople',
+        shortDescription: "From Butler's Lives of the Saints: Courageous Byzantine abbot who endured exile and scourging to defend sacred icons and the indissolubility of Christian marriage."
+      },
+      {
+        name: 'St. Bartholomew of Grottaferrata',
+        title: 'Basilian Abbot and Liturgical Poet',
+        lifespan: 'c. 981–1055',
+        place: 'Rossano and Grottaferrata, Italy',
+        shortDescription: "From Butler's Lives of the Saints: Disciple of St. Nilus the Younger who completed the Greek-rite Abbey of Grottaferrata near Rome and fostered reconciliation between Eastern and Western Christians."
+      }
+    ]
+  },
+  {
+    id: 'saint-josaphat-kuncevych',
+    name: 'St. Josaphat Kuncevyč',
+    title: 'Archbishop of Polotsk and Martyr for Church Unity',
     feastDate: 'November 12',
     month: 11,
     day: 12,
-    birthYear: '1850',
-    deathYear: '1917',
-    patronage: ['Immigrants and Displaced Persons', 'Hospital Administrators', 'Orphans', 'Travelers', 'Seekers of the Sacred Heart'],
-    symbols: ['The Sacred Heart of Jesus', 'Crucifix and Rosary', 'Religious Habit and Veil with White Ruff', 'Ocean Vessel and Traveling Trunk', 'Model of Columbus Hospital'],
-    liturgicalColor: 'white',
-    wikiSlug: 'Frances_Xavier_Cabrini',
-    butlerReference: "Butler's Lives of the Saints — Feast of St. Frances Xavier Cabrini (November 12–13)",
-    imageUrl: '/assets/aistudio/image_580bae0b.png',
-    biography: `From Butler's Lives of the Saints (Feast of St. Frances Xavier Cabrini): Saint Frances Xavier Cabrini—reverently known worldwide as Mother Cabrini—was born on July 15, 1850, in Sant'Angelo Lodigiano, Lombardy, Italy, the youngest of thirteen children of devout farmer Agostino Cabrini and his wife Stella. Born two months prematurely as a flock of white doves circled the family homestead, young Frances was frail in physical constitution yet consumed from childhood by a passionate missionary fire to bring the light of the Gospel to distant lands. Taking the name Xavier in honour of Saint Francis Xavier, she dreamed of voyaging to China. When two religious congregations turned her away on account of her delicate health, she refused to lose heart; urged by her bishop, she gathered seven companions in an abandoned Franciscan friary at Codogno in 1880 and founded the Missionary Sisters of the Sacred Heart of Jesus.
+    birthYear: 'c. 1580',
+    deathYear: '1623',
+    patronage: ['Ecumenical Unity', 'Eastern Catholic Churches', 'Ukraine and Belarus'],
+    symbols: ['Basilian Habit', 'Byzantine Omophorion', 'Halberd and Axe', 'Palm of Martyrdom'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Josaphat_Kuntsevych',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 12",
+    biography: `From Butler's Lives of the Saints (November 12): Born Jan Kuncevyč around 1580 at Volodymyr-Volynskyi in Volhynia (modern Ukraine) to Orthodox parents, young Josaphat was deeply drawn to the unity of Christ's Church after the Union of Brest (1596) restored the Ruthenian eparchies to full communion with the See of Rome. Entering the Basilian Monastery of the Holy Trinity in Vilnius at twenty-four, he embraced austere monastic penance, rising at midnight to chant the Divine Office and preaching with burning zeal for Catholic unity while faithfully preserving every Byzantine liturgical tradition.
 
-In 1887, Mother Cabrini journeyed to Rome seeking papal approval to lead her missionary sisters to the Orient. During a historic private audience, Pope Leo XIII discerned God's true providence for her and gave her the unforgettable commission: "Not to the East, Cabrini, but to the West! Go to the United States, where thousands of Italian immigrants are wandering like sheep without a shepherd." Obeying the Vicar of Christ, Mother Cabrini and six sisters sailed across the Atlantic, arriving in New York Harbor on March 31, 1889. Finding neither convent, school, nor institutional funds awaiting them, Archbishop Corrigan initially advised them to return to Italy. With heroic humility and resolute faith, Mother Cabrini replied: "Your Grace, the Pope sent me here, and here I must stay. Jesus will provide!"
-
-Over the next twenty-eight years, despite fragile lungs and perpetual physical suffering, Mother Cabrini crossed the ocean twenty-four times, traversed the snow-capped Andes on muleback, and crisscrossed North America, Central America, South America, and Europe. Relying wholly on the infinite love of the Sacred Heart of Jesus, she established sixty-seven schools, orphanages, free clinics, academies, and world-renowned hospitals—including Columbus Hospital in New York, Columbus Hospital in Chicago, and Mount San Rafael Hospital in Trinidad, Colorado. Insisting that education must shape the immortal soul for heaven as well as the intellect for the world, she became a naturalized United States citizen in Seattle in 1909. Mother Cabrini fell peacefully asleep in the Lord on December 22, 1917, at Columbus Hospital in Chicago while wrapping Christmas sweets for poor children. On July 7, 1946, Pope Pius XII canonized her as the first United States citizen saint, and in 1950 solemnly proclaimed her Universal Patroness of Immigrants.`,
+Consecrated Archbishop of Polotsk in 1618, Josaphat reformed clerical discipline, defended the poor, and reconciled countless souls through gentleness and learning, though bitter hostility mounted among schismatic opponents who dubbed him "the Thief of Souls." On November 12, 1623, while on pastoral visitation in Vitebsk, an armed mob stormed his residence. Stepping calmly forward to spare his household, the Archbishop declared: "My children, what are you doing with my servants? If you have anything against me, here I am!" Struck with a halberd and shot, he prayed for his killers before his body was thrown into the Dvina River, winning even his fiercest adversaries to conversion after his death.`,
     quote: {
-      text: 'I will go anywhere and do anything in order to communicate the love of Jesus to those who do not know Him or have forgotten Him. I can do all things in Him who strengthens me.',
-      source: "St. Frances Xavier Cabrini, Letters to the Missionary Sisters of the Sacred Heart of Jesus"
+      text: 'You seek my blood? Here I am; Lord, lay not this sin to their charge, and grant that all may be one in Your fold.',
+      source: "Last Words of St. Josaphat Kuncevyč (Butler's Lives of the Saints, November 12)"
     },
-    prayer: `Almighty and merciful God, who called Saint Frances Xavier Cabrini from Italy to the Americas to announce the boundless charity of the Sacred Heart to immigrants, orphans, and the sick, grant through her intercession that we, too, may find in Christ the strength to welcome the stranger, heal the brokenhearted, and tirelessly build your Kingdom of peace. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.`,
-    canonization: 'Beatified November 13, 1938 by Pope Pius XI; Canonized July 7, 1946 by Pope Pius XII; Proclaimed Universal Patroness of Immigrants in 1950',
+    prayer: `Stir up in your Church, we pray, O Lord, the Spirit that filled Saint Josaphat as he laid down his life for the sheep, so that through his intercession we, too, may be strengthened by the same Spirit and not be afraid to lay down our lives for our brethren. Through our Lord Jesus Christ, your Son. Amen.`,
+    canonization: 'Beatified May 16, 1643 by Pope Urban VIII; Canonized June 29, 1867 by Pope Pius IX',
     companionSaints: [
       {
-        name: 'St. Josaphat Kuncevyč',
-        title: 'Archbishop of Polotsk and Martyr for Church Unity',
-        lifespan: 'c. 1580–1623',
-        place: 'Polotsk and Vitebsk, Ruthenia (Belarus/Ukraine)',
-        shortDescription: "From Butler's Lives of the Saints: Basilian monk and Archbishop who shed his blood at Vitebsk to reconcile Eastern Orthodox brethren with the See of Peter, praying with his dying breath for his assassins."
+        name: 'St. Nilus the Younger (of Sinai / Rossano)',
+        title: 'Abbot and Desert Father',
+        lifespan: 'd. c. 430 / 1004',
+        place: 'Sinai and Mount Ancyra',
+        shortDescription: "From Butler's Lives of the Saints: Former Prefect of Constantinople who withdrew with his son Theodulus to the desert of Mount Sinai, leaving luminous treatises on prayer and monastic asceticism."
       },
       {
-        name: 'Pope St. Martin I',
-        title: 'Supreme Pontiff and Martyr',
-        lifespan: 'd. 655',
-        place: 'Todi (Umbria), Rome, Constantinople, and Chersonesus',
-        shortDescription: "From Butler's Lives of the Saints: Holy Pope who convened the Lateran Council of 649 to defend the two divine and human wills of Christ against the Monothelite heresy, endured imprisonment and starvation, and died a martyr in exile."
+        name: 'St. Emilian (Aemilianus) of la Cogolla',
+        title: 'Spanish Hermit and Abbot',
+        lifespan: '473–574',
+        place: 'Berceo and San Millán de la Cogolla, Spain',
+        shortDescription: "From Butler's Lives of the Saints: Shepherd who spent forty years as a solitary hermit in the Cantabrian mountains, later ordained priest and revered as patron saint of Castile."
       },
       {
-        name: 'St. Stanislaus Kostka',
-        title: 'Jesuit Novice and Patron of Youth',
-        lifespan: '1550–1568',
-        place: 'Rostkowo (Poland), Vienna, and Rome',
-        shortDescription: "From Butler's Lives of the Saints: Noble Polish youth who walked four hundred leagues on foot to Rome to enter the Society of Jesus under St. Peter Canisius and St. Francis Borgia, dying on the Feast of the Assumption at age seventeen with his heart burning with divine love."
+        name: 'St. Livinus of Ghent',
+        title: 'Irish Missionary Bishop and Martyr',
+        lifespan: 'd. c. 657',
+        place: 'Ireland and Brabant, Belgium',
+        shortDescription: "From Butler's Lives of the Saints: Learned Irish bishop who crossed to Flanders to evangelize Ghent and Brabant, shedding his blood for the Gospel at Essche."
       }
     ]
   },
@@ -1313,7 +1451,7 @@ Over the next twenty-eight years, despite fragile lungs and perpetual physical s
     liturgicalColor: 'white',
     wikiSlug: 'Frances_Xavier_Cabrini',
     butlerReference: "Butler's Lives of the Saints — Memorial of St. Frances Xavier Cabrini (November 13)",
-    imageUrl: '/assets/aistudio/image_580bae0b.png',
+    imageUrl: '/images/saints/saint-frances-xavier-cabrini.jpg',
     biography: `From Butler's Lives of the Saints (Feast of St. Frances Xavier Cabrini, November 13): Saint Frances Xavier Cabrini—reverently known worldwide as Mother Cabrini—was born on July 15, 1850, in Sant'Angelo Lodigiano, Lombardy, Italy, the youngest of thirteen children of devout farmer Agostino Cabrini and his wife Stella. Born two months prematurely as a flock of white doves circled the family homestead, young Frances was frail in physical constitution yet consumed from childhood by a passionate missionary fire to bring the light of the Gospel to distant lands. Taking the name Xavier in honour of Saint Francis Xavier, she dreamed of voyaging to China. When two religious congregations turned her away on account of her delicate health, she refused to lose heart; urged by her bishop, she gathered seven companions in an abandoned Franciscan friary at Codogno in 1880 and founded the Missionary Sisters of the Sacred Heart of Jesus.
 
 In 1887, Mother Cabrini journeyed to Rome seeking papal approval to lead her missionary sisters to the Orient. During a historic private audience, Pope Leo XIII discerned God's true providence for her and gave her the unforgettable commission: "Not to the East, Cabrini, but to the West! Go to the United States, where thousands of Italian immigrants are wandering like sheep without a shepherd." Obeying the Vicar of Christ, Mother Cabrini and six sisters sailed across the Atlantic, arriving in New York Harbor on March 31, 1889. Finding neither convent, school, nor institutional funds awaiting them, Archbishop Corrigan initially advised them to return to Italy. With heroic humility and resolute faith, Mother Cabrini replied: "Your Grace, the Pope sent me here, and here I must stay. Jesus will provide!"
@@ -1327,25 +1465,824 @@ Over the next twenty-eight years, despite fragile lungs and perpetual physical s
     canonization: 'Beatified November 13, 1938 by Pope Pius XI; Canonized July 7, 1946 by Pope Pius XII; Proclaimed Universal Patroness of Immigrants in 1950',
     companionSaints: [
       {
-        name: 'St. Josaphat Kuncevyč',
-        title: 'Archbishop of Polotsk and Martyr for Church Unity',
-        lifespan: 'c. 1580–1623',
-        place: 'Polotsk and Vitebsk, Ruthenia (Belarus/Ukraine)',
-        shortDescription: "From Butler's Lives of the Saints: Basilian monk and Archbishop who shed his blood at Vitebsk to reconcile Eastern Orthodox brethren with the See of Peter, praying with his dying breath for his assassins."
-      },
-      {
-        name: 'Pope St. Martin I',
-        title: 'Supreme Pontiff and Martyr',
-        lifespan: 'd. 655',
-        place: 'Todi (Umbria), Rome, Constantinople, and Chersonesus',
-        shortDescription: "From Butler's Lives of the Saints: Holy Pope who convened the Lateran Council of 649 to defend the two divine and human wills of Christ against the Monothelite heresy, endured imprisonment and starvation, and died a martyr in exile."
+        name: 'St. Didacus (Diego) of Alcalá',
+        title: 'Franciscan Lay Brother and Missionary',
+        lifespan: 'c. 1400–1463',
+        place: 'San Nicolás del Puerto and Alcalá de Henares, Spain',
+        shortDescription: "From Butler's Lives of the Saints: Humble Spanish Franciscan lay brother who served as missionary in the Canary Islands, nursed plague victims in Rome during the 1450 Jubilee, and worked miracles of charity at Alcalá."
       },
       {
         name: 'St. Stanislaus Kostka',
         title: 'Jesuit Novice and Patron of Youth',
         lifespan: '1550–1568',
         place: 'Rostkowo (Poland), Vienna, and Rome',
-        shortDescription: "From Butler's Lives of the Saints: Noble Polish youth who walked four hundred leagues on foot to Rome to enter the Society of Jesus under St. Peter Canisius and St. Francis Borgia, dying on the Feast of the Assumption at age seventeen with his heart burning with divine love."
+        shortDescription: "From Butler's Lives of the Saints: Noble Polish youth who walked four hundred leagues on foot to Rome to enter the Society of Jesus under St. Francis Borgia, receiving Holy Communion from angels and dying at age seventeen."
+      },
+      {
+        name: 'St. Homobonus of Cremona',
+        title: 'Merchant and Father of the Poor',
+        lifespan: 'd. 1197',
+        place: 'Cremona, Lombardy, Italy',
+        shortDescription: "From Butler's Lives of the Saints: Married lay merchant of Cremona renowned for scrupulous honesty in trade and boundless almsgiving, who died prostrate in prayer before the Crucifix during Matins."
+      }
+    ]
+  },
+  {
+    id: 'saint-serapion-of-algiers',
+    name: 'St. Serapion of Algiers',
+    title: 'Mercedarian Ransomer of Captives and Protomartyr of the Order of Mercy (1179–1240)',
+    feastDate: 'November 14',
+    month: 11,
+    day: 14,
+    birthYear: '1179',
+    deathYear: '1240',
+    patronage: ['Ransomed Captives and Prisoners', 'Mercedarian Order', 'Persecuted Christians', 'Expectant Mothers'],
+    symbols: ['White Mercedarian Habit with Red-and-Gold Cross Shield', 'Broken Iron Chains', 'Saltire (X-shaped) Cross', 'Palm of Martyrdom'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Serapion_of_Algiers',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 14",
+    biography: `From Butler's Lives of the Saints (November 14): Born in London around 1179 of a pious noble family, St. Serapion served in his youth as a soldier in the Third Crusade under King Richard the Lionheart and later fought in Spain under King Alfonso VIII of Castile for the defense of Christian kingdoms. Encountering St. Peter Nolasco in Barcelona—founder of the newly established Royal and Military Order of Our Lady of Mercy for the Redemption of Captives (Mercedarians)—Serapion was deeply moved by their fourth religious vow: to remain behind as a hostage in chains if necessary to ransom an enslaved Christian at risk of losing his faith. Entering the Order in 1222, he surrendered his sword for the white scapular of Our Lady of Mercy.
+
+In 1240, after already ransoming numerous enslaved Christians on prior expeditions to Murcia and North Africa, Serapion accompanied a redemption mission to Algiers, freeing eighty-seven captives. When funds fell short for the final group of Christians, St. Serapion voluntarily offered himself as pledge and hostage until the remaining ransom could be brought from Spain. While awaiting rescue, he spent every hour instructing his fellow Christian prisoners, comforting the sick, and even evangelizing his captors. Enraged when ransom shipments were delayed and several guards embraced Christ, the Muslim governor Selim Benimarin condemned Serapion to cruel death: nailed to an X-shaped saltire cross and dismembered alive, he sang hymns of praise to the Most Holy Trinity until his soul entered heaven on November 14, 1240 as the Protomartyr of the Mercedarian Order.`,
+    quote: {
+      text: 'Greater love hath no man than this, that a religious lay down his freedom and his very life to ransom a brother from slavery of body and soul.',
+      source: "Chronicles of the Order of Mercy (Butler's Lives of the Saints, November 14)"
+    },
+    prayer: `O God, who adorned the Martyr Saint Serapion with burning charity to ransom Christian captives and offer his own life as a living sacrifice upon the cross, grant through his intercession that, freed from the bondage of sin, we may serve you and our suffering neighbors with fearless love. Through our Lord Jesus Christ, your Son. Amen.`,
+    canonization: 'Cult confirmed 1728 by Pope Benedict XIII; Inscribed in the Universal Roman Martyrology for November 14',
+    companionSaints: [
+      {
+        name: "St. Lawrence O'Toole",
+        title: 'Archbishop of Dublin and Peacemaker of Ireland',
+        lifespan: '1128–1180',
+        place: 'Glendalough, Dublin (Ireland), and Eu (Normandy)',
+        shortDescription: "From Butler's Lives of the Saints: Abbot of Glendalough and Archbishop of Dublin who wore monastic penance beneath his episcopal robes, fed the poor daily, and died in Normandy seeking peace for Ireland."
+      },
+      {
+        name: 'St. Dubricius (Dyfrig)',
+        title: 'Archbishop of Caerleon and Monastic Founder',
+        lifespan: 'd. c. 550',
+        place: 'Herefordshire and Bardsey Island, Wales',
+        shortDescription: "From Butler's Lives of the Saints: Great British bishop and teacher of St. Teilo who governed monastic schools along the River Wye before retiring to Bardsey Island for contemplative prayer."
+      },
+      {
+        name: 'St. Nicholas Tavelić & Companions',
+        title: 'Franciscan Protomartyrs of the Holy Land',
+        lifespan: 'd. 1391',
+        place: 'Šibenik (Croatia) and Jerusalem',
+        shortDescription: "Four Franciscan friars—Nicholas Tavelić, Deodat of Rodez, Peter of Narbonne, and Stephen of Cuneo—who boldly proclaimed the Gospel in Jerusalem and won the martyr's crown."
+      }
+    ]
+  },
+  {
+    id: 'saint-albert-the-great',
+    name: 'St. Albert the Great',
+    title: 'Dominican Bishop, Doctor Universalis, and Patron of Natural Scientists',
+    feastDate: 'November 15',
+    month: 11,
+    day: 15,
+    birthYear: 'c. 1200',
+    deathYear: '1280',
+    patronage: ['Natural Scientists', 'Philosophers', 'Students of Theology', 'Medical Technicians'],
+    symbols: ['Bishop Mitre and Dominican Habit', 'Scroll and Astrolabe', 'Open Book of Philosophy and Scripture'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Albertus_Magnus',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 15",
+    biography: `From Butler's Lives of the Saints (November 15): Born around 1200 at Lauingen in Swabia, St. Albert entered the Order of Preachers while studying at Padua under Bl. Jordan of Saxony. Celebrated across Europe as Doctor Universalis for mastering theology, philosophy, botany, chemistry, astronomy, and zoology, he harmonized Christian revelation with the observation of created nature. Teaching at Paris and Cologne, he recognized and defended the silent brilliance of his young pupil St. Thomas Aquinas, declaring: "We call him the Dumb Ox, yet one day his bellowing in doctrine will resound throughout the whole world!"
+
+Appointed Bishop of Regensburg by Pope Alexander IV, Albert traveled his diocese on foot with a wooden staff before returning to Cologne to defend Thomas's orthodoxy and live in childlike devotion to the Blessed Virgin Mary until his holy death on November 15, 1280.`,
+    quote: {
+      text: 'The whole world is theology to the wise soul, for every creature bears the imprint of the Eternal Wisdom who fashioned it.',
+      source: "St. Albert the Great (Butler's Lives of the Saints, November 15)"
+    },
+    prayer: `O God, who made the Bishop Saint Albert great by his joining of human wisdom to divine faith, grant, we pray, that we may so adhere to the truths he taught, that through progress in learning we may come to a deeper knowledge and love of you. Through Christ our Lord. Amen.`,
+    canonization: 'Canonized and Proclaimed Doctor of the Church on December 16, 1931 by Pope Pius XI',
+    companionSaints: [
+      {
+        name: 'St. Leopold III of Austria',
+        title: 'Margrave of Austria and Father of the Poor',
+        lifespan: '1073–1136',
+        place: 'Klosterneuburg, Austria',
+        shortDescription: "From Butler's Lives of the Saints: Devout Christian ruler who refused the imperial crown out of humility, founded Klosterneuburg and Heiligenkreuz Abbeys, and governed with peace and justice."
+      },
+      {
+        name: 'St. Malo (Maclovius)',
+        title: 'Missionary Bishop in Brittany',
+        lifespan: 'd. c. 640',
+        place: 'Wales and Saint-Malo (Brittany), France',
+        shortDescription: "From Butler's Lives of the Saints: Welsh disciple of St. Brendan who evangelized Brittany and became first Bishop of Aleth (Saint-Malo)."
+      },
+      {
+        name: 'St. Gertrude of Helfta (Vigil)',
+        title: 'Benedictine Mystic of the Sacred Heart',
+        lifespan: '1256–1302',
+        place: 'Eisleben and Helfta, Saxony',
+        shortDescription: "Contemplative nun of Helfta honored for her profound mystical writings in the Herald of Divine Love."
+      }
+    ]
+  },
+  {
+    id: 'saint-margaret-of-scotland',
+    name: 'St. Margaret of Scotland & St. Gertrude the Great',
+    title: 'Queen of Scotland and Mother of the Poor / Benedictine Mystic of the Sacred Heart',
+    feastDate: 'November 16',
+    month: 11,
+    day: 16,
+    birthYear: 'c. 1045 / 1256',
+    deathYear: '1093 / 1302',
+    patronage: ['Scotland', 'Large Families', 'Rulers and Mothers', 'Devotees of the Sacred Heart'],
+    symbols: ['Royal Crown and Gospel Book', 'Black Rood of Scotland', 'Heart Bearing the Child Jesus'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Saint_Margaret_of_Scotland',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 16",
+    biography: `From Butler's Lives of the Saints (November 16): Born in exile in Hungary around 1045 to the English royal House of Wessex, St. Margaret was shipwrecked off the Scottish coast in 1068 and wed King Malcolm III Canmore. Transforming the rude royal court into a school of Christian chivalry and mercy, Margaret raised eight holy children, washed the feet of beggars every day before dining, ransomed English captives, built Dunfermline Abbey, and reformed ecclesiastical observance across Scotland. Learning of the death of her husband and eldest son at Alnwick in November 1093, she thanked God for purifying her by sorrow, kissed the Black Rood, and died on November 16, 1093.
+
+On the same day the Church honors St. Gertrude the Great of Helfta (1256–1302), Cistercian-Benedictine mystic and early herald of devotion to the Sacred Heart of Jesus.`,
+    quote: {
+      text: 'Almighty God has sent me this heavy affliction in my last hour to purify me from all stains of sin.',
+      source: "Dying Words of St. Margaret of Scotland (Butler's Lives of the Saints, November 16)"
+    },
+    prayer: `O God, who made Saint Margaret of Scotland wonderful in her outstanding charity towards the poor, grant that through her intercession and example your goodness may reflect among all people the image of your own loving-kindness. Through Christ our Lord. Amen.`,
+    canonization: 'Canonized 1250 by Pope Innocent IV',
+    companionSaints: [
+      {
+        name: 'St. Gertrude the Great',
+        title: 'Cistercian Mystic and Virgin',
+        lifespan: '1256–1302',
+        place: 'Helfta Abbey, Saxony, Germany',
+        shortDescription: "From Butler's Lives of the Saints: Entered Helfta Abbey at age five under St. Mechtilde; graced with intimate visions of the Sacred Heart of Jesus and author of the Herald of Divine Love."
+      },
+      {
+        name: 'St. Edmund Rich of Abingdon',
+        title: 'Archbishop of Canterbury',
+        lifespan: 'c. 1175–1240',
+        place: 'Abingdon, Oxford, and Pontigny, France',
+        shortDescription: "From Butler's Lives of the Saints: Oxford scholar and Archbishop of Canterbury who defended Church liberty and died in exile at Pontigny Abbey."
+      },
+      {
+        name: 'St. Agnes of Assisi',
+        title: 'Poor Clare Abbess',
+        lifespan: '1197–1253',
+        place: 'Assisi and Florence, Italy',
+        shortDescription: "Younger sister of St. Clare of Assisi who followed her into absolute Franciscan poverty at San Damiano and founded Poor Clare monasteries across Italy."
+      }
+    ]
+  },
+  {
+    id: 'saint-elizabeth-of-hungary',
+    name: 'St. Elizabeth of Hungary',
+    title: 'Princess, Widow, and Third Order Franciscan Patroness of Charity',
+    feastDate: 'November 17',
+    month: 11,
+    day: 17,
+    birthYear: '1207',
+    deathYear: '1231',
+    patronage: ['Catholic Charities', 'Bakers and Hospitals', 'Widows', 'Secular Franciscans', 'The Homeless'],
+    symbols: ['Royal Crown and Apron Filled with Roses', 'Loaves of Bread', 'Franciscan Cord'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Elizabeth_of_Hungary',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 17",
+    biography: `From Butler's Lives of the Saints (November 17): Daughter of King Andrew II of Hungary, St. Elizabeth was betrothed in childhood to Louis IV, Landgrave of Thuringia, and raised at Wartburg Castle. After her marriage at fourteen, their union was celebrated for deep tenderness and holiness. During famine she emptied the royal granaries, established a hospital beneath the castle walls, personally tended lepers, and distributed bread from her cloak—which tradition recalls miraculously turned into winter roses when questioned at the castle gate.
+
+When Louis died of fever on Crusade in 1227, driven from the castle with her three young children, Elizabeth took the grey habit of the Third Order of St. Francis, built a hospital at Marburg from her dowry, spun wool with her own hands for the poor, and died at age twenty-four on November 17, 1231.`,
+    quote: {
+      text: 'How could I wear a crown of gold upon my head, when I behold my Lord Jesus Christ crowned with thorns?',
+      source: "St. Elizabeth of Hungary (Butler's Lives of the Saints, November 17)"
+    },
+    prayer: `O God, by whose gift Saint Elizabeth of Hungary recognized and revered Christ in the poor of this world, grant, through her intercession, that we may serve with unfailing charity the needy and those afflicted. Through Christ our Lord. Amen.`,
+    canonization: 'Canonized May 27, 1235 by Pope Gregory IX (only four years after her death)',
+    companionSaints: [
+      {
+        name: 'St. Gregory Thaumaturgus (the Wonderworker)',
+        title: 'Bishop of Neocaesarea',
+        lifespan: 'c. 213–270',
+        place: 'Neocaesarea, Pontus',
+        shortDescription: "From Butler's Lives of the Saints: Disciple of Origen who found seventeen Christians in Neocaesarea on his consecration and left only seventeen pagans at his death."
+      },
+      {
+        name: 'St. Hugh of Lincoln',
+        title: 'Carthusian Monk and Bishop of Lincoln',
+        lifespan: 'c. 1140–1200',
+        place: 'Grande Chartreuse and Lincoln, England',
+        shortDescription: "From Butler's Lives of the Saints: French Carthusian called to England by King Henry II who protected persecuted Jewish citizens and rebuilt Lincoln Cathedral."
+      },
+      {
+        name: 'St. Hilda of Whitby',
+        title: 'Abbess of Whitby',
+        lifespan: '614–680',
+        place: 'Northumbria, England',
+        shortDescription: "From Butler's Lives of the Saints: Royal abbess who ruled the double monastery of Whitby, hosted the Synod of 664, and nurtured the poet Caedmon and five bishops."
+      }
+    ]
+  },
+  {
+    id: 'dedication-basilicas-peter-paul',
+    name: 'Dedication of the Basilicas of Sts. Peter and Paul',
+    title: 'Basilicas of the Princes of the Apostles / St. Rose Philippine Duchesne',
+    feastDate: 'November 18',
+    month: 11,
+    day: 18,
+    birthYear: '4th Century / 1769–1852',
+    deathYear: '326 / 1852',
+    patronage: ['The City of Rome', 'Pilgrims to the Apostolic Tombs', 'Perseverance in Prayer'],
+    symbols: ['Crossed Keys of St. Peter', 'Sword of St. Paul', 'Dome of St. Peter Basilica'],
+    liturgicalColor: 'white',
+    wikiSlug: "St._Peter%27s_Basilica",
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 18",
+    biography: `From Butler's Lives of the Saints (November 18): Today the universal Church celebrates the Dedication of the two great patriarchal basilicas erected over the tombs of the Princes of the Apostles in Rome: St. Peter's Basilica on Vatican Hill—consecrated originally under Emperor Constantine by Pope St. Sylvester I and rebuilt and dedicated by Pope Urban VIII on November 18, 1626—and St. Paul Outside the Walls along the Ostian Way, later rededicated by Bl. Pope Pius IX. Pilgrims from every continent gather at these confessios to profess the unbroken Apostolic Faith.
+
+In the United States this day also commemorates St. Rose Philippine Duchesne (1769–1852), Religious of the Sacred Heart, missionary pioneer to Missouri and the Potawatomi people, who called her "the Woman Who Prays Always."`,
+    quote: {
+      text: 'Where Peter is, there is the Church; where the Church is, there is no death, but eternal life.',
+      source: "St. Ambrose of Milan (Enarratio in Psalmum XL)"
+    },
+    prayer: `Defend your Church, O Lord, under the protection of the holy Apostles, that, as she receives from them the beginnings of her faith, so through them she may gain eternal grace. Through Christ our Lord. Amen.`,
+    canonization: 'Universal Memorial; St. Rose Philippine Duchesne canonized July 3, 1988 by Pope St. John Paul II',
+    companionSaints: [
+      {
+        name: 'St. Rose Philippine Duchesne',
+        title: 'Virgin and Missionary to Native Americans',
+        lifespan: '1769–1852',
+        place: 'Grenoble, France and St. Charles, Missouri',
+        shortDescription: "French Religious of the Sacred Heart who sailed to Louisiana in 1818, opened the first free school west of the Mississippi, and spent hours in silent adoration among the Potawatomi."
+      },
+      {
+        name: 'St. Odo of Cluny',
+        title: 'Second Abbot of Cluny',
+        lifespan: 'c. 878–942',
+        place: 'Tours and Cluny, France',
+        shortDescription: "From Butler's Lives of the Saints: Monastic reformer who spread the Cluniac revival across France and Italy and promoted frequent Holy Communion."
+      },
+      {
+        name: 'St. Romanus of Antioch',
+        title: 'Deacon and Martyr',
+        lifespan: 'd. 303',
+        place: 'Antioch, Syria',
+        shortDescription: "From Butler's Lives of the Saints: Early deacon whose tongue was torn out during the persecution of Galerius yet who continued praising Christ."
+      }
+    ]
+  },
+  {
+    id: 'saint-mechtilde-of-hackeborn',
+    name: 'St. Mechtilde of Hackeborn & St. Agnes of Assisi',
+    title: 'Benedictine Mystic and Chantress of Helfta / Poor Clare Abbess',
+    feastDate: 'November 19',
+    month: 11,
+    day: 19,
+    birthYear: '1241',
+    deathYear: '1298',
+    patronage: ['Liturgical Choirs and Cantors', 'Devotion to the Sacred Heart', 'Poor Clare Nuns'],
+    symbols: ['Choir Psalter', 'Sacred Heart', 'Franciscan Veil'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Mechtilde',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 19",
+    biography: `From Butler's Lives of the Saints (November 19): Born into a noble Thuringian family in 1241, St. Mechtilde entered the Benedictine-Cistercian Abbey of Rodersdorf at age seven under her sister, the renowned Abbess Gertrude of Hackeborn, and later moved with the community to Helfta. Gifted with an extraordinary voice and profound liturgical spirit, she served for decades as choir mistress and novice mistress, forming young St. Gertrude the Great.
+
+Her mystical conversations with Christ, collected in the Book of Special Grace, reveal the tender compassion of the Sacred Heart of Jesus and recommend the daily offering of the Three Hail Marys. Alongside her, Roman Martyrology honors St. Agnes of Assisi, younger sister of St. Clare, and St. Elizabeth of Hungary (in the pre-1970 Roman Calendar).`,
+    quote: {
+      text: 'The Sacred Heart of Jesus beats with a longing never to refuse anything to a soul that comes to Him in humble love.',
+      source: "St. Mechtilde of Hackeborn, Book of Special Grace"
+    },
+    prayer: `O God, who adorned Saint Mechtilde with heavenly gifts and revealed to her the unsearchable riches of the Heart of your Son, grant that by praising you on earth with pure hearts we may rejoice in your glory forever. Through Christ our Lord. Amen.`,
+    canonization: 'Venerated in the Benedictine and Universal Roman Martyrology',
+    companionSaints: [
+      {
+        name: 'Pope St. Pontian',
+        title: 'Bishop of Rome and Martyr',
+        lifespan: 'd. 235',
+        place: 'Rome and Mines of Sardinia',
+        shortDescription: "Exiled to the deadly mines of Sardinia under Emperor Maximinus Thrax, where he resigned the papacy so the Roman Church could elect a shepherd and died for Christ."
+      },
+      {
+        name: 'St. Barlaam of Antioch',
+        title: 'Peasant Martyr',
+        lifespan: 'd. c. 304',
+        place: 'Antioch, Syria',
+        shortDescription: "From Butler's Lives of the Saints: Unlettered villager praised by St. Basil and St. John Chrysostom who held glowing coals over an altar until his hand burned away rather than drop incense to an idol."
+      },
+      {
+        name: 'St. Nerses the Great',
+        title: 'Catholicos of Armenia and Martyr',
+        lifespan: 'c. 326–373',
+        place: 'Armenia',
+        shortDescription: "Archbishop who built hospitals and orphanages throughout Armenia and suffered martyrdom defending Christian morality before a wicked king."
+      }
+    ]
+  },
+  {
+    id: 'saint-felix-of-valois',
+    name: 'St. Felix of Valois & St. Edmund the Martyr',
+    title: 'Co-Founder of the Trinitarian Order / Christian King of East Anglia',
+    feastDate: 'November 20',
+    month: 11,
+    day: 20,
+    birthYear: '1127',
+    deathYear: '1212',
+    patronage: ['Ransom of Captives and Persecuted Christians', 'Trinitarian Order', 'East Anglia'],
+    symbols: ['White Trinitarian Habit with Red and Blue Cross', 'White Stag with Cross Between Antlers', 'Broken Chains'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Felix_of_Valois',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 20",
+    biography: `From Butler's Lives of the Saints (November 20): Living as a French hermit in the wooded solitude of Cerfroid, St. Felix of Valois welcomed St. John of Matha around 1197. Together, inspired by a vision of a white stag bearing a red-and-blue cross between its antlers while they prayed beside a forest spring, they traveled to Rome to receive papal approbation from Pope Innocent III for the Order of the Most Holy Trinity for the Redemption of Captives (the Trinitarians).
+
+Dedicating one-third of all alms solely to ransoming Christians enslaved in North Africa, Felix governed the motherhouse of Cerfroid in gentle holiness until his death on November 4, 1212. Today Britain also honors King St. Edmund of East Anglia (d. 869), martyred with arrows by Danish invaders rather than renounce Christ.`,
+    quote: {
+      text: 'All that we possess belongs first to the Most Holy Trinity and second to our brothers languishing in chains.',
+      source: "Butler's Lives of the Saints (November 20)"
+    },
+    prayer: `O God, who called Saint Felix out of solitude to share in establishing an order devoted to the freedom of captives for the glory of the Most Holy Trinity, grant us liberty of heart to serve you in love. Through Christ our Lord. Amen.`,
+    canonization: 'Cult confirmed 1262 by Pope Urban IV; Feast on Roman Calendar 1666',
+    companionSaints: [
+      {
+        name: 'St. Edmund, King and Martyr',
+        title: 'King of East Anglia',
+        lifespan: '841–869',
+        place: 'Hoxne and Bury St. Edmunds, England',
+        shortDescription: "From Butler's Lives of the Saints: Devout young king bound to an oak tree and shot with arrows by Viking raiders for refusing to divide his Christian kingdom under pagan terms."
+      },
+      {
+        name: 'St. Gregory Decapolites',
+        title: 'Monk and Defender of Sacred Icons',
+        lifespan: 'd. 842',
+        place: 'Isauria and Constantinople',
+        shortDescription: "From Butler's Lives of the Saints: Byzantine ascetic who traveled across Rome and Thessalonica strengthening Christians against Iconoclast persecution."
+      },
+      {
+        name: 'St. Bernward of Hildesheim',
+        title: 'Bishop, Artist, and Goldsmith',
+        lifespan: 'c. 960–1022',
+        place: 'Hildesheim, Saxony, Germany',
+        shortDescription: "Tutor to Emperor Otto III and Bishop of Hildesheim who cast the famed bronze doors of Hildesheim Cathedral depicting salvation history."
+      }
+    ]
+  },
+  {
+    id: 'presentation-of-blessed-virgin-mary',
+    name: 'The Presentation of the Blessed Virgin Mary',
+    title: 'Memorial of the Virgin Mary Totally Consecrated to God in the Temple',
+    feastDate: 'November 21',
+    month: 11,
+    day: 21,
+    birthYear: '1st Century BC',
+    deathYear: 'Liturgical Feast (543 AD)',
+    patronage: ['Cloistered Contemplatives', 'Young Women Discerners', 'The Consecrated Life'],
+    symbols: ['Fifteen Steps of the Jerusalem Temple', 'Lily of Purity', 'Lamp of Vigilance'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Presentation_of_Mary',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 21",
+    biography: `From Butler's Lives of the Saints (November 21): Commemorating the dedication in 543 AD of the Basilica of St. Mary the New beside the Temple mount in Jerusalem, today's Memorial honors the ancient Christian tradition—celebrated in the East since the sixth century and extended to the Western Church by Pope Sixtus V in 1585—that the young Virgin Mary was presented by her parents, Sts. Joachim and Anne, in the Temple of Jerusalem at three years of age to be consecrated wholly to the service of God.
+
+From the dawn of her consciousness, Mary offered her whole heart, mind, and body as a living temple of the Most High, preparing in silent prayer for the hour when she would become the Mother of the Incarnate Word. On this day cloistered religious worldwide renew their vows of consecration (Pro Orantibus Day).`,
+    quote: {
+      text: "All the glory of the King's daughter is within; from childhood she kept her soul as a pure sanctuary for the Eternal Word.",
+      source: "Psalms 44 & St. John Damascene (Butler's Lives of the Saints, November 21)"
+    },
+    prayer: `As we venerate the glorious memory of the most holy Virgin Mary, grant, we pray, O Lord, through her intercession, that we too may merit to receive from the fullness of your grace. Through our Lord Jesus Christ, your Son. Amen.`,
+    canonization: 'Universal Liturgical Memorial (Celebrated since 543 AD in Jerusalem)',
+    companionSaints: [
+      {
+        name: 'Pope St. Gelasius I',
+        title: 'Supreme Pontiff and Liturgical Doctor',
+        lifespan: 'd. 496',
+        place: 'Rome',
+        shortDescription: "From Butler's Lives of the Saints: African-born Pope who defended the distinction between spiritual and temporal authority and enriched the Roman Sacramentary."
+      },
+      {
+        name: 'St. Columbanus of Bobbio',
+        title: 'Irish Missionary Abbot',
+        lifespan: 'c. 543–615',
+        place: 'Bangor, Luxeuil, and Bobbio, Italy',
+        shortDescription: "From Butler's Lives of the Saints: Great Celtic monastic founder who established Luxeuil in France and Bobbio in northern Italy, reviving penance and scholarship across Europe."
+      },
+      {
+        name: 'St. Albert of Louvain',
+        title: 'Bishop of Liège and Martyr',
+        lifespan: '1166–1192',
+        place: 'Louvain, Liège, and Reims',
+        shortDescription: "Bishop assassinated at Reims for upholding canonical independence and Church freedom."
+      }
+    ]
+  },
+  {
+    id: 'saint-cecilia',
+    name: 'St. Cecilia',
+    title: 'Virgin and Martyr, Patroness of Sacred Music',
+    feastDate: 'November 22',
+    month: 11,
+    day: 22,
+    birthYear: '2nd/3rd Century',
+    deathYear: 'c. 230',
+    patronage: ['Sacred Musicians and Choirs', 'Church Organists', 'Composers and Poets', 'Instrument Makers'],
+    symbols: ['Portable Organ', 'Crown of Roses and Lilies', 'Three Sword Marks', 'Palm of Martyrdom'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Saint_Cecilia',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 22",
+    biography: `From Butler's Lives of the Saints (November 22): One of the most illustrious Roman virgin martyrs, commemorated daily by name in the Roman Canon (Eucharistic Prayer I), St. Cecilia belonged to the noble patrician family of the Caecilii in Rome. Having consecrated her virginity to Christ, when given in marriage to the young pagan nobleman Valerian, she sang in her heart to God alone while wedding music sounded, then led Valerian to Pope St. Urban in the catacombs to be instructed and baptized—followed shortly by Valerian's brother Tiburtius.
+
+Arrested for burying Christian martyrs and refusing to sacrifice to Roman gods, Valerian, Tiburtius, and their converted officer Maximus suffered martyrdom first. When Cecilia steadfastly confessed her faith before the prefect Almachius, she survived suffocation in a superheated bathhouse and received three blows from the executioner's sword, lingering for three days to bequeath her Trastevere home as a church and profess faith in the Triune God with three extended fingers on her right hand.`,
+    quote: {
+      text: 'While the instruments of music resounded at her wedding, Cecilia in her heart sang only to the Lord: Keep my heart and body spotless, that I may not be confounded.',
+      source: "Antiphon of the Liturgy of St. Cecilia (Butler's Lives of the Saints, November 22)"
+    },
+    prayer: `O God, who gladden us each year with the feast day of your handmaid Saint Cecilia, grant, we pray, that what has been devoutly handed down concerning her may offer us examples to imitate and proclaim the wonders you work in your servants. Through Christ our Lord. Amen.`,
+    canonization: 'Pre-Congregation (Named in the Roman Canon of the Mass)',
+    companionSaints: [
+      {
+        name: 'Sts. Philemon and Apphia',
+        title: 'Disciples of St. Paul and Martyrs',
+        lifespan: '1st Century',
+        place: 'Colossae, Phrygia',
+        shortDescription: "From Butler's Lives of the Saints: Christian nobleman of Colossae to whom St. Paul addressed his Epistle urging merciful reception of the runaway slave St. Onesimus."
+      },
+      {
+        name: 'St. Pragmatius of Autun',
+        title: 'Bishop and Confessor',
+        lifespan: 'd. c. 520',
+        place: 'Autun, Burgundy, France',
+        shortDescription: "From Butler's Lives of the Saints: Bishop celebrated by St. Avitus of Vienne for pastoral prudence and defense of orthodoxy."
+      },
+      {
+        name: 'Bl. Salvatore Lilli & Companions',
+        title: 'Franciscan Missionary and Armenian Martyrs',
+        lifespan: 'd. 1895',
+        place: 'Mujukderesi, Ottoman Empire',
+        shortDescription: "Italian Franciscan priest and seven Armenian Christians martyred for refusing to renounce Christ."
+      }
+    ]
+  },
+  {
+    id: 'pope-saint-clement-i',
+    name: 'Pope St. Clement I',
+    title: 'Fourth Bishop of Rome, Apostolic Father, and Martyr',
+    feastDate: 'November 23',
+    month: 11,
+    day: 23,
+    birthYear: '1st Century',
+    deathYear: 'c. 99',
+    patronage: ['Mariners and Sailors', 'Stonecutters', 'Blacksmiths', 'Marble Workers'],
+    symbols: ['Anchor', 'Papal Tiara', 'Fountain Springing from Rock', 'Epistle to the Corinthians'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Pope_Clement_I',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 23",
+    biography: `From Butler's Lives of the Saints (November 23): Honored in the Roman Canon right after Linus and Cletus as the third successor of St. Peter, St. Clement of Rome is praised by St. Paul in Philippians 4:3 as a fellow worker "whose names are in the Book of Life." About the year 96, writing on behalf of the Church of Rome to settle faction in the Church of Corinth, he composed the celebrated First Epistle of Clement—a foundational witness to apostolic succession, hierarchical order, and the primacy of the Roman Church even while the Apostle St. John still lived at Ephesus.
+
+Ancient tradition recounts that Emperor Trajan banished Clement to the stone quarries of the Chersonesus in the Crimea, where he converted thousands of fellow prisoners, caused a fresh spring to burst from dry rock, and was finally cast into the Black Sea with an iron anchor tied around his neck. Centuries later, Sts. Cyril and Methodius recovered his relics and bore them back to San Clemente in Rome.`,
+    quote: {
+      text: 'Let us fix our gaze on the Blood of Christ and realize how precious it is to His Father, since it was poured out for our salvation and brought the grace of repentance to the whole world.',
+      source: "St. Clement of Rome, First Epistle to the Corinthians 7:4"
+    },
+    prayer: `Almighty ever-living God, who are wonderful in the virtue of all your Saints, grant us joy in the yearly solemnity of Saint Clement, who as a Martyr and High Priest of your Son showed forth by his witness what he celebrated in the sacred mysteries. Through Christ our Lord. Amen.`,
+    canonization: 'Pre-Congregation (Named in the Roman Canon of the Mass)',
+    companionSaints: [
+      {
+        name: 'St. Columban (Columbanus)',
+        title: 'Abbot and Evangelizer of Europe',
+        lifespan: '543–615',
+        place: 'Leinster, Luxeuil, and Bobbio',
+        shortDescription: "From Butler's Lives of the Saints: Fearless Irish missionary abbot who traversed Gaul, Switzerland, and northern Italy teaching Christian penance and letters."
+      },
+      {
+        name: 'Bl. Miguel Agustín Pro',
+        title: 'Jesuit Priest and Martyr of Mexico',
+        lifespan: '1891–1927',
+        place: 'Guadalupe and Mexico City, Mexico',
+        shortDescription: "Heroic Jesuit who ministered covertly in disguise to persecuted Catholics during the Cristero persecution and faced a firing squad crying: 'Viva Cristo Rey!'"
+      },
+      {
+        name: 'St. Felicitas of Rome',
+        title: 'Matron and Mother of Seven Martyrs',
+        lifespan: 'd. c. 165',
+        place: 'Rome',
+        shortDescription: "From Butler's Lives of the Saints: Noble Christian widow praised by St. Gregory the Great who encouraged her seven sons to fidelity before winning the martyr's crown herself."
+      }
+    ]
+  },
+  {
+    id: 'vietnamese-martyrs',
+    name: 'Sts. Andrew Dũng-Lạc and Companions',
+    title: '117 Martyrs of Vietnam (1625–1886)',
+    feastDate: 'November 24',
+    month: 11,
+    day: 24,
+    birthYear: '17th–19th Century',
+    deathYear: '1839 (Andrew Dũng-Lạc)',
+    patronage: ['Vietnam and Vietnamese Diaspora', 'Persecuted Christians', 'Lay Catechists'],
+    symbols: ['Wooden Cangue and Bamboo Chains', 'Palm of Martyrdom', 'Crucifix'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Vietnamese_Martyrs',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 24",
+    biography: `From Butler's Lives of the Saints (November 24): Between the seventeenth and nineteenth centuries, over one hundred thousand Vietnamese Christians suffered torture, imprisonment, branding ("False Religion"), and death for Christ under imperial edicts of persecution. On June 19, 1988, Pope St. John Paul II canonized 117 representative martyrs of Vietnam—including eight bishops, fifty priests (thirty-seven Vietnamese and thirteen European missionaries), and fifty-nine lay men, mothers, soldiers, and catechists.
+
+Foremost among them is St. Andrew Dũng-Lạc (1795–1839), born into a poor pagan family near Bắc Ninh, baptized as a youth, and ordained a diocesan priest in 1823. Twice ransomed by his flock, he was arrested again in 1839 and beheaded outside Hanoi on December 21, 1839 alongside his fellow priest St. Peter Thi, sowing the blood that became the seed of a vibrant Vietnamese Church.`,
+    quote: {
+      text: 'Do not weep for me; rather pray that I may stand firm and obtain the crown of martyrdom for love of Jesus.',
+      source: "St. Paul Lê Bảo Tịnh, Letter from Prison (Vietnamese Martyrs)"
+    },
+    prayer: `O God, source and origin of all fatherhood, who kept the Martyrs Saint Andrew Dũng-Lạc and his companions faithful to the Cross of your Son even to the shedding of their blood, grant through their intercession that, spreading your love among our brothers and sisters, we may be your children both in name and in truth. Through Christ our Lord. Amen.`,
+    canonization: 'Canonized June 19, 1988 by Pope St. John Paul II',
+    companionSaints: [
+      {
+        name: 'St. Chrysogonus of Aquileia',
+        title: 'Martyr Named in the Roman Canon',
+        lifespan: 'd. c. 304',
+        place: 'Rome and Aquileia, Italy',
+        shortDescription: "From Butler's Lives of the Saints: Roman Christian imprisoned for two years who sustained St. Anastasia by letter before being beheaded at Aquileia."
+      },
+      {
+        name: 'Sts. Flora and Mary of Córdoba',
+        title: 'Virgins and Martyrs',
+        lifespan: 'd. 851',
+        place: 'Córdoba, Spain',
+        shortDescription: "From Butler's Lives of the Saints: Two young Christian women encouraged in prison by St. Eulogius of Córdoba who gladly offered their lives for Christ."
+      },
+      {
+        name: 'St. Colman of Cloyne',
+        title: 'Royal Bard, Priest, and Bishop',
+        lifespan: 'c. 530–606',
+        place: 'Munster and Cloyne, Ireland',
+        shortDescription: "From Butler's Lives of the Saints: Former court poet to King Fergus who converted through St. Brendan and founded the Diocese of Cloyne."
+      }
+    ]
+  },
+  {
+    id: 'saint-catherine-of-alexandria',
+    name: 'St. Catherine of Alexandria',
+    title: 'Virgin, Philosopher, and Martyr',
+    feastDate: 'November 25',
+    month: 11,
+    day: 25,
+    birthYear: 'c. 287',
+    deathYear: 'c. 305',
+    patronage: ['Philosophers and Students', 'Unmarried Women', 'Librarians and Scholars', 'Lawyers'],
+    symbols: ['Spiked Wheel of Torture', 'Sword and Royal Crown', 'Open Book of Philosophy', 'Palm Branch'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Catherine_of_Alexandria',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 25",
+    biography: `From Butler's Lives of the Saints (November 25): Noble-born and deeply learned in philosophy, rhetoric, and the sciences at Alexandria in Egypt, young St. Catherine embraced Christianity after receiving a mystical vision of the Blessed Virgin Mary and the Christ Child. At age eighteen, when Emperor Maxentius ordered pagan sacrifices throughout Alexandria, Catherine appeared publicly in court, refuting idolatry with compelling logic and eloquence.
+
+Unable to defeat her arguments, the Emperor summoned fifty pagan philosophers and orators to debate her—whom Catherine won over to Christ so completely that they confessed the Faith and suffered martyrdom themselves. Scourged, starved in prison (where tradition recounts angels nourished her and the Empress converted), and bound to a spiked wheel that shattered at her touch, she was beheaded around 305. According to ancient Christian tradition, angels carried her incorrupt relics to Mount Sinai, where St. Catherine's Monastery still guards her shrine.`,
+    quote: {
+      text: 'All the wisdom of the philosophers is mere shadow beside the Light of Christ, the Eternal Word made flesh for our salvation.',
+      source: "Acts of St. Catherine of Alexandria (Butler's Lives of the Saints)"
+    },
+    prayer: `Almighty ever-living God, who gave Saint Catherine of Alexandria to your people as a virgin invincible in faith and wisdom, grant through her intercession that, instructed by heavenly truth, we may steadfastly confess your name. Through Christ our Lord. Amen.`,
+    canonization: 'Pre-Congregation (One of the Fourteen Holy Helpers)',
+    companionSaints: [
+      {
+        name: 'St. Moses of Rome',
+        title: 'Roman Priest and Martyr',
+        lifespan: 'd. 251',
+        place: 'Rome',
+        shortDescription: "From Butler's Lives of the Saints: Courageous Roman priest who corresponded with St. Cyprian from prison during the Decian persecution before dying for Christ."
+      },
+      {
+        name: 'St. Mercurius of Caesarea',
+        title: 'Soldier and Martyr',
+        lifespan: 'd. c. 250',
+        place: 'Caesarea in Cappadocia',
+        shortDescription: "From Butler's Lives of the Saints: Christian commander in the Roman army who refused to offer pagan sacrifice after victory and won the martyr's crown."
+      },
+      {
+        name: 'Bl. Niels Steensen (Nicholas Steno)',
+        title: 'Pioneer Anatomist, Geologist, and Bishop',
+        lifespan: '1638–1686',
+        place: 'Copenhagen, Florence, and Schwerin',
+        shortDescription: "Father of modern stratigraphy and convert to Catholicism in Florence who served as Vicar Apostolic in northern Germany in heroic apostolic poverty."
+      }
+    ]
+  },
+  {
+    id: 'saint-leonard-of-port-maurice',
+    name: 'St. Leonard of Port Maurice & St. John Berchmans',
+    title: 'Franciscan Apostle of the Stations of the Cross / Jesuit Scholastic',
+    feastDate: 'November 26',
+    month: 11,
+    day: 26,
+    birthYear: '1676 / 1599',
+    deathYear: '1751 / 1621',
+    patronage: ['Parish Missions', 'The Stations of the Cross', 'Altar Servers and Youth'],
+    symbols: ['Franciscan Crucifix and Stations of the Cross', 'Colosseum Cross', 'Jesuit Rule Book and Rosary'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Leonard_of_Port_Maurice',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 26",
+    biography: `From Butler's Lives of the Saints (November 26): Born Paolo Girolamo Casanova at Porto Maurizio in Liguria in 1676, St. Leonard entered the Reformed Franciscans (Riformati) in Rome and spent forty-four years preaching parish missions throughout Italy before crowds so vast that churches could not hold them. A passionate devotee of the Passion of Christ, the Immaculate Conception, and the Most Holy Eucharist, he erected over 570 sets of the Stations of the Cross (Via Crucis), most famously inside the Roman Colosseum in 1750 at the request of Pope Benedict XIV—establishing the public Good Friday Stations still led by the Pope today.
+
+On November 26 the Church also remembers St. John Berchmans (1599–1621), Flemish Jesuit scholastic famed for achieving heroic sanctity through "common things done uncommonly well," and St. Sylvester Gozzolini (1177–1267), founder of the Sylvestrine Benedictines.`,
+    quote: {
+      text: 'The Way of the Cross is the royal road to Heaven; let us walk it daily with Jesus Crucified and His Sorrowful Mother.',
+      source: "St. Leonard of Port Maurice, Resolutions on the Via Crucis"
+    },
+    prayer: `O God, who sent Saint Leonard to inflame hearts with love for the Passion of your Son through the Way of the Cross, grant that meditating faithfully upon His saving wounds we may share in the triumph of His Resurrection. Through Christ our Lord. Amen.`,
+    canonization: 'Canonized June 29, 1867 by Pope Pius IX (with St. Josaphat)',
+    companionSaints: [
+      {
+        name: 'St. John Berchmans',
+        title: 'Jesuit Scholastic and Patron of Altar Servers',
+        lifespan: '1599–1621',
+        place: 'Diest (Belgium) and Rome',
+        shortDescription: "Young Jesuit student at the Roman College whose motto was perfection in daily duty, holding his crucifix, rosary, and Jesuit Rules as his three treasures at death."
+      },
+      {
+        name: 'St. Sylvester Gozzolini',
+        title: 'Abbot and Founder of the Sylvestrines',
+        lifespan: '1177–1267',
+        place: 'Osimo and Montefano, Italy',
+        shortDescription: "From Butler's Lives of the Saints: Canon of Osimo converted upon seeing the vanity of earthly beauty at a funeral, founding twelve monasteries under the Rule of St. Benedict."
+      },
+      {
+        name: 'St. Peter of Alexandria',
+        title: 'Archbishop and Martyr',
+        lifespan: 'd. 311',
+        place: 'Alexandria, Egypt',
+        shortDescription: "From Butler's Lives of the Saints: Gentle shepherd who governed the Church of Alexandria during persecution and suffered beheading as the final martyr under Diocletian's edicts."
+      }
+    ]
+  },
+  {
+    id: 'our-lady-of-the-miraculous-medal',
+    name: 'Our Lady of the Miraculous Medal & St. Virgilius of Salzburg',
+    title: 'Apparition of the Immaculate Conception at Rue du Bac (1830) / Missionary Bishop',
+    feastDate: 'November 27',
+    month: 11,
+    day: 27,
+    birthYear: '1830 AD (Apparition)',
+    deathYear: '784 (St. Virgilius)',
+    patronage: ['Vincentian Family', 'The Immaculate Conception', 'Astronomers and Geographers (St. Virgilius)'],
+    symbols: ['Oval Miraculous Medal with "M" and Cross', 'Two Hearts of Jesus and Mary', 'Rays of Grace'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Miraculous_Medal',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 27",
+    biography: `From Butler's Lives of the Saints (November 27): On the evening of November 27, 1830, in the chapel of the Daughters of Charity on Rue du Bac in Paris, the Blessed Virgin Mary appeared to a twenty-four-year-old novice, St. Catherine Labouré, standing upon a globe crushing a serpent beneath her feet while streams of dazzling light poured from rings upon her fingers—signifying graces given to all who ask for them. Framed by an oval halo appeared the golden prayer: "O Mary, conceived without sin, pray for us who have recourse to thee!"
+
+Turning the vision, Mary revealed the reverse design: the letter M surmounted by a Cross, twelve stars, and the Sacred Heart of Jesus crowned with thorns beside the Immaculate Heart of Mary pierced by a sword. Struck in 1832 with Archbishop de Quélen's approval, the medal spread across every nation with countless conversions and healings—including that of Alphonse Ratisbonne—earning the universal title "the Miraculous Medal."`,
+    quote: {
+      text: 'O Mary, conceived without sin, pray for us who have recourse to thee!',
+      source: "Prayer Revealed by the Blessed Virgin Mary on November 27, 1830 at Rue du Bac"
+    },
+    prayer: `O Lord Jesus Christ, who have vouchsafed to glorify by numberless miracles the Blessed Virgin Mary, immaculate from the first moment of her conception, grant that all who devoutly implore her protection on earth may eternally enjoy your presence in heaven. Who live and reign for ever and ever. Amen.`,
+    canonization: 'Feast Approved by the Holy See for the Vincentian Family and Universal Devotion (1894)',
+    companionSaints: [
+      {
+        name: 'St. Virgilius of Salzburg',
+        title: 'Irish Abbot, Bishop, and Scientist',
+        lifespan: 'c. 700–784',
+        place: 'Aghaboe, Ireland and Salzburg, Austria',
+        shortDescription: "From Butler's Lives of the Saints: Irish scholar called 'the Geometer' who evangelized Carinthia and built the first Cathedral of Salzburg."
+      },
+      {
+        name: 'St. James Intercisus (the Cut-to-Pieces)',
+        title: 'Persian Nobleman and Martyr',
+        lifespan: 'd. 421',
+        place: 'Beth-Lapat, Persia',
+        shortDescription: "From Butler's Lives of the Saints: Persian courtier who repented a brief denial of the Faith under royal pressure and joyfully endured twenty-eight amputations singing praises to Christ."
+      },
+      {
+        name: 'St. Maximus of Riez',
+        title: 'Abbot of Lérins and Bishop',
+        lifespan: 'd. c. 460',
+        place: 'Lérins and Riez, Provence, France',
+        shortDescription: "From Butler's Lives of the Saints: Successor to St. Honoratus as Abbot of Lérins Abbey before being elected Bishop of Riez."
+      }
+    ]
+  },
+  {
+    id: 'saint-catherine-laboure',
+    name: 'St. Catherine Labouré',
+    title: 'Daughter of Charity and Seer of the Miraculous Medal',
+    feastDate: 'November 28',
+    month: 11,
+    day: 28,
+    birthYear: '1806',
+    deathYear: '1876',
+    patronage: ['The Elderly and Nursing Homes', 'Daughters of Charity', 'Pigeon Fanciers'],
+    symbols: ['Miraculous Medal', 'Cornette Habit of Daughters of Charity', 'Altar of Rue du Bac'],
+    liturgicalColor: 'white',
+    wikiSlug: 'Catherine_Labour%C3%A9',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 28",
+    biography: `From Butler's Lives of the Saints (November 28): Born Zoé Labouré on May 2, 1806 on a farm at Fain-lès-Moutiers in Burgundy, Catherine lost her mother at age nine, climbed onto a chair to kiss a statue of the Virgin Mary, and vowed: "Now you will be my Mother!" Entering the Daughters of Charity of St. Vincent de Paul in 1830, she was privileged as a novice in the Rue du Bac chapel in Paris to receive three apparitions of Our Lady entrusting her with the Miraculous Medal.
+
+For forty-six years afterward, assigned to the Hospice d'Enghien on the outskirts of Paris, Sister Catherine quietly cooked, swept, tended chickens and pigeons, and nursed aged, bedridden men with boundless tenderness. Not even the sisters living beside her knew she was the visionary of Rue du Bac until eight months before her death on December 31, 1876.`,
+    quote: {
+      text: 'Come to the foot of this altar; there graces will be shed upon all, great and small, who ask for them with confidence and fervor.',
+      source: "Words of Our Lady to St. Catherine Labouré, July 18, 1830"
+    },
+    prayer: `O God, who revealed to the humble virgin Saint Catherine Labouré the spotless purity of your Mother and sent her forth as a hidden servant of the aged and poor, grant us the simplicity of heart to seek your will in silence and charity. Through Christ our Lord. Amen.`,
+    canonization: 'Canonized July 27, 1947 by Pope Pius XII (Incorrupt body at Rue du Bac, Paris)',
+    companionSaints: [
+      {
+        name: 'St. James of the Marches',
+        title: 'Franciscan Preacher and Reformer',
+        lifespan: 'c. 1391–1476',
+        place: 'Monteprandone and Naples, Italy',
+        shortDescription: "From Butler's Lives of the Saints: Disciple of St. Bernardine of Siena who preached devotion to the Holy Name of Jesus across Italy, Hungary, and Bosnia and founded Monte di Pietà charitable banks."
+      },
+      {
+        name: 'St. Stephen the Younger',
+        title: 'Monk and Martyr for Sacred Icons',
+        lifespan: '715–764',
+        place: 'Mount St. Auxentius, Constantinople',
+        shortDescription: "From Butler's Lives of the Saints: Byzantine abbot who defended the veneration of icons of Christ and Mary before Emperor Constantine V and won the martyr's crown."
+      },
+      {
+        name: 'St. Papinianus and Companions',
+        title: 'African Bishops and Martyrs',
+        lifespan: 'd. c. 430',
+        place: 'Vita, North Africa',
+        shortDescription: "From Butler's Lives of the Saints: Bishops of North Africa burned with red-hot iron plates for upholding Nicene Catholic orthodoxy."
+      }
+    ]
+  },
+  {
+    id: 'saint-saturninus-of-toulouse',
+    name: 'St. Saturninus (Sernin) of Toulouse',
+    title: 'First Bishop of Toulouse and Martyr of Gaul / All Franciscan Saints',
+    feastDate: 'November 29',
+    month: 11,
+    day: 29,
+    birthYear: '3rd Century',
+    deathYear: 'c. 257',
+    patronage: ['Archdiocese of Toulouse', 'Pamplona (Spain)', 'Bullfighters (Patron Saint of Pamplona)'],
+    symbols: ['Episcopal Mitre and Crosier', 'Bull and Rope', 'Martyr Palm'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Saturnin_of_Toulouse',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 29",
+    biography: `From Butler's Lives of the Saints (November 29): Sent from Rome around the year 250 under Pope St. Fabian alongside six other missionary bishops to evangelize Gaul, St. Saturninus (revered as St. Sernin in France and San Fermín's mentor San Saturnino in Navarre) established the Church of Toulouse, baptized St. Honestus, and converted multitudes by his holiness and miracles.
+
+When pagan priests blamed his silent passing near the Capitol temple for silencing their false oracles, an angry crowd seized Saturninus as he walked to celebrate Mass. Refusing to sacrifice a bull to pagan idols, the aged bishop was tied by his feet to the wild bull prepared for sacrifice, which dragged him down the stone steps of the Capitol until his skull was shattered—watering southern France with the blood of martyrdom. The grand Basilica of Saint-Sernin in Toulouse still stands over his venerated shrine.`,
+    quote: {
+      text: 'I adore one only God, and to Him alone will I offer the sacrifice of praise; your deaf and dumb idols I know not.',
+      source: "Acta of St. Saturninus (Butler's Lives of the Saints, November 29)"
+    },
+    prayer: `O God, who crowned the missionary zeal of your Bishop Saint Saturninus with the palm of glorious martyrdom, grant that through his prayers we may never yield to earthly fear but confess Christ boldly before all peoples. Through Christ our Lord. Amen.`,
+    canonization: 'Pre-Congregation (Feast of All Franciscan Saints also celebrated Nov 29 in the Seraphic Order)',
+    companionSaints: [
+      {
+        name: 'St. Cuthbert Mayne',
+        title: 'Protomartyr of the English Seminary Priests',
+        lifespan: '1544–1577',
+        place: 'Douai and Launceston, Cornwall',
+        shortDescription: "First seminary priest martyred under Queen Elizabeth I for celebrating Mass and preserving the Catholic priesthood in England."
+      },
+      {
+        name: 'St. Radbod of Utrecht',
+        title: 'Bishop, Scholar, and Poet',
+        lifespan: 'd. 917',
+        place: 'Utrecht and Deventer, Netherlands',
+        shortDescription: "From Butler's Lives of the Saints: Learned Benedictine Bishop of Utrecht who cared tenderly for the poor during Viking raids and died praising the Virgin Mary."
+      },
+      {
+        name: 'St. Philomenus of Ancyra',
+        title: 'Christian Corn-Merchant and Martyr',
+        lifespan: 'd. c. 275',
+        place: 'Lycaonia and Ancyra (Ankara)',
+        shortDescription: "From Butler's Lives of the Saints: Grain merchant arrested for delivering bread while preaching Christ, pierced through hands, feet, and head like his crucified Lord."
+      }
+    ]
+  },
+  {
+    id: 'saint-andrew-the-apostle',
+    name: 'St. Andrew the Apostle',
+    title: 'First-Called Disciple of Christ, Brother of St. Peter, and Martyr',
+    feastDate: 'November 30',
+    month: 11,
+    day: 30,
+    birthYear: '1st Century',
+    deathYear: 'c. 60 AD',
+    patronage: ['Scotland', 'Greece', 'Russia and Ukraine', 'Romania', 'Fishermen and Fishmongers', 'The Ecumenical Patriarchate'],
+    symbols: ['Saltire Cross (X-shaped Cross)', 'Fishing Net and Two Loaves', 'Gospel Book'],
+    liturgicalColor: 'red',
+    wikiSlug: 'Andrew_the_Apostle',
+    butlerReference: "Butler's Lives of the Saints, Vol. XI — November 30",
+    biography: `From Butler's Lives of the Saints (November 30): A fisherman of Bethsaida in Galilee and first-called (Protocletos) among the Twelve Apostles, St. Andrew was a disciple of St. John the Baptist on the banks of the Jordan when John pointed to Jesus saying: "Behold the Lamb of God!" Following Jesus to His dwelling and staying the afternoon, Andrew immediately sought out his brother Simon Peter with the joyous announcement: "We have found the Messias!"—and brought Peter to Christ.
+
+In the Gospels, it is Andrew who points out the boy with five barley loaves and two fishes before the multiplication of loaves and introduces the inquiring Greeks to Jesus at Passover. After Pentecost, tradition testifies he carried the Gospel across Scythia, Thrace, and Achaia until arrested at Patras by the Roman proconsul Aegeas. Bound with ropes to an X-shaped decussate cross (the Cross of St. Andrew), he preached to the crowds for two days from the wood, praying: "O good Cross, long desired and now set before my yearning soul, receive me from men and restore me to my Master!"`,
+    quote: {
+      text: 'O good Cross, made radiant by the Body of the Lord, long have I loved you and longed to embrace you; take me from among men and restore me to my Teacher.',
+      source: "Passion of St. Andrew the Apostle (Roman Breviary & Butler's Lives of the Saints)"
+    },
+    prayer: `We humbly implore your majesty, O Lord, that, just as the blessed Apostle Andrew was for your Church a preacher and pastor, so he may be for us a constant intercessor before you. Through our Lord Jesus Christ, your Son. Amen.`,
+    canonization: 'Apostle of the Lord; Named in the Roman Canon (Eucharistic Prayer I) and Feast of Scotland',
+    companionSaints: [
+      {
+        name: 'St. Tudwal (Tugdual) of Tréguier',
+        title: 'Abbot and Bishop in Brittany',
+        lifespan: 'd. c. 564',
+        place: 'Britain and Tréguier (Brittany), France',
+        shortDescription: "From Butler's Lives of the Saints: British monk who sailed to Brittany with seventy-two disciples and founded the monastic see of Tréguier."
+      },
+      {
+        name: 'St. Cuthbert of Wearmouth (Note)',
+        title: 'Early Confessors of the North',
+        lifespan: '7th Century',
+        place: 'Northumbria',
+        shortDescription: "From Butler's Lives of the Saints: Early Anglo-Saxon monastic witnesses remembered in the northern martyrologies around the Feast of St. Andrew."
+      },
+      {
+        name: 'St. Maura of Constantinople',
+        title: 'Virgin and Martyr',
+        lifespan: 'd. c. 304',
+        place: 'Constantinople',
+        shortDescription: "Early Christian virgin remembered in the Roman Martyrology on the Feast of St. Andrew for steadfast fidelity to Christ."
       }
     ]
   }
