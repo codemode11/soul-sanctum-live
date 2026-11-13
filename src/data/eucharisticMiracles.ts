@@ -280,11 +280,11 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
   },
   {
     "id": "maryegypt",
-    "location": "Saint Mary of Egypt",
+    "location": "St. Mary of Egypt",
     "country": "Egypt",
     "year": "4th-5th Century AD",
     "century": "5th Century",
-    "title": "The Eucharistic Miracle of Saint Mary of Egypt",
+    "title": "The Eucharistic Miracle of St. Mary of Egypt",
     "summary": "This Eucharistic miracle is related in the life of St. Mary of Egypt who lived in the desert for 47 years. The account of her life was written by the Bishop Sofronio of Jerusalem in the 7th century. St.",
     "miracleType": "Bleeding Host",
     "historicalContext": "This Eucharistic miracle is related in the life of St. Mary of Egypt who lived in the desert for 47 years. The account of her life was written by the Bishop Sofronio of Jerusalem in the 7th century. St. Mary is said to have walked on the Jordan River to reach the opposite bank and receive Communion from the Monk Zosimus. e are told that when St. Mary was 12 years of age she left her parents and went to Alexandria. There she led a very dissolute life for 16 years. One day she came upon a ship about to set sail with different groups of passengers. She inquired who they might be and where they were going.",
@@ -295,8 +295,8 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
       "Documented in 1 Panel(s) by Saint Carlo Acutis of the Vatican International Exhibition."
     ],
     "papalOrEcclesialApproval": "Officially Approved and Documented by the Catholic Church",
-    "currentLocation": "Saint Mary of Egypt, Egypt",
-    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • Saint Mary of Egypt, Egypt (4th-5th Century AD)"
+    "currentLocation": "St. Mary of Egypt, Egypt",
+    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • St. Mary of Egypt, Egypt (4th-5th Century AD)"
   },
   {
     "id": "scete",
@@ -365,7 +365,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     "historicalContext": "On Easter Sunday 1331, as Fr. Hugues de Baume distributed Holy Communion, a fragment of the Host fell from a parishioner’s mouth onto the linen cloth held under her chin. It turned into living blood.",
     "scientificOrChurchInvestigation": "Priests attempted to wash the cloth in a basin, but the water turned blood-red and the spot grew brighter.",
     "papalOrEcclesialApproval": "Approved by the Bishop of Autun and Pope John XXII in 1332.",
-    "currentLocation": "Church of Saint-Martin, Blanot, France",
+    "currentLocation": "Church of St. Martin, Blanot, France",
     "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue • Papal Bull of Pope John XXII (1332 AD)"
   },
   {
@@ -428,11 +428,11 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
   },
   {
     "id": "larochelle-neuvy",
-    "location": "La Rochelle / Neuvy Saint Sépulcre",
+    "location": "La Rochelle / Neuvy St. Sépulcre",
     "country": "France",
     "year": "1257, 1461 AD",
     "century": "13th Century",
-    "title": "The Eucharistic Miracle of La Rochelle / Neuvy Saint Sépulcre",
+    "title": "The Eucharistic Miracle of La Rochelle / Neuvy St. Sépulcre",
     "summary": "The Eucharistic miracle of La Rochelle concerns the instantaneous cure of a boy, paralyzed and mute since the age of seven, when he received Holy Communion at Mass on Easter Sunday in 1461. He was completely healed of his paralysis and was once again able to speak.",
     "miracleType": "Supernatural Light",
     "historicalContext": "The Eucharistic miracle of La Rochelle concerns the instantaneous cure of a boy, paralyzed and mute since the age of seven, when he received Holy Communion at Mass on Easter Sunday in 1461, He was completely healed of his paralysis and was once again able to speak, The most authoritative document that visually describes this miracle is the painted-manuscript preserved still today in the Cathedral of La Rochelle, There are two drops of Blood from our Lord, Jesus Christ, collected on Calvary during the Passion, preserved in the church of Neuvy-Saint-Sépulcre in Indre, They were brought to France in 1257 by Cardinal Eudes returning from the Holy Land, Black and white copy of one of tells the story of the miracle uring Easter of 1461, Mrs. Jehan Leclerc brought her twelve year old son, Bertrand, to the Church of St. Bartholomew. Bertrand had been paralyzed and mute since the age of seven due to a terrible fall. When the time for Holy Communion arrived, he indicated to his mother that he also wanted to receive Jesus in the Eucharist. Initially the priest did not want to give the young man Communion, because the boy was not able to go to Confession given his muteness.",
@@ -441,8 +441,8 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
       "Documented in 1 Panel(s) by Saint Carlo Acutis of the Vatican International Exhibition."
     ],
     "papalOrEcclesialApproval": "Officially Approved and Documented by the Catholic Church",
-    "currentLocation": "La Rochelle / Neuvy Saint Sépulcre, France",
-    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • La Rochelle / Neuvy Saint Sépulcre, France (1257, 1461 AD)"
+    "currentLocation": "La Rochelle / Neuvy St. Sépulcre, France",
+    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • La Rochelle / Neuvy St. Sépulcre, France (1257, 1461 AD)"
   },
   {
     "id": "lesulmes",
@@ -888,7 +888,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     "historicalContext": "A young woman attempted to use a Host for a love potion. Upon returning home, she opened the cloth in fear and saw the Host had turned into flesh.",
     "scientificOrChurchInvestigation": "Pope Gregory IX issued the official Papal Bull Fraternitatis Tuae in March 1228 acknowledging the miracle and granting indulgence to pilgrims.",
     "papalOrEcclesialApproval": "Papal Bull Fraternitatis Tuae (Pope Gregory IX, 1228).",
-    "currentLocation": "Cathedral of Saint Paul, Alatri, Italy",
+    "currentLocation": "Cathedral of St. Paul, Alatri, Italy",
     "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue • Papal Bull Fraternitatis Tuae (Pope Gregory IX, 1228)"
   },
   {
@@ -1001,7 +1001,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     "historicalContext": "A priest in Siena placed a consecrated Host inside his prayer book rather than a pyx when going to administer Viaticum. When he opened the breviary, the Host had liquefied into blood and soaked into two facing pages.",
     "scientificOrChurchInvestigation": "Augustinian Friar Simone Fidati collected the stained page and brought it to Cascia. The page displays a natural blood-imprinted profile of Jesus.",
     "papalOrEcclesialApproval": "Promulgated by Pope Boniface IX in 1389 and venerated alongside St. Rita of Cascia.",
-    "currentLocation": "Basilica of Saint Rita, Cascia, Perugia, Italy",
+    "currentLocation": "Basilica of St. Rita, Cascia, Perugia, Italy",
     "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue • Papal Bull of Pope Boniface IX (1389)"
   },
   {
@@ -1448,7 +1448,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     "title": "The Bleeding Host of Tixtla (Fresh Blood and Cardiac Tissue)",
     "summary": "During a parish retreat, a nun distributing Communion saw a Host ooze a reddish liquid. Forensic analysis confirmed human blood type AB with active white blood cells.",
     "miracleType": "Bleeding Host",
-    "historicalContext": "On October 21, 2006, during a spiritual retreat at the parish of Saint Martin of Tours in Tixtla, a consecrated Host began emitting a reddish substance.",
+    "historicalContext": "On October 21, 2006, during a spiritual retreat at the parish of St. Martin of Tours in Tixtla, a consecrated Host began emitting a reddish substance.",
     "scientificOrChurchInvestigation": "Bishop Alejo Zavala Castro requested an international scientific study led by Dr. Ricardo Castañón Gómez.",
     "keyScientificFindings": [
       "Reddish substance is real human blood containing hemoglobin and intact white blood cells.",
@@ -1457,7 +1457,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     ],
     "papalOrEcclesialApproval": "Approved by Bishop Alejo Zavala Castro in 2013 as a sign of divine origin.",
     "bloodType": "AB Positive",
-    "currentLocation": "Parish of Saint Martin of Tours, Tixtla, Guerrero, Mexico",
+    "currentLocation": "Parish of St. Martin of Tours, Tixtla, Guerrero, Mexico",
     "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue • Dr. Ricardo Castañón Gómez International Forensic Study (2013)"
   },
   {
@@ -1525,7 +1525,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     "title": "The Miracle of Legnica (Heart Tissue Under Agony)",
     "summary": "A Host dropped on Christmas Day 2013 dissolved in water and produced red stains. Pathological examination confirmed human heart tissue with alteration typical of agony.",
     "miracleType": "Heart Muscle Transformation",
-    "historicalContext": "On Christmas Day 2013, a consecrated Host fell to the floor during Communion at the Church of Saint Hyacinth in Legnica. It was placed in a container with water. In January 2014, a red stain appeared.",
+    "historicalContext": "On Christmas Day 2013, a consecrated Host fell to the floor during Communion at the Church of St. Hyacinth in Legnica. It was placed in a container with water. In January 2014, a red stain appeared.",
     "scientificOrChurchInvestigation": "The Department of Forensic Medicine in Wrocław and later Pomeranian Medical University in Szczecin performed histopathological analysis.",
     "keyScientificFindings": [
       "The tissue is human origin, specifically striated cardiac muscle with changes characteristic of severe hypoxia and emotional/physical trauma.",
@@ -1533,7 +1533,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     ],
     "papalOrEcclesialApproval": "Approved by Bishop Zbigniew Kiernikowski in 2016 following submission to the Vatican Congregation for the Doctrine of the Faith.",
     "bloodType": "AB Positive",
-    "currentLocation": "Church of Saint Hyacinth, Legnica, Poland",
+    "currentLocation": "Church of St. Hyacinth, Legnica, Poland",
     "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue • Pomeranian Medical University in Szczecin • Vatican CDF Decree (2016)"
   },
   {
@@ -1586,19 +1586,19 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
       "The coagulated blood and flesh fragment are contained within a crystal ampoule that has leaked blood during centuries of veneration."
     ],
     "papalOrEcclesialApproval": "Approved by King Afonso III and successive Popes including St. Francis Xavier who venerated the relic before going to India.",
-    "currentLocation": "Church of Saint Stephen (Sanctuary of the Most Holy Miracle), Santarém, Portugal",
+    "currentLocation": "Church of St. Stephen (Sanctuary of the Most Holy Miracle), Santarém, Portugal",
     "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue • Archdiocesan Archives of Santarém, Portugal"
   },
   {
     "id": "reunion",
-    "location": "Saint-André de la Réunion",
+    "location": "St. André de la Réunion",
     "country": "Réunion Island",
     "year": "1902 AD",
     "century": "20th Century",
-    "title": "The Eucharistic Miracle of Saint-André de la Réunion",
-    "summary": "On January 26, 1902, at the parish church of Saint-André, a city on the island of La Réunion (French colony).",
+    "title": "The Eucharistic Miracle of St. André de la Réunion",
+    "summary": "On January 26, 1902, at the parish church of St. André, a city on the island of La Réunion (French colony).",
     "miracleType": "Apparition in Host",
-    "historicalContext": "On January 26, 1902, at the parish church of Saint-André, a city on the island of La Réunion (French colony), Abbot Henry Lacombe, pastor of the church, was witness to the miracle that he would recount to thousands of people during the Eucharistic Congress of Angouleme (1904), as well as to the group of priests gathered for a spiritual retreat in the town of Perigueux, face of Jesus appeared in the Host which was for many hours witnessed by thousands of people. et's look at Abbot Lacome's report: «lt was January 26, 1902. We were celebrating perpetual adoration (the Forty hours). The Most Holy Sacrament was exposed in the tabernacle. I began to celebrate the Mass. After the elevation, at the moment of the Our Father, my eyes were lifted toward the Host and I saw a bright halo around the rays of the monstrance. I continued to recite the prayers of the Mass, with great agitation in my soul but which I tried to overcome.",
+    "historicalContext": "On January 26, 1902, at the parish church of St. André, a city on the island of La Réunion (French colony), Abbot Henry Lacombe, pastor of the church, was witness to the miracle that he would recount to thousands of people during the Eucharistic Congress of Angouleme (1904), as well as to the group of priests gathered for a spiritual retreat in the town of Perigueux, face of Jesus appeared in the Host which was for many hours witnessed by thousands of people. et's look at Abbot Lacome's report: «lt was January 26, 1902. We were celebrating perpetual adoration (the Forty hours). The Most Holy Sacrament was exposed in the tabernacle. I began to celebrate the Mass. After the elevation, at the moment of the Our Father, my eyes were lifted toward the Host and I saw a bright halo around the rays of the monstrance. I continued to recite the prayers of the Mass, with great agitation in my soul but which I tried to overcome.",
     "scientificOrChurchInvestigation": "We came to the moment for Communion and again I looked toward the monstrance. This time I saw a human face, with lowered eyes and a crown of thorns on the forehead. What moved me the most was the dolorous expres- Sion painted on the face. The eyelashes were long and thick. I tried not to let on to the presence of the turmoil agitating inside of me. Etoe L/\"östöe SAINT-ANDRÉ DE LA RÉUNION ISLAND OF LA RÉUNION, 1902 the altar and closely observe the monstrance. raced back and told me : \"Father, we see the head of a man in the Host. It is the good Lord revealing Himself ! I understood then that the vision was authentic\". A young man of 16, Adam de Villiers, who had studied in a college in France, also arrived. I said to him as well: 'Go in the church and see if you notice something strange in the tabernacle\". The young student went to the sacristy and returned immediately, saying: \"Father, it is the good Lord who appears in the Host, I see His divine face\". Since then, all my doubts disappeared. Slowly the entire town went to the church to see the Host suddenly became animated and the crown of thorns disappeared. I used every possible precaution, and fearing the effects from the rays of light, I had all the candles extinguished and the shutters closed. The phenomenon became even more clear. There was a young artist among the visitors who faithfully reproduced the face in the Host. Later, the vision changed again and a crucifix appeared which covered the entire Host from top to bottom. After the Eucharistic blessing and recital of the Tantum Ergo, the vision disappeared.",
     "keyScientificFindings": [
       "Analyzed Sample / Phenomenon: Living Human Tissue (Living human tissue with active leukocytes and intact cellular structure).",
@@ -1606,8 +1606,8 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
       "Documented in 1 Panel(s) by Saint Carlo Acutis of the Vatican International Exhibition."
     ],
     "papalOrEcclesialApproval": "Officially Approved and Documented by the Catholic Church",
-    "currentLocation": "Saint-André de la Réunion, Réunion Island",
-    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • Saint-André de la Réunion, Réunion Island (1902 AD)"
+    "currentLocation": "St. André de la Réunion, Réunion Island",
+    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • St. André de la Réunion, Réunion Island (1902 AD)"
   },
   {
     "id": "alboraya-1348",
@@ -2030,7 +2030,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
   },
   {
     "id": "egidio",
-    "location": "Saint-Gilles-du-Gard (St. Giles)",
+    "location": "St. Gilles-du-Gard (St. Giles)",
     "country": "France",
     "year": "720 AD",
     "century": "8th Century",
@@ -2043,8 +2043,8 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
       "Documented in 1 Panel(s) by Saint Carlo Acutis of the Vatican International Exhibition."
     ],
     "papalOrEcclesialApproval": "Officially Approved and Documented by the Catholic Church",
-    "currentLocation": "Saint-Gilles-du-Gard (St. Giles), France",
-    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • Saint-Gilles-du-Gard (St. Giles), France (720 AD)"
+    "currentLocation": "St. Gilles-du-Gard (St. Giles), France",
+    "sourceAttribution": "St. Carlo Acutis Vatican Exhibition Catalogue (miracolieucaristici.org / miracolieucaristici.com) • St. Gilles-du-Gard (St. Giles), France (720 AD)"
   },
   {
     "id": "emmerich",
