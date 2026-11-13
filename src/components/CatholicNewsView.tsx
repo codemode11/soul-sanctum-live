@@ -520,30 +520,49 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
       {/* 3. OFFICIAL EMBEDDED VATICAN NEWS WIDGET */}
       <section className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs overflow-hidden">
-        <div className="p-3 sm:p-4">
-          <VaticanNewsWidgetEmbed
-            lang="en"
-            fontSize="13"
-            carouselVideoAuto="true"
-            carouselVideoTime="medium"
-          />
+        {/* Top Editorial Banner */}
+        <div className="px-4 py-3.5 sm:px-6 sm:py-4 border-b border-amber-900/15 bg-white/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-1 text-left">
+            <div className="flex items-center gap-2 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.2em] text-amber-900">
+              <Globe className="w-3.5 h-3.5 text-amber-800 shrink-0" />
+              <span>Dicastery for Communication • Rome</span>
+            </div>
+            <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900 tracking-wide">
+              Vatican News Official Live Widget
+            </h3>
+          </div>
+
+          <a
+            href="https://www.vaticannews.va/en.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 self-start sm:self-center px-3 py-1.5 rounded-lg bg-[#FAF6EE]/80 hover:bg-white border border-amber-900/20 text-amber-950 font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all shadow-2xs shrink-0"
+            title="Visit official Vatican News portal"
+          >
+            <span>vaticannews.va</span>
+            <ExternalLink className="w-3 h-3 text-amber-800" />
+          </a>
         </div>
 
-        <div className="px-5 py-3.5 text-stone-900 border-t border-stone-200/70">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-            <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4 text-amber-800 shrink-0" />
-              <h3 className="font-serif text-base sm:text-lg font-bold text-stone-900 tracking-wide">
-                Vatican News Official Live Widget
-              </h3>
-            </div>
-            <span className="text-[11px] font-serif italic text-amber-900">
-              Dicastery for Communication • vaticannews.va
-            </span>
+        {/* Framed Live Widget Stage */}
+        <div className="p-3 sm:p-5">
+          <div className="rounded-lg bg-[#FAF8F5]/85 border border-amber-900/10 p-2.5 sm:p-3.5 shadow-inner">
+            <VaticanNewsWidgetEmbed
+              lang="en"
+              fontSize="13"
+              carouselVideoAuto="true"
+              carouselVideoTime="medium"
+            />
           </div>
-          <blockquote className="mt-2 text-xs text-stone-700 font-serif italic leading-relaxed border-l-2 border-amber-700/70 pl-3">
-            &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country.&rdquo;
-            <footer className="mt-0.5 not-italic font-semibold text-amber-950">
+        </div>
+
+        {/* Papal Quote Footer Strip */}
+        <div className="px-4 py-3 sm:px-6 sm:py-3.5 border-t border-amber-900/15 bg-[#FAF6EE]/45">
+          <blockquote className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 text-xs text-stone-700 font-serif italic leading-relaxed border-l-2 border-amber-800/70 pl-3.5">
+            <p className="max-w-3xl">
+              &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country.&rdquo;
+            </p>
+            <footer className="not-italic font-cinzel text-[11px] font-bold text-amber-950 tracking-wide shrink-0 sm:pl-4">
               — In Christ, Leo XIV
             </footer>
           </blockquote>
