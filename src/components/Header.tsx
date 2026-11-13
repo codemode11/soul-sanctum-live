@@ -89,11 +89,6 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="relative z-30 text-white bg-transparent flex-1 sm:flex-initial flex flex-col">
-      {/* Luminous Eucharistic aura connecting Masthead to Altar without black tint */}
-      <div className="absolute inset-0 select-none pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_35%_35%,rgba(251,191,36,0.22)_0%,rgba(217,119,6,0.06)_45%,transparent_75%)]" />
-      </div>
-
       {/* Website Masthead */}
       <div className="relative z-10 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 pb-2.5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7 flex-1 sm:flex-initial flex flex-col">
         {layoutVariant === 'solemn-centered' ? (
@@ -142,17 +137,13 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
 
               <div className="relative">
-                <div
-                  className="absolute -inset-x-12 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(253,224,71,0.65)_0%,rgba(251,191,36,0.38)_42%,rgba(245,158,11,0.16)_68%,transparent_82%)] blur-lg pointer-events-none -z-10"
-                  aria-hidden="true"
-                />
                 <h1
                   className="relative font-cinzel select-none font-extrabold text-2xl sm:text-4xl md:text-5xl tracking-[0.2em] sm:tracking-[0.26em] text-center"
                   style={{
                     fontFamily: "'Cinzel', serif",
                     fontWeight: 800,
                     color: '#FFFDF7',
-                    textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
+                    textShadow: '1px 2px 2px rgba(0, 0, 0, 0.95), 2px 4px 10px rgba(0, 0, 0, 0.85)',
                   }}
                 >
                   SOUL SANCTUM
@@ -199,7 +190,7 @@ export const Header: React.FC<HeaderProps> = ({
                     fontFamily: "'Cinzel', serif",
                     fontWeight: 800,
                     color: '#FFFDF7',
-                    textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
+                    textShadow: '1px 2px 2px rgba(0, 0, 0, 0.95), 2px 4px 10px rgba(0, 0, 0, 0.85)',
                   }}
                 >
                   SOUL SANCTUM
@@ -257,11 +248,6 @@ export const Header: React.FC<HeaderProps> = ({
 
                 <div className="space-y-0.5 sm:space-y-1 text-left">
                   <div className="relative flex items-center gap-2 sm:gap-3">
-                    <div 
-                      className="absolute -inset-x-8 -inset-y-4 bg-[radial-gradient(ellipse_at_center,rgba(253,224,71,0.65)_0%,rgba(251,191,36,0.38)_42%,rgba(245,158,11,0.16)_68%,transparent_82%)] blur-lg pointer-events-none -z-10" 
-                      aria-hidden="true"
-                    />
-
                     <h1 
                       className="relative font-cinzel select-none transition-all duration-300 flex flex-col items-start text-left leading-[0.92]"
                       style={{ fontFamily: "'Cinzel', serif", fontWeight: 800 }}
@@ -273,7 +259,7 @@ export const Header: React.FC<HeaderProps> = ({
                           fontFamily: "'Cinzel', serif",
                           fontWeight: 800,
                           color: '#FFFDF7',
-                          textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
+                          textShadow: '1px 2px 2px rgba(0, 0, 0, 0.95), 2px 4px 10px rgba(0, 0, 0, 0.85)',
                         }}
                       >
                         SOUL
@@ -284,7 +270,7 @@ export const Header: React.FC<HeaderProps> = ({
                           fontFamily: "'Cinzel', serif",
                           fontWeight: 800,
                           color: '#FFFDF7',
-                          textShadow: '1px 2px 1px rgba(0, 0, 0, 0.95), 2px 3px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(253, 224, 71, 0.75), 0 0 24px rgba(251, 191, 36, 0.55)',
+                          textShadow: '1px 2px 2px rgba(0, 0, 0, 0.95), 2px 4px 10px rgba(0, 0, 0, 0.85)',
                         }}
                       >
                         SANCTUM
@@ -304,14 +290,14 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* Date & Liturgical Feast Controls: Frosted Glass Card for High Contrast Across All Hero Backgrounds */}
-            <div className="relative z-20 mt-auto sm:mt-0 flex flex-col items-start sm:items-end gap-1.5 text-xs w-full sm:w-auto self-stretch sm:self-start shrink-0 bg-black/55 backdrop-blur-md border border-amber-400/35 rounded-xl px-3.5 py-2.5 sm:px-4 sm:py-3 shadow-[0_8px_24px_rgba(0,0,0,0.65)]">
+            {/* Date & Liturgical Feast Controls: White Text with Black Drop Shadows */}
+            <div className="relative z-20 mt-auto sm:mt-0 flex flex-col items-start sm:items-end gap-1 text-xs w-full sm:w-auto self-stretch sm:self-start shrink-0">
               
               <div className="w-full sm:w-auto flex flex-wrap items-center justify-between sm:justify-end gap-2">
                 <div className="relative w-full sm:w-auto">
                   <div 
                     onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-                    className="flex items-center justify-between sm:justify-end gap-2 text-amber-100 hover:text-amber-200 cursor-pointer transition-colors group select-none py-0.5"
+                    className="flex items-center justify-between sm:justify-end gap-2 text-white hover:text-amber-200 cursor-pointer transition-colors group select-none py-0.5"
                     title="Open Catholic Liturgical Calendar (Feasts, Colors and Memorials)"
                     role="button"
                     tabIndex={0}
@@ -322,12 +308,12 @@ export const Header: React.FC<HeaderProps> = ({
                     }}
                   >
                     <div className="flex items-center gap-1.5">
-                      <CalendarIcon className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] shrink-0" />
-                      <span className="font-serif font-bold text-sm sm:text-base text-amber-100 group-hover:text-amber-200 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
+                      <CalendarIcon className="w-4 h-4 text-white group-hover:text-amber-200 group-hover:scale-110 transition-transform shrink-0 [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]" />
+                      <span className="font-serif font-bold text-sm sm:text-base text-white group-hover:text-amber-200 [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
                         {formattedDate}
                       </span>
                     </div>
-                    <ChevronDown className={`w-4 h-4 text-amber-300 transition-transform duration-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] ${isCalendarOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-white group-hover:text-amber-200 transition-transform duration-200 [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))] ${isCalendarOpen ? 'rotate-180' : ''}`} />
                   </div>
 
                   <LiturgicalCalendarPicker
@@ -341,12 +327,12 @@ export const Header: React.FC<HeaderProps> = ({
 
               {/* Liturgical Day Title Below Current Date */}
               <div className="flex flex-col items-start sm:items-end gap-0.5 text-left sm:text-right w-full sm:w-auto">
-                <span className="font-serif font-bold text-xs sm:text-sm text-stone-100 leading-snug whitespace-normal sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
+                <span className="font-serif font-bold text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
                   {mainTitlePart}
                 </span>
 
                 {memorialPart && (
-                  <span className="font-serif font-bold not-italic text-xs sm:text-sm text-amber-200 leading-snug whitespace-normal sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
+                  <span className="font-serif font-bold not-italic text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
                     {memorialPart}
                   </span>
                 )}

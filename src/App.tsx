@@ -627,21 +627,24 @@ export default function App() {
                 {featuredMastheadArticle.summary}
               </p>
 
-              <div className="pt-1.5 sm:pt-2 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 sm:gap-3">
-                <span className="text-[11px] sm:text-xs font-serif text-amber-200/90">
-                  By {featuredMastheadArticle.author} • {featuredMastheadArticle.publishedDate} • {featuredMastheadArticle.readTime}
+              <div className="pt-1.5 sm:pt-2 flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center gap-2.5 md:gap-3">
+                <div className="hidden md:block" aria-hidden="true" />
+                <span className="text-[11px] sm:text-xs font-serif text-amber-200/90 text-center">
+                  By {featuredMastheadArticle.author} • {featuredMastheadArticle.publishedDate}
                 </span>
-                <button
-                  onClick={() => {
-                    setActiveCatholicArticleSourceId(featuredMastheadArticle.sourceId);
-                    setActiveCatholicArticleId(featuredMastheadArticle.id);
-                    handleSelectTab('catholic-articles');
-                  }}
-                  className="inline-flex items-center min-h-[38px] px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
-                  title="Read this full story in Catholic Articles"
-                >
-                  <span>Read Full Story</span>
-                </button>
+                <div className="w-full md:w-auto flex justify-end md:justify-self-end">
+                  <button
+                    onClick={() => {
+                      setActiveCatholicArticleSourceId(featuredMastheadArticle.sourceId);
+                      setActiveCatholicArticleId(featuredMastheadArticle.id);
+                      handleSelectTab('catholic-articles');
+                    }}
+                    className="inline-flex items-center min-h-[38px] px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
+                    title="Read this full story in Catholic Articles"
+                  >
+                    <span>Read Full Story</span>
+                  </button>
+                </div>
               </div>
             </div>
             {(featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort) && (
