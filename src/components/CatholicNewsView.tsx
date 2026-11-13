@@ -519,8 +519,8 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
       </section>
 
       {/* 3. OFFICIAL EMBEDDED VATICAN NEWS WIDGET */}
-      <section className="bg-white rounded-xl border border-stone-200/90 shadow-xs overflow-hidden">
-        <div className="p-3 sm:p-4 bg-[#FAF8F5]">
+      <section className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs overflow-hidden">
+        <div className="p-3 sm:p-4">
           <VaticanNewsWidgetEmbed
             lang="en"
             fontSize="13"
@@ -529,21 +529,21 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
           />
         </div>
 
-        <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 px-5 py-3.5 text-amber-50 border-t border-amber-900/40">
+        <div className="px-5 py-3.5 text-stone-900 border-t border-stone-200/70">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
             <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4 text-amber-400 shrink-0" />
-              <h3 className="font-serif text-base sm:text-lg font-bold text-white tracking-wide">
+              <Globe className="w-4 h-4 text-amber-800 shrink-0" />
+              <h3 className="font-serif text-base sm:text-lg font-bold text-stone-900 tracking-wide">
                 Vatican News Official Live Widget
               </h3>
             </div>
-            <span className="text-[11px] font-serif italic text-amber-200/90">
+            <span className="text-[11px] font-serif italic text-amber-900">
               Dicastery for Communication • vaticannews.va
             </span>
           </div>
-          <blockquote className="mt-2 text-xs text-stone-200 font-serif italic leading-relaxed border-l-2 border-amber-400/70 pl-3">
+          <blockquote className="mt-2 text-xs text-stone-700 font-serif italic leading-relaxed border-l-2 border-amber-700/70 pl-3">
             &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country.&rdquo;
-            <footer className="mt-0.5 not-italic font-semibold text-amber-300">
+            <footer className="mt-0.5 not-italic font-semibold text-amber-950">
               — In Christ, Leo XIV
             </footer>
           </blockquote>
