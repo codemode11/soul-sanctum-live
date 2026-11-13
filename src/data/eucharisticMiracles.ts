@@ -12,8 +12,8 @@ export interface EucharisticMiracle {
     | 'Incorrupt Host' 
     | 'Levitation' 
     | 'Fire Resistance' 
-    | 'Tsunami Arrest' 
-    | 'Animal Adoration' 
+    | 'Halting a Tsunami' 
+    | 'Adoration by Animals' 
     | 'Supernatural Light' 
     | 'Apparition in Host';
   historicalContext: string;
@@ -71,7 +71,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     century: '13th Century',
     title: 'The Miracle of the Starving Mule (St. Anthony of Padua)',
     summary: 'St. Anthony of Padua challenged a Cathar skeptic by presenting the Blessed Sacrament to a mule starved for 3 days alongside fresh oats. The mule ignored the food and knelt before the Host.',
-    miracleType: 'Animal Adoration',
+    miracleType: 'Adoration by Animals',
     historicalContext: 'In Rimini, a Cathar heretic named Bonvillo challenged St. Anthony of Padua, claiming animals would choose grain over a piece of bread. St. Anthony accepted the challenge, requiring Bonvillo to starve his mule for 3 consecutive days.',
     scientificOrChurchInvestigation: 'On the 3rd day, before a vast public gathering in the town square, Bonvillo offered oats while St. Anthony held up the Blessed Sacrament. The mule ignored the oats and bent its front knees to the ground in adoration before the Host.',
     keyScientificFindings: [
@@ -247,7 +247,7 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     century: '14th Century',
     title: 'The Miracle of the Fish of Alboraya',
     summary: 'A priest carrying Viaticum fell into a flooded river; three fish caught the three dropped Hosts in their mouths and returned them intact to the priest.',
-    miracleType: 'Animal Adoration',
+    miracleType: 'Adoration by Animals',
     historicalContext: 'While crossing the Carraixet ravine to visit a dying sick parishioner, a vicar was swept away by flash floods. The ciborium opened and three Hosts floated downriver toward the sea.',
     scientificOrChurchInvestigation: 'Villagers on the shore saw three fish holding the Hosts upright in their open mouths at the river mouth. The priest brought a chalice to the shoreline, and each fish dropped its Host unharmed into the chalice.',
     papalOrEcclesialApproval: 'Promulgated by the Archdiocese of Valencia; commemorated in regional Eucharistic feasts.',
@@ -360,9 +360,9 @@ export const EUCHARISTIC_MIRACLES_DATA: EucharisticMiracle[] = [
     country: 'Colombia',
     year: '1906 AD',
     century: '20th Century',
-    title: 'The Tsunami Arrest of Tumaco',
+    title: 'Halting a Tsunami at Tumaco',
     summary: 'A massive 8.8 earthquake triggered a catastrophic tsunami heading for the island of Tumaco. Fr. Larrondo raised the Sacred Host and the 30-foot wave receded immediately.',
-    miracleType: 'Tsunami Arrest',
+    miracleType: 'Halting a Tsunami',
     historicalContext: 'On January 31, 1906, a violent undersea earthquake struck off the coast of Ecuador and Colombia, unleashing a massive tidal wave toward the low-lying island of Tumaco.',
     scientificOrChurchInvestigation: 'Fr. Gerardo Larrondo led the terrified populace to the beach holding high the Blessed Sacrament in a monstrance. As the mountain of water reached the shore, Fr. Larrondo made the Sign of the Cross over the ocean with the Host. The wave stopped instantly and receded.',
     papalOrEcclesialApproval: 'Promulgated worldwide by the Order of Augustinian Recollects and the Archdiocese of Popayán.',
