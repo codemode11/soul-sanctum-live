@@ -86,7 +86,7 @@ export const CatholicBiblesView: React.FC = () => {
   const [primaryVerses, setPrimaryVerses] = useState<BibleVerse[]>([]);
   const [secondaryVerses, setSecondaryVerses] = useState<BibleVerse[]>([]);
   const [explanatoryNotes, setExplanatoryNotes] = useState<{ verse: number; note: string }[]>([]);
-  const [sourceLabel, setSourceLabel] = useState<string>('World English Bible — Catholic Edition (WEB-CE)');
+  const [sourceLabel, setSourceLabel] = useState<string>('World English Bible Catholic Edition (WEB-CE)');
   const [isLoadingChapter, setIsLoadingChapter] = useState<boolean>(false);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
@@ -160,7 +160,7 @@ export const CatholicBiblesView: React.FC = () => {
     }> => {
       const labelForTranslation = (t: CatholicBibleTranslationId) =>
         t === 'webbe'
-          ? 'World English Bible — Catholic Edition (WEB-CE)'
+          ? 'World English Bible Catholic Edition (WEB-CE)'
           : 'Douay-Rheims Catholic Bible (Challoner Revision)';
 
       const baseNotes = await fetchChapterExplanatoryNotes(book.id, chapterNum);

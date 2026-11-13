@@ -53,9 +53,19 @@ export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps>
   // Prayers Treasury state
   const [selectedPrayer, setSelectedPrayer] = useState<CatholicPrayer>(CATHOLIC_PRAYERS_DATABASE[1]); // Our Father
   const [prayerSearch, setPrayerSearch] = useState('');
+  const [selectedPrayerCategory, setSelectedPrayerCategory] = useState<string>('All');
   const [copiedPrayerId, setCopiedPrayerId] = useState<string | null>(null);
   const [speakingPrayerId, setSpeakingPrayerId] = useState<string | null>(null);
   const treasuryStripRef = useRef<HTMLDivElement>(null);
+
+  const prayerCategories = [
+    'All',
+    'Daily and Traditional',
+    'Marian',
+    'Eucharistic and Adoration',
+    'Saints and Intercession',
+    'Prayers for the Faithful Departed'
+  ];
 
   const handleScrollTreasuryStrip = (direction: 'left' | 'right') => {
     if (!treasuryStripRef.current) return;
@@ -154,11 +164,16 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
     return matchesCat && matchesSearch;
   });
 
-  const filteredTreasuryPrayers = CATHOLIC_PRAYERS_DATABASE.filter(p =>
-    p.title.toLowerCase().includes(prayerSearch.toLowerCase()) ||
-    (p.latinTitle && p.latinTitle.toLowerCase().includes(prayerSearch.toLowerCase())) ||
-    p.englishText.toLowerCase().includes(prayerSearch.toLowerCase())
-  );
+  const filteredTreasuryPrayers = CATHOLIC_PRAYERS_DATABASE.filter(p => {
+    const matchesCategory = selectedPrayerCategory === 'All' || p.category === selectedPrayerCategory;
+    const q = prayerSearch.toLowerCase().trim();
+    const matchesSearch =
+      !q ||
+      p.title.toLowerCase().includes(q) ||
+      (p.latinTitle && p.latinTitle.toLowerCase().includes(q)) ||
+      p.englishText.toLowerCase().includes(q);
+    return matchesCategory && matchesSearch;
+  });
 
   const handleStepPrayer = (delta: number) => {
     if (filteredTreasuryPrayers.length === 0) return;
@@ -180,31 +195,132 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       
-      {/* Prayer Requests Banner with Add Request CTA */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <Flame className="w-5 h-5 text-amber-400" />
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-              Communion of Saints • Fraternal Intercession
-            </span>
-          </div>
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-            Community Prayer Requests Wall
-          </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
-            "Bear one another's burdens, and so fulfill the law of Christ" (Galatians 6:2). Post your intentions, pray a decade for a brother or sister in Christ, and light a vigil candle. (The intentions below are only templates.)
-          </p>
-        </div>
+      {/* Top Banner — Context-aware for Treasury of Prayers vs. Community Prayer Wall */}
+      {activeSection === 'treasury' ? (
+        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-br from-[#2B1A0F] via-[#3B2314] to-[#1C1008] rounded-xl text-amber-50 shadow-xl border border-[#A67B4E]/65 relative overflow-hidden flex flex-col justify-between gap-3">
+          <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-amber-300/15 blur-3xl" />
 
-        <button
-          onClick={() => setNewRequestModalOpen(true)}
-          className="px-5 py-3 rounded-lg bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Submit Intention</span>
-        </button>
-      </div>
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-[11px] font-cinzel font-bold uppercase tracking-[0.18em] text-[#DFB991]">
+                <BookOpen className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                <span>Thesaurus Precum Catholicarum</span>
+                <span aria-hidden="true">·</span>
+                <span>{CATHOLIC_PRAYERS_DATABASE.length} Bilingual Prayers</span>
+              </div>
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FDF8F0] tracking-wide">
+                Treasury of Prayers
+              </h2>
+              <p className="text-xs sm:text-sm text-[#EAD7C0] font-serif-sacred max-w-2xl leading-relaxed">
+                &ldquo;Ask, and it shall be given you; seek, and you shall find; knock, and it shall be opened to you.&rdquo; (Matthew 7:7) — Classic English and Ecclesiastical Latin devotions.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
+              className={`px-4 py-2 rounded-lg text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start whitespace-nowrap ${
+                speakingPrayerId === selectedPrayer.id
+                  ? 'bg-amber-600 hover:bg-amber-500 text-white border border-amber-300/60'
+                  : 'bg-[#1D1109]/90 hover:bg-[#4E2F1B] text-amber-100 border border-[#C89F72]/60'
+              }`}
+            >
+              {speakingPrayerId === selectedPrayer.id ? (
+                <>
+                  <VolumeX className="w-4 h-4 text-white" />
+                  <span>Stop Audio</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 text-amber-300" />
+                  <span>Listen to Prayer</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* Interactive Filter & Search Utility Strip */}
+          <div className="relative z-10 pt-3 border-t border-[#8B5A2B]/45 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="flex flex-wrap items-center gap-2 flex-1">
+              <select
+                value={selectedPrayerCategory}
+                onChange={(e) => {
+                  const nextCat = e.target.value;
+                  setSelectedPrayerCategory(nextCat);
+                  const firstMatch = CATHOLIC_PRAYERS_DATABASE.find(
+                    p => (nextCat === 'All' || p.category === nextCat) &&
+                      (!prayerSearch.trim() ||
+                        p.title.toLowerCase().includes(prayerSearch.toLowerCase().trim()) ||
+                        (p.latinTitle && p.latinTitle.toLowerCase().includes(prayerSearch.toLowerCase().trim())) ||
+                        p.englishText.toLowerCase().includes(prayerSearch.toLowerCase().trim()))
+                  );
+                  if (firstMatch) setSelectedPrayer(firstMatch);
+                }}
+                aria-label="Filter prayers by category"
+                className="px-3 py-1.5 rounded-lg bg-[#1A0F08]/95 border border-[#8B5A2B]/70 text-xs font-cinzel font-semibold text-amber-100 focus:outline-none focus:border-amber-400 cursor-pointer"
+              >
+                {prayerCategories.map(cat => (
+                  <option key={cat} value={cat}>
+                    {cat === 'All'
+                      ? `All Categories (${CATHOLIC_PRAYERS_DATABASE.length})`
+                      : `${cat} (${CATHOLIC_PRAYERS_DATABASE.filter(p => p.category === cat).length})`}
+                  </option>
+                ))}
+              </select>
+
+              <div className="relative flex-1 min-w-[200px] max-w-sm">
+                <Search className="w-3.5 h-3.5 text-[#C89F72] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={prayerSearch}
+                  onChange={(e) => setPrayerSearch(e.target.value)}
+                  placeholder="Search prayer title, Latin, or phrase..."
+                  className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-[#1A0F08]/90 border border-[#8B5A2B]/70 text-xs text-amber-50 placeholder-[#C89F72]/70 focus:outline-none focus:border-amber-400"
+                />
+                {prayerSearch && (
+                  <button
+                    type="button"
+                    onClick={() => setPrayerSearch('')}
+                    aria-label="Clear prayer search"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[#C89F72] hover:text-white cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="text-[11px] font-cinzel font-semibold text-[#DFB991] shrink-0 tabular-nums">
+              {filteredTreasuryPrayers.length} {filteredTreasuryPrayers.length === 1 ? 'prayer' : 'prayers'} shown
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <Flame className="w-5 h-5 text-amber-400" />
+              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+                Communion of Saints • Fraternal Intercession
+              </span>
+            </div>
+            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+              Community Prayer Requests Wall
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
+              &ldquo;Bear one another&apos;s burdens, and so fulfill the law of Christ&rdquo; (Galatians 6:2). Post your intentions, pray a decade for a brother or sister in Christ, and light a vigil candle. (The intentions below are only templates.)
+            </p>
+          </div>
+
+          <button
+            onClick={() => setNewRequestModalOpen(true)}
+            className="px-5 py-3 rounded-lg bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start sm:self-auto"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Submit Intention</span>
+          </button>
+        </div>
+      )}
 
       {/* Switcher Buttons below the Prayer Requests Banner: Treasury of Prayers & Community Prayer Wall */}
       <div className="flex rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
@@ -357,23 +473,39 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 ref={treasuryStripRef}
                 className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth flex-1"
               >
-                {filteredTreasuryPrayers.map(p => {
-                  const isSelected = p.id === selectedPrayer.id;
-                  return (
+                {filteredTreasuryPrayers.length === 0 ? (
+                  <div className="flex items-center gap-3 text-xs font-serif-sacred text-stone-700 px-2 py-1">
+                    <span>No prayers match your search.</span>
                     <button
-                      key={p.id}
-                      data-prayer-id={p.id}
-                      onClick={() => setSelectedPrayer(p)}
-                      className={`px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                        isSelected
-                          ? 'bg-amber-900 text-amber-50 shadow-xs'
-                          : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-                      }`}
+                      type="button"
+                      onClick={() => {
+                        setPrayerSearch('');
+                        setSelectedPrayerCategory('All');
+                      }}
+                      className="px-2.5 py-1 rounded bg-amber-900 text-amber-50 font-cinzel font-semibold cursor-pointer"
                     >
-                      {p.title}
+                      Reset
                     </button>
-                  );
-                })}
+                  </div>
+                ) : (
+                  filteredTreasuryPrayers.map(p => {
+                    const isSelected = p.id === selectedPrayer.id;
+                    return (
+                      <button
+                        key={p.id}
+                        data-prayer-id={p.id}
+                        onClick={() => setSelectedPrayer(p)}
+                        className={`px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                          isSelected
+                            ? 'bg-amber-900 text-amber-50 shadow-xs'
+                            : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                        }`}
+                      >
+                        {p.title}
+                      </button>
+                    );
+                  })
+                )}
               </div>
 
               <button
@@ -393,17 +525,20 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
               <div>
-                <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 text-[10px] font-bold uppercase tracking-wider font-cinzel">
-                  {selectedPrayer.category}
-                </span>
+                <div className="flex flex-wrap items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-amber-800">
+                  <span>{selectedPrayer.category}</span>
+                  {selectedPrayer.latinTitle && (
+                    <>
+                      <span aria-hidden="true">·</span>
+                      <span className="font-serif-sacred italic normal-case tracking-normal text-amber-900">
+                        {selectedPrayer.latinTitle}
+                      </span>
+                    </>
+                  )}
+                </div>
                 <h3 className="font-cinzel text-2xl font-bold text-stone-900 mt-1">
                   {selectedPrayer.title}
                 </h3>
-                {selectedPrayer.latinTitle && (
-                  <p className="text-xs text-amber-900 font-serif-sacred italic">
-                    {selectedPrayer.latinTitle}
-                  </p>
-                )}
               </div>
 
               <div className="flex items-center gap-2">

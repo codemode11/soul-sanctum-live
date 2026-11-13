@@ -58,8 +58,8 @@ export interface ChapterPayload {
 export const CATHOLIC_BIBLE_TRANSLATIONS: CatholicBibleTranslation[] = [
   {
     id: 'webbe',
-    name: 'World English Bible — Catholic Edition',
-    shortName: 'World English Catholic (WEB-CE)',
+    name: 'World English Bible Catholic Edition',
+    shortName: 'World English Bible Catholic Edition (WEB-CE)',
     year: '2020',
     language: 'English (Modern)',
     imprimaturNote: 'Includes the complete Catholic Deuterocanonical books in accessible contemporary English.',
