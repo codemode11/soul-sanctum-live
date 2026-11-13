@@ -33,6 +33,9 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
     'https://catholiceducation.org/feed/',
     'https://crisismagazine.com/feed/',
   ],
+  'church-life-journal': [
+    'https://churchlifejournal.nd.edu/articles.atom',
+  ],
   cbcp: [
     'https://cbcpnews.net/cbcpnews/feed/',
     'https://www.vaticannews.va/en.rss.xml',

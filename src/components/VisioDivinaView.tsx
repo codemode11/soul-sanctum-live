@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { 
   Sparkles, 
   Eye, 
-  Heart, 
-  MessageSquare, 
   Maximize2, 
-  BookOpen, 
-  ChevronRight,
-  Flame,
   Volume2,
   VolumeX,
   Settings,
-  ChevronDown
+  ChevronDown,
+  Copy,
+  Check
 } from 'lucide-react';
 import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { SacredMasterpiece } from '../types';
@@ -28,6 +25,40 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
   const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4>(1);
   const [isReadingAloud, setIsReadingAloud] = useState(false);
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('sanctum_visio_font_size');
+      if (saved === 'normal' || saved === 'large' || saved === 'xlarge') return saved;
+    }
+    return 'normal';
+  });
+
+  const fontSizes: Array<'normal' | 'large' | 'xlarge'> = ['normal', 'large', 'xlarge'];
+
+  const handleSetFontSize = (size: 'normal' | 'large' | 'xlarge') => {
+    setFontSize(size);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('sanctum_visio_font_size', size);
+    }
+  };
+
+  const increaseFontSize = () => {
+    const idx = fontSizes.indexOf(fontSize);
+    if (idx < fontSizes.length - 1) handleSetFontSize(fontSizes[idx + 1]);
+  };
+
+  const decreaseFontSize = () => {
+    const idx = fontSizes.indexOf(fontSize);
+    if (idx > 0) handleSetFontSize(fontSizes[idx - 1]);
+  };
+
+  const reflectionTextClass =
+    fontSize === 'normal'
+      ? 'text-base leading-relaxed'
+      : fontSize === 'large'
+      ? 'text-lg leading-relaxed'
+      : 'text-xl leading-loose';
 
   const steps = [
     {
@@ -67,51 +98,155 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
     }
   };
 
+  const handleCopyText = () => {
+    const text = `Visio Divina — ${selectedArt.title} (${selectedArt.artist}, ${selectedArt.year})\n\nScripture: ${selectedArt.scriptureReference}\n\nTheological Reflection:\n${selectedArt.theologicalReflection}`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="max-w-5xl mx-auto space-y-6 pb-12 animate-fadeIn">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 animate-fadeIn">
       
-      {/* Visio Divina Banner with Settings Drop-Down Icon */}
-      <div className="bg-[#FAF7F2]/95 backdrop-blur-xl rounded-xl border border-amber-300/80 text-stone-900 shadow-xl relative overflow-hidden">
-        <div className="px-5 py-3 sm:px-6 flex items-center justify-between gap-3">
-          <div className="space-y-0.5 text-left min-w-0">
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-amber-700" />
-              <span className="font-cinzel text-xs uppercase tracking-widest text-amber-800 font-bold truncate">
+      {/* Visio Divina Banner (Patterned after Daily Mass Readings & Bible Commentary) */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        
+        {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-1.5 my-auto">
+            {/* Line 1: Kicker Badge & Monastic Subtitle */}
+            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950">
+                <Eye className="w-3.5 h-3.5" />
+                <span>Sacred Art Contemplation</span>
+              </span>
+              <span className="text-xs sm:text-sm text-amber-300/80 font-cinzel uppercase tracking-wider">
                 The Ancient Monastic Way of Divine Seeing
               </span>
             </div>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-wide drop-shadow-2xs truncate">
+
+            {/* Line 2: Main Title */}
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight">
               Visio Divina
             </h2>
+
+            {/* Line 3: Contemplative Subtitle */}
+            <p className="text-xs sm:text-sm text-stone-300 font-serif">
+              Contemplating God through the luminous beauty of Catholic sacred art
+            </p>
           </div>
 
-          {/* Settings Drop-Down Icon Button */}
-          <button
-            type="button"
-            onClick={() => setIsTopSettingsOpen(prev => !prev)}
-            aria-expanded={isTopSettingsOpen}
-            className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
-              isTopSettingsOpen
-                ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
-                : 'bg-white/80 hover:bg-white text-[#8B5A2B] hover:text-[#25170F] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
-            }`}
-            title={isTopSettingsOpen ? 'Hide Contemplative Guide' : 'Show Contemplative Guide'}
-            aria-label={isTopSettingsOpen ? 'Hide Contemplative Guide' : 'Show Contemplative Guide'}
-          >
-            <Settings className="w-3.5 h-3.5 text-[#8B5A2B] shrink-0" />
-            <ChevronDown
-              className={`w-3.5 h-3.5 text-[#8B5A2B] shrink-0 transition-transform duration-200 ${
-                isTopSettingsOpen ? 'rotate-180' : ''
+          {/* Lower Row: Settings Toggle Button */}
+          <div className="flex items-center justify-end mt-auto pt-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsTopSettingsOpen(prev => !prev)}
+              aria-expanded={isTopSettingsOpen}
+              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+                isTopSettingsOpen
+                  ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                  : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
               }`}
-            />
-          </button>
+              title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+              aria-label={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+            >
+              <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                  isTopSettingsOpen ? 'rotate-180' : ''
+                }`}
+              />
+            </button>
+          </div>
         </div>
 
-        {/* Dropdown contemplative description */}
+        {/* RECTANGLE 2: Settings Panel (Hidden by default) */}
         {isTopSettingsOpen && (
-          <div className="px-5 py-3.5 sm:px-6 border-t border-amber-200/80 bg-amber-50/70 text-stone-800 space-y-2 animate-in fade-in">
-            <p className="text-xs sm:text-sm font-serif leading-relaxed">
-              Contemplating God through the luminous beauty of Catholic sacred art. Just as Lectio Divina listens to the Word of God, Visio Divina beholds the presence of the Divine Mystery through holy images.
+          <div className="px-5 py-3.5 sm:px-6 bg-white/55 backdrop-blur-md border-t border-white/60 flex flex-col justify-center gap-2.5 rounded-b-xl animate-fadeIn">
+            <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 p-2.5 rounded-lg bg-stone-100/90 border border-stone-200 shadow-2xs text-xs text-stone-700">
+              {/* 1. Listen to Contemplation */}
+              <button
+                onClick={handleToggleSpeak}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer shadow-xs ${
+                  isReadingAloud
+                    ? 'bg-[#6B4423] text-white animate-pulse'
+                    : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
+                }`}
+                title="Listen to Visio Divina Contemplation"
+                aria-label="Listen to Visio Divina Contemplation"
+              >
+                {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-300" />}
+                <span>{isReadingAloud ? 'Stop Audio' : 'Listen to Contemplation'}</span>
+              </button>
+
+              {/* 2. Text Size */}
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="font-medium text-stone-600 text-xs">Text Size:</span>
+                <div className="flex items-center gap-1 bg-stone-200/90 p-0.5 rounded-md border border-stone-300 shadow-2xs">
+                  <button
+                    onClick={decreaseFontSize}
+                    disabled={fontSize === 'normal'}
+                    className="w-6 h-6 flex items-center justify-center rounded-sm text-xs font-bold text-stone-700 hover:text-stone-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Decrease font size"
+                    aria-label="Decrease font size"
+                  >
+                    A-
+                  </button>
+                  <button
+                    onClick={() => handleSetFontSize('normal')}
+                    className={`px-2 py-1 text-xs rounded-sm font-semibold transition-all cursor-pointer ${
+                      fontSize === 'normal'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                    }`}
+                  >
+                    A
+                  </button>
+                  <button
+                    onClick={() => handleSetFontSize('large')}
+                    className={`px-2 py-1 text-xs rounded-sm font-semibold transition-all cursor-pointer ${
+                      fontSize === 'large'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                    }`}
+                  >
+                    A+
+                  </button>
+                  <button
+                    onClick={() => handleSetFontSize('xlarge')}
+                    className={`px-2 py-1 text-xs rounded-sm font-semibold transition-all cursor-pointer ${
+                      fontSize === 'xlarge'
+                        ? 'bg-[#6B4423] text-white shadow-xs font-bold ring-1 ring-[#8B5A2B]'
+                        : 'text-stone-700 hover:text-stone-900 hover:bg-stone-100'
+                    }`}
+                  >
+                    A++
+                  </button>
+                  <button
+                    onClick={increaseFontSize}
+                    disabled={fontSize === 'xlarge'}
+                    className="w-6 h-6 flex items-center justify-center rounded-sm text-xs font-bold text-stone-700 hover:text-stone-950 hover:bg-white/80 disabled:opacity-35 disabled:hover:bg-transparent cursor-pointer transition-all"
+                    title="Increase font size"
+                    aria-label="Increase font size"
+                  >
+                    A+
+                  </button>
+                </div>
+              </div>
+
+              {/* 3. Copy Reflection */}
+              <button
+                onClick={handleCopyText}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 shadow-2xs transition-colors cursor-pointer shrink-0"
+                title="Copy Reflection"
+              >
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-stone-500" />}
+                <span>{copied ? 'Copied' : 'Copy Text'}</span>
+              </button>
+            </div>
+
+            <p className="text-xs font-serif text-stone-700 leading-relaxed px-1">
+              Just as <span className="italic font-semibold">Lectio Divina</span> listens prayerfully to the Word of God, <span className="italic font-semibold">Visio Divina</span> beholds the presence of the Divine Mystery through sacred art.
             </p>
           </div>
         )}
@@ -236,7 +371,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
               Step {activeStep}: {steps[activeStep - 1].name} — {steps[activeStep - 1].subtitle}
             </span>
           </div>
-          <p className="text-stone-700 text-base leading-relaxed">
+          <p className={`text-stone-700 ${reflectionTextClass}`}>
             {steps[activeStep - 1].description}
           </p>
         </div>
@@ -247,12 +382,12 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
             <span className="font-bold text-xs uppercase tracking-wider text-amber-800 block">
               Associated Scripture:
             </span>
-            <p className="text-sm italic leading-relaxed">
+            <p className={`italic ${reflectionTextClass}`}>
               {selectedArt.scriptureReference}
             </p>
           </div>
 
-          <div className="space-y-2 font-serif text-stone-800 text-base leading-relaxed">
+          <div className={`space-y-2 font-serif text-stone-800 ${reflectionTextClass}`}>
             <h4 className="font-bold text-stone-900">Theological Reflection:</h4>
             <p className="whitespace-pre-line">
               {selectedArt.theologicalReflection}

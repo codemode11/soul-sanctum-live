@@ -923,6 +923,9 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
     'https://catholiceducation.org/feed/',
     'https://crisismagazine.com/feed/'
   ],
+  'church-life-journal': [
+    'https://churchlifejournal.nd.edu/articles.atom'
+  ],
   'cbcp': [
     'https://cbcpnews.net/cbcpnews/feed/',
     'https://www.vaticannews.va/en.rss.xml'
@@ -1248,6 +1251,68 @@ app.get('/api/catholic-article-full', async (req, res) => {
     });
   } catch (err: any) {
     return res.status(502).json({ error: err?.message || 'Article fetch error' });
+  }
+});
+
+app.get('/api/catholic-instagram', async (req, res) => {
+  try {
+    const rawUser = String(req.query.username || 'aleteia_en').replace(/[^a-zA-Z0-9._]/g, '');
+    const embedUrl = `https://www.instagram.com/${rawUser}/embed/?_t=${Date.now()}`;
+
+    const response = await fetch(embedUrl, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        Pragma: 'no-cache'
+      },
+      signal: AbortSignal.timeout(7500)
+    });
+
+    if (!response.ok) {
+      throw new Error(`Instagram Embed HTTP ${response.status}`);
+    }
+
+    const html = await response.text();
+    let shortcodes: string[] = [];
+    const posts: any[] = [];
+
+    const rawMatch = html.match(/"contextJSON":"((?:\\.|[^"\\])*)"/);
+    if (rawMatch) {
+      try {
+        const unescaped = JSON.parse('"' + rawMatch[1] + '"');
+        const parsed = JSON.parse(unescaped);
+        const ctx = parsed?.context || {};
+        const brokenShortcodes = new Set(['DfagCq8D3sp', 'DfYQhEYAB8J', 'DfWDi7HDNuW', 'DfPX9L3D8mF']);
+        const mediaList = Array.isArray(ctx.graphql_media) ? ctx.graphql_media : [];
+        for (const item of mediaList) {
+          const sm = item?.shortcode_media;
+          if (!sm || !sm.shortcode || brokenShortcodes.has(sm.shortcode)) continue;
+          shortcodes.push(sm.shortcode);
+        }
+      } catch {
+        // Fallback to regex extraction below
+      }
+    }
+
+    if (shortcodes.length === 0) {
+      const matches = Array.from(html.matchAll(/shortcode\\?":\\?"([A-Za-z0-9_-]{11})\\?"/g)).map(m => m[1]);
+      shortcodes = Array.from(new Set(matches)).slice(0, 12);
+    }
+
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    return res.json({
+      username: rawUser,
+      shortcodes,
+      posts,
+      fetchedAt: Date.now()
+    });
+  } catch (err: any) {
+    return res.status(502).json({ error: err?.message || 'Instagram fetch error', shortcodes: [], posts: [] });
   }
 });
 

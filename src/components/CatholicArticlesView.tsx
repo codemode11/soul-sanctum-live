@@ -410,10 +410,10 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
                 type="button"
                 onClick={handleRefreshAllFeeds}
                 className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 active:scale-[0.99] border border-amber-500/40 text-amber-200 text-xs font-cinzel font-semibold transition-all cursor-pointer shrink-0"
-                title="Refresh all 9 Catholic RSS feeds simultaneously"
+                title={`Refresh all ${CATHOLIC_RSS_SOURCES.length} Catholic RSS feeds simultaneously`}
               >
                 <RefreshCw className={`w-3.5 h-3.5 text-amber-400 ${isRefreshingAll ? 'animate-spin' : ''}`} />
-                <span>{isRefreshingAll ? 'Syncing All 9…' : 'Refresh All 9 Feeds'}</span>
+                <span>{isRefreshingAll ? `Syncing All ${CATHOLIC_RSS_SOURCES.length}…` : `Refresh All ${CATHOLIC_RSS_SOURCES.length} Feeds`}</span>
               </button>
             </div>
             <span className="text-[11px] font-serif text-amber-200/80">

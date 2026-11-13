@@ -107,6 +107,18 @@ export const CatholicSocialView: React.FC = () => {
 
   const ewtnAdorationChapels = useMemo(() => [
     {
+      id: 'ewtn-adoration-melbourne',
+      epgChannelId: '',
+      label: 'St. Benedict\'s Perpetual Adoration Shrine',
+      location: 'Melbourne, Australia • 24/7 Exposition of the Blessed Sacrament',
+      scheduleBadge: 'LIVE 24/7 • MORNING, AFTERNOON & EVENING',
+      streamUrl: undefined as string | undefined,
+      embedUrl: 'https://www.youtube.com/embed/qz8YE61BoXM?autoplay=1&rel=0',
+      youtubeUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
+      portalUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
+      description: 'Continuous 24/7 live Eucharistic Adoration before the Most Blessed Sacrament exposed on the altar at St. Benedict\'s Parish Shrine (daytime in Oceania during US evenings).'
+    },
+    {
       id: 'ewtn-adoration-tyburn',
       epgChannelId: 'adoration',
       label: 'Tyburn Convent Shrine • EWTN Great Britain',
@@ -167,18 +179,6 @@ export const CatholicSocialView: React.FC = () => {
         : 'EWTN\'s Irondale Chapel camera broadcasts daily from 9:30 AM to 6:00 PM ET. During evening and overnight hours, this channel automatically relays 24/7 Perpetual Adoration from the Chapel of St. Ignatius of Loyola in Manresa.'
     },
     {
-      id: 'ewtn-adoration-melbourne',
-      epgChannelId: '',
-      label: 'St. Benedict\'s Perpetual Adoration Shrine',
-      location: 'Melbourne, Australia • 24/7 Exposition of the Blessed Sacrament',
-      scheduleBadge: 'LIVE 24/7 • MORNING, AFTERNOON & EVENING',
-      streamUrl: undefined as string | undefined,
-      embedUrl: 'https://www.youtube.com/embed/qz8YE61BoXM?autoplay=1&rel=0',
-      youtubeUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
-      portalUrl: 'https://www.youtube.com/watch?v=qz8YE61BoXM',
-      description: 'Continuous 24/7 live Eucharistic Adoration before the Most Blessed Sacrament exposed on the altar at St. Benedict\'s Parish Shrine (daytime in Oceania during US evenings).'
-    },
-    {
       id: 'ewtn-adoration-shalom',
       epgChannelId: '',
       label: 'Shalom World Perpetual Adoration Chapel',
@@ -193,7 +193,7 @@ export const CatholicSocialView: React.FC = () => {
   ], [irondaleAdorationLive]);
 
   const [selectedTvChannelId, setSelectedTvChannelId] = useState<string>('ewtn-us-global');
-  const [selectedAdorationId, setSelectedAdorationId] = useState<string>('ewtn-adoration-tyburn');
+  const [selectedAdorationId, setSelectedAdorationId] = useState<string>('ewtn-adoration-melbourne');
   const [ewtnStageKey, setEwtnStageKey] = useState<number>(0);
 
   // Fetch live EWTN EPG schedule and verify live stream URLs
@@ -703,58 +703,86 @@ export const CatholicSocialView: React.FC = () => {
           ===================================================================== */}
       {(activePlatform === 'all' || activePlatform === 'ewtn') && (
         <section className="rounded-2xl overflow-hidden bg-gradient-to-br from-[#17120E] via-[#1F1610] to-[#120D0A] border border-amber-500/40 shadow-xl text-stone-100">
-          {/* Header Bar */}
-          <div className="px-4 py-3.5 sm:px-6 sm:py-4 bg-gradient-to-r from-[#241307] via-[#3A1D0D] to-[#241307] border-b border-amber-500/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="space-y-1 text-left">
-              <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-widest text-amber-300">
-                <span>Eternal Word Television Network</span>
-                <span aria-hidden="true">·</span>
-                <span>Founded by Mother Angelica</span>
+          {/* Enhanced EWTN Banner */}
+          <div className="px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-r from-stone-900 via-[#2A160B] to-stone-900 border-b border-amber-500/35 flex flex-col justify-between gap-4">
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-3">
+              <div className="space-y-1.5 text-left">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs bg-amber-500 text-stone-950 font-cinzel text-[11px] font-bold tracking-wider uppercase shadow-xs shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
+                    <span>EWTN Global Network</span>
+                  </span>
+                  <span className="text-xs font-cinzel font-bold uppercase tracking-widest text-amber-300/95">
+                    Eternal Word Television Network · Founded by Mother Angelica
+                  </span>
+                </div>
+
+                <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 tracking-normal leading-snug">
+                  EWTN Live Television, Global Catholic Radio &amp; 24/7 Adoration
+                </h3>
+
+                <p className="text-xs sm:text-sm text-stone-300 font-serif max-w-3xl">
+                  Watch live regional television feeds from Irondale, listen to 24/7 worldwide Catholic radio, or unite in Perpetual Eucharistic Adoration across international sanctuaries.
+                </p>
               </div>
-              <h3 className="font-cinzel text-base sm:text-xl font-bold text-white">
-                EWTN Live Television, Global Catholic Radio &amp; 24/7 Eucharistic Adoration
-              </h3>
+
+              <a
+                href="https://www.ewtn.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border border-[#8B5A2B]/60 hover:border-[#D4A373]/80 text-xs font-cinzel font-semibold transition-all self-start shrink-0 shadow-xs"
+                title="Open Official EWTN Website (ewtn.com)"
+              >
+                <span>ewtn.com</span>
+                <ExternalLink className="w-3.5 h-3.5 text-amber-400" />
+              </a>
             </div>
 
-            {/* 3-Mode EWTN Switcher */}
-            <div className="flex items-center gap-1 bg-black/50 p-1 rounded-lg border border-amber-500/30 self-start md:self-center shrink-0">
-              <button
-                type="button"
-                onClick={() => setEwtnHubTab('tv')}
-                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
-                  ewtnHubTab === 'tv'
-                    ? 'bg-amber-600 text-stone-950 shadow-xs'
-                    : 'text-stone-300 hover:text-white'
-                }`}
-              >
-                <Tv className="w-3.5 h-3.5" />
-                <span>EWTN Television</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setEwtnHubTab('radio')}
-                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
-                  ewtnHubTab === 'radio'
-                    ? 'bg-amber-600 text-stone-950 shadow-xs'
-                    : 'text-stone-300 hover:text-white'
-                }`}
-              >
-                <Radio className="w-3.5 h-3.5" />
-                <span>EWTN Radio</span>
-                {isRadioPlaying && <span className="text-[10px] font-mono uppercase">(Playing)</span>}
-              </button>
-              <button
-                type="button"
-                onClick={() => setEwtnHubTab('adoration')}
-                className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
-                  ewtnHubTab === 'adoration'
-                    ? 'bg-amber-600 text-stone-950 shadow-xs'
-                    : 'text-stone-300 hover:text-white'
-                }`}
-              >
-                <Flame className="w-3.5 h-3.5" />
-                <span>24/7 Adoration</span>
-              </button>
+            {/* Bottom Control Row: 3-Mode EWTN Broadcast Switcher */}
+            <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-amber-500/20">
+              <span className="text-xs font-serif text-amber-200/80 hidden sm:inline">
+                Select EWTN Broadcast Stream:
+              </span>
+
+              <div className="flex flex-wrap items-center gap-1.5 bg-[#120B07]/90 p-1 rounded-lg border border-[#8B5A2B]/50 shadow-inner">
+                <button
+                  type="button"
+                  onClick={() => setEwtnHubTab('tv')}
+                  className={`px-3.5 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                    ewtnHubTab === 'tv'
+                      ? 'bg-amber-500 text-stone-950 shadow-xs'
+                      : 'text-stone-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Tv className="w-3.5 h-3.5" />
+                  <span>EWTN Television</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEwtnHubTab('radio')}
+                  className={`px-3.5 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                    ewtnHubTab === 'radio'
+                      ? 'bg-amber-500 text-stone-950 shadow-xs'
+                      : 'text-stone-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Radio className="w-3.5 h-3.5" />
+                  <span>EWTN Radio</span>
+                  {isRadioPlaying && <span className="text-[10px] font-mono uppercase">(Playing)</span>}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEwtnHubTab('adoration')}
+                  className={`px-3.5 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                    ewtnHubTab === 'adoration'
+                      ? 'bg-amber-500 text-stone-950 shadow-xs'
+                      : 'text-stone-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Flame className="w-3.5 h-3.5" />
+                  <span>24/7 Adoration</span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -1049,14 +1077,14 @@ export const CatholicSocialView: React.FC = () => {
             {/* TAB 3: EWTN 24/7 PERPETUAL EUCHARISTIC ADORATION */}
             {ewtnHubTab === 'adoration' && (
               <div className="space-y-4 text-left">
-                <div className="p-3.5 rounded-xl bg-amber-950/40 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="p-3.5 rounded-xl bg-gradient-to-r from-[#3A2112] via-[#2A180D] to-[#3A2112] border border-[#8B5A2B]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-sm">
                   <div className="flex items-center gap-2.5">
-                    <Flame className="w-4 h-4 text-amber-400 shrink-0" />
-                    <p className="text-xs font-serif text-amber-100">
-                      <strong className="font-cinzel text-amber-300">24/7 Morning, Afternoon &amp; Evening Coverage:</strong> Five chapels stream Perpetual Adoration 24 hours a day (Morning &amp; Evening), and EWTN&apos;s Irondale Chapel streams live 9:30 AM – 6:00 PM ET with an automatic Evening Relay after 6:00 PM ET.
+                    <Flame className="w-4 h-4 text-[#D4A373] shrink-0" />
+                    <p className="text-xs font-serif text-[#FAF5EE]">
+                      <strong className="font-cinzel text-[#E8D8C6]">24/7 Morning, Afternoon &amp; Evening Coverage:</strong> Five chapels stream Perpetual Adoration 24 hours a day (Morning &amp; Evening), and EWTN&apos;s Irondale Chapel streams live 9:30 AM – 6:00 PM ET with an automatic Evening Relay after 6:00 PM ET.
                     </p>
                   </div>
-                  <span className="px-2.5 py-1 rounded-md bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-cinzel font-bold text-emerald-300 whitespace-nowrap shrink-0">
+                  <span className="px-2.5 py-1 rounded-md bg-[#EFE5D8] border border-[#C8B094] text-[10px] font-cinzel font-bold text-[#3B2314] whitespace-nowrap shrink-0">
                     6 DISTINCT LIVE CHAPELS
                   </span>
                 </div>
@@ -1067,49 +1095,49 @@ export const CatholicSocialView: React.FC = () => {
                     return (
                       <div
                         key={chapel.id}
-                        className={`p-4 rounded-xl border transition-all flex flex-col justify-between gap-3 ${
+                        className={`p-5 rounded-xl border transition-all flex flex-col justify-between gap-3.5 ${
                           isActiveChapel
-                            ? 'bg-amber-950/55 border-amber-400 shadow-md'
-                            : 'bg-black/50 border-amber-500/35 hover:border-amber-400/60'
+                            ? 'bg-gradient-to-br from-white via-[#FAF5EE] to-[#E6D7C3] border-[#8B5A2B] ring-2 ring-amber-400/60 shadow-[0_8px_24px_rgba(78,47,26,0.22)]'
+                            : 'bg-gradient-to-br from-white/95 via-[#FAF5EE]/95 to-[#EFE5D8]/95 border-[#D6C2AC] hover:border-[#8B5A2B] shadow-sm hover:shadow-md'
                         }`}
                       >
-                        <div className="space-y-1.5">
+                        <div className="space-y-2">
                           <div className="flex flex-wrap items-center justify-between gap-1.5">
-                            <span className="text-[10px] font-cinzel font-bold uppercase tracking-wider text-amber-400">
+                            <span className="text-[10.5px] font-cinzel font-bold uppercase tracking-wider text-[#5C3A21]">
                               {chapel.location}
                             </span>
-                            <span className="px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-500/30 text-[9px] font-cinzel font-bold text-emerald-300 tracking-wider uppercase">
+                            <span className="px-2 py-0.5 rounded-md bg-[#EFE5D8] border border-[#C8B094] text-[9.5px] font-cinzel font-bold text-[#3B2314] tracking-wider uppercase">
                               {chapel.scheduleBadge}
                             </span>
                           </div>
-                          <h4 className="font-cinzel text-base font-bold text-white">
+                          <h4 className="font-cinzel text-base font-bold text-[#2A180D]">
                             {chapel.label}
                           </h4>
-                          <p className="text-xs font-serif text-stone-300 leading-relaxed">
+                          <p className="text-xs font-serif text-[#4E2F1A] leading-relaxed">
                             {chapel.description}
                           </p>
                         </div>
-                        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
+                        <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-[#D6C2AC]/80">
                           <button
                             type="button"
                             onClick={() => setSelectedAdorationId(chapel.id)}
-                            className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                            className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-xs ${
                               isActiveChapel
-                                ? 'bg-amber-600 text-stone-950'
-                                : 'bg-amber-900/70 hover:bg-amber-800 text-amber-100 border border-amber-500/40'
+                                ? 'bg-[#3B2314] text-[#FAF5EE] border border-[#2A180D]'
+                                : 'bg-[#5C3A21] hover:bg-[#3B2314] text-[#FAF5EE] border border-[#4E2F1A]'
                             }`}
                           >
-                            <Flame className="w-3.5 h-3.5" />
+                            <Flame className="w-3.5 h-3.5 text-[#D4A373]" />
                             <span>{isActiveChapel ? 'Playing Above' : 'Watch Live Adoration'}</span>
                           </button>
                           <a
                             href={chapel.portalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-3 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1.5 whitespace-nowrap"
+                            className="px-3 py-2 rounded-lg bg-white hover:bg-[#F5EDE2] text-[#3B2314] border border-[#C8B094] text-xs font-cinzel font-semibold flex items-center gap-1.5 whitespace-nowrap transition-colors"
                           >
                             <span>Portal</span>
-                            <ExternalLink className="w-3 h-3 text-amber-400" />
+                            <ExternalLink className="w-3 h-3 text-[#70482B]" />
                           </a>
                         </div>
                       </div>

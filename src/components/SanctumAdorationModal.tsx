@@ -34,7 +34,7 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'contemplation' | 'prayers' | 'hymns' | 'history'>('contemplation');
   const [altarMode, setAltarMode] = useState<'art' | 'ewtn-live'>('art');
-  const [ewtnChapel, setEwtnChapel] = useState<'tyburn' | 'niepokalanow' | 'skd' | 'manresa'>('tyburn');
+  const [ewtnChapel, setEwtnChapel] = useState<'st-benedict' | 'tyburn' | 'niepokalanow' | 'skd' | 'manresa'>('st-benedict');
   const [timerSeconds, setTimerSeconds] = useState<number | null>(null);
   const [timerInitial, setTimerInitial] = useState<number | null>(null);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
@@ -198,6 +198,7 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
             {altarMode === 'ewtn-live' && (
               <div className="flex flex-wrap items-center gap-2">
                 {[
+                  { id: 'st-benedict', label: "St. Benedict's Perpetual Adoration Shrine (24/7)" },
                   { id: 'tyburn', label: 'EWTN Tyburn Convent (24/7)' },
                   { id: 'niepokalanow', label: 'EWTN Niepokalanów (24/7)' },
                   { id: 'skd', label: 'St. Katharine Drexel USA (24/7)' },
@@ -218,7 +219,9 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
                 ))}
                 <a
                   href={
-                    ewtnChapel === 'tyburn'
+                    ewtnChapel === 'st-benedict'
+                      ? 'https://www.youtube.com/watch?v=qz8YE61BoXM'
+                      : ewtnChapel === 'tyburn'
                       ? 'https://www.ewtn.co.uk/live/adoration'
                       : ewtnChapel === 'niepokalanow'
                         ? 'https://ewtn.pl/adoracja/'
@@ -243,7 +246,9 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
               <EwtnLiveVideoPlayer
                 key={ewtnChapel}
                 embedUrl={
-                  ewtnChapel === 'tyburn'
+                  ewtnChapel === 'st-benedict'
+                    ? 'https://www.youtube.com/embed/qz8YE61BoXM?autoplay=1&rel=0'
+                    : ewtnChapel === 'tyburn'
                     ? 'https://www.youtube.com/embed/9spEO2iFGKI?autoplay=1&rel=0'
                     : ewtnChapel === 'niepokalanow'
                       ? 'https://www.youtube.com/embed/Orc7lHFSqNY?autoplay=1&rel=0'
@@ -252,7 +257,9 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
                         : 'https://www.youtube.com/embed/W4WApqZDbks?autoplay=1&rel=0'
                 }
                 title={
-                  ewtnChapel === 'tyburn'
+                  ewtnChapel === 'st-benedict'
+                    ? "St. Benedict's Perpetual Adoration Shrine • 24/7 Eucharistic Adoration"
+                    : ewtnChapel === 'tyburn'
                     ? 'Tyburn Convent Shrine • EWTN Great Britain 24/7 Perpetual Adoration'
                     : ewtnChapel === 'niepokalanow'
                       ? 'Sanctuary of St. Maximilian Kolbe • EWTN Niepokalanów 24/7 Adoration'
@@ -262,7 +269,9 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
                 }
                 subtitle="LIVE 24/7 • Morning, Afternoon & Evening Exposition"
                 portalUrl={
-                  ewtnChapel === 'tyburn'
+                  ewtnChapel === 'st-benedict'
+                    ? 'https://www.youtube.com/watch?v=qz8YE61BoXM'
+                    : ewtnChapel === 'tyburn'
                     ? 'https://www.ewtn.co.uk/live/adoration'
                     : ewtnChapel === 'niepokalanow'
                       ? 'https://ewtn.pl/adoracja/'

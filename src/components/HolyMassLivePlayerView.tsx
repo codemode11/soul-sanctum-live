@@ -579,7 +579,18 @@ Live on Soul Sanctum Catholic Sanctuary.`;
             return (
               <button
                 key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
+                onClick={() => {
+                  setSelectedCategory(cat.id);
+                  if (cat.id === 'adoration') {
+                    const defaultAdoration =
+                      HOLY_MASS_LIVESTREAMS.find(s => s.id === 'st-benedicts-perpetual-adoration-shrine') ||
+                      HOLY_MASS_LIVESTREAMS.find(s => s.category === 'adoration');
+                    if (defaultAdoration) {
+                      setSelectedStream(defaultAdoration);
+                      setStreamKey(Date.now());
+                    }
+                  }
+                }}
                 className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-2.5 group ${
                   isActive
                     ? 'bg-amber-900/95 text-amber-50 border-amber-700 ring-2 ring-amber-600/40 shadow-md'

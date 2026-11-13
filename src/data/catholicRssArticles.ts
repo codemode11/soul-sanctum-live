@@ -106,6 +106,15 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     websiteUrl: 'https://www.catholiceducation.org',
     tagline: 'In-depth scholarship on Catholic history, philosophy, bioethics, and apologetics',
     location: 'Vancouver / International'
+  },
+  {
+    id: 'church-life-journal',
+    name: 'Church Life Journal — University of Notre Dame',
+    shortName: 'Church Life Journal',
+    rssUrl: 'https://churchlifejournal.nd.edu/articles.atom',
+    websiteUrl: 'https://churchlifejournal.nd.edu',
+    tagline: 'Theology, liturgy, and culture from the McGrath Institute for Church Life at the University of Notre Dame',
+    location: 'Notre Dame, Indiana, USA'
   }
 ];
 
@@ -156,9 +165,7 @@ export function parseRssXmlToArticles(
 ): CatholicArticleItem[] {
   const parsedWithTs: { item: CatholicArticleItem; ts: number; order: number }[] = [];
   const seenTitles = new Set<string>();
-  const rawItems = xmlText.includes('<item')
-    ? xmlText.split(/<item[\s>]/i).slice(1)
-    : xmlText.split(/<entry[\s>]/i).slice(1);
+  const rawItems = xmlText.split(/<(?:item|entry)[\s>]/i).slice(1);
 
   const todayFormatted = new Date().toLocaleDateString('en-US', {
     month: 'long',
@@ -177,16 +184,16 @@ export function parseRssXmlToArticles(
     const atomLinkMatch =
       raw.match(/<link[^>]*rel=["']alternate["'][^>]*href=["']([^"']+)["'][^>]*\/?>/i) ||
       raw.match(/<link[^>]*href=["']([^"']+)["'][^>]*rel=["']alternate["'][^>]*\/?>/i) ||
-      raw.match(/<link(?![^>]*rel=["']self["'])[^>]*href=["']([^"']+)["'][^>]*\/?>/i);
+      raw.match(/<link(?![^>]*rel=["'](?:self|enclosure)["'])[^>]*href=["']([^"']+)["'][^>]*\/?>/i);
     const descMatch =
       raw.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/i) ||
       raw.match(/<description[^>]*>([\s\S]*?)<\/description>/i) ||
-      raw.match(/<summary><!\[CDATA\[([\s\S]*?)\]\]><\/summary>/i) ||
+      raw.match(/<summary[^>]*>\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*<\/summary>/i) ||
       raw.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i);
     const contentMatch =
       raw.match(/<content:encoded><!\[CDATA\[([\s\S]*?)\]\]><\/content:encoded>/i) ||
       raw.match(/<content:encoded[^>]*>([\s\S]*?)<\/content:encoded>/i) ||
-      raw.match(/<content(?:\s[^>]*)?><!\[CDATA\[([\s\S]*?)\]\]><\/content>/i) ||
+      raw.match(/<content(?:\s[^>]*)?>\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*<\/content>/i) ||
       raw.match(/<content(?:\s[^>]*)?>([\s\S]*?)<\/content>/i);
     const creatorMatch =
       raw.match(/<dc:creator><!\[CDATA\[([\s\S]*?)\]\]><\/dc:creator>/i) ||
@@ -202,6 +209,8 @@ export function parseRssXmlToArticles(
     const mediaMatch =
       raw.match(/<media:content[^>]+url=["']([^"']+\.(?:jpg|jpeg|png|webp)[^"']*)["']/i) ||
       raw.match(/<enclosure[^>]+url=["']([^"']+\.(?:jpg|jpeg|png|webp)[^"']*)["']/i) ||
+      raw.match(/<link[^>]+rel=["']enclosure["'][^>]+href=["']([^"']+\.(?:jpg|jpeg|png|webp)[^"']*)["']/i) ||
+      raw.match(/<link[^>]+href=["']([^"']+\.(?:jpg|jpeg|png|webp)[^"']*)["'][^>]+rel=["']enclosure["']/i) ||
       raw.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i) ||
       (contentMatch && contentMatch[1].match(/<img[^>]+src=["']([^"']+)["']/i)) ||
       (descMatch && descMatch[1].match(/<img[^>]+src=["']([^"']+)["']/i));
@@ -224,7 +233,7 @@ export function parseRssXmlToArticles(
     let cleanSummary = stripHtmlAndFormatParagraphs(rawDesc);
     const cleanContent = stripHtmlAndFormatParagraphs(rawFullContent);
 
-    if (!cleanSummary || cleanSummary.length < 25 || /^cna$/i.test(cleanSummary)) {
+    if (!cleanSummary || cleanSummary.length < 70 || /^cna$/i.test(cleanSummary)) {
       cleanSummary = cleanContent;
     }
 
@@ -594,6 +603,28 @@ Likewise, the documented Eucharistic miracles recognized by the Church—such as
 As Signs & Wonders for Our Times continually emphasizes in its apostolate, the proper response to Heaven’s graces is daily conversion of heart: returning promptly to the Sacrament of Confession, praying the family Rosary with meditation on the Mysteries, wearing the Brown Scapular and Miraculous Medal with fidelity, and spending quiet, loving time adoring Our Eucharistic Lord on the altar.`,
     link: 'https://sign.org',
     categories: ['Marian Devotion', 'Eucharistic Miracles', 'Prayer'],
+    isFullContentLoaded: true
+  },
+  // Church Life Journal — University of Notre Dame
+  {
+    id: 'clj-magnifica-humanitas-augustinian',
+    sourceId: 'church-life-journal',
+    sourceName: 'Church Life Journal — University of Notre Dame',
+    title: 'Magnifica Humanitas: An Encyclical in an Augustinian Register',
+    author: 'John C. Cavadini',
+    publishedDate: 'November 9, 2026',
+    readTime: '9 min read',
+    summary: 'John C. Cavadini of the McGrath Institute for Church Life at the University of Notre Dame explores how Pope Leo XIV’s encyclical Magnifica Humanitas speaks in a distinctively Augustinian theological register of gratitude, grace, and Christian humanism.',
+    content: `I propose the thought in what follows that Pope Leo’s Magnifica Humanitas is a modern day cultural intervention spoken in an Augustinian register. I am using the word “register” in the sense that an organist might speak of the range of pipes turned on or off by a stop, or in the sense of a particular range of voice performance as in “upper” or “lower” register. I am proposing that one way of more deeply understanding and therefore more efficaciously receiving Pope Leo’s recent encyclical is to sensitize ourselves so that we can “hear” it in the Augustinian register in which it evidently speaks.
+
+I say “evidently” because it makes an overt claim on an Augustinian voice by its citation of some of the key passages and ideas in all of Augustine’s oeuvre, but, I would hasten to add, just because someone quotes passages from Augustine does not mean they are speaking in an Augustinian register. Anyone can use prooftexts from any given author and re-voice them into a different register. In fact, one of the most decisive bombshells of Augustinian interventions in recent magisterial history does not mention Augustine at all, and yet is no less profoundly Augustinian for that, and I mean Pope Francis’s encyclical Laudato Sí. I have argued elsewhere that unless you hear the Augustinian register of that encyclical, its full impact goes unrealized. I am proposing the same here for Pope Leo’s recent encyclical. This way of working has the additional benefit of allowing us to hear the Tradition of the Church as a living reality, one which can take voice and speak in new tones and keys that we can readily recognize as characteristic of our own contemporary situation, without yet becoming something different.
+
+To start at the very beginning, the most characteristic note in the Augustinian register is taken from 1 Corinthians 4: “What have you that you did not receive? If then you received it, why do you boast as if it were not a gift?” (1 Cor 4:7). I propose that the most characteristic note in the Augustinian register is that of gratitude for gifts given, including and especially our own being, created from nothing as a sheer and utter gift.
+
+When humanity forgets that its existence, reason, and relational capacity are gifts received from the Creator, human greatness turns inward and fractures into technological domination or self-referential autonomy. By contrast, in the Augustinian register articulated by Pope Leo XIV, human dignity shines forth precisely when the human heart recognizes itself as capax Dei—capable of receiving God’s love and pouring itself out in charity for neighbor.`,
+    link: 'https://churchlifejournal.nd.edu/articles/magnifica-humanitas-an-encyclical-in-an-augustinian-register/',
+    imageUrl: 'https://churchlifejournal.nd.edu/assets/686581/1900px_gozzoli_augustine_teaching_rhetoric_in_rome.jpg',
+    categories: ['Theology', 'Magisterium', 'St. Augustine', 'University of Notre Dame'],
     isFullContentLoaded: true
   }
 ];
