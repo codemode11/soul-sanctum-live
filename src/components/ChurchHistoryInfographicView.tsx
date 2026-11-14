@@ -148,33 +148,33 @@ export const ChurchHistoryInfographicView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn text-stone-900">
+    <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 animate-fadeIn text-slate-900">
       
-      {/* 1. Header Banner and Section Navigation (Clean Charcoal and Gold - No Maroon) */}
-      <div className="rounded-xl bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 border border-amber-500/30 p-6 sm:p-8 text-amber-100 shadow-2xl relative overflow-hidden">
+      {/* 1. Header Banner and Section Navigation (Slate Blue & Bleached Sand) */}
+      <div className="rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 p-6 sm:p-8 text-[#F9F6F0] shadow-xl relative overflow-hidden">
         {/* Decorative background glow */}
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
 
         <div className="relative z-10 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-amber-500/20 pb-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700/70 pb-4">
             <div className="flex items-center gap-2">
-              <span className="font-cinzel text-xs uppercase tracking-widest text-amber-300 font-bold">
+              <span className="font-cinzel text-xs uppercase tracking-widest text-[#DFD5C3] font-bold">
                 HISTORIA ET POPULUS ECCLESIAE
               </span>
-              <span className="text-stone-500">·</span>
-              <span className="text-xs text-stone-400 font-serif">AD 33 – 2026</span>
+              <span className="text-slate-500">·</span>
+              <span className="text-xs text-[#EAE2D3] font-serif">AD 33 – 2026</span>
             </div>
 
             {/* Recitation Voice Option */}
-            <div className="flex items-center gap-2 bg-black/50 border border-amber-500/30 rounded-xl p-1 text-xs">
-              <span className="text-stone-400 pl-1.5 hidden sm:inline font-serif">Recitation:</span>
+            <div className="flex items-center gap-2 bg-slate-950/60 border border-slate-700/80 rounded-xl p-1 text-xs">
+              <span className="text-[#DFD5C3] pl-1.5 hidden sm:inline font-serif">Recitation:</span>
               <button
                 type="button"
                 onClick={() => handleVoiceSelect('ava-grace')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer flex items-center gap-1 ${
                   recitationVoice === 'ava-grace'
-                    ? 'bg-amber-600 text-white font-bold shadow-xs'
-                    : 'text-stone-300 hover:text-amber-200'
+                    ? 'bg-[#F4EFE6] text-slate-900 font-bold shadow-xs'
+                    : 'text-[#EAE2D3] hover:text-[#FBF9F5]'
                 }`}
                 title="Ava Grace (Prioritized Devotional Voice)"
               >
@@ -185,8 +185,8 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                 onClick={() => handleVoiceSelect('david')}
                 className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer flex items-center gap-1 ${
                   recitationVoice === 'david'
-                    ? 'bg-amber-600 text-white font-bold shadow-xs'
-                    : 'text-stone-300 hover:text-amber-200'
+                    ? 'bg-[#F4EFE6] text-slate-900 font-bold shadow-xs'
+                    : 'text-[#EAE2D3] hover:text-[#FBF9F5]'
                 }`}
                 title="Microsoft David (Traditional Solemn Male Voice)"
               >
@@ -196,10 +196,10 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
 
           <div className="space-y-1.5">
-            <h1 className="font-serif-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            <h1 className="font-serif-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#FBF9F5] tracking-tight leading-tight">
               History, Councils, and Infographics of the Church
             </h1>
-            <p className="text-sm sm:text-base text-stone-300 font-serif italic max-w-3xl leading-relaxed">
+            <p className="text-sm sm:text-base text-[#EAE2D3] font-serif italic max-w-3xl leading-relaxed">
               Explore 2,000 years of unbroken apostolic history from Pentecost to the present, the 21 Ecumenical Councils, worldwide Catholic demographics, and extraordinary milestones.
             </p>
           </div>
@@ -218,15 +218,15 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveSection(tab.id as MainSection)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border whitespace-nowrap ${
                     isActive
-                      ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white border-amber-400/60 shadow-lg scale-102'
-                      : 'bg-black/40 hover:bg-black/60 text-stone-300 border-amber-500/20 hover:border-amber-400/40'
+                      ? 'bg-[#F4EFE6] text-slate-900 border-[#DFD5C3] shadow-sm'
+                      : 'bg-slate-800/90 hover:bg-slate-700 text-[#EAE2D3] border-slate-600/70'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-amber-200' : 'text-amber-400'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#334E68]' : 'text-[#DFD5C3]'}`} />
                   <span>{tab.label}</span>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-sans ${isActive ? 'bg-black/30 text-amber-200' : 'bg-white/10 text-stone-400'}`}>
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-sans ${isActive ? 'bg-slate-900/10 text-slate-800' : 'bg-slate-950/40 text-[#DFD5C3]'}`}>
                     {tab.count}
                   </span>
                 </button>
@@ -236,27 +236,38 @@ export const ChurchHistoryInfographicView: React.FC = () => {
         </div>
       </div>
 
-      {/* SECTION 1: 2,000-YEAR CHURCH HISTORY TIMELINE */}
+      {/* SECTION 1: 2,000-YEAR CHURCH HISTORY TIMELINE (Full Unified Panel) */}
       {activeSection === 'timeline' && (
-        <div className="space-y-6">
+        <div className="w-full bg-[#FBF9F5] rounded-xl border border-[#DFD6C7] shadow-md overflow-hidden">
           
-          {/* Timeline Toolbar: Era filter and Search */}
-          <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200/90 shadow-md space-y-4">
+          {/* Integrated Timeline Header & Filters */}
+          <div className="p-5 sm:p-6 md:p-7 bg-[#F4EFE6]/90 border-b border-[#D8CFC0] space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <History className="w-5 h-5 text-amber-700" />
-                <h2 className="font-cinzel text-lg font-bold text-stone-900 tracking-wide">
-                  Chronological Epochs and Milestones
-                </h2>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <History className="w-5 h-5 text-[#334E68] shrink-0" />
+                  <h2 className="font-cinzel text-lg sm:text-xl font-bold text-slate-900 tracking-wide">
+                    Chronological Epochs and Milestones
+                  </h2>
+                </div>
+                <p className="text-xs sm:text-sm text-slate-600 font-serif pl-7">
+                  <span className="tabular-nums font-medium text-slate-800">{filteredEvents.length}</span> of {CHURCH_TIMELINE_EVENTS.length} milestones
+                  {selectedEra !== 'all' && (
+                    <>
+                      <span className="mx-1.5 text-slate-400">·</span>
+                      <span className="text-[#334E68] font-medium">{CHURCH_ERAS_INFO[selectedEra].name} ({CHURCH_ERAS_INFO[selectedEra].period})</span>
+                    </>
+                  )}
+                </p>
               </div>
 
               {/* Ecumenical Councils Button */}
               <button
                 onClick={() => setShowCouncilsDrawer(prev => !prev)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-cinzel font-bold transition-colors cursor-pointer self-start md:self-auto"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#EAE2D3]/75 hover:bg-[#E2D8C6] text-slate-900 border border-[#D4C8B4] text-xs font-cinzel font-bold transition-colors cursor-pointer self-start md:self-auto whitespace-nowrap shrink-0"
                 title="View Major Ecumenical Councils of the Church"
               >
-                <Scroll className="w-4 h-4 text-amber-700" />
+                <Scroll className="w-4 h-4 text-[#334E68]" />
                 <span>{showCouncilsDrawer ? 'Hide Councils Guide' : 'Ecumenical Councils (Nicaea to Vatican II)'}</span>
               </button>
             </div>
@@ -265,10 +276,10 @@ export const ChurchHistoryInfographicView: React.FC = () => {
             <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
               <button
                 onClick={() => setSelectedEra('all')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-cinzel whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-cinzel whitespace-nowrap shrink-0 transition-all cursor-pointer ${
                   selectedEra === 'all'
-                    ? 'bg-amber-900 text-white font-bold shadow-xs'
-                    : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                    ? 'bg-[#334E68] text-[#FBF9F5] font-bold shadow-xs'
+                    : 'bg-[#FBF9F5] hover:bg-[#EAE2D3]/70 text-slate-700 border border-[#D8CFC0]'
                 }`}
               >
                 All (2,000 Years)
@@ -280,14 +291,14 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   <button
                     key={eraKey}
                     onClick={() => setSelectedEra(eraKey)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-serif whitespace-nowrap transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-serif whitespace-nowrap shrink-0 transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-amber-900 text-white font-bold shadow-xs'
-                        : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                        ? 'bg-[#334E68] text-[#FBF9F5] font-bold shadow-xs'
+                        : 'bg-[#FBF9F5] hover:bg-[#EAE2D3]/70 text-slate-700 border border-[#D8CFC0]'
                     }`}
                   >
                     <span>{era.name}</span>
-                    <span className="text-[10px] opacity-75 ml-1.5 font-sans">({era.period})</span>
+                    <span className="text-[10px] opacity-80 ml-1.5 font-sans tabular-nums">({era.period})</span>
                   </button>
                 );
               })}
@@ -295,44 +306,54 @@ export const ChurchHistoryInfographicView: React.FC = () => {
 
             {/* Search Input */}
             <div className="relative">
-              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 value={timelineSearch}
                 onChange={(e) => setTimelineSearch(e.target.value)}
                 placeholder="Search history by event, saint, pope, council, or doctrine (e.g. Pentecost, Aquinas, Trent, Guadalupe, Nicaea)..."
-                className="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs sm:text-sm font-serif focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                className="w-full pl-10 pr-10 py-2.5 bg-[#FBF9F5] border border-[#D8CFC0] rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 font-serif focus:outline-none focus:ring-2 focus:ring-[#334E68]/35 focus:border-[#334E68]"
               />
+              {timelineSearch && (
+                <button
+                  type="button"
+                  onClick={() => setTimelineSearch('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1 cursor-pointer"
+                  aria-label="Clear timeline search"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Optional Councils Reference Drawer */}
+          {/* Optional Councils Reference Drawer (Inside Full Panel) */}
           {showCouncilsDrawer && (
-            <div className="bg-[#FAF7F2] rounded-xl p-5 border border-amber-300 shadow-md space-y-4 animate-fadeIn">
-              <div className="flex items-center justify-between border-b border-amber-200/80 pb-3">
+            <div className="bg-[#EFE9DC]/75 p-5 sm:p-6 md:p-7 border-b border-[#D8CFC0] space-y-4 animate-fadeIn">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#D8CFC0] pb-3">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-amber-800" />
-                  <h3 className="font-cinzel text-base font-bold text-amber-950">
+                  <ShieldCheck className="w-5 h-5 text-[#334E68]" />
+                  <h3 className="font-cinzel text-base font-bold text-slate-900">
                     The 21 Ecumenical Councils of the Universal Catholic Church
                   </h3>
                 </div>
-                <span className="text-xs text-stone-500 font-serif">Apostolic Magisterium</span>
+                <span className="text-xs text-slate-600 font-serif">Apostolic Magisterium</span>
               </div>
-              <p className="text-xs text-stone-600 font-serif leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 font-serif leading-relaxed">
                 Ecumenical Councils represent the solemn gathering of bishops under the authority of the Pope to definitively articulate dogma, protect against heresy, and govern the universal Church.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
                 {MAJOR_ECUMENICAL_COUNCILS.map((c) => (
-                  <div key={c.number} className="p-3.5 bg-white rounded-xl border border-stone-200/80 shadow-xs space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-cinzel font-bold text-amber-900 text-xs">
+                  <div key={c.number} className="p-3.5 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0] space-y-1.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-cinzel font-bold text-[#334E68] text-xs">
                         #{c.number}. {c.name}
                       </span>
-                      <span className="text-[11px] font-sans font-semibold text-stone-500">{c.year}</span>
+                      <span className="text-[11px] font-sans font-semibold text-slate-500 tabular-nums shrink-0">{c.year}</span>
                     </div>
-                    <div className="text-[11px] text-amber-800 font-serif">Pope: {c.pope}</div>
-                    <p className="text-xs text-stone-700 font-serif line-clamp-3">
+                    <div className="text-[11px] text-[#486581] font-serif font-medium">Pope: {c.pope}</div>
+                    <p className="text-xs text-slate-700 font-serif line-clamp-3">
                       <strong>Dogma:</strong> {c.keyDogma}
                     </p>
                   </div>
@@ -341,88 +362,112 @@ export const ChurchHistoryInfographicView: React.FC = () => {
             </div>
           )}
 
-          {/* Timeline Cards Container */}
-          <div className="space-y-4 relative before:absolute before:inset-0 before:left-4 sm:before:left-8 before:w-0.5 before:bg-amber-300/60 before:z-0">
-            {filteredEvents.map((event, idx) => {
-              const isEventSpeaking = isSpeaking && speakingItemId === event.id;
-              const eraMeta = CHURCH_ERAS_INFO[event.era];
+          {/* Full-Panel Vertical Timeline Stream */}
+          <div className="p-5 sm:p-7 md:p-8">
+            {filteredEvents.length === 0 ? (
+              <div className="py-12 text-center space-y-3">
+                <p className="text-base font-serif text-slate-600">
+                  No historical milestones match your current era filter or search query.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedEra('all');
+                    setTimelineSearch('');
+                  }}
+                  className="px-4 py-2 rounded-lg bg-[#334E68] hover:bg-slate-800 text-[#FBF9F5] text-xs font-cinzel font-bold transition-colors cursor-pointer"
+                >
+                  Reset Timeline Filters
+                </button>
+              </div>
+            ) : (
+              <div className="relative before:absolute before:top-3 before:bottom-3 before:left-3.5 sm:before:left-4 before:w-0.5 before:bg-gradient-to-b before:from-[#334E68]/80 before:via-[#486581]/55 before:to-[#829AB1]/40 before:z-0">
+                {filteredEvents.map((event, idx) => {
+                  const isEventSpeaking = isSpeaking && speakingItemId === event.id;
+                  const eraMeta = CHURCH_ERAS_INFO[event.era];
 
-              return (
-                <div key={event.id} className="relative z-10 pl-10 sm:pl-16">
-                  {/* Timeline Node Icon */}
-                  <div className="absolute left-2 sm:left-6 -translate-x-1/2 top-5 w-6 h-6 rounded-full bg-amber-900 border-2 border-amber-200 shadow-md flex items-center justify-center text-white text-[10px] font-bold">
-                    {idx + 1}
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="bg-white rounded-xl border border-stone-200/90 shadow-md hover:shadow-lg transition-all p-5 sm:p-6 space-y-3">
-                    
-                    {/* Header: Year, Era, Actions */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3">
-                      <div className="flex items-center gap-2">
-                        <span className="font-cinzel text-lg sm:text-xl font-extrabold text-amber-950">
-                          {event.year}
-                        </span>
-                        <span className="text-stone-300">·</span>
-                        <span className="text-xs font-serif text-amber-800 font-medium">
-                          {eraMeta.name}
-                        </span>
+                  return (
+                    <article
+                      key={event.id}
+                      className="relative z-10 pl-10 sm:pl-12 pb-7 mb-7 border-b border-[#E5DEC9] last:border-b-0 last:pb-0 last:mb-0"
+                    >
+                      {/* Timeline Node Icon (Inside Full Panel Rail) */}
+                      <div className="absolute left-3.5 sm:left-4 -translate-x-1/2 top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#334E68] border-2 border-[#EAE2D3] shadow-sm flex items-center justify-center text-[#FBF9F5] text-xs font-cinzel font-bold tabular-nums">
+                        {idx + 1}
                       </div>
 
-                      <div className="flex items-center gap-1.5">
-                        <button
-                          onClick={() => handleSpeakText(event.id, `${event.title}. Year: ${event.year}. ${event.description} Theological Significance: ${event.theologicalSignificance}`)}
-                          className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                            isEventSpeaking
-                              ? 'bg-amber-600 text-white animate-pulse'
-                              : 'bg-stone-100 hover:bg-amber-100 text-amber-900'
-                          }`}
-                          title={`Listen to this event in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
-                        >
-                          {isEventSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                        </button>
+                      <div className="space-y-3">
+                        {/* Header: Year, Era, Location & Audio Action */}
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                            <span className="font-cinzel text-lg sm:text-xl font-extrabold text-slate-900 tabular-nums">
+                              {event.year}
+                            </span>
+                            <span className="text-[#C9BFA9]" aria-hidden="true">·</span>
+                            <span className="text-xs sm:text-sm font-serif text-[#334E68] font-semibold">
+                              {eraMeta.name}
+                            </span>
+                            <span className="text-[#C9BFA9] hidden sm:inline" aria-hidden="true">·</span>
+                            <span className="text-xs sm:text-sm text-slate-600 font-serif">
+                              {event.location}
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => handleSpeakText(event.id, `${event.title}. Year: ${event.year}. ${event.description} Theological Significance: ${event.theologicalSignificance}`)}
+                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer shrink-0 border ${
+                              isEventSpeaking
+                                ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68]'
+                                : 'bg-[#EFE9DC] hover:bg-[#E5DEC9] text-slate-800 border-[#D8CFC0]'
+                            }`}
+                            title={`Listen to this event in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
+                          >
+                            {isEventSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                            <span className="hidden sm:inline">{isEventSpeaking ? 'Stop' : 'Listen'}</span>
+                          </button>
+                        </div>
+
+                        {/* Title and Subtitle */}
+                        <div className="space-y-0.5">
+                          <h3 className="font-serif-heading text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
+                            {event.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-slate-600 font-serif italic">
+                            {event.subtitle}
+                          </p>
+                        </div>
+
+                        {/* Description Prose */}
+                        <p className="text-sm sm:text-base text-slate-700 font-serif leading-relaxed">
+                          {event.description}
+                        </p>
+
+                        {/* Theological Significance Callout */}
+                        <div className="p-4 sm:p-5 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] text-sm sm:text-base text-slate-800 font-serif space-y-1">
+                          <span className="font-bold text-[#334E68] font-cinzel text-xs sm:text-sm block uppercase tracking-wider">
+                            Theological and Historical Impact
+                          </span>
+                          <p className="leading-relaxed text-sm sm:text-base">{event.theologicalSignificance}</p>
+                        </div>
+
+                        {/* Footer Meta: Key Figures and Document Reference */}
+                        <div className="pt-1 flex flex-wrap items-center justify-between gap-2 text-sm text-slate-700 font-serif">
+                          <div>
+                            <strong className="text-slate-900 font-bold">Key Figures:</strong> {event.keyFigures.join(', ')}
+                          </div>
+                          {event.scriptureOrDocumentRef && (
+                            <span className="italic text-[#334E68] font-medium text-xs sm:text-sm">
+                              Ref: {event.scriptureOrDocumentRef}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Title and Subtitle */}
-                    <div>
-                      <h3 className="font-serif-heading text-lg sm:text-xl font-bold text-stone-900 leading-snug">
-                        {event.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-stone-500 font-serif italic">
-                        {event.subtitle} • {event.location}
-                      </p>
-                    </div>
-
-                    {/* Description Prose */}
-                    <p className="text-sm sm:text-base text-stone-700 font-serif leading-relaxed">
-                      {event.description}
-                    </p>
-
-                    {/* Theological Significance Box */}
-                    <div className="p-4 sm:p-5 rounded-xl bg-amber-50/75 border border-amber-200/90 text-sm sm:text-base text-stone-800 font-serif space-y-1.5">
-                      <span className="font-bold text-amber-950 font-cinzel text-xs sm:text-sm block uppercase tracking-wider">
-                        Theological and Historical Impact:
-                      </span>
-                      <p className="leading-relaxed text-sm sm:text-base">{event.theologicalSignificance}</p>
-                    </div>
-
-                    {/* Footer Meta: Key Figures and Document Reference */}
-                    <div className="pt-1.5 flex flex-wrap items-center justify-between gap-2 text-sm sm:text-base text-stone-700 font-serif">
-                      <div>
-                        <strong className="text-stone-900 font-bold">Key Figures:</strong> {event.keyFigures.join(', ')}
-                      </div>
-                      {event.scriptureOrDocumentRef && (
-                        <span className="italic text-amber-900 font-medium text-xs sm:text-sm">
-                          Ref: {event.scriptureOrDocumentRef}
-                        </span>
-                      )}
-                    </div>
-
-                  </div>
-                </div>
-              );
-            })}
+                    </article>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
         </div>
@@ -440,50 +485,50 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           {/* Key Metric Headline KPI Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             
-            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
-              <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
+            <div className="bg-[#FBF9F5] rounded-xl p-4 sm:p-5 border border-[#DFD6C7] shadow-sm text-center space-y-1">
+              <span className="font-cinzel text-xs text-slate-600 uppercase tracking-wider font-semibold block">
                 Total Baptized Catholics
               </span>
-              <div className="text-2xl sm:text-3xl font-extrabold text-amber-900 font-cinzel tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#334E68] font-cinzel tabular-nums">
                 {GLOBAL_CATHOLIC_STATISTICS.formattedTotal}
               </div>
-              <span className="text-[11px] text-stone-500 font-serif block">
+              <span className="text-[11px] text-slate-600 font-serif block">
                 {GLOBAL_CATHOLIC_STATISTICS.percentageOfWorld}% of Earth's population
               </span>
             </div>
 
-            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
-              <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
+            <div className="bg-[#FBF9F5] rounded-xl p-4 sm:p-5 border border-[#DFD6C7] shadow-sm text-center space-y-1">
+              <span className="font-cinzel text-xs text-slate-600 uppercase tracking-wider font-semibold block">
                 Daily Holy Masses
               </span>
-              <div className="text-2xl sm:text-3xl font-extrabold text-amber-900 font-cinzel tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#334E68] font-cinzel tabular-nums">
                 415,000+
               </div>
-              <span className="text-[11px] text-stone-500 font-serif block">
+              <span className="text-[11px] text-slate-600 font-serif block">
                 Celebrated in 195+ nations daily
               </span>
             </div>
 
-            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
-              <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
+            <div className="bg-[#FBF9F5] rounded-xl p-4 sm:p-5 border border-[#DFD6C7] shadow-sm text-center space-y-1">
+              <span className="font-cinzel text-xs text-slate-600 uppercase tracking-wider font-semibold block">
                 Catholic Schools
               </span>
-              <div className="text-2xl sm:text-3xl font-extrabold text-amber-900 font-cinzel tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#334E68] font-cinzel tabular-nums">
                 141,250
               </div>
-              <span className="text-[11px] text-stone-500 font-serif block">
+              <span className="text-[11px] text-slate-600 font-serif block">
                 35.4 Million students educated
               </span>
             </div>
 
-            <div className="bg-white rounded-xl p-4 sm:p-5 border border-stone-200 shadow-md text-center space-y-1">
-              <span className="font-cinzel text-xs text-stone-500 uppercase tracking-wider font-semibold block">
+            <div className="bg-[#FBF9F5] rounded-xl p-4 sm:p-5 border border-[#DFD6C7] shadow-sm text-center space-y-1">
+              <span className="font-cinzel text-xs text-slate-600 uppercase tracking-wider font-semibold block">
                 Hospitals and Clinics
               </span>
-              <div className="text-2xl sm:text-3xl font-extrabold text-amber-900 font-cinzel tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#334E68] font-cinzel tabular-nums">
                 19,600+
               </div>
-              <span className="text-[11px] text-stone-500 font-serif block">
+              <span className="text-[11px] text-slate-600 font-serif block">
                 Largest healthcare provider
               </span>
             </div>
@@ -491,28 +536,28 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
 
           {/* Continental Distribution Chart Card */}
-          <div className="bg-white rounded-xl p-6 border border-stone-200/90 shadow-md space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-100 pb-3">
+          <div className="bg-[#FBF9F5] rounded-xl p-6 border border-[#DFD6C7] shadow-sm space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E5DEC9] pb-3">
               <div>
-                <h3 className="font-cinzel text-lg font-bold text-stone-900">
+                <h3 className="font-cinzel text-lg font-bold text-slate-900">
                   Global Catholic Distribution by Continent
                 </h3>
-                <p className="text-xs text-stone-500 font-serif">
+                <p className="text-xs text-slate-600 font-serif">
                   Regional breakdown of the 1.39 billion faithful worldwide
                 </p>
               </div>
-              <span className="text-xs text-amber-900 font-serif italic">
+              <span className="text-xs text-[#334E68] font-serif italic">
                 Source: Vatican Central Office of Church Statistics
               </span>
             </div>
 
-            {/* Visual Multi-Segment Bar */}
-            <div className="h-6 w-full rounded-xl overflow-hidden flex bg-stone-100 shadow-inner">
+            {/* Visual Multi-Segment Bar (Slate Blue Ramp: 48% Slate Blue to Lighter Shades) */}
+            <div className="h-6 w-full rounded-xl overflow-hidden flex bg-[#E5DEC9] shadow-inner">
               {GLOBAL_CATHOLIC_STATISTICS.continentalDistribution.map(item => (
                 <div
                   key={item.continent}
                   style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
-                  className="h-full relative group transition-all"
+                  className="h-full relative group transition-all border-r border-[#FBF9F5]/40 last:border-r-0"
                   title={`${item.continent}: ${item.percentage}% (${(item.catholics / 1000000).toFixed(0)}M Catholics)`}
                 />
               ))}
@@ -521,18 +566,18 @@ export const ChurchHistoryInfographicView: React.FC = () => {
             {/* Continental Breakdown Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pt-2">
               {GLOBAL_CATHOLIC_STATISTICS.continentalDistribution.map(c => (
-                <div key={c.continent} className="p-3 rounded-xl bg-stone-50 border border-stone-200 text-center space-y-1">
+                <div key={c.continent} className="p-3 rounded-xl bg-[#F4EFE6]/85 border border-[#D8CFC0] text-center space-y-1">
                   <div className="flex items-center justify-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: c.color }} />
-                    <span className="font-cinzel text-xs font-bold text-stone-800">{c.continent}</span>
+                    <div className="w-2.5 h-2.5 rounded-full ring-1 ring-slate-900/10" style={{ backgroundColor: c.color }} />
+                    <span className="font-cinzel text-xs font-bold text-slate-800">{c.continent}</span>
                   </div>
-                  <div className="text-xl font-extrabold text-stone-900 font-cinzel tabular-nums">
+                  <div className="text-xl font-extrabold text-slate-900 font-cinzel tabular-nums">
                     {c.percentage}%
                   </div>
-                  <div className="text-[11px] text-stone-500 font-serif">
+                  <div className="text-[11px] text-slate-600 font-serif">
                     {(c.catholics / 1000000).toFixed(0)} Million
                   </div>
-                  <span className="text-[10px] text-emerald-700 font-semibold block">
+                  <span className="text-[10px] text-[#334E68] font-semibold block">
                     {c.growthRate}
                   </span>
                 </div>
@@ -541,57 +586,57 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
 
           {/* Worldwide Clergy and Vocations Breakdown */}
-          <div className="bg-[#FAF7F2] rounded-xl p-5 border border-amber-200 shadow-sm space-y-3">
-            <h4 className="font-cinzel text-sm font-bold text-amber-950 uppercase tracking-wider">
+          <div className="bg-[#F4EFE6]/90 rounded-xl p-5 border border-[#D8CFC0] shadow-sm space-y-3">
+            <h4 className="font-cinzel text-sm font-bold text-slate-900 uppercase tracking-wider">
               Catholic Clergy and Consecrated Vocations Worldwide
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 text-center">
-              <div className="p-3 bg-white rounded-xl border border-stone-200 shadow-2xs">
-                <span className="text-xs text-stone-500 font-serif block">Bishops</span>
-                <span className="text-lg font-bold font-cinzel text-amber-900 tabular-nums">5,353</span>
+              <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0] shadow-2xs">
+                <span className="text-xs text-slate-600 font-serif block">Bishops</span>
+                <span className="text-lg font-bold font-cinzel text-[#334E68] tabular-nums">5,353</span>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-stone-200 shadow-2xs">
-                <span className="text-xs text-stone-500 font-serif block">Priests</span>
-                <span className="text-lg font-bold font-cinzel text-amber-900 tabular-nums">407,872</span>
+              <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0] shadow-2xs">
+                <span className="text-xs text-slate-600 font-serif block">Priests</span>
+                <span className="text-lg font-bold font-cinzel text-[#334E68] tabular-nums">407,872</span>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-stone-200 shadow-2xs">
-                <span className="text-xs text-stone-500 font-serif block">Deacons</span>
-                <span className="text-lg font-bold font-cinzel text-amber-900 tabular-nums">50,150</span>
+              <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0] shadow-2xs">
+                <span className="text-xs text-slate-600 font-serif block">Deacons</span>
+                <span className="text-lg font-bold font-cinzel text-[#334E68] tabular-nums">50,150</span>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-stone-200 shadow-2xs">
-                <span className="text-xs text-stone-500 font-serif block">Religious Sisters</span>
-                <span className="text-lg font-bold font-cinzel text-amber-900 tabular-nums">599,228</span>
+              <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0] shadow-2xs">
+                <span className="text-xs text-slate-600 font-serif block">Religious Sisters</span>
+                <span className="text-lg font-bold font-cinzel text-[#334E68] tabular-nums">599,228</span>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-stone-200 shadow-2xs">
-                <span className="text-xs text-stone-500 font-serif block">Brothers</span>
-                <span className="text-lg font-bold font-cinzel text-amber-900 tabular-nums">49,176</span>
+              <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0] shadow-2xs">
+                <span className="text-xs text-slate-600 font-serif block">Brothers</span>
+                <span className="text-lg font-bold font-cinzel text-[#334E68] tabular-nums">49,176</span>
               </div>
-              <div className="p-3 bg-white rounded-xl border border-stone-200 shadow-2xs">
-                <span className="text-xs text-stone-500 font-serif block">Seminarians</span>
-                <span className="text-lg font-bold font-cinzel text-amber-900 tabular-nums">108,481</span>
+              <div className="p-3 bg-[#FBF9F5] rounded-xl border border-[#D8CFC0] shadow-2xs">
+                <span className="text-xs text-slate-600 font-serif block">Seminarians</span>
+                <span className="text-lg font-bold font-cinzel text-[#334E68] tabular-nums">108,481</span>
               </div>
             </div>
           </div>
 
           {/* Interactive Country-by-Country Catholic Data Table */}
-          <div className="bg-white rounded-xl border border-stone-200/90 shadow-md p-6 sm:p-7 space-y-5">
+          <div className="bg-[#FBF9F5] rounded-xl border border-[#DFD6C7] shadow-sm p-6 sm:p-7 space-y-5">
             
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-100 pb-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E5DEC9] pb-4">
               <div className="space-y-1">
-                <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900 flex flex-wrap items-center gap-2.5">
+                <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-slate-900 flex flex-wrap items-center gap-2.5">
                   <span>Catholic Population and Percentage by Country</span>
-                  <span className="text-xs sm:text-sm bg-amber-100 text-amber-900 px-3 py-0.5 rounded-full font-sans font-bold">
+                  <span className="text-xs sm:text-sm bg-[#EFE9DC] text-[#334E68] border border-[#D8CFC0] px-3 py-0.5 rounded-lg font-sans font-bold">
                     {filteredCountries.length} Countries
                   </span>
                 </h3>
-                <p className="text-sm sm:text-base text-stone-600 font-serif">
+                <p className="text-sm sm:text-base text-slate-600 font-serif">
                   Comprehensive demographics, percentages, historical dates of arrival, and notable Catholic heritage facts
                 </p>
               </div>
 
               {/* Sort selector */}
-              <div className="flex items-center gap-1.5 bg-stone-100 p-1.5 rounded-xl text-sm shrink-0">
-                <span className="text-stone-600 font-serif px-2 font-medium">Sort:</span>
+              <div className="flex items-center gap-1.5 bg-[#EFE9DC] border border-[#D8CFC0] p-1.5 rounded-xl text-sm shrink-0">
+                <span className="text-slate-600 font-serif px-2 font-medium">Sort:</span>
                 {[
                   { id: 'percentage', label: '% Catholic' },
                   { id: 'population', label: 'Total Catholics' },
@@ -602,8 +647,8 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                     onClick={() => setSortBy(s.id as 'percentage' | 'population' | 'name')}
                     className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
                       sortBy === s.id
-                        ? 'bg-amber-900 text-white shadow-xs'
-                        : 'text-stone-700 hover:text-stone-900'
+                        ? 'bg-[#334E68] text-[#FBF9F5] shadow-xs'
+                        : 'text-slate-700 hover:text-slate-900'
                     }`}
                   >
                     {s.label}
@@ -619,10 +664,10 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   <button
                     key={cont}
                     onClick={() => setSelectedContinent(cont)}
-                    className={`px-3.5 py-2 rounded-lg text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer ${
+                    className={`px-3.5 py-2 rounded-lg text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer border ${
                       selectedContinent === cont
-                        ? 'bg-amber-900 text-white font-bold shadow-xs'
-                        : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                        ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68] font-bold shadow-xs'
+                        : 'bg-[#EFE9DC] hover:bg-[#E5DEC9] text-slate-700 border-[#D8CFC0]'
                     }`}
                   >
                     {cont}
@@ -631,13 +676,13 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               </div>
 
               <div className="relative min-w-[260px]">
-                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+                <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   value={countrySearch}
                   onChange={(e) => setCountrySearch(e.target.value)}
                   placeholder="Filter country, code, or archdiocese..."
-                  className="w-full pl-10 pr-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-sm sm:text-base font-serif focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                  className="w-full pl-10 pr-3.5 py-2 bg-[#F4EFE6]/70 border border-[#D8CFC0] rounded-xl text-sm sm:text-base text-slate-900 placeholder:text-slate-400 font-serif focus:outline-none focus:ring-2 focus:ring-[#334E68]/35 focus:border-[#334E68]"
                 />
               </div>
             </div>
@@ -647,7 +692,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               {filteredCountries.map((country) => (
                 <div
                   key={country.id}
-                  className="p-5 sm:p-6 rounded-xl border border-stone-200 bg-stone-50/60 hover:bg-amber-50/30 hover:border-amber-300 transition-all space-y-3.5"
+                  className="p-5 sm:p-6 rounded-xl border border-[#D8CFC0] bg-[#F4EFE6]/60 hover:bg-[#EFE9DC]/85 hover:border-[#486581]/60 transition-all space-y-3.5"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
@@ -655,20 +700,20 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                         {country.flag}
                       </span>
                       <div>
-                        <h4 className="font-serif-heading font-bold text-stone-900 text-lg sm:text-xl leading-snug">
+                        <h4 className="font-serif-heading font-bold text-slate-900 text-lg sm:text-xl leading-snug">
                           {country.name}
                         </h4>
-                        <span className="text-xs sm:text-sm text-stone-600 font-serif">
-                          {country.continent} • Est. {country.yearEstablished}
+                        <span className="text-xs sm:text-sm text-slate-600 font-serif">
+                          {country.continent} · Est. {country.yearEstablished}
                         </span>
                       </div>
                     </div>
 
                     <div className="text-right shrink-0">
-                      <div className="font-cinzel font-extrabold text-amber-950 text-xl sm:text-2xl tabular-nums">
+                      <div className="font-cinzel font-extrabold text-[#334E68] text-xl sm:text-2xl tabular-nums">
                         {country.catholicPercentage}%
                       </div>
-                      <span className="text-xs sm:text-sm text-stone-600 font-sans font-medium block">
+                      <span className="text-xs sm:text-sm text-slate-600 font-sans font-medium block">
                         {(country.catholicPopulation / 1000000 >= 1 
                           ? `${(country.catholicPopulation / 1000000).toFixed(1)}M` 
                           : `${(country.catholicPopulation / 1000).toFixed(0)}K`)} Catholics
@@ -677,19 +722,19 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   </div>
 
                   {/* Percentage Progress Bar */}
-                  <div className="w-full h-2.5 rounded-full bg-stone-200 overflow-hidden">
+                  <div className="w-full h-2.5 rounded-full bg-[#E5DEC9] overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-amber-600 to-amber-700"
+                      className="h-full rounded-full bg-gradient-to-r from-[#334E68] to-[#486581]"
                       style={{ width: `${Math.min(100, country.catholicPercentage)}%` }}
                     />
                   </div>
 
                   {/* Fact / Archdiocese note */}
-                  <div className="text-sm sm:text-base text-stone-700 font-serif space-y-1.5 pt-0.5">
-                    <div className="text-sm sm:text-base text-amber-950 font-semibold">
+                  <div className="text-sm sm:text-base text-slate-700 font-serif space-y-1.5 pt-0.5">
+                    <div className="text-sm sm:text-base text-[#334E68] font-semibold">
                       Archdiocese: {country.primaryArchdiocese}
                     </div>
-                    <p className="text-sm sm:text-base text-stone-800 italic leading-relaxed">
+                    <p className="text-sm sm:text-base text-slate-800 italic leading-relaxed">
                       "{country.notableFact}"
                     </p>
                   </div>
@@ -707,15 +752,15 @@ export const ChurchHistoryInfographicView: React.FC = () => {
         <div className="space-y-6">
           
           {/* Category Filter */}
-          <div className="bg-white rounded-xl p-5 sm:p-6 border border-stone-200 shadow-md space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3">
+          <div className="bg-[#FBF9F5] rounded-xl p-5 sm:p-6 border border-[#DFD6C7] shadow-sm space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E5DEC9] pb-3">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-amber-700" />
-                <h3 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
+                <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#334E68]" />
+                <h3 className="font-cinzel text-lg sm:text-xl font-bold text-slate-900">
                   Curated Catholic Facts, Discoveries and Scientific Achievements
                 </h3>
               </div>
-              <span className="text-sm text-stone-500 font-serif">A Universal Treasury</span>
+              <span className="text-sm text-slate-600 font-serif">A Universal Treasury</span>
             </div>
 
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
@@ -731,10 +776,10 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setFactCategory(cat)}
-                  className={`px-3.5 py-2 rounded-lg text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-3.5 py-2 rounded-lg text-sm sm:text-base font-serif whitespace-nowrap transition-all cursor-pointer border ${
                     factCategory === cat
-                      ? 'bg-amber-900 text-white font-bold shadow-xs'
-                      : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                      ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68] font-bold shadow-xs'
+                      : 'bg-[#EFE9DC] hover:bg-[#E5DEC9] text-slate-700 border-[#D8CFC0]'
                   }`}
                 >
                   {cat}
@@ -752,41 +797,41 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               return (
                 <div
                   key={fact.id}
-                  className="bg-white rounded-xl p-6 sm:p-7 border border-stone-200/90 shadow-md hover:shadow-lg transition-all space-y-4 flex flex-col justify-between"
+                  className="bg-[#FBF9F5] rounded-xl p-6 sm:p-7 border border-[#DFD6C7] shadow-sm hover:shadow-md transition-all space-y-4 flex flex-col justify-between"
                 >
                   <div className="space-y-3.5">
                     
                     {/* Header: Category and Metric Badge */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3">
-                      <span className="font-cinzel text-sm sm:text-base font-bold text-amber-900 uppercase tracking-wider">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E5DEC9] pb-3">
+                      <span className="font-cinzel text-sm sm:text-base font-bold text-[#334E68] uppercase tracking-wider">
                         {fact.category}
                       </span>
                       {fact.metric && (
-                        <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-950 border border-amber-200 text-xs sm:text-sm font-cinzel font-bold">
+                        <span className="px-3 py-1 rounded-lg bg-[#EFE9DC] text-slate-900 border border-[#D8CFC0] text-xs sm:text-sm font-cinzel font-bold">
                           {fact.metric}
                         </span>
                       )}
                     </div>
 
                     {/* Title */}
-                    <h4 className="font-serif-heading text-xl sm:text-2xl font-bold text-stone-900 leading-snug">
+                    <h4 className="font-serif-heading text-xl sm:text-2xl font-bold text-slate-900 leading-snug">
                       {fact.title}
                     </h4>
 
                     {/* Detailed Prose */}
-                    <p className="text-base sm:text-lg text-stone-800 font-serif leading-relaxed">
+                    <p className="text-base sm:text-lg text-slate-800 font-serif leading-relaxed">
                       {fact.detailedText}
                     </p>
 
                     {/* Key Figure and Source */}
-                    <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 text-sm sm:text-base text-stone-700 font-serif space-y-1">
+                    <div className="p-4 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] text-sm sm:text-base text-slate-700 font-serif space-y-1">
                       {fact.keyFigure && (
                         <div>
-                          <strong className="text-stone-900">Key Figure:</strong> {fact.keyFigure}
+                          <strong className="text-slate-900">Key Figure:</strong> {fact.keyFigure}
                         </div>
                       )}
                       {fact.scriptureOrSource && (
-                        <div className="italic text-stone-600">
+                        <div className="italic text-slate-600">
                           Source: {fact.scriptureOrSource}
                         </div>
                       )}
@@ -794,13 +839,13 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   </div>
 
                   {/* Actions: Listen in Ava Grace or Copy */}
-                  <div className="pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+                  <div className="pt-3 border-t border-[#E5DEC9] flex items-center justify-between gap-2">
                     <button
                       onClick={() => handleSpeakText(fact.id, `${fact.title}. ${fact.detailedText}`)}
-                      className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
+                      className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer border ${
                         isFactSpeaking
-                          ? 'bg-amber-600 text-white animate-pulse'
-                          : 'bg-stone-100 hover:bg-amber-50 text-amber-900 border border-stone-200'
+                          ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68] animate-pulse'
+                          : 'bg-[#EFE9DC] hover:bg-[#E5DEC9] text-slate-800 border-[#D8CFC0]'
                       }`}
                       title={`Listen in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
                     >
@@ -810,10 +855,10 @@ export const ChurchHistoryInfographicView: React.FC = () => {
 
                     <button
                       onClick={() => handleCopyFact(fact)}
-                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-serif transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#EFE9DC] hover:bg-[#E5DEC9] text-slate-700 border border-[#D8CFC0] text-sm font-serif transition-colors cursor-pointer"
                       title="Copy fact to clipboard"
                     >
-                      {isCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                      {isCopied ? <Check className="w-4 h-4 text-[#334E68]" /> : <Copy className="w-4 h-4" />}
                       <span>{isCopied ? 'Copied' : 'Share'}</span>
                     </button>
                   </div>
@@ -1877,310 +1922,344 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-24 text-stone-900">
-      {showHeroBanner ? null : (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-xl bg-white border border-stone-200 shadow-xs">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-amber-600 text-white shrink-0 shadow-xs">
-              <ScrollText className="w-5 h-5 text-white" />
+    <div className="w-full space-y-6 pb-16 text-slate-900">
+      <div className="w-full bg-[#FBF9F5] rounded-xl border border-[#DFD6C7] shadow-md overflow-hidden">
+        {/* Panel Top Header & Filter Controls */}
+        <div className="p-5 sm:p-6 md:p-7 bg-[#F4EFE6]/90 border-b border-[#D8CFC0] space-y-5">
+          {!showHeroBanner && (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#D8CFC0]">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-[#334E68] text-[#FBF9F5] shrink-0 shadow-xs">
+                  <ScrollText className="w-5 h-5 text-[#FBF9F5]" />
+                </div>
+                <div>
+                  <h2 className="font-cinzel text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                    Timeline of the 21 Ecumenical Councils
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-600 font-serif">
+                    325 AD – 1965 AD · Popes, Saints, Dogmas, and Sacred Decrees
+                  </p>
+                </div>
+              </div>
+              <div className="text-xs font-cinzel font-semibold text-[#334E68] shrink-0">
+                <span>21 Assemblies</span>
+                <span className="mx-1.5 text-slate-400">·</span>
+                <span>Unbroken Tradition</span>
+              </div>
             </div>
-            <div>
-              <h2 className="font-cinzel text-base sm:text-lg font-bold text-stone-900 leading-snug">
-                Timeline of the 21 Ecumenical Councils
-              </h2>
-              <p className="text-xs sm:text-sm text-stone-600 font-serif">
-                325 AD – 1965 AD • Popes, Saints, Dogmas, and Sacred Decrees
-              </p>
-            </div>
-          </div>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-cinzel font-semibold shrink-0">
-            <span>21 Assemblies</span>
-            <span>•</span>
-            <span>Unbroken Tradition</span>
-          </div>
-        </div>
-      )}
+          )}
 
-      {/* Filter and Search Bar */}
-      <div className="space-y-5 bg-white p-6 sm:p-7 rounded-3xl border border-stone-200 shadow-sm">
-        <div className="relative w-full">
-          <input
-            type="text"
-            placeholder="Search councils, popes, saints, dogmas (e.g. Nicaea, Trent, Leo the Great, Transubstantiation, Arianism)..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full text-sm sm:text-base pl-11 pr-10 py-3.5 rounded-xl bg-stone-100 border border-stone-300 focus:outline-none focus:border-amber-600 focus:bg-white font-serif transition-all"
-          />
-          <Search className="w-5 h-5 text-stone-400 absolute left-3.5 top-4" />
-          {searchQuery && (
-            <button 
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3.5 top-3.5 text-stone-400 hover:text-stone-700 p-1"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          {/* Search input */}
+          <div className="relative w-full">
+            <input
+              type="text"
+              placeholder="Search councils, popes, saints, dogmas (e.g. Nicaea, Trent, Leo the Great, Transubstantiation, Arianism)..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full text-sm sm:text-base pl-11 pr-10 py-3 rounded-xl bg-[#FBF9F5] border border-[#D8CFC0] text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#334E68]/35 focus:border-[#334E68] font-serif transition-all"
+            />
+            <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1 cursor-pointer"
+                aria-label="Clear council search"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <div className="text-xs font-cinzel font-bold text-slate-600 uppercase tracking-wider">
+              Filter by Historical Era
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {eras.map(era => (
+                <button
+                  key={era.id}
+                  type="button"
+                  onClick={() => setSelectedEra(era.id)}
+                  className={`px-3.5 py-2 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer flex items-center gap-2 whitespace-nowrap shrink-0 border ${
+                    selectedEra === era.id
+                      ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68] shadow-sm'
+                      : 'bg-[#FBF9F5] hover:bg-[#EAE2D3]/70 text-slate-700 border-[#D8CFC0]'
+                  }`}
+                >
+                  <span>{era.label}</span>
+                  <span className={`text-xs tabular-nums ${selectedEra === era.id ? 'text-[#DFD5C3]' : 'text-slate-500'}`}>
+                    ({era.count})
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2 pt-2 border-t border-[#D8CFC0]">
+            <div className="text-xs font-cinzel font-bold text-slate-600 uppercase tracking-wider">
+              Filter by Doctrinal Theme
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {themes.map(t => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setSelectedTheme(t.id)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-serif transition-all cursor-pointer whitespace-nowrap shrink-0 border ${
+                    selectedTheme === t.id
+                      ? 'bg-slate-800 text-[#EAE2D3] border-slate-800 font-bold shadow-xs'
+                      : 'bg-[#FBF9F5] hover:bg-[#EAE2D3]/70 text-slate-700 border-[#D8CFC0]'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {(selectedEra !== 'all' || selectedTheme !== 'all' || searchQuery) && (
+            <div className="flex items-center justify-between text-sm text-slate-600 pt-2 border-t border-[#D8CFC0]">
+              <span className="tabular-nums">
+                Showing {filteredCouncils.length} of 21 Ecumenical Councils
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedEra('all');
+                  setSelectedTheme('all');
+                  setSearchQuery('');
+                }}
+                className="text-[#334E68] hover:underline cursor-pointer font-serif font-medium"
+              >
+                Reset filters
+              </button>
+            </div>
           )}
         </div>
 
-        <div className="space-y-2">
-          <div className="text-xs sm:text-sm font-cinzel font-bold text-stone-600 uppercase tracking-wider">
-            Filter by Historical Era
-          </div>
-          <div className="flex flex-wrap items-center gap-2.5">
-            {eras.map(era => (
+        {/* Full-Panel Vertical Timeline Stream */}
+        <div className="p-5 sm:p-7 md:p-8">
+          {filteredCouncils.length === 0 ? (
+            <div className="py-12 text-center space-y-3">
+              <p className="text-base font-serif text-slate-600">
+                No Ecumenical Councils match your selected filters.
+              </p>
               <button
-                key={era.id}
-                onClick={() => setSelectedEra(era.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer flex items-center gap-2 ${
-                  selectedEra === era.id
-                    ? 'bg-amber-600 text-white shadow-md'
-                    : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-                }`}
+                type="button"
+                onClick={() => {
+                  setSelectedEra('all');
+                  setSelectedTheme('all');
+                  setSearchQuery('');
+                }}
+                className="px-4 py-2 rounded-lg bg-[#334E68] hover:bg-slate-800 text-[#FBF9F5] text-xs font-cinzel font-bold transition-colors cursor-pointer"
               >
-                <span>{era.label}</span>
-                <span className={`text-xs px-2 py-0.5 rounded-full ${selectedEra === era.id ? 'bg-amber-700 text-white' : 'bg-stone-200 text-stone-600'}`}>
-                  {era.count}
-                </span>
+                Reset Council Filters
               </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-2 pt-2 border-t border-stone-100">
-          <div className="text-xs sm:text-sm font-cinzel font-bold text-stone-600 uppercase tracking-wider">
-            Filter by Doctrinal Theme
-          </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {themes.map(t => (
-              <button
-                key={t.id}
-                onClick={() => setSelectedTheme(t.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-serif transition-all cursor-pointer ${
-                  selectedTheme === t.id
-                    ? 'bg-stone-900 text-amber-300 font-bold shadow-xs'
-                    : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {(selectedEra !== 'all' || selectedTheme !== 'all' || searchQuery) && (
-          <div className="flex items-center justify-between text-sm text-stone-500 pt-2 border-t border-stone-100">
-            <span>
-              Showing {filteredCouncils.length} of 21 Ecumenical Councils
-            </span>
-            <button
-              onClick={() => {
-                setSelectedEra('all');
-                setSelectedTheme('all');
-                setSearchQuery('');
-              }}
-              className="text-amber-700 hover:underline cursor-pointer font-serif font-medium"
-            >
-              Reset filters
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Main Timeline Stream */}
-      <div className="relative border-l-3 border-amber-500/40 ml-4 sm:ml-8 pl-5 sm:pl-9 space-y-9">
-        {filteredCouncils.map((council) => {
-          return (
-            <div 
-              key={council.id} 
-              className="relative group transition-all"
-            >
-              <div className="absolute -left-[31px] sm:-left-[47px] top-2 w-8 h-8 rounded-full bg-amber-600 border-4 border-white shadow-md flex items-center justify-center text-xs font-extrabold text-white font-cinzel">
-                {council.number}
-              </div>
-
-              <div 
-                onClick={() => setSelectedCouncil(council)}
-                className="bg-white rounded-3xl p-6 sm:p-7 md:p-8 border border-stone-200 shadow-sm hover:shadow-lg hover:border-amber-500/80 transition-all cursor-pointer space-y-5"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="space-y-1.5 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-                      <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-cinzel font-bold tracking-wider">
-                        Council #{council.number} • {council.eraLabel.split('(')[0].trim()}
-                      </span>
-                      <span className="text-stone-300">•</span>
-                      <span className="text-sm sm:text-base font-serif font-bold text-stone-900">
-                        {council.year}
-                      </span>
-                      <span className="text-stone-300">•</span>
-                      <span className="text-xs sm:text-sm text-stone-500 font-serif">
-                        {council.location} ({council.modernCountry})
-                      </span>
-                    </div>
-
-                    <h3 className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-stone-900 group-hover:text-amber-700 transition-colors leading-tight">
-                      {council.name}
-                    </h3>
-                  </div>
-
-                  <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      onClick={(e) => handleShareCouncil(council, e)}
-                      className="p-2.5 rounded-xl text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
-                      title="Copy summary and achievements"
-                    >
-                      {copiedId === council.id ? (
-                        <Check className="w-5 h-5 text-emerald-600" />
-                      ) : (
-                        <Share2 className="w-5 h-5" />
-                      )}
-                    </button>
-                    <button
-                      onClick={(e) => handleToggleNarration(council, e)}
-                      className="p-2.5 rounded-xl text-stone-500 hover:text-amber-700 hover:bg-amber-50 transition-colors"
-                      title="Listen with voice narration"
-                    >
-                      <Volume2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="p-4 sm:p-5 rounded-xl bg-[#F9F7F2] border border-amber-200/80 flex items-start gap-3.5">
-                  <div className="p-2.5 rounded-xl bg-stone-900 text-amber-300 shrink-0 mt-0.5 shadow-xs">
-                    <Crown className="w-5 h-5 text-amber-300" />
-                  </div>
-                  <div className="min-w-0 space-y-0.5">
-                    <div className="text-xs font-cinzel font-bold text-amber-800 uppercase tracking-wider">
-                      Reigning Roman Pontiff
-                    </div>
-                    <div className="font-serif text-base sm:text-lg md:text-xl font-bold text-stone-900">
-                      {council.pontiff.name} <span className="font-normal text-stone-600 text-sm sm:text-base">({council.pontiff.dates})</span>
-                    </div>
-                    {council.pontiff.note && (
-                      <p className="text-xs sm:text-sm text-stone-600 font-serif italic pt-0.5 leading-relaxed">
-                        {council.pontiff.note}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <p className="text-sm sm:text-base md:text-lg text-stone-800 font-serif leading-relaxed">
-                  {council.summary}
-                </p>
-
-                <div className="space-y-2.5 pt-3 border-t border-stone-100">
-                  <div className="flex items-center gap-2 text-sm sm:text-base font-cinzel font-bold text-stone-800">
-                    <Users className="w-4 h-4 text-amber-600" />
-                    <span>Major Figures, Saints & Rulers</span>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {council.majorPlayers.saintsAndDoctors.map(s => (
-                      <span key={s} className="px-3.5 py-1.5 rounded-lg bg-amber-50 text-stone-900 border border-amber-300/70 text-sm sm:text-base font-serif font-semibold">
-                        {s}
-                      </span>
-                    ))}
-                    {council.majorPlayers.emperorsAndRulers.map(r => (
-                      <span key={r} className="px-3.5 py-1.5 rounded-lg bg-stone-100 text-stone-700 border border-stone-300 text-sm sm:text-base font-serif">
-                        {r}
-                      </span>
-                    ))}
-                    {council.majorPlayers.theologiansAndLeaders.map(t => (
-                      <span key={t} className="px-3.5 py-1.5 rounded-lg bg-stone-50 text-stone-800 border border-stone-200 text-sm sm:text-base font-serif">
-                        {t}
-                      </span>
-                    ))}
-                    {council.majorPlayers.adversariesOrHeresies.map(h => (
-                      <span key={h} className="px-3.5 py-1.5 rounded-lg bg-stone-200 text-stone-800 border border-stone-300 text-sm sm:text-base font-serif font-medium">
-                        Refuted: {h}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-2 pt-3 border-t border-stone-100">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-emerald-800">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    <span>Key Dogmas & Achievements</span>
-                  </div>
-                  <ul className="space-y-1.5">
-                    {council.achievements.slice(0, 3).map((ach, aIdx) => (
-                      <li key={aIdx} className="text-sm sm:text-base text-stone-800 font-serif flex items-start gap-2.5 leading-relaxed">
-                        <span className="text-emerald-700 font-bold mt-0.5 shrink-0 text-base">✓</span>
-                        <span>{ach}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {council.achievements.length > 3 && (
-                    <div className="text-xs sm:text-sm text-amber-700 font-cinzel font-bold pt-1">
-                      + {council.achievements.length - 3} more historic decrees (click to view full council record)
-                    </div>
-                  )}
-                </div>
-
-                <div className="pt-2 flex items-center justify-between text-xs sm:text-sm text-stone-500">
-                  <span className="font-serif italic">
-                    Convoked by: {council.convenedBy}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 font-cinzel font-bold text-amber-700 group-hover:underline">
-                    <span>Read Full Decrees & Quotes</span>
-                    <ChevronRight className="w-4 h-4" />
-                  </span>
-                </div>
-              </div>
             </div>
-          );
-        })}
+          ) : (
+            <div className="relative before:absolute before:top-3 before:bottom-3 before:left-3.5 sm:before:left-4 before:w-0.5 before:bg-gradient-to-b before:from-[#334E68]/80 before:via-[#486581]/55 before:to-[#829AB1]/40 before:z-0">
+              {filteredCouncils.map((council) => {
+                return (
+                  <article
+                    key={council.id}
+                    onClick={() => setSelectedCouncil(council)}
+                    className="relative z-10 group pl-10 sm:pl-12 pb-8 mb-8 border-b border-[#E5DEC9] last:border-b-0 last:pb-0 last:mb-0 cursor-pointer"
+                  >
+                    {/* Timeline Node Icon (Inside Full Panel Rail) */}
+                    <div className="absolute left-3.5 sm:left-4 -translate-x-1/2 top-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#334E68] group-hover:bg-slate-900 border-2 border-[#EAE2D3] shadow-sm flex items-center justify-center text-xs font-extrabold text-[#FBF9F5] font-cinzel tabular-nums transition-colors">
+                      {council.number}
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div className="space-y-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs sm:text-sm">
+                            <span className="font-cinzel font-bold text-[#334E68] tracking-wider uppercase">
+                              Council #{council.number}
+                            </span>
+                            <span className="text-[#C9BFA9]" aria-hidden="true">·</span>
+                            <span className="font-serif text-[#486581] font-medium">
+                              {council.eraLabel.split('(')[0].trim()}
+                            </span>
+                            <span className="text-[#C9BFA9]" aria-hidden="true">·</span>
+                            <span className="font-serif font-bold text-slate-900 tabular-nums">
+                              {council.year}
+                            </span>
+                            <span className="text-[#C9BFA9]" aria-hidden="true">·</span>
+                            <span className="text-slate-600 font-serif">
+                              {council.location} ({council.modernCountry})
+                            </span>
+                          </div>
+
+                          <h3 className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-slate-900 group-hover:text-[#334E68] transition-colors leading-tight">
+                            {council.name}
+                          </h3>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          <button
+                            type="button"
+                            onClick={(e) => handleShareCouncil(council, e)}
+                            className="p-2 rounded-lg text-slate-500 hover:text-slate-900 hover:bg-[#EFE9DC] transition-colors cursor-pointer"
+                            title="Copy summary and achievements"
+                          >
+                            {copiedId === council.id ? (
+                              <Check className="w-5 h-5 text-[#334E68]" />
+                            ) : (
+                              <Share2 className="w-5 h-5" />
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => handleToggleNarration(council, e)}
+                            className="p-2 rounded-lg text-slate-500 hover:text-[#334E68] hover:bg-[#EFE9DC] transition-colors cursor-pointer"
+                            title="Listen with voice narration"
+                          >
+                            <Volume2 className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-4 sm:p-5 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] flex items-start gap-3.5">
+                        <div className="p-2.5 rounded-xl bg-slate-900 text-[#EAE2D3] shrink-0 mt-0.5">
+                          <Crown className="w-5 h-5 text-[#EAE2D3]" />
+                        </div>
+                        <div className="min-w-0 space-y-0.5">
+                          <div className="text-xs font-cinzel font-bold text-[#334E68] uppercase tracking-wider">
+                            Reigning Roman Pontiff
+                          </div>
+                          <div className="font-serif text-base sm:text-lg font-bold text-slate-900">
+                            {council.pontiff.name} <span className="font-normal text-slate-600 text-sm sm:text-base">({council.pontiff.dates})</span>
+                          </div>
+                          {council.pontiff.note && (
+                            <p className="text-xs sm:text-sm text-slate-600 font-serif italic pt-0.5 leading-relaxed">
+                              {council.pontiff.note}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <p className="text-sm sm:text-base md:text-lg text-slate-800 font-serif leading-relaxed">
+                        {council.summary}
+                      </p>
+
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center gap-2 text-sm font-cinzel font-bold text-slate-800">
+                          <Users className="w-4 h-4 text-[#334E68]" />
+                          <span>Major Figures, Saints &amp; Rulers</span>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          {council.majorPlayers.saintsAndDoctors.map(s => (
+                            <span key={s} className="px-3 py-1 rounded-lg bg-[#EAE2D3]/75 text-slate-900 border border-[#C9BFA9] text-xs sm:text-sm font-serif font-semibold">
+                              {s}
+                            </span>
+                          ))}
+                          {council.majorPlayers.emperorsAndRulers.map(r => (
+                            <span key={r} className="px-3 py-1 rounded-lg bg-[#EFE9DC] text-slate-800 border border-[#D8CFC0] text-xs sm:text-sm font-serif">
+                              {r}
+                            </span>
+                          ))}
+                          {council.majorPlayers.theologiansAndLeaders.map(t => (
+                            <span key={t} className="px-3 py-1 rounded-lg bg-[#F4EFE6] text-slate-800 border border-[#DFD6C7] text-xs sm:text-sm font-serif">
+                              {t}
+                            </span>
+                          ))}
+                          {council.majorPlayers.adversariesOrHeresies.map(h => (
+                            <span key={h} className="px-3 py-1 rounded-lg bg-slate-200/80 text-slate-800 border border-slate-300 text-xs sm:text-sm font-serif font-medium">
+                              Refuted: {h}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-[#334E68]">
+                          <CheckCircle2 className="w-4 h-4 text-[#486581]" />
+                          <span>Key Dogmas &amp; Achievements</span>
+                        </div>
+                        <ul className="space-y-1.5">
+                          {council.achievements.slice(0, 3).map((ach, aIdx) => (
+                            <li key={aIdx} className="text-sm sm:text-base text-slate-800 font-serif flex items-start gap-2.5 leading-relaxed">
+                              <span className="text-[#334E68] font-bold mt-0.5 shrink-0 text-base">✓</span>
+                              <span>{ach}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        {council.achievements.length > 3 && (
+                          <div className="text-xs sm:text-sm text-[#334E68] font-cinzel font-bold pt-0.5">
+                            + {council.achievements.length - 3} more historic decrees (click to view full council record)
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="pt-1 flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm text-slate-600">
+                        <span className="font-serif italic">
+                          Convoked by: {council.convenedBy}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 font-cinzel font-bold text-[#334E68] group-hover:underline">
+                          <span>Read Full Decrees &amp; Quotes</span>
+                          <ChevronRight className="w-4 h-4" />
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Detailed Council Modal */}
       {selectedCouncil && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-7 bg-black/80 backdrop-blur-md overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-7 bg-slate-950/80 backdrop-blur-md overflow-y-auto"
           onClick={() => setSelectedCouncil(null)}
         >
           <div 
-            className="relative w-full max-w-3xl bg-[#FCFAF6] text-stone-900 rounded-3xl shadow-2xl border border-amber-500/50 overflow-hidden my-auto max-h-[92vh] flex flex-col"
+            className="relative w-full max-w-3xl bg-[#FBF9F5] text-slate-900 rounded-2xl shadow-2xl border border-[#D8CFC0] overflow-hidden my-auto max-h-[92vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 sm:p-7 bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 text-stone-100 flex items-start justify-between gap-4 border-b border-amber-500/40 shrink-0">
+            <div className="p-6 sm:p-7 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex items-start justify-between gap-4 border-b border-slate-700/80 shrink-0">
               <div className="space-y-1.5 min-w-0">
                 <div className="flex items-center gap-2.5">
-                  <span className="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 text-xs font-cinzel font-bold">
-                    Council #{selectedCouncil.number} • {selectedCouncil.year}
+                  <span className="px-3 py-1 rounded-lg bg-slate-800/90 text-[#DFD5C3] border border-slate-600/80 text-xs font-cinzel font-bold">
+                    Council #{selectedCouncil.number} · {selectedCouncil.year}
                   </span>
-                  <span className="text-stone-400 text-sm">•</span>
-                  <span className="text-sm text-stone-300 font-serif">
+                  <span className="text-slate-500 text-sm">·</span>
+                  <span className="text-sm text-[#EAE2D3] font-serif">
                     {selectedCouncil.location} ({selectedCouncil.modernCountry})
                   </span>
                 </div>
 
-                <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight">
+                <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-[#FBF9F5] leading-tight">
                   {selectedCouncil.name}
                 </h3>
               </div>
 
               <button
                 onClick={() => setSelectedCouncil(null)}
-                className="p-2.5 rounded-xl text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+                className="p-2.5 rounded-xl text-[#DFD5C3] hover:text-white hover:bg-white/10 transition-colors cursor-pointer shrink-0"
                 title="Close"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="px-6 py-3 bg-[#F4F1EA] border-b border-stone-200 flex items-center justify-between gap-3 shrink-0 text-sm">
-              <div className="flex items-center gap-2 text-stone-700 font-serif">
-                <Landmark className="w-4 h-4 text-amber-700" />
+            <div className="px-6 py-3 bg-[#F4EFE6] border-b border-[#D8CFC0] flex items-center justify-between gap-3 shrink-0 text-sm">
+              <div className="flex items-center gap-2 text-slate-700 font-serif">
+                <Landmark className="w-4 h-4 text-[#334E68]" />
                 <span>Attendance: {selectedCouncil.attendeesCount}</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleToggleNarration(selectedCouncil)}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border ${
                     isNarrating
-                      ? 'bg-amber-600 text-white'
-                      : 'bg-white border border-stone-300 text-stone-800 hover:bg-amber-100'
+                      ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68]'
+                      : 'bg-[#FBF9F5] border-[#D8CFC0] text-slate-800 hover:bg-[#EAE2D3]'
                   }`}
                 >
                   <Volume2 className="w-4 h-4" />
@@ -2189,70 +2268,70 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
 
                 <button
                   onClick={() => handleShareCouncil(selectedCouncil)}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white border border-stone-300 text-stone-800 hover:bg-amber-100 text-xs sm:text-sm font-cinzel font-bold cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#FBF9F5] border border-[#D8CFC0] text-slate-800 hover:bg-[#EAE2D3] text-xs sm:text-sm font-cinzel font-bold cursor-pointer"
                 >
-                  {copiedId === selectedCouncil.id ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
+                  {copiedId === selectedCouncil.id ? <Check className="w-4 h-4 text-[#334E68]" /> : <Share2 className="w-4 h-4" />}
                   <span>{copiedId === selectedCouncil.id ? 'Copied' : 'Share'}</span>
                 </button>
               </div>
             </div>
 
-            <div className="p-6 sm:p-8 overflow-y-auto space-y-7 text-stone-900">
-              <div className="p-5 rounded-xl bg-[#F5F2EB] border border-amber-300/80 space-y-3">
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-amber-800 uppercase tracking-wider">
-                  <Crown className="w-4 h-4 text-amber-600" />
+            <div className="p-6 sm:p-8 overflow-y-auto space-y-7 text-slate-900">
+              <div className="p-5 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] space-y-3">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-[#334E68] uppercase tracking-wider">
+                  <Crown className="w-4 h-4 text-[#334E68]" />
                   <span>Petrine Leadership & Convocation</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                   <div>
-                    <span className="font-semibold text-stone-600 block text-xs uppercase tracking-wider">Reigning Pope:</span>
-                    <span className="font-bold text-stone-950 text-base sm:text-lg">{selectedCouncil.pontiff.name}</span>
-                    <span className="text-stone-600 block text-sm">({selectedCouncil.pontiff.dates})</span>
+                    <span className="font-semibold text-slate-600 block text-xs uppercase tracking-wider">Reigning Pope:</span>
+                    <span className="font-bold text-slate-900 text-base sm:text-lg">{selectedCouncil.pontiff.name}</span>
+                    <span className="text-slate-600 block text-sm">({selectedCouncil.pontiff.dates})</span>
                     {selectedCouncil.pontiff.note && (
-                      <span className="text-stone-700 italic block mt-1 text-sm leading-relaxed">{selectedCouncil.pontiff.note}</span>
+                      <span className="text-slate-700 italic block mt-1 text-sm leading-relaxed">{selectedCouncil.pontiff.note}</span>
                     )}
                   </div>
                   <div>
-                    <span className="font-semibold text-stone-600 block text-xs uppercase tracking-wider">Convoked By:</span>
-                    <span className="text-stone-950 font-medium text-base sm:text-lg">{selectedCouncil.convenedBy}</span>
+                    <span className="font-semibold text-slate-600 block text-xs uppercase tracking-wider">Convoked By:</span>
+                    <span className="text-slate-900 font-medium text-base sm:text-lg">{selectedCouncil.convenedBy}</span>
                   </div>
                 </div>
               </div>
 
               <div className="space-y-2.5">
-                <h4 className="font-cinzel text-xs sm:text-sm font-bold text-stone-700 uppercase tracking-wider flex items-center gap-2">
-                  <ScrollText className="w-4 h-4 text-amber-600" />
+                <h4 className="font-cinzel text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                  <ScrollText className="w-4 h-4 text-[#334E68]" />
                   <span>Historical Crisis & Context</span>
                 </h4>
-                <p className="text-sm sm:text-base md:text-lg text-stone-800 font-serif leading-relaxed bg-white p-5 rounded-xl border border-stone-200">
+                <p className="text-sm sm:text-base md:text-lg text-slate-800 font-serif leading-relaxed bg-[#F4EFE6]/55 p-5 rounded-xl border border-[#DFD6C7]">
                   {selectedCouncil.historicalContext}
                 </p>
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-cinzel text-xs sm:text-sm font-bold text-stone-700 uppercase tracking-wider flex items-center gap-2">
-                  <Users className="w-4 h-4 text-amber-600" />
+                <h4 className="font-cinzel text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                  <Users className="w-4 h-4 text-[#334E68]" />
                   <span>Major Figures & Protagonists</span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-sm">
-                  <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
-                    <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Saints & Doctors:</span>
+                  <div className="p-4 rounded-xl bg-[#F4EFE6]/60 border border-[#DFD6C7] space-y-2">
+                    <span className="font-cinzel font-bold text-slate-900 text-xs uppercase tracking-wider block">Saints & Doctors:</span>
                     <ul className="space-y-1.5">
                       {selectedCouncil.majorPlayers.saintsAndDoctors.map(s => (
-                        <li key={s} className="text-stone-800 font-serif flex items-start gap-2 text-sm sm:text-base">
-                          <span className="text-amber-600 font-bold">•</span>
+                        <li key={s} className="text-slate-800 font-serif flex items-start gap-2 text-sm sm:text-base">
+                          <span className="text-[#334E68] font-bold">•</span>
                           <span>{s}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
-                    <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Theologians & Leaders:</span>
+                  <div className="p-4 rounded-xl bg-[#F4EFE6]/60 border border-[#DFD6C7] space-y-2">
+                    <span className="font-cinzel font-bold text-slate-900 text-xs uppercase tracking-wider block">Theologians & Leaders:</span>
                     <ul className="space-y-1.5">
                       {selectedCouncil.majorPlayers.theologiansAndLeaders.map(t => (
-                        <li key={t} className="text-stone-800 font-serif flex items-start gap-2 text-sm sm:text-base">
-                          <span className="text-stone-400 font-bold">•</span>
+                        <li key={t} className="text-slate-800 font-serif flex items-start gap-2 text-sm sm:text-base">
+                          <span className="text-[#486581] font-bold">•</span>
                           <span>{t}</span>
                         </li>
                       ))}
@@ -2260,12 +2339,12 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   </div>
 
                   {selectedCouncil.majorPlayers.emperorsAndRulers.length > 0 && (
-                    <div className="p-4 rounded-xl bg-white border border-stone-200 space-y-2">
-                      <span className="font-cinzel font-bold text-stone-900 text-xs uppercase tracking-wider block">Emperors & Rulers:</span>
+                    <div className="p-4 rounded-xl bg-[#F4EFE6]/60 border border-[#DFD6C7] space-y-2">
+                      <span className="font-cinzel font-bold text-slate-900 text-xs uppercase tracking-wider block">Emperors & Rulers:</span>
                       <ul className="space-y-1.5">
                         {selectedCouncil.majorPlayers.emperorsAndRulers.map(r => (
-                          <li key={r} className="text-stone-800 font-serif flex items-start gap-2 text-sm sm:text-base">
-                            <span className="text-stone-400 font-bold">•</span>
+                          <li key={r} className="text-slate-800 font-serif flex items-start gap-2 text-sm sm:text-base">
+                            <span className="text-[#486581] font-bold">•</span>
                             <span>{r}</span>
                           </li>
                         ))}
@@ -2274,12 +2353,12 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
                   )}
 
                   {selectedCouncil.majorPlayers.adversariesOrHeresies.length > 0 && (
-                    <div className="p-4 rounded-xl bg-stone-100 border border-stone-300 space-y-2">
-                      <span className="font-cinzel font-bold text-stone-800 text-xs uppercase tracking-wider block">Heresies & Opponents Refuted:</span>
+                    <div className="p-4 rounded-xl bg-slate-100 border border-slate-300 space-y-2">
+                      <span className="font-cinzel font-bold text-slate-800 text-xs uppercase tracking-wider block">Heresies & Opponents Refuted:</span>
                       <ul className="space-y-1.5">
                         {selectedCouncil.majorPlayers.adversariesOrHeresies.map(h => (
-                          <li key={h} className="text-stone-800 font-serif flex items-start gap-2 text-sm sm:text-base">
-                            <span className="text-stone-500 font-bold">✕</span>
+                          <li key={h} className="text-slate-800 font-serif flex items-start gap-2 text-sm sm:text-base">
+                            <span className="text-slate-500 font-bold">✕</span>
                             <span>{h}</span>
                           </li>
                         ))}
@@ -2290,14 +2369,14 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
               </div>
 
               <div className="space-y-3">
-                <h4 className="font-cinzel text-xs sm:text-sm font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-2">
-                  <Award className="w-4 h-4 text-emerald-600" />
+                <h4 className="font-cinzel text-xs sm:text-sm font-bold text-[#334E68] uppercase tracking-wider flex items-center gap-2">
+                  <Award className="w-4 h-4 text-[#486581]" />
                   <span>Key Dogmatic & Canonical Achievements</span>
                 </h4>
-                <div className="p-5 rounded-xl bg-white border border-stone-200 space-y-3">
+                <div className="p-5 rounded-xl bg-[#F4EFE6]/60 border border-[#DFD6C7] space-y-3">
                   {selectedCouncil.achievements.map((ach, idx) => (
-                    <div key={idx} className="flex items-start gap-3 text-sm sm:text-base text-stone-800 font-serif leading-relaxed">
-                      <span className="p-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mt-0.5 shrink-0">
+                    <div key={idx} className="flex items-start gap-3 text-sm sm:text-base text-slate-800 font-serif leading-relaxed">
+                      <span className="w-6 h-6 rounded-full bg-[#334E68]/15 text-[#334E68] flex items-center justify-center text-xs font-bold mt-0.5 shrink-0">
                         ✓
                       </span>
                       <span>{ach}</span>
@@ -2308,31 +2387,31 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
 
               {selectedCouncil.famousQuotesOrCreed.length > 0 && (
                 <div className="space-y-2.5">
-                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-stone-700 uppercase tracking-wider flex items-center gap-2">
-                    <ScrollText className="w-4 h-4 text-amber-600" />
+                  <h4 className="font-cinzel text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                    <ScrollText className="w-4 h-4 text-[#334E68]" />
                     <span>Historic Conciliar Text</span>
                   </h4>
-                  <div className="p-5 rounded-xl bg-[#F7F4EC] border-l-4 border-amber-600 text-stone-900 font-serif italic text-sm sm:text-base md:text-lg leading-relaxed shadow-2xs">
+                  <div className="p-5 rounded-xl bg-[#F4EFE6] border-y border-[#D8CFC0] text-slate-900 font-serif italic text-sm sm:text-base md:text-lg leading-relaxed shadow-2xs">
                     {selectedCouncil.famousQuotesOrCreed[0]}
                   </div>
                 </div>
               )}
 
-              <div className="p-6 rounded-xl bg-stone-900 text-white space-y-2">
-                <div className="font-cinzel text-xs sm:text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
+              <div className="p-6 rounded-xl bg-slate-900 text-[#FBF9F5] space-y-2 border border-slate-700">
+                <div className="font-cinzel text-xs sm:text-sm font-bold text-[#DFD5C3] uppercase tracking-wider flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#EAE2D3]" />
                   <span>Lasting Impact on the Church Today</span>
                 </div>
-                <p className="text-sm sm:text-base md:text-lg text-stone-200 font-serif leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg text-[#EAE2D3] font-serif leading-relaxed">
                   {selectedCouncil.lastingImpact}
                 </p>
               </div>
             </div>
 
-            <div className="p-5 bg-stone-100 border-t border-stone-200 text-right shrink-0">
+            <div className="p-5 bg-[#F4EFE6] border-t border-[#D8CFC0] text-right shrink-0">
               <button
                 onClick={() => setSelectedCouncil(null)}
-                className="px-6 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs sm:text-sm font-cinzel font-bold cursor-pointer transition-colors"
+                className="px-6 py-2.5 rounded-xl bg-[#334E68] hover:bg-slate-800 text-[#FBF9F5] text-xs sm:text-sm font-cinzel font-bold cursor-pointer transition-colors"
               >
                 Close Council Record
               </button>

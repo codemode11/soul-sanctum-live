@@ -47,11 +47,11 @@ export const GLOBAL_CATHOLIC_STATISTICS = {
     orphanagesAndNurseries: 9374
   },
   continentalDistribution: [
-    { continent: 'Americas', percentage: 48.0, catholics: 667000000, color: '#D97706', growthRate: '+0.4% / yr' },
-    { continent: 'Europe', percentage: 20.3, catholics: 282000000, color: '#2563EB', growthRate: '-0.2% / yr' },
-    { continent: 'Africa', percentage: 19.3, catholics: 268000000, color: '#16A34A', growthRate: '+3.1% / yr (Fastest)' },
-    { continent: 'Asia', percentage: 11.0, catholics: 153000000, color: '#9333EA', growthRate: '+1.5% / yr' },
-    { continent: 'Oceania', percentage: 0.8, catholics: 11000000, color: '#EA580C', growthRate: '+0.8% / yr' }
+    { continent: 'Americas', percentage: 48.0, catholics: 667000000, color: '#334E68', growthRate: '+0.4% / yr' },
+    { continent: 'Europe', percentage: 20.3, catholics: 282000000, color: '#486581', growthRate: '-0.2% / yr' },
+    { continent: 'Africa', percentage: 19.3, catholics: 268000000, color: '#627D98', growthRate: '+3.1% / yr (Fastest)' },
+    { continent: 'Asia', percentage: 11.0, catholics: 153000000, color: '#829AB1', growthRate: '+1.5% / yr' },
+    { continent: 'Oceania', percentage: 0.8, catholics: 11000000, color: '#BCCCDC', growthRate: '+0.8% / yr' }
   ]
 };
 

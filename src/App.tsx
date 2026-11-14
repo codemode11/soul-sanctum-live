@@ -658,6 +658,8 @@ export default function App() {
         <div className={`flex-1 w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center transition-all duration-300 ${
           activeTab === 'catholic-ai'
             ? 'max-w-none px-2 sm:px-4 lg:px-6' 
+            : activeTab === 'church-history'
+            ? 'max-w-[1400px]'
             : 'max-w-7xl'
         }`}>
           
@@ -686,7 +688,7 @@ export default function App() {
 
             {/* Main Content Area */}
             <main className={`flex-1 w-full min-w-0 transition-all duration-300 ${
-              activeTab === 'catholic-ai' ? 'max-w-full' : 'max-w-4xl'
+              activeTab === 'catholic-ai' || activeTab === 'church-history' ? 'max-w-full' : 'max-w-4xl'
             }`}>
 
             {/* 1. Mass Readings */}
