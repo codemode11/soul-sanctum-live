@@ -21,7 +21,9 @@ import {
   Award,
   HelpCircle,
   BookmarkCheck,
-  Bookmark
+  Bookmark,
+  Settings,
+  ChevronDown
 } from 'lucide-react';
 import { BIBLE_MEMORY_VERSES, BibleFlashcard } from '../data/bibleMemoryVerses';
 import { SacredReader } from '../utils/speech';
@@ -42,6 +44,7 @@ export const BibleFlashcardsView: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
   const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
+  const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
 
   const handleVoiceSelect = (v: 'ava-grace' | 'david') => {
     setRecitationVoice(v);
@@ -304,208 +307,238 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-16 animate-fadeIn">
       
-      {/* Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-xl border border-amber-800/40 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-radial-gradient from-amber-500/10 to-transparent pointer-events-none rounded-full blur-2xl" />
-        
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                <BookOpen className="w-4 h-4" />
-              </span>
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-                Catholic Scripture Memorization Treasury
-              </span>
+      {/* Top Container: Banner + Collapsible Settings Dropdown */}
+      <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        {/* Main Banner */}
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-amber-50 shadow-xl border border-amber-800/40 relative overflow-hidden flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-radial-gradient from-amber-500/10 to-transparent pointer-events-none rounded-full blur-2xl" />
+
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-xl">
+              <div className="flex items-center gap-2">
+                <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <BookOpen className="w-4 h-4" />
+                </span>
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+                  Catholic Scripture Memorization Treasury
+                </span>
+              </div>
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+                Bible Flashcards and Memorization Tool
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
+                Inscribe the living word of God upon your heart. Practice active recall, test your memory with cloze blanks, acrostic first-letter recall, and audio recitation.
+              </p>
             </div>
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-              Bible Flashcards and Memorization Tool
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-              Inscribe the living word of God upon your heart. Practice active recall, test your memory with cloze blanks, acrostic first-letter recall, and audio recitation.
-            </p>
+
+            {/* Quick Mastery Progress */}
+            <div className="bg-black/50 backdrop-blur-md rounded-xl p-4 border border-amber-500/20 flex flex-col gap-2.5 min-w-[240px]">
+              <div className="flex items-center justify-between text-xs font-cinzel text-amber-200">
+                <span className="flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-amber-400" />
+                  <span>Memory Progress</span>
+                </span>
+                <span className="font-bold text-amber-400">
+                  {stats.mastered} / {stats.total} Mastered
+                </span>
+              </div>
+
+              <div className="w-full bg-stone-800 h-2.5 rounded-full overflow-hidden flex">
+                <div
+                  className="bg-emerald-500 h-full transition-all duration-500"
+                  style={{ width: `${(stats.mastered / stats.total) * 100}%` }}
+                  title={`${stats.mastered} Mastered`}
+                />
+                <div
+                  className="bg-amber-500 h-full transition-all duration-500"
+                  style={{ width: `${(stats.learning / stats.total) * 100}%` }}
+                  title={`${stats.learning} In Progress`}
+                />
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] text-stone-400 font-sans">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+                  {stats.mastered} Mastered
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" />
+                  {stats.learning} Learning
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-stone-600 inline-block" />
+                  {stats.unlearned} To Memorize
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Quick Mastery Progress Pill */}
-          <div className="bg-black/50 backdrop-blur-md rounded-xl p-4 border border-amber-500/20 flex flex-col gap-2.5 min-w-[240px]">
-            <div className="flex items-center justify-between text-xs font-cinzel text-amber-200">
-              <span className="flex items-center gap-1.5">
-                <Award className="w-4 h-4 text-amber-400" />
-                <span>Memory Progress</span>
-              </span>
-              <span className="font-bold text-amber-400">
-                {stats.mastered} / {stats.total} Mastered
-              </span>
-            </div>
-            
-            {/* Multi-segmented Progress Bar */}
-            <div className="w-full bg-stone-800 h-2.5 rounded-full overflow-hidden flex">
-              <div 
-                className="bg-emerald-500 h-full transition-all duration-500" 
-                style={{ width: `${(stats.mastered / stats.total) * 100}%` }}
-                title={`${stats.mastered} Mastered`}
+          {/* Lower Row: Settings Drop-down Toggle */}
+          <div className="relative z-10 flex items-center justify-end mt-auto pt-3 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsTopSettingsOpen(prev => !prev)}
+              aria-expanded={isTopSettingsOpen}
+              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap ${
+                isTopSettingsOpen
+                  ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                  : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+              }`}
+              title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+              aria-label={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
+            >
+              <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+              <span className="text-xs font-cinzel font-semibold">Settings</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                  isTopSettingsOpen ? 'rotate-180' : ''
+                }`}
               />
-              <div 
-                className="bg-amber-500 h-full transition-all duration-500" 
-                style={{ width: `${(stats.learning / stats.total) * 100}%` }}
-                title={`${stats.learning} In Progress`}
-              />
-            </div>
-
-            <div className="flex items-center justify-between text-[11px] text-stone-400 font-sans">
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                {stats.mastered} Mastered
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" />
-                {stats.learning} Learning
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-stone-600 inline-block" />
-                {stats.unlearned} To Memorize
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Control Bar: Mode Switcher, Categories, Search */}
-      <div className="bg-white rounded-xl p-5 shadow-xs border border-stone-200 space-y-4">
-        
-        {/* Row 1: Study Mode Switcher and Tools */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-stone-100">
-          
-          {/* Study Mode Tabs */}
-          <div className="flex items-center bg-stone-100 p-1 rounded-xl gap-1">
-            <button
-              onClick={() => setStudyMode('flip')}
-              className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                studyMode === 'flip'
-                  ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
-              }`}
-              title="Classic 3D Flashcard Flip"
-            >
-              <RotateCw className="w-3.5 h-3.5" />
-              <span>Flip Card</span>
-            </button>
-
-            <button
-              onClick={() => setStudyMode('cloze')}
-              className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                studyMode === 'cloze'
-                  ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
-              }`}
-              title="Fill-in-the-Blanks active recall test"
-            >
-              <EyeOff className="w-3.5 h-3.5" />
-              <span>Fill-in-Blanks</span>
-            </button>
-
-            <button
-              onClick={() => setStudyMode('first-letter')}
-              className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                studyMode === 'first-letter'
-                  ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
-              }`}
-              title="Acrostic first-letter recall prompt"
-            >
-              <Flame className="w-3.5 h-3.5" />
-              <span>First Letter</span>
-            </button>
-
-            <button
-              onClick={() => setStudyMode('scramble')}
-              className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                studyMode === 'scramble'
-                  ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
-              }`}
-              title="Word-by-word sentence builder"
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Word Builder</span>
-            </button>
-          </div>
-
-          {/* Right Tools: Font size and Shuffle */}
-          <div className="flex items-center justify-between sm:justify-end gap-2">
-            
-            {/* Font Stepper */}
-            <div className="flex items-center bg-stone-100 p-1 rounded-xl border border-stone-200">
-              <button
-                onClick={() => setFontSize('normal')}
-                className={`px-2.5 py-1 text-xs rounded-lg font-bold cursor-pointer transition-all ${
-                  fontSize === 'normal' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-900'
-                }`}
-                title="Default text size"
-              >
-                A
-              </button>
-              <button
-                onClick={() => setFontSize('large')}
-                className={`px-2.5 py-1 text-xs rounded-lg font-bold cursor-pointer transition-all ${
-                  fontSize === 'large' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-900'
-                }`}
-                title="Large text size"
-              >
-                A+
-              </button>
-              <button
-                onClick={() => setFontSize('xlarge')}
-                className={`px-2.5 py-1 text-xs rounded-lg font-bold cursor-pointer transition-all ${
-                  fontSize === 'xlarge' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-900'
-                }`}
-                title="Extra large text size"
-              >
-                A++
-              </button>
-            </div>
-
-            {/* Shuffle Button */}
-            <button
-              onClick={handleShuffle}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition-colors cursor-pointer border border-stone-200"
-              title="Randomize flashcard deck"
-            >
-              <Shuffle className="w-3.5 h-3.5 text-stone-500" />
-              <span className="hidden sm:inline">Shuffle</span>
             </button>
           </div>
         </div>
 
-        {/* Row 2: Category Pills and Search */}
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-3 py-1 rounded-lg text-xs whitespace-nowrap transition-all cursor-pointer font-medium ${
-                  activeCategory === cat
-                    ? 'bg-amber-900 text-white font-bold shadow-xs'
-                    : 'bg-stone-100 hover:bg-stone-200 text-stone-600'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+        {/* Settings Drop-down Menu */}
+        {isTopSettingsOpen && (
+          <div className="px-4 py-4 sm:px-6 bg-white/85 backdrop-blur-md border-t border-stone-200/80 rounded-b-xl space-y-4 animate-fadeIn">
+            {/* Row 1: Study Mode Switcher, Font Size, Shuffle */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-stone-200/80">
+              <div className="flex flex-wrap sm:flex-nowrap items-center bg-stone-100 p-1 rounded-xl gap-1">
+                <button
+                  type="button"
+                  onClick={() => setStudyMode('flip')}
+                  className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+                    studyMode === 'flip'
+                      ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
+                      : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                  }`}
+                  title="Classic 3D Flashcard Flip"
+                >
+                  <RotateCw className="w-3.5 h-3.5 shrink-0" />
+                  <span>Flip Card</span>
+                </button>
 
-          <div className="relative shrink-0">
-            <input
-              type="text"
-              placeholder="Filter by citation or keyword..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="text-xs pl-8 pr-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200 focus:outline-hidden focus:border-amber-700 w-full sm:w-64"
-            />
-            <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5" />
+                <button
+                  type="button"
+                  onClick={() => setStudyMode('cloze')}
+                  className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+                    studyMode === 'cloze'
+                      ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
+                      : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                  }`}
+                  title="Fill-in-the-Blanks active recall test"
+                >
+                  <EyeOff className="w-3.5 h-3.5 shrink-0" />
+                  <span>Fill-in-Blanks</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setStudyMode('first-letter')}
+                  className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+                    studyMode === 'first-letter'
+                      ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
+                      : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                  }`}
+                  title="Acrostic first-letter recall prompt"
+                >
+                  <Flame className="w-3.5 h-3.5 shrink-0" />
+                  <span>First Letter</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setStudyMode('scramble')}
+                  className={`flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
+                    studyMode === 'scramble'
+                      ? 'bg-amber-900 text-white shadow-xs font-cinzel font-bold'
+                      : 'text-stone-600 hover:text-stone-900 hover:bg-white/60'
+                  }`}
+                  title="Word-by-word sentence builder"
+                >
+                  <Layers className="w-3.5 h-3.5 shrink-0" />
+                  <span>Word Builder</span>
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0">
+                <div className="flex items-center bg-stone-100 p-1 rounded-xl border border-stone-200">
+                  <button
+                    type="button"
+                    onClick={() => setFontSize('normal')}
+                    className={`px-2.5 py-1 text-xs rounded-lg font-bold cursor-pointer transition-all ${
+                      fontSize === 'normal' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-900'
+                    }`}
+                    title="Default text size"
+                  >
+                    A
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFontSize('large')}
+                    className={`px-2.5 py-1 text-xs rounded-lg font-bold cursor-pointer transition-all ${
+                      fontSize === 'large' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-900'
+                    }`}
+                    title="Large text size"
+                  >
+                    A+
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFontSize('xlarge')}
+                    className={`px-2.5 py-1 text-xs rounded-lg font-bold cursor-pointer transition-all ${
+                      fontSize === 'xlarge' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-900'
+                    }`}
+                    title="Extra large text size"
+                  >
+                    A++
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleShuffle}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition-colors cursor-pointer border border-stone-200 whitespace-nowrap"
+                  title="Randomize flashcard deck"
+                >
+                  <Shuffle className="w-3.5 h-3.5 text-stone-500 shrink-0" />
+                  <span>Shuffle</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Row 2: Categories and Search */}
+            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    type="button"
+                    onClick={() => setActiveCategory(cat)}
+                    className={`px-3 py-1 rounded-lg text-xs whitespace-nowrap transition-all cursor-pointer font-medium shrink-0 ${
+                      activeCategory === cat
+                        ? 'bg-amber-900 text-white font-bold shadow-xs'
+                        : 'bg-stone-100 hover:bg-stone-200 text-stone-600'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              <div className="relative shrink-0">
+                <input
+                  type="text"
+                  placeholder="Filter by citation or keyword..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="text-xs pl-8 pr-3 py-1.5 rounded-xl bg-stone-50 border border-stone-200 focus:outline-hidden focus:border-amber-700 w-full sm:w-64"
+                />
+                <Search className="w-3.5 h-3.5 text-stone-400 absolute left-2.5 top-2.5" />
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Main Flashcard Arena */}
