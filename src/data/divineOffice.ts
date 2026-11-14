@@ -2,7 +2,15 @@ import { MassReading } from '../types';
 import { getMassReadingsForDate } from './massReadings';
 import { getSaintForDate } from './saints';
 
-export type OfficeHourKey = 'invitatory' | 'readings' | 'lauds' | 'daytime' | 'vespers' | 'compline';
+export type OfficeHourKey =
+  | 'invitatory'
+  | 'readings'
+  | 'lauds'
+  | 'midmorning'
+  | 'midday'
+  | 'midafternoon'
+  | 'vespers'
+  | 'compline';
 export type DaytimeSubHourKey = 'terce' | 'sext' | 'none';
 export type DaytimePsalmodyMode = 'current' | 'complementary';
 
@@ -12,6 +20,7 @@ export interface PsalmEntry {
   title: string;
   subtitle?: string; // Christological psalm caption printed in italics (GILH 111, 114)
   verses: string[];
+  psalmPrayer?: string;
   isSectioned?: boolean; // Divided long psalm (GILH 115, 124)
 }
 
@@ -44,28 +53,36 @@ export interface DivineOfficeHourData {
   hourKey: OfficeHourKey;
   englishTitle: string;
   latinTitle?: string;
+  liturgicalDay: string;
+  liturgicalSeason: string;
+  formattedDate: string;
   timeHint: string;
   introSectionLabel: string;
+  signOfCrossNote?: string; // GILH 266
   combiningHoursNote: string;
   openingVerse: string;
   openingResponse: string;
   examinationOfConscience?: ExaminationOfConscienceData;
-  hymnTitle: string;
+  hymnTitle?: string;
   hymnAuthor?: string;
-  hymnStanzas: string[];
+  hymnStanzas?: string[];
   psalmodyModeNote?: string;
   psalms: PsalmEntry[];
-  readingSectionLabel: string;
+  psalmodyTransitionVerse?: {
+    verse: string;
+    response: string;
+  }; // GILH 63
+  readingSectionLabel?: string;
   readingRubricNote?: string;
-  shortReadingCitation: string;
-  shortReadingText: string;
+  shortReadingCitation?: string;
+  shortReadingText?: string;
   longerReadingOption?: {
     citation: string;
     text: string;
     rubricNote: string;
   };
   silenceNote?: string;
-  responsory: {
+  responsory?: {
     verse: string;
     response: string;
     repeat: string;
@@ -95,6 +112,8 @@ export interface DivineOfficeHourData {
   };
   vigilExtension?: VigilExtensionData;
   teDeum?: TeDeumData;
+  teDeumOmittedNote?: string; // GILH 68
+  intercessionsSectionLabel?: string;
   intercessions?: {
     introduction: string;
     response: string;
@@ -105,8 +124,8 @@ export interface DivineOfficeHourData {
       petitions: string[];
     };
   };
-  collect: string;
-  conclusion: string;
+  collect?: string;
+  conclusion?: string;
   conclusionOmissionNote?: string;
   marianAntiphon?: {
     title: string;
@@ -126,26 +145,29 @@ export interface DivineOfficeOptions {
 export interface CanonicalHourSchedule {
   key: OfficeHourKey;
   label: string;
-  approxTime: string;
 }
 
 export const CANONICAL_HOUR_SCHEDULE: Record<OfficeHourKey, CanonicalHourSchedule> = {
-  invitatory: { key: 'invitatory', label: 'Invitatory', approxTime: 'Before First Hour' },
-  readings: { key: 'readings', label: 'Office of Readings', approxTime: 'Any Hour of Day' },
-  lauds: { key: 'lauds', label: 'Morning Prayer', approxTime: 'Start of Day' },
-  daytime: { key: 'daytime', label: 'Daytime Prayer', approxTime: 'Terce • Sext • None' },
-  vespers: { key: 'vespers', label: 'Evening Prayer', approxTime: 'Close of Day' },
-  compline: { key: 'compline', label: 'Night Prayer', approxTime: 'Before Sleep' },
+  invitatory: { key: 'invitatory', label: 'Invitatory' },
+  readings: { key: 'readings', label: 'Office of Readings' },
+  lauds: { key: 'lauds', label: 'Morning Prayer' },
+  midmorning: { key: 'midmorning', label: 'Midmorning Prayer' },
+  midday: { key: 'midday', label: 'Midday Prayer' },
+  midafternoon: { key: 'midafternoon', label: 'Midafternoon Prayer' },
+  vespers: { key: 'vespers', label: 'Evening Prayer' },
+  compline: { key: 'compline', label: 'Night Prayer' },
 };
 
 export function getIdealDivineOfficeHour(date: Date = new Date()): OfficeHourKey {
-  const hour = date.getHours();
-  if (hour >= 21 || hour < 3) return 'compline';   // Night / before sleep convenience default
-  if (hour >= 3 && hour < 5) return 'readings';    // Pre-dawn convenience default
-  if (hour >= 5 && hour < 6) return 'invitatory';  // Early waking convenience default
-  if (hour >= 6 && hour < 9) return 'lauds';       // Morning convenience default
-  if (hour >= 9 && hour < 17) return 'daytime';    // Daytime convenience default
-  return 'vespers';                                // Evening convenience default
+  const mins = date.getHours() * 60 + date.getMinutes();
+  if (mins >= 21 * 60 || mins < 3 * 60) return 'compline';
+  if (mins >= 3 * 60 && mins < 5 * 60) return 'readings';
+  if (mins >= 5 * 60 && mins < 6 * 60) return 'invitatory';
+  if (mins >= 6 * 60 && mins < 9 * 60) return 'lauds';
+  if (mins >= 9 * 60 && mins < 11 * 60 + 30) return 'midmorning';
+  if (mins >= 11 * 60 + 30 && mins < 14 * 60 + 30) return 'midday';
+  if (mins >= 14 * 60 + 30 && mins < 17 * 60) return 'midafternoon';
+  return 'vespers';
 }
 
 export function getDaytimeSubHourKey(date: Date = new Date()): DaytimeSubHourKey {
@@ -157,9 +179,9 @@ export function getDaytimeSubHourKey(date: Date = new Date()): DaytimeSubHourKey
 
 export function getDaytimeSubHourLabel(date: Date = new Date()): string {
   const key = getDaytimeSubHourKey(date);
-  if (key === 'terce') return 'Terce (Mid-Morning)';
-  if (key === 'sext') return 'Sext (Midday)';
-  return 'None (Mid-Afternoon)';
+  if (key === 'terce') return 'Midmorning Prayer';
+  if (key === 'sext') return 'Midday Prayer';
+  return 'Midafternoon Prayer';
 }
 
 const COMPLEMENTARY_GRADUAL_PSALMS: Record<DaytimeSubHourKey, PsalmEntry[]> = {
@@ -738,6 +760,20 @@ export const GILH_QA_ITEMS: GilhQaGuideItem[] = [
     gilhRef: 'GILH 35, 41, 68–69, 79, 171',
     question: 'What elements may be omitted in the Hours?',
     answer: 'When the Invitatory immediately precedes Morning Prayer or Office of Readings, "God, come to my assistance" and "Glory to the Father" are omitted at the start of the Hour (41); the Invitatory itself may also be omitted before Morning Prayer (35). At Morning/Evening Prayer, the responsory may be omitted (49), and when not sung the full reprise is optional (171). The final section of the Te Deum ("Save your people, Lord..." to the end) may be omitted (68), and "Let us praise the Lord. And give him thanks" may be omitted in private recitation of the Office of Readings and Daytime Prayer (69, 79).'
+  },
+  {
+    id: 'gilh-23',
+    category: 'Intercessions, Silence & Structure',
+    gilhRef: 'GILH 263–266',
+    question: 'What are the liturgical postures and when is the Sign of the Cross made?',
+    answer: 'In common celebration, all stand for the introduction and introductory verses of each Hour, the hymn, the Gospel Canticle, and the intercessions, Lord\'s Prayer, and concluding prayer (263). All sit for the readings except the Gospel (264), and sit or stand for the psalms and canticles according to custom (265). All make the Sign of the Cross from forehead to breast and left shoulder to right at "God, come to my assistance" and at the start of the Canticles of Zechariah, Mary, and Simeon; the Sign of the Cross is made on the mouth at "Lord, open my lips" in the Invitatory (266).'
+  },
+  {
+    id: 'gilh-24',
+    category: 'Schedule & Hours',
+    gilhRef: 'GILH 208–216, 268–273',
+    question: 'What special norms apply during the Easter Triduum, Christmas Eve, and sung celebrations?',
+    answer: 'Those who attend the evening Mass of the Lord\'s Supper on Holy Thursday or the Celebration of the Lord\'s Passion on Good Friday do not say Evening Prayer on that day (209). Night Prayer on Holy Saturday is prayed only by those not attending the Easter Vigil (211), and likewise on Christmas Eve by those not present at the solemn Vigil before Midnight Mass (215). For sung Hours, the GILH recommends "progressive solemnity" (273), giving priority to Morning and Evening Prayer and elements lyrical by nature (acclamations, hymns, psalms, canticles, and responsories).'
   }
 ];
 
@@ -764,9 +800,16 @@ export function getDivineOfficeHour(
   const gospelCitation = reading.gospel.citation || 'Holy Gospel';
   const liturgicalDay = reading.liturgicalDay || 'Weekday in Ordinary Time';
   const liturgicalRank = reading.liturgicalRank || 'Weekday';
-  const isLent = reading.liturgicalSeason.toLowerCase().includes('lent');
+  const seasonLower = reading.liturgicalSeason.toLowerCase();
+  const liturgicalDayLower = liturgicalDay.toLowerCase();
+  const isLent = seasonLower.includes('lent');
+  const isEaster = seasonLower.includes('easter');
+  const isOctave =
+    liturgicalDayLower.includes('octave of easter') ||
+    liturgicalDayLower.includes('octave of christmas');
   const isTeDeumEligible =
     (!isLent && dayOfWeek === 0) ||
+    isOctave ||
     liturgicalRank === 'Solemnity' ||
     liturgicalRank === 'Feast';
   const isVigilEligible =
@@ -774,57 +817,68 @@ export function getDivineOfficeHour(
     liturgicalRank === 'Solemnity' ||
     liturgicalRank === 'Feast';
   const isSaturdayOrdinaryTime =
-    dayOfWeek === 6 && reading.liturgicalSeason.toLowerCase().includes('ordinary');
+    dayOfWeek === 6 && seasonLower.includes('ordinary');
   const isSaintMemorialOrFeast =
     liturgicalRank === 'Memorial' ||
     liturgicalRank === 'Optional Memorial' ||
     liturgicalRank === 'Feast' ||
     liturgicalRank === 'Solemnity';
 
+  const standardOpeningResponse = isLent
+    ? 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
+    : 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.';
+
+  const withEasterAlleluia = (antiphon: string): string => {
+    if (!isEaster) return antiphon;
+    if (/alleluia[.!]?$/i.test(antiphon.trim())) return antiphon;
+    return `${antiphon.replace(/[.!]$/, '')}, alleluia.`;
+  };
+
+  const applySeasonPsalms = (entries: PsalmEntry[]): PsalmEntry[] =>
+    isEaster
+      ? entries.map(p => ({ ...p, antiphon: withEasterAlleluia(p.antiphon) }))
+      : entries;
+
   const saturdayBvmNote = isSaturdayOrdinaryTime
     ? 'Saturday in Ordinary Time: Where no obligatory memorial impedes it, an Optional Memorial of the Blessed Virgin Mary may be celebrated (GILH 240); Saturday night begins Evening Prayer I of Sunday.'
     : undefined;
+
+  const formattedDate = parsedDate.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
 
   switch (hourKey) {
     case 'invitatory':
       return {
         hourKey: 'invitatory',
-        englishTitle: 'Invitatory Prayer',
-        timeHint: 'Opening call to praise before the first Hour of the day — no clock time is prescribed (GILH 34–41)',
-        introSectionLabel: 'Invitatory Opening',
-        combiningHoursNote: 'When the Invitatory serves as the prelude to Morning Prayer or Office of Readings, omit "O God, come to my assistance" and "Glory to the Father" at the beginning of that Hour (GILH 41); the Invitatory may also be omitted before Morning Prayer (GILH 35).',
+        englishTitle: 'Invitatory',
+        liturgicalDay,
+        liturgicalSeason: reading.liturgicalSeason,
+        formattedDate,
+        timeHint: liturgicalDay,
+        introSectionLabel: 'Introduction',
+        signOfCrossNote: 'Make the Sign of the Cross on your lips while saying "Lord, open my lips." (GILH 266).',
+        combiningHoursNote: 'Proceed directly to the Hymn of Morning Prayer or the Office of Readings (GILH 34–35, 41).',
         openingVerse: 'Lord, open my lips.',
         openingResponse: 'And my mouth will proclaim your praise.',
-        hymnTitle: 'Venite, Exultemus Domino (Psalm 95)',
-        hymnStanzas: [
-          'Come, let us ring out our joy to the Lord, hail the rock who saves us. Let us come before him, giving thanks, with songs let us hail the Lord.',
-          'A mighty God is the Lord, a great king above all gods. In his hand are the depths of the earth; the heights of the mountains are his. To him belongs the sea, for he made it, and the dry land shaped by his hands.',
-          'Come in, let us bow and bend low; let us kneel before the God who made us for he is our God and we the people who belong to his pasture, the flock that is led by his hand.',
-          'O that today you would listen to his voice: "Harden not your hearts as at Meribah, as on that day at Massah in the desert when your fathers put me to the test; when they tried me, though they saw my work."'
-        ],
-        psalms: [
+        psalms: applySeasonPsalms([
           {
             antiphon: `Come, let us worship Christ the Lord, who speaks to us in the Holy Gospel (${liturgicalDay}).`,
-            citation: 'Psalm 95 (Concluding Strophe & Doxology)',
-            title: 'Call to Praise the Lord and Sovereign God',
+            citation: 'Psalm 95 (Venite, Exultemus Domino)',
+            title: 'A Call to Praise God and Listen to His Voice',
             subtitle: 'Encourage one another every day, as long as it is called "Today" (Heb 3:13)',
             verses: [
+              'Come, let us ring out our joy to the Lord, hail the rock who saves us. Let us come before him, giving thanks, with songs let us hail the Lord.',
+              'A mighty God is the Lord, a great king above all gods. In his hand are the depths of the earth; the heights of the mountains are his. To him belongs the sea, for he made it, and the dry land shaped by his hands.',
+              'Come in, let us bow and bend low; let us kneel before the God who made us, for he is our God and we the people who belong to his pasture, the flock that is led by his hand.',
+              'O that today you would listen to his voice: "Harden not your hearts as at Meribah, as on that day at Massah in the desert when your fathers put me to the test; when they tried me, though they saw my work."',
               'Forty years I was wearied of that generation, and I said: "Their hearts are always astray, they do not know my ways." So I swore in my anger: "They shall not enter my rest."',
               'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
             ]
           }
-        ],
-        readingSectionLabel: 'Invitatory Scripture Verse',
-        shortReadingCitation: 'Hebrews 3:7-8',
-        shortReadingText: 'Today, if you hear his voice, do not harden your hearts as in the rebellion, on the day of testing in the wilderness.',
-        responsory: {
-          verse: 'V. Hear the word of the Lord, O nations.',
-          response: 'R. Proclaim it to the ends of the earth.',
-          repeat: 'Proclaim it to the ends of the earth.',
-          omissionNote: 'Repeat the antiphon after each strophe when sung; in private recitation it suffices at the beginning and end of Psalm 95 (GILH 35, 123).'
-        },
-        collect: `Almighty and ever-living God, grant that our hearts may always be attentive to your divine voice, so that, responding in faith to the Holy Gospel proclaimed today in ${liturgicalDay}, we may enter into your eternal rest. Through Christ our Lord. Amen.`,
-        conclusion: 'V. May the Lord bless us, protect us from all evil and bring us to everlasting life. R. Amen.',
+        ]),
         liturgicalContextNote: saturdayBvmNote
       };
 
@@ -835,15 +889,14 @@ export function getDivineOfficeHour(
 
       const secondReading = isSaintMemorialOrFeast
         ? {
-            sectionLabel: `Second Reading — Proper of ${liturgicalRank}: ${saint.name} (GILH 67)`,
+            sectionLabel: 'Second Reading',
             author: saint.name,
-            work: saint.butlerReference || `Roman Martyrology & Hagiographical Reading (${saint.feastDate})`,
+            work: saint.butlerReference || `Roman Martyrology (${saint.feastDate})`,
             title: `${saint.name} — ${saint.title}`,
-            text: `${saint.biography}\n\nSpiritual Maxim: "${saint.quote.text}"${saint.quote.source ? ` (${saint.quote.source})` : ''}`,
+            text: `${saint.biography}\n\n"${saint.quote.text}"${saint.quote.source ? ` (${saint.quote.source})` : ''}`,
             responsory: `R. Pray for us, ${saint.name}. V. That we may be made worthy of the promises of Christ.`,
-            rubricNote: 'On solemnities and feasts of saints, a proper Second Reading or one from the Common of Saints is used; on unimpeded memorials, the reading of the saint replaces the current Second Reading (GILH 67).',
             alternateOption: {
-              label: 'Patristic Alternative (GILH 250)',
+              label: 'Patristic',
               author: patristicAuthor,
               work: 'Expositio in Evangelium & Sermones Patrum',
               title: patristicTitle,
@@ -851,15 +904,14 @@ export function getDivineOfficeHour(
             }
           }
         : {
-            sectionLabel: `Second Reading — Ecclesiastical & Patristic (${patristicAuthor})`,
+            sectionLabel: 'Second Reading',
             author: patristicAuthor,
             work: 'Expositio in Evangelium & Sermones Patrum',
             title: patristicTitle,
             text: patristicText,
             responsory: 'R. Lord, to whom shall we go? You have the words of eternal life. V. We have come to believe and know that you are the Holy One of God.',
-            rubricNote: 'For good reason, another reading from the same season—or on weekdays a semicontinuous reading from a Father of the Church—may be chosen (GILH 250).',
             alternateOption: {
-              label: `Commemoration of ${saint.name} (${saint.feastDate})`,
+              label: 'Saint',
               author: saint.name,
               work: saint.butlerReference || `Roman Martyrology (${saint.feastDate})`,
               title: `${saint.name} — ${saint.title}`,
@@ -870,19 +922,22 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'readings',
         englishTitle: 'Office of Readings',
-        timeHint: 'May be recited at any hour of the day, or as a night office after Evening Prayer / before Morning Prayer (GILH 58–59)',
+        liturgicalDay,
+        liturgicalSeason: reading.liturgicalSeason,
+        formattedDate,
+        timeHint: liturgicalDay,
         introSectionLabel: 'Introduction',
-        combiningHoursNote: 'If prayed immediately before Morning Prayer or another Hour, omit the closing prayer and acclamation of this Office and omit the introduction of the following Hour (GILH 60).',
+        combiningHoursNote: '',
         openingVerse: 'O God, come to my assistance.',
-        openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
+        openingResponse: standardOpeningResponse,
         hymnTitle: 'O Splendor of God\'s Glory Bright',
-        hymnAuthor: 'St. Ambrose of Milan (340–397)',
+        hymnAuthor: 'St. Ambrose of Milan',
         hymnStanzas: [
           'O Splendor of God\'s glory bright, who bringest forth the light from Light; O Light of light, light\'s Fount and Spring, Redeemer, Savior, heavenly King.',
           'Come, very Sun of truth and love, come in thy radiance from above, and shed the Holy Spirit\'s ray on all we think or do today.',
           'To God the Father, glory be, and to his sole-begotten Son, with thee, O Holy Paraclete, while everlasting ages run.'
         ],
-        psalms: [
+        psalms: applySeasonPsalms([
           {
             antiphon: 'Great is the Lord and worthy of high praise in the city of our God.',
             citation: 'Psalm 48',
@@ -902,6 +957,7 @@ export function getDivineOfficeHour(
             citation: 'Psalm 49:1-13',
             title: 'The Vanity of Riches and Human Pride',
             subtitle: 'Hard it is for a rich man to enter the Kingdom of Heaven (Mt 19:23)',
+            isSectioned: true,
             verses: [
               '1 Hear this, all you peoples! Give ear, all inhabitants of the world, both low and high, rich and poor together!',
               '5 Why should I fear in times of trouble, when the iniquity of my persecutors surrounds me, those who trust in their wealth and boast of the abundance of their riches?',
@@ -909,66 +965,80 @@ export function getDivineOfficeHour(
               '12 Man in his pomp will not remain; he is like the beasts that perish.',
               'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
             ]
+          },
+          {
+            antiphon: 'God will ransom my soul from the power of Sheol, for he will receive me.',
+            citation: 'Psalm 49:14-21',
+            title: 'The Foolishness of Trusting in Passing Wealth',
+            subtitle: 'Seek first the Kingdom of God and his righteousness (Mt 6:33)',
+            isSectioned: true,
+            verses: [
+              '14 This is the path of those who have foolish confidence; yet after them people approve of their boasts.',
+              '16 But God will ransom my soul from the power of Sheol, for he will receive me.',
+              '17 Be not afraid when a man becomes rich, when the glory of his house increases. For when he dies he will carry nothing away; his glory will not go down after him.',
+              'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
+            ]
           }
-        ],
-        readingSectionLabel: 'First Reading — Sacred Scripture',
-        readingRubricNote: 'Normally taken from the Proper of Seasons (or Proper/Common on solemnities and feasts). During Ordinary Time or retreats, suitable alternate or combined biblical readings may be chosen (GILH 66, 248).',
+        ]),
+        psalmodyTransitionVerse: {
+          verse: 'Your word, O Lord, stands firm forever.',
+          response: 'Your faithfulness endures from age to age.'
+        },
+        readingSectionLabel: 'First Reading',
         shortReadingCitation: reading.firstReading.citation,
         shortReadingText: reading.firstReading.text,
-        silenceNote: 'Pause briefly in sacred silence after the readings or responsories for meditation (GILH 201–203).',
         responsory: {
           verse: 'V. Your word is a lamp for my feet, O Lord.',
           response: 'R. And a light for my path.',
           repeat: 'And a light for my path.'
         },
         patristicReading: secondReading,
-        vigilExtension: {
-          rubricNote: isVigilEligible
-            ? `Today (${liturgicalDay}) may be extended with a Vigil: after the Second Reading and before the Te Deum, add the three Vigil Canticles and proclaim the Gospel (GILH 71, 73).`
-            : 'On Sundays, solemnities (preeminently Christmas and Pentecost), feasts, and pilgrimages, the Office of Readings may be extended with a Vigil after the two readings (GILH 71, 73).',
-          canticles: [
-            {
-              title: 'Canticle I — Song of Isaiah on the Eternal City',
-              citation: 'Isaiah 66:10-14',
-              excerpt: 'Rejoice with Jerusalem, and be glad for her, all you who love her... For thus says the LORD: "Behold, I will extend peace to her like a river, and the glory of the nations like an overflowing stream."'
-            },
-            {
-              title: 'Canticle II — Prayer of Jeremiah in Hope',
-              citation: 'Jeremiah 14:17-21',
-              excerpt: 'Do not spurn us, for your name\'s sake; do not dishonor your glorious throne; remember and do not break your covenant with us!'
-            },
-            {
-              title: 'Canticle III — Promise of the New Heart',
-              citation: 'Ezekiel 36:24-28',
-              excerpt: 'I will sprinkle clean water upon you, and you shall be clean from all your uncleannesses... And I will give you a new heart, and a new spirit I will put within you.'
+        vigilExtension: isVigilEligible
+          ? {
+              rubricNote: '',
+              canticles: [
+                {
+                  title: 'Canticle I — Song of Isaiah',
+                  citation: 'Isaiah 66:10-14',
+                  excerpt: 'Rejoice with Jerusalem, and be glad for her, all you who love her... For thus says the LORD: "Behold, I will extend peace to her like a river, and the glory of the nations like an overflowing stream."'
+                },
+                {
+                  title: 'Canticle II — Prayer of Jeremiah',
+                  citation: 'Jeremiah 14:17-21',
+                  excerpt: 'Do not spurn us, for your name\'s sake; do not dishonor your glorious throne; remember and do not break your covenant with us!'
+                },
+                {
+                  title: 'Canticle III — Promise of the New Heart',
+                  citation: 'Ezekiel 36:24-28',
+                  excerpt: 'I will sprinkle clean water upon you, and you shall be clean from all your uncleannesses... And I will give you a new heart, and a new spirit I will put within you.'
+                }
+              ],
+              gospelCitation,
+              gospelText: reading.gospel.text
             }
-          ],
-          gospelCitation: gospelCitation,
-          gospelText: reading.gospel.text
-        },
-        teDeum: {
-          rubricNote: isTeDeumEligible
-            ? `Said or sung today (${liturgicalDay}) before the Concluding Collect (GILH 68).`
-            : 'Prescribed on Sundays (outside Lent), Solemnities, and Feasts before the Concluding Collect (GILH 68).',
-          mainText: [
-            'You are God: we praise you; You are the Lord: we acclaim you; You are the eternal Father: all creation worships you.',
-            'To you all angels, all the powers of heaven, Cherubim and Seraphim, sing in endless praise: Holy, holy, holy Lord, God of power and might, heaven and earth are full of your glory.',
-            'The glorious company of apostles praise you. The noble fellowship of prophets praise you. The white-robed army of martyrs praise you. Throughout the world the holy Church acclaims you: Father, of majesty unbounded, your true and only Son, worthy of all worship, and the Holy Spirit, advocate and guide.',
-            'You, Christ, are the king of glory, the eternal Son of the Father. When you became man to set us free you did not spurn the Virgin\'s womb. You overcame the sting of death and opened the kingdom of heaven to all believers. You are seated at God\'s right hand in glory. We believe that you will come and be our judge.',
-            'Come then, Lord, and help your people, bought with the price of your own blood, and bring us with your saints to glory everlasting.'
-          ],
-          optionalEndingNote: 'Optional ending — from "Save your people, Lord" to the end may be omitted (GILH 68):',
-          optionalEndingLines: [
-            'Save your people, Lord, and bless your inheritance. Govern and uphold them now and always.',
-            'Day by day we bless you. We praise your name for ever.',
-            'Keep us today, Lord, from all sin. Have mercy on us, Lord, have mercy.',
-            'Lord, show us your love and mercy; for we put our trust in you.',
-            'In you, Lord, is our hope: and we shall never hope in vain.'
-          ]
-        },
+          : undefined,
+        teDeum: isTeDeumEligible
+          ? {
+              rubricNote: '',
+              mainText: [
+                'You are God: we praise you; You are the Lord: we acclaim you; You are the eternal Father: all creation worships you.',
+                'To you all angels, all the powers of heaven, Cherubim and Seraphim, sing in endless praise: Holy, holy, holy Lord, God of power and might, heaven and earth are full of your glory.',
+                'The glorious company of apostles praise you. The noble fellowship of prophets praise you. The white-robed army of martyrs praise you. Throughout the world the holy Church acclaims you: Father, of majesty unbounded, your true and only Son, worthy of all worship, and the Holy Spirit, advocate and guide.',
+                'You, Christ, are the king of glory, the eternal Son of the Father. When you became man to set us free you did not spurn the Virgin\'s womb. You overcame the sting of death and opened the kingdom of heaven to all believers. You are seated at God\'s right hand in glory. We believe that you will come and be our judge.',
+                'Come then, Lord, and help your people, bought with the price of your own blood, and bring us with your saints to glory everlasting.'
+              ],
+              optionalEndingNote: '',
+              optionalEndingLines: [
+                'Save your people, Lord, and bless your inheritance. Govern and uphold them now and always.',
+                'Day by day we bless you. We praise your name for ever.',
+                'Keep us today, Lord, from all sin. Have mercy on us, Lord, have mercy.',
+                'Lord, show us your love and mercy; for we put our trust in you.',
+                'In you, Lord, is our hope: and we shall never hope in vain.'
+              ]
+            }
+          : undefined,
         collect: `O God, who in the mystery of the Liturgy of the Hours draw your Bride the Church into unceasing communion with the Trinity, grant that as we meditate upon your holy Word today, we may grow in wisdom and holiness. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.`,
-        conclusion: 'V. Let us praise the Lord. R. Thanks be to God.',
-        conclusionOmissionNote: 'In private recitation, "Let us praise the Lord. Thanks be to God." may be omitted (GILH 69); omit prayer and acclamation if immediately followed by Morning Prayer (GILH 60).',
+        conclusion: 'V. Let us praise the Lord. R. And give him thanks.',
         liturgicalContextNote: saturdayBvmNote
       };
     }
@@ -977,20 +1047,23 @@ export function getDivineOfficeHour(
     default:
       return {
         hourKey: 'lauds',
-        englishTitle: 'Morning Prayer (Lauds)',
-        timeHint: 'Morning prayer consecrating the start of the day to the Risen Christ — no clock time is prescribed (GILH 37–54)',
+        englishTitle: 'Morning Prayer',
+        liturgicalDay,
+        liturgicalSeason: reading.liturgicalSeason,
+        formattedDate,
+        timeHint: liturgicalDay,
         introSectionLabel: 'Introduction',
-        combiningHoursNote: 'If immediately preceded by the Invitatory or Office of Readings, omit "O God, come to my assistance" and "Glory to the Father" (GILH 41, 60). Morning Prayer may also be combined with Mass (GILH 93–95).',
+        combiningHoursNote: '',
         openingVerse: 'O God, come to my assistance.',
-        openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
+        openingResponse: standardOpeningResponse,
         hymnTitle: 'Lucis Creator Optime (O Blest Creator of the Light)',
-        hymnAuthor: 'Attributed to St. Gregory the Great (540–604)',
+        hymnAuthor: 'St. Gregory the Great',
         hymnStanzas: [
           'O blest Creator of the light, who mak\'st the day with radiance bright, and o\'er the forming world didst call the light from chaos first of all.',
           'Whose wisdom joined in meet array the morning and the closing day; now night returns with solemn shade, hear thou the prayers thy saints have made.',
           'Most loving Father, hear our cry through Jesus Christ, thy Son Most High, who with the Holy Ghost and thee doth live and reign eternally. Amen.'
         ],
-        psalms: [
+        psalms: applySeasonPsalms([
           {
             antiphon: 'O God, you are my God, for you I long; for you my soul is thirsting.',
             citation: 'Psalm 63:2-9',
@@ -1003,7 +1076,8 @@ export function getDivineOfficeHour(
               '5 So I will bless you all my life, in your name I will lift up my hands.',
               '8 For you have been my help; in the shadow of your wings I rejoice. My soul clings to you; your right hand holds me fast.',
               'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
-            ]
+            ],
+            psalmPrayer: 'Lord, let the morning light of your resurrection dispel our darkness, that with thirsting hearts we may seek your face throughout this day. Amen.'
           },
           {
             antiphon: 'All works of the Lord, bless the Lord; praise and exalt him above all forever.',
@@ -1028,28 +1102,28 @@ export function getDivineOfficeHour(
               '2 Let Israel rejoice in its Maker; let the children of Zion exult in their King.',
               '4 For the LORD takes pleasure in his people; he crowns the humble with victory.',
               'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
-            ]
+            ],
+            psalmPrayer: 'Let your Church sing a new song to you, Father, as we enter the labor of this day crowned with the humility of Christ. Amen.'
           }
-        ],
-        readingSectionLabel: 'Short Scripture Reading',
+        ]),
+        readingSectionLabel: 'Reading',
         shortReadingCitation: '2 Thessalonians 3:10b, 13',
         shortReadingText: 'If anyone is not willing to work, let him not eat. As for you, brothers and sisters, do not grow weary in doing good.',
         longerReadingOption: {
           citation: reading.firstReading.citation,
           text: reading.firstReading.text,
-          rubricNote: 'In celebration with a congregation, retreats, or pastoral gatherings, a longer Scripture reading from the Lectionary for Mass or Office of Readings—followed by a short homily or silence—may be used (GILH 45–46, 248).'
+          rubricNote: ''
         },
-        silenceNote: 'A short reflection or a moment of sacred silence may follow the reading (GILH 45, 201–203).',
+        silenceNote: 'Sacred Silence',
         responsory: {
           verse: 'V. The Lord is my strength and my song; he has become my salvation.',
           response: 'R. The Lord is my strength and my song; he has become my salvation.',
-          repeat: 'Glory to the Father, and to the Son, and to the Holy Spirit. The Lord is my strength and my song.',
-          omissionNote: 'The responsory may be omitted (GILH 49), and when not sung the repetition of the whole responsory is optional (GILH 171).'
+          repeat: 'Glory to the Father, and to the Son, and to the Holy Spirit. The Lord is my strength and my song.'
         },
         canticle: {
-          title: 'Canticle of Zechariah (The Benedictus)',
+          title: 'Canticle of Zechariah (Benedictus)',
           citation: 'Luke 1:68-79',
-          antiphon: `Blessed be the Lord God of Israel, who has visited and redeemed his people in the Gospel of this day (${gospelCitation}).`,
+          antiphon: withEasterAlleluia(`Blessed be the Lord God of Israel, who has visited and redeemed his people in the Gospel of this day (${gospelCitation}).`),
           text: `68 Blessed be the Lord, the God of Israel; he has come to his people and set them free.
 69 He has raised up for us a mighty savior, born of the house of his servant David.
 70 Through his holy prophets he promised of old that he would save us from our enemies, from the hands of all who hate us.
@@ -1058,8 +1132,9 @@ export function getDivineOfficeHour(
 76 You, my child, shall be called the prophet of the Most High, for you will go before the Lord to prepare his way, to give his people knowledge of salvation by the forgiveness of their sins.
 78 In the tender compassion of our God the dawn from on high shall break upon us, to shine on those who dwell in darkness and the shadow of death, and to guide our feet into the way of peace.`
         },
+        intercessionsSectionLabel: 'Intercessions',
         intercessions: {
-          introduction: 'Let us glorify Christ, the Sun of Justice, who rises upon the world to enlighten all mankind. In joy and faith let us cry out:',
+          introduction: 'Let us glorify Christ, the Sun of Justice, who rises upon the world to enlighten all mankind:',
           response: 'Lord, guide our feet into the way of peace.',
           petitions: [
             'Blessed are you, Lord God, who preserved us through the darkness of night: fill this morning with the radiant light of your Holy Spirit.',
@@ -1067,18 +1142,27 @@ export function getDivineOfficeHour(
             'Teach us to manage the passing goods of this world with prudence and justice, always preparing our eternal dwelling in the Kingdom of Heaven.',
             'Comfort the sick, the dying, the lonely, and the suffering today: let them feel the tender compassion of your divine Sacred Heart.'
           ],
-          methodNote: 'In common, the leader invites the people and announces the single response; each intention may be prayed in full before the response, or split into two parts completed by the assembly. Personal intentions may be added (GILH 188–193).'
+          methodNote: ''
         },
         collect: `Almighty God, who in your infinite love grant us to begin this new day praising your holy Name, grant that as we hear your word proclaimed in ${liturgicalDay}, we may walk before you in righteousness and purity of heart. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.`,
-        conclusion: 'V. The Lord be with you. R. And with your spirit. V. May almighty God bless you, the Father, and the Son, and the Holy Spirit. R. Amen. (Or in private recitation: May the Lord bless us, protect us from all evil and bring us to everlasting life. R. Amen.)',
+        conclusion: 'V. The Lord be with you. R. And with your spirit. May almighty God bless you, the Father, and the Son, and the Holy Spirit. R. Amen. V. Go in peace. R. Thanks be to God. (Or in private: V. May the Lord bless us, protect us from all evil and bring us to everlasting life. R. Amen.)',
         liturgicalContextNote: saturdayBvmNote
       };
 
-    case 'daytime': {
-      const subHour: DaytimeSubHourKey = options.daytimeSubHour || getDaytimeSubHourKey(new Date());
+    case 'midmorning':
+    case 'midday':
+    case 'midafternoon': {
+      const subHour: DaytimeSubHourKey =
+        hourKey === 'midmorning'
+          ? 'terce'
+          : hourKey === 'midday'
+            ? 'sext'
+            : hourKey === 'midafternoon'
+              ? 'none'
+              : options.daytimeSubHour || getDaytimeSubHourKey(new Date());
       const useComplementary =
         options.daytimePsalmodyMode === 'complementary' ||
-        liturgicalRank === 'Solemnity';
+        (liturgicalRank === 'Solemnity' && dayOfWeek !== 0);
 
       const subHourMeta: Record<DaytimeSubHourKey, {
         title: string;
@@ -1091,7 +1175,7 @@ export function getDivineOfficeHour(
         collect: string;
       }> = {
         terce: {
-          title: 'Daytime Prayer — Mid-Morning (Terce)',
+          title: 'Midmorning Prayer',
           hymnTitle: 'Nunc, Sancte, Nobis, Spiritus (Come, Holy Ghost, Who Ever One)',
           hymnStanzas: [
             'Come, Holy Ghost, who ever One art with the Father and the Son; come, Holy Ghost, our souls possess with thy full flood of holiness.',
@@ -1104,7 +1188,7 @@ export function getDivineOfficeHour(
           collect: 'Almighty, eternal God, at this third hour you poured out your Holy Spirit upon the Apostles; grant that the same Spirit of truth and charity may sanctify our work and strengthen our witness today. Through Christ our Lord. Amen.'
         },
         sext: {
-          title: 'Daytime Prayer — Midday (Sext)',
+          title: 'Midday Prayer',
           hymnTitle: 'Rector Potens, Verax Deus (O God of Truth, O Lord of Might)',
           hymnStanzas: [
             'O God of truth, O Lord of might, who orderest time and change aright, arraying morn with golden gleams, and kindling noonday\'s fiery beams.',
@@ -1117,7 +1201,7 @@ export function getDivineOfficeHour(
           collect: 'Lord God, heavenly King, at this midday hour when your blessed Son hung upon the Cross for our redemption, grant that his sacred Passion may sanctify our daily labors and protect us from every temptation. Through Christ our Lord. Amen.'
         },
         none: {
-          title: 'Daytime Prayer — Mid-Afternoon (None)',
+          title: 'Midafternoon Prayer',
           hymnTitle: 'Rerum, Deus, Tenax Vigor (O God, Creation\'s Secret Force)',
           hymnStanzas: [
             'O God, creation\'s secret force, yourself unmoved, all motion\'s source, who guide the day from morning light through all its changes to the night.',
@@ -1137,52 +1221,80 @@ export function getDivineOfficeHour(
         : CURRENT_DAYTIME_PSALMS[subHour];
 
       return {
-        hourKey: 'daytime',
+        hourKey,
         englishTitle: activeMeta.title,
-        timeHint: 'Mid-morning (Terce), midday (Sext), or mid-afternoon (None) — no fixed clock hour is prescribed (GILH 74–83)',
+        liturgicalDay,
+        liturgicalSeason: reading.liturgicalSeason,
+        formattedDate,
+        timeHint: liturgicalDay,
         introSectionLabel: 'Introduction',
-        combiningHoursNote: 'Daytime Prayer may be combined with Mass or celebrated directly after the Prayer after Communion (GILH 93–98).',
+        combiningHoursNote: '',
         openingVerse: 'O God, come to my assistance.',
-        openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
+        openingResponse: standardOpeningResponse,
         hymnTitle: activeMeta.hymnTitle,
-        hymnAuthor: 'Attributed to St. Ambrose of Milan (4th Century)',
+        hymnAuthor: 'St. Ambrose of Milan',
         hymnStanzas: activeMeta.hymnStanzas,
-        psalmodyModeNote: useComplementary
-          ? 'Complementary Psalmody (Gradual Psalms — 3 psalms): prescribed on solemnities, Easter Triduum, Easter Octave, and when praying more than one Daytime Hour (GILH 81–83).'
-          : 'Current Psalmody (3 psalm selections): prescribed for those praying one Daytime Hour; switch to Complementary Psalmody if praying additional Daytime Hours (GILH 81–83).',
-        psalms,
-        readingSectionLabel: 'Short Reading',
+        psalms: applySeasonPsalms(psalms),
+        readingSectionLabel: 'Reading',
         shortReadingCitation: activeMeta.citation,
         shortReadingText: activeMeta.readingText,
-        silenceNote: 'Pause briefly in silent prayer before concluding (GILH 201–203).',
         responsory: {
           verse: activeMeta.respV,
           response: activeMeta.respR,
           repeat: activeMeta.respR.replace(/^R\.\s*/, '')
         },
         collect: activeMeta.collect,
-        conclusion: 'V. Let us praise the Lord. R. Thanks be to God.',
-        conclusionOmissionNote: 'In private recitation, "Let us praise the Lord. Thanks be to God." may be omitted (GILH 79).',
+        conclusion: 'V. Let us praise the Lord. R. And give him thanks.',
         liturgicalContextNote: saturdayBvmNote
       };
     }
 
-    case 'vespers':
+    case 'vespers': {
+      const vespersNtCanticle: PsalmEntry =
+        isLent && dayOfWeek === 0
+          ? {
+              antiphon: 'By his wounds we have been healed.',
+              citation: 'Canticle — 1 Peter 2:21-24',
+              title: 'The Voluntary Passion of Christ the Servant',
+              subtitle: 'He himself bore our sins in his body upon the cross (1 Pt 2:24)',
+              verses: [
+                '21 Christ suffered for you, leaving you an example, so that you might follow in his steps.',
+                '22 He committed no sin, neither was deceit found in his mouth. When he was reviled, he did not revile in return; when he suffered, he did not threaten, but continued entrusting himself to him who judges justly.',
+                '24 He himself bore our sins in his body on the tree, that we might die to sin and live to righteousness. By his wounds you have been healed.',
+                'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
+              ]
+            }
+          : {
+              antiphon: 'At the name of Jesus every knee should bend in heaven, on earth, and under the earth.',
+              citation: 'Canticle — Philippians 2:6-11',
+              title: 'Christ, the Servant of God, Exalted as Lord',
+              subtitle: 'Every tongue shall confess that Jesus Christ is Lord, to the glory of God the Father',
+              verses: [
+                '6 Though he was in the form of God, Christ Jesus did not count equality with God a thing to be grasped, but emptied himself, taking the form of a servant, being born in the likeness of men.',
+                '8 And being found in human form, he humbled himself by becoming obedient to the point of death, even death on a cross.',
+                '9 Therefore God has highly exalted him and bestowed on him the name that is above every name, so that at the name of Jesus every knee should bow, in heaven and on earth and under the earth, and every tongue confess that Jesus Christ is Lord, to the glory of God the Father.',
+                'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
+              ]
+            };
+
       return {
         hourKey: 'vespers',
-        englishTitle: 'Evening Prayer (Vespers)',
-        timeHint: 'Evening thanksgiving at the close of the day — no fixed clock hour is prescribed (GILH 37–54)',
+        englishTitle: 'Evening Prayer',
+        liturgicalDay,
+        liturgicalSeason: reading.liturgicalSeason,
+        formattedDate,
+        timeHint: liturgicalDay,
         introSectionLabel: 'Introduction',
-        combiningHoursNote: 'Evening Prayer may be combined with Mass or prayed directly after the Prayer after Communion (GILH 93–98). On Saturdays and eve of Solemnities, Evening Prayer I celebrates the coming Sunday or Solemnity.',
+        combiningHoursNote: '',
         openingVerse: 'O God, come to my assistance.',
-        openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
+        openingResponse: standardOpeningResponse,
         hymnTitle: 'O Lux Beata Trinitas (O Trinity of Blessed Light)',
-        hymnAuthor: 'Attributed to St. Ambrose of Milan',
+        hymnAuthor: 'St. Ambrose of Milan',
         hymnStanzas: [
           'O Trinity of blessed light, O Unity of princely might, the fiery sun now goes his way; shed thou within our hearts thy ray.',
           'To thee our morning song of praise, to thee our evening prayer we raise; thy glory suppliant we adore forever and forevermore.'
         ],
-        psalms: [
+        psalms: applySeasonPsalms([
           {
             antiphon: 'The Lord said to my Lord: Sit at my right hand.',
             citation: 'Psalm 110:1-5, 7',
@@ -1193,7 +1305,8 @@ export function getDivineOfficeHour(
               '2 The LORD sends forth from Zion your mighty scepter. Rule in the midst of your enemies!',
               '4 The LORD has sworn and will not change his mind: "You are a priest forever after the order of Melchizedek."',
               'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
-            ]
+            ],
+            psalmPrayer: 'Almighty Father, you seated your Son at your right hand as eternal priest and king; grant that we who share his priesthood may offer you a sacrifice of praise at the close of day. Amen.'
           },
           {
             antiphon: 'Great are the works of the Lord, full of honor and majesty.',
@@ -1206,28 +1319,29 @@ export function getDivineOfficeHour(
               '5 He provides food for those who fear him; he remembers his covenant forever.',
               '9 He sent redemption to his people; he has commanded his covenant forever. Holy and awesome is his name!',
               'Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen.'
-            ]
-          }
-        ],
-        readingSectionLabel: 'Short Scripture Reading',
+            ],
+            psalmPrayer: 'Lord God, your works of mercy endure forever; keep us mindful of the covenant sealed in the Blood of your Son. Amen.'
+          },
+          vespersNtCanticle
+        ]),
+        readingSectionLabel: 'Reading',
         shortReadingCitation: '1 Peter 1:18-19',
         shortReadingText: 'You know that you were ransomed from the futile ways inherited from your fathers, not with perishable things such as silver or gold, but with the precious blood of Christ, like that of a lamb without blemish or spot.',
         longerReadingOption: {
           citation: reading.firstReading.citation,
           text: reading.firstReading.text,
-          rubricNote: 'Especially in celebration with a congregation, retreats, or pastoral gatherings, a longer Scripture reading from the Lectionary for Mass or Office of Readings—followed by a short homily or silence—may be chosen (GILH 45–46, 248).'
+          rubricNote: ''
         },
-        silenceNote: 'A short reflection or a moment of sacred silence may follow the reading (GILH 45, 201–203).',
+        silenceNote: 'Sacred Silence',
         responsory: {
           verse: 'V. From the rising of the sun to its setting, praised be the name of the Lord.',
           response: 'R. From the rising of the sun to its setting, praised be the name of the Lord.',
-          repeat: 'His splendor is above the heavens. Praised be the name of the Lord.',
-          omissionNote: 'The responsory may be omitted (GILH 49), and when not sung the full reprise is optional (GILH 171).'
+          repeat: 'His splendor is above the heavens. Praised be the name of the Lord.'
         },
         canticle: {
-          title: 'Canticle of Mary (The Magnificat)',
+          title: 'Canticle of Mary (Magnificat)',
           citation: 'Luke 1:46-55',
-          antiphon: `My soul proclaims the greatness of the Lord, for he who is mighty has done great things for me, and holy is his name.`,
+          antiphon: withEasterAlleluia('My soul proclaims the greatness of the Lord, for he who is mighty has done great things for me, and holy is his name.'),
           text: `46 My soul proclaims the greatness of the Lord, my spirit rejoices in God my Savior;
 48 for he has looked with favor on his lowly servant. From this day all generations will call me blessed:
 49 the Almighty has done great things for me, and holy is his Name.
@@ -1238,8 +1352,9 @@ export function getDivineOfficeHour(
 54 He has come to the help of his servant Israel for he has remembered his promise of mercy,
 55 the promise he made to our fathers, to Abraham and his children for ever.`
         },
+        intercessionsSectionLabel: 'Intercessions',
         intercessions: {
-          introduction: 'Let us offer our evening thanksgiving to Christ, the Savior of the world, who laid down his life on the Cross for our salvation:',
+          introduction: 'Let us offer our evening thanksgiving to Christ, the Savior of the world:',
           response: 'Stay with us, Lord, for evening draws near.',
           petitions: [
             'We give you thanks, O Lord, for guiding us through the hours of this day: pardon our sins and strengthen our fragile hearts.',
@@ -1247,7 +1362,7 @@ export function getDivineOfficeHour(
             'Remember the poor, the sick, the dying, and the destitute tonight: let your holy angels watch over them in peace.',
             'Grant eternal rest to our deceased relatives and friends: admit them to the light of your Heavenly Jerusalem.'
           ],
-          methodNote: 'Intercessions may be adapted for congregation, small community, or private prayer, and particular intentions may be added (GILH 188–193). Shorter forms from the appendix may also replace the longer Evening Prayer petitions.',
+          methodNote: '',
           shorterForm: {
             response: 'Lord, hear our prayer.',
             petitions: [
@@ -1259,27 +1374,45 @@ export function getDivineOfficeHour(
           }
         },
         collect: `Lord God, as evening falls upon the world, we pray that your divine grace may abide in our homes and hearts. Forgive our shortcomings today, and let the light of your Son Christ Jesus shine upon us through the dark watches of the night. Through our Lord Jesus Christ, your Son, who lives and reigns with you in the unity of the Holy Spirit, God, for ever and ever. Amen.`,
-        conclusion: 'V. May the Lord bless us, protect us from all evil and bring us to everlasting life. R. Amen.',
+        conclusion: 'V. The Lord be with you. R. And with your spirit. May almighty God bless you, the Father, and the Son, and the Holy Spirit. R. Amen. V. Go in peace. R. Thanks be to God. (Or in private: V. May the Lord bless us, protect us from all evil and bring us to everlasting life. R. Amen.)',
         liturgicalContextNote: dayOfWeek === 6
-          ? 'Saturday Evening: Evening Prayer I of Sunday opens the Lord\'s Day; Night Prayer tonight uses Psalms 4 and 134 (GILH 88).'
+          ? 'Evening Prayer I of Sunday'
           : undefined
       };
+    }
 
     case 'compline': {
       const { psalms, modeNote } = getComplinePsalmsForDate(
         dayOfWeek,
         Boolean(options.useComplineSundayPsalms)
       );
+      const complineMarianAntiphon = isEaster
+        ? {
+            title: 'Regina Caeli',
+            text: 'Queen of Heaven, rejoice, alleluia. For he whom you did merit to bear, alleluia. Has risen, as he said, alleluia. Pray for us to God, alleluia.',
+            verseResponse: 'V. Rejoice and be glad, O Virgin Mary, alleluia. R. For the Lord has truly risen, alleluia.',
+            collect: 'O God, who gave joy to the world through the resurrection of your Son, our Lord Jesus Christ, grant we beseech you, that through the intercession of the Virgin Mary, his Mother, we may obtain the joys of everlasting life. Through the same Christ our Lord. Amen.'
+          }
+        : {
+            title: 'Salve Regina',
+            text: 'Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope! To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.',
+            verseResponse: 'V. Pray for us, O Holy Mother of God. R. That we may be made worthy of the promises of Christ.',
+            collect: 'Almighty, everlasting God, who by the co-operation of the Holy Spirit didst prepare the body and soul of the glorious Virgin-Mother Mary to become a worthy dwelling for Thy Son; grant that we who rejoice in her commemoration may, by her loving intercession, be delivered from present evils and from everlasting death. Through the same Christ our Lord. Amen.'
+          };
+
       return {
         hourKey: 'compline',
-        englishTitle: 'Night Prayer (Compline)',
-        timeHint: 'Last prayer of the day before retiring to sleep, even if after midnight — no clock time is prescribed (GILH 84–92)',
+        englishTitle: 'Night Prayer',
+        liturgicalDay,
+        liturgicalSeason: reading.liturgicalSeason,
+        formattedDate,
+        timeHint: liturgicalDay,
         introSectionLabel: 'Introduction',
-        combiningHoursNote: 'Said as the final prayer of the day before rest (GILH 84). Followed immediately by the Examination of Conscience before the Hymn (GILH 86).',
+        combiningHoursNote: '',
         openingVerse: 'O God, come to my assistance.',
-        openingResponse: 'O Lord, make haste to help me. Glory to the Father, and to the Son, and to the Holy Spirit: as it was in the beginning, is now, and will be for ever. Amen. Alleluia.',
+        openingResponse: standardOpeningResponse,
         examinationOfConscience: {
-          rubricNote: 'It is a laudable practice to have an examination of conscience before the hymn—observed in silence or through a penitential rite based on the formularies in the Roman Missal (GILH 86).',
+          rubricNote: '',
           prompts: [
             'Pause in silence to thank God for the graces and blessings received throughout this day.',
             'Examine your thoughts, words, deeds, and omissions before the merciful Lord.',
@@ -1296,34 +1429,28 @@ export function getDivineOfficeHour(
           'O Father, that we ask be done, through Jesus Christ, thine only Son, who, with the Holy Ghost and thee, doth live and reign eternally. Amen.'
         ],
         psalmodyModeNote: modeNote,
-        psalms,
-        readingSectionLabel: 'Short Scripture Reading',
+        psalms: applySeasonPsalms(psalms),
+        readingSectionLabel: 'Reading',
         shortReadingCitation: 'Revelation 22:4-5',
         shortReadingText: 'They will see his face, and his name will be on their foreheads. And night will be no more; they will need no light of lamp or sun, for the Lord God will be their light, and they will reign forever and ever.',
-        silenceNote: 'Pause briefly in tranquil silence before the responsory and Nunc Dimittis (GILH 201–203).',
         responsory: {
           verse: 'V. Into your hands, Lord, I commend my spirit.',
           response: 'R. Into your hands, Lord, I commend my spirit.',
           repeat: 'You have redeemed us, Lord God of truth. Into your hands, Lord, I commend my spirit.'
         },
         canticle: {
-          title: 'Canticle of Simeon (The Nunc Dimittis)',
+          title: 'Canticle of Simeon (Nunc Dimittis)',
           citation: 'Luke 2:29-32',
-          antiphon: 'Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.',
+          antiphon: withEasterAlleluia('Protect us, Lord, as we stay awake; watch over us as we sleep, that awake, we may keep watch with Christ, and asleep, rest in his peace.'),
           text: `29 Lord, now you let your servant go in peace; your word has been fulfilled.
 30 My own eyes have seen the salvation which you have prepared in the sight of every people:
 32 a light to reveal you to the nations and the glory of your people Israel.`
         },
         collect: `Visit this house, we beseech thee, O Lord, and drive far from it all snares of the enemy; let thy holy angels dwell herein to preserve us in peace, and may thy blessing be upon us evermore. Through Christ our Lord. Amen.`,
         conclusion: 'V. May the all-powerful Lord grant us a restful night and a peaceful death. R. Amen.',
-        marianAntiphon: {
-          title: 'Salve Regina (Hail, Holy Queen)',
-          text: 'Hail, Holy Queen, Mother of Mercy, our life, our sweetness and our hope! To thee do we cry, poor banished children of Eve. To thee do we send up our sighs, mourning and weeping in this valley of tears. Turn then, most gracious advocate, thine eyes of mercy toward us, and after this our exile, show unto us the blessed fruit of thy womb, Jesus. O clement, O loving, O sweet Virgin Mary.',
-          verseResponse: 'V. Pray for us, O Holy Mother of God. R. That we may be made worthy of the promises of Christ.',
-          collect: 'Almighty, everlasting God, who by the co-operation of the Holy Spirit didst prepare the body and soul of the glorious Virgin-Mother Mary to become a worthy dwelling for Thy Son; grant that we who rejoice in her commemoration may, by her loving intercession, be delivered from present evils and from everlasting death. Through the same Christ our Lord. Amen.'
-        },
+        marianAntiphon: complineMarianAntiphon,
         liturgicalContextNote: dayOfWeek === 6
-          ? 'Saturday Night: Night Prayer is prayed after Evening Prayer I of Sunday using Psalms 4 and 134 (GILH 88).'
+          ? 'Night Prayer after Evening Prayer I'
           : undefined
       };
     }
