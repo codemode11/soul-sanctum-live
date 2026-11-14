@@ -637,22 +637,24 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
     : [activeSectionTab];
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-14 animate-fadeIn text-stone-900">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12 animate-fadeIn text-slate-900">
       
       {/* =====================================================================
-          1. MASTHEAD BANNER & OVERALL PROGRESS
+          1. MASTHEAD BANNER & OVERALL PROGRESS — Slate Gray & Bleached Sand
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-br from-[#7A5230] via-[#6B4628] to-[#5C3B20] border border-[#9E7348]/80 shadow-[0_12px_32px_rgba(92,59,32,0.28)] space-y-5 text-amber-50">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#9E7348]/45 pb-4">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md space-y-5 text-[#F9F6F0] relative overflow-hidden">
+        <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
+
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-700/70 pb-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-[#52341C] border border-[#A67B4E]/70 flex items-center justify-center text-amber-200 shadow-xs shrink-0">
-              <NotebookWithBallpenIcon className="w-6 h-6 text-amber-200" />
+            <div className="w-11 h-11 rounded-xl bg-slate-800/90 border border-slate-600/70 flex items-center justify-center text-[#EAE2D3] shadow-xs shrink-0">
+              <NotebookWithBallpenIcon className="w-6 h-6 text-[#EAE2D3]" />
             </div>
             <div>
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-200/90 block">
+              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#DFD5C3] block">
                 Rule of Life • Daily Devotional Order
               </span>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-amber-50">
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5]">
                 Spiritual Checklist &amp; Prayer Habit Tracker
               </h2>
             </div>
@@ -662,15 +664,15 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             {onOpenCebuParishes && (
               <button
                 onClick={onOpenCebuParishes}
-                className="px-3.5 py-2 rounded-lg bg-white hover:bg-stone-50 text-[#24140B] border border-[#8B5A2B]/40 text-xs font-cinzel font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-900 border border-[#DFD5C3] text-xs font-cinzel font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
               >
-                <MapPin className="w-3.5 h-3.5 text-[#6B3E1E]" />
+                <MapPin className="w-3.5 h-3.5 text-slate-700" />
                 <span>Holy Mass &amp; Confession Schedules</span>
               </button>
             )}
             <button
               onClick={resetAll}
-              className="px-3 py-2 rounded-lg bg-[#52341C]/90 hover:bg-[#462B16] border border-[#B08558]/70 text-amber-100 hover:text-white text-xs font-cinzel font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+              className="px-3 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-600/70 text-[#EAE2D3] hover:text-white text-xs font-cinzel font-bold transition-colors cursor-pointer flex items-center gap-1.5"
               title="Uncheck all items for today"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -680,39 +682,39 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
         </div>
 
         {/* Attribution to The Indulgence Collective */}
-        <div className="p-3.5 rounded-xl bg-[#52341C]/65 border border-[#9E7348]/55 flex items-start gap-3">
-          <Sparkles className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
-          <div className="text-xs sm:text-sm text-amber-100/95 leading-relaxed font-serif">
-            <strong className="text-amber-200 font-cinzel tracking-wide">Recommended Devotions &amp; Indulgences: </strong>
-            Inspired by and attributed to <span className="font-bold text-white">The Indulgence Collective</span> and the <em>Enchiridion Indulgentiarum</em>, 
+        <div className="relative z-10 p-3.5 rounded-xl bg-slate-950/35 border border-slate-600/60 flex items-start gap-3">
+          <Sparkles className="w-5 h-5 text-[#EAE2D3] shrink-0 mt-0.5" />
+          <div className="text-xs sm:text-sm text-[#EAE2D3] leading-relaxed font-serif">
+            <strong className="text-[#FBF9F5] font-cinzel tracking-wide">Recommended Devotions &amp; Indulgences: </strong>
+            Inspired by and attributed to <span className="font-bold text-[#FBF9F5]">The Indulgence Collective</span> and the <em>Enchiridion Indulgentiarum</em>, 
             providing verified prayers, November suffrages for the Holy Souls, and daily spiritual exercises.
           </div>
         </div>
 
         {/* Progress Bar & Summary */}
-        <div className="bg-[#FDF9F1] p-4 sm:p-5 rounded-xl border border-[#D8C3A5] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-stone-900 shadow-inner">
+        <div className="relative z-10 bg-[#FBF9F5] p-4 sm:p-5 rounded-xl border border-[#D8CFC0] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-900 shadow-inner">
           <div className="space-y-1.5 flex-1">
             <div className="flex items-center justify-between sm:justify-start gap-3">
-              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-700">
+              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-slate-700">
                 Today’s Checklist Completion ({currentDateStr})
               </span>
-              <span className="text-xs font-bold text-[#6B4628] font-cinzel bg-[#EFE5D4] px-2.5 py-0.5 rounded-md border border-[#D8C3A5]">
+              <span className="text-xs font-bold text-slate-800 font-cinzel bg-[#EFE9DC] px-2.5 py-0.5 rounded-md border border-[#C8BBA6]">
                 {completedCount} of {totalCount} Checked
               </span>
             </div>
-            <div className="w-full h-3 bg-stone-200 rounded-full overflow-hidden">
+            <div className="w-full h-3 bg-[#EAE2D3] rounded-full overflow-hidden border border-[#D8CFC0]">
               <div 
-                className="h-full bg-gradient-to-r from-[#6B4628] to-[#D4AF37] transition-all duration-500 rounded-full"
+                className="h-full bg-gradient-to-r from-slate-700 to-slate-900 transition-all duration-500 rounded-full"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
           </div>
 
           <div className="text-right flex items-center justify-between sm:justify-end gap-3 shrink-0">
-            <span className="text-xs text-stone-600 font-serif">
+            <span className="text-xs text-slate-600 font-serif">
               Check off each prayer or activity as completed
             </span>
-            <span className="text-2xl sm:text-3xl font-bold font-cinzel text-[#6B4628]">
+            <span className="text-2xl sm:text-3xl font-bold font-cinzel text-slate-900">
               {progressPercent}%
             </span>
           </div>
@@ -722,23 +724,23 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
       {/* =====================================================================
           2. ORDERLY DAILY CHECKLIST (ALL PRAYERS & ACTIVITIES WITH CHECKBOXES)
          ===================================================================== */}
-      <div className="rounded-2xl bg-[#F9F4EC] border border-[#D8C3A5] p-5 sm:p-7 shadow-sm space-y-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#DFCBB0] pb-4">
+      <div className="rounded-2xl bg-[#FBF9F5]/95 backdrop-blur-xl border border-[#DFD6C7] p-5 sm:p-7 shadow-xs space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#D8CFC0] pb-4">
           <div>
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#7A5230] block">
+            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-slate-600 block">
               Part I • Daily Spiritual Order
             </span>
-            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900">
+            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-slate-900">
               Daily Prayers, Precepts &amp; November Indulgences Checklist
             </h3>
-            <p className="text-xs sm:text-sm font-serif text-stone-600 mt-0.5">
+            <p className="text-xs sm:text-sm font-serif text-slate-700 mt-0.5">
               Every prayer, sacramental precept, and November indulgence work below includes a checkbox for orderly daily tracking.
             </p>
           </div>
 
           <button
             onClick={() => setIsAddingCustom(!isAddingCustom)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white hover:bg-stone-50 border border-[#8B5A2B]/40 text-[#5C3B20] text-xs font-cinzel font-bold transition-all cursor-pointer self-start md:self-auto shadow-xs shrink-0"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] border border-[#C8BBA6] text-slate-900 text-xs font-cinzel font-bold transition-all cursor-pointer self-start md:self-auto shadow-xs shrink-0"
           >
             <Plus className="w-4 h-4" />
             <span>Add Custom Prayer / Activity</span>
@@ -751,8 +753,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             onClick={() => setActiveSectionTab('all')}
             className={`px-3 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border text-center ${
               activeSectionTab === 'all'
-                ? 'bg-[#6B4628] text-amber-50 border-[#52341C] shadow-xs'
-                : 'bg-white hover:bg-stone-50 text-stone-800 border-[#D8C3A5]'
+                ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-xs'
+                : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#D8CFC0]'
             }`}
           >
             All Categories ({checklist.length})
@@ -761,8 +763,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             onClick={() => setActiveSectionTab('daily-essential')}
             className={`px-3 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border text-center ${
               activeSectionTab === 'daily-essential'
-                ? 'bg-[#6B4628] text-amber-50 border-[#52341C] shadow-xs'
-                : 'bg-white hover:bg-stone-50 text-stone-800 border-[#D8C3A5]'
+                ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-xs'
+                : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#D8CFC0]'
             }`}
           >
             I. Daily Essentials
@@ -771,8 +773,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             onClick={() => setActiveSectionTab('marian-mercy')}
             className={`px-3 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border text-center ${
               activeSectionTab === 'marian-mercy'
-                ? 'bg-[#6B4628] text-amber-50 border-[#52341C] shadow-xs'
-                : 'bg-white hover:bg-stone-50 text-stone-800 border-[#D8C3A5]'
+                ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-xs'
+                : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#D8CFC0]'
             }`}
           >
             II. Rosary &amp; Mercy
@@ -781,8 +783,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             onClick={() => setActiveSectionTab('sacraments-precepts')}
             className={`px-3 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border text-center ${
               activeSectionTab === 'sacraments-precepts'
-                ? 'bg-[#6B4628] text-amber-50 border-[#52341C] shadow-xs'
-                : 'bg-white hover:bg-stone-50 text-stone-800 border-[#D8C3A5]'
+                ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-xs'
+                : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#D8CFC0]'
             }`}
           >
             III. Mass &amp; Precepts
@@ -791,8 +793,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             onClick={() => setActiveSectionTab('november-indulgences')}
             className={`px-3 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border text-center ${
               activeSectionTab === 'november-indulgences'
-                ? 'bg-[#6B4628] text-amber-50 border-[#52341C] shadow-xs'
-                : 'bg-white hover:bg-stone-50 text-stone-800 border-[#D8C3A5]'
+                ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-xs'
+                : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#D8CFC0]'
             }`}
           >
             IV. Nov. Indulgences
@@ -801,8 +803,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             onClick={() => setActiveSectionTab('penance-charity')}
             className={`px-3 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border text-center ${
               activeSectionTab === 'penance-charity'
-                ? 'bg-[#6B4628] text-amber-50 border-[#52341C] shadow-xs'
-                : 'bg-white hover:bg-stone-50 text-stone-800 border-[#D8C3A5]'
+                ? 'bg-slate-800 text-[#F9F6F0] border-slate-900 shadow-xs'
+                : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#D8CFC0]'
             }`}
           >
             V. Mercy &amp; Souls
@@ -811,8 +813,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
 
         {/* Add Custom Item Form */}
         {isAddingCustom && (
-          <form onSubmit={handleAddCustomItem} className="p-4 sm:p-5 rounded-xl bg-white border border-[#C8AD8D] shadow-sm space-y-3 animate-fadeIn">
-            <div className="font-cinzel text-xs font-bold text-[#6B4628] uppercase tracking-wider">
+          <form onSubmit={handleAddCustomItem} className="p-4 sm:p-5 rounded-xl bg-[#F4EFE6] border border-[#C8BBA6] shadow-xs space-y-3 animate-fadeIn">
+            <div className="font-cinzel text-xs font-bold text-slate-900 uppercase tracking-wider">
               Add Custom Prayer or Spiritual Activity with Checkbox
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -821,7 +823,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                 value={customItemTitle}
                 onChange={(e) => setCustomItemTitle(e.target.value)}
                 placeholder="Prayer / Activity (e.g., Litany of St. Joseph)..."
-                className="px-3.5 py-2 text-xs sm:text-sm rounded-lg border border-stone-300 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628] font-serif"
+                className="px-3.5 py-2 text-xs sm:text-sm rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700 font-serif"
                 required
               />
               <input
@@ -829,27 +831,27 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                 value={customItemSubtitle}
                 onChange={(e) => setCustomItemSubtitle(e.target.value)}
                 placeholder="Intention or notes (optional)..."
-                className="px-3.5 py-2 text-xs sm:text-sm rounded-lg border border-stone-300 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628] font-serif"
+                className="px-3.5 py-2 text-xs sm:text-sm rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700 font-serif"
               />
               <input
                 type="text"
                 value={customItemTime}
                 onChange={(e) => setCustomItemTime(e.target.value)}
                 placeholder="Time (e.g., 7:00 AM, Evening)..."
-                className="px-3.5 py-2 text-xs sm:text-sm rounded-lg border border-stone-300 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628] font-serif"
+                className="px-3.5 py-2 text-xs sm:text-sm rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700 font-serif"
               />
             </div>
             <div className="flex items-center justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setIsAddingCustom(false)}
-                className="px-3 py-1.5 text-xs text-stone-600 hover:text-stone-900 cursor-pointer"
+                className="px-3 py-1.5 text-xs text-slate-600 hover:text-slate-900 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-1.5 rounded-lg bg-[#6B4628] hover:bg-[#52341C] text-white text-xs font-cinzel font-bold shadow-xs cursor-pointer"
+                className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-[#F9F6F0] text-xs font-cinzel font-bold shadow-xs cursor-pointer"
               >
                 Add to Checklist
               </button>
@@ -868,38 +870,38 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             return (
               <div
                 key={catKey}
-                className="rounded-xl bg-white border border-[#DFCBB0] shadow-xs overflow-hidden"
+                className="rounded-xl bg-[#FBF9F5] border border-[#D8CFC0] shadow-xs overflow-hidden"
               >
                 {/* Category Header */}
-                <div className="px-5 py-3.5 bg-gradient-to-r from-[#EFE5D6] via-[#E8D9C5] to-[#EFE5D6] border-b border-[#DFCBB0] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="px-5 py-3.5 bg-gradient-to-r from-[#EFE9DC] via-[#EAE2D3] to-[#EFE9DC] border-b border-[#D8CFC0] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-[#2E1B0E]">
+                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-slate-900">
                         {meta.label}
                       </h4>
-                      <span className="text-[11px] font-cinzel font-bold px-2.5 py-0.5 rounded-md bg-white text-[#6B4628] border border-[#C8AD8D]">
+                      <span className="text-[11px] font-cinzel font-bold px-2.5 py-0.5 rounded-md bg-[#FBF9F5] text-slate-800 border border-[#C8BBA6]">
                         {catDone} / {catItems.length}
                       </span>
                     </div>
-                    <p className="text-xs font-serif text-stone-700 mt-0.5">
+                    <p className="text-xs font-serif text-slate-700 mt-0.5">
                       {meta.description}
                     </p>
                   </div>
-                  <span className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-[#6B4628] self-start sm:self-center shrink-0">
+                  <span className="text-[11px] font-cinzel font-bold uppercase tracking-wider text-slate-700 self-start sm:self-center shrink-0">
                     {meta.badge}
                   </span>
                 </div>
 
                 {/* Items List with Explicit Checkboxes */}
-                <div className="divide-y divide-[#EFE6D8]">
+                <div className="divide-y divide-[#D8CFC0]/80">
                   {catItems.map((item) => (
                     <label
                       key={item.id}
                       htmlFor={`chk-${item.id}`}
                       className={`p-4 sm:px-5 sm:py-4 flex items-start gap-3.5 cursor-pointer transition-colors select-none ${
                         item.completed
-                          ? 'bg-[#FAF7F2] text-stone-500'
-                          : 'bg-white hover:bg-[#FFFDF9] text-stone-900'
+                          ? 'bg-[#EFE9DC]/65 text-slate-500'
+                          : 'bg-[#FBF9F5] hover:bg-[#F4EFE6] text-slate-900'
                       }`}
                     >
                       <div className="pt-0.5 shrink-0 flex items-center">
@@ -908,34 +910,34 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                           type="checkbox"
                           checked={item.completed}
                           onChange={() => toggleItem(item.id)}
-                          className="w-5 h-5 rounded border-2 border-[#8B5A2B] text-[#6B4628] focus:ring-[#6B4628] accent-[#6B4628] cursor-pointer"
+                          className="w-5 h-5 rounded border-2 border-slate-600 text-slate-800 focus:ring-slate-700 accent-slate-800 cursor-pointer"
                         />
                       </div>
 
                       <div className="flex-1 min-w-0 space-y-1">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                           <span className={`font-serif text-sm sm:text-base font-bold leading-snug ${
-                            item.completed ? 'line-through text-stone-500' : 'text-[#24140B]'
+                            item.completed ? 'line-through text-slate-500' : 'text-slate-900'
                           }`}>
                             {item.title}
                           </span>
 
                           <div className="flex flex-wrap items-center gap-1.5 shrink-0">
                             {item.recommendedTime && (
-                              <span className="text-[11px] font-serif px-2.5 py-0.5 rounded-md bg-[#F4EDE2] text-[#5C3B20] border border-[#E2D3BE] font-semibold">
+                              <span className="text-[11px] font-serif px-2.5 py-0.5 rounded-md bg-[#F4EFE6] text-slate-800 border border-[#D8CFC0] font-semibold">
                                 {item.recommendedTime}
                               </span>
                             )}
                             {item.indulgenceNote && (
-                              <span className="text-[11px] font-serif font-bold px-2.5 py-0.5 rounded-md bg-[#FAF0D9] text-[#7A4E1D] border border-[#E5C98B] flex items-center gap-1">
-                                <Award className="w-3 h-3 text-[#B8860B] shrink-0" />
+                              <span className="text-[11px] font-serif font-bold px-2.5 py-0.5 rounded-md bg-[#EAE2D3] text-slate-900 border border-[#C8BBA6] flex items-center gap-1">
+                                <Award className="w-3 h-3 text-slate-700 shrink-0" />
                                 <span>{item.indulgenceNote}</span>
                               </span>
                             )}
                           </div>
                         </div>
 
-                        <p className="text-xs sm:text-sm font-serif text-stone-600 leading-relaxed">
+                        <p className="text-xs sm:text-sm font-serif text-slate-600 leading-relaxed">
                           {item.subtitle}
                         </p>
                       </div>
@@ -948,7 +950,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                             e.stopPropagation();
                             deleteCustomItem(item.id);
                           }}
-                          className="p-1.5 text-stone-400 hover:text-red-700 rounded-md transition-colors shrink-0"
+                          className="p-1.5 text-slate-400 hover:text-red-700 rounded-md transition-colors shrink-0"
                           title="Delete custom item"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -966,37 +968,37 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
       {/* =====================================================================
           3. PRAYER HABIT FORMER ("When do I plan to start?")
          ===================================================================== */}
-      <div className="rounded-2xl bg-[#F9F4EC] border border-[#D8C3A5] p-5 sm:p-7 shadow-sm space-y-6">
-        <div className="border-b border-[#DFCBB0] pb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div className="rounded-2xl bg-[#FBF9F5]/95 backdrop-blur-xl border border-[#DFD6C7] p-5 sm:p-7 shadow-xs space-y-6">
+        <div className="border-b border-[#D8CFC0] pb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-[#6B4628]" />
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#7A5230]">
+              <Target className="w-4 h-4 text-slate-700" />
+              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-slate-600">
                 Part II • Catholic Prayer Habit Former
               </span>
             </div>
-            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900 mt-0.5">
+            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">
               Plan Your Daily Prayer Habit &amp; Start Date
             </h3>
-            <p className="text-xs sm:text-sm font-serif text-stone-600 mt-0.5">
+            <p className="text-xs sm:text-sm font-serif text-slate-700 mt-0.5">
               For example, if you want to pray the Holy Rosary daily, choose the prayer below, set <strong>when you plan to start</strong>, and track your fidelity in the Monthly Tracker.
             </p>
           </div>
         </div>
 
         {/* Habit Builder Form */}
-        <form onSubmit={handleAddHabitPlan} className="p-5 rounded-xl bg-white border border-[#DFCBB0] shadow-xs space-y-4">
+        <form onSubmit={handleAddHabitPlan} className="p-5 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] shadow-2xs space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
             
             {/* 1. Prayer to Pray Daily */}
             <div className="md:col-span-5 space-y-1.5">
-              <label className="block font-cinzel text-xs font-bold text-[#3A2213] uppercase tracking-wider">
+              <label className="block font-cinzel text-xs font-bold text-slate-800 uppercase tracking-wider">
                 1. Which prayer do you want to pray daily?
               </label>
               <select
                 value={selectedPresetPrayer}
                 onChange={(e) => setSelectedPresetPrayer(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg bg-[#FDFBF7] border border-[#C8AD8D] text-sm font-serif text-stone-900 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628]"
+                className="w-full px-3.5 py-2.5 rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-sm font-serif text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700"
               >
                 {PRESET_HABIT_PRAYERS.map((p) => (
                   <option key={p} value={p}>{p}</option>
@@ -1010,7 +1012,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                   value={customHabitPrayerName}
                   onChange={(e) => setCustomHabitPrayerName(e.target.value)}
                   placeholder="Enter custom prayer name (e.g., Litany of Loreto)..."
-                  className="w-full mt-2 px-3.5 py-2 rounded-lg bg-white border border-[#C8AD8D] text-sm font-serif text-stone-900 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628]"
+                  className="w-full mt-2 px-3.5 py-2 rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-sm font-serif text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700"
                   required
                 />
               )}
@@ -1018,42 +1020,42 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
 
             {/* 2. When do I plan to start? */}
             <div className="md:col-span-4 space-y-1.5">
-              <label className="block font-cinzel text-xs font-bold text-[#3A2213] uppercase tracking-wider">
+              <label className="block font-cinzel text-xs font-bold text-slate-800 uppercase tracking-wider">
                 2. When do you plan to start?
               </label>
               <input
                 type="date"
                 value={plannedStartDate}
                 onChange={(e) => setPlannedStartDate(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-lg bg-[#FDFBF7] border border-[#C8AD8D] text-sm font-serif text-stone-900 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628]"
+                className="w-full px-3.5 py-2 rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-sm font-serif text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700"
                 required
               />
               <div className="flex flex-wrap gap-1.5 pt-1">
                 <button
                   type="button"
                   onClick={() => setQuickStartDate(0)}
-                  className="px-2 py-1 rounded bg-[#F3E9DA] hover:bg-[#E6D6BF] text-[#4A2E1B] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
+                  className="px-2 py-1 rounded bg-[#EAE2D3] hover:bg-[#DFD5C3] text-slate-800 border border-[#C8BBA6] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
                 >
                   Today
                 </button>
                 <button
                   type="button"
                   onClick={() => setQuickStartDate(1)}
-                  className="px-2 py-1 rounded bg-[#F3E9DA] hover:bg-[#E6D6BF] text-[#4A2E1B] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
+                  className="px-2 py-1 rounded bg-[#EAE2D3] hover:bg-[#DFD5C3] text-slate-800 border border-[#C8BBA6] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
                 >
                   Tomorrow
                 </button>
                 <button
                   type="button"
                   onClick={() => setQuickStartDate('nov1')}
-                  className="px-2 py-1 rounded bg-[#F3E9DA] hover:bg-[#E6D6BF] text-[#4A2E1B] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
+                  className="px-2 py-1 rounded bg-[#EAE2D3] hover:bg-[#DFD5C3] text-slate-800 border border-[#C8BBA6] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
                 >
                   Nov 1 (All Saints)
                 </button>
                 <button
                   type="button"
                   onClick={() => setQuickStartDate('nextMonth1st')}
-                  className="px-2 py-1 rounded bg-[#F3E9DA] hover:bg-[#E6D6BF] text-[#4A2E1B] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
+                  className="px-2 py-1 rounded bg-[#EAE2D3] hover:bg-[#DFD5C3] text-slate-800 border border-[#C8BBA6] text-[11px] font-serif font-semibold cursor-pointer transition-colors"
                 >
                   1st of Next Month
                 </button>
@@ -1062,7 +1064,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
 
             {/* 3. Preferred Hour & Goal */}
             <div className="md:col-span-3 space-y-1.5">
-              <label className="block font-cinzel text-xs font-bold text-[#3A2213] uppercase tracking-wider">
+              <label className="block font-cinzel text-xs font-bold text-slate-800 uppercase tracking-wider">
                 3. Daily Hour &amp; Goal
               </label>
               <input
@@ -1070,10 +1072,10 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                 value={preferredTime}
                 onChange={(e) => setPreferredTime(e.target.value)}
                 placeholder="e.g., 7:00 PM or After Dinner"
-                className="w-full px-3.5 py-2 rounded-lg bg-[#FDFBF7] border border-[#C8AD8D] text-sm font-serif text-stone-900 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628]"
+                className="w-full px-3.5 py-2 rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-sm font-serif text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700"
               />
               <div className="flex items-center gap-1.5 pt-1">
-                <span className="text-[11px] font-serif text-stone-600">Commitment:</span>
+                <span className="text-[11px] font-serif text-slate-600">Commitment:</span>
                 {[14, 21, 30, 33].map(days => (
                   <button
                     key={days}
@@ -1081,8 +1083,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                     onClick={() => setHabitTargetDays(days)}
                     className={`px-2 py-0.5 rounded text-[11px] font-serif font-bold cursor-pointer border ${
                       habitTargetDays === days
-                        ? 'bg-[#6B4628] text-white border-[#52341C]'
-                        : 'bg-white text-stone-700 border-stone-300'
+                        ? 'bg-slate-800 text-[#F9F6F0] border-slate-900'
+                        : 'bg-[#FBF9F5] text-slate-700 border-[#C8BBA6] hover:bg-[#EAE2D3]'
                     }`}
                   >
                     {days}d
@@ -1092,17 +1094,17 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[#EFE6D8]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[#D8CFC0]">
             <input
               type="text"
               value={habitIntention}
               onChange={(e) => setHabitIntention(e.target.value)}
               placeholder="Personal intention for this habit (e.g., For family peace, purity of heart, or the Holy Souls)..."
-              className="flex-1 px-3.5 py-2 rounded-lg bg-[#FDFBF7] border border-[#C8AD8D] text-xs sm:text-sm font-serif text-stone-900 focus:outline-hidden focus:ring-1 focus:ring-[#6B4628]"
+              className="flex-1 px-3.5 py-2 rounded-lg bg-[#FBF9F5] border border-[#C8BBA6] text-xs sm:text-sm font-serif text-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-700"
             />
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-lg bg-[#6B4628] hover:bg-[#52341C] text-amber-50 font-cinzel text-xs font-bold shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0"
+              className="px-5 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-[#F9F6F0] font-cinzel text-xs font-bold shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0"
             >
               <Plus className="w-4 h-4" />
               <span>Add to Habit Former &amp; Monthly Tracker</span>
@@ -1112,7 +1114,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
 
         {/* Active Prayer Habit Commitments List */}
         <div className="space-y-2.5">
-          <h4 className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#5C3B20]">
+          <h4 className="font-cinzel text-xs font-bold uppercase tracking-wider text-slate-800">
             My Planned Daily Prayer Habits ({habitPlans.length})
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1132,7 +1134,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
               return (
                 <div
                   key={habit.id}
-                  className="p-4 rounded-xl bg-white border border-[#DFCBB0] shadow-2xs flex flex-col justify-between gap-3"
+                  className="p-4 rounded-xl bg-gradient-to-br from-[#FBF9F5] via-[#F6F2EA] to-[#ECE5D5] border border-[#D8CFC0] shadow-2xs flex flex-col justify-between gap-3"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <label className="flex items-start gap-3 cursor-pointer flex-1">
@@ -1140,16 +1142,16 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                         type="checkbox"
                         checked={todayChecked}
                         onChange={() => toggleMonthlyDayCheck(habit.id, currentDateStr)}
-                        className="mt-1 w-5 h-5 rounded border-2 border-[#8B5A2B] accent-[#6B4628] cursor-pointer shrink-0"
+                        className="mt-1 w-5 h-5 rounded border-2 border-slate-600 accent-slate-800 cursor-pointer shrink-0"
                         title="Check off for today"
                       />
                       <div>
                         <span className={`font-serif text-sm sm:text-base font-bold block ${
-                          todayChecked ? 'line-through text-stone-500' : 'text-[#24140B]'
+                          todayChecked ? 'line-through text-slate-500' : 'text-slate-900'
                         }`}>
                           {habit.prayerName}
                         </span>
-                        <span className="text-xs font-serif text-stone-600 italic block mt-0.5">
+                        <span className="text-xs font-serif text-slate-600 italic block mt-0.5">
                           {habit.intentionOrGoal}
                         </span>
                       </div>
@@ -1158,33 +1160,33 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                     <button
                       type="button"
                       onClick={() => handleDeleteHabitPlan(habit.id)}
-                      className="p-1 text-stone-400 hover:text-red-700 rounded transition-colors cursor-pointer"
+                      className="p-1 text-slate-400 hover:text-red-700 rounded transition-colors cursor-pointer"
                       title="Remove prayer habit"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <div className="pt-2.5 border-t border-[#F2E9DC] flex flex-wrap items-center justify-between gap-2 text-xs font-serif">
+                  <div className="pt-2.5 border-t border-[#D8CFC0] flex flex-wrap items-center justify-between gap-2 text-xs font-serif">
                     <div className="flex items-center gap-2">
-                      <span className="text-stone-600 font-semibold">Planned Start:</span>
+                      <span className="text-slate-600 font-semibold">Planned Start:</span>
                       <input
                         type="date"
                         value={habit.plannedStartDate}
                         onChange={(e) => handleUpdateHabitStartDate(habit.id, e.target.value)}
-                        className="px-2 py-0.5 rounded bg-[#F7F1E6] border border-[#D8C3A5] text-[#3A2213] font-bold text-xs cursor-pointer"
+                        className="px-2 py-0.5 rounded bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 font-bold text-xs cursor-pointer"
                         title="Change planned start date"
                       />
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 rounded bg-[#F4EDE2] text-[#5C3B20] border border-[#E2D3BE] font-semibold">
+                      <span className="px-2 py-0.5 rounded bg-[#F4EFE6] text-slate-800 border border-[#D8CFC0] font-semibold">
                         {habit.preferredTime}
                       </span>
                       <span className={`px-2 py-0.5 rounded font-bold ${
                         isStarted
-                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                          : 'bg-amber-50 text-amber-900 border border-amber-200'
+                          ? 'bg-slate-800 text-[#F9F6F0] border border-slate-900'
+                          : 'bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6]'
                       }`}>
                         {isStarted ? `${monthCompletedDays}/${daysInTrackerMonth} in ${trackerMonthLabel.split(' ')[0]}` : `Starts ${habit.plannedStartDate}`}
                       </span>
@@ -1200,20 +1202,20 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
       {/* =====================================================================
           4. MONTHLY DAILY PRAYER TRACKER (WITH CHECKBOXES FOR EVERY DAY)
          ===================================================================== */}
-      <div className="rounded-2xl bg-[#F9F4EC] border border-[#D8C3A5] p-5 sm:p-7 shadow-sm space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DFCBB0] pb-4">
+      <div className="rounded-2xl bg-[#FBF9F5]/95 backdrop-blur-xl border border-[#DFD6C7] p-5 sm:p-7 shadow-xs space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D8CFC0] pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <CalendarIcon className="w-4 h-4 text-[#6B4628]" />
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#7A5230]">
+              <CalendarIcon className="w-4 h-4 text-slate-700" />
+              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-slate-600">
                 Part III • Monthly Daily Prayer Tracker
               </span>
             </div>
-            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-stone-900 mt-0.5">
+            <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">
               Monthly Checkboxes for Prayers You Want to Pray Daily
             </h3>
-            <p className="text-xs sm:text-sm font-serif text-stone-600 mt-0.5">
-              Check the box for each day of the month as you complete your daily prayers. Days marked with a gold border indicate your planned start date.
+            <p className="text-xs sm:text-sm font-serif text-slate-700 mt-0.5">
+              Check the box for each day of the month as you complete your daily prayers. Days highlighted in darker sand indicate your planned start date.
             </p>
           </div>
 
@@ -1227,29 +1229,29 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold border transition-all cursor-pointer ${
                 trackerMonth === 10
-                  ? 'bg-[#6B4628] text-amber-50 border-[#52341C]'
-                  : 'bg-white hover:bg-stone-50 text-[#5C3B20] border-[#C8AD8D]'
+                  ? 'bg-slate-800 text-[#F9F6F0] border-slate-900'
+                  : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#C8BBA6]'
               }`}
             >
               November
             </button>
 
-            <div className="flex items-center gap-1.5 bg-white px-2 py-1 rounded-xl border border-[#C8AD8D] shadow-2xs">
+            <div className="flex items-center gap-1.5 bg-[#F4EFE6] px-2 py-1 rounded-xl border border-[#C8BBA6] shadow-2xs">
               <button
                 type="button"
                 onClick={handlePrevTrackerMonth}
-                className="p-1.5 rounded-lg hover:bg-stone-100 text-[#3A2213] cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-[#EAE2D3] text-slate-800 cursor-pointer"
                 title="Previous Month"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <span className="font-cinzel text-xs sm:text-sm font-bold text-[#24140B] min-w-[130px] text-center">
+              <span className="font-cinzel text-xs sm:text-sm font-bold text-slate-900 min-w-[130px] text-center">
                 {trackerMonthLabel}
               </span>
               <button
                 type="button"
                 onClick={handleNextTrackerMonth}
-                className="p-1.5 rounded-lg hover:bg-stone-100 text-[#3A2213] cursor-pointer"
+                className="p-1.5 rounded-lg hover:bg-[#EAE2D3] text-slate-800 cursor-pointer"
                 title="Next Month"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -1259,14 +1261,14 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
         </div>
 
         {/* Scrollable Monthly Grid Table with Checkboxes */}
-        <div className="overflow-x-auto rounded-xl border border-[#DFCBB0] bg-white shadow-xs">
+        <div className="overflow-x-auto rounded-xl border border-[#D8CFC0] bg-[#FBF9F5] shadow-xs">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="bg-[#EFE5D6] border-b border-[#DFCBB0] text-[#2E1B0E]">
-                <th className="sticky left-0 z-10 bg-[#EFE5D6] px-4 py-3 font-cinzel text-xs font-bold uppercase tracking-wider min-w-[220px] max-w-[260px] border-r border-[#DFCBB0]">
+              <tr className="bg-[#EFE9DC] border-b border-[#D8CFC0] text-slate-900">
+                <th className="sticky left-0 z-10 bg-[#EFE9DC] px-4 py-3 font-cinzel text-xs font-bold uppercase tracking-wider min-w-[220px] max-w-[260px] border-r border-[#D8CFC0]">
                   Daily Prayer / Start Date
                 </th>
-                <th className="px-3 py-3 font-cinzel text-xs font-bold uppercase tracking-wider text-center border-r border-[#DFCBB0] min-w-[72px]">
+                <th className="px-3 py-3 font-cinzel text-xs font-bold uppercase tracking-wider text-center border-r border-[#D8CFC0] min-w-[72px]">
                   Done
                 </th>
                 {Array.from({ length: daysInTrackerMonth }, (_, idx) => {
@@ -1276,8 +1278,8 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                   return (
                     <th
                       key={dayNum}
-                      className={`px-1.5 py-2.5 text-center font-cinzel text-[11px] font-bold min-w-[34px] border-r border-[#EFE6D8] ${
-                        isTodayCol ? 'bg-[#6B4628] text-amber-100' : 'text-[#4A2E1B]'
+                      className={`px-1.5 py-2.5 text-center font-cinzel text-[11px] font-bold min-w-[34px] border-r border-[#D8CFC0]/70 ${
+                        isTodayCol ? 'bg-slate-800 text-[#F9F6F0]' : 'text-slate-700'
                       }`}
                       title={dStr}
                     >
@@ -1287,7 +1289,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#EFE6D8]">
+            <tbody className="divide-y divide-[#D8CFC0]/70">
               {habitPlans.map((habit) => {
                 let completedInMonth = 0;
                 for (let d = 1; d <= daysInTrackerMonth; d++) {
@@ -1296,21 +1298,21 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                 }
 
                 return (
-                  <tr key={habit.id} className="hover:bg-[#FFFDF9] transition-colors">
+                  <tr key={habit.id} className="hover:bg-[#F4EFE6]/60 transition-colors">
                     {/* Sticky Prayer Name & Planned Start Date */}
-                    <td className="sticky left-0 z-10 bg-white px-4 py-3 border-r border-[#DFCBB0] align-middle">
-                      <div className="font-serif text-xs sm:text-sm font-bold text-[#24140B] leading-snug">
+                    <td className="sticky left-0 z-10 bg-[#FBF9F5] px-4 py-3 border-r border-[#D8CFC0] align-middle">
+                      <div className="font-serif text-xs sm:text-sm font-bold text-slate-900 leading-snug">
                         {habit.prayerName}
                       </div>
-                      <div className="flex items-center gap-2 mt-1 text-[11px] font-serif text-stone-600">
-                        <span>Start: <strong className="text-[#6B4628]">{habit.plannedStartDate}</strong></span>
+                      <div className="flex items-center gap-2 mt-1 text-[11px] font-serif text-slate-600">
+                        <span>Start: <strong className="text-slate-800">{habit.plannedStartDate}</strong></span>
                         <span>•</span>
                         <span>{habit.preferredTime}</span>
                       </div>
                     </td>
 
                     {/* Monthly Counter */}
-                    <td className="px-2.5 py-3 text-center font-cinzel text-xs font-bold text-[#6B4628] border-r border-[#DFCBB0] bg-[#FAF6EE]">
+                    <td className="px-2.5 py-3 text-center font-cinzel text-xs font-bold text-slate-800 border-r border-[#D8CFC0] bg-[#F4EFE6]">
                       {completedInMonth}/{daysInTrackerMonth}
                     </td>
 
@@ -1327,13 +1329,13 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                       return (
                         <td
                           key={dayNum}
-                          className={`p-1 text-center align-middle border-r border-[#F4EDE2] ${
+                          className={`p-1 text-center align-middle border-r border-[#D8CFC0]/60 ${
                             isStartDate
-                              ? 'bg-amber-100/75 ring-1 ring-inset ring-amber-500'
+                              ? 'bg-[#DFD5C3] ring-1 ring-inset ring-slate-700'
                               : isTodayCol
-                                ? 'bg-[#FDF6E9]'
+                                ? 'bg-[#EFE9DC]'
                                 : isBeforeStart
-                                  ? 'bg-stone-50/70'
+                                  ? 'bg-slate-100/70'
                                   : ''
                           }`}
                           title={
@@ -1347,7 +1349,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
                             checked={isChecked}
                             onChange={() => toggleMonthlyDayCheck(habit.id, dStr)}
                             aria-label={`${habit.prayerName} on ${dStr}`}
-                            className="w-4 h-4 rounded border border-[#8B5A2B] accent-[#6B4628] cursor-pointer"
+                            className="w-4 h-4 rounded border border-slate-600 accent-slate-800 cursor-pointer"
                           />
                         </td>
                       );
@@ -1359,14 +1361,14 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
           </table>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-serif text-stone-600 pt-1">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-serif text-slate-600 pt-1">
           <div className="flex flex-wrap items-center gap-4">
             <span className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded bg-amber-100 border border-amber-500 inline-block" />
+              <span className="w-3.5 h-3.5 rounded bg-[#DFD5C3] border border-slate-700 inline-block" />
               <span>Planned Start Date</span>
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-3.5 h-3.5 rounded bg-[#6B4628] inline-block" />
+              <span className="w-3.5 h-3.5 rounded bg-slate-800 inline-block" />
               <span>Today ({currentDateStr})</span>
             </span>
           </div>

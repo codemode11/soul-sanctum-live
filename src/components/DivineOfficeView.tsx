@@ -481,20 +481,20 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-2.5">
         <div className="flex flex-wrap items-center justify-between gap-2 pb-0.5">
           <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-stone-700">
-            Canonical Hours • Ideal Prayer Times
+            Canonical Hours • Flexible Personal Rhythm
           </span>
           {selectedHourKey !== currentIdealHour ? (
             <button
               type="button"
               onClick={() => handleHourSelect(currentIdealHour)}
               className="px-2.5 py-0.5 rounded-md bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-400/70 text-[10.5px] font-cinzel font-bold transition-colors cursor-pointer"
-              title="Jump back to the canonical hour for the current time of day"
+              title="Jump back to the hour suggested for the current part of the day (no clock time is prescribed)"
             >
-              Return to Current Hour ({CANONICAL_HOUR_SCHEDULE[currentIdealHour].label})
+              Suggested Now: {CANONICAL_HOUR_SCHEDULE[currentIdealHour].label}
             </button>
           ) : (
             <span className="text-[10.5px] font-cinzel font-semibold text-amber-900">
-              Current Hour: {CANONICAL_HOUR_SCHEDULE[currentIdealHour].label} ({CANONICAL_HOUR_SCHEDULE[currentIdealHour].approxTime})
+              Suggested Now: {CANONICAL_HOUR_SCHEDULE[currentIdealHour].label} • No Clock Schedule Prescribed
             </span>
           )}
         </div>
@@ -532,7 +532,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
                 {isIdealNow && (
                   <span
                     className="absolute top-1 right-1.5 w-1.5 h-1.5 rounded-full bg-amber-600"
-                    title="Current ideal prayer hour"
+                    title="Suggested for the current part of the day (no clock time is prescribed)"
                   />
                 )}
                 <Icon
@@ -555,6 +555,13 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
           })}
         </div>
 
+        <p className="text-[11px] sm:text-xs font-serif text-stone-600 leading-snug pt-0.5">
+          <span className="font-cinzel font-bold text-amber-900 uppercase tracking-wide mr-1">
+            When to Say the Hours:
+          </span>
+          No specific clock times are prescribed. The General Instruction does not impose a rigid schedule—keeping a consistent daily time is entirely a personal choice, as there is no intrinsic significance to the clock.
+        </p>
+
         {/* Hour-Specific GILH Controls (Daytime Sub-Hour & Psalmody, Compline Sunday Psalm option) */}
         {viewMode === 'native' && selectedHourKey === 'daytime' && (
           <div className="pt-2 border-t border-stone-300/70 flex flex-wrap items-center justify-between gap-2 text-xs">
@@ -562,9 +569,9 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               <span className="font-cinzel text-[10.5px] font-bold uppercase text-stone-700">Hour:</span>
               {(
                 [
-                  { id: 'terce' as const, label: 'Terce (~9 AM)' },
-                  { id: 'sext' as const, label: 'Sext (~12 PM)' },
-                  { id: 'none' as const, label: 'None (~3 PM)' },
+                  { id: 'terce' as const, label: 'Terce (Mid-Morning)' },
+                  { id: 'sext' as const, label: 'Sext (Midday)' },
+                  { id: 'none' as const, label: 'None (Mid-Afternoon)' },
                 ]
               ).map(opt => (
                 <button

@@ -130,22 +130,22 @@ export interface CanonicalHourSchedule {
 }
 
 export const CANONICAL_HOUR_SCHEDULE: Record<OfficeHourKey, CanonicalHourSchedule> = {
-  invitatory: { key: 'invitatory', label: 'Invitatory', approxTime: '~5–6 AM' },
-  readings: { key: 'readings', label: 'Office of Readings', approxTime: '~3–5 AM' },
-  lauds: { key: 'lauds', label: 'Morning Prayer', approxTime: '~6–9 AM' },
-  daytime: { key: 'daytime', label: 'Daytime Prayer', approxTime: '9 AM • 12 • 3 PM' },
-  vespers: { key: 'vespers', label: 'Evening Prayer', approxTime: '~5–9 PM' },
-  compline: { key: 'compline', label: 'Night Prayer', approxTime: '~9 PM–3 AM' },
+  invitatory: { key: 'invitatory', label: 'Invitatory', approxTime: 'Before First Hour' },
+  readings: { key: 'readings', label: 'Office of Readings', approxTime: 'Any Hour of Day' },
+  lauds: { key: 'lauds', label: 'Morning Prayer', approxTime: 'Start of Day' },
+  daytime: { key: 'daytime', label: 'Daytime Prayer', approxTime: 'Terce • Sext • None' },
+  vespers: { key: 'vespers', label: 'Evening Prayer', approxTime: 'Close of Day' },
+  compline: { key: 'compline', label: 'Night Prayer', approxTime: 'Before Sleep' },
 };
 
 export function getIdealDivineOfficeHour(date: Date = new Date()): OfficeHourKey {
   const hour = date.getHours();
-  if (hour >= 21 || hour < 3) return 'compline';   // ~9:00 PM – 2:59 AM: Night Prayer (Compline)
-  if (hour >= 3 && hour < 5) return 'readings';    // ~3:00 AM – 4:59 AM: Office of Readings
-  if (hour >= 5 && hour < 6) return 'invitatory';  // ~5:00 AM – 5:59 AM: Invitatory upon waking
-  if (hour >= 6 && hour < 9) return 'lauds';       // ~6:00 AM – 8:59 AM: Morning Prayer (Lauds)
-  if (hour >= 9 && hour < 17) return 'daytime';    // 9:00 AM – 4:59 PM: Daytime Prayer (Terce 9 AM, Sext 12 PM, None 3 PM)
-  return 'vespers';                                // ~5:00 PM – 8:59 PM: Evening Prayer (Vespers)
+  if (hour >= 21 || hour < 3) return 'compline';   // Night / before sleep convenience default
+  if (hour >= 3 && hour < 5) return 'readings';    // Pre-dawn convenience default
+  if (hour >= 5 && hour < 6) return 'invitatory';  // Early waking convenience default
+  if (hour >= 6 && hour < 9) return 'lauds';       // Morning convenience default
+  if (hour >= 9 && hour < 17) return 'daytime';    // Daytime convenience default
+  return 'vespers';                                // Evening convenience default
 }
 
 export function getDaytimeSubHourKey(date: Date = new Date()): DaytimeSubHourKey {
@@ -157,9 +157,9 @@ export function getDaytimeSubHourKey(date: Date = new Date()): DaytimeSubHourKey
 
 export function getDaytimeSubHourLabel(date: Date = new Date()): string {
   const key = getDaytimeSubHourKey(date);
-  if (key === 'terce') return 'Terce (Mid-Morning, ~9 AM)';
-  if (key === 'sext') return 'Sext (Midday, ~12 PM)';
-  return 'None (Mid-Afternoon, ~3 PM)';
+  if (key === 'terce') return 'Terce (Mid-Morning)';
+  if (key === 'sext') return 'Sext (Midday)';
+  return 'None (Mid-Afternoon)';
 }
 
 const COMPLEMENTARY_GRADUAL_PSALMS: Record<DaytimeSubHourKey, PsalmEntry[]> = {
@@ -579,6 +579,13 @@ export interface GilhQaGuideItem {
 
 export const GILH_QA_ITEMS: GilhQaGuideItem[] = [
   {
+    id: 'gilh-0',
+    category: 'Schedule & Hours',
+    gilhRef: 'GILH 11, 29, 58–59, 84',
+    question: 'When should the Hours be said? Are specific clock times prescribed?',
+    answer: 'No specific clock times are prescribed. While some guides suggest traditional times for each Hour, the General Instruction of the Liturgy of the Hours carefully avoids specifying any particular schedule. If you prefer to recite a specific Hour at the same time each day, you are completely free to do so as a personal choice—there is no intrinsic significance to the clock in this context.'
+  },
+  {
     id: 'gilh-1',
     category: 'Schedule & Hours',
     gilhRef: 'GILH 58–59',
@@ -783,7 +790,7 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'invitatory',
         englishTitle: 'Invitatory Prayer',
-        timeHint: 'Opening call to praise before the first Hour of the day (GILH 34–41)',
+        timeHint: 'Opening call to praise before the first Hour of the day — no clock time is prescribed (GILH 34–41)',
         introSectionLabel: 'Invitatory Opening',
         combiningHoursNote: 'When the Invitatory serves as the prelude to Morning Prayer or Office of Readings, omit "O God, come to my assistance" and "Glory to the Father" at the beginning of that Hour (GILH 41); the Invitatory may also be omitted before Morning Prayer (GILH 35).',
         openingVerse: 'Lord, open my lips.',
@@ -863,7 +870,7 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'readings',
         englishTitle: 'Office of Readings',
-        timeHint: 'May be recited at any hour, or as a night office after Evening Prayer / before Morning Prayer (GILH 58–59)',
+        timeHint: 'May be recited at any hour of the day, or as a night office after Evening Prayer / before Morning Prayer (GILH 58–59)',
         introSectionLabel: 'Introduction',
         combiningHoursNote: 'If prayed immediately before Morning Prayer or another Hour, omit the closing prayer and acclamation of this Office and omit the introduction of the following Hour (GILH 60).',
         openingVerse: 'O God, come to my assistance.',
@@ -971,7 +978,7 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'lauds',
         englishTitle: 'Morning Prayer (Lauds)',
-        timeHint: 'Prayed at dawn to consecrate the first hours of the day to the Risen Christ (GILH 37–54)',
+        timeHint: 'Morning prayer consecrating the start of the day to the Risen Christ — no clock time is prescribed (GILH 37–54)',
         introSectionLabel: 'Introduction',
         combiningHoursNote: 'If immediately preceded by the Invitatory or Office of Readings, omit "O God, come to my assistance" and "Glory to the Father" (GILH 41, 60). Morning Prayer may also be combined with Mass (GILH 93–95).',
         openingVerse: 'O God, come to my assistance.',
@@ -1084,7 +1091,7 @@ export function getDivineOfficeHour(
         collect: string;
       }> = {
         terce: {
-          title: 'Daytime Prayer — Mid-Morning (Terce, ~9 AM)',
+          title: 'Daytime Prayer — Mid-Morning (Terce)',
           hymnTitle: 'Nunc, Sancte, Nobis, Spiritus (Come, Holy Ghost, Who Ever One)',
           hymnStanzas: [
             'Come, Holy Ghost, who ever One art with the Father and the Son; come, Holy Ghost, our souls possess with thy full flood of holiness.',
@@ -1097,7 +1104,7 @@ export function getDivineOfficeHour(
           collect: 'Almighty, eternal God, at this third hour you poured out your Holy Spirit upon the Apostles; grant that the same Spirit of truth and charity may sanctify our work and strengthen our witness today. Through Christ our Lord. Amen.'
         },
         sext: {
-          title: 'Daytime Prayer — Midday (Sext, ~12 PM)',
+          title: 'Daytime Prayer — Midday (Sext)',
           hymnTitle: 'Rector Potens, Verax Deus (O God of Truth, O Lord of Might)',
           hymnStanzas: [
             'O God of truth, O Lord of might, who orderest time and change aright, arraying morn with golden gleams, and kindling noonday\'s fiery beams.',
@@ -1110,7 +1117,7 @@ export function getDivineOfficeHour(
           collect: 'Lord God, heavenly King, at this midday hour when your blessed Son hung upon the Cross for our redemption, grant that his sacred Passion may sanctify our daily labors and protect us from every temptation. Through Christ our Lord. Amen.'
         },
         none: {
-          title: 'Daytime Prayer — Mid-Afternoon (None, ~3 PM)',
+          title: 'Daytime Prayer — Mid-Afternoon (None)',
           hymnTitle: 'Rerum, Deus, Tenax Vigor (O God, Creation\'s Secret Force)',
           hymnStanzas: [
             'O God, creation\'s secret force, yourself unmoved, all motion\'s source, who guide the day from morning light through all its changes to the night.',
@@ -1132,7 +1139,7 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'daytime',
         englishTitle: activeMeta.title,
-        timeHint: 'Prayed at mid-morning (Terce ~9 AM), midday (Sext ~12 PM), or mid-afternoon (None ~3 PM) (GILH 74–83)',
+        timeHint: 'Mid-morning (Terce), midday (Sext), or mid-afternoon (None) — no fixed clock hour is prescribed (GILH 74–83)',
         introSectionLabel: 'Introduction',
         combiningHoursNote: 'Daytime Prayer may be combined with Mass or celebrated directly after the Prayer after Communion (GILH 93–98).',
         openingVerse: 'O God, come to my assistance.',
@@ -1164,7 +1171,7 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'vespers',
         englishTitle: 'Evening Prayer (Vespers)',
-        timeHint: 'Prayed at sunset to offer thanksgiving for the day and commemorate the Last Supper & Cross (GILH 37–54)',
+        timeHint: 'Evening thanksgiving at the close of the day — no fixed clock hour is prescribed (GILH 37–54)',
         introSectionLabel: 'Introduction',
         combiningHoursNote: 'Evening Prayer may be combined with Mass or prayed directly after the Prayer after Communion (GILH 93–98). On Saturdays and eve of Solemnities, Evening Prayer I celebrates the coming Sunday or Solemnity.',
         openingVerse: 'O God, come to my assistance.',
@@ -1266,7 +1273,7 @@ export function getDivineOfficeHour(
       return {
         hourKey: 'compline',
         englishTitle: 'Night Prayer (Compline)',
-        timeHint: 'Last prayer of the day before retiring to sleep, even if after midnight (GILH 84–92)',
+        timeHint: 'Last prayer of the day before retiring to sleep, even if after midnight — no clock time is prescribed (GILH 84–92)',
         introSectionLabel: 'Introduction',
         combiningHoursNote: 'Said as the final prayer of the day before rest (GILH 84). Followed immediately by the Examination of Conscience before the Hymn (GILH 86).',
         openingVerse: 'O God, come to my assistance.',
