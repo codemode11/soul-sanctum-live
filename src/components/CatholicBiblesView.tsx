@@ -887,11 +887,11 @@ export const CatholicBiblesView: React.FC = () => {
                 <strong className="text-stone-900">Nova Vulgata</strong>.
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
               <select
                 value={selectedBookId}
                 onChange={(e) => handleSelectBook(CATHOLIC_BIBLE_BOOKS.find((b) => b.id === e.target.value) || selectedBook, 1)}
-                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+                className="min-w-0 max-w-full sm:max-w-[220px] bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
               >
                 {CATHOLIC_BIBLE_BOOKS.map((b) => (
                   <option key={b.id} value={b.id}>
@@ -902,7 +902,7 @@ export const CatholicBiblesView: React.FC = () => {
               <select
                 value={selectedChapter}
                 onChange={(e) => setSelectedChapter(Number(e.target.value))}
-                className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
+                className="min-w-0 max-w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-3 py-2 text-xs sm:text-sm text-stone-900 font-serif focus:outline-none focus:border-amber-800"
               >
                 {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
                   <option key={ch} value={ch}>
@@ -1084,8 +1084,8 @@ export const CatholicBiblesView: React.FC = () => {
           
           {/* Book Header, Pericope Summary & Chapter Heading */}
           <div className="border-b border-stone-200 pb-4 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-              <div className="space-y-1.5">
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+              <div className="space-y-1.5 min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   {selectedBook.isDeuterocanonical && (
                     <span className="px-2.5 py-0.5 rounded bg-amber-900 text-amber-50 text-[11px] font-cinzel uppercase font-bold">
@@ -1096,18 +1096,18 @@ export const CatholicBiblesView: React.FC = () => {
                     {selectedBook.latinName}
                   </span>
                 </div>
-                <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-950 tracking-normal leading-tight pt-0.5">
+                <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-950 tracking-normal leading-tight pt-0.5 break-words">
                   {selectedBook.traditionalName}
                 </h3>
               </div>
 
               {/* Inline Quick Translation, Book/Chapter Jump & Prev/Next Controls */}
-              <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full lg:justify-end">
                 <select
                   value={primaryTranslation}
                   onChange={(e) => setPrimaryTranslation(e.target.value as CatholicBibleTranslationId)}
                   aria-label="Select Catholic Bible Translation"
-                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-amber-950 font-serif font-bold focus:outline-none focus:border-amber-800"
+                  className="min-w-0 max-w-[138px] sm:max-w-[155px] bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-amber-950 font-serif font-bold truncate focus:outline-none focus:border-amber-800"
                 >
                   {CATHOLIC_BIBLE_TRANSLATIONS.map((t) => (
                     <option key={t.id} value={t.id}>
@@ -1123,7 +1123,7 @@ export const CatholicBiblesView: React.FC = () => {
                     if (b) handleSelectBook(b, 1);
                   }}
                   aria-label="Select Bible Book"
-                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
+                  className="min-w-0 max-w-[175px] sm:max-w-[195px] bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold truncate focus:outline-none focus:border-amber-800"
                 >
                   {CATHOLIC_BIBLE_BOOKS.map((b) => (
                     <option key={b.id} value={b.id}>
@@ -1136,7 +1136,7 @@ export const CatholicBiblesView: React.FC = () => {
                   value={selectedChapter}
                   onChange={(e) => setSelectedChapter(Number(e.target.value))}
                   aria-label="Select Chapter"
-                  className="bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
+                  className="min-w-0 max-w-full bg-[#FAF4EB] border border-[#D8C7B2] rounded-lg px-2.5 py-1.5 text-xs sm:text-sm text-stone-900 font-serif font-semibold focus:outline-none focus:border-amber-800"
                 >
                   {Array.from({ length: selectedBook.chapters }, (_, i) => i + 1).map((ch) => (
                     <option key={ch} value={ch}>
@@ -1145,7 +1145,7 @@ export const CatholicBiblesView: React.FC = () => {
                   ))}
                 </select>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 shrink-0">
                   <button
                     type="button"
                     onClick={handlePrevChapter}
@@ -1326,27 +1326,27 @@ export const CatholicBiblesView: React.FC = () => {
           )}
 
           {/* Bottom Chapter Navigation Bar */}
-          <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
+          <div className="pt-4 border-t border-stone-200 flex flex-wrap items-center justify-between gap-2.5">
             <button
               type="button"
               onClick={handlePrevChapter}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all shrink-0"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-4 h-4 shrink-0" />
               <span>Previous Chapter</span>
             </button>
 
-            <span className="text-xs font-serif font-semibold text-stone-600">
+            <span className="text-xs font-serif font-semibold text-stone-600 text-center min-w-0 flex-1 basis-full sm:basis-auto order-first sm:order-none truncate">
               {selectedBook.traditionalName} {selectedChapter} • {sourceLabel}
             </span>
 
             <button
               type="button"
               onClick={handleNextChapter}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl bg-[#FAF4EB] hover:bg-amber-100/80 border border-[#D8C7B2] text-xs font-cinzel font-bold text-amber-950 cursor-pointer transition-all shrink-0 ml-auto sm:ml-0"
             >
               <span>Next Chapter</span>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 shrink-0" />
             </button>
           </div>
         </div>

@@ -6,16 +6,10 @@ import {
   Check, 
   Volume2, 
   VolumeX, 
-  Filter, 
-  Calendar, 
   BookOpen, 
-  Heart, 
   ShieldCheck, 
   Star,
-  Quote,
-  Feather,
-  ChevronDown,
-  ChevronUp
+  Feather
 } from 'lucide-react';
 import { 
   MEDJUGORJE_MESSAGES, 
@@ -118,70 +112,78 @@ export const MedjugorjeMessagesView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 pb-16 animate-fadeIn text-stone-100">
+    <div className="space-y-6 pb-8 animate-fadeIn text-slate-900">
       
-      {/* Marian Header Banner */}
-      <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-br from-blue-950 via-[#11192b] to-stone-950 border border-blue-500/35 shadow-2xl space-y-3 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Marian Header Banner — Slate Gray & Bleached Sand */}
+      <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md space-y-3 relative overflow-hidden text-[#F9F6F0]">
+        <div className="pointer-events-none absolute -right-12 -bottom-12 w-60 h-44 bg-[#EAE2D3]/15 rounded-full blur-3xl" />
         
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-xl bg-blue-500/20 text-blue-300 border border-blue-400/30">
+            <span className="p-1.5 rounded-xl bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70">
               <Star className="w-4 h-4" />
             </span>
-            <span className="font-cinzel text-xs font-bold text-amber-300 tracking-wider uppercase">
+            <span className="font-cinzel text-xs font-bold text-[#DFD5C3] tracking-wider uppercase">
               Queen of Peace • Kraljica Mira • Medjugorje
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => setShowFiveStones(!showFiveStones)}
-              className="px-3 py-1 rounded-lg bg-blue-500/20 hover:bg-blue-500/35 border border-blue-400/40 text-blue-200 text-xs font-serif transition-colors cursor-pointer"
+              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-colors cursor-pointer border ${
+                showFiveStones
+                  ? 'bg-[#F4EFE6] text-slate-900 border-[#DFD5C3]'
+                  : 'bg-slate-800/90 hover:bg-slate-700 border-slate-600/70 text-[#EAE2D3]'
+              }`}
             >
               5 Spiritual Stones
             </button>
             <button
               onClick={() => setShowVaticanNote(!showVaticanNote)}
-              className="px-3 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-xs font-serif transition-colors cursor-pointer"
+              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-colors cursor-pointer border ${
+                showVaticanNote
+                  ? 'bg-[#F4EFE6] text-slate-900 border-[#DFD5C3]'
+                  : 'bg-slate-800/90 hover:bg-slate-700 border-slate-600/70 text-[#EAE2D3]'
+              }`}
             >
               Vatican Nihil Obstat
             </button>
           </div>
         </div>
 
-        <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+        <h2 className="relative z-10 font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5] tracking-wide">
           Messages of Our Lady to the Seers of Medjugorje
         </h2>
         
-        <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
-          "Peace, peace, peace and only peace! Peace must reign between God and man and between men!" Discover the maternal messages of Our Lady, Queen of Peace, given to the visionaries of Medjugorje calling humanity to prayer, conversion, fasting, Holy Scripture, and the Holy Mass.
+        <p className="relative z-10 text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-2xl leading-relaxed">
+          &ldquo;Peace, peace, peace and only peace! Peace must reign between God and man and between men!&rdquo; Discover the maternal messages of Our Lady, Queen of Peace, given to the visionaries of Medjugorje calling humanity to prayer, conversion, fasting, Holy Scripture, and the Holy Mass.
         </p>
       </div>
 
       {/* VATICAN DECREE COLLAPSIBLE CARD */}
       {showVaticanNote && (
-        <div className="p-5 sm:p-6 rounded-xl bg-amber-950/40 border border-amber-500/40 backdrop-blur-md space-y-3 animate-fadeIn">
-          <div className="flex items-center justify-between">
+        <div className="p-5 sm:p-6 rounded-xl bg-[#FBF9F5]/95 border border-[#DFD6C7] shadow-xs space-y-3 animate-fadeIn">
+          <div className="flex items-center justify-between border-b border-[#D8CFC0] pb-2">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-amber-300" />
-              <h3 className="font-cinzel text-sm sm:text-base font-bold text-amber-200">
+              <ShieldCheck className="w-5 h-5 text-slate-700" />
+              <h3 className="font-cinzel text-sm sm:text-base font-bold text-slate-900">
                 {VATICAN_NIHIL_OBSTAT_NOTE.title}
               </h3>
             </div>
-            <span className="text-[11px] font-serif text-amber-300/80">
+            <span className="text-[11px] font-cinzel font-semibold text-slate-600">
               Sept 19, 2024
             </span>
           </div>
-          <p className="text-xs font-serif text-stone-300 leading-relaxed">
+          <p className="text-xs sm:text-sm font-serif text-slate-700 leading-relaxed">
             {VATICAN_NIHIL_OBSTAT_NOTE.summary}
           </p>
-          <div className="relative p-3 rounded-xl bg-black/40 text-xs font-serif italic text-amber-100">
+          <div className="relative p-4 rounded-xl bg-[#EFE9DC]/90 border border-[#D8CFC0] text-xs sm:text-sm font-serif italic text-slate-900">
             <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
-              <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
-              <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
-              <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
-              <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+              <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
+              <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
+              <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
+              <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
             </div>
             {VATICAN_NIHIL_OBSTAT_NOTE.keyQuote}
           </div>
@@ -190,39 +192,39 @@ export const MedjugorjeMessagesView: React.FC = () => {
 
       {/* FIVE STONES OF MEDJUGORJE COLLAPSIBLE */}
       {showFiveStones && (
-        <div className="p-5 sm:p-6 rounded-xl bg-blue-950/40 border border-blue-500/40 backdrop-blur-md space-y-4 animate-fadeIn">
-          <div className="flex items-center justify-between border-b border-blue-500/20 pb-3">
+        <div className="p-5 sm:p-6 rounded-xl bg-[#FBF9F5]/95 border border-[#DFD6C7] shadow-xs space-y-4 animate-fadeIn">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#D8CFC0] pb-3">
             <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-blue-300" />
-              <h3 className="font-cinzel text-sm sm:text-base font-bold text-blue-200">
+              <Sparkles className="w-4 h-4 text-slate-700" />
+              <h3 className="font-cinzel text-sm sm:text-base font-bold text-slate-900">
                 The Five Stones of Medjugorje (Spiritual Weapons Against Evil)
               </h3>
             </div>
-            <span className="text-xs font-serif text-blue-300/80">Like David’s Five Stones</span>
+            <span className="text-xs font-serif italic text-slate-600">Like David&apos;s Five Stones</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {FIVE_STONES_OF_MEDJUGORJE.map(stone => (
-              <div key={stone.number} className="p-3.5 rounded-xl bg-black/40 border border-blue-500/20 space-y-1.5 flex flex-col justify-between">
+              <div key={stone.number} className="p-3.5 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] space-y-1.5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between">
-                    <span className="font-cinzel text-[11px] font-bold text-amber-300">
+                    <span className="font-cinzel text-[11px] font-bold text-slate-700">
                       Stone #{stone.number}
                     </span>
                   </div>
-                  <h4 className="font-serif text-xs font-bold text-white mt-0.5">
+                  <h4 className="font-serif text-xs sm:text-sm font-bold text-slate-900 mt-0.5">
                     {stone.name}
                   </h4>
-                  <p className="text-[11px] font-serif text-stone-300 mt-1 leading-normal">
+                  <p className="text-[11px] font-serif text-slate-700 mt-1 leading-normal">
                     {stone.description}
                   </p>
                 </div>
-                <div className="relative p-2 rounded-xl bg-blue-950/40 mt-2 text-[10px] font-serif italic text-blue-200">
+                <div className="relative p-2.5 rounded-xl bg-[#EFE9DC] border border-[#C8BBA6] mt-2 text-[10.5px] font-serif italic text-slate-800">
                   <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
-                    <span className="pointer-events-none absolute top-0 left-0 w-3.5 h-3.5 rounded-tl-xl border-t-[2.5px] border-l-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
-                    <span className="pointer-events-none absolute top-0 right-0 w-3.5 h-3.5 rounded-tr-xl border-t-[2.5px] border-r-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
-                    <span className="pointer-events-none absolute bottom-0 left-0 w-3.5 h-3.5 rounded-bl-xl border-b-[2.5px] border-l-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
-                    <span className="pointer-events-none absolute bottom-0 right-0 w-3.5 h-3.5 rounded-br-xl border-b-[2.5px] border-r-[2.5px] border-blue-400 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute top-0 left-0 w-3.5 h-3.5 rounded-tl-xl border-t-[2.5px] border-l-[2.5px] border-slate-700 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute top-0 right-0 w-3.5 h-3.5 rounded-tr-xl border-t-[2.5px] border-r-[2.5px] border-slate-700 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 left-0 w-3.5 h-3.5 rounded-bl-xl border-b-[2.5px] border-l-[2.5px] border-slate-700 m-0" style={{ margin: 0 }} />
+                    <span className="pointer-events-none absolute bottom-0 right-0 w-3.5 h-3.5 rounded-br-xl border-b-[2.5px] border-r-[2.5px] border-slate-700 m-0" style={{ margin: 0 }} />
                   </div>
                   {stone.gospaQuote}
                 </div>
@@ -233,27 +235,27 @@ export const MedjugorjeMessagesView: React.FC = () => {
       )}
 
       {/* LATEST SPOTLIGHT MESSAGE CARD */}
-      <div className="rounded-xl p-6 sm:p-8 bg-stone-900/90 border border-amber-500/35 shadow-xl space-y-4 relative overflow-hidden">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-amber-500/20 pb-4">
-          <div className="space-y-0.5">
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold uppercase tracking-wider font-cinzel border border-amber-400/30">
+      <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-br from-[#FBF9F5] via-[#F6F2EA] to-[#ECE5D5] border border-[#D8CFC0] shadow-[0_3px_14px_rgba(51,65,85,0.06)] space-y-4 relative overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#D8CFC0] pb-4">
+          <div className="space-y-0.5 min-w-0 flex-1">
+            <span className="inline-block px-2.5 py-0.5 rounded-full bg-slate-800 text-[#F9F6F0] text-[10px] font-bold uppercase tracking-wider font-cinzel border border-slate-900">
               LATEST MESSAGE • {latestMessage.displayDate}
             </span>
-            <h3 className="font-cinzel text-lg sm:text-xl font-bold text-white pt-1">
+            <h3 className="font-cinzel text-lg sm:text-xl font-bold text-slate-900 pt-1">
               {latestMessage.title}
             </h3>
-            <p className="text-xs font-serif text-amber-200/80">
+            <p className="text-xs font-serif text-slate-600">
               Visionary: {latestMessage.seerName} • {latestMessage.seerTitle}
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => handleToggleSpeak(latestMessage)}
               className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                 playingMessageId === latestMessage.id
-                  ? 'bg-amber-600 text-white animate-pulse'
-                  : 'bg-amber-900/60 hover:bg-amber-800 text-amber-100 border border-amber-700/60'
+                  ? 'bg-slate-800 text-[#F9F6F0] border border-slate-900 animate-pulse'
+                  : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6]'
               }`}
               title="Listen to latest Marian message with human voice"
               aria-label="Listen to message"
@@ -261,34 +263,34 @@ export const MedjugorjeMessagesView: React.FC = () => {
               {playingMessageId === latestMessage.id ? (
                 <VolumeX className="w-4 h-4" />
               ) : (
-                <Volume2 className="w-4 h-4 text-amber-200" />
+                <Volume2 className="w-4 h-4 text-slate-700" />
               )}
             </button>
 
             <button
               onClick={() => handleCopy(latestMessage)}
-              className="p-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-amber-200 border border-amber-800/40 transition-colors cursor-pointer"
+              className="p-2 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6] transition-colors cursor-pointer"
               title="Copy message to clipboard"
               aria-label="Copy message"
             >
-              {copiedId === latestMessage.id ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+              {copiedId === latestMessage.id ? <Check className="w-4 h-4 text-emerald-700" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>
         </div>
 
         {/* Message Text Quote */}
-        <div className="relative p-5 sm:p-6 rounded-xl bg-black/45">
+        <div className="relative p-5 sm:p-6 rounded-xl bg-[#EFE9DC]/90 border border-[#D8CFC0]">
           <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
-            <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
-            <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
-            <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
-            <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400 m-0" style={{ margin: 0 }} />
+            <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
+            <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
+            <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
+            <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-slate-700 m-0" style={{ margin: 0 }} />
           </div>
           <div className="space-y-2">
-            <p className="font-serif italic text-white transition-all duration-200" style={messageStyle}>
-              "{latestMessage.messageText}"
+            <p className="font-serif italic text-slate-900 transition-all duration-200" style={messageStyle}>
+              &ldquo;{latestMessage.messageText}&rdquo;
             </p>
-            <p className="text-xs font-serif text-stone-400 pt-1">
+            <p className="text-xs font-serif text-slate-600 pt-1">
               Original Croatian: <span className="italic">{latestMessage.originalCroatianExcerpt}</span>
             </p>
           </div>
@@ -296,22 +298,22 @@ export const MedjugorjeMessagesView: React.FC = () => {
 
         {/* Spiritual Reflection and Scripture */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
-            <div className="flex items-center gap-1.5 text-amber-300 text-xs font-bold font-cinzel">
-              <Feather className="w-3.5 h-3.5" />
+          <div className="p-3.5 rounded-xl bg-[#FBF9F5] border border-[#D8CFC0] space-y-1">
+            <div className="flex items-center gap-1.5 text-slate-800 text-xs font-bold font-cinzel">
+              <Feather className="w-3.5 h-3.5 text-slate-700" />
               <span>Spiritual Reflection</span>
             </div>
-            <p className="font-serif text-stone-300 transition-all duration-200" style={reflectionStyle}>
+            <p className="font-serif text-slate-700 transition-all duration-200" style={reflectionStyle}>
               {latestMessage.spiritualReflection}
             </p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 space-y-1">
-            <div className="flex items-center gap-1.5 text-blue-300 text-xs font-bold font-cinzel">
-              <BookOpen className="w-3.5 h-3.5" />
+          <div className="p-3.5 rounded-xl bg-[#FBF9F5] border border-[#D8CFC0] space-y-1">
+            <div className="flex items-center gap-1.5 text-slate-800 text-xs font-bold font-cinzel">
+              <BookOpen className="w-3.5 h-3.5 text-slate-700" />
               <span>Biblical Anchor • {latestMessage.scriptureAnchor.citation}</span>
             </div>
-            <p className="text-xs font-serif italic text-stone-300 leading-relaxed">
+            <p className="text-xs font-serif italic text-slate-700 leading-relaxed">
               {latestMessage.scriptureAnchor.text}
             </p>
           </div>
@@ -319,23 +321,23 @@ export const MedjugorjeMessagesView: React.FC = () => {
       </div>
 
       {/* FILTER and SEARCH BAR WITH DYNAMIC FONT CONTROLS */}
-      <div className="p-4 rounded-xl bg-stone-900/80 border border-stone-800 space-y-3">
+      <div className="p-4 sm:p-5 rounded-xl bg-[#F4EFE6]/90 border border-[#D8CFC0] shadow-2xs space-y-3">
         <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <div className="relative flex-1 min-w-0">
+            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search Medjugorje messages (e.g. peace, fasting, rosary)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-black/40 border border-white/15 text-stone-200 text-xs placeholder:text-stone-500 focus:outline-hidden focus:border-amber-400"
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 text-xs placeholder:text-slate-500 focus:outline-hidden focus:border-slate-700"
             />
           </div>
 
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-stone-800 border border-stone-700 text-stone-200 text-xs font-serif focus:outline-hidden"
+            className="px-3 py-2 rounded-xl bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 text-xs font-serif focus:outline-hidden focus:border-slate-700 cursor-pointer"
           >
             <option value="all">All Years (1981 - 2026)</option>
             {availableYears.filter(y => y !== 'all').map(y => (
@@ -346,7 +348,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
           <select
             value={selectedSeer}
             onChange={(e) => setSelectedSeer(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-stone-800 border border-stone-700 text-stone-200 text-xs font-serif focus:outline-hidden"
+            className="px-3 py-2 rounded-xl bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 text-xs font-serif focus:outline-hidden focus:border-slate-700 cursor-pointer"
           >
             <option value="all">All Visionaries (6 Seers)</option>
             {seers.filter(s => s !== 'all').map(s => (
@@ -357,7 +359,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
           <select
             value={selectedTheme}
             onChange={(e) => setSelectedTheme(e.target.value)}
-            className="px-3 py-2 rounded-xl bg-stone-800 border border-stone-700 text-stone-200 text-xs font-serif focus:outline-hidden"
+            className="px-3 py-2 rounded-xl bg-[#FBF9F5] border border-[#C8BBA6] text-slate-900 text-xs font-serif focus:outline-hidden focus:border-slate-700 cursor-pointer"
           >
             <option value="all">All Spiritual Themes</option>
             {allThemes.map(t => (
@@ -367,13 +369,13 @@ export const MedjugorjeMessagesView: React.FC = () => {
         </div>
 
         {/* Text Size Stepper */}
-        <div className="flex items-center justify-between border-t border-white/10 pt-2.5 text-xs text-stone-300">
-          <span className="font-serif text-stone-400">Message Text Size:</span>
-          <div className="flex items-center gap-1 bg-stone-800/90 p-1 rounded-xl border border-stone-700">
+        <div className="flex items-center justify-between border-t border-[#D8CFC0] pt-2.5 text-xs text-slate-700">
+          <span className="font-cinzel font-bold uppercase tracking-wider text-[11px] text-slate-700">Message Text Size:</span>
+          <div className="flex items-center gap-1 bg-[#EAE2D3] p-1 rounded-xl border border-[#C8BBA6]">
             <button
               onClick={decreaseFontSize}
               disabled={fontSize === 'normal'}
-              className="w-7 h-7 flex items-center justify-center rounded-lg text-xs font-bold text-stone-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+              className="w-7 h-7 flex items-center justify-center rounded-lg text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-[#FBF9F5] disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
               title="Decrease text size"
             >
               A-
@@ -382,8 +384,8 @@ export const MedjugorjeMessagesView: React.FC = () => {
               onClick={() => setFontSize('normal')}
               className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all cursor-pointer ${
                 fontSize === 'normal' 
-                  ? 'bg-amber-600 text-white shadow-xs font-bold' 
-                  : 'text-stone-300 hover:text-white hover:bg-stone-700'
+                  ? 'bg-slate-800 text-[#F9F6F0] shadow-xs font-bold' 
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-[#FBF9F5]'
               }`}
               title="Default text size (100%)"
             >
@@ -393,8 +395,8 @@ export const MedjugorjeMessagesView: React.FC = () => {
               onClick={() => setFontSize('large')}
               className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all cursor-pointer ${
                 fontSize === 'large' 
-                  ? 'bg-amber-600 text-white shadow-xs font-bold' 
-                  : 'text-stone-300 hover:text-white hover:bg-stone-700'
+                  ? 'bg-slate-800 text-[#F9F6F0] shadow-xs font-bold' 
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-[#FBF9F5]'
               }`}
               title="Large text size (125%)"
             >
@@ -404,8 +406,8 @@ export const MedjugorjeMessagesView: React.FC = () => {
               onClick={() => setFontSize('xlarge')}
               className={`px-2.5 py-1 text-xs rounded-lg font-semibold transition-all cursor-pointer ${
                 fontSize === 'xlarge' 
-                  ? 'bg-amber-600 text-white shadow-xs font-bold' 
-                  : 'text-stone-300 hover:text-white hover:bg-stone-700'
+                  ? 'bg-slate-800 text-[#F9F6F0] shadow-xs font-bold' 
+                  : 'text-slate-700 hover:text-slate-900 hover:bg-[#FBF9F5]'
               }`}
               title="Extra large text size (155%)"
             >
@@ -414,7 +416,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
             <button
               onClick={increaseFontSize}
               disabled={fontSize === 'xlarge'}
-              className="w-7 h-7 flex items-center justify-center rounded-lg text-xs font-bold text-amber-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
+              className="w-7 h-7 flex items-center justify-center rounded-lg text-xs font-bold text-slate-800 hover:text-slate-950 hover:bg-[#FBF9F5] disabled:opacity-30 disabled:hover:bg-transparent cursor-pointer transition-all"
               title="Increase text size"
             >
               +
@@ -426,10 +428,10 @@ export const MedjugorjeMessagesView: React.FC = () => {
       {/* ALL FILTERED MESSAGES ARCHIVE */}
       <div className="space-y-4">
         <div className="flex items-center justify-between px-1">
-          <span className="font-cinzel text-xs font-bold text-amber-200 uppercase tracking-wider">
+          <span className="font-cinzel text-xs font-bold text-slate-800 uppercase tracking-wider">
             Marian Message Archive ({filteredMessages.length} Messages)
           </span>
-          <span className="text-[11px] font-serif text-stone-400">
+          <span className="text-[11px] font-serif text-slate-600">
             Queen of Peace • Medjugorje
           </span>
         </div>
@@ -441,60 +443,60 @@ export const MedjugorjeMessagesView: React.FC = () => {
           return (
             <article 
               key={msg.id}
-              className="p-5 sm:p-6 rounded-xl bg-stone-900/80 border border-stone-800/80 hover:border-amber-500/30 transition-all space-y-3"
+              className="p-5 sm:p-6 rounded-xl bg-gradient-to-br from-[#FBF9F5] via-[#F6F2EA] to-[#ECE5D5] border border-[#D8CFC0] hover:border-slate-500 transition-all shadow-[0_3px_14px_rgba(51,65,85,0.06)] space-y-3"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold font-cinzel text-amber-300">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#D8CFC0] pb-3">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-bold font-cinzel text-slate-800">
                       {msg.displayDate}
                     </span>
-                    <span className="text-[10px] font-serif px-2 py-0.5 rounded-full bg-white/5 text-stone-300 border border-white/10">
+                    <span className="text-[10px] font-serif px-2 py-0.5 rounded-full bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6]">
                       {msg.seerName}
                     </span>
                   </div>
-                  <h4 className="font-serif text-base font-bold text-white mt-1">
+                  <h4 className="font-serif text-base font-bold text-slate-900 mt-1">
                     {msg.title}
                   </h4>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
                   <button
                     onClick={() => handleToggleSpeak(msg)}
                     className={`p-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                       isPlaying
-                        ? 'bg-amber-600 text-white animate-pulse'
-                        : 'bg-white/5 hover:bg-white/10 text-stone-300 border border-white/10'
+                        ? 'bg-slate-800 text-[#F9F6F0] border border-slate-900 animate-pulse'
+                        : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6]'
                     }`}
                     title="Listen with human voice"
                     aria-label="Listen with human voice"
                   >
-                    {isPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-300" />}
+                    {isPlaying ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-slate-700" />}
                   </button>
 
                   <button
                     onClick={() => handleCopy(msg)}
-                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-stone-300 border border-white/10 transition-colors cursor-pointer"
+                    className="p-2 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6] transition-colors cursor-pointer"
                     title="Copy message"
                     aria-label="Copy message"
                   >
-                    {isCopied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                    {isCopied ? <Check className="w-4 h-4 text-emerald-700" /> : <Copy className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
 
               {/* Message text */}
               <div 
-                className="relative font-serif italic text-amber-50 leading-relaxed bg-black/30 p-3.5 rounded-xl transition-all duration-200"
+                className="relative font-serif italic text-slate-900 leading-relaxed bg-[#EFE9DC]/85 border border-[#D8CFC0] p-3.5 rounded-xl transition-all duration-200"
                 style={messageStyle}
               >
                 <div className="pointer-events-none absolute inset-0 m-0" style={{ margin: 0 }}>
-                  <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
-                  <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
-                  <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
-                  <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-amber-400/70 m-0" style={{ margin: 0 }} />
+                  <span className="pointer-events-none absolute top-0 left-0 w-4 h-4 rounded-tl-xl border-t-[3px] border-l-[3px] border-slate-700/80 m-0" style={{ margin: 0 }} />
+                  <span className="pointer-events-none absolute top-0 right-0 w-4 h-4 rounded-tr-xl border-t-[3px] border-r-[3px] border-slate-700/80 m-0" style={{ margin: 0 }} />
+                  <span className="pointer-events-none absolute bottom-0 left-0 w-4 h-4 rounded-bl-xl border-b-[3px] border-l-[3px] border-slate-700/80 m-0" style={{ margin: 0 }} />
+                  <span className="pointer-events-none absolute bottom-0 right-0 w-4 h-4 rounded-br-xl border-b-[3px] border-r-[3px] border-slate-700/80 m-0" style={{ margin: 0 }} />
                 </div>
-                "{msg.messageText}"
+                &ldquo;{msg.messageText}&rdquo;
               </div>
 
               {/* Themes */}
@@ -503,7 +505,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
                   <span 
                     key={t}
                     onClick={() => setSelectedTheme(t)}
-                    className="text-[10px] font-serif px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20 cursor-pointer hover:bg-amber-500/20 transition-colors"
+                    className="text-[10px] font-serif px-2 py-0.5 rounded-md bg-[#F4EFE6] text-slate-700 border border-[#D8CFC0] cursor-pointer hover:bg-[#EAE2D3] transition-colors"
                   >
                     #{t}
                   </span>
@@ -511,11 +513,11 @@ export const MedjugorjeMessagesView: React.FC = () => {
               </div>
 
               {/* Reflection snippet */}
-              <div className="pt-2 font-serif text-stone-300 border-t border-white/5 flex flex-col sm:flex-row justify-between gap-2">
-                <p className="italic text-stone-400 transition-all duration-200" style={reflectionStyle}>
+              <div className="pt-2 font-serif text-slate-700 border-t border-[#D8CFC0] flex flex-col sm:flex-row justify-between gap-2">
+                <p className="italic text-slate-700 transition-all duration-200" style={reflectionStyle}>
                   Reflection: {msg.spiritualReflection}
                 </p>
-                <span className="text-[11px] font-serif text-amber-300/80 shrink-0">
+                <span className="text-[11px] font-cinzel font-semibold text-slate-700 shrink-0">
                   {msg.scriptureAnchor.citation}
                 </span>
               </div>

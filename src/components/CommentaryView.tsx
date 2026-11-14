@@ -538,7 +538,7 @@ ${selectedCommentary.practicalApplication}`;
 
               <div
                 ref={scrollRef}
-                className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth w-full"
+                className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 scroll-smooth flex-1 min-w-0"
               >
                 {activeList.map(comm => {
                   const isSelected = comm.id === selectedCommentary.id;
@@ -662,39 +662,39 @@ ${selectedCommentary.practicalApplication}`;
         </div>
 
         {/* Bottom Passage Navigation Arrows */}
-        <div className="flex items-center justify-between pt-3 border-t border-stone-200 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-stone-200 text-xs">
           <button
             onClick={handlePrevPassage}
             disabled={currentIndex <= 0}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs min-w-0 max-w-[48%] sm:max-w-[38%]"
             title="Go to previous passage commentary"
             aria-label="Previous passage commentary"
           >
-            <ChevronLeft className="w-4 h-4 text-amber-800" />
-            <span className="truncate max-w-[140px] sm:max-w-none">
+            <ChevronLeft className="w-4 h-4 text-amber-800 shrink-0" />
+            <span className="truncate">
               {currentIndex > 0
                 ? `${activeList[currentIndex - 1].dateLabel ? `${activeList[currentIndex - 1].dateLabel}: ` : ''}${activeList[currentIndex - 1].scriptureReference}`
                 : 'Previous Passage'}
             </span>
           </button>
 
-          <span className="font-cinzel text-stone-600 font-bold text-[11px] uppercase tracking-wider hidden xs:inline">
+          <span className="font-cinzel text-stone-600 font-bold text-[11px] uppercase tracking-wider hidden sm:inline shrink-0">
             Passage {currentIndex >= 0 ? currentIndex + 1 : 1} of {activeList.length}
           </span>
 
           <button
             onClick={handleNextPassage}
             disabled={currentIndex < 0 || currentIndex >= activeList.length - 1}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-amber-100/70 border border-stone-300 text-stone-800 hover:text-amber-950 font-semibold disabled:opacity-40 disabled:hover:bg-stone-100 cursor-pointer transition-all shadow-2xs min-w-0 max-w-[48%] sm:max-w-[38%] ml-auto sm:ml-0"
             title="Go to next passage commentary"
             aria-label="Next passage commentary"
           >
-            <span className="truncate max-w-[140px] sm:max-w-none">
+            <span className="truncate">
               {currentIndex >= 0 && currentIndex < activeList.length - 1
                 ? `${activeList[currentIndex + 1].dateLabel ? `${activeList[currentIndex + 1].dateLabel}: ` : ''}${activeList[currentIndex + 1].scriptureReference}`
                 : 'Next Passage'}
             </span>
-            <ChevronRight className="w-4 h-4 text-amber-800" />
+            <ChevronRight className="w-4 h-4 text-amber-800 shrink-0" />
           </button>
         </div>
 

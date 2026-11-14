@@ -296,7 +296,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
           {/* Line 3: Bottom Bar with Topic Navigation & Action Buttons */}
           <div className="flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-3 border-t border-stone-800/80 w-full">
             {/* Left: Quick Date & Gospel Citation Navigation Bar */}
-            <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs max-w-full shrink-0">
+            <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs min-w-0 max-w-full">
               <button
                 type="button"
                 onClick={handlePrevTopic}
@@ -487,7 +487,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                   <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300/80 shrink-0">
                     Daily Gospel Topics
                   </span>
-                  <div className="inline-flex items-center rounded-lg border border-[#8B5A2B]/80 bg-[#251710] text-amber-200 overflow-hidden shadow-2xs max-w-full shrink-0">
+                  <div className="inline-flex items-center rounded-lg border border-[#8B5A2B]/80 bg-[#251710] text-amber-200 overflow-hidden shadow-2xs min-w-0 max-w-full">
                     <button
                       type="button"
                       onClick={handlePrevTopic}

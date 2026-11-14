@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
   Eye, 
@@ -8,11 +8,27 @@ import {
   Settings,
   ChevronDown,
   Copy,
-  Check
+  Check,
+  Shuffle
 } from 'lucide-react';
 import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { SacredMasterpiece } from '../types';
 import { SacredReader } from '../utils/speech';
+
+const LAST_VISIO_ART_KEY = 'sanctum_visio_last_art_id';
+
+function shuffleArtworks(items: SacredMasterpiece[], excludeFirstId?: string | null): SacredMasterpiece[] {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  if (excludeFirstId && arr.length > 1 && arr[0].id === excludeFirstId) {
+    const swapIdx = 1 + Math.floor(Math.random() * (arr.length - 1));
+    [arr[0], arr[swapIdx]] = [arr[swapIdx], arr[0]];
+  }
+  return arr;
+}
 
 interface VisioDivinaViewProps {
   onOpenArtViewer?: (artId: string) => void;
@@ -21,7 +37,16 @@ interface VisioDivinaViewProps {
 export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
   onOpenArtViewer
 }) => {
-  const [selectedArt, setSelectedArt] = useState<SacredMasterpiece>(SACRED_MASTERPIECES[0]);
+  const [shuffledArtworks, setShuffledArtworks] = useState<SacredMasterpiece[]>(() => {
+    let lastId: string | null = null;
+    try {
+      lastId = typeof window !== 'undefined' ? localStorage.getItem(LAST_VISIO_ART_KEY) : null;
+    } catch {
+      lastId = null;
+    }
+    return shuffleArtworks(SACRED_MASTERPIECES, lastId);
+  });
+  const [selectedArt, setSelectedArt] = useState<SacredMasterpiece>(() => shuffledArtworks[0]);
   const [activeStep, setActiveStep] = useState<1 | 2 | 3 | 4>(1);
   const [isReadingAloud, setIsReadingAloud] = useState(false);
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
@@ -86,6 +111,36 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
       description: 'Surrender all words and simply rest in the stillness of God’s presence. Allow His peace and grace to dwell deeply within your soul.'
     }
   ];
+
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined' && selectedArt?.id) {
+        localStorage.setItem(LAST_VISIO_ART_KEY, selectedArt.id);
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }, [selectedArt]);
+
+  const handleSelectArt = (art: SacredMasterpiece) => {
+    if (isReadingAloud) {
+      SacredReader.stop();
+      setIsReadingAloud(false);
+    }
+    setSelectedArt(art);
+    setActiveStep(1);
+  };
+
+  const handleShuffleArtworks = () => {
+    if (isReadingAloud) {
+      SacredReader.stop();
+      setIsReadingAloud(false);
+    }
+    const nextOrder = shuffleArtworks(SACRED_MASTERPIECES, selectedArt.id);
+    setShuffledArtworks(nextOrder);
+    setSelectedArt(nextOrder[0]);
+    setActiveStep(1);
+  };
 
   const handleToggleSpeak = () => {
     if (isReadingAloud) {
@@ -252,24 +307,33 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
         )}
       </div>
 
-      {/* Artwork Selector Bar with lighter styling */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
-        {SACRED_MASTERPIECES.map(art => (
-          <button
-            key={art.id}
-            onClick={() => {
-              setSelectedArt(art);
-              setActiveStep(1);
-            }}
-            className={`px-3.5 py-2 rounded-lg text-xs font-serif transition-all cursor-pointer whitespace-nowrap shrink-0 border shadow-xs ${
-              selectedArt.id === art.id
-                ? 'bg-[#6B4423] text-white font-bold border-[#5A381C] shadow-md ring-2 ring-[#8B5A2B]/50'
-                : 'bg-white/95 hover:bg-[#FAF4EE] text-stone-800 border-stone-300/90'
-            }`}
-          >
-            {art.title.split('—')[0].replace(/"/g, '')}
-          </button>
-        ))}
+      {/* Artwork Selector Bar with Shuffle button & lighter styling */}
+      <div className="flex items-center gap-2 min-w-0 max-w-full">
+        <button
+          type="button"
+          onClick={handleShuffleArtworks}
+          className="px-3 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer whitespace-nowrap shrink-0 border shadow-xs bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border-[#8B5A2B]/80 flex items-center gap-1.5"
+          title="Shuffle sacred images for a new contemplation"
+        >
+          <Shuffle className="w-3.5 h-3.5 text-amber-300" />
+          <span>Shuffle</span>
+        </button>
+
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 flex-1 min-w-0">
+          {shuffledArtworks.map(art => (
+            <button
+              key={art.id}
+              onClick={() => handleSelectArt(art)}
+              className={`px-3.5 py-2 rounded-lg text-xs font-serif transition-all cursor-pointer whitespace-nowrap shrink-0 border shadow-xs ${
+                selectedArt.id === art.id
+                  ? 'bg-[#6B4423] text-white font-bold border-[#5A381C] shadow-md ring-2 ring-[#8B5A2B]/50'
+                  : 'bg-white/95 hover:bg-[#FAF4EE] text-stone-800 border-stone-300/90'
+              }`}
+            >
+              {art.title.split('—')[0].replace(/"/g, '')}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Main Sacred Artwork Presentation */}

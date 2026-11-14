@@ -662,8 +662,8 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         <article className="bg-white/85 backdrop-blur-xl backdrop-saturate-150 p-6 sm:p-8 md:p-10 rounded-2xl border border-white/80 ring-1 ring-inset ring-white/50 shadow-[0_8px_32px_0_rgba(120,90,50,0.14)] space-y-6">
           {/* Top Navigation & Article Counter + Quick Selector Bar */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 pb-3.5">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 rounded-md bg-amber-900 text-amber-50 font-bold font-cinzel text-xs shadow-2xs">
+            <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
+              <span className="px-3 py-1 rounded-md bg-amber-900 text-amber-50 font-bold font-cinzel text-xs shadow-2xs max-w-full truncate">
                 {currentArticle.sourceName}
               </span>
               <span
@@ -689,7 +689,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
             {/* Article Dropdown Jump + Previous / Next Article Controls */}
             {sourceArticles.length > 1 && (
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <select
                   value={selectedArticleIndex}
                   onChange={(e) => {
@@ -699,7 +699,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
                     setSelectedArticleIndex(idx);
                   }}
                   aria-label="Select an article from this feed"
-                  className="max-w-[230px] sm:max-w-[280px] px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-serif truncate cursor-pointer focus:outline-none focus:border-amber-700"
+                  className="min-w-0 max-w-full sm:max-w-[260px] px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-serif truncate cursor-pointer focus:outline-none focus:border-amber-700"
                 >
                   {sourceArticles.map((art, idx) => (
                     <option key={art.id} value={idx}>
@@ -708,7 +708,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
                   ))}
                 </select>
 
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 shrink-0">
                   <button
                     type="button"
                     onClick={handlePrevArticle}
@@ -833,17 +833,17 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
           {/* Bottom Article Stepping Bar */}
           {sourceArticles.length > 1 && (
-            <div className="pt-4 border-t border-stone-200 flex items-center justify-between gap-3">
-              <span className="text-xs font-cinzel text-stone-500">
+            <div className="pt-4 border-t border-stone-200 flex flex-wrap items-center justify-between gap-2.5">
+              <span className="text-xs font-cinzel text-stone-500 min-w-0 truncate flex-1 basis-full sm:basis-auto">
                 {currentArticle.sourceName} • Article {selectedArticleIndex + 1} of {sourceArticles.length}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0 ml-auto">
                 <button
                   type="button"
                   onClick={handlePrevArticle}
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
                 >
-                  <ChevronLeft className="w-4 h-4 text-amber-800" />
+                  <ChevronLeft className="w-4 h-4 text-amber-800 shrink-0" />
                   <span>Previous Article</span>
                 </button>
                 <button
@@ -852,7 +852,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
                   className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold transition-colors cursor-pointer"
                 >
                   <span>Next Article</span>
-                  <ChevronRight className="w-4 h-4 text-amber-800" />
+                  <ChevronRight className="w-4 h-4 text-amber-800 shrink-0" />
                 </button>
               </div>
             </div>

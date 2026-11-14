@@ -471,7 +471,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
               <div
                 ref={treasuryStripRef}
-                className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth flex-1"
+                className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 scroll-smooth flex-1 min-w-0"
               >
                 {filteredTreasuryPrayers.length === 0 ? (
                   <div className="flex items-center gap-3 text-xs font-serif-sacred text-stone-700 px-2 py-1">

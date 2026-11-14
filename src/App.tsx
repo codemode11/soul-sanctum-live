@@ -720,7 +720,7 @@ export default function App() {
             {activeTab === 'catholic-ai' && <CatholicAIAssistantView />}
 
             {/* 4. Divine Office (Liturgy of the Hours) */}
-            {activeTab === 'divine-office' && <DivineOfficeView />}
+            {activeTab === 'divine-office' && <DivineOfficeView currentDateStr={currentDateStr} />}
 
             {/* Catholic Bibles (73-Book In-App Bibles & Modern Catholic Translations) */}
             {activeTab === 'catholic-bibles' && <CatholicBiblesView />}
