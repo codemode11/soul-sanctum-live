@@ -353,16 +353,16 @@ export const Header: React.FC<HeaderProps> = ({
               )}
 
               {onOpenAdoration && activeEstablishingImageId === 'our-lady-monstrance-connors' && (
-                <div className="flex flex-col items-start sm:items-end mt-3 sm:mt-36 md:mt-44 lg:mt-52 w-full sm:max-w-[285px] md:max-w-[310px]">
+                <div className="flex flex-col items-start sm:items-end mt-3 sm:mt-32 md:mt-40 lg:mt-44 w-full sm:max-w-[220px] md:max-w-[235px]">
                   <div
-                    className="flex flex-col items-start sm:items-end text-left sm:text-right px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-xl bg-black/50 text-stone-100 backdrop-blur-md shadow-2xl w-full border border-white/15"
+                    className="flex flex-col items-stretch justify-between text-left px-3.5 py-3.5 sm:px-4 sm:py-4 rounded-xl bg-black/50 text-stone-100 backdrop-blur-md shadow-2xl w-full border border-white/15"
                     title={activeImg.title}
                   >
-                    <p className="text-[11px] sm:text-xs font-serif text-stone-100/95 leading-relaxed text-left sm:text-right">
+                    <p className="text-[11px] sm:text-[11.5px] font-serif text-stone-100/95 leading-snug text-justify">
                       {activeImg.description}
                     </p>
                     <span
-                      className="text-[11px] font-serif text-amber-300/95 mt-2 text-left sm:text-right leading-snug"
+                      className="text-[10.5px] sm:text-[11px] font-serif text-amber-300/95 mt-2.5 text-left leading-snug"
                       onClick={(e) => e.stopPropagation()}
                     >
                       Photo Credit:{' '}
