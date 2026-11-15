@@ -603,7 +603,7 @@ export const RosaryAndChapletView: React.FC = () => {
 
           {/* Mystery Group Selector Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            {(['Joyful', 'Luminous', 'Sorrowful', 'Glorious'] as RosaryMysteryGroup[]).map((group) => {
+            {(['Joyful', 'Sorrowful', 'Glorious', 'Luminous'] as RosaryMysteryGroup[]).map((group) => {
               const meta = ROSARY_MYSTERY_SETS[group];
               const isSelected = selectedMysteryGroup === group;
               const isToday = getTodaysMysteryGroup() === group;

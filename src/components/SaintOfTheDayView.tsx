@@ -8,7 +8,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Calendar,
-  BookOpen
+  BookOpen,
+  Share2,
+  Download,
+  X
 } from 'lucide-react';
 import { Saint, LiturgicalColor } from '../types';
 import { SAINTS_DATABASE } from '../data/saints';
@@ -859,6 +862,8 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
   const [isReadingAloud, setIsReadingAloud] = useState(false);
   const [readingCompanionIndex, setReadingCompanionIndex] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
+  const [fbCopied, setFbCopied] = useState(false);
+  const [isFacebookModalOpen, setIsFacebookModalOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
 
   // Sync when parent date props change
@@ -1048,6 +1053,207 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
   const companionSaints = (selectedSaint.companionSaints || []).slice(0, 3);
   const [isDirectoryOpen, setIsDirectoryOpen] = useState(false);
 
+  const isAlbertTheGreat = selectedSaint.id === 'saint-albert-the-great';
+
+  const lifespanLabel =
+    selectedSaint.birthYear || selectedSaint.deathYear
+      ? [selectedSaint.birthYear, selectedSaint.deathYear].filter(Boolean).join(' – ')
+      : '';
+
+  const facebookPostCaption = React.useMemo(() => {
+    if (isAlbertTheGreat) {
+      return `SAINT OF THE DAY — NOVEMBER 15
+St. Albert the Great (c. 1200 – November 15, 1280)
+Dominican Bishop and Doctor of the Church · Patron of Natural Scientists
+
+“The greater and more persistent your confidence in God, the more abundantly you will receive all that you ask.”
+
+Why St. Albert was Great
+• Master of St. Thomas Aquinas — Teaching at Paris and Cologne, he discerned and defended the quiet brilliance of his greatest pupil, proclaiming that the “Dumb Ox” would one day make his doctrine resound throughout the whole world.
+• Doctor Universalis — Revered across Christendom for mastering theology, philosophy, physics, astronomy, botany, chemistry, and zoology—harmonizing human science with divine revelation.
+• Shepherd & Peacemaker — As Dominican Provincial and Bishop of Regensburg, he walked his diocese on foot with a wooden staff and reconciled warring cities with humility and wisdom.
+
+Collect Prayer:
+${selectedSaint.prayer}
+
+St. Albert the Great, pray for us!
+
+#SaintOfTheDay #StAlbertTheGreat #CatholicSaints #DoctorOfTheChurch #SoulSanctum`;
+    }
+
+    const datesPart = lifespanLabel ? ` (${lifespanLabel})` : '';
+    const leadBio = biographyParagraphs[0] || '';
+    return `SAINT OF THE DAY — ${selectedSaint.feastDate.toUpperCase()}
+${selectedSaint.name}${datesPart}
+${selectedSaint.title}
+
+${quoteText ? `“${quoteText}”\n\n` : ''}${leadBio}
+
+Collect Prayer:
+${selectedSaint.prayer}
+
+${selectedSaint.name}, pray for us!
+
+#SaintOfTheDay #CatholicSaints #LivesOfTheSaints #SoulSanctum`;
+  }, [isAlbertTheGreat, lifespanLabel, selectedSaint, quoteText, biographyParagraphs]);
+
+  const handleCopyFacebookPost = () => {
+    navigator.clipboard.writeText(facebookPostCaption);
+    setFbCopied(true);
+    setTimeout(() => setFbCopied(false), 2000);
+  };
+
+  const handleDownloadFacebookGraphic = async () => {
+    if (isAlbertTheGreat) {
+      const link = document.createElement('a');
+      link.href = '/assets/st_albert_the_great_facebook_post.png';
+      link.download = 'st-albert-the-great-facebook-post.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    // Dynamic high-resolution serif canvas export (1080x1350, 4:5 Facebook portrait feed standard)
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1350;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.fillStyle = '#FAF6EE';
+    ctx.fillRect(0, 0, 1080, 1350);
+
+    // Top dark Baroque showcase band
+    ctx.fillStyle = '#1A120C';
+    ctx.fillRect(0, 0, 1080, 572);
+
+    ctx.strokeStyle = '#B88A3B';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 572);
+    ctx.lineTo(1080, 572);
+    ctx.stroke();
+
+    ctx.strokeStyle = '#D6C5A3';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(24, 596, 1032, 730);
+
+    const drawTextAndDownload = () => {
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = '#DFC082';
+      ctx.font = '600 16px "Cinzel", Georgia, serif';
+      ctx.fillText(`SAINT OF THE DAY · ${selectedSaint.feastDate.toUpperCase()}`, 476, 86);
+
+      ctx.fillStyle = '#FAF6EE';
+      ctx.font = '700 50px "Libre Baskerville", Baskerville, Georgia, serif';
+      const titleWords = selectedSaint.name.split(/\s+/);
+      let titleLine = '';
+      let titleY = 126;
+      for (let i = 0; i < titleWords.length; i++) {
+        const test = titleLine ? `${titleLine} ${titleWords[i]}` : titleWords[i];
+        if (ctx.measureText(test).width > 540 && titleLine) {
+          ctx.fillText(titleLine, 476, titleY);
+          titleY += 60;
+          titleLine = titleWords[i];
+        } else {
+          titleLine = test;
+        }
+      }
+      if (titleLine) {
+        ctx.fillText(titleLine, 476, titleY);
+        titleY += 66;
+      }
+
+      ctx.fillStyle = '#DFC082';
+      ctx.font = '400 22px "Calluna", Georgia, serif';
+      ctx.fillText(selectedSaint.title, 476, titleY + 6, 540);
+
+      if (lifespanLabel) {
+        ctx.fillStyle = '#F5EFE4';
+        ctx.font = '600 19px "Cinzel", Georgia, serif';
+        ctx.fillText(lifespanLabel, 476, titleY + 46, 540);
+      }
+
+      const wrapText = (text: string, x: number, startY: number, maxWidth: number, lineHeight: number, font: string, color: string, maxLines = 12) => {
+        ctx.font = font;
+        ctx.fillStyle = color;
+        const words = text.split(/\s+/);
+        let line = '';
+        let y = startY;
+        let linesDrawn = 0;
+        for (let i = 0; i < words.length; i++) {
+          const testLine = line ? `${line} ${words[i]}` : words[i];
+          if (ctx.measureText(testLine).width > maxWidth && line) {
+            ctx.fillText(line, x, y);
+            y += lineHeight;
+            linesDrawn++;
+            if (linesDrawn >= maxLines) return y;
+            line = words[i];
+          } else {
+            line = testLine;
+          }
+        }
+        if (line && linesDrawn < maxLines) {
+          ctx.fillText(line, x, y);
+          y += lineHeight;
+        }
+        return y;
+      };
+
+      let nextY = 626;
+      if (quoteText) {
+        nextY = wrapText(`“${quoteText}”`, 68, nextY, 944, 44, '400 32px "Calluna", Georgia, serif', '#1C1917', 5) + 26;
+      }
+
+      ctx.strokeStyle = '#C9A66B';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(68, nextY);
+      ctx.lineTo(1012, nextY);
+      ctx.stroke();
+
+      const summary = biographyParagraphs[0] || '';
+      wrapText(summary, 68, nextY + 28, 944, 34, '400 22px "Calluna", Georgia, serif', '#292524', 12);
+
+      ctx.strokeStyle = '#E5DAC3';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(68, 1274);
+      ctx.lineTo(1012, 1274);
+      ctx.stroke();
+
+      ctx.fillStyle = '#78716C';
+      ctx.font = '600 18px "Cinzel", Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Soul Sanctum', 540, 1286);
+      ctx.textAlign = 'left';
+
+      const link = document.createElement('a');
+      link.href = canvas.toDataURL('image/png');
+      link.download = `${selectedSaint.id || 'saint-of-the-day'}-facebook-post.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+
+    if (resolvedSaintImageUrl) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        ctx.strokeStyle = '#B88A3B';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(52, 32, 364, 480);
+        ctx.drawImage(img, 54, 34, 360, 476);
+        drawTextAndDownload();
+      };
+      img.onerror = drawTextAndDownload;
+      img.src = resolvedSaintImageUrl;
+    } else {
+      drawTextAndDownload();
+    }
+  };
+
   const romanNumerals = ['II', 'III', 'IV'];
 
   return (
@@ -1227,6 +1433,17 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                     </dd>
                   </div>
 
+                  {lifespanLabel && (
+                    <div className="py-3 flex items-baseline justify-between gap-4">
+                      <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold">
+                        Life Years
+                      </dt>
+                      <dd className="font-serif font-bold text-base text-stone-950 dark:text-stone-100 text-right tabular-nums">
+                        {lifespanLabel}
+                      </dd>
+                    </div>
+                  )}
+
                   <div className="py-3 flex items-end justify-between gap-4">
                     <dt className="text-xs uppercase tracking-wider text-stone-700 dark:text-stone-300 font-semibold leading-snug">
                       <span className="block">Liturgical</span>
@@ -1288,6 +1505,15 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
                   aria-label={copied ? 'Copied' : 'Copy Saint Biography & Martyrology'}
                 >
                   {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                </button>
+
+                <button
+                  onClick={() => setIsFacebookModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-lg border border-white/70 dark:border-stone-700 bg-white/55 dark:bg-stone-900/60 hover:bg-white/80 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-200 text-xs font-semibold backdrop-blur-md transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  title="Open Facebook Post Card & Caption"
+                >
+                  <Share2 className="w-4 h-4" />
+                  <span>Facebook Post</span>
                 </button>
               </div>
             </div>
@@ -1418,6 +1644,133 @@ export const SaintOfTheDayView: React.FC<SaintOfTheDayViewProps> = ({
               })}
             </div>
           </section>
+        )}
+        {/* Serif Facebook Post Modal */}
+        {isFacebookModalOpen && (
+          <div
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+            onClick={() => setIsFacebookModalOpen(false)}
+          >
+            <div
+              className="bg-[#FAF6EE] dark:bg-stone-950 rounded-xl border border-stone-300 dark:border-stone-700 max-w-2xl w-full shadow-2xl overflow-hidden my-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="px-6 py-4 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between gap-4 bg-white dark:bg-stone-900">
+                <div>
+                  <h3 className="font-serif text-xl font-bold text-stone-900 dark:text-stone-100">
+                    Facebook Post · {selectedSaint.name}
+                  </h3>
+                  <p className="text-xs text-stone-600 dark:text-stone-400">
+                    {selectedSaint.feastDate} {lifespanLabel ? `· ${lifespanLabel}` : ''} · 1080 × 1350 px (4:5 Facebook Feed)
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsFacebookModalOpen(false)}
+                  className="p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 cursor-pointer"
+                  aria-label="Close Facebook Post modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6 space-y-6 max-h-[82vh] overflow-y-auto">
+                {/* Visual Serif Card Preview */}
+                {isAlbertTheGreat ? (
+                  <div className="max-w-md mx-auto rounded-xl overflow-hidden border border-stone-300 dark:border-stone-700 shadow-md bg-[#FAF6EE]">
+                    <img
+                      src="/assets/st_albert_the_great_facebook_post.png"
+                      alt="St. Albert the Great Facebook Post"
+                      className="w-full h-auto block"
+                    />
+                  </div>
+                ) : (
+                <div className="rounded-xl overflow-hidden border border-stone-300 dark:border-stone-700 shadow-md grid grid-cols-1 md:grid-cols-12 bg-[#FAF6EE] text-stone-900">
+                  <div className="md:col-span-5 bg-[#1A120C] p-5 flex flex-col items-center justify-center">
+                    {resolvedSaintImageUrl && !imgError ? (
+                      <img
+                        src={resolvedSaintImageUrl}
+                        alt={selectedSaint.name}
+                        referrerPolicy="no-referrer"
+                        className="w-full max-w-[280px] aspect-[3/4] object-cover object-top border-2 border-[#B88A3B] shadow-lg"
+                      />
+                    ) : (
+                      <div className="w-full max-w-[280px] aspect-[3/4] flex items-center justify-center border border-[#B88A3B]/40">
+                        <SaintWithHaloIcon className="w-16 h-16 text-amber-400" />
+                      </div>
+                    )}
+                    <div className="mt-3 text-center font-serif">
+                      <div className="text-xs font-bold tracking-widest uppercase text-[#DFC082]">
+                        {isAlbertTheGreat ? 'Albertus Magnus' : selectedSaint.name}
+                      </div>
+                      {lifespanLabel && (
+                        <div className="text-xs italic text-[#C8B8A2] mt-0.5">
+                          {lifespanLabel}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-7 p-6 sm:p-7 flex flex-col justify-between space-y-4 font-serif">
+                    <div className="space-y-2 border-b border-[#C9A66B]/60 pb-4">
+                      <div className="text-[11px] font-bold uppercase tracking-widest text-[#8A5A19]">
+                        Saint of the Day · {selectedSaint.feastDate}
+                      </div>
+                      <h4 className="text-3xl font-bold text-stone-950 leading-tight">
+                        {selectedSaint.name}
+                      </h4>
+                      <p className="italic text-base text-[#6B4423]">
+                        {selectedSaint.title}
+                      </p>
+                      {lifespanLabel && (
+                        <p className="text-sm font-bold text-stone-800">
+                          {isAlbertTheGreat ? 'Born c. 1200 · Died November 15, 1280' : lifespanLabel}
+                        </p>
+                      )}
+                    </div>
+
+                    {quoteText && (
+                      <blockquote className="space-y-1.5 border-b border-[#C9A66B]/60 pb-4">
+                        <p className="italic text-lg text-stone-900 leading-relaxed">
+                          &ldquo;{quoteText}&rdquo;
+                        </p>
+                      </blockquote>
+                    )}
+
+                    <p className="text-sm text-stone-800 leading-relaxed line-clamp-5">
+                      {biographyParagraphs[0]}
+                    </p>
+
+                    <div className="pt-2 border-t border-[#E5DAC3] text-xs font-cinzel text-center text-stone-500">
+                      Soul Sanctum
+                    </div>
+                  </div>
+                </div>
+                )}
+
+                {/* Actions */}
+                <div className="flex flex-wrap items-center justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={handleCopyFacebookPost}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900 hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-900 dark:text-stone-100 text-xs font-semibold cursor-pointer whitespace-nowrap"
+                  >
+                    {fbCopied ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                    <span>{fbCopied ? 'Caption Copied' : 'Copy Facebook Caption'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleDownloadFacebookGraphic}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#6B4423] hover:bg-[#5A381C] text-white text-xs font-semibold cursor-pointer whitespace-nowrap"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>Download Serif Graphic (PNG)</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

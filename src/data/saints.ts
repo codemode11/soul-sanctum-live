@@ -1548,12 +1548,13 @@ In 1240, after already ransoming numerous enslaved Christians on prior expeditio
     liturgicalColor: 'white',
     wikiSlug: 'Albertus_Magnus',
     butlerReference: "Butler's Lives of the Saints, Vol. XI — November 15",
-    biography: `From Butler's Lives of the Saints (November 15): Born around 1200 at Lauingen in Swabia, St. Albert entered the Order of Preachers while studying at Padua under Bl. Jordan of Saxony. Celebrated across Europe as Doctor Universalis for mastering theology, philosophy, botany, chemistry, astronomy, and zoology, he harmonized Christian revelation with the observation of created nature. Teaching at Paris and Cologne, he recognized and defended the silent brilliance of his young pupil St. Thomas Aquinas, declaring: "We call him the Dumb Ox, yet one day his bellowing in doctrine will resound throughout the whole world!"
+    imageUrl: '/assets/aistudio/ST._ALBERT_THE_GREAT_637b0928.jpg',
+    biography: `From Butler's Lives of the Saints (November 15): Born around 1200 at Lauingen in Swabia, St. Albert entered the Order of Preachers while studying at Padua under Bl. Jordan of Saxony. Called "the Great" (Albertus Magnus) even in his own lifetime and revered as Doctor Universalis, he mastered virtually every field of human and divine knowledge—theology, philosophy, botany, chemistry, physics, astronomy, and zoology—harmonizing Christian revelation with the observation of created nature. Teaching at Paris and Cologne, he served as Master of St. Thomas Aquinas, famously discerning and defending the quiet brilliance of his greatest pupil: "We call him the Dumb Ox, yet one day his bellowing in doctrine will resound throughout the whole world!"
 
-Appointed Bishop of Regensburg by Pope Alexander IV, Albert traveled his diocese on foot with a wooden staff before returning to Cologne to defend Thomas's orthodoxy and live in childlike devotion to the Blessed Virgin Mary until his holy death on November 15, 1280.`,
+Appointed Dominican Provincial and later Bishop of Regensburg by Pope Alexander IV, Albert traveled his diocese on foot with a wooden staff and reconciled warring cities before returning to Cologne to defend Thomas's orthodoxy and live in childlike devotion to the Blessed Virgin Mary until his holy death on November 15, 1280.`,
     quote: {
-      text: 'The whole world is theology to the wise soul, for every creature bears the imprint of the Eternal Wisdom who fashioned it.',
-      source: "St. Albert the Great (Butler's Lives of the Saints, November 15)"
+      text: 'The greater and more persistent your confidence in God, the more abundantly you will receive all that you ask.',
+      source: 'St. Albert the Great (~ Albertus Magnus)'
     },
     prayer: `O God, who made the Bishop Saint Albert great by his joining of human wisdom to divine faith, grant, we pray, that we may so adhere to the truths he taught, that through progress in learning we may come to a deeper knowledge and love of you. Through Christ our Lord. Amen.`,
     canonization: 'Canonized and Proclaimed Doctor of the Church on December 16, 1931 by Pope Pius XI',

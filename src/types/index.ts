@@ -187,7 +187,7 @@ export interface CatholicTerm {
   category: 'Sacraments' | 'Theology and Dogma' | 'Liturgy and Worship' | 'Spiritual Life' | 'Church Hierarchy and Canon Law';
 }
 
-export type RosaryMysteryGroup = 'Joyful' | 'Luminous' | 'Sorrowful' | 'Glorious';
+export type RosaryMysteryGroup = 'Joyful' | 'Sorrowful' | 'Glorious' | 'Luminous';
 
 export interface RosaryMystery {
   number: number;
