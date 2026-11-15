@@ -1596,6 +1596,7 @@ Appointed Dominican Provincial and later Bishop of Regensburg by Pope Alexander 
     liturgicalColor: 'white',
     wikiSlug: 'Saint_Margaret_of_Scotland',
     butlerReference: "Butler's Lives of the Saints, Vol. XI — November 16",
+    imageUrl: '/assets/aistudio/image_8e65e9de.png',
     biography: `From Butler's Lives of the Saints (November 16): Born in exile in Hungary around 1045 to the English royal House of Wessex, St. Margaret was shipwrecked off the Scottish coast in 1068 and wed King Malcolm III Canmore. Transforming the rude royal court into a school of Christian chivalry and mercy, Margaret raised eight holy children, washed the feet of beggars every day before dining, ransomed English captives, built Dunfermline Abbey, and reformed ecclesiastical observance across Scotland. Learning of the death of her husband and eldest son at Alnwick in November 1093, she thanked God for purifying her by sorrow, kissed the Black Rood, and died on November 16, 1093.
 
 On the same day the Church honors St. Gertrude the Great of Helfta (1256–1302), Cistercian-Benedictine mystic and early herald of devotion to the Sacred Heart of Jesus.`,

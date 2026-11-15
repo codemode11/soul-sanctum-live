@@ -498,7 +498,7 @@ export default function App() {
                     target.src = '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg';
                   }
                 }}
-                className="w-full h-full mx-auto object-cover object-[50%_28%] brightness-[0.98] contrast-[1.04] transform-gpu"
+                className="w-full h-full mx-auto object-cover object-[50%_10%] brightness-[0.98] contrast-[1.04] transform-gpu"
               />
               {/* Subtle bottom gradient behind Main Story card */}
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-stone-950/85 to-transparent pointer-events-none" />
