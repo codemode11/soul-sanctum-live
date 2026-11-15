@@ -15,6 +15,18 @@ export interface NiepokalanowHighResImage {
 
 export const NIEPOKALANOW_HIGH_RES_IMAGES: NiepokalanowHighResImage[] = [
   {
+    id: 'our-lady-monstrance-connors',
+    title: 'Our Lady’s Call to Prayer, Penance, and Devotion to the Most Blessed Sacrament',
+    shortLabel: '0. Our Lady & Most Blessed Sacrament Monstrance',
+    resolution: 'High-Res Masthead Photograph',
+    imageUrl: '/assets/aistudio/MONSTRANCE__MATTHEW_JOSEPH_LEON_CONNORS__3f8d888b.jpg',
+    description: 'The golden, silver, and crystal monstrance designed by sculptor Mariusz Drapikowski features the figure of the Virgin Mary displaying the Eucharistic Christ beneath her heart, surrounded by silver lilies, sun rays, and twelve cut stones representing the apocalyptic stars and the Miraculous Medal.',
+    attributionText: 'Photo Credit: Matthew Joseph Leon Connors',
+    creditShort: 'Matthew Joseph Leon Connors',
+    attributionUrl: 'https://sign.org',
+    objectPosition: '50% 28%'
+  },
+  {
     id: 'pope-leo-peru-homecoming',
     title: "What a homecoming! Pope’s arrival in Peru hits all the right notes — Lima, Peru (November 11, 2026)",
     shortLabel: '0. Pope Leo XIV Homecoming in Peru',

@@ -136,9 +136,13 @@ export const Header: React.FC<HeaderProps> = ({
                 {renderEmblemIcon('w-9 h-9 sm:w-10 sm:h-10', 'text-3xl sm:text-4xl')}
               </div>
 
-              <div className="relative">
+              <div className="relative inline-block isolate">
+                <div
+                  className="absolute -inset-x-5 -inset-y-2 bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.45)_0%,rgba(245,158,11,0.22)_50%,transparent_78%)] blur-xl pointer-events-none z-0"
+                  aria-hidden="true"
+                />
                 <h1
-                  className="relative font-cinzel select-none font-extrabold text-2xl sm:text-4xl md:text-5xl tracking-[0.2em] sm:tracking-[0.26em] text-center"
+                  className="relative z-10 font-cinzel select-none font-extrabold text-2xl sm:text-4xl md:text-5xl tracking-[0.2em] sm:tracking-[0.26em] text-center"
                   style={{
                     fontFamily: "'Cinzel', serif",
                     fontWeight: 800,
@@ -236,7 +240,7 @@ export const Header: React.FC<HeaderProps> = ({
              ===================================================================== */
           <div className="flex-1 sm:flex-initial flex flex-col sm:flex-row items-stretch sm:items-start justify-between gap-3 sm:gap-6">
             
-            {/* Brand Lockup Row */}
+            {/* Brand Lockup Row + Liturgical Day Title Aligned Under Text Column */}
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3 sm:gap-5">
                 <div 
@@ -247,9 +251,13 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
 
                 <div className="space-y-0.5 sm:space-y-1 text-left">
-                  <div className="relative flex items-center gap-2 sm:gap-3">
+                  <div className="relative inline-flex items-center gap-2 sm:gap-3 isolate">
+                    <div
+                      className="absolute -inset-x-5 -inset-y-2 bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.45)_0%,rgba(245,158,11,0.22)_50%,transparent_78%)] blur-xl pointer-events-none z-0"
+                      aria-hidden="true"
+                    />
                     <h1 
-                      className="relative font-cinzel select-none transition-all duration-300 flex flex-col items-start text-left leading-[0.92]"
+                      className="relative z-10 font-cinzel select-none transition-all duration-300 flex flex-col items-start text-left leading-[0.92]"
                       style={{ fontFamily: "'Cinzel', serif", fontWeight: 800 }}
                       title="Soul Sanctum — Catholic Sanctuary"
                     >
@@ -285,6 +293,19 @@ export const Header: React.FC<HeaderProps> = ({
                     <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#D4AF37] tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)] mt-0.5">
                       {mottoCitation}
                     </span>
+                  </div>
+
+                  {/* Liturgical Day Title Aligned With Left Text Column */}
+                  <div className="flex flex-col items-start gap-0.5 text-left pt-2">
+                    <span className="font-serif font-bold text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
+                      {mainTitlePart}
+                    </span>
+
+                    {memorialPart && (
+                      <span className="font-serif font-bold not-italic text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
+                        {memorialPart}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -325,26 +346,33 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               </div>
 
-              {/* Liturgical Day Title Below Current Date */}
-              <div className="flex flex-col items-start sm:items-end gap-0.5 text-left sm:text-right w-full sm:w-auto">
-                <span className="font-serif font-bold text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
-                  {mainTitlePart}
-                </span>
-
-                {memorialPart && (
-                  <span className="font-serif font-bold not-italic text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
-                    {memorialPart}
-                  </span>
-                )}
-              </div>
-
               {voiceToast && (
                 <div className="px-3 py-1 rounded-lg bg-amber-950/90 border border-amber-400/60 text-amber-100 text-[11px] font-serif shadow-lg animate-fadeIn">
                   Active Lector Voice: <span className="font-bold text-amber-300">{voiceToast}</span>
                 </div>
               )}
 
-              {onOpenAdoration && activeEstablishingImageId !== 'faith-scholarship-science' && activeEstablishingImageId !== 'pope-leo-peru-homecoming' && (
+              {onOpenAdoration && activeEstablishingImageId === 'our-lady-monstrance-connors' && (
+                <div className="flex flex-col items-start sm:items-end mt-3 sm:mt-36 md:mt-44 lg:mt-52 w-full sm:max-w-[285px] md:max-w-[310px]">
+                  <div
+                    className="flex flex-col items-start sm:items-end text-left sm:text-right px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-xl bg-black/50 text-stone-100 backdrop-blur-md shadow-2xl w-full border border-white/15"
+                    title={activeImg.title}
+                  >
+                    <p className="text-[11px] sm:text-xs font-serif text-stone-100/95 leading-relaxed text-left sm:text-right">
+                      {activeImg.description}
+                    </p>
+                    <span
+                      className="text-[11px] font-serif text-amber-300/95 mt-2 text-left sm:text-right leading-snug"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      Photo Credit:{' '}
+                      <span className="text-amber-200 font-semibold">{creditLabel}</span>
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {onOpenAdoration && activeEstablishingImageId !== 'faith-scholarship-science' && activeEstablishingImageId !== 'pope-leo-peru-homecoming' && activeEstablishingImageId !== 'our-lady-monstrance-connors' && (
                 <div className="flex flex-col items-end mt-6 lg:mt-10 max-w-[195px] sm:max-w-[210px] md:max-w-[220px]">
                   <div
                     className="flex flex-col items-end text-right px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-xl bg-black/65 text-amber-200 backdrop-blur-md shadow-2xl w-full border border-white/15"

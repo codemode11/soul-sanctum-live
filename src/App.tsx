@@ -44,8 +44,7 @@ import { getTopVaticanHeadline } from './data/news';
 import { SacredReader } from './utils/speech';
 import {
   CatholicArticleItem,
-  CURATED_CATHOLIC_ARTICLES,
-  fetchCatholicRssArticlesForSource
+  CURATED_CATHOLIC_ARTICLES
 } from './data/catholicRssArticles';
 
 import { getMassReadingsForDate } from './data/massReadings';
@@ -90,14 +89,14 @@ export default function App() {
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
-      const stored = localStorage.getItem('sanctum_establishing_image_v6');
+      const stored = localStorage.getItem('sanctum_establishing_image_v7');
       if (!stored) {
-        localStorage.setItem('sanctum_establishing_image_v6', 'pope-leo-peru-homecoming');
-        return 'pope-leo-peru-homecoming';
+        localStorage.setItem('sanctum_establishing_image_v7', 'our-lady-monstrance-connors');
+        return 'our-lady-monstrance-connors';
       }
       return stored;
     } catch {
-      return 'pope-leo-peru-homecoming';
+      return 'our-lady-monstrance-connors';
     }
   });
 
@@ -146,7 +145,7 @@ export default function App() {
   const handleSelectEstablishingImage = (img: NiepokalanowHighResImage) => {
     setActiveEstablishingImageId(img.id);
     try {
-      localStorage.setItem('sanctum_establishing_image_v6', img.id);
+      localStorage.setItem('sanctum_establishing_image_v7', img.id);
     } catch {
       // ignore storage errors
     }
@@ -287,39 +286,9 @@ export default function App() {
   const [activeVaticanArticleId, setActiveVaticanArticleId] = useState<string | null>(null);
   const [activeCatholicArticleSourceId, setActiveCatholicArticleSourceId] = useState<string | null>(null);
   const [activeCatholicArticleId, setActiveCatholicArticleId] = useState<string | null>(null);
-  const [featuredMastheadArticle, setFeaturedMastheadArticle] = useState<CatholicArticleItem>(
-    () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'aleteia-peru-homecoming') || CURATED_CATHOLIC_ARTICLES[0]
+  const [featuredMastheadArticle] = useState<CatholicArticleItem>(
+    () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'sign-org-curated-1') || CURATED_CATHOLIC_ARTICLES[0]
   );
-
-  useEffect(() => {
-    let cancelled = false;
-    const loadFeaturedArticle = async () => {
-      try {
-        const items = await fetchCatholicRssArticlesForSource('aleteia', true);
-        const peruStory = items.find(
-          item =>
-            item.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
-            item.title.toLowerCase().includes('what a homecoming')
-        );
-        if (!cancelled && peruStory) {
-          setFeaturedMastheadArticle({
-            ...peruStory,
-            author: 'Kathleen N. Hattrup',
-            publishedDate: 'November 12, 2026',
-            readTime: '6 min read',
-            imageUrl: '/images/sacred-art/pope_leo_lima_peru.jpg',
-            imageCredit: 'SIMONE RISOLUTI | VATICAN MEDIA | AFP'
-          });
-        }
-      } catch {
-        // Keep curated Peru homecoming story
-      }
-    };
-    loadFeaturedArticle();
-    return () => {
-      cancelled = true;
-    };
-  }, [currentDateStr]);
 
   // Audio state for Catholic Podcasts
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
@@ -517,6 +486,23 @@ export default function App() {
               {/* Subtle bottom edge feathering so the priest remains completely visible */}
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
             </div>
+          ) : activeEstablishingImage.id === 'our-lady-monstrance-connors' ? (
+            <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
+              <img
+                src={activeEstablishingImage.imageUrl}
+                alt={activeEstablishingImage.title}
+                decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('niepokalanow_white_host_sanctuary.jpg')) {
+                    target.src = '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg';
+                  }
+                }}
+                className="w-full h-full mx-auto object-cover object-[50%_28%] brightness-[0.98] contrast-[1.04] transform-gpu"
+              />
+              {/* Subtle bottom gradient behind Main Story card */}
+              <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-stone-950/85 to-transparent pointer-events-none" />
+            </div>
           ) : activeEstablishingImage.id === 'pope-leo-peru-homecoming' ? (
             <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
               <img
@@ -598,7 +584,11 @@ export default function App() {
           />
 
           {/* Main Story: Featured Catholic Article Masthead Dispatch (stacked right below the Date banner and slightly above the 5 bottom icons on mobile) */}
-          <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-0 sm:mt-64 md:mt-72 lg:mt-80">
+          <div className={`max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-0 ${
+            effectiveEstablishingImageId === 'our-lady-monstrance-connors'
+              ? 'mt-3 sm:mt-6 md:mt-8 lg:mt-10'
+              : 'sm:mt-64 md:mt-72 lg:mt-80'
+          }`}>
             <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/30 sm:bg-black/40 hover:bg-black/50 border border-amber-500/45 hover:border-amber-400 text-amber-100 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.55)] transition-all py-3.5 px-4 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
@@ -616,7 +606,14 @@ export default function App() {
                 }}
                 className="font-serif text-lg sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.98)] tracking-tight cursor-pointer transition-colors"
               >
-                {featuredMastheadArticle.title}
+                {featuredMastheadArticle.title.endsWith(' Most Blessed Sacrament') ? (
+                  <>
+                    <span>{featuredMastheadArticle.title.slice(0, -' Most Blessed Sacrament'.length)}</span>
+                    <span className="block">Most Blessed Sacrament</span>
+                  </>
+                ) : (
+                  featuredMastheadArticle.title
+                )}
               </h2>
 
               {/* Subtitle & Call to Action */}
@@ -644,7 +641,8 @@ export default function App() {
                 </div>
               </div>
             </div>
-            {(featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort) && (
+            {effectiveEstablishingImageId !== 'our-lady-monstrance-connors' &&
+              (featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort) && (
               <div className="max-w-4xl mx-auto mt-1.5 px-2 text-right">
                 <span className="text-[10px] sm:text-[11px] font-cinzel tracking-wider uppercase text-amber-100/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
                   Credit: {featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort}

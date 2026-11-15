@@ -580,14 +580,14 @@ Equally transformative was the Church’s invention of the hospital and organize
     categories: ['Church History', 'Faith & Reason', 'Education'],
     isFullContentLoaded: true
   },
-  // 10. Signs & Wonders for Our Times (sign.org)
+  // 10. Signs & Wonders for Our Times (sign.org) — Featured Main Story
   {
     id: 'sign-org-curated-1',
     sourceId: 'sign-org',
-    sourceName: 'Signs & Wonders for Our Times (sign.org)',
-    title: 'Our Lady\'s Call to Prayer, Penance, and Devotion to the Most Blessed Sacrament',
+    sourceName: 'Signs & Wonders for Our Times',
+    title: 'Our Lady’s Call to Prayer, Penance, and Devotion to the Most Blessed Sacrament',
     author: 'Signs & Wonders for Our Times',
-    publishedDate: 'November 6, 2026',
+    publishedDate: 'November 15, 2026',
     readTime: '6 min read',
     summary: 'Exploring the perennial message of the Blessed Virgin Mary across approved apparitions: a maternal summons to return to Jesus in the Eucharist, pray the daily Rosary, and live in sanctifying grace.',
     content: `Across the centuries, whenever Heaven has permitted the Blessed Virgin Mary to appear on earth in Church-approved apparitions—from Tepeyac Hill in Guadalupe and the Rue du Bac in Paris to Lourdes, Knock, and Fátima—her maternal message has never drawn attention to herself apart from her Divine Son. Instead, like at the Wedding Feast of Cana, her words always echo the same Gospel command: “Do whatever He tells you” (John 2:5).
@@ -602,6 +602,8 @@ Likewise, the documented Eucharistic miracles recognized by the Church—such as
 
 As Signs & Wonders for Our Times continually emphasizes in its apostolate, the proper response to Heaven’s graces is daily conversion of heart: returning promptly to the Sacrament of Confession, praying the family Rosary with meditation on the Mysteries, wearing the Brown Scapular and Miraculous Medal with fidelity, and spending quiet, loving time adoring Our Eucharistic Lord on the altar.`,
     link: 'https://sign.org',
+    imageUrl: '/assets/aistudio/MONSTRANCE__MATTHEW_JOSEPH_LEON_CONNORS__3f8d888b.jpg',
+    imageCredit: 'Matthew Joseph Leon Connors',
     categories: ['Marian Devotion', 'Eucharistic Miracles', 'Prayer'],
     isFullContentLoaded: true
   },
