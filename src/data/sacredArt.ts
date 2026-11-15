@@ -24,7 +24,7 @@ export const NIEPOKALANOW_HIGH_RES_IMAGES: NiepokalanowHighResImage[] = [
     attributionText: 'Photo Credit: Matthew Joseph Leon Connors',
     creditShort: 'Matthew Joseph Leon Connors',
     attributionUrl: 'https://sign.org',
-    objectPosition: '50% 10%'
+    objectPosition: '50% 20%'
   },
   {
     id: 'pope-leo-peru-homecoming',
