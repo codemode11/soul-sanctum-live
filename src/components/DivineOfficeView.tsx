@@ -723,12 +723,12 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
                   key={idx}
                   className={`space-y-3.5 p-4 sm:p-5 rounded-xl border transition-colors ${
                     isEven
-                      ? 'bg-[#EEF3F8] border-[#D5E0EC] shadow-2xs'
-                      : 'bg-[#F6F9FC] border-[#DFE8F2] shadow-2xs'
+                      ? 'bg-[#FAF4EB] border-[#E2D5C3] shadow-2xs'
+                      : 'bg-stone-50 border-stone-200 shadow-2xs'
                   }`}
                 >
-                  <div className="bg-[#3B536D] border border-[#2D4257] p-3 rounded-lg font-serif text-white text-xs sm:text-sm shadow-2xs">
-                    <span className="font-cinzel font-bold text-white not-italic uppercase tracking-wide mr-1.5">
+                  <div className="bg-amber-100/80 border border-amber-300/70 p-3 rounded-lg font-serif text-amber-950 text-xs sm:text-sm shadow-2xs">
+                    <span className="font-cinzel font-bold text-amber-900 not-italic uppercase tracking-wide mr-1.5">
                       Antiphon
                     </span>
                     <span className="italic">&ldquo;{toCurvedQuotes(psalm.antiphon)}&rdquo;</span>
@@ -754,15 +754,15 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
                   </div>
 
                   {psalm.psalmPrayer && (
-                    <div className="pt-2 border-t border-[#CBD7E4] font-serif text-stone-700 text-xs sm:text-sm">
-                      <span className="font-cinzel font-bold text-[#2D4257] uppercase tracking-wide mr-1.5">
+                    <div className="pt-2 border-t border-stone-200/80 font-serif text-stone-700 text-xs sm:text-sm">
+                      <span className="font-cinzel font-bold text-amber-900 uppercase tracking-wide mr-1.5">
                         Psalm-prayer
                       </span>
                       <span>{toCurvedQuotes(psalm.psalmPrayer)}</span>
                     </div>
                   )}
 
-                  <div className="text-xs text-[#2D4257] font-serif pt-1 border-t border-[#CBD7E4]">
+                  <div className="text-xs text-amber-900 font-serif pt-1 border-t border-stone-200/80">
                     <span className="font-cinzel font-bold mr-1.5">Antiphon</span>
                     <span className="italic">&ldquo;{toCurvedQuotes(psalm.antiphon)}&rdquo;</span>
                   </div>
@@ -840,9 +840,9 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
                 </div>
               </div>
 
-              <div className="space-y-3.5 p-4 sm:p-5 rounded-xl bg-[#EEF3F8] border border-[#D5E0EC] shadow-2xs">
-                <div className="bg-[#3B536D] border border-[#2D4257] p-3 rounded-lg font-serif text-white text-xs sm:text-sm shadow-2xs">
-                  <span className="font-cinzel font-bold text-white not-italic uppercase tracking-wide mr-1.5">
+              <div className="space-y-3.5 p-4 sm:p-5 rounded-xl bg-[#FAF4EB] border border-[#E2D5C3] shadow-2xs">
+                <div className="bg-amber-100/80 border border-amber-300/70 p-3 rounded-lg font-serif text-amber-950 text-xs sm:text-sm shadow-2xs">
+                  <span className="font-cinzel font-bold text-amber-900 not-italic uppercase tracking-wide mr-1.5">
                     Antiphon
                   </span>
                   <span className="italic">&ldquo;{toCurvedQuotes(hourData.canticle.antiphon)}&rdquo;</span>
@@ -852,11 +852,11 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
                   {hourData.canticle.title} ({hourData.canticle.citation})
                 </h4>
 
-                <div className={`font-serif text-stone-900 whitespace-pre-line pl-3 border-l border-[#3B536D]/45 not-italic ${getTextSizeClass()}`}>
+                <div className={`font-serif text-stone-900 whitespace-pre-line pl-3 border-l border-amber-800/40 not-italic ${getTextSizeClass()}`}>
                   {toCurvedQuotes(hourData.canticle.text)}
                 </div>
 
-                <div className="text-xs text-[#2D4257] font-serif pt-1 border-t border-[#CBD7E4]">
+                <div className="text-xs text-amber-900 font-serif pt-1 border-t border-[#E2D5C3]">
                   <span className="font-cinzel font-bold mr-1.5">Antiphon</span>
                   <span className="italic">&ldquo;{toCurvedQuotes(hourData.canticle.antiphon)}&rdquo;</span>
                 </div>
