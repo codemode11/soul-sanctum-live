@@ -523,10 +523,10 @@ ${reading.gospel.text}`;
         </div>
       </article>
 
-      {/* RESPONSORIAL PSALM — Solid White Background for Lengthy Reading */}
-      <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-5">
-        <div className="border-b border-stone-200 pb-3">
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
+      {/* RESPONSORIAL PSALM — Whisper Ice Background for Lengthy Reading */}
+      <article className="bg-[#EEF3F8] rounded-xl p-6 sm:p-8 shadow-sm border border-[#D5E0EC] space-y-5">
+        <div className="border-b border-[#CBD7E4] pb-3">
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#1E3246] tracking-normal">
             Responsorial Psalm
           </h3>
           <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 mt-0.5">
@@ -535,9 +535,9 @@ ${reading.gospel.text}`;
         </div>
 
         {/* Antiphon response: Justified alignment and dynamically scalable */}
-        <div className="p-4 sm:p-5 rounded-md bg-[#EADACA] border border-[#C8AD8D] font-serif text-[#2C1A0E] font-bold italic shadow-2xs" style={antiphonStyle}>
+        <div className="p-4 sm:p-5 rounded-md bg-[#3B536D] border border-[#2D4257] font-serif text-white font-bold italic shadow-2xs" style={antiphonStyle}>
           <p className="w-full text-justify leading-snug">
-            <span className="text-[#6B4423] font-serif font-black text-2xl sm:text-3xl leading-none not-italic mr-2.5">R.</span>
+            <span className="text-white font-serif font-black text-2xl sm:text-3xl leading-none not-italic mr-2.5">R.</span>
             <span>{toCurvedQuotes(reading.responsorialPsalm.antiphon)}</span>
           </p>
         </div>
