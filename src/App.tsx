@@ -487,7 +487,7 @@ export default function App() {
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
             </div>
           ) : activeEstablishingImage.id === 'our-lady-monstrance-connors' ? (
-            <div className="relative w-full sm:max-w-[900px] mx-auto h-[84vh] sm:h-[90vh] sm:max-h-[860px] flex items-center justify-center overflow-hidden transform-gpu sm:[mask-image:linear-gradient(to_right,transparent,black_7%,black_93%,transparent)]">
+            <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
               <img
                 src={activeEstablishingImage.imageUrl}
                 alt={activeEstablishingImage.title}
@@ -498,7 +498,7 @@ export default function App() {
                     target.src = '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg';
                   }
                 }}
-                className="w-full h-full mx-auto object-cover object-[50%_20%] brightness-[0.98] contrast-[1.04] transform-gpu"
+                className="w-full h-full mx-auto object-cover object-[50%_22%] brightness-[0.98] contrast-[1.04] transform-gpu"
               />
               {/* Subtle bottom gradient behind Main Story card */}
               <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-stone-950/85 to-transparent pointer-events-none" />
