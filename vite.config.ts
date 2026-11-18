@@ -1025,64 +1025,56 @@ function vaticanNewsPlugin() {
               ytChannelId: 'UC_xCst3mv8PQslyRtfOkMGQ',
               name: 'Christendom College & Media',
               avatarUrl: 'https://yt3.googleusercontent.com/ytc/AIdro_lse_d8k2NYELKQE-5cu2m5vRt5ikYvw1Q_74LaZkg=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Apologetics & Culture',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Apologetics & Culture'
             },
             {
               id: 'ch-wordonfire',
               ytChannelId: 'UCcMjLgeWNwqL2LBGS-iPb1A',
               name: 'Word on Fire (Bishop Barron)',
               avatarUrl: 'https://yt3.googleusercontent.com/yjqfvu6ZX2QWSqczNIi3sbN6224_O62eAFob7uLgomGEVG6es2Tc3i_RNjAa4TbJfrceWuHw8Q=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Theology & Homilies',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Theology & Homilies'
             },
             {
               id: 'ch-ascension',
               ytChannelId: 'UCVdGX3N-WIJ5nUvklBTNhAw',
               name: 'Ascension Presents',
               avatarUrl: 'https://yt3.googleusercontent.com/2mhKBivLUIgeKbZ70A7z-rv3DX-KSZsxL5UPSF8CvkKQ_TAITqgarHM2eCXbtgza1vYy_VAI=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Theology & Homilies',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Theology & Homilies'
             },
             {
               id: 'ch-stpaulcenter',
               ytChannelId: 'UCBr-aH7rulKvlRdSM2Zz_mQ',
               name: 'St. Paul Center (Dr. Scott Hahn)',
               avatarUrl: 'https://yt3.googleusercontent.com/eYpoPbiU611IXhHWGo5-5kUboJkA1CPWRNSMDbcxLfKLU4YAEHRdPHpdORnlfLsRc227-3PPBZc=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Sacred Scripture',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Sacred Scripture'
             },
             {
               id: 'ch-catholicanswers',
               ytChannelId: 'UCvwbLBTkuIwqNm9kHUqWRnw',
               name: 'Catholic Answers Live',
               avatarUrl: 'https://yt3.googleusercontent.com/ytc/AIdro_mVshmYIBh_5n_6zbctv3onmWbDUQo6polUcPZjL1Y=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Apologetics & Culture',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Apologetics & Culture'
             },
             {
               id: 'ch-augustine',
               ytChannelId: 'UCViR8Uk46_06QjqkTNlVu2Q',
               name: 'Augustine Institute & FORMED',
               avatarUrl: 'https://yt3.googleusercontent.com/c8SAvU-uBojeQEEDkeOs1qbntDhnJ6tY_brmG-8USjn6LNdlKza3OKLSZS2OqT5ciM_cczmj59I=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Sacred Scripture',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Sacred Scripture'
             },
             {
               id: 'ch-icc',
               ytChannelId: 'UCrkyDHc586jpfgPPQCZidwA',
               name: 'Institute of Catholic Culture',
               avatarUrl: 'https://yt3.googleusercontent.com/ytc/AIdro_kLo4Wzqbjkld4929HovTthbN0CUMEwQXH2ODvq1ZBmKg=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Church History',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Church History'
             },
             {
               id: 'ch-ewtn',
               ytChannelId: 'UCijDos-LUTh9RQvSCMQqN6Q',
               name: 'EWTN Global Catholic Network',
               avatarUrl: 'https://yt3.googleusercontent.com/aXMeNbOffojVIm0uqTNEUMzmHtA5YxiLzzuj7gAwbuVdsIcv1jx5tkUfMWEEMte4eKT1hasUbJY=s176-c-k-c0x00ffffff-no-rj',
-              defaultCategory: 'Sacred Liturgy & Chant',
-              fallbackImageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80'
+              defaultCategory: 'Sacred Liturgy & Chant'
             }
           ];
 
@@ -1174,7 +1166,7 @@ function vaticanNewsPlugin() {
                     category: inferCategory(title, cleanDesc, ch.defaultCategory),
                     description: cleanDesc || `${title} — Presented by ${ch.name}.`,
                     thumbnailUrl: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-                    fallbackImageUrl: ch.fallbackImageUrl,
+                    fallbackImageUrl: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
                     verified: true,
                     likes: formatCount(likesNum),
                     christendomUrl: `https://www.youtube.com/watch?v=${videoId}`

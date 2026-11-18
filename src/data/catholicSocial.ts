@@ -388,13 +388,10 @@ export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
     pageUrl: 'https://www.facebook.com/EWTNAfrica',
     postUrl: 'https://www.facebook.com/EWTNAfrica/posts/pfbid02dHUKotdNF9Ax2on8Ktr5cQDhpW6DoWcpqh6G7upT9Z7tDaRXDWeN5AE2D45bYQoBl',
     embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FEWTNAfrica%2Fposts%2Fpfbid02dHUKotdNF9Ax2on8Ktr5cQDhpW6DoWcpqh6G7upT9Z7tDaRXDWeN5AE2D45bYQoBl&show_text=true&width=500',
-    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'EWTN Africa Post',
     category: 'EWTN Africa & Catholic Faith',
     text: `EWTN Africa — Eternal Word Television Network in Africa. Proclaiming Catholic faith, liturgical celebration, and Papal guidance across the African continent and the world.`,
-    imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Catholic Mass and faith community in Africa',
     likesCount: 15400,
     commentsCount: 1280,
     sharesCount: 6420
@@ -408,13 +405,10 @@ export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
     pageUrl: 'https://www.facebook.com/EWTNasia',
     postUrl: 'https://www.facebook.com/EWTNasia/posts/pfbid02hCX86UMvAQYLxa8Q9LwnQ5SFK4sho8XCzLythbbPYwFh9byWnR5d6s2gg7evXivil',
     embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FEWTNasia%2Fposts%2Fpfbid02hCX86UMvAQYLxa8Q9LwnQ5SFK4sho8XCzLythbbPYwFh9byWnR5d6s2gg7evXivil&show_text=true&width=500',
-    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'EWTN Asia Post',
     category: 'EWTN Asia & Gospel Witness',
     text: `EWTN Asia — Eternal Word Television Network Asia. Serving the Church in Asia and Oceania with daily Mass, Marian devotion, and Catholic news.`,
-    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Catholic sanctuary and altar of Christ in Asia',
     likesCount: 18200,
     commentsCount: 1450,
     sharesCount: 7100
@@ -428,13 +422,10 @@ export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
     pageUrl: 'https://www.facebook.com/NCRegister',
     postUrl: 'https://www.facebook.com/NCRegister/posts/pfbid0M2zP7Kobgk1qALXucs9cNVdQ9yAcuPxrKvDyY2DULoUTbkdXq2BARv12WtGy7GYZl',
     embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNCRegister%2Fposts%2Fpfbid0M2zP7Kobgk1qALXucs9cNVdQ9yAcuPxrKvDyY2DULoUTbkdXq2BARv12WtGy7GYZl&show_text=true&width=500',
-    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'NCRegister Featured Post',
     category: 'Catholic Journalism & Magisterium',
     text: `National Catholic Register — Providing Catholic news and analysis with fidelity to the Magisterium of the Church.`,
-    imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'National Catholic Register journalism and sacred news',
     likesCount: 16800,
     commentsCount: 1120,
     sharesCount: 5490
@@ -448,13 +439,10 @@ export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
     pageUrl: 'https://www.facebook.com/vaticannews',
     postUrl: 'https://www.facebook.com/vaticannews/posts/pfbid02aoXsGmtQerkYXouJzdGDdpcE8kkrnWrd6h8djpL9cNCKqa7qhocZGiYsweHyY3JUl',
     embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fvaticannews%2Fposts%2Fpfbid02aoXsGmtQerkYXouJzdGDdpcE8kkrnWrd6h8djpL9cNCKqa7qhocZGiYsweHyY3JUl&show_text=true&width=500',
-    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Vatican News Featured Post',
     category: 'Holy See & Papal Ministry',
     text: `Vatican News — Official news service of the Holy See. Bringing the voice of the Pope and global Church news to faithful believers worldwide.`,
-    imageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'St. Peter’s Basilica and the Holy See at Vatican City',
     likesCount: 24500,
     commentsCount: 1890,
     sharesCount: 9240
@@ -468,13 +456,10 @@ export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
     pageUrl: 'https://www.facebook.com/permalink.php?story_fbid=pfbid025JYCJp6RiyWZDP1F7hvdBGSEwmnHHJXXj14MXRrbZmZrkt4azboRZJGZNjCpXqeZl&id=100085925378028',
     postUrl: 'https://www.facebook.com/permalink.php?story_fbid=pfbid025JYCJp6RiyWZDP1F7hvdBGSEwmnHHJXXj14MXRrbZmZrkt4azboRZJGZNjCpXqeZl&id=100085925378028',
     embedUrl: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid025JYCJp6RiyWZDP1F7hvdBGSEwmnHHJXXj14MXRrbZmZrkt4azboRZJGZNjCpXqeZl%26id%3D100085925378028&show_text=true&width=500',
-    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Catholic Community Post',
     category: 'Catholic Community & Devotion',
     text: `Catholic Faith Reflection — Seeking Christ through prayer, sacred liturgy, and community fellowship.`,
-    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Catholic prayer chapel bathed in quiet morning light',
     likesCount: 12400,
     commentsCount: 980,
     sharesCount: 4520
@@ -486,7 +471,6 @@ export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
     sourceName: 'Aleteia',
     handle: '@aleteia_en',
     pageUrl: 'https://www.facebook.com/aleteia.en',
-    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Yesterday at 2:30 PM',
     category: 'Sacred Silence & Prayer',
@@ -497,8 +481,6 @@ Saint John Vianney approached him and asked: "My friend, what do you do here for
 The peasant looked up with serenity and replied: "Nothing, Monsieur le Curé. I look at Him, and He looks at me."
 
 Take five minutes today to sit quietly before the Blessed Sacrament. Sacred silence heals what the noise of the world fractures.`,
-    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Quiet sanctuary pew bathed in soft morning sunlight for contemplative prayer',
     likesCount: 8640,
     commentsCount: 520,
     sharesCount: 2890
@@ -509,7 +491,6 @@ Take five minutes today to sit quietly before the Blessed Sacrament. Sacred sile
     sourceName: 'Aleteia',
     handle: '@aleteia_en',
     pageUrl: 'https://www.facebook.com/aleteia.en',
-    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '3 days ago',
     category: 'Saints & Interior Peace',
@@ -524,8 +505,6 @@ Whoever has God lacks nothing;
 God alone suffices."
 
 Whatever trial or cross you are carrying today, hold fast to Jesus Christ. His grace is more than enough for you.`,
-    imageUrl: 'https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Glowing Gothic stained glass window filling a sacred Catholic chapel with warm light',
     likesCount: 11200,
     commentsCount: 780,
     sharesCount: 4320
@@ -538,7 +517,6 @@ Whatever trial or cross you are carrying today, hold fast to Jesus Christ. His g
     sourceName: 'EWTN Global Catholic Network',
     handle: '@ewtnonline',
     pageUrl: 'https://www.facebook.com/ewtnonline',
-    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Yesterday at 4:15 PM',
     category: 'The Holy Rosary & Prayer',
@@ -547,8 +525,6 @@ Whatever trial or cross you are carrying today, hold fast to Jesus Christ. His g
 Take fifteen minutes today to pray five decades of the Rosary for your family, your priests, and for peace in the world.
 
 Our Lady promised: "Whoever shall faithfully serve me by the recitation of the Rosary, shall receive signal graces."`,
-    imageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Traditional wooden Catholic Rosary beads with sacred crucifix',
     likesCount: 14700,
     commentsCount: 1040,
     sharesCount: 5210
@@ -559,15 +535,12 @@ Our Lady promised: "Whoever shall faithfully serve me by the recitation of the R
     sourceName: 'EWTN Global Catholic Network',
     handle: '@ewtnonline',
     pageUrl: 'https://www.facebook.com/ewtnonline',
-    avatarUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '4 days ago',
     category: 'Mother Angelica Wisdom',
     text: `Mother Angelica reminds us: "Unless you are willing to do the ridiculous, God cannot do the miraculous. When you step out in faith for Jesus, do not look at your own smallness—look at His boundless majesty!"
 
 Never let human fear, worldly doubt, or smallness of spirit stop you from responding to God’s call. He is faithful to the very end.`,
-    imageUrl: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'The Holy Cross of Christ rising against the radiant morning sky',
     likesCount: 12500,
     commentsCount: 890,
     sharesCount: 4190
@@ -580,7 +553,6 @@ Never let human fear, worldly doubt, or smallness of spirit stop you from respon
     sourceName: 'St. Paul Center',
     handle: '@stpaulcenter',
     pageUrl: 'https://www.facebook.com/stpaulcenter',
-    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '2 days ago',
     category: 'Biblical Theology & Holy Mass',
@@ -589,8 +561,6 @@ Never let human fear, worldly doubt, or smallness of spirit stop you from respon
 In the Mass, we hear: "Holy, Holy, Holy is the Lord God Almighty." We see the altar, the golden chalice, the incense, the candles, and the chant of the Lamb of God.
 
 Saint John was revealing the heavenly liturgy. In the Holy Mass, heaven touches earth.`,
-    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Reverent Catholic sanctuary with the high altar and golden tabernacle',
     likesCount: 10400,
     commentsCount: 670,
     sharesCount: 3510
@@ -601,7 +571,6 @@ Saint John was revealing the heavenly liturgy. In the Holy Mass, heaven touches 
     sourceName: 'St. Paul Center',
     handle: '@stpaulcenter',
     pageUrl: 'https://www.facebook.com/stpaulcenter',
-    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '5 days ago',
     category: 'Sacred Scripture & The Word of God',
@@ -610,8 +579,6 @@ Saint John was revealing the heavenly liturgy. In the Holy Mass, heaven touches 
 "For the word of God is living and active, sharper than any two-edged sword." (Hebrews 4:12)
 
 Make a commitment to read the daily Mass readings each morning before opening emails or social media. Let God's Word shape your soul.`,
-    imageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Open Catholic Holy Bible bathed in warm morning light',
     likesCount: 8900,
     commentsCount: 540,
     sharesCount: 3100
@@ -624,7 +591,6 @@ Make a commitment to read the daily Mass readings each morning before opening em
     sourceName: 'Augustine Institute',
     handle: '@AugustineInstitute',
     pageUrl: 'https://www.facebook.com/AugustineInstitute',
-    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Yesterday at 1:00 PM',
     category: 'Saint Augustine & Catholic Wisdom',
@@ -633,8 +599,6 @@ Make a commitment to read the daily Mass readings each morning before opening em
 "Late have I loved You, O Beauty ever ancient, ever new! Late have I loved You!"
 
 God is closer to us than we are to ourselves. Turn inward in silent prayer today and listen to the voice of the divine Physician.`,
-    imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Historic theological manuscripts and Catholic scholarly library bathed in candlelight',
     likesCount: 9340,
     commentsCount: 620,
     sharesCount: 3280
@@ -645,7 +609,6 @@ God is closer to us than we are to ourselves. Turn inward in silent prayer today
     sourceName: 'Augustine Institute',
     handle: '@AugustineInstitute',
     pageUrl: 'https://www.facebook.com/AugustineInstitute',
-    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '4 days ago',
     category: 'Theological Formation & Grace',
@@ -654,8 +617,6 @@ God is closer to us than we are to ourselves. Turn inward in silent prayer today
 When we study theology from the heart of the Church, our love for Jesus Christ deepens from mere sentiment into unbreakable conviction.
 
 "You have made us for Yourself, O Lord, and our hearts are restless until they rest in You."`,
-    imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Majestic cathedral arches with morning light pouring down upon the sanctuary',
     likesCount: 7820,
     commentsCount: 490,
     sharesCount: 2650
@@ -668,7 +629,6 @@ When we study theology from the heart of the Church, our love for Jesus Christ d
     sourceName: 'FORMED',
     handle: '@FORMEDCatholic',
     pageUrl: 'https://www.facebook.com/FORMEDCatholic',
-    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '2 days ago',
     category: 'Liturgical Living & Catholic Culture',
@@ -677,8 +637,6 @@ When we study theology from the heart of the Church, our love for Jesus Christ d
 Hang a crucifix in every room. Keep holy water by the front door. Gather at the dinner table to share the story of the Saint of the Day.
 
 "As for me and my house, we will serve the Lord." (Joshua 24:15)`,
-    imageUrl: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Sacred image of Jesus Christ revealing His Sacred Heart to all families',
     likesCount: 8940,
     commentsCount: 512,
     sharesCount: 3180
@@ -689,7 +647,6 @@ Hang a crucifix in every room. Keep holy water by the front door. Gather at the 
     sourceName: 'FORMED',
     handle: '@FORMEDCatholic',
     pageUrl: 'https://www.facebook.com/FORMEDCatholic',
-    avatarUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '5 days ago',
     category: 'Saint of the Day & Evangelization',
@@ -698,8 +655,6 @@ Hang a crucifix in every room. Keep holy water by the front door. Gather at the 
 When the world is fractured by cynicism, anger, and despair, the holiness of one Christian can ignite a revival across the entire Church.
 
 Lord, make me an instrument of Your peace: where there is hatred, let me sow love; where there is injury, pardon; where there is despair, hope.`,
-    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Peaceful Franciscan cloister stone walkway illuminated by peaceful sunlight',
     likesCount: 9780,
     commentsCount: 630,
     sharesCount: 3410
@@ -712,7 +667,6 @@ Lord, make me an instrument of Your peace: where there is hatred, let me sow lov
     sourceName: 'Vatican News',
     handle: '@vaticannews',
     pageUrl: 'https://www.facebook.com/vaticannews',
-    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Yesterday at 11:30 AM',
     category: 'Papal Angelus & Global Peace',
@@ -721,8 +675,6 @@ Lord, make me an instrument of Your peace: where there is hatred, let me sow lov
 Addressing thousands of pilgrims gathered in St. Peter’s Square, the Holy Father urged the faithful worldwide to pray without ceasing for victims of violence and for peace across our troubled world.
 
 "Let us place all our brothers and sisters under the loving protection of Mary, Queen of Peace."`,
-    imageUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'St. Peter’s Basilica and thousands of pilgrims gathered in St. Peter’s Square at the Vatican',
     likesCount: 14200,
     commentsCount: 920,
     sharesCount: 4180
@@ -733,15 +685,12 @@ Addressing thousands of pilgrims gathered in St. Peter’s Square, the Holy Fath
     sourceName: 'Vatican News',
     handle: '@vaticannews',
     pageUrl: 'https://www.facebook.com/vaticannews',
-    avatarUrl: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '3 days ago',
     category: 'Holy See & Papal Ministry',
     text: `"The Eucharist is not a prize for the perfect, but a powerful medicine and nourishment for the weak."
 
 At morning Mass in the Vatican, the Holy Father reminded pastors and the faithful that the heart of Jesus Christ beats with infinite mercy for every weary soul who walks through the doors of the Church. Come to Him with trust.`,
-    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'High altar and sanctuary illuminated within St. Peter’s Basilica',
     likesCount: 11800,
     commentsCount: 640,
     sharesCount: 3240
@@ -754,7 +703,6 @@ At morning Mass in the Vatican, the Holy Father reminded pastors and the faithfu
     sourceName: 'U.S. Conference of Catholic Bishops (USCCB)',
     handle: '@usccb',
     pageUrl: 'https://www.facebook.com/usccb',
-    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Yesterday at 9:00 AM',
     category: 'Daily Gospel Reflection',
@@ -763,8 +711,6 @@ At morning Mass in the Vatican, the Holy Father reminded pastors and the faithfu
 Jesus turns worldly values upside down. True blessedness does not come from wealth, fame, or self-sufficiency, but from total dependence upon God's merciful fatherhood.
 
 Today, ask the Holy Spirit to teach you humility of heart so you may recognize Christ in the hungry, the stranger, and the forgotten.`,
-    imageUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Holy Gospel book and liturgical candles illuminated on the lectern',
     likesCount: 9800,
     commentsCount: 610,
     sharesCount: 3200
@@ -775,7 +721,6 @@ Today, ask the Holy Spirit to teach you humility of heart so you may recognize C
     sourceName: 'U.S. Conference of Catholic Bishops (USCCB)',
     handle: '@usccb',
     pageUrl: 'https://www.facebook.com/usccb',
-    avatarUrl: 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '4 days ago',
     category: 'National Eucharistic Revival',
@@ -784,8 +729,6 @@ Today, ask the Holy Spirit to teach you humility of heart so you may recognize C
 The greatest gift Jesus left us is Himself in the Blessed Sacrament. When you receive Holy Communion, you are united to the living God.
 
 Spend an hour in Eucharistic adoration this week. Kneel before the King of Kings and let His Eucharistic love heal your soul.`,
-    imageUrl: 'https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'The Blessed Sacrament exposed in a golden monstrance during parish Eucharistic adoration',
     likesCount: 12900,
     commentsCount: 940,
     sharesCount: 4890
@@ -798,7 +741,6 @@ Spend an hour in Eucharistic adoration this week. Kneel before the King of Kings
     sourceName: 'Institute of Catholic Culture',
     handle: '@InstituteofCatholicCulture',
     pageUrl: 'https://www.facebook.com/InstituteofCatholicCulture',
-    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '2 days ago',
     category: 'The Early Church Fathers & Patristics',
@@ -807,8 +749,6 @@ Spend an hour in Eucharistic adoration this week. Kneel before the King of Kings
 The Early Church Fathers did not see theology as dry academic theory, but as the pathway to theosis—divinization through participation in the life of the Holy Trinity.
 
 Rediscover the ancient beauty of Patristic wisdom. As the Fathers proclaimed: What Christ has not assumed, He has not redeemed!`,
-    imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Illuminated Patristic Greek manuscripts and sacred icons in a monastery scriptorium',
     likesCount: 7650,
     commentsCount: 480,
     sharesCount: 2940
@@ -819,7 +759,6 @@ Rediscover the ancient beauty of Patristic wisdom. As the Fathers proclaimed: Wh
     sourceName: 'Institute of Catholic Culture',
     handle: '@InstituteofCatholicCulture',
     pageUrl: 'https://www.facebook.com/InstituteofCatholicCulture',
-    avatarUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '6 days ago',
     category: 'Sacred Liturgy & Sacred Music',
@@ -828,8 +767,6 @@ Rediscover the ancient beauty of Patristic wisdom. As the Fathers proclaimed: Wh
 When the bells toll and incense rises at the consecration, time stops. We stand at the foot of Mount Calvary, and we enter the heavenly Jerusalem.
 
 "Let all mortal flesh keep silence, and with fear and trembling stand."`,
-    imageUrl: 'https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Incense smoke rising gently before the altar during the solemn Catholic Mass',
     likesCount: 8420,
     commentsCount: 530,
     sharesCount: 3120
@@ -842,7 +779,6 @@ When the bells toll and incense rises at the consecration, time stops. We stand 
     sourceName: 'SpiritualDirection.com',
     handle: '@CatholicSpiritualDirection',
     pageUrl: 'https://www.facebook.com/CatholicSpiritualDirection',
-    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: 'Yesterday at 5:00 PM',
     category: 'Contemplative Prayer & Interior Life',
@@ -851,8 +787,6 @@ When the bells toll and incense rises at the consecration, time stops. We stand 
 Many souls abandon prayer when distractions come or feelings fade. But true prayer is an act of the will, not an emotional surge.
 
 Stay with Jesus in the chapel or your prayer corner. Even five minutes of faithful presence draws down boundless graces.`,
-    imageUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Solitary Catholic prayer chapel bathed in peaceful morning light',
     likesCount: 9140,
     commentsCount: 670,
     sharesCount: 3620
@@ -863,7 +797,6 @@ Stay with Jesus in the chapel or your prayer corner. Even five minutes of faithf
     sourceName: 'SpiritualDirection.com',
     handle: '@CatholicSpiritualDirection',
     pageUrl: 'https://www.facebook.com/CatholicSpiritualDirection',
-    avatarUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=120&q=80',
     verified: true,
     postDate: '4 days ago',
     category: 'Saint John of the Cross & The Dark Night',
@@ -872,8 +805,6 @@ Stay with Jesus in the chapel or your prayer corner. Even five minutes of faithf
 In the dark night, the soul learns to love God for His own sake, rather than for the spiritual sweetness He gives.
 
 "In the evening of life, we will be judged on love alone." Persevere in prayer through the dry seasons!`,
-    imageUrl: 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80',
-    imageAlt: 'Crucifix with quiet candle glow illuminating sacred prayer in the dark night',
     likesCount: 8850,
     commentsCount: 590,
     sharesCount: 3340

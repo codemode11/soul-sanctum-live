@@ -17,14 +17,11 @@ import {
   Sunrise,
   Settings,
   ChevronDown,
-  ScrollText,
   PauseCircle
 } from 'lucide-react';
 import {
   getDivineOfficeHour,
   getIdealDivineOfficeHour,
-  GILH_QA_ITEMS,
-  GilhQaGuideItem,
   OfficeHourKey,
   DaytimePsalmodyMode,
   DivineOfficeHourData
@@ -52,15 +49,6 @@ const WIDGET_HOURS: { key: OfficeHourKey; label: string; Icon: React.FC<{ classN
   { key: 'compline', label: 'Night Prayer', Icon: Moon },
 ];
 
-const RUBRIC_CATEGORIES: { id: 'All' | GilhQaGuideItem['category']; label: string }[] = [
-  { id: 'All', label: 'All' },
-  { id: 'Schedule & Hours', label: 'Schedule' },
-  { id: 'Readings & Vigils', label: 'Readings' },
-  { id: 'Psalms & Singing', label: 'Psalms' },
-  { id: 'Intercessions, Silence & Structure', label: 'Structure' },
-  { id: 'Adaptations, Votives & Omissions', label: 'Adaptations' },
-];
-
 interface DivineOfficeViewProps {
   currentDateStr?: string;
 }
@@ -81,9 +69,8 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
   const [showTeDeumEnding, setShowTeDeumEnding] = useState<boolean>(true);
   const [useShorterVespersIntercessions, setUseShorterVespersIntercessions] = useState<boolean>(false);
   const [showConfiteorText, setShowConfiteorText] = useState<boolean>(false);
-  const [gilhCategoryFilter, setGilhCategoryFilter] = useState<'All' | GilhQaGuideItem['category']>('All');
 
-  const [viewMode, setViewMode] = useState<'native' | 'widget' | 'gilh'>('native');
+  const [viewMode, setViewMode] = useState<'native' | 'widget'>('native');
   const [textSize, setTextSize] = useState<'normal' | 'medium' | 'large' | 'xlarge'>('medium');
   const [audioSpeedIdx, setAudioSpeedIdx] = useState<number>(0);
   const [isReadingAloud, setIsReadingAloud] = useState(false);
@@ -340,11 +327,6 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
   })();
   const isWeekdayMonToFri = dateObj.getDay() >= 1 && dateObj.getDay() <= 5;
 
-  const filteredGilhItems =
-    gilhCategoryFilter === 'All'
-      ? GILH_QA_ITEMS
-      : GILH_QA_ITEMS.filter(item => item.category === gilhCategoryFilter);
-
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
 
@@ -383,18 +365,6 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               >
                 <Layers className="w-3.5 h-3.5 text-amber-300 shrink-0" />
                 <span>Reader</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode('gilh')}
-                className={`h-8 px-3 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-                  viewMode === 'gilh'
-                    ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                    : 'text-stone-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <ScrollText className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                <span>Rubrics</span>
               </button>
               <button
                 type="button"
@@ -510,7 +480,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
           {WIDGET_HOURS.map(({ key, label, Icon }) => {
-            const isSelected = selectedHourKey === key && viewMode !== 'gilh';
+            const isSelected = selectedHourKey === key;
             return (
               <button
                 key={key}
@@ -1119,56 +1089,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
         </article>
       )}
 
-      {/* VIEW MODE 2: GILH RUBRICS */}
-      {viewMode === 'gilh' && (
-        <section className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-6">
-          <div className="space-y-3 border-b border-stone-200 pb-4">
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-stone-900">
-              General Instruction of the Liturgy of the Hours
-            </h3>
-
-            <div className="flex flex-wrap items-center gap-1.5">
-              {RUBRIC_CATEGORIES.map(cat => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setGilhCategoryFilter(cat.id)}
-                  className={`px-3 py-1.5 rounded-md font-cinzel text-[11px] font-bold border transition-colors cursor-pointer whitespace-nowrap ${
-                    gilhCategoryFilter === cat.id
-                      ? 'bg-amber-900 text-amber-50 border-amber-800'
-                      : 'bg-stone-100 text-stone-800 border-stone-300 hover:bg-amber-50'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            {filteredGilhItems.map(item => (
-              <div
-                key={item.id}
-                className="p-4 sm:p-5 rounded-xl bg-[#FAF4EB]/70 border border-[#E2D5C3] space-y-2 shadow-2xs"
-              >
-                <div className="flex items-center justify-between gap-2 text-xs text-amber-900 font-cinzel font-bold">
-                  <span>{item.category}</span>
-                  <span>{item.gilhRef}</span>
-                </div>
-                <h4 className="font-serif text-base sm:text-lg font-bold text-stone-900 leading-snug">
-                  Q: {toCurvedQuotes(item.question)}
-                </h4>
-                <p className={`font-serif text-stone-800 leading-relaxed not-italic ${getTextSizeClass()}`}>
-                  <span className="font-cinzel font-bold text-amber-900 mr-1.5">A:</span>
-                  {toCurvedQuotes(item.answer)}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* VIEW MODE 3: WIDGET */}
+      {/* VIEW MODE 2: WIDGET */}
       {viewMode === 'widget' && (
         <section className="bg-white rounded-xl border border-stone-200/90 shadow-sm overflow-hidden space-y-3 p-4">
           <div className="flex items-center justify-between pb-2 border-b border-stone-200">

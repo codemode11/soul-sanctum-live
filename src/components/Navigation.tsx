@@ -406,7 +406,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: 'Catholic Social', 
       icon: CatholicSocialShareIcon, 
       tag: 'Social & Media', 
-      subtext: 'Catholic Instagram & Christendom.com' 
+      subtext: 'EWTN, Instagram, Christendom & Favorites' 
     },
     { 
       id: 'catholic-glossary', 

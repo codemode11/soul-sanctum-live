@@ -134,7 +134,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "Recorded live at Christendom College: Experience Catholic liberal arts education where faith and reason meet, forming men and women to \"restore all things in Christ\" with intellectual vigor and sacramental devotion.",
     "thumbnailUrl": "https://img.youtube.com/vi/ZXHoVTo-8vk/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/ZXHoVTo-8vk/hqdefault.jpg",
     "verified": true,
     "likes": "24K",
     "christendomUrl": "https://www.christendom.com"
@@ -152,7 +152,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "Fr. Mike Schmitz offers powerful spiritual counsel on overcoming distraction, dryness, and feelings of inadequacy in prayer. When feelings fade, persevering in prayer is the purest expression of authentic love for Jesus Christ.",
     "thumbnailUrl": "https://img.youtube.com/vi/Smana2aJxkQ/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/Smana2aJxkQ/hqdefault.jpg",
     "verified": true,
     "likes": "74K",
     "christendomUrl": "https://www.christendom.com"
@@ -170,7 +170,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "Bishop Robert Barron reflects on the classical natural law tradition of Saint Thomas Aquinas and its enduring power to bring truth, justice, and transcendent moral order to human society.",
     "thumbnailUrl": "https://img.youtube.com/vi/vNLWWiDXI8s/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/vNLWWiDXI8s/hqdefault.jpg",
     "verified": true,
     "likes": "22K",
     "christendomUrl": "https://www.christendom.com"
@@ -188,7 +188,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "Dr. Scott Hahn unfolds the profound biblical journey that brought him into the Catholic Church: uncovering the Holy Sacrifice of the Mass in the Book of Revelation and the early Church Fathers.",
     "thumbnailUrl": "https://img.youtube.com/vi/1sFMI6vIiH4/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/1sFMI6vIiH4/hqdefault.jpg",
     "verified": true,
     "likes": "19K",
     "christendomUrl": "https://www.christendom.com"
@@ -206,7 +206,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "Senior apologist Tim Staples addresses the Bread of Life discourse in John 6, Saint Paul’s warnings in 1 Corinthians 11, and the universal witness of the early Church that the Eucharist is the literal Body, Blood, Soul, and Divinity of Jesus Christ.",
     "thumbnailUrl": "https://img.youtube.com/vi/rTNXpLU8p50/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/rTNXpLU8p50/hqdefault.jpg",
     "verified": true,
     "likes": "16K",
     "christendomUrl": "https://www.christendom.com"
@@ -224,7 +224,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Documentaries",
     "description": "An evocative cinematic series from the Augustine Institute hosted by Chris Stefanick, exploring the foundational questions of human existence: Why are we here? What is the purpose of life? Where do we find lasting joy?",
     "thumbnailUrl": "https://img.youtube.com/vi/VUFZiFVfsHE/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/VUFZiFVfsHE/hqdefault.jpg",
     "verified": true,
     "likes": "42K",
     "christendomUrl": "https://www.christendom.com"
@@ -242,7 +242,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Church History",
     "description": "Deacon Sabatino Carnazzo presents the educational mission of the Institute of Catholic Culture: faithful adult formation in Sacred Scripture, Patristic theology, philosophy, and liturgical heritage.",
     "thumbnailUrl": "https://img.youtube.com/vi/KhPbUL6TL_U/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/KhPbUL6TL_U/hqdefault.jpg",
     "verified": true,
     "likes": "9.8K",
     "christendomUrl": "https://www.christendom.com"
@@ -260,7 +260,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Liturgy & Chant",
     "description": "EWTN Vatican explores the timeless treasure of Catholic sacred music: Gregorian chant, choral polyphony in Rome, and how noble liturgical music elevates the human heart toward heavenly contemplation.",
     "thumbnailUrl": "https://img.youtube.com/vi/1OiLU6-q0Dw/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/1OiLU6-q0Dw/hqdefault.jpg",
     "verified": true,
     "likes": "35K",
     "christendomUrl": "https://www.christendom.com"
@@ -278,7 +278,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Church History",
     "description": "Delivered at Christendom College: Renowned biographer Joseph Pearce explores the deep sacramental and Catholic theology woven into J.R.R. Tolkien’s Middle-earth, from the Lembas bread of the Eucharist to the triumph of humility over tyranny.",
     "thumbnailUrl": "https://img.youtube.com/vi/n27mXqW89oo/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/n27mXqW89oo/hqdefault.jpg",
     "verified": true,
     "likes": "8.2K",
     "christendomUrl": "https://www.christendom.com"
@@ -296,7 +296,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "We all make mistakes, and oftentimes, those mistakes hurt people. And when we've hurt people, we owe them an apology. But what goes into a good, heartfelt apology? What are the ingredients to mend a broken relationship? Fr. Mark-Mary reveals that the formula is hidden in the confessional—in the Act of Contrition. After",
     "thumbnailUrl": "https://img.youtube.com/vi/P4yTBOZLmyM/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/P4yTBOZLmyM/hqdefault.jpg",
     "verified": true,
     "likes": "439",
     "christendomUrl": "https://www.youtube.com/watch?v=P4yTBOZLmyM"
@@ -314,7 +314,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Documentaries",
     "description": "Friends, in the latest episode of the Word on Fire Show, I sat down with Matthew Petrusek to discuss the meaning of Catholic ordination. We examine why the Church maintains a distinction between clergy and laity, how ordination configures a man to Christ, the offices of deacon, priest, and bishop, common critiques of t",
     "thumbnailUrl": "https://img.youtube.com/vi/009BXm-uzsI/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/009BXm-uzsI/hqdefault.jpg",
     "verified": true,
     "likes": "302",
     "christendomUrl": "https://www.youtube.com/watch?v=009BXm-uzsI"
@@ -332,7 +332,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "The Scriptures reveal God's love and relationship with us throughout history. The Lord speaks to us through the Word. A great way to begin incorporating the Scriptures into your prayer life is by reading a passage or a chapter a day. A good place to start is the Gospels, where the Word made flesh enters history and sav",
     "thumbnailUrl": "https://img.youtube.com/vi/bgDFHQl6xVo/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/bgDFHQl6xVo/hqdefault.jpg",
     "verified": true,
     "likes": "161",
     "christendomUrl": "https://www.youtube.com/watch?v=bgDFHQl6xVo"
@@ -350,7 +350,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "More Catholic Answers: Donate: Book a speaker: SUBSCRIBE TO CA LIVE CLUB: Topic: AMA: Priesthood Guest: Tom Nash 0:00 - Intro 1:20 - Stop Extending Hands During 'Our Father,' Says Bishop 13:21 - Talking Apostolic Argument with Non Denominational Believers 20:41 - Should You Honor a Dishonorable Priest or Bishop? 37:02 ",
     "thumbnailUrl": "https://img.youtube.com/vi/t7O24SVkaUU/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/t7O24SVkaUU/hqdefault.jpg",
     "verified": true,
     "likes": "386",
     "christendomUrl": "https://www.youtube.com/watch?v=t7O24SVkaUU"
@@ -368,7 +368,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "Our 10th annual City of God Seminar for college students #CityofGod2026 — Presented by Augustine Institute & FORMED.",
     "thumbnailUrl": "https://img.youtube.com/vi/a3GM_JVr3Gc/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/a3GM_JVr3Gc/hqdefault.jpg",
     "verified": true,
     "likes": "46",
     "christendomUrl": "https://www.youtube.com/watch?v=a3GM_JVr3Gc"
@@ -386,7 +386,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "CHRIST IS RISEN! ALLELUIA! The Church has always prayed without ceasing. The Divine Office is how she does it — the hours, the Psalms, the sacred rhythm that has shaped Christian souls for centuries. In this course, Fr. David Anderson invites you into that living tradition, exploring the Roman Breviary, the Monastic Di",
     "thumbnailUrl": "https://img.youtube.com/vi/dAKNZuIZShU/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/dAKNZuIZShU/hqdefault.jpg",
     "verified": true,
     "likes": "23",
     "christendomUrl": "https://www.youtube.com/watch?v=dAKNZuIZShU"
@@ -404,7 +404,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Liturgy & Chant",
     "description": "Mother Angelica recounts a funny incident from a Bible class. Originally aired March 13, 1984 #ewtn #motherangelica #bible #bibleclass #catholic Stay connected with the content you care about. Subscribe to our new EWTN channels and never miss what inspires you. EWTN News: EWTN Live Mass & Devotions: EWTN On Air: EWTN R",
     "thumbnailUrl": "https://img.youtube.com/vi/RTKrujvtMR4/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/RTKrujvtMR4/hqdefault.jpg",
     "verified": true,
     "likes": "632",
     "christendomUrl": "https://www.youtube.com/watch?v=RTKrujvtMR4"
@@ -422,7 +422,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Church History",
     "description": "Welcome to the newest episode of Christendom Conversations, a podcast from Christendom College President George A. Harne, Ph.D., that offers listeners the opportunity to engage with the wisdom of the Catholic intellectual tradition. In this episode, Fr. Joseph Rampino joins Harne to discuss the history, spirituality, a",
     "thumbnailUrl": "https://img.youtube.com/vi/0PujK9Lt_rM/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/0PujK9Lt_rM/hqdefault.jpg",
     "verified": true,
     "likes": "6",
     "christendomUrl": "https://www.youtube.com/watch?v=0PujK9Lt_rM"
@@ -440,7 +440,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "What is the difference between happiness and authentic, lasting joy? In this conversation, Fr. Mike Schmitz is joined by Bishop Robert Barron (Diocese of Winona-Rochester and founder of Word on Fire) to explore the true origin of Christian joy. Together, they tackle some of the tough questions: Why does the modern purs",
     "thumbnailUrl": "https://img.youtube.com/vi/f-1LiVaXfvU/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/f-1LiVaXfvU/hqdefault.jpg",
     "verified": true,
     "likes": "3.0K",
     "christendomUrl": "https://www.youtube.com/watch?v=f-1LiVaXfvU"
@@ -458,7 +458,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "Friends, our first reading this Sunday from the book of Wisdom begins, “Resplendent and unfading is wisdom, and she is readily perceived by those who love her, and found by those who seek her.” The Bible is preoccupied with the search for wisdom because Jesus is the Wisdom of God made flesh. But to get there, I want to",
     "thumbnailUrl": "https://img.youtube.com/vi/-AOeAA4nhXw/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/-AOeAA4nhXw/hqdefault.jpg",
     "verified": true,
     "likes": "7.4K",
     "christendomUrl": "https://www.youtube.com/watch?v=-AOeAA4nhXw"
@@ -476,7 +476,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Liturgy & Chant",
     "description": "Many Protestant Christians claim that Catholics are guilty of idolatry for praying to Mary and the saints. Is this true? As Catholic Christians, we believe there are different types of prayer: latria, hyperdulia, and dulia. Latria is adoration and worship, the highest form of prayer reserved for God alone. Dulia is the",
     "thumbnailUrl": "https://img.youtube.com/vi/g3emMmOj3js/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/g3emMmOj3js/hqdefault.jpg",
     "verified": true,
     "likes": "529",
     "christendomUrl": "https://www.youtube.com/watch?v=g3emMmOj3js"
@@ -494,7 +494,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "More Catholic Answers: Donate: Book a speaker: SUBSCRIBE TO CA LIVE CLUB: Topic: How to Deal with Feels Guest: Dr. Greg Popcak 0:00 - Intro 0:25 - Why Do Christians Struggle with Emotions? 6:08 - Can Unpleasant Emotions Serve a Godly Purpose? 19:22 - How to Handle a Friend's Adultery from a Catholic Perspective? 27:40 ",
     "thumbnailUrl": "https://img.youtube.com/vi/lYC2GvxunJ0/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/lYC2GvxunJ0/hqdefault.jpg",
     "verified": true,
     "likes": "55",
     "christendomUrl": "https://www.youtube.com/watch?v=lYC2GvxunJ0"
@@ -512,7 +512,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Church History",
     "description": "Dr. Elizabeth Klein and Taylor Kemp explore the life of St. Aelred of Rieveaulx, a famous Cistercian monk from the 12th century. St. Aelred writes about the perfection of Christian friendship, while witnessing to it by his own life. His feast day is January 12. ▶ Learn more about the Saints on FORMED: ▶ Sign Up for FOR",
     "thumbnailUrl": "https://img.youtube.com/vi/DJcUcyFNNNE/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/DJcUcyFNNNE/hqdefault.jpg",
     "verified": true,
     "likes": "33",
     "christendomUrl": "https://www.youtube.com/watch?v=DJcUcyFNNNE"
@@ -530,7 +530,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Church History",
     "description": "\"Behold, I am the handmaid of the Lord. Let it be to me according to your word.\" — Luke 1:38 Even in the midst of Passiontide, we pause to honor this great mystery of the Incarnation. Celebrate the Solemnity of the Annunciation — the day God descended to dwell among his people once more, taking on flesh in the womb of ",
     "thumbnailUrl": "https://img.youtube.com/vi/FLW4U3DLzG4/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/FLW4U3DLzG4/hqdefault.jpg",
     "verified": true,
     "likes": "9",
     "christendomUrl": "https://www.youtube.com/watch?v=FLW4U3DLzG4"
@@ -548,7 +548,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Liturgy & Chant",
     "description": "Watch Catholics & Cappuccinos streaming now on EWTN+ and YouTube. Stay connected with the content you care about. Subscribe to our new EWTN channels and never miss what inspires you. EWTN News: EWTN Live Mass & Devotions: EWTN On Air: EWTN Radio: EWTN Religious Catalogue: EWTN Kids: EWTN Espanol: ACI Prensa: Franciscan",
     "thumbnailUrl": "https://img.youtube.com/vi/0aLo-GYFrHU/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/0aLo-GYFrHU/hqdefault.jpg",
     "verified": true,
     "likes": "296",
     "christendomUrl": "https://www.youtube.com/watch?v=0aLo-GYFrHU"
@@ -566,7 +566,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "Academics at Christendom College — Presented by Christendom College & Media.",
     "thumbnailUrl": "https://img.youtube.com/vi/9wFYQZjV_dc/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/9wFYQZjV_dc/hqdefault.jpg",
     "verified": true,
     "likes": "7",
     "christendomUrl": "https://www.youtube.com/watch?v=9wFYQZjV_dc"
@@ -584,7 +584,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "How we live is how we die, and how we die is how we will live forever. — Presented by Ascension Presents.",
     "thumbnailUrl": "https://img.youtube.com/vi/E3iTc3cYNPo/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/E3iTc3cYNPo/hqdefault.jpg",
     "verified": true,
     "likes": "3.2K",
     "christendomUrl": "https://www.youtube.com/watch?v=E3iTc3cYNPo"
@@ -602,7 +602,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "Friends, All Saints Day falls on a Sunday this year, so the Church can give special attention to this important solemnity. Léon Bloy famously said that there is only one real sadness in life: not to be a saint. Sainthood is the ordinary goal of Christian life; it’s what the whole spiritual life is about. But what does ",
     "thumbnailUrl": "https://img.youtube.com/vi/KcqdAPu6ew0/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/KcqdAPu6ew0/hqdefault.jpg",
     "verified": true,
     "likes": "8.0K",
     "christendomUrl": "https://www.youtube.com/watch?v=KcqdAPu6ew0"
@@ -620,7 +620,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "To order Kingdom Come and The Emmaus Paradigm, visit: stpaulcenter.com/emmaus. Read alone, these books are rich entry points into salvation history. Read together, they trace one arc from the Kingdom promised to the Kingdom fulfilled in the Church. In Kingdom Come, we are shown how the Chronicler presents the comprehen",
     "thumbnailUrl": "https://img.youtube.com/vi/ABCmRFdwA1Y/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/ABCmRFdwA1Y/hqdefault.jpg",
     "verified": true,
     "likes": "811",
     "christendomUrl": "https://www.youtube.com/watch?v=ABCmRFdwA1Y"
@@ -638,7 +638,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "More Catholic Answers: Donate: Book a speaker: SUBSCRIBE TO CA LIVE CLUB: Topic: AMA: Catholicism Guest: Jimmy Akin More Catholic Answers: Donate: Book a speaker: SUBSCRIBE TO CA LIVE CLUB: Topic: Catholic Answers Live (Hour 1) Guest: Jimmy Akin Description: 0:00 - Intro 2:00 - Why Do We Need the Church for Indulgences",
     "thumbnailUrl": "https://img.youtube.com/vi/a7qDdSZjuqw/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/a7qDdSZjuqw/hqdefault.jpg",
     "verified": true,
     "likes": "175",
     "christendomUrl": "https://www.youtube.com/watch?v=a7qDdSZjuqw"
@@ -656,7 +656,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "Who is St. Malachy of Armagh? The answer, in short, is, \"It's complicated.\" A saint during the Middle Ages, St. Malachy served as a bishop in Ireland and helped to reform the Church there, navigating many difficult political situations. Join Dr. Elizabeth Klein and Mary McGeehan as they dive into the life of St. Malach",
     "thumbnailUrl": "https://img.youtube.com/vi/yeVHwGGjnZg/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/yeVHwGGjnZg/hqdefault.jpg",
     "verified": true,
     "likes": "43",
     "christendomUrl": "https://www.youtube.com/watch?v=yeVHwGGjnZg"
@@ -674,7 +674,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Church History",
     "description": "\"Lent is meant to bring us to a reflowering... There is no beauty without a digging of the ground so that it might come forth.\" — Mother Mary Francis Join ICC and the Filiae Laboris Mariae Sisters for daily Lenten reflections from A Time of Renewal by Poor Clare Abbess Mother Mary Francis. Let this Lent renew your life",
     "thumbnailUrl": "https://img.youtube.com/vi/A0ljYn71kXM/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/A0ljYn71kXM/hqdefault.jpg",
     "verified": true,
     "likes": "20",
     "christendomUrl": "https://www.youtube.com/watch?v=A0ljYn71kXM"
@@ -692,7 +692,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Liturgy & Chant",
     "description": "Watch Lost + Found, streaming now on EWTN+ and YouTube! #ewtn #lostandfound #catholicpodcast Stay connected with the content you care about. Subscribe to our new EWTN channels and never miss what inspires you. EWTN News: EWTN Live Mass & Devotions: EWTN On Air: EWTN Radio: EWTN Religious Catalogue: EWTN Kids: EWTN Espa",
     "thumbnailUrl": "https://img.youtube.com/vi/LEuxjyH5lSQ/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/LEuxjyH5lSQ/hqdefault.jpg",
     "verified": true,
     "likes": "166",
     "christendomUrl": "https://www.youtube.com/watch?v=LEuxjyH5lSQ"
@@ -710,7 +710,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "Nearly $30,000 was raised to support Christendom’s student-athletes at the seventeenth annual Thomas S. Vander Woude Golf Tournament, held in October 2026 at the Shenandoah Valley Golf Club. The event brought together more than 150 golfers, including alumni, current students, friends, and benefactors of the college, al",
     "thumbnailUrl": "https://img.youtube.com/vi/E98JyvKH7JE/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/E98JyvKH7JE/hqdefault.jpg",
     "verified": true,
     "likes": "5",
     "christendomUrl": "https://www.youtube.com/watch?v=E98JyvKH7JE"
@@ -728,7 +728,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "Our differences are ordered towards collaboration and communion, not conflict. — Presented by Ascension Presents.",
     "thumbnailUrl": "https://img.youtube.com/vi/sV2ABWDfPGc/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/sV2ABWDfPGc/hqdefault.jpg",
     "verified": true,
     "likes": "509",
     "christendomUrl": "https://www.youtube.com/watch?v=sV2ABWDfPGc"
@@ -746,7 +746,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Documentaries",
     "description": "Friends, in the latest episode of the Word on Fire Show, I sat down with Matthew Petrusek to discuss the epidemic of public fraud and why it is a grave assault on the common good. We examine what Catholic social teaching says about theft from the public treasury, the harm this does to the poor, and how Christians can d",
     "thumbnailUrl": "https://img.youtube.com/vi/mMeSt1AmZGk/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/mMeSt1AmZGk/hqdefault.jpg",
     "verified": true,
     "likes": "1.2K",
     "christendomUrl": "https://www.youtube.com/watch?v=mMeSt1AmZGk"
@@ -764,7 +764,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "To watch the full video, visit the link below: ➡️ In this episode of The Road to Emmaus, Scott Hahn draws us into the book of Job, approaching it not from the angle of the problem of suffering but as a covenant ordeal. If you’ve ever struggled to understand the deeper meaning of Job, or if the answers you encountered i",
     "thumbnailUrl": "https://img.youtube.com/vi/4k7amHM5ouQ/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/4k7amHM5ouQ/hqdefault.jpg",
     "verified": true,
     "likes": "485",
     "christendomUrl": "https://www.youtube.com/watch?v=4k7amHM5ouQ"
@@ -782,7 +782,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "More Catholic Answers: Donate: Book a speaker: SUBSCRIBE TO CA LIVE CLUB: Topic: AMA: Salvation Guest: Brayden Cook 0:00 - Intro 1:04 - The Five Solas of Protestantism; Catholic Responses 14:49 - Did the Rich Young Ruler's Question to Jesus Concern Salvation? 18:08 - Are You Saved? My Baptism Story 20:32 - Responding t",
     "thumbnailUrl": "https://img.youtube.com/vi/0atUNRnhxsc/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/0atUNRnhxsc/hqdefault.jpg",
     "verified": true,
     "likes": "152",
     "christendomUrl": "https://www.youtube.com/watch?v=0atUNRnhxsc"
@@ -800,7 +800,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "There are lots of Jameses mentioned in the Gospels, including two among Jesus' twelve apostles. In this episode of Catholic Saints, Dr. James Prothro (another James!) and Mary McGeehan talk about the life and witness of the first bishop of Jerusalem. They also discuss the Letter of James and how Catholics today can fol",
     "thumbnailUrl": "https://img.youtube.com/vi/iCpn3z_AZ7o/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/iCpn3z_AZ7o/hqdefault.jpg",
     "verified": true,
     "likes": "59",
     "christendomUrl": "https://www.youtube.com/watch?v=iCpn3z_AZ7o"
@@ -817,8 +817,8 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "publishedAt": "Feb 1, 2026",
     "category": "Church History",
     "description": "Forty days after Christmas, Mary and Joseph bring the infant Jesus to the Temple in Jerusalem. In that moment, the Author of the Law submits Himself to it, carried by the New Ark into His own holy dwelling. And the aged Simeon, who has waited his entire life, receives the Child and declares: \"Now, O Lord, dismiss me in",
-    "thumbnailUrl": "https://img.youtube.com/vi/oKP8OUCx_II/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80",
+    "thumbnailUrl": "https://img.youtube.com/vi/oKP8OUCx_II/hqdefault.jpg",
+    "fallbackImageUrl": "https://img.youtube.com/vi/oKP8OUCx_II/hqdefault.jpg",
     "verified": true,
     "likes": "10",
     "christendomUrl": "https://www.youtube.com/watch?v=oKP8OUCx_II"
@@ -836,7 +836,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Liturgy & Chant",
     "description": "Watch the special \"Zero A.D. Roundtable\" streaming now on EWTN+ #ewtn #zeroad #zeroadmovie Stay connected with the content you care about. Subscribe to our new EWTN channels and never miss what inspires you. EWTN News: EWTN Live Mass & Devotions: EWTN On Air: EWTN Radio: EWTN Religious Catalogue: EWTN Kids: EWTN Espano",
     "thumbnailUrl": "https://img.youtube.com/vi/ZMB7nIuUiW4/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/ZMB7nIuUiW4/hqdefault.jpg",
     "verified": true,
     "likes": "244",
     "christendomUrl": "https://www.youtube.com/watch?v=ZMB7nIuUiW4"
@@ -854,7 +854,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "Christendom College welcomed political theorist Dr. Matthew Mehan to campus for a special lecture on Monday, October 8. Mehan, a professor of Government science at the Van Andel Graduate School of Government at Hillsdale College in Washington, D.C., spoke on “myths and storytelling\" and his best-selling new book, \"The ",
     "thumbnailUrl": "https://img.youtube.com/vi/70XkIOPtqlQ/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/70XkIOPtqlQ/hqdefault.jpg",
     "verified": true,
     "likes": "10",
     "christendomUrl": "https://www.youtube.com/watch?v=70XkIOPtqlQ"
@@ -872,7 +872,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "How does a Catholic apostolate embrace rapid digital innovation without losing sight of the Gospel? In this episode of the Called podcast, Fr. Mike Schmitz talks with Jonathan Strate, President and CEO of Ascension. Jonathan shares his journey from working 10 years in aerospace engineering to Catholic media/publishing.",
     "thumbnailUrl": "https://img.youtube.com/vi/zDvVWnV49Do/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/zDvVWnV49Do/hqdefault.jpg",
     "verified": true,
     "likes": "224",
     "christendomUrl": "https://www.youtube.com/watch?v=zDvVWnV49Do"
@@ -890,7 +890,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "Friends, our Gospel this Sunday is from the twenty-second chapter of the Gospel of Matthew. Jesus has been doing battle with the scribes and Pharisees, and this passage brings that great argument to a conclusion in an interesting way. One of the teachers of the law, making an old move in rabbinic circles, tests him: “T",
     "thumbnailUrl": "https://img.youtube.com/vi/u6Cqlpslo38/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/u6Cqlpslo38/hqdefault.jpg",
     "verified": true,
     "likes": "8.3K",
     "christendomUrl": "https://www.youtube.com/watch?v=u6Cqlpslo38"
@@ -908,7 +908,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "If you’re like most Bible readers, you probably learned to read the book of Job as a biblical treatise on the problem of suffering. But Job is so much more. In this episode of The Road to Emmaus, Scott Hahn draws us into the book of Job, approaching it not from the angle of the problem of suffering but as a covenant or",
     "thumbnailUrl": "https://img.youtube.com/vi/UrWhOCPCTlI/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/UrWhOCPCTlI/hqdefault.jpg",
     "verified": true,
     "likes": "2.7K",
     "christendomUrl": "https://www.youtube.com/watch?v=UrWhOCPCTlI"
@@ -926,7 +926,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Apologetics & Culture",
     "description": "More Catholic Answers: Donate: Book a speaker: SUBSCRIBE TO CA LIVE CLUB: Topic: Bishop Baron and Cardinal Vesco | Pope Leo and Bob Dylan Guest: Cy Kellett, Thomas Graf, Edgar Lujano 0:00 - Intro 2:10 - Bishop Barron Picks A Fight 6:29 - Cardinal Vesco And Proselytism 14:07 - Rome Is Complicated 17:46 - Our Thumbnail K",
     "thumbnailUrl": "https://img.youtube.com/vi/K7ZzzANY_ko/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/K7ZzzANY_ko/hqdefault.jpg",
     "verified": true,
     "likes": "115",
     "christendomUrl": "https://www.youtube.com/watch?v=K7ZzzANY_ko"
@@ -944,7 +944,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "Join Dr. Ben Akers with Lucas Pollice as they discuss the life of Pope St. Pius X and his work to restore all things in Christ, particularly through catechesis of youth. ▶ Check out the Augustine Institute: ▶ Get a FREE 7-day trial of FORMED ▬▬▬▬▬▬▬▬▬▬▬▬▬ FIND ANSWERS ON SOCIAL: ▬▬▬▬▬▬▬▬▬▬▬▬▬ 🔔 SUBSCRIBE FOR MORE: ▶ F",
     "thumbnailUrl": "https://img.youtube.com/vi/ho9r1WVUlik/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/ho9r1WVUlik/hqdefault.jpg",
     "verified": true,
     "likes": "34",
     "christendomUrl": "https://www.youtube.com/watch?v=ho9r1WVUlik"
@@ -962,7 +962,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Church History",
     "description": "Can Christianity save civilization? When Rome fell, Christians were blamed for the empire's collapse. St. Augustine's response—The City of God—became one of the most influential works in Western history. Augustine didn't just defend Christianity. He used Roman philosophy itself to prove that Christianity wasn't the pro",
     "thumbnailUrl": "https://img.youtube.com/vi/xo0SDgocyqw/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/xo0SDgocyqw/hqdefault.jpg",
     "verified": true,
     "likes": "59",
     "christendomUrl": "https://www.youtube.com/watch?v=xo0SDgocyqw"
@@ -980,7 +980,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Liturgy & Chant",
     "description": "Paul Laudiero introduces his new show \"It's Not Too Late\". Coming November 20th on EWTN! #ewtn #motherangelica #itsnottoolate #paullaudiero Stay connected with the content you care about. Subscribe to our new EWTN channels and never miss what inspires you. EWTN News: EWTN Live Mass & Devotions: EWTN On Air: EWTN Radio:",
     "thumbnailUrl": "https://img.youtube.com/vi/Y3f9WsvPvfY/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/Y3f9WsvPvfY/hqdefault.jpg",
     "verified": true,
     "likes": "1.3K",
     "christendomUrl": "https://www.youtube.com/watch?v=Y3f9WsvPvfY"
@@ -998,7 +998,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "Why should adults read children’s literature? And what can these timeless stories teach us about living well? In this lecture, Christendom College English professor Dr. Kathleen Sullivan explores the enduring value of children’s literature and its power to cultivate imagination, strengthen virtue, and renew our sense o",
     "thumbnailUrl": "https://img.youtube.com/vi/fCCFGAWhjwE/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/fCCFGAWhjwE/hqdefault.jpg",
     "verified": true,
     "likes": "8",
     "christendomUrl": "https://www.youtube.com/watch?v=fCCFGAWhjwE"
@@ -1016,7 +1016,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "Your Advent invitation is cleared for landing. ✈️ Prepare your heart for Christmas with Fr. Mike Schmitz in Joy to the World, a new Advent program exclusively in the Ascension App!",
     "thumbnailUrl": "https://img.youtube.com/vi/2OO0_hRrJB4/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/2OO0_hRrJB4/hqdefault.jpg",
     "verified": true,
     "likes": "1.7K",
     "christendomUrl": "https://www.youtube.com/watch?v=2OO0_hRrJB4"
@@ -1034,7 +1034,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Theology & Homilies",
     "description": "Friends, I traveled today to the Planned Parenthood in Rochester to join a group of seminarians and lay people in praying for an end to abortion. Over the years, it has been edifying to join in prayer with 40 Days for Life and to see the progress being made to uphold the dignity of every human life. As I mentioned to o",
     "thumbnailUrl": "https://img.youtube.com/vi/lZQKli8wu7A/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/lZQKli8wu7A/hqdefault.jpg",
     "verified": true,
     "likes": "3.2K",
     "christendomUrl": "https://www.youtube.com/watch?v=lZQKli8wu7A"
@@ -1052,7 +1052,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "To watch the full episode, visit: ➡️ In this special episode of Stunned by Scripture, Dr. John Bergsma is joined by long-time friend, colleague, and founder and president of the St. Paul Center, Dr. Scott Hahn. In their conversation amongst friends and theologians, you’ll discover what led Scott Hahn to the Catholic Ch",
     "thumbnailUrl": "https://img.youtube.com/vi/eD_--c3BOIQ/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/eD_--c3BOIQ/hqdefault.jpg",
     "verified": true,
     "likes": "435",
     "christendomUrl": "https://www.youtube.com/watch?v=eD_--c3BOIQ"
@@ -1070,7 +1070,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "More Catholic Answers: Donate: Book a speaker: SUBSCRIBE TO CA LIVE CLUB: Topic: How to evangelize without being a jerk Guest: Tim Staples 0:00 - Bishop Barron vs. Cardinals; Should the Church Convert People? 15:36 - Addressing Secularism in Prosperous Societies 20:55 - Tips for Sharing the Gospel with Jehovah's Witnes",
     "thumbnailUrl": "https://img.youtube.com/vi/3O7eDFM6Cso/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/3O7eDFM6Cso/hqdefault.jpg",
     "verified": true,
     "likes": "233",
     "christendomUrl": "https://www.youtube.com/watch?v=3O7eDFM6Cso"
@@ -1087,8 +1087,8 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "publishedAt": "Nov 3, 2025",
     "category": "Sacred Scripture",
     "description": "Watch 'How to Advent' here: ➡️ Check out the Augustine Institute: ➡️ Get a FREE 7-day trial of Formed: FIND US ON SOCIAL: 🔔 SUBSCRIBE FOR MORE: ➡️ Augustine Institute Facebook: ➡️ Augustine Institute Instagram: ➡️ Formed Facebook Page: ➡️ Formed Instagram Page:",
-    "thumbnailUrl": "https://img.youtube.com/vi/2hnE9EWD4dc/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80",
+    "thumbnailUrl": "https://img.youtube.com/vi/2hnE9EWD4dc/hqdefault.jpg",
+    "fallbackImageUrl": "https://img.youtube.com/vi/2hnE9EWD4dc/hqdefault.jpg",
     "verified": true,
     "likes": "58",
     "christendomUrl": "https://www.youtube.com/watch?v=2hnE9EWD4dc"
@@ -1106,7 +1106,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Sacred Scripture",
     "description": "Join Dr. Jared Staudt and Fr. Hezekias for a theological tour of Sainte-Chapelle's Rose Window—a medieval masterpiece narrating the entire Book of Revelation in glass and light. Discover how this window teaches through overwhelming beauty, revealing the faith \"not as a packet of dogmas and commandments, but as a unique",
     "thumbnailUrl": "https://img.youtube.com/vi/zdbLm0J-sN8/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1548625361-1959779df3a8?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/zdbLm0J-sN8/hqdefault.jpg",
     "verified": true,
     "likes": "23",
     "christendomUrl": "https://www.youtube.com/watch?v=zdbLm0J-sN8"
@@ -1124,7 +1124,7 @@ export const CHRISTENDOM_VIDEOS: ChristendomVideo[] = [
     "category": "Documentaries",
     "description": "Joy Pinto joins Lost + Found to share her remarkable journey of faith. After discovering Christ as a teenage yoga instructor she never thought she would later become a pastor’s wife who would be arrested for her pro-life advocacy. Joy thought she knew what her faith required until her husband converted to the Catholic ",
     "thumbnailUrl": "https://img.youtube.com/vi/r1FC3fCNW8g/maxresdefault.jpg",
-    "fallbackImageUrl": "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80",
+    "fallbackImageUrl": "https://img.youtube.com/vi/r1FC3fCNW8g/hqdefault.jpg",
     "verified": true,
     "likes": "156",
     "christendomUrl": "https://www.youtube.com/watch?v=r1FC3fCNW8g"

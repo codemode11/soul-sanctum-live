@@ -10,6 +10,8 @@ interface EwtnLiveVideoPlayerProps {
   subtitle?: string;
   portalUrl?: string;
   autoPlay?: boolean;
+  playSignal?: number;
+  onPlayingChange?: (playing: boolean) => void;
 }
 
 export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
@@ -19,17 +21,23 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
   title,
   subtitle,
   portalUrl = 'https://www.ewtn.com/live/tv',
-  autoPlay = true
+  autoPlay = false,
+  playSignal = 0,
+  onPlayingChange
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hlsRef = useRef<Hls | null>(null);
+  const manifestReadyRef = useRef<boolean>(false);
+  const pendingPlayRef = useRef<boolean>(false);
+  const autoPlayRef = useRef<boolean>(autoPlay);
+  autoPlayRef.current = autoPlay;
 
   const [activeHlsUrl, setActiveHlsUrl] = useState<string | undefined>(streamUrl);
   const [triedFallback, setTriedFallback] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(autoPlay);
   const [hasError, setHasError] = useState(false);
   const [reloadNonce, setReloadNonce] = useState(0);
   const [isNativeFullscreen, setIsNativeFullscreen] = useState(false);
@@ -74,8 +82,55 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
     setActiveHlsUrl(streamUrl);
     setTriedFallback(false);
     setHasError(false);
-    setIsLoading(true);
-  }, [streamUrl, fallbackStreamUrl, embedUrl]);
+    setIsPlaying(false);
+    setIsLoading(autoPlayRef.current);
+    manifestReadyRef.current = false;
+    pendingPlayRef.current = false;
+    onPlayingChange?.(false);
+  }, [streamUrl, fallbackStreamUrl, embedUrl, onPlayingChange]);
+
+  const startVideoPlayback = (video: HTMLVideoElement) => {
+    pendingPlayRef.current = false;
+    video
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        // Browsers may block unmuted autoplay; retry muted so the live video starts immediately
+        video.muted = true;
+        setIsMuted(true);
+        video
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+            setIsLoading(false);
+          })
+          .catch(() => {
+            setIsPlaying(false);
+            setIsLoading(false);
+          });
+      });
+  };
+
+  const prevPlaySignalRef = useRef<number>(playSignal);
+
+  useEffect(() => {
+    if (playSignal <= prevPlaySignalRef.current) {
+      prevPlaySignalRef.current = playSignal;
+      return;
+    }
+    prevPlaySignalRef.current = playSignal;
+    const video = videoRef.current;
+    if (!video) return;
+    if (manifestReadyRef.current) {
+      startVideoPlayback(video);
+    } else {
+      pendingPlayRef.current = true;
+      setIsLoading(true);
+    }
+  }, [playSignal]);
 
   useEffect(() => {
     if (!activeHlsUrl) {
@@ -86,7 +141,9 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
     const video = videoRef.current;
     if (!video) return;
 
-    setIsLoading(true);
+    manifestReadyRef.current = false;
+    setIsPlaying(false);
+    setIsLoading(autoPlayRef.current || pendingPlayRef.current);
     setHasError(false);
 
     // Cleanup previous HLS instance
@@ -96,31 +153,11 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
     }
 
     const attemptPlay = () => {
-      if (!autoPlay) {
+      if (!autoPlayRef.current && !pendingPlayRef.current) {
         setIsLoading(false);
         return;
       }
-      video
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          // Browsers may block unmuted autoplay; retry muted so the live video starts immediately
-          video.muted = true;
-          setIsMuted(true);
-          video
-            .play()
-            .then(() => {
-              setIsPlaying(true);
-              setIsLoading(false);
-            })
-            .catch(() => {
-              setIsPlaying(false);
-              setIsLoading(false);
-            });
-        });
+      startVideoPlayback(video);
     };
 
     if (Hls.isSupported()) {
@@ -135,6 +172,7 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
       hls.attachMedia(video);
 
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        manifestReadyRef.current = true;
         setIsLoading(false);
         attemptPlay();
       });
@@ -175,6 +213,7 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
       // Native HLS support (Safari / iOS)
       video.src = activeHlsUrl;
       const handleLoadedMetadata = () => {
+        manifestReadyRef.current = true;
         setIsLoading(false);
         attemptPlay();
       };
@@ -197,17 +236,29 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
       setHasError(true);
       setIsLoading(false);
     }
-  }, [activeHlsUrl, fallbackStreamUrl, triedFallback, autoPlay, reloadNonce]);
+  }, [activeHlsUrl, fallbackStreamUrl, triedFallback, reloadNonce]);
 
   const handleTogglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
+      if (!manifestReadyRef.current) {
+        pendingPlayRef.current = true;
+        setIsLoading(true);
+        return;
+      }
       video
         .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => setIsPlaying(false));
+        .then(() => {
+          setIsPlaying(true);
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setIsPlaying(false);
+          setIsLoading(false);
+        });
     } else {
+      pendingPlayRef.current = false;
       video.pause();
       setIsPlaying(false);
     }
@@ -309,8 +360,15 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
         playsInline
         onClick={handleTogglePlay}
         onDoubleClick={handleFullscreen}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
+        onPlay={() => {
+          setIsPlaying(true);
+          setIsLoading(false);
+          onPlayingChange?.(true);
+        }}
+        onPause={() => {
+          setIsPlaying(false);
+          onPlayingChange?.(false);
+        }}
         onVolumeChange={() => {
           if (videoRef.current) {
             setIsMuted(videoRef.current.muted);

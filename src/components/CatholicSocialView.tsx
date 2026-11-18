@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import {
   ExternalLink,
   RefreshCw,
@@ -15,7 +16,9 @@ import {
   Search,
   ThumbsUp,
   Eye,
-  CheckCircle2
+  CheckCircle2,
+  Star,
+  Bookmark
 } from 'lucide-react';
 import {
   CATHOLIC_INSTAGRAM_SOURCES,
@@ -30,7 +33,16 @@ import {
 import { CatholicSocialShareIcon } from './SanctumIcons';
 import { EwtnLiveVideoPlayer } from './EwtnLiveVideoPlayer';
 
-type SocialPlatformTab = 'all' | 'ewtn' | 'instagram' | 'christendom';
+type SocialPlatformTab = 'all' | 'favorites' | 'ewtn' | 'instagram' | 'christendom';
+
+const FAVORITES_STORAGE_KEY = 'sanctum_catholic_social_favorites_v1';
+const CUSTOM_IG_FAVORITES_STORAGE_KEY = 'sanctum_catholic_social_custom_ig_v1';
+
+const DEFAULT_FAVORITE_FEEDS: string[] = [
+  'ewtn-tv:ewtn-us-global',
+  'ig:aleteia_en',
+  'christendom:ch-wordonfire'
+];
 
 interface EwtnEpgChannelInfo {
   channelId: string;
@@ -52,6 +64,61 @@ interface EwtnEpgChannelInfo {
 
 export const CatholicSocialView: React.FC = () => {
   const [activePlatform, setActivePlatform] = useState<SocialPlatformTab>('all');
+
+  // =========================================================================
+  // FAVORITE FEEDS STATE (PERSISTED IN LOCALSTORAGE)
+  // =========================================================================
+  const [favoriteIds, setFavoriteIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem(FAVORITES_STORAGE_KEY);
+      if (saved !== null) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.filter(
+            (id): id is string => typeof id === 'string' && !id.startsWith('fb:') && id !== 'soul-sanctum-fb'
+          );
+        }
+      }
+    } catch {
+      // ignore storage errors
+    }
+    return DEFAULT_FAVORITE_FEEDS;
+  });
+
+  const [customIgSources, setCustomIgSources] = useState<CatholicInstagramSource[]>(() => {
+    try {
+      const saved = localStorage.getItem(CUSTOM_IG_FAVORITES_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch {
+      // ignore
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteIds));
+    } catch {
+      // ignore
+    }
+  }, [favoriteIds]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CUSTOM_IG_FAVORITES_STORAGE_KEY, JSON.stringify(customIgSources));
+    } catch {
+      // ignore
+    }
+  }, [customIgSources]);
+
+  const isFavorite = useCallback((id: string) => favoriteIds.includes(id), [favoriteIds]);
+
+  const toggleFavorite = useCallback((id: string) => {
+    setFavoriteIds(prev => (prev.includes(id) ? prev.filter(item => item !== id) : [id, ...prev]));
+  }, []);
 
   // =========================================================================
   // EWTN HUB STATE (TELEVISION, RADIO & 24/7 EUCHARISTIC ADORATION)
@@ -195,6 +262,20 @@ export const CatholicSocialView: React.FC = () => {
   const [selectedTvChannelId, setSelectedTvChannelId] = useState<string>('ewtn-us-global');
   const [selectedAdorationId, setSelectedAdorationId] = useState<string>('ewtn-adoration-melbourne');
   const [ewtnStageKey, setEwtnStageKey] = useState<number>(0);
+  const [isEwtnTvPlaying, setIsEwtnTvPlaying] = useState<boolean>(false);
+  const [shouldAutoPlayTv, setShouldAutoPlayTv] = useState<boolean>(false);
+  const [tvPlaySignal, setTvPlaySignal] = useState<number>(0);
+
+  const handleWatchEwtnTvChannel = useCallback((channelId: string) => {
+    setShouldAutoPlayTv(true);
+    setEwtnHubTab('tv');
+    if (selectedTvChannelId === channelId) {
+      setTvPlaySignal(prev => prev + 1);
+    } else {
+      setIsEwtnTvPlaying(false);
+      setSelectedTvChannelId(channelId);
+    }
+  }, [selectedTvChannelId]);
 
   // Fetch live EWTN EPG schedule and verify live stream URLs
   useEffect(() => {
@@ -476,6 +557,9 @@ export const CatholicSocialView: React.FC = () => {
         profileUrl: `https://www.instagram.com/${cleanUser}/`,
         defaultShortcodes: []
       };
+      setCustomIgSources(prev =>
+        prev.some(s => s.username.toLowerCase() === cleanUser.toLowerCase()) ? prev : [customSource, ...prev]
+      );
       setSelectedIgSource(customSource);
       setCustomIgInput('');
     }
@@ -637,6 +721,17 @@ export const CatholicSocialView: React.FC = () => {
                 All Feeds
               </button>
               <button
+                onClick={() => setActivePlatform('favorites')}
+                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap inline-flex items-center gap-1.5 ${
+                  activePlatform === 'favorites'
+                    ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 border-amber-200 shadow-sm'
+                    : 'bg-[#1C120C]/90 text-amber-300 border-amber-500/50 hover:border-amber-300/80 hover:text-amber-100'
+                }`}
+              >
+                <Star className={`w-3.5 h-3.5 ${activePlatform === 'favorites' ? 'fill-stone-950' : 'fill-amber-400/70'}`} />
+                <span>Favorites ({favoriteIds.length})</span>
+              </button>
+              <button
                 onClick={() => setActivePlatform('ewtn')}
                 className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'ewtn'
@@ -671,6 +766,90 @@ export const CatholicSocialView: React.FC = () => {
         </div>
       </div>
 
+      {/* Quick-Jump Favorite Feeds Bar (Visible in All Feeds mode) */}
+      {activePlatform === 'all' && favoriteIds.length > 0 && (
+        <div className="rounded-xl bg-[#FAF5EE]/90 border border-amber-800/25 px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 shadow-xs">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="inline-flex items-center gap-1 text-[11px] font-cinzel font-bold uppercase tracking-wider text-amber-900 mr-1">
+              <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-600" />
+              <span>Favorite Feeds:</span>
+            </span>
+            {favoriteIds.slice(0, 6).map(favId => {
+              let label = favId;
+              let onJump = () => setActivePlatform('favorites');
+              if (favId.startsWith('ewtn-tv:')) {
+                const cid = favId.slice(8);
+                const ch = ewtnTvChannels.find(c => c.id === cid);
+                label = ch ? ch.label.replace(/\s*\(.*\)/, '') : 'EWTN TV';
+                onJump = () => {
+                  if (ch) {
+                    handleWatchEwtnTvChannel(ch.id);
+                  } else {
+                    setEwtnHubTab('tv');
+                  }
+                  setActivePlatform('ewtn');
+                };
+              } else if (favId.startsWith('ewtn-radio:')) {
+                const rid = favId.slice(11) as typeof selectedRadioId;
+                const st = ewtnRadioStations.find(s => s.id === rid);
+                label = st ? st.name.replace(/\s*\(.*\)/, '') : 'EWTN Radio';
+                onJump = () => {
+                  if (st) {
+                    setEwtnHubTab('radio');
+                    handleToggleRadio(st.id);
+                  }
+                  setActivePlatform('ewtn');
+                };
+              } else if (favId.startsWith('ewtn-adoration:')) {
+                const aid = favId.slice(15);
+                const ap = ewtnAdorationChapels.find(c => c.id === aid);
+                label = ap ? ap.label.split('•')[0].trim() : 'Adoration';
+                onJump = () => {
+                  if (ap) {
+                    setEwtnHubTab('adoration');
+                    setSelectedAdorationId(ap.id);
+                  }
+                  setActivePlatform('ewtn');
+                };
+              } else if (favId.startsWith('ig:')) {
+                const uname = favId.slice(3);
+                const ig = [...customIgSources, ...CATHOLIC_INSTAGRAM_SOURCES].find(s => s.username === uname);
+                label = ig ? `IG · ${ig.name}` : `@${uname}`;
+                onJump = () => {
+                  if (ig) setSelectedIgSource(ig);
+                  setActivePlatform('instagram');
+                };
+              } else if (favId.startsWith('christendom:')) {
+                const cid = favId.slice(12);
+                const ch = CHRISTENDOM_CHANNELS.find(c => c.id === cid);
+                label = ch ? ch.name.replace(/\s*\(.*\)/, '') : 'Christendom';
+                onJump = () => {
+                  if (ch) setSelectedChannelId(ch.id);
+                  setActivePlatform('christendom');
+                };
+              }
+              return (
+                <button
+                  key={favId}
+                  type="button"
+                  onClick={onJump}
+                  className="px-2.5 py-1 rounded-md bg-white hover:bg-amber-100/80 border border-amber-700/25 text-[11px] font-serif font-medium text-stone-800 cursor-pointer transition-colors"
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => setActivePlatform('favorites')}
+            className="text-[11px] font-cinzel font-bold text-amber-900 hover:text-amber-700 underline underline-offset-2 cursor-pointer shrink-0"
+          >
+            View All Favorites ({favoriteIds.length})
+          </button>
+        </div>
+      )}
+
       {/* Hidden HTML5 Audio Element for EWTN 24/7 Live Radio */}
       <audio
         ref={radioAudioRef}
@@ -699,7 +878,283 @@ export const CatholicSocialView: React.FC = () => {
       />
 
       {/* =====================================================================
-          0. EWTN GLOBAL CATHOLIC NETWORK HUB (TV • RADIO • 24/7 ADORATION)
+          0A. FAVORITE FEEDS HUB (UNIFIED CROSS-PLATFORM FAVORITES VIEW)
+          ===================================================================== */}
+      {activePlatform === 'favorites' && (
+        <section className="rounded-2xl bg-[#FBF9F5] border border-amber-800/25 shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-[#241307] via-[#3A2210] to-[#241307] px-4 py-4 sm:px-6 border-b border-amber-500/35 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-1 text-left">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs bg-amber-400 text-stone-950 font-cinzel text-[11px] font-bold tracking-wider uppercase shadow-xs">
+                  <Star className="w-3.5 h-3.5 fill-stone-950" />
+                  <span>Favorite Feeds</span>
+                </span>
+                <span className="text-xs font-cinzel font-bold uppercase tracking-widest text-amber-200/90">
+                  Your Pinned Apostolates &amp; Channels
+                </span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-100">
+                Your Favorite Catholic Feeds ({favoriteIds.length})
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-300 font-serif">
+                Star any EWTN live channel or adoration chapel, Instagram feed, or Christendom creator to pin it here for instant daily access.
+              </p>
+            </div>
+
+            {favoriteIds.length === 0 && (
+              <button
+                type="button"
+                onClick={() => setFavoriteIds(DEFAULT_FAVORITE_FEEDS)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-cinzel font-bold cursor-pointer shrink-0 transition-colors"
+              >
+                <Star className="w-3.5 h-3.5 fill-stone-950" />
+                <span>Restore Starter Favorites</span>
+              </button>
+            )}
+          </div>
+
+          <div className="p-4 sm:p-6 space-y-6">
+            {favoriteIds.length === 0 ? (
+              <div className="py-10 px-4 text-center rounded-xl bg-white border border-amber-900/15 space-y-3">
+                <Bookmark className="w-8 h-8 text-amber-700/70 mx-auto" />
+                <h4 className="font-cinzel text-base font-bold text-stone-900">No Favorite Feeds Pinned Yet</h4>
+                <p className="text-xs sm:text-sm font-serif text-stone-600 max-w-md mx-auto">
+                  Click the star (<Star className="w-3.5 h-3.5 inline text-amber-600" />) button on any EWTN channel, Instagram account, or Christendom creator to pin your favorite feeds here.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setFavoriteIds(DEFAULT_FAVORITE_FEEDS)}
+                    className="px-3.5 py-2 rounded-lg bg-amber-700 hover:bg-amber-800 text-white text-xs font-cinzel font-bold cursor-pointer"
+                  >
+                    Pin Recommended Catholic Feeds
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActivePlatform('all')}
+                    className="px-3.5 py-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300 text-xs font-cinzel font-bold cursor-pointer"
+                  >
+                    Browse All Feeds
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {/* Pinned Feed Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-left">
+                  {favoriteIds.map(favId => {
+                    let badge = 'Feed';
+                    let badgeClass = 'bg-amber-100 text-amber-900 border-amber-300';
+                    let title = favId;
+                    let subtitle = '';
+                    let actionLabel = 'Open Feed';
+                    let externalUrl: string | undefined;
+                    let onOpen = () => setActivePlatform('all');
+
+                    if (favId.startsWith('ewtn-tv:')) {
+                      const cid = favId.slice(8);
+                      const ch = ewtnTvChannels.find(c => c.id === cid);
+                      if (!ch) return null;
+                      badge = 'EWTN Live TV';
+                      badgeClass = 'bg-amber-100 text-amber-950 border-amber-300';
+                      title = ch.label;
+                      subtitle = ch.location;
+                      actionLabel = 'Watch Live TV';
+                      externalUrl = ch.portalUrl;
+                      onOpen = () => {
+                        handleWatchEwtnTvChannel(ch.id);
+                        setActivePlatform('ewtn');
+                      };
+                    } else if (favId.startsWith('ewtn-radio:')) {
+                      const rid = favId.slice(11) as typeof selectedRadioId;
+                      const st = ewtnRadioStations.find(s => s.id === rid);
+                      if (!st) return null;
+                      badge = 'EWTN Live Radio';
+                      badgeClass = 'bg-amber-100 text-amber-950 border-amber-300';
+                      title = st.name;
+                      subtitle = st.subtitle;
+                      actionLabel = selectedRadioId === st.id && isRadioPlaying ? 'Pause Radio' : 'Listen Live';
+                      externalUrl = st.portalUrl;
+                      onOpen = () => {
+                        setEwtnHubTab('radio');
+                        handleToggleRadio(st.id);
+                        setActivePlatform('ewtn');
+                      };
+                    } else if (favId.startsWith('ewtn-adoration:')) {
+                      const aid = favId.slice(15);
+                      const ap = ewtnAdorationChapels.find(c => c.id === aid);
+                      if (!ap) return null;
+                      badge = '24/7 Adoration';
+                      badgeClass = 'bg-stone-200 text-stone-900 border-stone-300';
+                      title = ap.label;
+                      subtitle = ap.location;
+                      actionLabel = 'Enter Chapel';
+                      externalUrl = ap.portalUrl;
+                      onOpen = () => {
+                        setEwtnHubTab('adoration');
+                        setSelectedAdorationId(ap.id);
+                        setActivePlatform('ewtn');
+                      };
+                    } else if (favId.startsWith('ig:')) {
+                      const uname = favId.slice(3);
+                      const ig = [...customIgSources, ...CATHOLIC_INSTAGRAM_SOURCES].find(s => s.username === uname);
+                      if (!ig) return null;
+                      badge = 'Instagram';
+                      badgeClass = 'bg-pink-100 text-pink-900 border-pink-300';
+                      title = ig.name;
+                      subtitle = `@${ig.username} • ${ig.category}`;
+                      actionLabel = 'Open Instagram Feed';
+                      externalUrl = ig.profileUrl;
+                      onOpen = () => {
+                        setSelectedIgSource(ig);
+                        setActivePlatform('instagram');
+                      };
+                    } else if (favId.startsWith('christendom:')) {
+                      const cid = favId.slice(12);
+                      const ch = CHRISTENDOM_CHANNELS.find(c => c.id === cid);
+                      if (!ch) return null;
+                      badge = 'Christendom';
+                      badgeClass = 'bg-red-100 text-red-900 border-red-300';
+                      title = ch.name;
+                      subtitle = `${ch.handle} • ${ch.category}`;
+                      actionLabel = 'Watch Talks';
+                      externalUrl = ch.christendomUrl;
+                      onOpen = () => {
+                        setSelectedChannelId(ch.id);
+                        setActivePlatform('christendom');
+                      };
+                    } else {
+                      return null;
+                    }
+
+                    return (
+                      <div
+                        key={favId}
+                        className="p-4 rounded-xl bg-white border border-amber-900/20 hover:border-amber-600/60 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-3"
+                      >
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className={`px-2 py-0.5 rounded-xs text-[10px] font-cinzel font-bold uppercase tracking-wider border ${badgeClass}`}>
+                              {badge}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => toggleFavorite(favId)}
+                              className="p-1 rounded-md hover:bg-amber-50 text-amber-500 cursor-pointer"
+                              title="Remove from Favorite Feeds"
+                              aria-label={`Remove ${title} from favorites`}
+                            >
+                              <Star className="w-4 h-4 fill-amber-500" />
+                            </button>
+                          </div>
+                          <h4 className="font-cinzel text-sm font-bold text-stone-900 leading-snug">
+                            {title}
+                          </h4>
+                          <p className="text-xs font-serif text-stone-600 line-clamp-2">
+                            {subtitle}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-stone-100">
+                          <button
+                            type="button"
+                            onClick={onOpen}
+                            className="px-3 py-1.5 rounded-lg bg-[#241307] hover:bg-[#3A1D0D] text-amber-200 text-xs font-cinzel font-bold cursor-pointer transition-colors"
+                          >
+                            {actionLabel}
+                          </button>
+                          {externalUrl && (
+                            <a
+                              href={externalUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[11px] font-serif text-stone-600 hover:text-amber-900"
+                            >
+                              <span>Source</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Latest Videos from Favorite Christendom Creators */}
+                {favoriteIds.some(id => id.startsWith('christendom:')) && (
+                  <div className="space-y-3 pt-2 border-t border-amber-900/15">
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="font-cinzel text-sm font-bold uppercase tracking-wider text-amber-950">
+                        Talks from Your Favorite Christendom Creators
+                      </h4>
+                      <button
+                        type="button"
+                        onClick={() => setActivePlatform('christendom')}
+                        className="text-xs font-cinzel font-bold text-red-800 hover:underline cursor-pointer"
+                      >
+                        Open Christendom Hub
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {christendomVideos.filter(v => favoriteIds.includes(`christendom:${v.channelId}`)).slice(0, 4).map(video => (
+                        <div
+                          key={`fav-vid-${video.id}`}
+                          className="rounded-xl bg-white border border-stone-200 overflow-hidden shadow-sm flex flex-col justify-between text-left"
+                        >
+                          <div
+                            onClick={() => setActiveVideo(video)}
+                            className="relative aspect-video bg-stone-950 cursor-pointer group"
+                          >
+                            <img
+                              src={video.thumbnailUrl}
+                              alt={video.title}
+                              loading="lazy"
+                              onLoad={(e) => {
+                                const target = e.currentTarget;
+                                const hq = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                                if (target.naturalWidth <= 120 && target.src !== hq) {
+                                  target.src = hq;
+                                }
+                              }}
+                              onError={(e) => {
+                                const target = e.currentTarget;
+                                const hq = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                                if (target.src !== hq) {
+                                  target.src = hq;
+                                }
+                              }}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
+                              <div className="w-10 h-10 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow">
+                                <Play className="w-4 h-4 fill-white ml-0.5" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="p-3 space-y-1.5">
+                            <div className="text-[10px] font-cinzel font-bold uppercase text-amber-800 truncate">
+                              {video.channelName}
+                            </div>
+                            <h5
+                              onClick={() => setActiveVideo(video)}
+                              className="font-serif font-bold text-xs text-stone-900 line-clamp-2 cursor-pointer hover:text-amber-900"
+                            >
+                              {video.title}
+                            </h5>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* =====================================================================
+          0C. EWTN GLOBAL CATHOLIC NETWORK HUB (TV • RADIO • 24/7 ADORATION)
           ===================================================================== */}
       {(activePlatform === 'all' || activePlatform === 'ewtn') && (
         <section className="rounded-2xl overflow-hidden bg-gradient-to-br from-[#17120E] via-[#1F1610] to-[#120D0A] border border-amber-500/40 shadow-xl text-stone-100">
@@ -759,7 +1214,12 @@ export const CatholicSocialView: React.FC = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setEwtnHubTab('radio')}
+                  onClick={() => {
+                    setShouldAutoPlayTv(false);
+                    setIsEwtnTvPlaying(false);
+                    setTvPlaySignal(0);
+                    setEwtnHubTab('radio');
+                  }}
                   className={`px-3.5 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                     ewtnHubTab === 'radio'
                       ? 'bg-amber-500 text-stone-950 shadow-xs'
@@ -772,7 +1232,12 @@ export const CatholicSocialView: React.FC = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setEwtnHubTab('adoration')}
+                  onClick={() => {
+                    setShouldAutoPlayTv(false);
+                    setIsEwtnTvPlaying(false);
+                    setTvPlaySignal(0);
+                    setEwtnHubTab('adoration');
+                  }}
                   className={`px-3.5 py-1.5 rounded-md text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
                     ewtnHubTab === 'adoration'
                       ? 'bg-amber-500 text-stone-950 shadow-xs'
@@ -798,7 +1263,9 @@ export const CatholicSocialView: React.FC = () => {
                   title={ewtnStageVideo.title}
                   subtitle={ewtnStageVideo.subtitle}
                   portalUrl={ewtnStageVideo.portalUrl}
-                  autoPlay={true}
+                  autoPlay={ewtnHubTab === 'adoration' || shouldAutoPlayTv}
+                  playSignal={ewtnHubTab === 'tv' ? tvPlaySignal : 0}
+                  onPlayingChange={ewtnHubTab === 'tv' ? setIsEwtnTvPlaying : undefined}
                 />
 
                 <div className="p-3.5 sm:p-4 bg-stone-950/95 border-t border-amber-500/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -814,7 +1281,10 @@ export const CatholicSocialView: React.FC = () => {
 
                     <button
                       type="button"
-                      onClick={() => setEwtnStageKey(prev => prev + 1)}
+                      onClick={() => {
+                        setIsEwtnTvPlaying(false);
+                        setEwtnStageKey(prev => prev + 1);
+                      }}
                       className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
                     >
                       <RefreshCw className="w-3.5 h-3.5 text-amber-400" />
@@ -899,24 +1369,37 @@ export const CatholicSocialView: React.FC = () => {
                         )}
                       </div>
 
-                      <div className="flex flex-wrap items-center gap-2.5 pt-2.5 border-t border-white/10">
+                      <div className="flex flex-wrap items-center gap-2 pt-2.5 border-t border-white/10">
                         <button
                           type="button"
-                          onClick={() => setSelectedTvChannelId(channel.id)}
+                          onClick={() => handleWatchEwtnTvChannel(channel.id)}
                           className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 ${
-                            isActiveChannel
+                            isActiveChannel && isEwtnTvPlaying
                               ? 'bg-amber-600 text-stone-950'
                               : 'bg-amber-900/60 hover:bg-amber-800 text-amber-100 border border-amber-500/40'
                           }`}
                         >
                           <Tv className="w-3.5 h-3.5 shrink-0" />
-                          <span>{isActiveChannel ? 'Playing Above' : 'Watch Live'}</span>
+                          <span>{isActiveChannel && isEwtnTvPlaying ? 'Playing Above' : 'Watch Live'}</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => toggleFavorite(`ewtn-tv:${channel.id}`)}
+                          className={`px-2.5 py-1.5 rounded-lg border text-xs font-cinzel font-bold cursor-pointer flex items-center gap-1 whitespace-nowrap shrink-0 transition-colors ${
+                            isFavorite(`ewtn-tv:${channel.id}`)
+                              ? 'bg-amber-400 text-stone-950 border-amber-200'
+                              : 'bg-stone-800 hover:bg-stone-700 text-amber-300 border-stone-600'
+                          }`}
+                          title="Favorite EWTN TV Channel"
+                        >
+                          <Star className={`w-3.5 h-3.5 ${isFavorite(`ewtn-tv:${channel.id}`) ? 'fill-stone-950' : ''}`} />
+                          <span>{isFavorite(`ewtn-tv:${channel.id}`) ? 'Favorited' : 'Favorite'}</span>
                         </button>
                         <a
                           href={channel.portalUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3.5 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
+                          className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-600 text-xs font-sans font-medium flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0"
                           title={`Open ${channel.label} official stream`}
                         >
                           <span>Portal</span>
@@ -988,21 +1471,38 @@ export const CatholicSocialView: React.FC = () => {
                           )}
                         </div>
 
-                        <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                        <div className="flex items-center justify-between pt-2 border-t border-white/10 gap-2">
                           <span className="inline-flex items-center gap-1.5 text-xs font-cinzel font-bold text-amber-300">
                             {isThisPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                             <span>{isThisPlaying ? 'Pause Radio' : 'Listen Live'}</span>
                           </span>
-                          <a
-                            href={station.portalUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={e => e.stopPropagation()}
-                            className="text-[11px] font-sans text-stone-300 hover:text-amber-200 flex items-center gap-1"
-                          >
-                            <span>Official Player</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={e => {
+                                e.stopPropagation();
+                                toggleFavorite(`ewtn-radio:${station.id}`);
+                              }}
+                              className={`p-1 rounded border cursor-pointer transition-colors ${
+                                isFavorite(`ewtn-radio:${station.id}`)
+                                  ? 'bg-amber-400 text-stone-950 border-amber-200'
+                                  : 'bg-stone-800 text-amber-300 border-stone-600 hover:bg-stone-700'
+                              }`}
+                              title="Favorite EWTN Radio Station"
+                            >
+                              <Star className={`w-3 h-3 ${isFavorite(`ewtn-radio:${station.id}`) ? 'fill-stone-950' : ''}`} />
+                            </button>
+                            <a
+                              href={station.portalUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={e => e.stopPropagation()}
+                              className="text-[11px] font-sans text-stone-300 hover:text-amber-200 flex items-center gap-1"
+                            >
+                              <span>Official Player</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
                         </div>
                       </div>
                     );
@@ -1130,6 +1630,19 @@ export const CatholicSocialView: React.FC = () => {
                             <Flame className="w-3.5 h-3.5 text-[#D4A373]" />
                             <span>{isActiveChapel ? 'Playing Above' : 'Watch Live Adoration'}</span>
                           </button>
+                          <button
+                            type="button"
+                            onClick={() => toggleFavorite(`ewtn-adoration:${chapel.id}`)}
+                            className={`px-2.5 py-2 rounded-lg border text-xs font-cinzel font-bold cursor-pointer flex items-center gap-1 whitespace-nowrap transition-colors ${
+                              isFavorite(`ewtn-adoration:${chapel.id}`)
+                                ? 'bg-amber-400 text-stone-950 border-amber-600'
+                                : 'bg-white hover:bg-[#F5EDE2] text-[#3B2314] border-[#C8B094]'
+                            }`}
+                            title="Favorite Adoration Chapel"
+                          >
+                            <Star className={`w-3.5 h-3.5 ${isFavorite(`ewtn-adoration:${chapel.id}`) ? 'fill-stone-950' : ''}`} />
+                            <span>{isFavorite(`ewtn-adoration:${chapel.id}`) ? 'Favorited' : 'Favorite'}</span>
+                          </button>
                           <a
                             href={chapel.portalUrl}
                             target="_blank"
@@ -1173,6 +1686,20 @@ export const CatholicSocialView: React.FC = () => {
 
             <div className="flex flex-wrap items-center gap-2">
               <button
+                type="button"
+                onClick={() => toggleFavorite(`ig:${selectedIgSource.username}`)}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-cinzel font-bold cursor-pointer transition-colors ${
+                  isFavorite(`ig:${selectedIgSource.username}`)
+                    ? 'bg-amber-400 text-stone-950 border-amber-200'
+                    : 'bg-white/10 hover:bg-white/20 text-amber-200 border-white/15'
+                }`}
+                title="Favorite this Instagram Feed"
+              >
+                <Star className={`w-3.5 h-3.5 ${isFavorite(`ig:${selectedIgSource.username}`) ? 'fill-stone-950' : ''}`} />
+                <span>{isFavorite(`ig:${selectedIgSource.username}`) ? 'Favorited' : 'Favorite Feed'}</span>
+              </button>
+
+              <button
                 onClick={() => {
                   setIgRefreshKey(prev => prev + 1);
                   fetchInstagramShortcodes(selectedIgSource, true);
@@ -1200,19 +1727,23 @@ export const CatholicSocialView: React.FC = () => {
             {/* Account Selector Bar (Compact arranged buttons) */}
             <div className="rounded-lg bg-[#241307]/[0.025] border border-amber-900/10 p-1.5 sm:p-2 flex flex-col xl:flex-row xl:items-center justify-between gap-1.5 shadow-xs">
               <div className="flex flex-wrap items-center gap-1">
-                {CATHOLIC_INSTAGRAM_SOURCES.map(src => (
-                  <button
-                    key={src.id}
-                    onClick={() => setSelectedIgSource(src)}
-                    className={`px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
-                      selectedIgSource.username === src.username
-                        ? 'bg-[#241307] text-amber-200 border-amber-700 shadow-xs font-semibold'
-                        : 'bg-white text-stone-700 border-stone-200 hover:border-amber-600/50 hover:bg-stone-50'
-                    }`}
-                  >
-                    {src.name}
-                  </button>
-                ))}
+                {[...customIgSources, ...CATHOLIC_INSTAGRAM_SOURCES].map(src => {
+                  const starred = isFavorite(`ig:${src.username}`);
+                  return (
+                    <button
+                      key={src.id}
+                      onClick={() => setSelectedIgSource(src)}
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer border ${
+                        selectedIgSource.username === src.username
+                          ? 'bg-[#241307] text-amber-200 border-amber-700 shadow-xs font-semibold'
+                          : 'bg-white text-stone-700 border-stone-200 hover:border-amber-600/50 hover:bg-stone-50'
+                      }`}
+                    >
+                      {starred && <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-500 shrink-0" />}
+                      <span>{src.name}</span>
+                    </button>
+                  );
+                })}
               </div>
 
               <form onSubmit={handleCustomInstagramSubmit} className="flex items-center gap-1 shrink-0">
@@ -1305,6 +1836,22 @@ export const CatholicSocialView: React.FC = () => {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
+              {activeChannel && (
+                <button
+                  type="button"
+                  onClick={() => toggleFavorite(`christendom:${activeChannel.id}`)}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-cinzel font-bold cursor-pointer transition-colors ${
+                    isFavorite(`christendom:${activeChannel.id}`)
+                      ? 'bg-amber-400 text-stone-950 border-amber-200'
+                      : 'bg-white/10 hover:bg-white/20 text-amber-200 border-white/15'
+                  }`}
+                  title="Favorite this Christendom Creator"
+                >
+                  <Star className={`w-3.5 h-3.5 ${isFavorite(`christendom:${activeChannel.id}`) ? 'fill-stone-950' : ''}`} />
+                  <span>{isFavorite(`christendom:${activeChannel.id}`) ? 'Favorited' : 'Favorite Channel'}</span>
+                </button>
+              )}
+
               <button
                 onClick={() => {
                   fetchChristendomVideos(true);
@@ -1409,6 +1956,7 @@ export const CatholicSocialView: React.FC = () => {
                 </button>
                 {CHRISTENDOM_CHANNELS.map(ch => {
                   const isSelected = selectedChannelId === ch.id;
+                  const starred = isFavorite(`christendom:${ch.id}`);
                   const shortName = ch.name.replace(/\s*\(.*\)/, '');
                   const channelCount = christendomVideos.filter(v => v.channelId === ch.id).length;
                   return (
@@ -1424,6 +1972,7 @@ export const CatholicSocialView: React.FC = () => {
                           : 'bg-white text-stone-700 border-stone-200 hover:border-amber-600/50 hover:bg-stone-50'
                       }`}
                     >
+                      {starred && <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-500 shrink-0" />}
                       <img
                         src={ch.avatarUrl}
                         alt=""
@@ -1489,7 +2038,7 @@ export const CatholicSocialView: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {filteredVideos.map(video => (
                   <div
                     key={video.id}
@@ -1506,13 +2055,21 @@ export const CatholicSocialView: React.FC = () => {
                           src={video.thumbnailUrl}
                           alt={video.title}
                           loading="lazy"
+                          onLoad={(e) => {
+                            const target = e.currentTarget;
+                            const hq = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                            if (target.naturalWidth <= 120 && !target.src.includes('hqdefault.jpg')) {
+                              target.src = hq;
+                            }
+                          }}
                           onError={(e) => {
                             const target = e.currentTarget;
                             const hq = `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`;
-                            if (target.src !== hq && !target.src.includes('hqdefault.jpg')) {
+                            const mq = `https://img.youtube.com/vi/${video.youtubeId}/mqdefault.jpg`;
+                            if (!target.src.includes('hqdefault.jpg') && !target.src.includes('mqdefault.jpg')) {
                               target.src = hq;
-                            } else if (video.fallbackImageUrl && target.src !== video.fallbackImageUrl) {
-                              target.src = video.fallbackImageUrl;
+                            } else if (target.src.includes('hqdefault.jpg')) {
+                              target.src = mq;
                             }
                           }}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -1545,11 +2102,7 @@ export const CatholicSocialView: React.FC = () => {
                             src={video.channelAvatar}
                             alt={video.channelName}
                             onError={(e) => {
-                              const target = e.currentTarget;
-                              const fallback = 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=160&q=80';
-                              if (target.src !== fallback) {
-                                target.src = fallback;
-                              }
+                              e.currentTarget.style.display = 'none';
                             }}
                             className="w-8 h-8 rounded-full object-cover border border-amber-500/40 shrink-0 mt-0.5"
                           />
@@ -1581,7 +2134,7 @@ export const CatholicSocialView: React.FC = () => {
                     </div>
 
                     {/* Card Actions Footer */}
-                    <div className="px-3.5 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs font-serif">
+                    <div className="px-3.5 py-2.5 bg-stone-50 border-t border-stone-200 flex items-center justify-between gap-2 text-xs font-serif">
                       <button
                         onClick={() => setActiveVideo(video)}
                         className="inline-flex items-center gap-1 text-red-700 hover:text-red-900 font-cinzel font-bold cursor-pointer"
@@ -1590,15 +2143,29 @@ export const CatholicSocialView: React.FC = () => {
                         <span>Watch Video</span>
                       </button>
 
-                      <a
-                        href={video.christendomUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-stone-600 hover:text-amber-900 text-[11px] font-serif"
-                      >
-                        <span>Christendom</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => toggleFavorite(`christendom:${video.channelId}`)}
+                          className={`p-1 rounded border cursor-pointer transition-colors ${
+                            isFavorite(`christendom:${video.channelId}`)
+                              ? 'bg-amber-100 border-amber-400 text-amber-600'
+                              : 'bg-white border-stone-200 text-stone-400 hover:text-amber-600'
+                          }`}
+                          title={`Favorite ${video.channelName}`}
+                        >
+                          <Star className={`w-3 h-3 ${isFavorite(`christendom:${video.channelId}`) ? 'fill-amber-500' : ''}`} />
+                        </button>
+                        <a
+                          href={video.christendomUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-stone-600 hover:text-amber-900 text-[11px] font-serif"
+                        >
+                          <span>Site</span>
+                          <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1609,9 +2176,9 @@ export const CatholicSocialView: React.FC = () => {
       )}
 
       {/* =====================================================================
-          3. ACTIVE VIDEO THEATER MODAL
+          3. ACTIVE VIDEO THEATER MODAL (PORTALED TO DOCUMENT BODY)
           ===================================================================== */}
-      {activeVideo && (
+      {activeVideo && typeof document !== 'undefined' && createPortal(
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5"
           onClick={() => setActiveVideo(null)}
@@ -1680,17 +2247,13 @@ export const CatholicSocialView: React.FC = () => {
               </div>
 
               {/* Channel Meta */}
-              <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-stone-900/80 border border-stone-800">
+              <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-stone-900/80 border border-stone-800">
                 <div className="flex items-center gap-3 min-w-0">
                   <img
                     src={activeVideo.channelAvatar}
                     alt={activeVideo.channelName}
                     onError={(e) => {
-                      const target = e.currentTarget;
-                      const fallback = 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=160&q=80';
-                      if (target.src !== fallback) {
-                        target.src = fallback;
-                      }
+                      e.currentTarget.style.display = 'none';
                     }}
                     className="w-10 h-10 rounded-full object-cover border border-amber-500/40 shrink-0"
                   />
@@ -1709,15 +2272,17 @@ export const CatholicSocialView: React.FC = () => {
                   </div>
                 </div>
 
-                <a
-                  href={activeVideo.christendomUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-cinzel font-bold tracking-wider transition-colors shrink-0"
-                >
-                  <span>Open on Christendom</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={activeVideo.christendomUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-cinzel font-bold tracking-wider transition-colors shrink-0"
+                  >
+                    <span>Open on Christendom</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
               </div>
 
               {/* Description */}
@@ -1726,7 +2291,8 @@ export const CatholicSocialView: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
