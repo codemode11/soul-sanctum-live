@@ -1389,8 +1389,20 @@ async function startServer() {
   } else {
     // In production, serve static build output (Express 5 compatible fallback)
     const distPath = path.resolve(__dirname, 'dist');
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, {
+      setHeaders: (res, filePath) => {
+        const base = path.basename(filePath);
+        if (base === 'index.html' || base === 'sw.js' || base === 'dev-sw.js') {
+          res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+          res.setHeader('Pragma', 'no-cache');
+          res.setHeader('Expires', '0');
+        }
+      }
+    }));
     app.use((_req, res) => {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
       res.sendFile(path.resolve(distPath, 'index.html'));
     });
   }
