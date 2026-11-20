@@ -10,7 +10,6 @@ import {
   ExternalLink,
   Maximize2,
   Minimize2,
-  Sparkles,
   Home
 } from 'lucide-react';
 
@@ -24,12 +23,6 @@ interface FioSectionOption {
   url: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
-}
-
-interface FioFeaturedArtist {
-  name: string;
-  genre: string;
-  url: string;
 }
 
 const FIO_SECTIONS: FioSectionOption[] = [
@@ -60,49 +53,6 @@ const FIO_SECTIONS: FioSectionOption[] = [
     url: 'https://play.fio.fm/log-in',
     description: 'Sign in to your Fio account for your saved library and full streaming',
     icon: LogIn,
-  },
-];
-
-const FIO_FEATURED_ARTISTS: FioFeaturedArtist[] = [
-  {
-    name: 'Floriani',
-    genre: 'Gregorian Chant & Polyphony',
-    url: 'https://play.fio.fm/artist/Floriani',
-  },
-  {
-    name: 'Benedictines of Mary',
-    genre: 'Monastic Sacred Chant',
-    url: 'https://play.fio.fm/artist/BenedictinesofMaryQueenofApostles',
-  },
-  {
-    name: 'The Vigil Project',
-    genre: 'Liturgical & Worship',
-    url: 'https://play.fio.fm/artist/TheVigilProject',
-  },
-  {
-    name: 'Fr. Maximilian M. Dean',
-    genre: 'Sacred Devotional',
-    url: 'https://play.fio.fm/artist/FrMaximilianMDean',
-  },
-  {
-    name: 'Liturgy Resources',
-    genre: 'Mass Settings & Psalms',
-    url: 'https://play.fio.fm/artist/LiturgyResources',
-  },
-  {
-    name: 'Connor Flanagan',
-    genre: 'Catholic Contemporary',
-    url: 'https://play.fio.fm/artist/ConnorFlanagan',
-  },
-  {
-    name: 'Mike Mangione',
-    genre: 'Catholic Folk & Acoustic',
-    url: 'https://play.fio.fm/artist/MikeMangione',
-  },
-  {
-    name: 'John Finch',
-    genre: 'Catholic Worship',
-    url: 'https://play.fio.fm/artist/JohnFinch',
   },
 ];
 
@@ -179,45 +129,6 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
               >
                 <Icon className="w-3.5 h-3.5" />
                 <span>{section.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Featured Catholic Artists & Chant Quick-Jump Bar */}
-      <div className="p-4 sm:p-5 rounded-xl bg-[#F6F2EA]/95 border border-[#DFD6C7] shadow-xs space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-amber-800" />
-            <span className="font-cinzel text-xs sm:text-sm font-bold text-stone-900 uppercase tracking-wider">
-              Quick Jump to Featured Catholic Artists on Fio
-            </span>
-          </div>
-          <span className="text-xs font-serif text-stone-600">
-            Loads directly inside the player below
-          </span>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {FIO_FEATURED_ARTISTS.map((artist) => {
-            const isSelected = activeUrl === artist.url;
-            return (
-              <button
-                key={artist.name}
-                type="button"
-                onClick={() => navigatePlayer(artist.url, artist.name)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-serif transition-all cursor-pointer border flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-stone-900 text-amber-200 border-amber-500/60 font-bold shadow-xs'
-                    : 'bg-[#FBF9F5] hover:bg-[#EFE9DC] text-stone-800 border-[#D8CFC0]'
-                }`}
-                title={`${artist.name} — ${artist.genre}`}
-              >
-                <span className="font-semibold">{artist.name}</span>
-                <span className={`text-[10px] ${isSelected ? 'text-amber-300/80' : 'text-stone-500'}`}>
-                  • {artist.genre}
-                </span>
               </button>
             );
           })}

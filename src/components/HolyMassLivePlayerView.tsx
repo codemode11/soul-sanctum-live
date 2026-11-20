@@ -15,12 +15,10 @@ import {
   ChevronRight,
   ChevronDown,
   Info,
-  Volume2,
   Settings
 } from 'lucide-react';
 import { HolyMassLiveStream, LiveStreamRegion, LiveStreamCategory, MassReading } from '../types';
 import { HOLY_MASS_LIVESTREAMS } from '../data/holyMassLiveStreams';
-import { SacredReader } from '../utils/speech';
 
 interface HolyMassLivePlayerViewProps {
   currentReading?: MassReading;
@@ -28,7 +26,6 @@ interface HolyMassLivePlayerViewProps {
 }
 
 export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
-  currentReading,
   initialStreamId
 }) => {
   const [selectedStream, setSelectedStream] = useState<HolyMassLiveStream>(() => {
@@ -42,11 +39,6 @@ export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<LiveStreamCategory | 'all'>('all');
   const [selectedRegion, setSelectedRegion] = useState<LiveStreamRegion>('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeSideTab, setActiveSideTab] = useState<'communion' | 'readings' | 'candle'>('communion');
-  const [isPrayingSpiritualCommunion, setIsPrayingSpiritualCommunion] = useState(false);
-  const [isCandleLit, setIsCandleLit] = useState(false);
-  const [candleIntention, setCandleIntention] = useState('');
-  const [savedIntentions, setSavedIntentions] = useState<string[]>([]);
   const [copied, setCopied] = useState(false);
   const [streamKey, setStreamKey] = useState(Date.now());
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
@@ -71,39 +63,6 @@ export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
       stream.country.toLowerCase().includes(q);
     return matchesCategory && matchesRegion && matchesSearch;
   });
-
-  const spiritualCommunionPrayer = `My Jesus, 
-I believe that You are present in the Most Holy Sacrament. 
-I love You above all things, 
-and I desire to receive You into my soul. 
-
-Since I cannot at this moment receive You sacramentally, 
-come at least spiritually into my heart. 
-
-I embrace You as if You were already there 
-and unite myself wholly to You. 
-Never permit me to be separated from You. 
-
-Amen.`;
-
-  const handleToggleSpiritualCommunionAudio = () => {
-    if (isPrayingSpiritualCommunion) {
-      SacredReader.stop();
-      setIsPrayingSpiritualCommunion(false);
-    } else {
-      const speech = `Act of Spiritual Communion, by Saint Alphonsus Liguori. ${spiritualCommunionPrayer}`;
-      SacredReader.speak(speech, () => setIsPrayingSpiritualCommunion(false));
-      setIsPrayingSpiritualCommunion(true);
-    }
-  };
-
-  const handleLightCandle = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!candleIntention.trim()) return;
-    setSavedIntentions(prev => [candleIntention.trim(), ...prev]);
-    setIsCandleLit(true);
-    setCandleIntention('');
-  };
 
   const handleShareStream = () => {
     const text = `Join the livestream of Holy Mass at ${selectedStream.sanctuary} (${selectedStream.location}, ${selectedStream.country}):
@@ -348,204 +307,7 @@ Live on Soul Sanctum Catholic Sanctuary.`;
         </div>
       </div>
 
-      {/* 2. Liturgical Companion & Devotions Card */}
-      <div className="rounded-xl bg-white/90 backdrop-blur-md border border-stone-200/90 shadow-md p-4 sm:p-5 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-3">
-          <div className="text-left">
-            <span className="text-[10px] font-cinzel font-bold uppercase tracking-widest text-amber-900 block">
-              Accompanying Mass Devotions
-            </span>
-            <h3 className="font-cinzel text-base sm:text-lg font-bold text-stone-900">
-              Spiritual Communion, Today&apos;s Readings &amp; Votive Altar
-            </h3>
-          </div>
-
-          {/* 3-Tab Switcher */}
-          <div className="flex rounded-lg bg-stone-100 p-1 text-xs font-cinzel font-semibold shrink-0 border border-stone-200">
-            <button
-              onClick={() => setActiveSideTab('communion')}
-              className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
-                activeSideTab === 'communion'
-                  ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
-                  : 'text-stone-700 hover:text-stone-900'
-              }`}
-            >
-              Spiritual Communion
-            </button>
-            <button
-              onClick={() => setActiveSideTab('readings')}
-              className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
-                activeSideTab === 'readings'
-                  ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
-                  : 'text-stone-700 hover:text-stone-900'
-              }`}
-            >
-              Today&apos;s Readings
-            </button>
-            <button
-              onClick={() => setActiveSideTab('candle')}
-              className={`py-1.5 px-3 rounded-md transition-all cursor-pointer ${
-                activeSideTab === 'candle'
-                  ? 'bg-amber-900 text-amber-50 shadow-2xs font-bold'
-                  : 'text-stone-700 hover:text-stone-900'
-              }`}
-            >
-              Votive Candle
-            </button>
-          </div>
-        </div>
-
-        {/* Tab 1: Spiritual Communion Prayer */}
-        {activeSideTab === 'communion' && (
-          <div className="p-4 sm:p-5 rounded-xl bg-gradient-to-br from-[#FAF6EE] to-white border border-amber-200/80 text-left">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
-              
-              {/* Left Column (2/3): Prayer Text */}
-              <div className="md:col-span-2 space-y-2.5 border-r-0 md:border-r border-amber-200/70 md:pr-4">
-                <h4 className="font-serif text-base sm:text-lg font-bold text-stone-900 text-center">
-                  Act of Spiritual Communion
-                </h4>
-
-                <div className="text-sm sm:text-base font-serif italic text-stone-900 leading-snug whitespace-pre-line text-center px-2">
-                  {spiritualCommunionPrayer}
-                </div>
-
-                <div className="text-right pt-1">
-                  <span className="text-[11px] font-bold font-cinzel text-amber-900 uppercase">
-                    — St. Alphonsus Liguori
-                  </span>
-                </div>
-              </div>
-
-              {/* Right Column (1/3): Audio Player & Spiritual Grace Note */}
-              <div className="space-y-3">
-                <div className="p-3 rounded-lg bg-white border border-amber-200 shadow-2xs space-y-2">
-                  <span className="text-[10px] font-cinzel font-bold text-amber-900 uppercase tracking-wider block">
-                    Audio Prayer Recitation
-                  </span>
-                  <button
-                    onClick={handleToggleSpiritualCommunionAudio}
-                    className={`w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold transition-all cursor-pointer ${
-                      isPrayingSpiritualCommunion
-                        ? 'bg-amber-900 border-amber-700 text-white shadow-xs'
-                        : 'bg-stone-50 hover:bg-white border-stone-300 text-stone-800'
-                    }`}
-                  >
-                    <Volume2 className="w-4 h-4 text-amber-600" />
-                    <span>{isPrayingSpiritualCommunion ? 'Stop Audio' : 'Listen to Prayer'}</span>
-                  </button>
-                </div>
-
-                <p className="text-[11px] text-stone-600 font-serif leading-relaxed">
-                  The Church grants rich spiritual graces to the faithful who, unable to receive Our Lord sacramentally, recite this prayer with deep faith and longing for Christ&apos;s Real Presence.
-                </p>
-              </div>
-
-            </div>
-          </div>
-        )}
-
-        {/* Tab 2: Mass Readings of the Day */}
-        {activeSideTab === 'readings' && (
-          <div className="space-y-3 text-left">
-            <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-              <span className="text-xs font-bold font-cinzel text-amber-800 uppercase tracking-wider">
-                Today&apos;s Liturgy of the Word
-              </span>
-              <h4 className="font-serif text-sm font-bold text-stone-900">
-                {currentReading?.liturgicalDay || 'Daily Mass Readings'}
-              </h4>
-            </div>
-
-            {currentReading ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs sm:text-sm font-serif text-stone-800 leading-relaxed">
-                <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-1">
-                  <span className="font-bold font-cinzel text-[11px] text-stone-900 block uppercase">
-                    First Reading • {currentReading.firstReading.citation}
-                  </span>
-                  <p className="line-clamp-5 text-stone-700 text-xs">
-                    {currentReading.firstReading.text}
-                  </p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/70 space-y-1">
-                  <span className="font-bold font-cinzel text-[11px] text-amber-950 block uppercase">
-                    Responsorial Psalm • {currentReading.responsorialPsalm.citation}
-                  </span>
-                  <p className="italic font-semibold text-amber-950 text-xs">
-                    R. {currentReading.responsorialPsalm.antiphon}
-                  </p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#FAF8F5] border border-stone-200/80 space-y-1">
-                  <span className="font-bold font-cinzel text-[11px] text-amber-900 block uppercase">
-                    Holy Gospel • {currentReading.gospel.citation}
-                  </span>
-                  <p className="line-clamp-5 text-stone-800 font-medium text-xs">
-                    {currentReading.gospel.text}
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <p className="text-xs text-stone-600 font-serif">
-                Follow along with the sacred scriptures proclaimed during Holy Mass.
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* Tab 3: Light a Votive Candle */}
-        {activeSideTab === 'candle' && (
-          <div className="p-4 sm:p-5 rounded-xl bg-stone-900 text-stone-100 border border-amber-500/30 space-y-3 text-left">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <Flame className={`w-4 h-4 ${isCandleLit ? 'text-amber-400 animate-pulse' : 'text-stone-400'}`} />
-                <h4 className="font-cinzel text-sm sm:text-base font-bold text-amber-300">
-                  Light a Votive Candle at the Altar
-                </h4>
-              </div>
-              <span className="text-[11px] font-serif text-stone-400">
-                Unceasing Prayer Intention
-              </span>
-            </div>
-
-            <form onSubmit={handleLightCandle} className="flex flex-col sm:flex-row gap-2.5">
-              <input
-                type="text"
-                value={candleIntention}
-                onChange={(e) => setCandleIntention(e.target.value)}
-                placeholder="Type your prayer petition or Thanksgiving intention..."
-                className="flex-1 text-xs px-3.5 py-2 rounded-lg bg-stone-800 border border-stone-700 text-stone-100 focus:outline-none focus:border-amber-400 font-serif"
-              />
-              <button
-                type="submit"
-                disabled={!candleIntention.trim()}
-                className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-900 to-amber-950 hover:from-amber-800 hover:to-amber-900 border border-amber-600/70 disabled:opacity-40 text-amber-50 font-cinzel text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-md shrink-0"
-              >
-                <Flame className="w-3.5 h-3.5 fill-current" />
-                <span>Offer Petition</span>
-              </button>
-            </form>
-
-            {savedIntentions.length > 0 && (
-              <div className="pt-2 border-t border-stone-800 space-y-1">
-                <span className="text-[10px] font-cinzel uppercase text-amber-400 font-bold block">
-                  Your Burning Votive Petitions:
-                </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {savedIntentions.map((intent, i) => (
-                    <div key={i} className="text-xs text-stone-200 font-serif italic pl-2 py-1 border-l-2 border-amber-500 bg-black/40 rounded-r-md">
-                      &ldquo;{intent}&rdquo;
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      {/* 3. Worldwide Sanctuaries & Category Selection */}
+      {/* 2. Worldwide Sanctuaries & Category Selection */}
       <div className="rounded-xl bg-white/85 backdrop-blur-xl border border-stone-200/90 shadow-lg p-5 sm:p-6 space-y-6">
         
         {/* Top Header & Search */}
