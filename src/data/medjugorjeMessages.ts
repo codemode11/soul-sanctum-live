@@ -4,7 +4,14 @@ export interface MedjugorjeMessage {
   displayDate: string;
   seerName: string;
   seerTitle: string;
-  seerType: 'monthly-world' | 'second-of-month' | 'annual' | 'prayer-group' | 'special-intention';
+  seerType:
+    | 'monthly-world'
+    | 'weekly-parish'
+    | 'second-of-month'
+    | 'annual'
+    | 'prayer-group'
+    | 'early-days'
+    | 'special-intention';
   title: string;
   messageText: string;
   originalCroatianExcerpt: string;
@@ -14,6 +21,7 @@ export interface MedjugorjeMessage {
     citation: string;
     text: string;
   };
+  ecclesiasticalApproval?: boolean;
 }
 
 export interface FiveStonesDevotion {
@@ -77,21 +85,40 @@ export const VATICAN_NIHIL_OBSTAT_NOTE = {
 
 export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
   {
+    id: 'medj-2026-10-25',
+    date: '2026-10-25',
+    displayDate: 'October 25, 2026',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Be Prayer and Extended Hands of Love and Peace',
+    messageText: 'Dear children! A fire of hatred and wars is spreading in the hearts of people who do not want peace but their own weak interests. That is why, little children, you be prayer and my extended hands of love and peace for all those who are far from my motherly heart. Pray more strongly and more for the peace that God desires to give you, but you do not want it. I am with you and I am praying that peace may prevail and begin to reign in every heart. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Vatra mržnje i ratova širi se u srcima ljudi koji ne žele mir, nego svoje slabe interese...',
+    themes: ['Peace', 'Prayer with the Heart', 'Extended Hands', 'Intercession', 'Love'],
+    spiritualReflection: 'Our Lady urgently calls believers to become living prayer and instruments of reconciliation in a world threatened by selfishness and conflict. True peace begins when human hearts open themselves to the peace God desires to bestow.',
+    scriptureAnchor: {
+      citation: 'Matthew 5:9',
+      text: '"Blessed are the peacemakers, for they shall be called sons of God."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
     id: 'medj-2026-09-25',
     date: '2026-09-25',
     displayDate: 'September 25, 2026',
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Good and Evil: Pray for the Triumph of Light',
-    messageText: 'Dear children! In this time of grace, pray with me for the good to win in you and around you. In a special way, little children, pray united with Jesus on His Way of the Cross for humanity which has gone astray without God. Pray, little children, that your hearts may not be closed by fear or indifference. Be carriers of peace and love to everyone you meet, because God has chosen you to be His instruments in this restless world. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu molite sa mnom da dobro pobijedi u vama i oko vas...',
-    themes: ['Peace', 'Prayer with the Heart', 'Way of the Cross', 'Hope', 'Apostles of Love'],
-    spiritualReflection: 'Our Lady gently summons us to unite our personal sufferings to the Sorrowful Way of the Cross. When the world feels disordered and cold, prayer with the heart becomes an impenetrable shield of divine grace.',
+    title: 'Renew the Family Rosary for Peace',
+    messageText: 'Dear children! May this time be a time of prayer for peace. I am calling you to renew in your families the prayer of the Rosary for my intentions, so that I may be able to multiply your prayers and intercede for you before the Most High, [for Him] to heed your prayers and to give you peace. I am with you and like never before I pray for you and with you, my little children. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Neka ovo vrijeme bude vrijeme molitve za mir. Pozivam vas da obnovite u vašim obiteljima molitvu krunice...',
+    themes: ['Peace', 'Rosary', 'Family', 'Intercession'],
+    spiritualReflection: 'When families gather to pray the Rosary together, Mary multiplies their humble petitions before the throne of the Most High. Renewing domestic prayer turns the home into a sanctuary of peace.',
     scriptureAnchor: {
-      citation: 'Romans 12:21',
-      text: '"Do not be overcome by evil, but overcome evil with good."'
-    }
+      citation: 'Matthew 18:20',
+      text: '"For where two or three are gathered in my name, there am I in the midst of them."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2026-08-25',
@@ -100,15 +127,16 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Prayer for Peace in Hearts and the World',
-    messageText: 'Dear children! Today my prayer with you is for peace. Good and evil are fighting and want to prevail in the world and in the hearts of people. Be people of prayer and witnesses of God’s great love. Little children, return to prayer with the heart so that God may transform you and fill you with His Holy Spirit. Do not lose hope; I am with you and I intercede before my Son Jesus for each of you. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! Danas je moja molitva s vama za mir. Dobro i zlo se bore i žele prevladati...',
-    themes: ['Peace', 'Holy Spirit', 'Hope', 'Intercession'],
-    spiritualReflection: 'Peace (Mir in Croatian) is the foundational greeting of the Risen Christ. Mary reminds us that the spiritual battle begins in the human heart; when our heart is at peace with God through Confession and Eucharist, peace radiates outwards to the world.',
+    title: 'Return to God and Become Carriers of Peace',
+    messageText: 'Dear children, Today I am calling you: return to God, return to prayer, so that you may become carriers of peace. Pray, little children, for peace that is in danger; and may prayer begin to flow anew from your hearts and from your families, so that, in joy, you may feel the voice of Jesus in your hearts: \'Peace be with you.\' Be, little children, carriers of peace and prayer for all those who do not pray. I am with you and I pray for you before my Son Jesus. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco, Danas vas pozivam: vratite se Bogu, vratite se molitvi, kako biste postali nositelji mira...',
+    themes: ['Peace', 'Prayer with the Heart', 'Family', 'Joy', 'Conversion'],
+    spiritualReflection: 'Echoing the Risen Lord\'s greeting in the Upper Room—"Peace be with you"—Our Lady invites prayer to flow freshly from hearts and homes, interceding especially for those who do not pray.',
     scriptureAnchor: {
-      citation: 'John 14:27',
-      text: '"Peace I leave with you; my peace I give to you. Not as the world gives do I give to you. Let not your hearts be troubled, neither let them be afraid."'
-    }
+      citation: 'John 20:19',
+      text: '"Jesus came and stood among them and said to them, \'Peace be with you.\'"'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2026-07-25',
@@ -117,31 +145,50 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Chosen to be People of Faith and Joy',
-    messageText: 'Dear children! With joy I have chosen you and I am leading you, because in you, little children, I see people of faith who seek God\'s love. Pray, little children, that your life may become a song of praise to the Creator. Open your hearts to the holy Sacraments, especially the Holy Mass. May the Holy Eucharist be your daily food and the light on your earthly journey. I am with you and I bless you with my motherly blessing. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! S radošću sam vas izabrala i vodim vas, jer u vama, dječice, vidim ljude vjere...',
-    themes: ['Holy Mass', 'Holy Eucharist', 'Joy', 'Praise'],
-    spiritualReflection: 'The Holy Eucharist is the fountain of eternal youth for the soul. In this message, the Queen of Peace places Holy Mass at the very center of spiritual life, urging us to approach the altar with vibrant gratitude.',
+    title: 'Place Sacred Scripture in a Visible Place in Your Family',
+    messageText: 'Dear children! While darkness and peacelessness rule in many hearts, you, little children, be prayer and my extended hands of love. Little children, place the Sacred Scripture in a visible place in your family and read it, so that it may be an encouragement for you to conversion and a new life; because Satan is strong and seduces hearts. Your hearts, through my maternal Heart, I desire to commend to the Heart of my Son Jesus, so that He, the Risen One, may reign in you and joy may begin to reign in you and around you. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Dok tama i nemir vladaju u mnogim srcima, vi budite, dječice, molitva i moje ispružene ruke ljubavi...',
+    themes: ['Holy Scripture', 'Family', 'Conversion', 'Spiritual Warfare', 'Joy'],
+    spiritualReflection: 'Our Lady returns to one of the Five Stones of Medjugorje—enthroning the Holy Bible in the home—and consecrating human hearts through her Immaculate Heart to the Risen Heart of Jesus.',
     scriptureAnchor: {
-      citation: 'John 6:51',
-      text: '"I am the living bread that came down from heaven. If anyone eats of this bread, he will live forever."'
-    }
+      citation: 'Psalm 119:105',
+      text: '"Your word is a lamp to my feet and a light to my path."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2026-06-25',
     date: '2026-06-25',
-    displayDate: 'June 25, 2026 (Anniversary of Apparitions)',
+    displayDate: 'June 25, 2026 (45th Anniversary of Apparitions)',
     seerName: 'Marija Pavlović-Lunetti',
-    seerTitle: '45th Anniversary of the Apparitions of the Queen of Peace',
+    seerTitle: '45th Anniversary Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: '45 Years of Maternal Grace and Call to Conversion',
-    messageText: 'Dear children! I rejoice with you and thank God for my presence with you, for my love and the joy with which I lead you on the path of salvation. Pray, little children, because the world is in a great crisis of faith and peace. Satan wants hatred and war; therefore, you, my little children, be my hands extended to this lost world. Fast, pray, and witness so that God may be loved and glorified. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! Radujem se s vama i zahvaljujem Bogu za moju prisutnost među vama...',
-    themes: ['Anniversary', 'Conversion', 'Fasting', 'Apostles of Peace'],
-    spiritualReflection: 'Commemorating the arrival of Our Lady in Medjugorje on June 24-25, 1981. Mary reveals that our fasting and prayer are God\'s appointed remedies for modern crises, transforming ordinary believers into the extended hands of Jesus.',
+    title: 'Rejoice Also in Difficulties: I Am Your Mother and I Love You',
+    messageText: 'Dear children, Rejoice with me because the Most High permits me to be with you, to lead you to Him Who is the Way, the Truth and the Life. Rejoice, little children, and be joyful also in difficulties and you will have the strength, because you will be aware that you are transient and you will know to offer everything to God. That is why, do not forget: I am your Mother and I love you. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Radujte se sa mnom jer mi Svevišnji dozvoli da sam s vama, da vas vodim Njemu, koji je Put, Istina i Život...',
+    themes: ['Anniversary', 'Joy', 'Eternal Life', 'Surrender', 'Motherly Love'],
+    spiritualReflection: 'Marking 45 years since the first apparitions in June 1981, Mary points every pilgrim to Christ—the Way, the Truth, and the Life—teaching that remembering our heavenly homeland gives joyful strength in every trial.',
     scriptureAnchor: {
-      citation: 'Mark 9:29',
-      text: '"This kind cannot be driven out by anything but prayer and fasting."'
+      citation: 'John 14:6',
+      text: '"Jesus said to him, \'I am the way, and the truth, and the life.\'"'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2026-06-25-ivanka',
+    date: '2026-06-25',
+    displayDate: 'June 25, 2026 (45th Anniversary Annual Apparition)',
+    seerName: 'Ivanka Ivanković-Elez',
+    seerTitle: 'Annual Apparition Message to Ivanka',
+    seerType: 'annual',
+    title: 'Carry the Peace and Love of My Son into Every Heart',
+    messageText: 'Dear children, carry the peace and the love of my Son into every heart. Pray for peace, peace, peace.',
+    originalCroatianExcerpt: 'Draga djeco, nosite mir i ljubav moga Sina u svako srce. Molite za mir, mir, mir.',
+    themes: ['Peace', 'Love', 'Anniversary', 'Prayer with the Heart'],
+    spiritualReflection: 'In her annual apparition on the 45th Anniversary, Ivanka received a concise, urgent call echoing the very first days of Medjugorje: bring Christ\'s love into every heart and pray ceaselessly for peace.',
+    scriptureAnchor: {
+      citation: 'John 14:27',
+      text: '"Peace I leave with you; my peace I give to you. Not as the world gives do I give to you."'
     }
   },
   {
@@ -151,15 +198,16 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Let Your Whole Life Become a Prayer',
-    messageText: 'Dear children! In this time of grace, I am praying with you that your life may become a prayer. Little children, seek God and do not allow the material things of this world to bind your heart. Surrender your worries, your families, and your plans into God’s hands. When you pray with the heart, God gives you the wisdom to recognize what is essential for eternal life. I bless you all with my motherly blessing. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu molim s vama da vaš život postane molitva...',
-    themes: ['Prayer with the Heart', 'Detachment', 'Family', 'Wisdom'],
-    spiritualReflection: 'To make life a prayer means offering every thought, conversation, and duty as a fragrant sacrifice to God. Freedom from worldly attachments allows the soul to fly to heaven.',
+    title: 'A Time of Prayer and Fasting: Return in Love to God',
+    messageText: 'Dear children, May this time be for you a time of prayer and fasting. Return, little children, in love to God Who is your peace. I am with you, little children, and I love you with my motherly tenderness. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Nek vam ovo vrijeme bude vrijeme molitve i posta. Vratite se, dječice, u ljubavi Bogu koji je vaš mir...',
+    themes: ['Fasting', 'Prayer with the Heart', 'Peace', 'Conversion', 'Motherly Love'],
+    spiritualReflection: 'With brief, luminous simplicity, Our Lady unites prayer, fasting, and loving return to God—assuring every soul of her gentle maternal nearness.',
     scriptureAnchor: {
-      citation: 'Colossians 3:2',
-      text: '"Set your minds on things that are above, not on things that are on earth."'
-    }
+      citation: 'Joel 2:12',
+      text: '"Return to me with all your heart, with fasting, with weeping, and with mourning."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2026-04-25',
@@ -168,15 +216,16 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Overcoming Darkness with Prayer and Forgiveness',
-    messageText: 'Dear children! I am with you to tell you that I love you and to encourage you to prayer; because Satan is strong and every day his strength is stronger through those who have chosen death and hatred. You, little children, be prayer, be my extended hands of love for all those who are in darkness and seek the light of God’s salvation. Forgive, love, and pray for your enemies, so that in your hearts there may be only room for Jesus. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! S vama sam da vam kažem da vas volim i potičem na molitvu...',
-    themes: ['Forgiveness', 'Love', 'Spiritual Warfare', 'Light'],
-    spiritualReflection: 'Echoing Christ’s Sermon on the Mount, Mary calls us to the heroic Gospel virtue of loving our enemies and forgiving from the heart. True spiritual strength lies in humility and forgiveness.',
+    title: 'Missionaries of Love and Peace Filled with the Holy Spirit',
+    messageText: 'Dear children, I am praying for you and encourage you to a new life, a life in joy and prayer. May the Holy Spirit fill you, little children, with joy so that you may be like a spring of pure and drinkable water; that you, little children, may be in God and with God missionaries of love and peace. Your life is short here on earth and that is why I am with you to lead you towards Heaven. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Molim se za vas i potičem vas na novi život, život u radosti i molitvi. Nek vas, dječice, Duh Sveti ispuni radošću...',
+    themes: ['Holy Spirit', 'Joy', 'Peace', 'Witness', 'Eternal Life'],
+    spiritualReflection: 'Filled with the joy of the Holy Spirit, Christians become a living spring of pure water for a thirsty world, remembering that earthly life is brief and ordered toward Heaven.',
     scriptureAnchor: {
-      citation: 'Matthew 5:44',
-      text: '"Love your enemies and pray for those who persecute you, so that you may be sons of your Father who is in heaven."'
-    }
+      citation: 'John 7:38',
+      text: '"Whoever believes in me, as the Scripture has said, \'Out of his heart will flow rivers of living water.\'"'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2026-03-25',
@@ -185,15 +234,16 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message on the Feast of the Annunciation',
     seerType: 'monthly-world',
-    title: 'United with Jesus on His Way of the Cross',
-    messageText: 'Dear children! In this time of grace, pray with me that good may win in you and around you. In a special way, little children, pray united with Jesus on His Way of the Cross. Put in your prayers this humanity which is wandering without God and without His love. Be prayer, be light, and witnesses to everyone you meet, little children, so that the merciful God may have mercy on you. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu molite sa mnom da dobro pobijedi u vama i oko vas...',
-    themes: ['Annunciation', 'Way of the Cross', 'Divine Mercy', 'Witness'],
-    spiritualReflection: 'Given on the solemnity of Mary\'s "Fiat" (Annunciation). Like Mary standing faithfully at the foot of the Cross, we are called to stand with Jesus for the salvation of our brothers and sisters.',
+    title: 'In Humility, Pray for Peace and Work on Reconciliation',
+    messageText: 'Dear children, The poison of selfishness and hatred rules human hearts and that is why you do not have peace. I am calling you, little children: be love and my extended hands to all those whom you meet. In humility, pray for peace and work on reconciliation among people, so that it may be good for every person on earth. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Otrov sebičnosti i mržnje vlada ljudskim srcima i zato nemate mira. Pozivam vas, dječice: budite ljubav...',
+    themes: ['Annunciation', 'Peace', 'Humility', 'Forgiveness', 'Love'],
+    spiritualReflection: 'Given on the Solemnity of the Annunciation, Our Lady diagnoses the root of human unrest—selfishness and hatred—and prescribes the Gospel antidote: humility, active reconciliation, and becoming her extended hands of love.',
     scriptureAnchor: {
-      citation: 'Luke 1:38',
-      text: '"Behold, I am the handmaid of the Lord; let it be to me according to your word."'
-    }
+      citation: '2 Corinthians 5:18',
+      text: '"All this is from God, who through Christ reconciled us to himself and gave us the ministry of reconciliation."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2026-03-18',
@@ -202,31 +252,85 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Mirjana Dragićević-Soldo',
     seerTitle: 'Annual Apparition Message to Mirjana',
     seerType: 'annual',
-    title: 'Apostles of My Love: Do Not Be Afraid',
-    messageText: 'Dear children, by the merciful love of God, I am with you. And that is why, as a mother, I call you to believe in love—the love that is union with my Son. With love you achieve everything, even what you think is impossible. My children, look at the Cross and see how much Jesus loved you; He gave His life so that you may have life eternal. Pray that you may understand this mystery of love. Do not be afraid; open your hearts, and let my Son reign in them. Thank you.',
-    originalCroatianExcerpt: 'Draga djeco, po milosrdnoj ljubavi Božjoj ja sam s vama...',
-    themes: ['Love', 'The Cross', 'Trust', 'Eternal Life'],
-    spiritualReflection: 'Mirjana receives an apparition every year on March 18. Mary points every heart toward the Holy Cross as the supreme school of love where fear is dissolved in the ocean of divine mercy.',
+    title: 'Abandon Yourselves to My Son and Do Not Be Afraid of the Future',
+    messageText: 'Dear children, never forget how great is the love of God. Through that love I am with you. Do not forget how great is His mercy. Through that mercy I am showing you the way to true happiness and perfect peace. That is the way to my Son. Therefore, my children, with complete trust, abandon yourselves to my Son and do not be afraid. Do not be afraid of the future because it belongs entirely to the will of my Son. Therefore, my children, renounce everything that distances you from my Son: false happiness, false hope, false splendor. Trust my Son. Tell Him about your pains, sufferings, desires and hopes. You will feel His love and His blessing. Thank you!',
+    originalCroatianExcerpt: 'Draga djeco, nikada ne zaboravite koliko je velika Božja ljubav. Po toj ljubavi sam s vama...',
+    themes: ['Trust', 'Divine Mercy', 'Peace', 'Surrender', 'Hope'],
+    spiritualReflection: 'In her annual apparition on March 18, Mirjana received a tender summons to cast off fear of the future, renounce worldly illusions, and speak honestly to Jesus about every pain, desire, and hope.',
     scriptureAnchor: {
-      citation: '1 John 4:18',
-      text: '"There is no fear in love, but perfect love casts out fear."'
+      citation: '1 Peter 5:7',
+      text: '"Cast all your anxieties on him, because he cares for you."'
     }
+  },
+  {
+    id: 'medj-2026-02-25',
+    date: '2026-02-25',
+    displayDate: 'February 25, 2026',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Awaken from Sleep and Shine Holiness Like a Spring Flower',
+    messageText: 'Dear children, In this time of grace, anew, I am calling you to offer your lives to God that He may lead you towards the resurrection through your personal conversion. Little children, God is near to you and heeds your prayers, but you are lulled to sleep, and that is why He sent me to you to awaken you, and that you may shine holiness like a spring flower. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu iznova vas pozivam da prikažete vaše živote Bogu, da vas on vodi prema uskrsnuću...',
+    themes: ['Conversion', 'Holiness', 'Resurrection', 'Prayer with the Heart'],
+    spiritualReflection: 'Given during Lent, this message gently rouses souls from spiritual slumber, assuring us that God is close and hears every prayer as He leads us through conversion toward the glory of the Resurrection.',
+    scriptureAnchor: {
+      citation: 'Ephesians 5:14',
+      text: '"Awake, O sleeper, and arise from the dead, and Christ will shine on you."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2026-01-25',
+    date: '2026-01-25',
+    displayDate: 'January 25, 2026',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Be Prayer and a Sign of God\'s Love to Others',
+    messageText: 'Dear children, Today, I am calling you to be prayer and a blessing for all those who have not come to know God\'s love. Little children, be different from others and be positive people of prayer and love towards God, that with your lives, you may be a sign of God\'s love to others. I bless you with my motherly blessing and intercede for each of you before my Son Jesus. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Danas vas pozivam da budete molitva i blagoslov za sve one koji nisu upoznali Božju ljubav...',
+    themes: ['Witness', 'Love', 'Prayer with the Heart', 'Intercession'],
+    spiritualReflection: 'Opening the year 2026, Our Lady asks Christians to stand out from worldly cynicism as radiant, positive people of prayer whose very lives point unbelievers to the love of God.',
+    scriptureAnchor: {
+      citation: 'Matthew 5:16',
+      text: '"Let your light shine before others, so that they may see your good works and give glory to your Father who is in heaven."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-12-25-marija',
+    date: '2025-12-25',
+    displayDate: 'December 25, 2025 (Christmas Monthly Message)',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Christmas Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Be Resolute and Courageous Defenders of the Love of God',
+    messageText: 'Dear children! Also today — when God permits me to carry to you in my arms little Jesus, the King of Peace, that He may fill you with the ardor of love and peace, so that every heart may be similar to His Heart in this time of grace — be resolute and courageous defenders of the love of your God, that in this time of grace He may give you His peace. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! I danas - kad mi Bog dozvoli da vam u mojim rukama nosim malog Isusa Kralja mira, da vas on ispuni žarom ljubavi i mirom...',
+    themes: ['Christmas', 'Prince of Peace', 'Love', 'Courage'],
+    spiritualReflection: 'Bearing the Infant Jesus, King of Peace, in her arms on Christmas Day, Mary calls the faithful to courageous fidelity so every heart may grow like the Sacred Heart of Christ.',
+    scriptureAnchor: {
+      citation: 'Isaiah 9:6',
+      text: '"For to us a child is born, to us a son is given... and his name shall be called Wonderful Counselor, Mighty God, Everlasting Father, Prince of Peace."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2025-12-25',
     date: '2025-12-25',
-    displayDate: 'December 25, 2025 (Nativity of Our Lord)',
+    displayDate: 'December 25, 2025 (Annual Christmas Apparition)',
     seerName: 'Jakov Čolo',
     seerTitle: 'Annual Christmas Apparition Message to Jakov',
     seerType: 'annual',
-    title: 'I Bring You Little Jesus, King of Peace',
-    messageText: 'Dear children, today with little Jesus in my arms, I invite you to open your hearts to Him. He is the Prince of Peace, the One who alone can give true peace to your weary hearts and to your families. Do not seek peace in the passing things of this world; seek it on your knees before the tabernacle. Receive Jesus in Holy Communion with clean hearts, and allow Him to be born anew in you today. Thank you for responding to my call.',
-    originalCroatianExcerpt: 'Draga djeco, danas s malim Isusom u naručju pozivam vas da Mu otvorite svoja srca...',
-    themes: ['Christmas', 'Eucharist', 'Prince of Peace', 'Family'],
-    spiritualReflection: 'Our Lady appeared with the Infant Jesus in her arms. She reminds us that peace is not an abstract concept or treaty; Peace is a Divine Person: Jesus Christ in the Holy Eucharist.',
+    title: 'Complete Surrender to Jesus: Permit Him to Rule in Your Lives',
+    messageText: 'Today, on this day of grace, in a special way I am calling you to complete surrender to Jesus. Little children, surrender to Him your wounds and pains, your past and future, and permit Jesus to begin to rule in your lives. My children, only with complete surrender, Jesus gives Himself in your life, and this is the greatest gift that you can receive. Pray that you may comprehend how precious you are for Jesus and how much He loves you. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Danas, na ovaj milosni dan, na poseban način pozivam vas na potpuno predanje Isusu...',
+    themes: ['Christmas', 'Surrender', 'Healing', 'Love', 'Trust'],
+    spiritualReflection: 'In her annual Christmas message to Jakov, Our Lady invites total surrender of past wounds and future fears to Jesus, revealing that when we surrender wholly, Christ gives Himself completely to us.',
     scriptureAnchor: {
-      citation: 'Isaiah 9:6',
-      text: '"For to us a child is born, to us a son is given... and his name shall be called Wonderful Counselor, Mighty God, Everlasting Father, Prince of Peace."'
+      citation: 'Galatians 2:20',
+      text: '"It is no longer I who live, but Christ who lives in me."'
     }
   },
   {
@@ -236,15 +340,52 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Open Your Hearts to the Beauty of Holiness and Gratitude',
-    messageText: 'Dear children! In this time of grace, I am calling you to prayer. Pray, little children, that your life may become a continuous act of thanksgiving to God for everything He gives you. Do not allow worldly anxieties to rob you of joy. When you pray with the heart, your soul is filled with divine light and Satan has no power over you. Be messengers of my peace to all who suffer. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu pozivam vas na molitvu...',
-    themes: ['Gratitude', 'Prayer with the Heart', 'Light', 'Peace'],
-    spiritualReflection: 'Gratitude is the antidote to spiritual fatigue. When we thank God for every breath and cross, our eyes open to see His infinite providence directing our life.',
+    title: 'United in the Joy of Expectancy and Confidence in God',
+    messageText: 'Dear children! In this time of grace, I am calling you to follow me. Pray for those who do not pray and do not want peace and joy, which only the Most High can give. May your souls be united in the joy of expectancy and your heart will be filled with peace. You will be convinced, little children, that all will be good and that God will bless all; because the good that you give will return to you, and joy will enfold your heart because you are with God and in God. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu pozivam vas da me slijedite. Molite za one koji ne mole i ne žele mir i radost...',
+    themes: ['Peace', 'Joy', 'Hope', 'Intercession'],
+    spiritualReflection: 'On the threshold of Advent, Our Lady consoles the faithful with radiant hope: every act of goodness returns multiplied in grace, and living with God fills the heart with unshakeable peace.',
     scriptureAnchor: {
-      citation: '1 Thessalonians 5:18',
-      text: '"Give thanks in all circumstances; for this is the will of God in Christ Jesus for you."'
-    }
+      citation: 'Romans 8:28',
+      text: '"And we know that for those who love God all things work together for good."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-10-25',
+    date: '2025-10-25',
+    displayDate: 'October 25, 2025',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Create Prayer Groups to Encourage Each Other to the Good',
+    messageText: 'Dear children! The Most High in His goodness gave me to you to lead you on the way of peace. Many have responded and are praying, but there are many creatures who do not have peace and have not come to know the God of love. Therefore, little children, pray and love, create prayer groups to encourage each other to the good. I am with you and am praying for your conversion. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Svevišnji u svojoj dobroti dade me vama da vas vodim na putu mira. Mnogi su se odazvali i mole...',
+    themes: ['Peace', 'Prayer Groups', 'Conversion', 'Love'],
+    spiritualReflection: 'Christian faith flourishes in communion. By forming prayer groups, believers strengthen one another in virtue and intercede for those who have not yet encountered the God of love.',
+    scriptureAnchor: {
+      citation: 'Hebrews 10:24',
+      text: '"And let us consider how to stir up one another to love and good works."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-09-25',
+    date: '2025-09-25',
+    displayDate: 'September 25, 2025',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'May This Time Be a Time of Prayer for Peace',
+    messageText: 'Dear children! May this time for you be a time of prayer for peace. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Neka vam ovo vrijeme bude vrijeme molitve za mir. Hvala vam što ste se odazvali mome pozivu.',
+    themes: ['Peace', 'Prayer with the Heart'],
+    spiritualReflection: 'One of the briefest and most penetrating monthly messages in Medjugorje history—summoning the whole Church to single-minded, urgent prayer for peace.',
+    scriptureAnchor: {
+      citation: 'Psalm 122:6',
+      text: '"Pray for the peace of Jerusalem! May they be secure who love you!"'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2025-08-25',
@@ -253,32 +394,88 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Be Transformed in the Silence of Eucharistic Adoration',
-    messageText: 'Dear children! I am calling you to be prayer for all those who do not pray; to be joy for all those who do not see a way out; to be light in the darkness of this time. Pray, little children, and spend time in silent adoration before Jesus in the Blessed Sacrament. There He will transform your heart, heal your wounds, and give you strength to overcome every obstacle. I am with you and I bless you. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! Pozivam vas da budete molitva za sve one koji ne mole...',
-    themes: ['Eucharist', 'Adoration', 'Silence', 'Healing'],
-    spiritualReflection: 'Silent adoration before the Sacred Host is the school of divine transformation. Before the tabernacle, the soul loses its self-centered burdens and absorbs Christ\'s gentle humility.',
+    title: 'Fast, Sacrifice Yourselves, and Be My Extended Hands',
+    messageText: 'Dear children, my little children, my beloved ones; you are chosen because you have responded, you have put into practice my instructions and love God above all else. Therefore, little children, pray with all your heart that my words may be realized. Fast, sacrifice yourselves, love out of love for God Who created you, and be, little children, my extended hands to this world that has not come to know the God of love. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco, dječice moja, ljubljeni moji! Vi ste izabrani jer ste se odazvali, stavili u praksu moje upute...',
+    themes: ['Fasting', 'Extended Hands', 'Prayer with the Heart', 'Love'],
+    spiritualReflection: 'With deep maternal affection ("my beloved ones"), Our Lady praises those who live her messages and calls them to fasting, self-offering, and active charity for a world in need of God.',
     scriptureAnchor: {
-      citation: '2 Corinthians 3:18',
-      text: '"And we all, with unveiled face, beholding the glory of the Lord, are being transformed into the same image from one degree of glory to another."'
-    }
+      citation: 'Romans 12:1',
+      text: '"I appeal to you therefore, brothers, by the mercies of God, to present your bodies as a living sacrifice, holy and acceptable to God."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-07-25',
+    date: '2025-07-25',
+    displayDate: 'July 25, 2025',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Fight for the Holiness of Every Life',
+    messageText: 'Dear children! In this time of grace, when the Most High permits me to love you and lead you on the way of holiness, Satan wants to entangle you with the cord of peacelessness and hatred. Do not permit him to prevail, but, little children, fight for the holiness of every life. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu, kad mi Svevišnji dozvoli da vas ljubim i vodim putem svetosti, sotona vas želi zapetljati...',
+    themes: ['Holiness', 'Spiritual Warfare', 'Peace', 'Pro-Life'],
+    spiritualReflection: 'Our Lady warns against the snare of unrest and hatred, calling believers to defend the dignity and sanctity of every human life through steadfast holiness.',
+    scriptureAnchor: {
+      citation: '1 Peter 1:15',
+      text: '"As he who called you is holy, you also be holy in all your conduct."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2025-06-25',
     date: '2025-06-25',
     displayDate: 'June 25, 2025 (44th Anniversary of Apparitions)',
     seerName: 'Marija Pavlović-Lunetti',
-    seerTitle: '44th Anniversary Message to the World',
+    seerTitle: '44th Anniversary Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Thank God for the Abundance of Divine Grace and Conversions',
-    messageText: 'Dear children! My heart is full of joy because through all these years I see your response and your love for my call. Today I invite you: be prayer, be my extended hands of peace to this world which is perishing without God. Fast, pray, and return to the Sacraments. May Holy Mass be the crown of your week and the source of your daily joy. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! Moje srce je puno radosti jer kroz sve ove godine vidim vaš odaziv...',
-    themes: ['Anniversary', 'Holy Mass', 'Sacraments', 'Apostles of Peace'],
-    spiritualReflection: 'Celebrating 44 years of Marian apparitions. Our Lady reminds us that her long presence is a testament to God\'s incredible patience and desire that no soul be lost.',
+    title: 'Return to God: Ideologies Are Transitory, With God You Have Eternal Life',
+    messageText: 'Dear children, Also today I thank the Almighty that I am with you and that I can lead you towards the God of love and peace. The ideologies which destroy you and your spiritual life are transitory. I am calling you, little children: return to God, because with God you have a future and eternal life. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! I danas zahvaljujem Svemogućemu da sam s vama i da vas mogu voditi prema Bogu ljubavi i mira...',
+    themes: ['Anniversary', 'Conversion', 'Eternal Life', 'Peace'],
+    spiritualReflection: 'Celebrating 44 years of apparitions, Mary contrasts passing worldly ideologies that erode spiritual life with the eternal future promised to all who return to the God of love and peace.',
     scriptureAnchor: {
-      citation: '2 Peter 3:9',
-      text: '"The Lord is not slow to fulfill his promise as some count slowness, but is patient toward you, not wishing that any should perish, but that all should reach repentance."'
-    }
+      citation: '1 John 2:17',
+      text: '"And the world is passing away along with its desires, but whoever does the will of God abides forever."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-05-25',
+    date: '2025-05-25',
+    displayDate: 'May 25, 2025',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Pray to the Holy Spirit for Courage, Surrender, and Peace',
+    messageText: 'Dear children, In this time of grace, I am calling you to be people of hope, peace and joy, so that every person may be a peacemaker and a lover of life. Pray, little children, to the Holy Spirit to fill you with the strength of His own Holy Spirit of courage and surrender. And this time for you will be a gift and a walk in holiness towards eternal life. I am with you and I love you. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu pozivam vas da budete ljudi nade, mira i radosti, da bi svaki čovjek bio mirotvorac...',
+    themes: ['Holy Spirit', 'Hope', 'Peace', 'Joy', 'Holiness'],
+    spiritualReflection: 'Approaching Pentecost, Our Lady urges us to invoke the Holy Spirit for courage and surrender so that every believer becomes a joyful peacemaker and defender of life.',
+    scriptureAnchor: {
+      citation: 'Romans 15:13',
+      text: '"May the God of hope fill you with all joy and peace in believing, so that by the power of the Holy Spirit you may abound in hope."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-04-25',
+    date: '2025-04-25',
+    displayDate: 'April 25, 2025',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Winds of Peacelessness: Return to God and to Prayer',
+    messageText: 'Dear children, Winds of peacelessness, selfishness and sin are catching hold of many hearts and leading them into peacelessness and perdition. That is why I am calling you, little children: return to God and to prayer, so that it may be good for you in the hearts and on the earth on which you live. I love you, little children, and that is why I am not tiring of calling you to conversion. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Vjetrovi nemira, sebičnosti i grijeha zahvaćaju mnoga srca i vode ih u nemir i propast...',
+    themes: ['Conversion', 'Peace', 'Prayer with the Heart', 'Motherly Love'],
+    spiritualReflection: 'Mary\'s tireless maternal love persists in calling humanity away from sin and selfishness, reminding us that interior peace and blessing on earth come only by returning to God.',
+    scriptureAnchor: {
+      citation: 'Isaiah 55:6-7',
+      text: '"Seek the Lord while he may be found; call upon him while he is near."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2025-03-25',
@@ -287,15 +484,88 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message on the Feast of the Annunciation',
     seerType: 'monthly-world',
-    title: 'Prayer with the Heart is the Key to Peace in Families',
-    messageText: 'Dear children! In this time of grace, pray with me for peace, because Satan wants to destroy everything that is holy in you and in your families. Little children, pray until prayer becomes your life. Put Holy Scripture in a visible place in your family, read it together, and let God’s Word guide your steps. May the Holy Eucharist be the sun of your life. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu molite sa mnom za mir...',
-    themes: ['Annunciation', 'Family', 'Holy Scripture', 'Eucharist'],
-    spiritualReflection: 'Given on the Annunciation, Mary\'s message reinforces two of her Five Stones: daily reading of the Bible in the home and centeredness on Holy Mass.',
+    title: 'Say "Yes" to God: Offer Prayers, Sufferings, and Tears',
+    messageText: 'Dear children, in this time of grace when you are called to conversion, I am encouraging you, little children: offer me your prayers, sufferings and tears for conversion of hearts that are far from the Heart of my Son Jesus. Pray with me, because, little children, without God you do not have a future or eternal life. I love you, but I cannot help you without you; therefore, say "yes" to God. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu kad ste pozvani na obraćenje potičem vas, dječice, prikažite mi vaše molitve, patnje i suze...',
+    themes: ['Annunciation', 'Conversion', 'Redemptive Suffering', 'Eternal Life'],
+    spiritualReflection: 'On the Solemnity of her own "Fiat," Mary invites us to unite our daily crosses and tears with hers for distant hearts, reminding us that God respects our free will and awaits our personal "yes."',
     scriptureAnchor: {
-      citation: 'Psalm 119:105',
-      text: '"Your word is a lamp to my feet and a light to my path."'
-    }
+      citation: 'Luke 1:38',
+      text: '"Behold, I am the handmaid of the Lord; let it be to me according to your word."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-02-25',
+    date: '2025-02-25',
+    displayDate: 'February 25, 2025',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Springtime of Personal Conversion: Be My Hands of Peace',
+    messageText: 'Dear children, May this springtime be an encouragement for personal conversion for you, that with your lives you may pray and love God above all, for all those who are in need. Little children, be my hands of peace and prayer; be love for all those who do not love, do not pray and do not want peace. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Nek vam ovo proljetno vrijeme bude poticaj na osobno obraćenje da bi svojim životima molili i ljubili Boga iznad svega...',
+    themes: ['Conversion', 'Extended Hands', 'Peace', 'Love'],
+    spiritualReflection: 'Personal conversion bears fruit in concrete charity: becoming Mary\'s hands of peace and prayer specifically for those who neither pray nor love.',
+    scriptureAnchor: {
+      citation: '1 John 3:18',
+      text: '"Little children, let us not love in word or talk but in deed and in truth."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2025-01-25',
+    date: '2025-01-25',
+    displayDate: 'January 25, 2025',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Put God in the Center of Your Living',
+    messageText: 'Dear children, In this year of grace, I am calling you to conversion. Put God, dear children, in the center of your living and the fruits will be love towards neighbor and joy of witnessing; and the holiness of your life will become a true witnessing of faith. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovoj milosnoj godini pozivam vas na obraćenje. Stavite Boga, draga djeco, u centar vašeg življenja...',
+    themes: ['Conversion', 'Holiness', 'Witness', 'Joy', 'Love'],
+    spiritualReflection: 'Given during the Jubilee Year of Grace 2025, Our Lady teaches that when God holds the center of our lives, neighborly love and joyful witness of faith spring forth naturally.',
+    scriptureAnchor: {
+      citation: 'Matthew 6:33',
+      text: '"But seek first the kingdom of God and his righteousness, and all these things will be added to you."'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2024-12-25',
+    date: '2024-12-25',
+    displayDate: 'December 25, 2024 (Nativity of Our Lord)',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Christmas Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'Pray That Peace May Reign Over Every Evil',
+    messageText: 'Dear children! Pray, pray, pray that peace may begin to reign in every heart and prevail over every evil and peacelessness. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Molite, molite, molite da bi mir zavladao u svakom srcu i prevladao nad svakim zlom i nemirom.',
+    themes: ['Christmas', 'Peace', 'Prayer with the Heart'],
+    spiritualReflection: 'A piercing Christmas plea from the Queen of Peace: persistent, triple-repeated prayer is the path by which Christ\'s peace overcomes every evil and unrest.',
+    scriptureAnchor: {
+      citation: 'Luke 2:14',
+      text: '"Glory to God in the highest, and on earth peace among those with whom he is pleased!"'
+    },
+    ecclesiasticalApproval: true
+  },
+  {
+    id: 'medj-2024-11-25',
+    date: '2024-11-25',
+    displayDate: 'November 25, 2024',
+    seerName: 'Marija Pavlović-Lunetti',
+    seerTitle: 'Monthly Message to the Parish and the World',
+    seerType: 'monthly-world',
+    title: 'May Advent Be Prayer of the Family',
+    messageText: 'Dear children! In this time of the grace of expectation, I desire to call you to prayer for Advent to be prayer of the family. In a special way, little children whom I tenderly embrace, I encourage you to prayer for peace in the world; for peace to prevail over peacelessness and hatred. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovom milosnom vremenu iščekivanja želim vas pozvati na molitvu da Došašće bude molitva obitelji...',
+    themes: ['Family', 'Peace', 'Prayer with the Heart', 'Motherly Love'],
+    spiritualReflection: 'Inviting families to keep Advent together in prayer, Our Lady tenderly embraces her children and urges intercession so that peace triumphs over hatred.',
+    scriptureAnchor: {
+      citation: 'Philippians 4:6-7',
+      text: '"In everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2024-10-25',
@@ -304,15 +574,16 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message to the Parish and the World',
     seerType: 'monthly-world',
-    title: 'Pray with the Saints and Witness God’s Boundless Love',
-    messageText: 'Dear children! In this time, when you are celebrating the day of All Saints and remembering your dear deceased, I invite you: pray, little children, so that your life may become a continuous witness of love and hope. Pray for those who do not have peace in their hearts and who do not know the love of God. God desires to work through each of you. Open your hearts to His Holy Spirit and do not fear the trials of this world. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! U ovom vremenu kada slavite Dan Svih Svetih i spominjete se svojih dragih pokojnih...',
-    themes: ['All Saints', 'Witness', 'Holy Spirit', 'Hope', 'Eternal Life'],
-    spiritualReflection: 'Following the Vatican’s "Nihil Obstat" decree, Our Lady encourages us to unite with the communion of saints. Sanctity is not reserved for the few, but is the universal Catholic calling of every baptized believer.',
+    title: 'Seek the Intercession of the Saints and Live Holily',
+    messageText: 'Dear children, At this time, when you are celebrating the day of All Saints, seek their intercession and prayers so that in union with them, you may find peace. May the Saints be your intercessors and example, that you imitate them and live holily. I am with you and intercede before God for each of you. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! U ovom vremenu kada slavite dan svih svetih, tražite njihov zagovor i molitve, da biste u jedinstvu s njima pronašli mir...',
+    themes: ['All Saints', 'Holiness', 'Intercession', 'Peace'],
+    spiritualReflection: 'Uniting with the Communion of Saints brings peace and courage to imitate their holiness. Our Lady assures us that she and all the Saints actively intercede for us before God.',
     scriptureAnchor: {
-      citation: '1 Thessalonians 4:14',
-      text: '"For since we believe that Jesus died and rose again, even so, through Jesus, God will bring with him those who have fallen asleep."'
-    }
+      citation: 'Hebrews 12:1',
+      text: '"Therefore, since we are surrounded by so great a cloud of witnesses, let us also lay aside every weight... and let us run with endurance the race that is set before us."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2024-09-25',
@@ -321,15 +592,16 @@ export const MEDJUGORJE_MESSAGES: MedjugorjeMessage[] = [
     seerName: 'Marija Pavlović-Lunetti',
     seerTitle: 'Monthly Message Following the Holy See Decree on Medjugorje',
     seerType: 'monthly-world',
-    title: 'Return to Prayer with the Heart and the Holy Eucharist',
-    messageText: 'Dear children! Out of love for you, God has sent me among you, to love you and encourage you to prayer. Little children, return to prayer with the heart, because when you pray with the heart, the ice melts in your souls and every anxiety disappears. Be carriers of peace in this world without peace. Worship Jesus in the Most Blessed Sacrament of the Altar; let Him be your strength, your peace, and your eternal consolation. Thank you for having responded to my call.',
-    originalCroatianExcerpt: 'Draga djeco! Iz ljubavi prema vama Bog me poslao među vas, da vas ljubim i potičem na molitvu...',
-    themes: ['Holy Eucharist', 'Adoration', 'Vatican Decree', 'Peace', 'Prayer with the Heart'],
-    spiritualReflection: 'Issued six days after the Holy See granted "Nihil Obstat" to Medjugorje. Mary directs all eyes not to herself, but to Jesus present in the Blessed Sacrament on the altar.',
+    title: 'True Peace Comes Only Through Prayer, From God Who Is Your Peace',
+    messageText: 'Dear children, Out of love towards you, God has sent me among you, to love you and encourage you to prayer and conversion, for peace in you and in your families and in the world. Little children, do not forget that true peace comes only through prayer, from God Who is your peace. Thank you for having responded to my call.',
+    originalCroatianExcerpt: 'Draga djeco! Iz ljubavi prema vama Bog me posla među vas da vas ljubim i potičem na molitvu i obraćenje za mir u vama...',
+    themes: ['Vatican Decree', 'Peace', 'Conversion', 'Family', 'Prayer with the Heart'],
+    spiritualReflection: 'Issued six days after the Holy See granted "Nihil Obstat" to Medjugorje, this message sums up the entire spirituality of the Queen of Peace: true peace comes only through prayer, from God Who is our peace.',
     scriptureAnchor: {
-      citation: 'Matthew 11:28',
-      text: '"Come to me, all who labor and are heavy laden, and I will give you rest."'
-    }
+      citation: 'Ephesians 2:14',
+      text: '"For he himself is our peace, who has made us both one."'
+    },
+    ecclesiasticalApproval: true
   },
   {
     id: 'medj-2024-06-25-ivanka',

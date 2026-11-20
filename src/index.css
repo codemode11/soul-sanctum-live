@@ -1,59 +1,65 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-  --font-cinzel: 'Cinzel', serif;
-  --font-trajan: 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
-  --font-calluna: 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-cinzel: 'Playfair Display', 'Cinzel', serif;
+  --font-trajan: 'Playfair Display', 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
+  --font-calluna: 'Playfair Display', 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
+  --font-sans: 'Playfair Display', 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 @layer base {
   :root {
-    --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-    --font-cinzel: 'Cinzel', serif;
-    --font-trajan: 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
-    --font-calluna: 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
-    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-serif: 'Playfair Display', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    --font-cinzel: 'Playfair Display', 'Cinzel', serif;
+    --font-trajan: 'Playfair Display', 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
+    --font-calluna: 'Playfair Display', 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
+    --font-sans: 'Playfair Display', 'Plus Jakarta Sans', system-ui, sans-serif;
     --sanctum-icon-speed: 1.2s;
+    quotes: "“" "”" "‘" "’";
   }
 
   /* Make all heading elements (h1-h6) use traditional, dignified serif fonts */
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    font-family: 'Playfair Display', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   }
 
   body {
     font-family: var(--font-sans);
     font-size: 1.0625rem; /* generous readable baseline */
     line-height: 1.6;
+    quotes: "“" "”" "‘" "’";
+  }
+
+  q {
+    quotes: "“" "”" "‘" "’";
   }
 }
 
 .font-serif {
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-family: 'Playfair Display', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
 }
 
 .font-cinzel {
-  font-family: 'Cinzel', serif;
+  font-family: 'Playfair Display', 'Cinzel', serif;
 }
 
 .font-trajan {
-  font-family: 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
+  font-family: 'Playfair Display', 'Trajan Pro', 'Trajan', 'Cinzel', Georgia, serif;
 }
 
 .font-calluna {
-  font-family: 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
+  font-family: 'Playfair Display', 'Calluna', 'Crimson Pro', 'EB Garamond', Georgia, serif;
 }
 
 .font-serif-heading {
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-family: 'Playfair Display', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 .font-serif-sacred {
-  font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  font-family: 'Playfair Display', 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   font-size: 1.25rem; /* ~20px generous baseline for sacred missal reading */
   line-height: 1.7;
 }

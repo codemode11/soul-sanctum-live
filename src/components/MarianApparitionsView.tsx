@@ -98,7 +98,7 @@ export const MarianApparitionsView: React.FC = () => {
   };
 
   const handleCopy = (app: MarianApparition) => {
-    const text = `${app.title.toUpperCase()} (${app.latinTitle})\nYear: ${app.year} | Location: ${app.location}, ${app.country}\nVisionaries: ${app.visionaries}\nFeast Day: ${app.feastDay} | Status: ${app.approvalStatus}\n\nSUMMARY:\n${app.summary}\n\nMESSAGE OF OUR LADY:\n"${app.keyMessage}"\n\nMIRACULOUS SIGNS:\n${app.miraculousSigns}\n\nDEVOTIONAL PRACTICE:\n${app.devotionalPractice}\n\nSCRIPTURE ANCHOR:\n${app.scriptureAnchor}\n\nVia Soul Sanctum`;
+    const text = `${app.title.toUpperCase()} (${app.latinTitle})\nYear: ${app.year} | Location: ${app.location}, ${app.country}\nVisionaries: ${app.visionaries}\nFeast Day: ${app.feastDay} | Status: ${app.approvalStatus}\n\nSUMMARY:\n${app.summary}\n\nMESSAGE OF OUR LADY:\n${app.keyMessage}\n\nMIRACULOUS SIGNS:\n${app.miraculousSigns}\n\nDEVOTIONAL PRACTICE:\n${app.devotionalPractice}\n\nSCRIPTURE ANCHOR:\n${app.scriptureAnchor}\n\nVia Soul Sanctum`;
     navigator.clipboard.writeText(text);
     setCopiedId(app.id);
     setTimeout(() => setCopiedId(null), 2500);
@@ -378,7 +378,7 @@ export const MarianApparitionsView: React.FC = () => {
                       <span className="font-cinzel text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider block">
                         Words of the Blessed Virgin Mary
                       </span>
-                      <p className={`font-serif italic text-slate-900 font-medium transition-all duration-200 ${quoteTextClass}`}>
+                      <p className={`font-serif not-italic font-normal text-slate-900 transition-all duration-200 ${quoteTextClass}`}>
                         {app.keyMessage}
                       </p>
                     </div>

@@ -256,12 +256,12 @@ export const SpiritualBooksReaderView: React.FC = () => {
   const getFontFamilyStyle = () => {
     switch (fontFamily) {
       case 'roman':
-        return { fontFamily: "'Cinzel', serif" };
+        return { fontFamily: "'Playfair Display', 'Cinzel', serif" };
       case 'sans':
-        return { fontFamily: 'ui-sans-serif, system-ui, sans-serif' };
+        return { fontFamily: "'Playfair Display', ui-sans-serif, system-ui, sans-serif" };
       case 'serif':
       default:
-        return { fontFamily: "'Cinzel', 'Merriweather', 'Georgia', serif" };
+        return { fontFamily: "'Playfair Display', 'Cinzel', 'Merriweather', 'Georgia', serif" };
     }
   };
 
