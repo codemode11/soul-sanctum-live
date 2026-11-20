@@ -22,7 +22,10 @@ import {
 } from 'lucide-react';
 import {
   CATHOLIC_INSTAGRAM_SOURCES,
+  CATHOLIC_FACEBOOK_SOURCES,
+  CATHOLIC_FACEBOOK_POSTS,
   CatholicInstagramSource,
+  CatholicFacebookSource,
   CatholicStaticSocialPost
 } from '../data/catholicSocial';
 import {
@@ -32,14 +35,24 @@ import {
 } from '../data/christendomData';
 import { CatholicSocialShareIcon } from './SanctumIcons';
 import { EwtnLiveVideoPlayer } from './EwtnLiveVideoPlayer';
+import {
+  CatholicFacebookSection,
+  CustomFacebookPostEmbed
+} from './CatholicFacebookSection';
 
-type SocialPlatformTab = 'all' | 'favorites' | 'ewtn' | 'instagram' | 'christendom';
+type SocialPlatformTab = 'all' | 'favorites' | 'ewtn' | 'facebook' | 'instagram' | 'christendom';
 
 const FAVORITES_STORAGE_KEY = 'sanctum_catholic_social_favorites_v1';
 const CUSTOM_IG_FAVORITES_STORAGE_KEY = 'sanctum_catholic_social_custom_ig_v1';
+const CUSTOM_FB_SOURCES_STORAGE_KEY = 'sanctum_catholic_social_custom_fb_sources_v1';
+const CUSTOM_FB_POSTS_STORAGE_KEY = 'sanctum_catholic_social_custom_fb_posts_v1';
+const FB_FAVORITES_SEEDED_KEY = 'sanctum_catholic_social_fb_seeded_v2';
+
+const STARTER_FB_FAVORITES: string[] = CATHOLIC_FACEBOOK_SOURCES.map(src => `fb:${src.id}`);
 
 const DEFAULT_FAVORITE_FEEDS: string[] = [
   'ewtn-tv:ewtn-us-global',
+  ...STARTER_FB_FAVORITES,
   'ig:aleteia_en',
   'christendom:ch-wordonfire'
 ];
@@ -74,11 +87,18 @@ export const CatholicSocialView: React.FC = () => {
       if (saved !== null) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          return parsed.filter(
-            (id): id is string => typeof id === 'string' && !id.startsWith('fb:') && id !== 'soul-sanctum-fb'
+          const cleaned = parsed.filter(
+            (id): id is string => typeof id === 'string' && id !== 'soul-sanctum-fb'
           );
+          const alreadySeededAllFb = localStorage.getItem(FB_FAVORITES_SEEDED_KEY) === '1';
+          if (!alreadySeededAllFb) {
+            localStorage.setItem(FB_FAVORITES_SEEDED_KEY, '1');
+            return Array.from(new Set([...cleaned, ...STARTER_FB_FAVORITES]));
+          }
+          return cleaned;
         }
       }
+      localStorage.setItem(FB_FAVORITES_SEEDED_KEY, '1');
     } catch {
       // ignore storage errors
     }
@@ -98,6 +118,34 @@ export const CatholicSocialView: React.FC = () => {
     return [];
   });
 
+  const [customFbSources, setCustomFbSources] = useState<CatholicFacebookSource[]>(() => {
+    try {
+      const saved = localStorage.getItem(CUSTOM_FB_SOURCES_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch {
+      // ignore
+    }
+    return [];
+  });
+
+  const [customFbPosts, setCustomFbPosts] = useState<CustomFacebookPostEmbed[]>(() => {
+    try {
+      const saved = localStorage.getItem(CUSTOM_FB_POSTS_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch {
+      // ignore
+    }
+    return [];
+  });
+
+  const [focusedFbSourceId, setFocusedFbSourceId] = useState<string | null>(null);
+
   useEffect(() => {
     try {
       localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(favoriteIds));
@@ -114,10 +162,50 @@ export const CatholicSocialView: React.FC = () => {
     }
   }, [customIgSources]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(CUSTOM_FB_SOURCES_STORAGE_KEY, JSON.stringify(customFbSources));
+    } catch {
+      // ignore
+    }
+  }, [customFbSources]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(CUSTOM_FB_POSTS_STORAGE_KEY, JSON.stringify(customFbPosts));
+    } catch {
+      // ignore
+    }
+  }, [customFbPosts]);
+
   const isFavorite = useCallback((id: string) => favoriteIds.includes(id), [favoriteIds]);
 
   const toggleFavorite = useCallback((id: string) => {
     setFavoriteIds(prev => (prev.includes(id) ? prev.filter(item => item !== id) : [id, ...prev]));
+  }, []);
+
+  const handleAddCustomFbSource = useCallback((source: CatholicFacebookSource) => {
+    setCustomFbSources(prev =>
+      prev.some(s => s.id === source.id) ? prev : [source, ...prev]
+    );
+  }, []);
+
+  const handleRemoveCustomFbSource = useCallback((sourceId: string) => {
+    setCustomFbSources(prev => prev.filter(s => s.id !== sourceId));
+  }, []);
+
+  const handleAddCustomFbPost = useCallback((post: CustomFacebookPostEmbed) => {
+    setCustomFbPosts(prev =>
+      prev.some(p => p.postUrl === post.postUrl) ? prev : [post, ...prev]
+    );
+  }, []);
+
+  const handleRemoveCustomFbPost = useCallback((postId: string) => {
+    setCustomFbPosts(prev => prev.filter(p => p.id !== postId));
+  }, []);
+
+  const handleRestoreStarterFbFavorites = useCallback(() => {
+    setFavoriteIds(prev => Array.from(new Set([...STARTER_FB_FAVORITES, ...prev])));
   }, []);
 
   // =========================================================================
@@ -700,7 +788,7 @@ export const CatholicSocialView: React.FC = () => {
 
             {/* Line 2: Main Title */}
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
-              EWTN, Catholic Instagram &amp; Christendom.com
+              EWTN, Facebook, Instagram &amp; Christendom.com
             </h2>
           </div>
 
@@ -740,6 +828,19 @@ export const CatholicSocialView: React.FC = () => {
                 }`}
               >
                 EWTN Hub
+              </button>
+              <button
+                onClick={() => {
+                  setFocusedFbSourceId(null);
+                  setActivePlatform('facebook');
+                }}
+                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
+                  activePlatform === 'facebook'
+                    ? 'bg-[#1877F2] text-white border-blue-300 shadow-sm'
+                    : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
+                }`}
+              >
+                Facebook
               </button>
               <button
                 onClick={() => setActivePlatform('instagram')}
@@ -810,6 +911,14 @@ export const CatholicSocialView: React.FC = () => {
                     setSelectedAdorationId(ap.id);
                   }
                   setActivePlatform('ewtn');
+                };
+              } else if (favId.startsWith('fb:')) {
+                const fbId = favId.slice(3);
+                const fb = [...customFbSources, ...CATHOLIC_FACEBOOK_SOURCES].find(s => s.id === fbId);
+                label = fb ? `FB · ${fb.name.replace(/\s*\(.*\)/, '')}` : 'Facebook';
+                onJump = () => {
+                  if (fb) setFocusedFbSourceId(fb.id);
+                  setActivePlatform('facebook');
                 };
               } else if (favId.startsWith('ig:')) {
                 const uname = favId.slice(3);
@@ -897,7 +1006,7 @@ export const CatholicSocialView: React.FC = () => {
                 Your Favorite Catholic Feeds ({favoriteIds.length})
               </h3>
               <p className="text-xs sm:text-sm text-stone-300 font-serif">
-                Star any EWTN live channel or adoration chapel, Instagram feed, or Christendom creator to pin it here for instant daily access.
+                Star any EWTN live channel, Facebook page, Instagram feed, or Christendom creator to pin it here for instant daily access.
               </p>
             </div>
 
@@ -995,6 +1104,20 @@ export const CatholicSocialView: React.FC = () => {
                         setSelectedAdorationId(ap.id);
                         setActivePlatform('ewtn');
                       };
+                    } else if (favId.startsWith('fb:')) {
+                      const fbId = favId.slice(3);
+                      const fb = [...customFbSources, ...CATHOLIC_FACEBOOK_SOURCES].find(s => s.id === fbId);
+                      if (!fb) return null;
+                      badge = 'Facebook';
+                      badgeClass = 'bg-blue-100 text-blue-900 border-blue-300';
+                      title = fb.name;
+                      subtitle = `${fb.handle} • ${fb.category}`;
+                      actionLabel = 'Open Facebook Feed';
+                      externalUrl = fb.pageUrl;
+                      onOpen = () => {
+                        setFocusedFbSourceId(fb.id);
+                        setActivePlatform('facebook');
+                      };
                     } else if (favId.startsWith('ig:')) {
                       const uname = favId.slice(3);
                       const ig = [...customIgSources, ...CATHOLIC_INSTAGRAM_SOURCES].find(s => s.username === uname);
@@ -1079,6 +1202,74 @@ export const CatholicSocialView: React.FC = () => {
                     );
                   })}
                 </div>
+
+                {/* Posts from Your Favorite Facebook Pages */}
+                {favoriteIds.some(id => id.startsWith('fb:')) && (
+                  <div className="space-y-3 pt-2 border-t border-amber-900/15">
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="font-cinzel text-sm font-bold uppercase tracking-wider text-amber-950">
+                        Posts by Your Favorite Facebook Pages
+                      </h4>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFocusedFbSourceId(null);
+                          setActivePlatform('facebook');
+                        }}
+                        className="text-xs font-cinzel font-bold text-blue-800 hover:underline cursor-pointer"
+                      >
+                        Open Live Facebook Timelines
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                      {CATHOLIC_FACEBOOK_POSTS.filter(p =>
+                        favoriteIds.includes(`fb:${p.sourceId}`)
+                      )
+                        .slice(0, 4)
+                        .map(post => (
+                          <div
+                            key={`fav-fb-${post.id}`}
+                            className="p-4 rounded-xl bg-white border border-stone-200 shadow-xs flex flex-col justify-between gap-3"
+                          >
+                            <div className="space-y-1.5">
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="font-cinzel text-xs font-bold text-blue-900">
+                                  {post.sourceName}
+                                </span>
+                                <span className="text-[11px] font-serif text-stone-500">
+                                  {post.postDate}
+                                </span>
+                              </div>
+                              <p className="text-xs sm:text-sm font-serif text-stone-800 line-clamp-4 leading-relaxed whitespace-pre-line">
+                                {post.text}
+                              </p>
+                            </div>
+                            <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs">
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setFocusedFbSourceId(post.sourceId);
+                                  setActivePlatform('facebook');
+                                }}
+                                className="font-cinzel font-bold text-amber-900 hover:underline cursor-pointer"
+                              >
+                                View Live Timeline
+                              </button>
+                              <a
+                                href={post.postUrl || post.pageUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 font-serif text-blue-800 hover:underline"
+                              >
+                                <span>Facebook</span>
+                                <ExternalLink className="w-3 h-3" />
+                              </a>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Latest Videos from Favorite Christendom Creators */}
                 {favoriteIds.some(id => id.startsWith('christendom:')) && (
@@ -1661,6 +1852,26 @@ export const CatholicSocialView: React.FC = () => {
             )}
           </div>
         </section>
+      )}
+
+      {/* =====================================================================
+          0D. CATHOLIC FACEBOOK FEEDS (POSTS BY FAVORITES + ALL PAGES)
+          ===================================================================== */}
+      {(activePlatform === 'all' || activePlatform === 'facebook') && (
+        <CatholicFacebookSection
+          favoriteIds={favoriteIds}
+          isFavorite={isFavorite}
+          toggleFavorite={toggleFavorite}
+          customFbSources={customFbSources}
+          onAddCustomFbSource={handleAddCustomFbSource}
+          onRemoveCustomFbSource={handleRemoveCustomFbSource}
+          customFbPosts={customFbPosts}
+          onAddCustomFbPost={handleAddCustomFbPost}
+          onRemoveCustomFbPost={handleRemoveCustomFbPost}
+          focusedSourceId={focusedFbSourceId}
+          onClearFocusedSource={() => setFocusedFbSourceId(null)}
+          onRestoreStarterFbFavorites={handleRestoreStarterFbFavorites}
+        />
       )}
 
       {/* =====================================================================

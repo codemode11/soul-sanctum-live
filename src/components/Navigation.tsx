@@ -335,13 +335,6 @@ export const Navigation: React.FC<NavigationProps> = ({
       tag: 'Doctrine', 
       subtext: 'Pillars of Catholic Faith' 
     },
-    {
-      id: 'magisterium-ai',
-      label: 'Magisterium AI',
-      icon: MagisteriumKeysIcon,
-      tag: 'Magisterium',
-      subtext: '28,000+ Church Documents, CCC & Canon Law'
-    },
     { 
       id: 'catholic-bibles', 
       label: 'Holy Bible', 
@@ -355,6 +348,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: BibleFlashcardsIcon, 
       tag: 'Memory', 
       subtext: 'Scripture Memorization and Recall' 
+    },
+    {
+      id: 'magisterium-ai',
+      label: 'Magisterium AI',
+      icon: MagisteriumKeysIcon,
+      tag: 'Magisterium',
+      subtext: '28,000+ Church Documents, CCC & Canon Law'
     },
     { 
       id: 'visio-divina', 
@@ -424,7 +424,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: 'Catholic Social', 
       icon: CatholicSocialShareIcon, 
       tag: 'Social & Media', 
-      subtext: 'EWTN, Instagram, Christendom & Favorites' 
+      subtext: 'EWTN, Facebook, Instagram, Christendom & Favorites' 
     },
     { 
       id: 'catholic-glossary', 

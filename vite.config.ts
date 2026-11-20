@@ -11,6 +11,7 @@ import {
   searchCatholicInternet,
   WebResearchSource,
 } from './src/utils/catholicInternetResearch.js';
+import { fetchLiveCatholicFacebookPosts } from './src/utils/catholicFacebookFeedServer.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -638,6 +639,38 @@ Include 3 to 5 accurate Magisterial citations and 3 related follow-up questions.
             res.end(JSON.stringify({ error: 'Malformed JSON payload.' }));
           }
         });
+      });
+
+      server.middlewares.use('/api/catholic-facebook', async (req: any, res: any) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+
+        if (req.method === 'OPTIONS') {
+          res.statusCode = 204;
+          res.end();
+          return;
+        }
+
+        try {
+          const urlObj = new URL(req.url || '', 'http://localhost');
+          const rawSources = urlObj.searchParams.get('sources') || '';
+          const requestedIds = rawSources
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean);
+          const payload = await fetchLiveCatholicFacebookPosts(requestedIds);
+          res.end(JSON.stringify(payload));
+        } catch (err: any) {
+          res.statusCode = 500;
+          res.end(JSON.stringify({
+            error: err?.message || 'Unable to refresh Catholic Facebook feed.',
+            posts: [],
+            fetchedAt: Date.now(),
+          }));
+        }
       });
 
       server.middlewares.use('/api/vatican-news', async (_req: any, res: any) => {

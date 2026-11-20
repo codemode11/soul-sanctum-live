@@ -32,6 +32,7 @@ export interface CatholicFacebookPost {
   embedUrl?: string;
   avatarUrl?: string;
   postDate: string;
+  publishedAt?: number;
   category: string;
   text: string;
   imageUrl?: string;
@@ -40,6 +41,7 @@ export interface CatholicFacebookPost {
   commentsCount: number;
   sharesCount: number;
   verified: boolean;
+  isLive?: boolean;
 }
 
 export interface CatholicFacebookArticlePost {
@@ -375,6 +377,78 @@ export const CATHOLIC_FACEBOOK_SOURCES: CatholicFacebookSource[] = [
     pageUrl: 'https://www.facebook.com/NCRegister',
     category: 'Catholic Journalism & News',
     description: 'Fidelity to the Magisterium — Catholic journalism, Church news, Papal coverage, and liturgical analysis from the National Catholic Register.'
+  },
+  {
+    id: 'fb-wordonfire',
+    name: 'Word on Fire (Bishop Robert Barron)',
+    handle: '@BishopRobertBarron',
+    socialUsername: 'BishopRobertBarron',
+    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
+    category: 'Theology & Evangelization',
+    description: 'Bishop Robert Barron and Word on Fire proclaiming Christ in the culture through beauty, truth, and goodness.'
+  },
+  {
+    id: 'fb-catholicanswers',
+    name: 'Catholic Answers',
+    handle: '@catholicanswers',
+    socialUsername: 'catholicanswers',
+    pageUrl: 'https://www.facebook.com/catholicanswers',
+    category: 'Apologetics & Evangelization',
+    description: 'Clear, charitable explanations of Catholic doctrine, apologetics Q&As, and feast day reflections from Catholic Answers.'
+  },
+  {
+    id: 'fb-ascension',
+    name: 'Ascension',
+    handle: '@AscensionPress',
+    socialUsername: 'AscensionPress',
+    pageUrl: 'https://www.facebook.com/AscensionPress',
+    category: 'Scripture & Faith Formation',
+    description: 'Bible in a Year, Catechism in a Year, Fr. Mike Schmitz reflections, and Catholic faith formation from Ascension.'
+  },
+  {
+    id: 'fb-cna',
+    name: 'Catholic News Agency (CNA)',
+    handle: '@catholicnewsagency',
+    socialUsername: 'catholicnewsagency',
+    pageUrl: 'https://www.facebook.com/catholicnewsagency',
+    category: 'Catholic World News',
+    description: 'Breaking Catholic news from Rome, the United States, and the universal Church from Catholic News Agency.'
+  },
+  {
+    id: 'fb-osv',
+    name: 'Our Sunday Visitor',
+    handle: '@OurSundayVisitor',
+    socialUsername: 'OurSundayVisitor',
+    pageUrl: 'https://www.facebook.com/OurSundayVisitor',
+    category: 'Catholic News & Commentary',
+    description: 'Faithful Catholic journalism, parish life, culture, and pastoral commentary from Our Sunday Visitor.'
+  },
+  {
+    id: 'fb-cwr',
+    name: 'Catholic World Report',
+    handle: '@CatholicWorldReport',
+    socialUsername: 'CatholicWorldReport',
+    pageUrl: 'https://www.facebook.com/CatholicWorldReport',
+    category: 'Catholic Journalism & Analysis',
+    description: 'In-depth Catholic news, essays, theological commentary, and book reviews from Ignatius Press’s Catholic World Report.'
+  },
+  {
+    id: 'fb-pillar',
+    name: 'The Pillar',
+    handle: '@ThePillarNews',
+    socialUsername: 'ThePillarNews',
+    pageUrl: 'https://www.facebook.com/ThePillarNews',
+    category: 'Investigative Catholic Journalism',
+    description: 'Canon-law grounded Catholic reporting, analysis, and global Church coverage from The Pillar.'
+  },
+  {
+    id: 'fb-catholicexchange',
+    name: 'Catholic Exchange',
+    handle: '@CatholicExchange',
+    socialUsername: 'CatholicExchange',
+    pageUrl: 'https://www.facebook.com/CatholicExchange',
+    category: 'Catholic Spirituality & Formation',
+    description: 'Daily Catholic spirituality, lives of the saints, apologetics, and family formation from Catholic Exchange.'
   }
 ];
 
@@ -476,9 +550,9 @@ export const CATHOLIC_FACEBOOK_POSTS: CatholicFacebookPost[] = [
     category: 'Sacred Silence & Prayer',
     text: `Feeling mentally drained or anxious? A parish priest in Ars, France, noticed a local farmer sitting alone in the village church for hours every afternoon.
 
-Saint John Vianney approached him and asked: "My friend, what do you do here for so long?"
+Saint John Vianney approached him and asked: “My friend, what do you do here for so long?”
 
-The peasant looked up with serenity and replied: "Nothing, Monsieur le Curé. I look at Him, and He looks at me."
+The peasant looked up with serenity and replied: “Nothing, Monsieur le Curé. I look at Him, and He looks at me.”
 
 Take five minutes today to sit quietly before the Blessed Sacrament. Sacred silence heals what the noise of the world fractures.`,
     likesCount: 8640,
@@ -496,13 +570,13 @@ Take five minutes today to sit quietly before the Blessed Sacrament. Sacred sile
     category: 'Saints & Interior Peace',
     text: `Saint Teresa of Ávila carried this bookmark in her breviary her entire life:
 
-"Let nothing disturb you,
+“Let nothing disturb you,
 Let nothing frighten you,
 All things are passing away:
 God never changes.
 Patience obtains all things.
 Whoever has God lacks nothing;
-God alone suffices."
+God alone suffices.”
 
 Whatever trial or cross you are carrying today, hold fast to Jesus Christ. His grace is more than enough for you.`,
     likesCount: 11200,
@@ -520,11 +594,11 @@ Whatever trial or cross you are carrying today, hold fast to Jesus Christ. His g
     verified: true,
     postDate: 'Yesterday at 4:15 PM',
     category: 'The Holy Rosary & Prayer',
-    text: `Saint Padre Pio called the Rosary "the weapon for our times." In the Holy Rosary, we do not simply repeat words; we contemplate the face of Jesus Christ through the immaculate eyes and maternal heart of the Virgin Mary.
+    text: `Saint Padre Pio called the Rosary “the weapon for our times.” In the Holy Rosary, we do not simply repeat words; we contemplate the face of Jesus Christ through the immaculate eyes and maternal heart of the Virgin Mary.
 
 Take fifteen minutes today to pray five decades of the Rosary for your family, your priests, and for peace in the world.
 
-Our Lady promised: "Whoever shall faithfully serve me by the recitation of the Rosary, shall receive signal graces."`,
+Our Lady promised: “Whoever shall faithfully serve me by the recitation of the Rosary, shall receive signal graces.”`,
     likesCount: 14700,
     commentsCount: 1040,
     sharesCount: 5210
@@ -538,7 +612,7 @@ Our Lady promised: "Whoever shall faithfully serve me by the recitation of the R
     verified: true,
     postDate: '4 days ago',
     category: 'Mother Angelica Wisdom',
-    text: `Mother Angelica reminds us: "Unless you are willing to do the ridiculous, God cannot do the miraculous. When you step out in faith for Jesus, do not look at your own smallness—look at His boundless majesty!"
+    text: `Mother Angelica reminds us: “Unless you are willing to do the ridiculous, God cannot do the miraculous. When you step out in faith for Jesus, do not look at your own smallness—look at His boundless majesty!”
 
 Never let human fear, worldly doubt, or smallness of spirit stop you from responding to God’s call. He is faithful to the very end.`,
     likesCount: 12500,
@@ -556,9 +630,9 @@ Never let human fear, worldly doubt, or smallness of spirit stop you from respon
     verified: true,
     postDate: '2 days ago',
     category: 'Biblical Theology & Holy Mass',
-    text: `Dr. Scott Hahn: "When I was a Protestant pastor, the Book of Revelation was an enigma of dragons, beasts, and trumpets. But on the morning I quietly slipped into the back of a Catholic chapel for daily Mass, scales fell from my eyes."
+    text: `Dr. Scott Hahn: “When I was a Protestant pastor, the Book of Revelation was an enigma of dragons, beasts, and trumpets. But on the morning I quietly slipped into the back of a Catholic chapel for daily Mass, scales fell from my eyes.”
 
-In the Mass, we hear: "Holy, Holy, Holy is the Lord God Almighty." We see the altar, the golden chalice, the incense, the candles, and the chant of the Lamb of God.
+In the Mass, we hear: “Holy, Holy, Holy is the Lord God Almighty.” We see the altar, the golden chalice, the incense, the candles, and the chant of the Lamb of God.
 
 Saint John was revealing the heavenly liturgy. In the Holy Mass, heaven touches earth.`,
     likesCount: 10400,
@@ -576,9 +650,9 @@ Saint John was revealing the heavenly liturgy. In the Holy Mass, heaven touches 
     category: 'Sacred Scripture & The Word of God',
     text: `Ignorance of Scripture is ignorance of Christ, wrote Saint Jerome. When you open your Catholic Bible, God is not communicating distant memories from the ancient past—He is speaking directly into your life today.
 
-"For the word of God is living and active, sharper than any two-edged sword." (Hebrews 4:12)
+“For the word of God is living and active, sharper than any two-edged sword.” (Hebrews 4:12)
 
-Make a commitment to read the daily Mass readings each morning before opening emails or social media. Let God's Word shape your soul.`,
+Make a commitment to read the daily Mass readings each morning before opening emails or social media. Let God’s Word shape your soul.`,
     likesCount: 8900,
     commentsCount: 540,
     sharesCount: 3100
@@ -594,9 +668,9 @@ Make a commitment to read the daily Mass readings each morning before opening em
     verified: true,
     postDate: 'Yesterday at 1:00 PM',
     category: 'Saint Augustine & Catholic Wisdom',
-    text: `Saint Augustine in his Confessions: "You were within me, but I was in the world outside myself. I sought You there, and in my unlovely state I plunged into those lovely created things which You made. You were with me, and I was not with You."
+    text: `Saint Augustine in his Confessions: “You were within me, but I was in the world outside myself. I sought You there, and in my unlovely state I plunged into those lovely created things which You made. You were with me, and I was not with You.”
 
-"Late have I loved You, O Beauty ever ancient, ever new! Late have I loved You!"
+“Late have I loved You, O Beauty ever ancient, ever new! Late have I loved You!”
 
 God is closer to us than we are to ourselves. Turn inward in silent prayer today and listen to the voice of the divine Physician.`,
     likesCount: 9340,
@@ -616,7 +690,7 @@ God is closer to us than we are to ourselves. Turn inward in silent prayer today
 
 When we study theology from the heart of the Church, our love for Jesus Christ deepens from mere sentiment into unbreakable conviction.
 
-"You have made us for Yourself, O Lord, and our hearts are restless until they rest in You."`,
+“You have made us for Yourself, O Lord, and our hearts are restless until they rest in You.”`,
     likesCount: 7820,
     commentsCount: 490,
     sharesCount: 2650
@@ -636,7 +710,7 @@ When we study theology from the heart of the Church, our love for Jesus Christ d
 
 Hang a crucifix in every room. Keep holy water by the front door. Gather at the dinner table to share the story of the Saint of the Day.
 
-"As for me and my house, we will serve the Lord." (Joshua 24:15)`,
+“As for me and my house, we will serve the Lord.” (Joshua 24:15)`,
     likesCount: 8940,
     commentsCount: 512,
     sharesCount: 3180
@@ -670,11 +744,11 @@ Lord, make me an instrument of Your peace: where there is hatred, let me sow lov
     verified: true,
     postDate: 'Yesterday at 11:30 AM',
     category: 'Papal Angelus & Global Peace',
-    text: `Pope at the Angelus: "Peace is not merely the absence of conflict; it is the gift of Christ’s presence in our hearts, working through justice, mutual respect, and maternal forgiveness."
+    text: `Pope at the Angelus: “Peace is not merely the absence of conflict; it is the gift of Christ’s presence in our hearts, working through justice, mutual respect, and maternal forgiveness.”
 
 Addressing thousands of pilgrims gathered in St. Peter’s Square, the Holy Father urged the faithful worldwide to pray without ceasing for victims of violence and for peace across our troubled world.
 
-"Let us place all our brothers and sisters under the loving protection of Mary, Queen of Peace."`,
+“Let us place all our brothers and sisters under the loving protection of Mary, Queen of Peace.”`,
     likesCount: 14200,
     commentsCount: 920,
     sharesCount: 4180
@@ -688,7 +762,7 @@ Addressing thousands of pilgrims gathered in St. Peter’s Square, the Holy Fath
     verified: true,
     postDate: '3 days ago',
     category: 'Holy See & Papal Ministry',
-    text: `"The Eucharist is not a prize for the perfect, but a powerful medicine and nourishment for the weak."
+    text: `“The Eucharist is not a prize for the perfect, but a powerful medicine and nourishment for the weak.”
 
 At morning Mass in the Vatican, the Holy Father reminded pastors and the faithful that the heart of Jesus Christ beats with infinite mercy for every weary soul who walks through the doors of the Church. Come to Him with trust.`,
     likesCount: 11800,
@@ -706,9 +780,9 @@ At morning Mass in the Vatican, the Holy Father reminded pastors and the faithfu
     verified: true,
     postDate: 'Yesterday at 9:00 AM',
     category: 'Daily Gospel Reflection',
-    text: `Daily Gospel Reflection (Matthew 5:1-12): "Blessed are the poor in spirit, for theirs is the kingdom of heaven."
+    text: `Daily Gospel Reflection (Matthew 5:1-12): “Blessed are the poor in spirit, for theirs is the kingdom of heaven.”
 
-Jesus turns worldly values upside down. True blessedness does not come from wealth, fame, or self-sufficiency, but from total dependence upon God's merciful fatherhood.
+Jesus turns worldly values upside down. True blessedness does not come from wealth, fame, or self-sufficiency, but from total dependence upon God’s merciful fatherhood.
 
 Today, ask the Holy Spirit to teach you humility of heart so you may recognize Christ in the hungry, the stranger, and the forgotten.`,
     likesCount: 9800,
@@ -724,7 +798,7 @@ Today, ask the Holy Spirit to teach you humility of heart so you may recognize C
     verified: true,
     postDate: '4 days ago',
     category: 'National Eucharistic Revival',
-    text: `National Eucharistic Revival: "My flesh is true food, and my blood is true drink. Whoever feeds on my flesh and drinks my blood abides in me, and I in him." (John 6:55-56)
+    text: `National Eucharistic Revival: “My flesh is true food, and my blood is true drink. Whoever feeds on my flesh and drinks my blood abides in me, and I in him.” (John 6:55-56)
 
 The greatest gift Jesus left us is Himself in the Blessed Sacrament. When you receive Holy Communion, you are united to the living God.
 
@@ -744,7 +818,7 @@ Spend an hour in Eucharistic adoration this week. Kneel before the King of Kings
     verified: true,
     postDate: '2 days ago',
     category: 'The Early Church Fathers & Patristics',
-    text: `Saint Irenaeus of Lyons (c. 130–202 AD): "The glory of God is a human being fully alive; and the life of man consists in beholding God."
+    text: `Saint Irenaeus of Lyons (c. 130–202 AD): “The glory of God is a human being fully alive; and the life of man consists in beholding God.”
 
 The Early Church Fathers did not see theology as dry academic theory, but as the pathway to theosis—divinization through participation in the life of the Holy Trinity.
 
@@ -766,7 +840,7 @@ Rediscover the ancient beauty of Patristic wisdom. As the Fathers proclaimed: Wh
 
 When the bells toll and incense rises at the consecration, time stops. We stand at the foot of Mount Calvary, and we enter the heavenly Jerusalem.
 
-"Let all mortal flesh keep silence, and with fear and trembling stand."`,
+“Let all mortal flesh keep silence, and with fear and trembling stand.”`,
     likesCount: 8420,
     commentsCount: 530,
     sharesCount: 3120
@@ -782,7 +856,7 @@ When the bells toll and incense rises at the consecration, time stops. We stand 
     verified: true,
     postDate: 'Yesterday at 5:00 PM',
     category: 'Contemplative Prayer & Interior Life',
-    text: `Saint Teresa of Jesus writes: "Mental prayer, in my opinion, is nothing else than an intimate sharing between friends; it means taking time frequently to be alone with Him who we know loves us."
+    text: `Saint Teresa of Jesus writes: “Mental prayer, in my opinion, is nothing else than an intimate sharing between friends; it means taking time frequently to be alone with Him who we know loves us.”
 
 Many souls abandon prayer when distractions come or feelings fade. But true prayer is an act of the will, not an emotional surge.
 
@@ -804,10 +878,80 @@ Stay with Jesus in the chapel or your prayer corner. Even five minutes of faithf
 
 In the dark night, the soul learns to love God for His own sake, rather than for the spiritual sweetness He gives.
 
-"In the evening of life, we will be judged on love alone." Persevere in prayer through the dry seasons!`,
+“In the evening of life, we will be judged on love alone.” Persevere in prayer through the dry seasons!`,
     likesCount: 8850,
     commentsCount: 590,
     sharesCount: 3340
+  },
+
+  // 10. Word on Fire (Bishop Robert Barron)
+  {
+    id: 'fb-post-wof-1',
+    sourceId: 'fb-wordonfire',
+    sourceName: 'Word on Fire (Bishop Robert Barron)',
+    handle: '@BishopRobertBarron',
+    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
+    verified: true,
+    postDate: 'Today at 8:15 AM',
+    category: 'Beauty, Truth & Evangelization',
+    text: `Why does the Church lead with beauty? Because beauty disarms the defensive mind. Before someone is ready to debate metaphysics or moral theology, they can stand in awe before Chartres Cathedral, a painting by Caravaggio, or the quiet holiness of a saint.
+
+As Bishop Robert Barron reminds us: “First the beautiful, then the good, and finally the true.” Let your life today be a quiet radiance of Christ’s beauty in the world.`,
+    likesCount: 16400,
+    commentsCount: 1120,
+    sharesCount: 5380
+  },
+  {
+    id: 'fb-post-wof-2',
+    sourceId: 'fb-wordonfire',
+    sourceName: 'Word on Fire (Bishop Robert Barron)',
+    handle: '@BishopRobertBarron',
+    pageUrl: 'https://www.facebook.com/BishopRobertBarron',
+    verified: true,
+    postDate: '3 days ago',
+    category: 'The Eucharist & St. Thomas Aquinas',
+    text: `St. Thomas Aquinas teaches that the Eucharist is the “source and summit” of the Christian life because it is not merely a symbol of Christ—it is Christ Himself, Body, Blood, Soul, and Divinity.
+
+Every time you approach the altar at Holy Mass, remember: you do not assimilate Christ into yourself; Christ assimilates you into His Mystical Body.`,
+    likesCount: 13900,
+    commentsCount: 840,
+    sharesCount: 4610
+  },
+
+  // 11. Catholic Answers
+  {
+    id: 'fb-post-ca-1',
+    sourceId: 'fb-catholicanswers',
+    sourceName: 'Catholic Answers',
+    handle: '@catholicanswers',
+    pageUrl: 'https://www.facebook.com/catholicanswers',
+    verified: true,
+    postDate: 'Yesterday at 1:45 PM',
+    category: 'Scripture & Apologetics',
+    text: `“Always be prepared to make a defense to any one who calls you to account for the hope that is in you, yet do it with gentleness and reverence.” (1 Peter 3:15)
+
+Catholic apologetics is never about winning an argument—it is about winning a soul through charity, clarity, and faithful witness to the truth of the Gospel.`,
+    likesCount: 9420,
+    commentsCount: 685,
+    sharesCount: 3190
+  },
+
+  // 12. Ascension
+  {
+    id: 'fb-post-asc-1',
+    sourceId: 'fb-ascension',
+    sourceName: 'Ascension',
+    handle: '@AscensionPress',
+    pageUrl: 'https://www.facebook.com/AscensionPress',
+    verified: true,
+    postDate: 'Yesterday at 10:00 AM',
+    category: 'Daily Prayer & Scripture',
+    text: `Fr. Mike Schmitz: “You don’t have to feel extraordinary to pray faithfully. Show up to God for ten minutes today—even when you are tired, distracted, or dry. Faithfulness in the ordinary moments is where sanctity is forged.”
+
+Take a quiet moment right now and offer the next hour of your day to the Sacred Heart of Jesus.`,
+    likesCount: 15200,
+    commentsCount: 930,
+    sharesCount: 5040
   }
 ];
 

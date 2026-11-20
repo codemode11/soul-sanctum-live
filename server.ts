@@ -58,6 +58,7 @@ import {
   searchCatholicInternet,
   WebResearchSource,
 } from './src/utils/catholicInternetResearch.js';
+import { fetchLiveCatholicFacebookPosts } from './src/utils/catholicFacebookFeedServer.js';
 
 app.get('/api/catholic-ai/health', (_req, res) => {
   res.json({
@@ -789,6 +790,25 @@ function parseMagisterialJsonSafely(rawText: string) {
     relatedQuestions: [],
   };
 }
+
+app.get('/api/catholic-facebook', async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+  try {
+    const rawSources = typeof req.query.sources === 'string' ? req.query.sources : '';
+    const requestedIds = rawSources
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const payload = await fetchLiveCatholicFacebookPosts(requestedIds);
+    return res.json(payload);
+  } catch (err: any) {
+    return res.status(500).json({
+      error: err?.message || 'Unable to refresh Catholic Facebook feed.',
+      posts: [],
+      fetchedAt: Date.now(),
+    });
+  }
+});
 
 app.all('/api/magisterium', async (req, res) => {
   res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
