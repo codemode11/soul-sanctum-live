@@ -1691,7 +1691,8 @@ export class SacredReader {
     text: string, 
     onEnd?: () => void, 
     voiceOrGenderOrRate?: 'ava-grace' | 'david' | 'female' | 'male' | number,
-    customRate?: number
+    customRate?: number,
+    explicitVoiceKey?: string
   ): Promise<void> {
     this.stop();
     this.unlockSharedAudio();
@@ -1700,16 +1701,24 @@ export class SacredReader {
     const cleanText = prepareLiturgicalTextForSpeech(text);
     if (!cleanText) return;
 
-    const activeKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+    const activeKey = explicitVoiceKey || this.getActiveLectorVoiceKey() || 'gemini-Kore';
 
-    // Only force local Microsoft David if the user actually chose 'david' or a local explicit gender override without picking another Gemini/persona voice
+    // Only force local Microsoft David if explicitly requested via 'david' (or global activeKey is 'david' without an explicit non-David voice)
     const isCustomServerVoice =
       activeKey.startsWith('gemini-') ||
       activeKey.startsWith('persona-') ||
       activeKey.startsWith('liturgical-') ||
       activeKey.startsWith('saint-');
 
-    if (voiceOrGenderOrRate === 'david' || (activeKey === 'david' && voiceOrGenderOrRate !== 'female' && voiceOrGenderOrRate !== 'ava-grace') || (voiceOrGenderOrRate === 'male' && !isCustomServerVoice)) {
+    const shouldUseLocalDavid = explicitVoiceKey
+      ? explicitVoiceKey === 'david'
+      : (
+          voiceOrGenderOrRate === 'david' ||
+          (activeKey === 'david' && voiceOrGenderOrRate !== 'female' && voiceOrGenderOrRate !== 'ava-grace') ||
+          (voiceOrGenderOrRate === 'male' && !isCustomServerVoice)
+        );
+
+    if (shouldUseLocalDavid) {
       const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
       if (davidVoice) {
         const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : (customRate || this.currentRate || 0.92);
@@ -1730,7 +1739,9 @@ export class SacredReader {
     }
 
     let targetVoiceKey = activeKey;
-    if (voiceOrGenderOrRate === 'david') {
+    if (explicitVoiceKey) {
+      targetVoiceKey = explicitVoiceKey === 'david' ? 'liturgical-deacon' : explicitVoiceKey;
+    } else if (voiceOrGenderOrRate === 'david') {
       targetVoiceKey = 'liturgical-deacon';
     } else if (voiceOrGenderOrRate === 'male' && !isCustomServerVoice) {
       targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey) ? activeKey : 'gemini-Charon';
@@ -1765,7 +1776,17 @@ export class SacredReader {
     }
     if (!this.synth) return;
 
-    const voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceKey, voiceOrGenderOrRate === 'male' || voiceOrGenderOrRate === 'david' ? 'male' : 'female');
+    const isMaleTarget =
+      voiceOrGenderOrRate === 'male' ||
+      voiceOrGenderOrRate === 'david' ||
+      targetVoiceKey === 'david' ||
+      targetVoiceKey === 'gemini-Charon' ||
+      targetVoiceKey === 'gemini-Fenrir' ||
+      targetVoiceKey === 'gemini-Puck' ||
+      targetVoiceKey.startsWith('liturgical-') ||
+      targetVoiceKey.startsWith('saint-');
+
+    const voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceKey, isMaleTarget ? 'male' : 'female');
     const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : customRate;
 
     const utterance = new SpeechSynthesisUtterance(cleanText);

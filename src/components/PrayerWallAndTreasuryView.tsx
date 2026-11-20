@@ -15,7 +15,10 @@ import {
   X,
   Cross,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Award,
+  ScrollText,
+  UserCheck
 } from 'lucide-react';
 import { CatholicPrayer, PrayerRequest, PrayerCategory } from '../types';
 import { CATHOLIC_PRAYERS_DATABASE } from '../data/prayers';
@@ -51,21 +54,87 @@ export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps>
   const [newCategory, setNewCategory] = useState<PrayerCategory>('Healing');
 
   // Prayers Treasury state
+  const TREASURY_LEADER_OPTIONS = [
+    { id: 'gemini-Kore', shortName: 'Kore', label: 'Kore — Serene Devotional Soprano (Default)' },
+    { id: 'persona-ava', shortName: 'Ava Grace', label: 'Ava Grace — Gentle Devotional Voice' },
+    { id: 'persona-sonia', shortName: 'Sister Sonia', label: 'Sister Sonia — Cathedral Contemplative' },
+    { id: 'persona-clara', shortName: 'Clara', label: 'Clara — Adoration & Meditative' },
+    { id: 'gemini-Zephyr', shortName: 'Zephyr', label: 'Zephyr — Peaceful Liturgical Reader' },
+    { id: 'gemini-Charon', shortName: 'Charon', label: 'Charon — Deep Monastic Bass' },
+    { id: 'gemini-Fenrir', shortName: 'Fenrir', label: 'Fenrir — Resonant Benedictine Baritone' },
+    { id: 'liturgical-deacon', shortName: 'Deacon', label: 'Cathedral Deacon — Solemn Proclaimer' },
+  ] as const;
+
   const [selectedPrayer, setSelectedPrayer] = useState<CatholicPrayer>(CATHOLIC_PRAYERS_DATABASE[1]); // Our Father
   const [prayerSearch, setPrayerSearch] = useState('');
   const [selectedPrayerCategory, setSelectedPrayerCategory] = useState<string>('All');
+  const [showIndulgenceGuide, setShowIndulgenceGuide] = useState(false);
   const [copiedPrayerId, setCopiedPrayerId] = useState<string | null>(null);
   const [speakingPrayerId, setSpeakingPrayerId] = useState<string | null>(null);
+  const [treasuryLeaderVoice, setTreasuryLeaderVoice] = useState<string>(() => {
+    if (typeof localStorage !== 'undefined') {
+      const saved = localStorage.getItem('soul_sanctum_treasury_prayer_leader');
+      if (saved && TREASURY_LEADER_OPTIONS.some(v => v.id === saved)) {
+        return saved;
+      }
+    }
+    return 'gemini-Kore';
+  });
   const treasuryStripRef = useRef<HTMLDivElement>(null);
+
+  const activeLeader =
+    TREASURY_LEADER_OPTIONS.find(v => v.id === treasuryLeaderVoice) || TREASURY_LEADER_OPTIONS[0];
+
+  React.useEffect(() => {
+    return () => {
+      SacredReader.stop();
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (activeSection !== 'treasury' && speakingPrayerId) {
+      SacredReader.stop();
+      setSpeakingPrayerId(null);
+    }
+  }, [activeSection, speakingPrayerId]);
+
+  React.useEffect(() => {
+    if (speakingPrayerId && speakingPrayerId !== selectedPrayer.id) {
+      SacredReader.stop();
+      setSpeakingPrayerId(null);
+    }
+  }, [selectedPrayer.id, speakingPrayerId]);
 
   const prayerCategories = [
     'All',
+    'Indulgenced Prayers',
+    'Plenary Indulgence',
+    'Partial Indulgence',
+    'Prayers of the Saints',
     'Daily and Traditional',
     'Marian',
     'Eucharistic and Adoration',
     'Saints and Intercession',
+    'Prayers for Priests',
+    'Litanies',
+    'Acts of the Theological Virtues',
     'Prayers for the Faithful Departed'
   ];
+
+  const matchesPrayerCategory = (p: CatholicPrayer, cat: string): boolean => {
+    if (cat === 'All') return true;
+    if (cat === 'Indulgenced Prayers') return Boolean(p.indulgence);
+    if (cat === 'Plenary Indulgence') {
+      return p.indulgence?.type === 'Plenary' || p.indulgence?.type === 'Plenary or Partial';
+    }
+    if (cat === 'Partial Indulgence') {
+      return p.indulgence?.type === 'Partial' || p.indulgence?.type === 'Plenary or Partial';
+    }
+    if (cat === 'Prayers of the Saints') {
+      return p.category === 'Prayers of the Saints' || Boolean(p.author);
+    }
+    return p.category === cat;
+  };
 
   const handleScrollTreasuryStrip = (direction: 'left' | 'right') => {
     if (!treasuryStripRef.current) return;
@@ -145,12 +214,37 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
     setTimeout(() => setCopiedPrayerId(null), 2000);
   };
 
+  const handleTreasuryLeaderChange = (voiceId: string) => {
+    setTreasuryLeaderVoice(voiceId);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('soul_sanctum_treasury_prayer_leader', voiceId);
+    }
+    if (speakingPrayerId) {
+      SacredReader.unlockSharedAudio();
+      SacredReader.speak(
+        selectedPrayer.englishText,
+        () => setSpeakingPrayerId(null),
+        undefined,
+        undefined,
+        voiceId
+      );
+      setSpeakingPrayerId(selectedPrayer.id);
+    }
+  };
+
   const handleToggleSpeakPrayer = (prayer: CatholicPrayer) => {
     if (speakingPrayerId === prayer.id) {
       SacredReader.stop();
       setSpeakingPrayerId(null);
     } else {
-      SacredReader.speak(prayer.englishText, () => setSpeakingPrayerId(null));
+      SacredReader.unlockSharedAudio();
+      SacredReader.speak(
+        prayer.englishText,
+        () => setSpeakingPrayerId(null),
+        undefined,
+        undefined,
+        treasuryLeaderVoice
+      );
       setSpeakingPrayerId(prayer.id);
     }
   };
@@ -165,12 +259,20 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
   });
 
   const filteredTreasuryPrayers = CATHOLIC_PRAYERS_DATABASE.filter(p => {
-    const matchesCategory = selectedPrayerCategory === 'All' || p.category === selectedPrayerCategory;
+    const matchesCategory = matchesPrayerCategory(p, selectedPrayerCategory);
     const q = prayerSearch.toLowerCase().trim();
     const matchesSearch =
       !q ||
       p.title.toLowerCase().includes(q) ||
       (p.latinTitle && p.latinTitle.toLowerCase().includes(q)) ||
+      (p.author && p.author.toLowerCase().includes(q)) ||
+      (p.historicalContext && p.historicalContext.toLowerCase().includes(q)) ||
+      (p.scripturalOrTraditionOrigin && p.scripturalOrTraditionOrigin.toLowerCase().includes(q)) ||
+      (p.indulgence && (
+        p.indulgence.type.toLowerCase().includes(q) ||
+        p.indulgence.summary.toLowerCase().includes(q) ||
+        p.indulgence.grantReference.toLowerCase().includes(q)
+      )) ||
       p.englishText.toLowerCase().includes(q);
     return matchesCategory && matchesSearch;
   });
@@ -216,27 +318,47 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
-              className={`px-4 py-2 rounded-lg text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start whitespace-nowrap ${
-                speakingPrayerId === selectedPrayer.id
-                  ? 'bg-amber-600 hover:bg-amber-500 text-white border border-amber-300/60'
-                  : 'bg-[#1D1109]/90 hover:bg-[#4E2F1B] text-amber-100 border border-[#C89F72]/60'
-              }`}
-            >
-              {speakingPrayerId === selectedPrayer.id ? (
-                <>
-                  <VolumeX className="w-4 h-4 text-white" />
-                  <span>Stop Audio</span>
-                </>
-              ) : (
-                <>
-                  <Volume2 className="w-4 h-4 text-amber-300" />
-                  <span>Listen to Prayer</span>
-                </>
-              )}
-            </button>
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0 self-start">
+              <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#1A0F08]/95 border border-[#8B5A2B]/70 text-xs">
+                <span className="font-cinzel font-semibold text-[#DFB991] whitespace-nowrap">
+                  Leader:
+                </span>
+                <select
+                  value={treasuryLeaderVoice}
+                  onChange={(e) => handleTreasuryLeaderChange(e.target.value)}
+                  aria-label="Select Treasury Prayer Leader voice"
+                  className="bg-transparent text-amber-100 font-cinzel font-semibold text-xs focus:outline-none cursor-pointer pr-1"
+                >
+                  {TREASURY_LEADER_OPTIONS.map(opt => (
+                    <option key={opt.id} value={opt.id} className="bg-[#1C1008] text-amber-50">
+                      {opt.id === 'gemini-Kore' ? 'Kore (Default)' : opt.shortName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
+                className={`px-4 py-2 rounded-lg text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 whitespace-nowrap ${
+                  speakingPrayerId === selectedPrayer.id
+                    ? 'bg-amber-600 hover:bg-amber-500 text-white border border-amber-300/60'
+                    : 'bg-[#1D1109]/90 hover:bg-[#4E2F1B] text-amber-100 border border-[#C89F72]/60'
+                }`}
+              >
+                {speakingPrayerId === selectedPrayer.id ? (
+                  <>
+                    <VolumeX className="w-4 h-4 text-white" />
+                    <span>Stop {activeLeader.shortName}</span>
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="w-4 h-4 text-amber-300" />
+                    <span>Listen ({activeLeader.shortName})</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Interactive Filter & Search Utility Strip */}
@@ -247,12 +369,14 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 onChange={(e) => {
                   const nextCat = e.target.value;
                   setSelectedPrayerCategory(nextCat);
+                  const q = prayerSearch.toLowerCase().trim();
                   const firstMatch = CATHOLIC_PRAYERS_DATABASE.find(
-                    p => (nextCat === 'All' || p.category === nextCat) &&
-                      (!prayerSearch.trim() ||
-                        p.title.toLowerCase().includes(prayerSearch.toLowerCase().trim()) ||
-                        (p.latinTitle && p.latinTitle.toLowerCase().includes(prayerSearch.toLowerCase().trim())) ||
-                        p.englishText.toLowerCase().includes(prayerSearch.toLowerCase().trim()))
+                    p => matchesPrayerCategory(p, nextCat) &&
+                      (!q ||
+                        p.title.toLowerCase().includes(q) ||
+                        (p.latinTitle && p.latinTitle.toLowerCase().includes(q)) ||
+                        (p.author && p.author.toLowerCase().includes(q)) ||
+                        p.englishText.toLowerCase().includes(q))
                   );
                   if (firstMatch) setSelectedPrayer(firstMatch);
                 }}
@@ -263,7 +387,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                   <option key={cat} value={cat}>
                     {cat === 'All'
                       ? `All Categories (${CATHOLIC_PRAYERS_DATABASE.length})`
-                      : `${cat} (${CATHOLIC_PRAYERS_DATABASE.filter(p => p.category === cat).length})`}
+                      : `${cat} (${CATHOLIC_PRAYERS_DATABASE.filter(p => matchesPrayerCategory(p, cat)).length})`}
                   </option>
                 ))}
               </select>
@@ -274,7 +398,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                   type="text"
                   value={prayerSearch}
                   onChange={(e) => setPrayerSearch(e.target.value)}
-                  placeholder="Search prayer title, Latin, or phrase..."
+                  placeholder="Search saint, title, Latin, indulgence..."
                   className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-[#1A0F08]/90 border border-[#8B5A2B]/70 text-xs text-amber-50 placeholder-[#C89F72]/70 focus:outline-none focus:border-amber-400"
                 />
                 {prayerSearch && (
@@ -288,6 +412,19 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                   </button>
                 )}
               </div>
+
+              <button
+                type="button"
+                onClick={() => setShowIndulgenceGuide(prev => !prev)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-semibold transition-colors cursor-pointer border flex items-center gap-1.5 whitespace-nowrap ${
+                  showIndulgenceGuide
+                    ? 'bg-amber-400 text-stone-950 border-amber-200'
+                    : 'bg-[#1A0F08]/90 hover:bg-[#3A2213] text-amber-200 border-[#8B5A2B]/70'
+                }`}
+              >
+                <Award className="w-3.5 h-3.5" />
+                <span>Indulgences Guide</span>
+              </button>
             </div>
 
             <div className="text-[11px] font-cinzel font-semibold text-[#DFB991] shrink-0 tabular-nums">
@@ -449,13 +586,88 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
          ========================================================================= */}
       {activeSection === 'treasury' && (
         <div className="space-y-6">
+
+          {/* Expandable Enchiridion Indulgentiarum Quick Guide */}
+          {showIndulgenceGuide && (
+            <div className="bg-white rounded-xl p-5 sm:p-6 shadow-sm border border-amber-300/80 space-y-4">
+              <div className="flex items-start justify-between gap-3 border-b border-amber-200/80 pb-3">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-amber-900">
+                    <Award className="w-4 h-4 text-amber-700" />
+                    <span>Enchiridion Indulgentiarum (Manual of Indulgences, 4th Edition)</span>
+                  </div>
+                  <h3 className="font-cinzel text-lg sm:text-xl font-bold text-stone-900">
+                    Understanding Plenary &amp; Partial Indulgences
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowIndulgenceGuide(false)}
+                  className="p-1.5 rounded-lg hover:bg-stone-100 text-stone-500 hover:text-stone-900 cursor-pointer"
+                  aria-label="Close Indulgences Guide"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <p className="font-serif-sacred text-sm sm:text-base text-stone-800 leading-relaxed">
+                “An indulgence is a remission before God of the temporal punishment due to sins whose guilt has already been forgiven, which the faithful Christian who is duly disposed gains under certain prescribed conditions through the action of the Church” (<em>Catechism of the Catholic Church</em>, §1471). Indulgences may be applied to oneself or by way of suffrage to the Holy Souls in Purgatory.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-amber-50/75 border border-amber-200 space-y-2">
+                  <h4 className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-950">
+                    Four Usual Conditions for a Plenary Indulgence (Norm 20)
+                  </h4>
+                  <ul className="space-y-1.5 text-xs sm:text-sm font-serif-sacred text-stone-800 list-disc pl-4">
+                    <li><strong>Sacramental Confession</strong> (within about 20 days before or after; one confession suffices for several plenary indulgences).</li>
+                    <li><strong>Eucharistic Communion</strong> (ideally on the same day the indulgenced work is performed).</li>
+                    <li><strong>Prayer for the Pope’s Intentions</strong> (for example, one Our Father and one Hail Mary).</li>
+                    <li><strong>Complete Detachment from All Sin</strong>, even venial sin (if attachment remains or a condition is lacking, the indulgence becomes Partial).</li>
+                  </ul>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#FAF8F5] border border-stone-200 space-y-2">
+                  <h4 className="font-cinzel text-xs font-bold uppercase tracking-wider text-stone-900">
+                    Four Everyday Plenary Indulgence Works (Any Day of the Year)
+                  </h4>
+                  <ul className="space-y-1.5 text-xs sm:text-sm font-serif-sacred text-stone-800 list-disc pl-4">
+                    <li><strong>Eucharistic Adoration</strong> before the Blessed Sacrament for at least 30 minutes (<em>Grant #7 §1</em>).</li>
+                    <li><strong>Sacred Scripture Reading</strong> (or listening with veneration) for at least 30 minutes (<em>Grant #30</em>).</li>
+                    <li><strong>The Holy Rosary</strong> (5 continuous decades) in a church, public oratory, family, religious community, or pious association (<em>Grant #17 §1</em>).</li>
+                    <li><strong>Stations of the Cross</strong> performed devoutly before legitimately erected stations (<em>Grant #13</em>).</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
           
           {/* Prayers Selector List */}
           <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="font-cinzel text-base sm:text-lg md:text-xl font-bold uppercase tracking-wider text-stone-900">
                 Treasury of Catholic Prayers
               </span>
+              <div className="flex flex-wrap items-center gap-1.5">
+                {(['All', 'Prayers of the Saints', 'Plenary Indulgence', 'Partial Indulgence'] as const).map(quickCat => (
+                  <button
+                    key={quickCat}
+                    type="button"
+                    onClick={() => {
+                      setSelectedPrayerCategory(quickCat);
+                      const firstMatch = CATHOLIC_PRAYERS_DATABASE.find(p => matchesPrayerCategory(p, quickCat));
+                      if (firstMatch) setSelectedPrayer(firstMatch);
+                    }}
+                    className={`px-2.5 py-1 rounded-md text-[11px] font-cinzel font-bold transition-colors cursor-pointer border ${
+                      selectedPrayerCategory === quickCat
+                        ? 'bg-amber-900 text-amber-50 border-amber-900'
+                        : 'bg-white/80 hover:bg-amber-50 text-stone-700 border-stone-300'
+                    }`}
+                  >
+                    {quickCat === 'All' ? 'All' : quickCat}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div className="flex items-center gap-2">
@@ -490,18 +702,33 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 ) : (
                   filteredTreasuryPrayers.map(p => {
                     const isSelected = p.id === selectedPrayer.id;
+                    const isPlenary = p.indulgence?.type === 'Plenary' || p.indulgence?.type === 'Plenary or Partial';
                     return (
                       <button
                         key={p.id}
                         data-prayer-id={p.id}
                         onClick={() => setSelectedPrayer(p)}
-                        className={`px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
+                        className={`px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer inline-flex items-center gap-1.5 ${
                           isSelected
                             ? 'bg-amber-900 text-amber-50 shadow-xs'
                             : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
                         }`}
                       >
-                        {p.title}
+                        <span>{p.title}</span>
+                        {p.indulgence && (
+                          <span
+                            className={`text-[10px] font-cinzel font-bold px-1.5 py-0.5 rounded ${
+                              isSelected
+                                ? 'bg-amber-400/25 text-amber-200'
+                                : isPlenary
+                                  ? 'bg-amber-200/80 text-amber-950'
+                                  : 'bg-stone-200/90 text-stone-700'
+                            }`}
+                            title={`${p.indulgence.type} Indulgence`}
+                          >
+                            {isPlenary ? 'Plenary' : 'Partial'}
+                          </span>
+                        )}
                       </button>
                     );
                   })
@@ -524,7 +751,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           <article className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-stone-200/90 space-y-6">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-stone-200 pb-4">
-              <div>
+              <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-2 text-xs font-cinzel font-bold uppercase tracking-wider text-amber-800">
                   <span>{selectedPrayer.category}</span>
                   {selectedPrayer.latinTitle && (
@@ -535,10 +762,28 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                       </span>
                     </>
                   )}
+                  {selectedPrayer.indulgence && (
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-cinzel font-bold uppercase tracking-wider border ${
+                        selectedPrayer.indulgence.type === 'Plenary' || selectedPrayer.indulgence.type === 'Plenary or Partial'
+                          ? 'bg-amber-100 text-amber-950 border-amber-400'
+                          : 'bg-emerald-50 text-emerald-900 border-emerald-300'
+                      }`}
+                    >
+                      <Award className="w-3 h-3" />
+                      <span>{selectedPrayer.indulgence.type} Indulgence</span>
+                    </span>
+                  )}
                 </div>
-                <h3 className="font-cinzel text-2xl font-bold text-stone-900 mt-1">
+                <h3 className="font-cinzel text-2xl font-bold text-stone-900">
                   {selectedPrayer.title}
                 </h3>
+                {selectedPrayer.author && (
+                  <div className="flex items-center gap-1.5 text-sm font-serif-sacred text-stone-700">
+                    <UserCheck className="w-3.5 h-3.5 text-amber-800 shrink-0" />
+                    <span>{selectedPrayer.author}</span>
+                  </div>
+                )}
               </div>
 
               <div className="flex items-center gap-2">
@@ -569,8 +814,8 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                       ? 'bg-amber-600 text-white'
                       : 'bg-stone-100 hover:bg-stone-200 text-stone-800 border border-stone-300'
                   }`}
-                  title="Read Aloud"
-                  aria-label="Read Aloud"
+                  title={speakingPrayerId === selectedPrayer.id ? `Stop ${activeLeader.shortName}` : `Read Aloud with ${activeLeader.shortName}`}
+                  aria-label={speakingPrayerId === selectedPrayer.id ? `Stop ${activeLeader.shortName}` : `Read Aloud with ${activeLeader.shortName}`}
                 >
                   {speakingPrayerId === selectedPrayer.id ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-800" />}
                 </button>
@@ -612,15 +857,53 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
             </div>
 
-            {/* Historical Origin and Liturgical Context */}
-            {selectedPrayer.scripturalOrTraditionOrigin && (
-              <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200 text-sm sm:text-base font-serif-sacred text-stone-800 space-y-1">
-                <span className="font-cinzel font-bold text-amber-950 uppercase text-xs block">
-                  Apostolic and Spiritual Origin:
-                </span>
-                <p>{selectedPrayer.scripturalOrTraditionOrigin}</p>
+            {/* Indulgence Grant Panel (Enchiridion Indulgentiarum) */}
+            {selectedPrayer.indulgence && (
+              <div className="p-5 rounded-xl bg-gradient-to-br from-amber-50 via-[#FFFBF0] to-amber-50/70 border border-amber-300/90 text-sm sm:text-base font-serif-sacred text-stone-800 space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 font-cinzel font-bold text-amber-950 uppercase text-xs tracking-wider">
+                    <Award className="w-4 h-4 text-amber-700" />
+                    <span>{selectedPrayer.indulgence.type} Indulgence</span>
+                  </span>
+                  <span className="text-xs font-cinzel font-semibold text-amber-900">
+                    {selectedPrayer.indulgence.grantReference}
+                  </span>
+                </div>
+                <p className="leading-relaxed">{selectedPrayer.indulgence.summary}</p>
+                {selectedPrayer.indulgence.conditions && (
+                  <p className="text-xs sm:text-sm text-stone-700 leading-relaxed border-t border-amber-200/80 pt-2">
+                    <strong className="font-cinzel text-amber-950">Conditions: </strong>
+                    {selectedPrayer.indulgence.conditions}
+                  </p>
+                )}
+                {selectedPrayer.indulgence.applicableToSouls && (
+                  <p className="text-xs font-serif-sacred italic text-amber-950">
+                    Applicable by way of suffrage specifically to the Holy Souls in Purgatory.
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Historical Origin and Spiritual Context */}
+            {(selectedPrayer.historicalContext || selectedPrayer.scripturalOrTraditionOrigin) && (
+              <div className="p-5 rounded-xl bg-amber-50/60 border border-amber-200 text-sm sm:text-base font-serif-sacred text-stone-800 space-y-2.5">
+                <div className="flex items-center gap-1.5 font-cinzel font-bold text-amber-950 uppercase text-xs tracking-wider">
+                  <ScrollText className="w-4 h-4 text-amber-800" />
+                  <span>Historical &amp; Spiritual Context</span>
+                </div>
+                {selectedPrayer.historicalContext && (
+                  <p className="leading-relaxed text-stone-900">{selectedPrayer.historicalContext}</p>
+                )}
+                {selectedPrayer.scripturalOrTraditionOrigin && (
+                  <p className="text-xs sm:text-sm text-stone-700 leading-relaxed">
+                    <strong className="font-cinzel text-amber-950">Source &amp; Origin: </strong>
+                    {selectedPrayer.scripturalOrTraditionOrigin}
+                  </p>
+                )}
                 {selectedPrayer.usageTime && (
-                  <p className="italic text-amber-900 pt-0.5 text-xs sm:text-sm">Recommended time: {selectedPrayer.usageTime}</p>
+                  <p className="italic text-amber-900 text-xs sm:text-sm">
+                    Recommended time: {selectedPrayer.usageTime}
+                  </p>
                 )}
               </div>
             )}

@@ -232,15 +232,35 @@ export interface PrayerRequest {
   candleLit?: boolean;
 }
 
+export interface PrayerIndulgenceInfo {
+  type: 'Plenary' | 'Partial' | 'Plenary or Partial';
+  grantReference: string;
+  summary: string;
+  conditions?: string;
+  applicableToSouls?: boolean;
+}
+
 export interface CatholicPrayer {
   id: string;
   title: string;
   latinTitle?: string;
-  category: 'Daily and Traditional' | 'Marian' | 'Eucharistic and Adoration' | 'Saints and Intercession' | 'Litanies' | 'Acts of the Theological Virtues' | 'Prayers for the Faithful Departed';
+  author?: string;
+  category:
+    | 'Daily and Traditional'
+    | 'Marian'
+    | 'Eucharistic and Adoration'
+    | 'Saints and Intercession'
+    | 'Prayers of the Saints'
+    | 'Prayers for Priests'
+    | 'Litanies'
+    | 'Acts of the Theological Virtues'
+    | 'Prayers for the Faithful Departed';
   englishText: string;
   latinText?: string;
   scripturalOrTraditionOrigin?: string;
+  historicalContext?: string;
   usageTime?: string; // e.g. "Morning", "Evening", "Before Mass", "After Communion", "At 12 PM and 6 PM"
+  indulgence?: PrayerIndulgenceInfo;
 }
 
 export interface NotificationPreference {

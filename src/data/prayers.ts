@@ -1,6 +1,10 @@
 import { CatholicPrayer } from '../types';
+import { PRAYERS_PART_1_CORE_AND_MARIAN } from './prayersPart1';
+import { PRAYERS_PART_2_DOCTORS_AND_SAINTS } from './prayersPart2';
+import { PRAYERS_PART_3_SAINTS_AND_PRIESTS } from './prayersPart3';
+import { PRAYERS_PART_4_INDULGENCED_AND_LITANIES } from './prayersPart4';
 
-export const CATHOLIC_PRAYERS_DATABASE: CatholicPrayer[] = [
+const CORE_SANCTUM_PRAYERS: CatholicPrayer[] = [
   {
     id: 'prayer-sign-of-cross',
     title: 'The Sign of the Cross',
@@ -9,7 +13,13 @@ export const CATHOLIC_PRAYERS_DATABASE: CatholicPrayer[] = [
     englishText: 'In the name of the Father, and of the Son, and of the Holy Spirit. Amen.',
     latinText: 'In nómine Patris, et Fílii, et Spíritus Sancti. Amen.',
     scripturalOrTraditionOrigin: 'Matthew 28:19; used by the Apostles and early Christians from apostolic times (Tertullian, 2nd century).',
-    usageTime: 'Beginning and end of every Catholic prayer and action'
+    historicalContext: 'By tracing the Cross upon our bodies while invoking the Triune Name, we profess the two supreme mysteries of Christianity—the Most Holy Trinity and the Redemption won on Calvary—sanctifying every moment of the day.',
+    usageTime: 'Beginning and end of every Catholic prayer and action',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #18',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly sign themselves with the Sign of the Cross while saying the customary words.'
+    }
   },
   {
     id: 'prayer-our-father',
@@ -99,7 +109,13 @@ and life everlasting. Amen.`,
 Et in Iesum Christum, Fílium eius únicum, Dóminum nostrum: qui concéptus est de Spíritu Sancto, natus ex María Vírgine, passus sub Póntio Piláto, crucifixus, mórtuus, et sepúltus, descéndit ad ínferos, tértia die resurréxit a mórtuis, ascéndit ad caelos, sedet ad déxteram Dei Patris omnipoténtis, inde ventúrus est iudicáre vivos et mórtuos.
 Credo in Spíritum Sanctum, sanctam Ecclésiam cathólicam, sanctórum communiónem, remissiónem peccatórum, carnis resurrectiónem, vitam aetérnam. Amen.`,
     scripturalOrTraditionOrigin: 'Ancient summary of the Faith handed down by the Apostles for Holy Baptism.',
-    usageTime: 'Beginning of the Rosary, Baptism, Daily Prayer'
+    historicalContext: 'Developed from the baptismal profession of the ancient Roman Church, the Apostles’ Creed summarizes the twelve articles of Christian belief and opens the Holy Rosary as a living confession of Catholic faith.',
+    usageTime: 'Beginning of the Rosary, Baptism, Daily Prayer',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #28',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite the Apostles’ Creed or the Nicene Creed.'
+    }
   },
   {
     id: 'prayer-st-michael',
@@ -120,7 +136,9 @@ tuque, Princeps milítiae caeléstis,
 Sátanam aliósque spíritus malígnos,
 qui ad perditiónem animárum pervagántur in mundo,
 divína virtúte, in inférnum detrúde. Amen.`,
+    author: 'Pope Leo XIII (1884)',
     scripturalOrTraditionOrigin: 'Composed by Pope Leo XIII in 1884 following a mystical vision of the spiritual assault on the Church.',
+    historicalContext: 'After celebrating Holy Mass on October 13, 1884, Pope Leo XIII stood motionless near the altar in shock after hearing a dialogue between Christ and Satan regarding a century of severe testing for the Church. Immediately retiring to his study, he composed this prayer and ordered it recited after every Low Mass worldwide.',
     usageTime: 'After Holy Mass, during spiritual warfare, before sleep'
   },
   {
@@ -144,8 +162,15 @@ Ego tali animátus confidéntia, ad te, Virgo Vírginum, Mater, curro,
 ad te vénio, coram te gemens peccátor assísto.
 Noli, Mater Verbi, verba mea despícere;
 sed audi propítia et exáudi. Amen.`,
+    author: 'Attributed to St. Bernard of Clairvaux (12th Century)',
     scripturalOrTraditionOrigin: 'Attributed to St. Bernard of Clairvaux (12th Century) and popularized by Fr. Claude Bernard (17th Century).',
-    usageTime: 'In urgent needs and tribulations'
+    historicalContext: 'Part of a longer 15th-century Marian prayer (“Ad sanctitatis tuae pedes”), the Memorare was championed by the “Poor Priest” Fr. Claude Bernard, who distributed over 200,000 leaflets after attributing his own miraculous healing to Mary’s intercession.',
+    usageTime: 'In urgent needs and tribulations',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #17 §2',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite the Memorare.'
+    }
   },
   {
     id: 'prayer-hail-holy-queen',
@@ -173,8 +198,15 @@ O clemens, o pia, o dulcis Virgo María.
 
 V. Ora pro nobis, Sancta Dei Génetrix.
 R. Ut digni efficiámur promissiónibus Christi.`,
+    author: 'Bl. Hermann the Cripple (1013–1054)',
     scripturalOrTraditionOrigin: 'Composed by Blessed Hermann the Cripple, monk of Reichenau, c. 1050 AD.',
-    usageTime: 'Conclusion of the Holy Rosary and Night Prayer (Compline)'
+    historicalContext: 'Born severely disabled and unable to walk without aid, Bl. Hermann became one of the most brilliant scholars and hymnographers of medieval Europe. His tender appeal to Mary as “our life, our sweetness, and our hope” has consoled pilgrims in this “valley of tears” for nearly a millennium.',
+    usageTime: 'Conclusion of the Holy Rosary and Night Prayer (Compline)',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #17 §2',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite the Salve Regina.'
+    }
   },
   {
     id: 'prayer-angelus',
@@ -199,7 +231,13 @@ R. That we may be made worthy of the promises of Christ.
 Let us pray:
 Pour forth, we beseech Thee, O Lord, Thy grace into our hearts; that we, to whom the Incarnation of Christ, Thy Son, was made known by the message of an Angel, may by His Passion and Cross be brought to the glory of His Resurrection. Through the same Christ our Lord. Amen.`,
     scripturalOrTraditionOrigin: 'Commemoration of the Annunciation and Incarnation recited when the church bells chime thrice daily.',
-    usageTime: '6:00 AM, 12:00 PM, and 6:00 PM daily'
+    historicalContext: 'Rooted in the 13th-century Franciscan custom of ringing the evening bell for three Hail Marys in honor of the Incarnation—immortalized in Jean-François Millet’s painting The Angelus—this devotion pauses ordinary work at 6 AM, noon, and 6 PM to recall that “the Word was made flesh.”',
+    usageTime: '6:00 AM, 12:00 PM, and 6:00 PM daily (outside Eastertide)',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #17 §2',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite the Angelus at morning, noon, or evening.'
+    }
   },
   {
     id: 'prayer-anima-christi',
@@ -232,8 +270,15 @@ In hora mortis meae voca me.
 Et iube me veníre ad te,
 ut cum Sanctis tuis laudem te
 in saécula saeculórum. Amen.`,
+    author: '14th-Century Tradition (Popularized by St. Ignatius of Loyola)',
     scripturalOrTraditionOrigin: '14th-century Eucharistic prayer popularized by St. Ignatius of Loyola in the Spiritual Exercises.',
-    usageTime: 'Thanksgiving after receiving Holy Communion'
+    historicalContext: 'Already inscribed on the gates of the Alcázar of Seville in the 1300s and indulgenced by Pope John XXII in 1330, Anima Christi was placed by St. Ignatius of Loyola at the opening of his Spiritual Exercises so souls would hide within Christ’s wounds after receiving Holy Communion.',
+    usageTime: 'Thanksgiving after receiving Holy Communion',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #8 §2',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite the Anima Christi, especially after Holy Communion.'
+    }
   },
   {
     id: 'prayer-act-of-contrition',
@@ -247,7 +292,13 @@ who art all good and deserving of all my love.
 I firmly resolve, with the help of Thy grace,
 to sin no more and to avoid the near occasion of sin. Amen.`,
     scripturalOrTraditionOrigin: 'Sacramental formula for the Sacrament of Reconciliation (Confession) and nightly examination of conscience.',
-    usageTime: 'During Confession and nightly examination of conscience'
+    historicalContext: 'The Catechism (CCC 1451–1453) calls contrition the chief act of the penitent: sorrow for sin arising above all from love of God (perfect contrition) or from fear of punishment and hatred of sin’s ugliness (imperfect contrition), joined with a firm resolve to amend one’s life.',
+    usageTime: 'During Confession and nightly examination of conscience',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #8 §2',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite an Act of Contrition using any legitimately approved formula.'
+    }
   },
   {
     id: 'prayer-requiem-aeternam',
@@ -262,7 +313,14 @@ through the mercy of God, rest in peace. Amen.`,
 et lux perpétua lúceat eis.
 Requiéscant in pace. Amen.`,
     scripturalOrTraditionOrigin: 'From 2 Maccabees 12:46; traditional liturgical prayer for deceased relatives and holy souls.',
-    usageTime: 'Daily for deceased loved ones and souls in purgatory'
+    historicalContext: 'Rooted in Judas Maccabeus’s sacrifice for the fallen in 2 Maccabees 12:46 (“It is therefore a holy and wholesome thought to pray for the dead”), this brief versicle is the Church’s timeless act of mercy toward the souls undergoing final purification in Purgatory.',
+    usageTime: 'Daily for deceased loved ones and souls in purgatory',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #29 §1',
+      summary: 'A Partial Indulgence, applicable only to the Souls in Purgatory, is granted to the faithful who devoutly recite “Requiem aeternam.”',
+      applicableToSouls: true
+    }
   },
   {
     id: 'prayer-spiritual-communion',
@@ -285,8 +343,15 @@ veni saltem spiritualiter in cor meum.
 Amplector te quasi iam venisses,
 et me totum tibi unio;
 ne permittas me umquam a te separari. Amen.`,
+    author: 'St. Alphonsus Maria de Liguori (1696–1787)',
     scripturalOrTraditionOrigin: 'Composed by Saint Alphonsus Maria de Liguori, Bishop and Doctor of the Church (1696–1787). Reaffirmed by the Council of Trent.',
-    usageTime: 'When unable to attend Holy Mass or receive sacramental Communion, and during Eucharistic Adoration'
+    historicalContext: 'Drawing on St. Thomas Aquinas and the Council of Trent (Session XIII), St. Alphonsus taught that an ardent desire to receive Christ spiritually in the Eucharist brings abundant grace whenever sacramental Communion is not immediately possible.',
+    usageTime: 'When unable to attend Holy Mass or receive sacramental Communion, and during Eucharistic Adoration',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #8 §2',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly make an Act of Spiritual Communion using any approved pious formula.'
+    }
   },
   {
     id: 'prayer-holy-trinity',
@@ -331,7 +396,13 @@ O God, who by the light of the Holy Spirit, did instruct the hearts of the faith
 Orémus.
 Deus, qui corda fidélium Sancti Spíritus illustratióne docuísti: da nobis in eódem Spíritu recta sápere, et de eius semper consolatióne gaudére. Per Christum Dóminum nostrum. Amen.`,
     scripturalOrTraditionOrigin: 'Psalm 104:30 and the Roman Missal Collect of Pentecost; ancient invocation of the Paraclete.',
-    usageTime: 'Before study, prayer, discernment, and daily work'
+    historicalContext: 'Pairing the ancient Pentecost versicle with the Roman Missal Collect of Pentecost Sunday, the Church invites every believer to call down the light and fire of the Holy Spirit before prayer, work, or discernment.',
+    usageTime: 'Before study, prayer, discernment, and daily work',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #26',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite the invocation “Veni, Sancte Spiritus.”'
+    }
   },
   {
     id: 'prayer-angels-prayer-fatima',
@@ -388,16 +459,25 @@ Blessed be St. Joseph,
 her most chaste spouse.
 Blessed be God 
 in his Angels and in his Saints.`,
+    author: 'Fr. Luigi Felici, S.J. (1797)',
     scripturalOrTraditionOrigin: 'Composed by Fr. Luigi Felici, S.J. in 1797 as an act of reparation for blasphemy and profanity; recited during Eucharistic Benediction.',
-    usageTime: 'During Benediction of the Most Blessed Sacrament and after Holy Mass'
+    historicalContext: 'Originally composed in Italian (“Dio sia benedetto”) to repair the sin of cursing and taking God’s Name in vain, the Divine Praises were later expanded by Popes Pius VII, Pius IX, Leo XIII, and Pius XII to include the Immaculate Conception, the Assumption, and St. Joseph.',
+    usageTime: 'During Benediction of the Most Blessed Sacrament and after Holy Mass',
+    indulgence: {
+      type: 'Partial',
+      grantReference: 'Enchiridion Indulgentiarum (4th ed.), Grant #22',
+      summary: 'A Partial Indulgence is granted to the faithful who devoutly recite the Divine Praises in reparation for blasphemy.'
+    }
   },
   {
     id: 'prayer-shoulder-wound-of-christ',
-    title: 'Prayer to the shoulder wound of Christ',
+    title: 'Prayer to the Shoulder Wound of Christ',
     latinTitle: 'Oratio ad Plagam Humeri Christi',
-    category: 'Daily and Traditional',
+    author: 'Attributed to St. Bernard of Clairvaux (1090–1153)',
+    category: 'Prayers of the Saints',
     englishText: `Most loving Jesus, meek Lamb of God, I, a miserable sinner, salute and worship the most sacred wound of Thy shoulder on which Thou didst bear Thy heavy cross which so tore Thy flesh and laid bare Thy bones as to inflict on Thee an anguish greater than any other wound of Thy most blessed body. I adore Thee, O Jesus most sorrowful; I praise and glorify Thee, and give Thee thanks for this most sacred and painful wound, beseeching Thee by that exceeding pain, and by the crushing burden of Thy heavy cross to be merciful to me, a sinner, to forgive me all my mortal and venial sins, and to lead me on towards heaven along the Way of Thy Cross. Amen.`,
-    scripturalOrTraditionOrigin: 'Attributed to Saint Bernard of Clairvaux from the Annals of Clairvaux, honoring the hidden wound inflicted by the Cross on Our Lord\'s shoulder.',
+    scripturalOrTraditionOrigin: 'Attributed to Saint Bernard of Clairvaux from the Annals of Clairvaux, honoring the hidden wound inflicted by the Cross on Our Lord’s shoulder.',
+    historicalContext: 'According to the medieval Cistercian tradition of Clairvaux, St. Bernard asked Christ in prayer which unknown suffering of His Passion had caused Him the greatest pain, and Our Lord pointed to the deep, forgotten wound carved into His shoulder by the heavy wooden beam of the Cross. Padre Pio also had a profound devotion to this wound.',
     usageTime: 'Fridays, Lent, Stations of the Cross, and daily penitential devotion'
   },
   {
@@ -478,10 +558,20 @@ in his Angels and in his Saints.`,
 O Blood and Water, which flowed out from the Heart of Jesus as a fountain of Mercy for us, we trust in you!
 Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. (three times)
 Jesus, King of Mercy, We trust in you!`,
-    scripturalOrTraditionOrigin: 'Prayed daily at the 3:00 PM Hour of Great Mercy, commemorating Our Lord\'s Passion and death on the Cross.',
+    scripturalOrTraditionOrigin: 'Prayed daily at the 3:00 PM Hour of Great Mercy, commemorating Our Lord’s Passion and death on the Cross.',
+    historicalContext: 'Rooted in the Divine Mercy revelations to St. Maria Faustina Kowalska (Diary §1320, §1572), the 3:00 PM Hour commemorates the exact hour when Christ expired on Calvary and blood and water gushed from His pierced Heart as a fountain of mercy for the world.',
     usageTime: '3:00 PM daily (The Hour of Great Mercy)'
   }
 ];
+
+export const CATHOLIC_PRAYERS_DATABASE: CatholicPrayer[] = [
+  ...CORE_SANCTUM_PRAYERS,
+  ...PRAYERS_PART_1_CORE_AND_MARIAN,
+  ...PRAYERS_PART_2_DOCTORS_AND_SAINTS,
+  ...PRAYERS_PART_3_SAINTS_AND_PRIESTS,
+  ...PRAYERS_PART_4_INDULGENCED_AND_LITANIES,
+];
+
 
 
 

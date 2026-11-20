@@ -20,7 +20,6 @@ import { CatholicTermView } from './components/CatholicTermView';
 import { CatholicNewsView } from './components/CatholicNewsView';
 import { CatholicArticlesView } from './components/CatholicArticlesView';
 import { CatholicSocialView } from './components/CatholicSocialView';
-import { CatholicFacebookView } from './components/CatholicFacebookSection';
 import { PrayerWallAndTreasuryView } from './components/PrayerWallAndTreasuryView';
 import { NotificationsModal } from './components/NotificationsModal';
 import { AngelusModal } from './components/AngelusModal';
@@ -657,10 +656,8 @@ export default function App() {
 
         {/* Main Body Layout */}
         <div className={`flex-1 w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center transition-all duration-300 ${
-          activeTab === 'catholic-ai' || activeTab === 'magisterium-ai'
-            ? 'max-w-none px-2 sm:px-4 lg:px-6' 
-            : activeTab === 'church-history'
-            ? 'max-w-[1400px]'
+          activeTab === 'catholic-ai'
+            ? 'max-w-none px-2 sm:px-4 lg:px-6'
             : 'max-w-7xl'
         }`}>
           
@@ -689,7 +686,7 @@ export default function App() {
 
             {/* Main Content Area */}
             <main className={`flex-1 w-full min-w-0 transition-all duration-300 ${
-              activeTab === 'catholic-ai' || activeTab === 'magisterium-ai' || activeTab === 'church-history' ? 'max-w-full' : 'max-w-4xl'
+              activeTab === 'catholic-ai' ? 'max-w-full' : 'max-w-4xl'
             }`}>
 
             {/* 1. Mass Readings */}
@@ -804,11 +801,6 @@ export default function App() {
                   setActiveCatholicArticleId(null);
                 }}
               />
-            )}
-
-            {/* Catholic Facebook (Live Favorites Feed) */}
-            {activeTab === 'catholic-facebook' && (
-              <CatholicFacebookView />
             )}
 
             {/* Catholic Social (EWTN, Facebook, Instagram & Christendom) */}
@@ -1001,15 +993,6 @@ export default function App() {
                 className="hover:text-amber-300 cursor-pointer transition-colors"
               >
                 Magisterium AI
-              </button>
-              <span>•</span>
-
-              {/* 5d. Catholic Facebook */}
-              <button 
-                onClick={() => handleSelectTab('catholic-facebook')} 
-                className="hover:text-amber-300 cursor-pointer transition-colors"
-              >
-                Catholic Facebook
               </button>
               <span>•</span>
 
