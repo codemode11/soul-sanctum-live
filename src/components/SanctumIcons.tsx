@@ -2217,3 +2217,36 @@ export const MagisteriumKeysIcon: React.FC<IconProps> = ({ className = 'w-5 h-5'
   </svg>
 );
 
+/**
+ * Papal Miter Icon: Traditional Roman Pontiff's liturgical miter with front cross,
+ * circulus brow band, and twin hanging lappets (infulae).
+ */
+export const PapalMiterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Papal Miter"
+  >
+    {/* Tall pointed miter peak with gently curved sides */}
+    <path
+      d="M12 2.2C15.8 5.2 18.4 8.8 17.8 15H6.2C5.6 8.8 8.2 5.2 12 2.2Z"
+      fill="currentColor"
+      fillOpacity="0.12"
+    />
+    {/* Central liturgical cross on the miter front */}
+    <path d="M12 6.2v6.8" strokeWidth="1.65" />
+    <path d="M9.5 9.2h5" strokeWidth="1.65" />
+    {/* Circulus (horizontal ornamental brow band) */}
+    <rect x="5.8" y="15" width="12.4" height="2.6" rx="0.8" fill="currentColor" fillOpacity="0.18" />
+    {/* Twin hanging lappets (infulae) */}
+    <path d="M8.5 17.6L7.3 21.7l2.5-.9.5-3.2" strokeWidth="1.55" />
+    <path d="M15.5 17.6l1.2 4.1-2.5-.9-.5-3.2" strokeWidth="1.55" />
+  </svg>
+);
+
+

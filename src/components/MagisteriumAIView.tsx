@@ -193,7 +193,8 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const domainMenuRef = useRef<HTMLDivElement>(null);
+  const domainButtonRef = useRef<HTMLButtonElement>(null);
+  const domainPanelRef = useRef<HTMLDivElement>(null);
 
   const activeSession = useMemo(() => {
     return sessions.find((s) => s.id === activeSessionId) || sessions[0];
@@ -237,7 +238,10 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
   useEffect(() => {
     if (!isDomainMenuOpen) return;
     const handleClickOutside = (event: MouseEvent) => {
-      if (domainMenuRef.current && !domainMenuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      const clickedButton = domainButtonRef.current?.contains(target);
+      const clickedPanel = domainPanelRef.current?.contains(target);
+      if (!clickedButton && !clickedPanel) {
         setIsDomainMenuOpen(false);
       }
     };
@@ -633,93 +637,99 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
               </a>
 
               {/* Settings Icon + Dropdown Arrow for Consult by Magisterial Domain */}
-              <div ref={domainMenuRef} className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsDomainMenuOpen((prev) => !prev)}
-                  aria-expanded={isDomainMenuOpen}
-                  aria-haspopup="true"
-                  aria-label="Consult by Magisterial Domain"
-                  title="Consult by Magisterial Domain"
-                  className={`px-2.5 py-2 rounded-lg border transition-colors cursor-pointer flex items-center gap-1 shrink-0 ${
-                    isDomainMenuOpen
-                      ? 'bg-[#EFE8D8] text-amber-950 border-amber-700/60 shadow-2xs'
-                      : 'bg-white hover:bg-[#F7F2E7] text-stone-800 border-stone-300'
+              <button
+                ref={domainButtonRef}
+                type="button"
+                onClick={() => setIsDomainMenuOpen((prev) => !prev)}
+                aria-expanded={isDomainMenuOpen}
+                aria-haspopup="true"
+                aria-label="Consult by Magisterial Domain"
+                title="Consult by Magisterial Domain"
+                className={`px-2.5 py-2 rounded-lg border transition-colors cursor-pointer flex items-center gap-1 shrink-0 ${
+                  isDomainMenuOpen
+                    ? 'bg-[#EFE8D8] text-amber-950 border-amber-700/60 shadow-2xs'
+                    : 'bg-white hover:bg-[#F7F2E7] text-stone-800 border-stone-300'
+                }`}
+              >
+                <Settings className="w-4 h-4 text-amber-800" />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-stone-600 transition-transform duration-200 ${
+                    isDomainMenuOpen ? 'rotate-180 text-amber-900' : ''
                   }`}
-                >
-                  <Settings className="w-4 h-4 text-amber-800" />
-                  <ChevronDown
-                    className={`w-3.5 h-3.5 text-stone-600 transition-transform duration-200 ${
-                      isDomainMenuOpen ? 'rotate-180 text-amber-900' : ''
-                    }`}
-                  />
-                </button>
-
-                {isDomainMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 z-40 w-[min(calc(100vw-2.5rem),540px)] rounded-xl bg-[#FAF8F3] border border-[#D8CEB8] shadow-xl p-4 sm:p-5 space-y-3.5">
-                    <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[#E5DEC9]">
-                      <div className="space-y-0.5">
-                        <h3 className="font-cinzel text-xs sm:text-sm font-bold text-amber-950">
-                          Consult by Magisterial Domain
-                        </h3>
-                        <p className="font-serif text-xs text-stone-600">
-                          Select a domain to explore curated Catholic inquiries
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setIsDomainMenuOpen(false)}
-                        className="p-1 rounded-md text-stone-500 hover:text-stone-900 hover:bg-[#ECE5D5] transition-colors cursor-pointer"
-                        aria-label="Close Magisterial Domains menu"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-
-                    {/* Domain Tabs */}
-                    <div className="flex flex-wrap items-center gap-1 p-1 rounded-lg bg-[#ECE5D5]">
-                      {MAGISTERIUM_DOMAINS.map((item) => (
-                        <button
-                          key={item.domain}
-                          type="button"
-                          onClick={() => setSelectedDomain(item.domain)}
-                          className={`px-2.5 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-                            selectedDomain === item.domain
-                              ? 'bg-white text-amber-950 shadow-2xs'
-                              : 'text-stone-700 hover:text-stone-950'
-                          }`}
-                        >
-                          {item.label}
-                        </button>
-                      ))}
-                    </div>
-
-                    {/* Domain Prompts */}
-                    <div className="space-y-2 max-h-[300px] overflow-y-auto pr-0.5">
-                      {activeDomainPrompts.map((promptText, idx) => (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => {
-                            setIsDomainMenuOpen(false);
-                            handleSubmit(undefined, promptText);
-                          }}
-                          disabled={isLoading}
-                          className="group w-full text-left p-3 rounded-lg bg-white hover:bg-[#FDFBF7] border border-[#E5DEC9] hover:border-amber-700/60 transition-all cursor-pointer flex items-start justify-between gap-3 disabled:opacity-50"
-                        >
-                          <span className="font-serif text-xs sm:text-sm text-stone-900 leading-relaxed">
-                            {promptText}
-                          </span>
-                          <ArrowRight className="w-3.5 h-3.5 text-amber-900 shrink-0 mt-1 group-hover:translate-x-0.5 transition-transform" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+                />
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Full-Width Dropdown Panel: Same Width as All Magisterium AI Containers */}
+        {isDomainMenuOpen && (
+          <div
+            ref={domainPanelRef}
+            className="absolute left-0 right-0 top-full mt-2 z-40 w-full rounded-xl bg-[#FAF8F3] border border-[#D8CEB8] shadow-xl p-4 sm:p-5 space-y-4"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-2.5 border-b border-[#E5DEC9]">
+              <div className="space-y-0.5">
+                <h3 className="font-cinzel text-xs sm:text-sm font-bold text-amber-950">
+                  Consult by Magisterial Domain
+                </h3>
+                <p className="font-serif text-xs text-stone-600">
+                  Select a domain to explore curated Catholic inquiries
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsDomainMenuOpen(false)}
+                className="p-1 rounded-md text-stone-500 hover:text-stone-900 hover:bg-[#ECE5D5] transition-colors cursor-pointer"
+                aria-label="Close Magisterial Domains menu"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Domain Tabs */}
+            <div className="flex flex-wrap items-center gap-1 p-1 rounded-lg bg-[#ECE5D5]">
+              {MAGISTERIUM_DOMAINS.map((item) => (
+                <button
+                  key={item.domain}
+                  type="button"
+                  onClick={() => setSelectedDomain(item.domain)}
+                  className={`px-3 py-1.5 rounded-md text-xs font-cinzel font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
+                    selectedDomain === item.domain
+                      ? 'bg-white text-amber-950 shadow-2xs'
+                      : 'text-stone-700 hover:text-stone-950'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Domain Prompts */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {activeDomainPrompts.map((promptText, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setIsDomainMenuOpen(false);
+                    handleSubmit(undefined, promptText);
+                  }}
+                  disabled={isLoading}
+                  className="group text-left p-4 rounded-lg bg-white hover:bg-[#FDFBF7] border border-[#E5DEC9] hover:border-amber-700/60 transition-all cursor-pointer flex flex-col justify-between gap-3 disabled:opacity-50"
+                >
+                  <span className="font-serif text-sm text-stone-900 leading-relaxed">
+                    {promptText}
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-xs font-cinzel font-semibold text-amber-900 group-hover:translate-x-0.5 transition-transform">
+                    <span>Ask Magisterium AI</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* 2. Workspace Layout: Optional Past Inquiries Sidebar + Active Magisterial Research Thread */}

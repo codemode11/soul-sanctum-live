@@ -25,13 +25,13 @@ import {
   Activity, 
   Users,
   Cross,
-  Crown,
   ScrollText,
   CheckCircle2,
   X,
   Share2,
   Landmark
 } from 'lucide-react';
+import { PapalMiterIcon } from './SanctumIcons';
 import { 
   CHURCH_ERAS_INFO, 
   CHURCH_TIMELINE_EVENTS, 
@@ -2123,7 +2123,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
 
                       <div className="p-4 sm:p-5 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] flex items-start gap-3.5">
                         <div className="p-2.5 rounded-xl bg-slate-900 text-[#EAE2D3] shrink-0 mt-0.5">
-                          <Crown className="w-5 h-5 text-[#EAE2D3]" />
+                          <PapalMiterIcon className="w-5 h-5 text-[#EAE2D3]" />
                         </div>
                         <div className="min-w-0 space-y-0.5">
                           <div className="text-xs font-cinzel font-bold text-[#334E68] uppercase tracking-wider">
@@ -2279,7 +2279,7 @@ const ChurchCouncilsTimelineView: React.FC<{ showHeroBanner?: boolean }> = ({
             <div className="p-6 sm:p-8 overflow-y-auto space-y-7 text-slate-900">
               <div className="p-5 rounded-xl bg-[#F4EFE6] border border-[#D8CFC0] space-y-3">
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-[#334E68] uppercase tracking-wider">
-                  <Crown className="w-4 h-4 text-[#334E68]" />
+                  <PapalMiterIcon className="w-4 h-4 text-[#334E68]" />
                   <span>Petrine Leadership & Convocation</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
