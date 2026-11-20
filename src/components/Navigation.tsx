@@ -423,7 +423,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     { 
       id: 'catholic-facebook', 
-      label: 'Catholic Facebook Feed', 
+      label: 'Catholic Facebook', 
       icon: CatholicFacebookFeedIcon, 
       tag: 'Facebook', 
       subtext: 'Live Favorites Feed from 20 Catholic Accounts' 

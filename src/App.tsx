@@ -806,7 +806,7 @@ export default function App() {
               />
             )}
 
-            {/* Catholic Facebook Feed (Live Favorites Feed) */}
+            {/* Catholic Facebook (Live Favorites Feed) */}
             {activeTab === 'catholic-facebook' && (
               <CatholicFacebookView />
             )}
@@ -1004,12 +1004,12 @@ export default function App() {
               </button>
               <span>•</span>
 
-              {/* 5d. Catholic Facebook Feed */}
+              {/* 5d. Catholic Facebook */}
               <button 
                 onClick={() => handleSelectTab('catholic-facebook')} 
                 className="hover:text-amber-300 cursor-pointer transition-colors"
               >
-                Catholic Facebook Feed
+                Catholic Facebook
               </button>
               <span>•</span>
 

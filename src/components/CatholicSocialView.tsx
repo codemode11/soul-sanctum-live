@@ -840,7 +840,7 @@ export const CatholicSocialView: React.FC = () => {
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
                 }`}
               >
-                Catholic Facebook Feed
+                Catholic Facebook
               </button>
               <button
                 onClick={() => setActivePlatform('instagram')}

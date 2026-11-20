@@ -2229,7 +2229,7 @@ export const CatholicFacebookFeedIcon: React.FC<IconProps> = ({ className = 'w-5
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
-    aria-label="Catholic Facebook Feed"
+    aria-label="Catholic Facebook"
   >
     <rect x="3" y="3" width="18" height="18" rx="4.5" fill="currentColor" fillOpacity="0.12" />
     <path d="M14.5 7.5h-1.8a2.2 2.2 0 0 0-2.2 2.2V21" />

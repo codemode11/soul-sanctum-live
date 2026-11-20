@@ -400,7 +400,7 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
       <div className="bg-gradient-to-r from-[#162238] via-[#1C3357] to-[#132033] px-4 py-3.5 sm:px-6 border-b border-amber-500/30 flex flex-wrap items-center justify-between gap-3">
         <div className="space-y-0.5 min-w-0">
           <h3 className="font-serif text-lg sm:text-xl font-bold text-white leading-snug">
-            Catholic Facebook Feed
+            Catholic Facebook
           </h3>
           <p className="text-xs text-blue-100/80 font-serif">
             Unified stream from {favoriteSources.length} favorite{' '}
@@ -568,7 +568,7 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
         {unifiedFeedEntries.length === 0 ? (
           <div className="max-w-[620px] mx-auto p-8 rounded-xl bg-white border border-stone-200 text-center space-y-3">
             <p className="font-serif text-sm text-stone-700">
-              Your Catholic Facebook Feed has no Favorites selected.
+              Your Catholic Facebook has no Favorites selected.
             </p>
             <button
               type="button"
