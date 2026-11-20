@@ -1439,7 +1439,7 @@ export const RosaryAndChapletView: React.FC = () => {
                       }`}>
                         {item.title}
                       </h4>
-                      <div className={`relative font-serif not-italic font-bold text-stone-800 leading-relaxed bg-white/55 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
+                      <div className={`relative font-serif not-italic font-normal text-stone-800 leading-relaxed bg-white/55 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
                         promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
                         promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
                       }`}>
@@ -1812,7 +1812,7 @@ export const RosaryAndChapletView: React.FC = () => {
                       }`}>
                         {item.title}
                       </h5>
-                      <div className={`relative font-serif not-italic font-bold text-stone-800 leading-relaxed bg-white/55 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
+                      <div className={`relative font-serif not-italic font-normal text-stone-800 leading-relaxed bg-white/55 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-white/80 shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)] ${
                         promisesFontSize === 'normal' ? 'text-sm sm:text-base' :
                         promisesFontSize === 'large' ? 'text-base sm:text-lg md:text-xl' : 'text-lg sm:text-xl md:text-2xl'
                       }`}>
