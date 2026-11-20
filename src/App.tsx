@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Header } from './components/Header';
 import { Navigation, ActiveTab } from './components/Navigation';
 import { DailyMassReadingsView } from './components/DailyMassReadingsView';
@@ -430,6 +431,7 @@ export default function App() {
   if (isStandaloneDashboardSite) {
     return (
       <div className="min-h-screen bg-[#18110C] text-[#24140B] py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
+        <Analytics route="/dashboard" path="/dashboard" debug={false} />
         <div className="max-w-7xl mx-auto">
           <PersonalCatholicDashboardView
             currentDateStr={currentDateStr}
@@ -443,6 +445,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen relative flex flex-col overflow-x-clip bg-stone-950 text-stone-900 selection:bg-amber-300 selection:text-amber-950">
+      <Analytics route={`/${activeTab}`} path={`/${activeTab}`} debug={false} />
       
       {/* Fixed Full-Website Sacred Sanctum Background: Centered and Enlarged */}
       <div className="fixed inset-0 z-0 select-none pointer-events-none overflow-hidden flex flex-col items-center justify-start px-4 sm:px-6 lg:px-8">
