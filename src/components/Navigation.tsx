@@ -55,13 +55,16 @@ import {
   DivineOfficeBreviaryIcon,
   CatholicBiblesBookIcon,
   CatholicArticlesRssIcon,
-  CatholicSocialShareIcon
+  CatholicSocialShareIcon,
+  FioAudioNavIcon,
+  MagisteriumKeysIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
   | 'readings'
   | 'saints'
   | 'catechism'
+  | 'magisterium-ai'
   | 'catholic-ai'
   | 'divine-office'
   | 'catholic-bibles'
@@ -70,6 +73,7 @@ export type ActiveTab =
   | 'quotations'
   | 'spiritual-books'
   | 'catholic-podcasts'
+  | 'fio-audio'
   | 'live-mass'
   | 'vatican-news'
   | 'catholic-articles'
@@ -331,6 +335,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       tag: 'Doctrine', 
       subtext: 'Pillars of Catholic Faith' 
     },
+    {
+      id: 'magisterium-ai',
+      label: 'Magisterium AI',
+      icon: MagisteriumKeysIcon,
+      tag: 'Magisterium',
+      subtext: '28,000+ Church Documents, CCC & Canon Law'
+    },
     { 
       id: 'catholic-bibles', 
       label: 'Holy Bible', 
@@ -379,6 +390,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: CatholicPodcastNavIcon, 
       tag: 'Audio', 
       subtext: 'Ascension, Word on Fire and Live Audio' 
+    },
+    {
+      id: 'fio-audio',
+      label: 'Fio.fm Audio',
+      icon: FioAudioNavIcon,
+      tag: 'Streaming',
+      subtext: 'Catholic Music, Chant, Podcasts & Audiobooks'
     },
     { 
       id: 'live-mass', 

@@ -200,6 +200,256 @@ function vaticanNewsPlugin() {
   return {
     name: 'vatican-news-plugin',
     configureServer(server: any) {
+      server.middlewares.use('/api/magisterium', async (req: any, res: any) => {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+
+        if (req.method === 'OPTIONS') {
+          res.statusCode = 204;
+          res.end();
+          return;
+        }
+
+        const magisteriumKey = (process.env.MAGISTERIUM_API_KEY || '').trim();
+
+        if (req.method === 'GET') {
+          res.setHeader('Content-Type', 'application/json; charset=utf-8');
+          res.end(JSON.stringify({
+            status: 'ok',
+            configured: Boolean(magisteriumKey),
+            model: 'magisterium-1',
+          }));
+          return;
+        }
+
+        const normalizeCitations = (rawCitations: unknown) => {
+          if (!Array.isArray(rawCitations)) return [];
+          const results: any[] = [];
+          for (const item of rawCitations) {
+            if (!item || typeof item !== 'object') continue;
+            const c = item as Record<string, any>;
+            const documentTitle = String(c.document_title || c.documentTitle || c.title || c.source_title || '').trim();
+            const citedText = String(c.cited_text || c.citedText || c.text || c.quote || c.excerpt || '').trim();
+            const documentAuthor = String(c.document_author || c.documentAuthor || c.author || '').trim();
+            const rawYear = c.document_year ?? c.documentYear ?? c.year;
+            const documentYear = rawYear != null && String(rawYear).trim() ? String(rawYear).trim() : undefined;
+            const documentReference = String(c.document_reference || c.documentReference || c.reference || c.section || '').trim();
+            const sourceUrl = String(c.source_url || c.sourceUrl || c.url || c.link || '').trim();
+            if (!documentTitle && !citedText) continue;
+            results.push({
+              documentTitle: documentTitle || 'Magisterial Document',
+              citedText,
+              documentAuthor: documentAuthor || undefined,
+              documentYear,
+              documentReference: documentReference || undefined,
+              sourceUrl: /^https?:\/\//i.test(sourceUrl) ? sourceUrl : undefined,
+            });
+          }
+          return results;
+        };
+
+        const normalizeRelated = (rawQuestions: unknown): string[] => {
+          if (!Array.isArray(rawQuestions)) return [];
+          return rawQuestions
+            .map((q) => (typeof q === 'string' ? q.trim() : ''))
+            .filter((q) => q.length > 0)
+            .slice(0, 5);
+        };
+
+        const processMagisteriumRequest = async (body: any) => {
+          try {
+            const prompt = typeof body?.prompt === 'string' ? body.prompt.trim() : '';
+            const rawHistory = Array.isArray(body?.history) ? body.history : [];
+            const rawMessages = Array.isArray(body?.messages) ? body.messages : [];
+            const returnRelatedQuestions = body?.returnRelatedQuestions !== false;
+
+            const conversationMessages: Array<{ role: 'user' | 'assistant'; content: string }> = [];
+            if (rawMessages.length > 0) {
+              for (const msg of rawMessages.slice(-10)) {
+                if (msg && typeof msg.content === 'string' && msg.content.trim()) {
+                  conversationMessages.push({
+                    role: msg.role === 'assistant' || msg.role === 'model' ? 'assistant' : 'user',
+                    content: msg.content.trim(),
+                  });
+                }
+              }
+            } else {
+              for (const item of rawHistory.slice(-8)) {
+                if (item && typeof item.content === 'string' && item.content.trim()) {
+                  conversationMessages.push({
+                    role: item.role === 'assistant' || item.role === 'model' ? 'assistant' : 'user',
+                    content: item.content.trim(),
+                  });
+                }
+              }
+              if (prompt) {
+                conversationMessages.push({ role: 'user', content: prompt });
+              }
+            }
+
+            if (conversationMessages.length === 0) {
+              res.statusCode = 400;
+              res.setHeader('Content-Type', 'application/json; charset=utf-8');
+              res.end(JSON.stringify({ error: 'A theological question or prompt is required.' }));
+              return;
+            }
+
+            if (magisteriumKey) {
+              try {
+                const apiResponse = await fetch('https://www.magisterium.com/api/v1/chat/completions', {
+                  method: 'POST',
+                  headers: {
+                    Authorization: `Bearer ${magisteriumKey}`,
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                  },
+                  body: JSON.stringify({
+                    model: 'magisterium-1',
+                    messages: conversationMessages,
+                    return_related_questions: returnRelatedQuestions,
+                  }),
+                  signal: AbortSignal.timeout(45000),
+                });
+
+                if (apiResponse.ok) {
+                  const data: any = await apiResponse.json();
+                  const content = data?.choices?.[0]?.message?.content;
+                  if (typeof content === 'string' && content.trim()) {
+                    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+                    res.end(JSON.stringify({
+                      reply: content.trim(),
+                      citations: normalizeCitations(data.citations),
+                      relatedQuestions: normalizeRelated(data.related_questions),
+                      provider: 'magisterium',
+                      model: data.model || 'magisterium-1',
+                      source: 'magisterium-api',
+                      configured: true,
+                    }));
+                    return;
+                  }
+                }
+              } catch (err: any) {
+                console.warn('[Magisterium AI Dev] Live API failed, falling back:', err?.message || err);
+              }
+            }
+
+            const geminiKey = (process.env.GEMINI_API_KEY || '').trim();
+            if (geminiKey) {
+              const ai = new GoogleGenAI({
+                apiKey: geminiKey,
+                httpOptions: { headers: { 'User-Agent': 'aistudio-build' } },
+              });
+              const contents = conversationMessages.map((msg) => ({
+                role: msg.role === 'assistant' ? ('model' as const) : ('user' as const),
+                parts: [{ text: msg.content }],
+              }));
+
+              const magisterialInstruction = `You are a Catholic Magisterial research scholar operating inside Soul Sanctum's Magisterium AI module.
+Ground every response faithfully in the authentic Magisterium of the Catholic Church: Catechism of the Catholic Church (exact CCC paragraphs), 1983 Code of Canon Law, Ecumenical Councils (Trent, Vatican I, Vatican II), Papal Encyclicals, Sacred Scripture (73-book Catholic canon), and Fathers & Doctors of the Church.
+Return ONLY valid JSON with this exact schema (no markdown fences):
+{
+  "reply": "Clear, reverent, well-structured Markdown answer with headings, paragraphs, and inline references (e.g. CCC 1374, Dei Verbum 9).",
+  "citations": [
+    {
+      "documentTitle": "Official Church document title",
+      "documentAuthor": "Author or authority",
+      "documentYear": "Year",
+      "documentReference": "Paragraph, canon, or section",
+      "citedText": "Brief authentic summary or quotation from this Magisterial passage.",
+      "sourceUrl": "Official Vatican URL if well-known, or empty string"
+    }
+  ],
+  "relatedQuestions": ["Follow-up question 1?", "Follow-up question 2?", "Follow-up question 3?"]
+}
+Include 3 to 5 accurate Magisterial citations and 3 related follow-up questions.`;
+
+              const candidateModels = ['gemini-3.8-flash', 'gemini-3.1-flash-lite', 'gemini-flash-latest'];
+              for (const modelName of candidateModels) {
+                try {
+                  const response = await ai.models.generateContent({
+                    model: modelName,
+                    contents,
+                    config: {
+                      systemInstruction: magisterialInstruction,
+                      responseMimeType: 'application/json',
+                      ...(modelName === 'gemini-3.8-flash'
+                        ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
+                        : {}),
+                    },
+                  });
+
+                  if (response?.text) {
+                    const cleaned = response.text
+                      .trim()
+                      .replace(/^```(?:json)?\s*/i, '')
+                      .replace(/\s*```$/i, '')
+                      .trim();
+                    let parsedReply = response.text.trim();
+                    let parsedCitations: any[] = [];
+                    let parsedRelated: string[] = [];
+                    try {
+                      const json = JSON.parse(cleaned);
+                      if (json && typeof json.reply === 'string' && json.reply.trim()) {
+                        parsedReply = json.reply.trim();
+                        parsedCitations = normalizeCitations(json.citations);
+                        parsedRelated = normalizeRelated(json.relatedQuestions || json.related_questions);
+                      }
+                    } catch {
+                      // Use raw prose
+                    }
+                    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+                    res.end(JSON.stringify({
+                      reply: parsedReply,
+                      citations: parsedCitations,
+                      relatedQuestions: parsedRelated,
+                      provider: 'magisterium',
+                      model: 'magisterium-1',
+                      source: 'sanctum-magisterial-fallback',
+                      configured: Boolean(magisteriumKey),
+                    }));
+                    return;
+                  }
+                } catch {
+                  // Try next candidate
+                }
+              }
+            }
+
+            res.statusCode = 503;
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.end(JSON.stringify({
+              error: 'Magisterium AI service is temporarily unavailable.',
+              configured: Boolean(magisteriumKey),
+            }));
+          } catch (err: any) {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.end(JSON.stringify({ error: err?.message || 'Error consulting Magisterium AI.' }));
+          }
+        };
+
+        if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
+          processMagisteriumRequest(req.body);
+          return;
+        }
+
+        let bodyBuffer = '';
+        req.on('data', (chunk: any) => {
+          bodyBuffer += chunk;
+        });
+        req.on('end', () => {
+          try {
+            processMagisteriumRequest(JSON.parse(bodyBuffer || '{}'));
+          } catch {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
+            res.end(JSON.stringify({ error: 'Malformed JSON payload.' }));
+          }
+        });
+      });
+
       server.middlewares.use('/api/catholic-ai', async (req: any, res: any) => {
         // Handle CORS preflight
         res.setHeader('Access-Control-Allow-Origin', '*');

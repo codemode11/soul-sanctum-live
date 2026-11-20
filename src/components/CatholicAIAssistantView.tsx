@@ -29,17 +29,21 @@ import {
   synthesizeResearchResponse,
 } from '../utils/catholicInternetResearch';
 
+import { MagisterialCitation } from './MagisteriumAIView';
+
 export interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
   content: string;
   timestamp: number;
   webSources?: WebResearchSource[];
+  magisterialCitations?: MagisterialCitation[];
+  relatedQuestions?: string[];
   provider?: string;
   model?: string;
 }
 
-export type AIEngine = 'openai' | 'gemini' | 'auto';
+export type AIEngine = 'openai' | 'magisterium' | 'gemini' | 'auto';
 export type AIPersona = 'scholarly' | 'essay' | 'catechism' | 'patristic' | 'apologetics' | 'spiritual';
 
 export type PreferredBibleEdition = 'NABRE' | 'Douay-Rheims' | 'RSV-CE' | 'Knox / Latin Vulgate';
@@ -80,6 +84,10 @@ const AI_ENGINE_SPECS: Record<AIEngine, { name: string; label: string }> = {
   openai: {
     name: 'ChatGPT (OpenAI GPT-4o)',
     label: 'ChatGPT (GPT-4o)'
+  },
+  magisterium: {
+    name: 'Magisterium AI (magisterium-1)',
+    label: 'Magisterium AI'
   },
   gemini: {
     name: 'Soul Sanctum AI (Gemini)',
@@ -500,7 +508,10 @@ export const CatholicAIAssistantView: React.FC = () => {
     setActiveSessionId(session.id);
     setSelectedPersona(session.persona || memoryProfile.favoredPersona);
     const validEngine: AIEngine =
-      session.engine === 'openai' || session.engine === 'gemini' || session.engine === 'auto'
+      session.engine === 'openai' ||
+      session.engine === 'magisterium' ||
+      session.engine === 'gemini' ||
+      session.engine === 'auto'
         ? session.engine
         : 'openai';
     setSelectedEngine(validEngine);
@@ -651,37 +662,70 @@ export const CatholicAIAssistantView: React.FC = () => {
       let data: {
         reply?: string;
         webSources?: WebResearchSource[];
+        citations?: MagisterialCitation[];
+        relatedQuestions?: string[];
         provider?: string;
         model?: string;
       } | null = null;
 
-      // 1. Primary POST request with clean user question + ChatGPT default engine
-      try {
-        const postRes = await fetch('/api/catholic-ai', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          credentials: 'same-origin',
-          body: JSON.stringify({
-            prompt: promptToSend,
-            history: historyPayload,
-            userMemory: userMemoryString,
-            enableWebResearch: isWebResearchEnabled,
-            provider: selectedEngine,
-          }),
-        });
+      // 0. Dedicated Magisterium AI Route when Magisterium AI engine is selected
+      if (selectedEngine === 'magisterium') {
+        try {
+          const magRes = await fetch('/api/magisterium', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              prompt: promptToSend,
+              history: historyPayload,
+              returnRelatedQuestions: true,
+            }),
+          });
 
-        const postContentType = postRes.headers.get('content-type') || '';
-        if (postRes.ok && postContentType.includes('application/json')) {
-          const parsed = await postRes.json();
-          if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
-            data = parsed;
+          const magContentType = magRes.headers.get('content-type') || '';
+          if (magRes.ok && magContentType.includes('application/json')) {
+            const parsed = await magRes.json();
+            if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
+              data = parsed;
+            }
           }
+        } catch {
+          // Proceed to /api/catholic-ai fallback
         }
-      } catch {
-        // Proceed to GET fallback
+      }
+
+      // 1. Primary POST request with clean user question + ChatGPT default engine
+      if (!data) {
+        try {
+          const postRes = await fetch('/api/catholic-ai', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+              prompt: promptToSend,
+              history: historyPayload,
+              userMemory: userMemoryString,
+              enableWebResearch: isWebResearchEnabled,
+              provider: selectedEngine === 'magisterium' ? 'openai' : selectedEngine,
+            }),
+          });
+
+          const postContentType = postRes.headers.get('content-type') || '';
+          if (postRes.ok && postContentType.includes('application/json')) {
+            const parsed = await postRes.json();
+            if (parsed && typeof parsed.reply === 'string' && parsed.reply.trim()) {
+              data = parsed;
+            }
+          }
+        } catch {
+          // Proceed to GET fallback
+        }
       }
 
       // 2. Fallback GET request
@@ -718,10 +762,16 @@ export const CatholicAIAssistantView: React.FC = () => {
           content: data.reply,
           timestamp: Date.now(),
           webSources: data.webSources || [],
+          magisterialCitations: Array.isArray(data.citations) ? data.citations : undefined,
+          relatedQuestions: Array.isArray(data.relatedQuestions) ? data.relatedQuestions : undefined,
           provider: data.provider || selectedEngine,
           model:
             data.model ||
-            (selectedEngine === 'openai' ? 'gpt-4o' : 'gemini-3-flash-preview'),
+            (selectedEngine === 'magisterium'
+              ? 'magisterium-1'
+              : selectedEngine === 'openai'
+              ? 'gpt-4o'
+              : 'gemini-3-flash-preview'),
         };
         appendMessageToActiveSession(targetSessionId, assistantMsg);
         return;
@@ -981,6 +1031,25 @@ export const CatholicAIAssistantView: React.FC = () => {
                     : 'Essay Mode (with Sources)'}
                 </span>
               </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedEngine(prev => (prev === 'magisterium' ? 'openai' : 'magisterium'))
+                }
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
+                  selectedEngine === 'magisterium'
+                    ? 'bg-amber-900/15 text-amber-950 border-amber-700/70 shadow-2xs'
+                    : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-300'
+                }`}
+                title="Switch engine to Magisterium AI (28,000+ Catholic Church documents)"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-800" />
+                <span>
+                  {selectedEngine === 'magisterium'
+                    ? 'Magisterium AI: Active'
+                    : 'Use Magisterium AI'}
+                </span>
+              </button>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
@@ -1020,14 +1089,14 @@ export const CatholicAIAssistantView: React.FC = () => {
               {/* Engine Selector */}
               <div className="space-y-1.5">
                 <label className="block font-cinzel font-bold text-amber-950 text-[11px]">
-                  Primary AI Engine (Default: ChatGPT)
+                  Primary AI Engine
                 </label>
                 <select
                   value={selectedEngine}
                   onChange={(e) => setSelectedEngine(e.target.value as AIEngine)}
                   className="w-full bg-white text-stone-900 text-xs font-serif rounded-lg p-2.5 border border-stone-300 focus:outline-none focus:border-amber-700 cursor-pointer"
                 >
-                  {(['openai', 'gemini', 'auto'] as AIEngine[]).map((eng) => (
+                  {(['openai', 'magisterium', 'gemini', 'auto'] as AIEngine[]).map((eng) => (
                     <option key={eng} value={eng}>
                       {AI_ENGINE_SPECS[eng].name}
                     </option>
@@ -1399,7 +1468,9 @@ export const CatholicAIAssistantView: React.FC = () => {
                       <div className="flex items-center justify-between pb-2.5 mb-3.5 border-b border-stone-200/80 text-xs text-stone-600 font-cinzel">
                         <div className="flex items-center gap-2 flex-wrap">
                           <span className="font-bold text-amber-950">
-                            {msg.provider === 'gemini'
+                            {msg.provider === 'magisterium'
+                              ? 'Magisterium AI (magisterium-1)'
+                              : msg.provider === 'gemini'
                               ? 'Soul Sanctum Assistant (Gemini)'
                               : 'ChatGPT (OpenAI GPT-4o)'}
                           </span>
@@ -1455,6 +1526,84 @@ export const CatholicAIAssistantView: React.FC = () => {
                       </p>
                     ) : (
                       renderFormattedContent(msg.content)
+                    )}
+
+                    {/* Magisterial Citations Footnotes (from Magisterium AI) */}
+                    {!isUser && msg.magisterialCitations && msg.magisterialCitations.length > 0 && (
+                      <div className="mt-5 pt-4 border-t border-[#E5DEC9] space-y-3 text-left">
+                        <div className="font-cinzel text-xs font-bold text-amber-950">
+                          Magisterial Citations &amp; Primary Sources
+                        </div>
+                        <ol className="space-y-2.5">
+                          {msg.magisterialCitations.map((citation, cIdx) => {
+                            const meta = [
+                              citation.documentAuthor,
+                              citation.documentYear,
+                              citation.documentReference,
+                            ].filter(Boolean);
+                            return (
+                              <li
+                                key={cIdx}
+                                className="pb-2.5 border-b border-stone-200/70 last:border-b-0 last:pb-0 flex items-start gap-2.5"
+                              >
+                                <span className="font-cinzel text-xs font-bold text-amber-900 tabular-nums shrink-0 mt-0.5">
+                                  {cIdx + 1}.
+                                </span>
+                                <div className="flex-1 min-w-0 space-y-0.5">
+                                  <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                                    <span className="font-serif font-semibold text-sm text-stone-950">
+                                      {citation.documentTitle}
+                                    </span>
+                                    {citation.sourceUrl && (
+                                      <a
+                                        href={citation.sourceUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 text-xs font-cinzel font-semibold text-amber-900 hover:text-amber-700 whitespace-nowrap shrink-0"
+                                      >
+                                        <span>Source</span>
+                                        <ExternalLink className="w-3 h-3" />
+                                      </a>
+                                    )}
+                                  </div>
+                                  {meta.length > 0 && (
+                                    <div className="text-xs font-serif text-stone-600">
+                                      {meta.join(' · ')}
+                                    </div>
+                                  )}
+                                  {citation.citedText && (
+                                    <p className="text-xs sm:text-sm font-serif text-stone-700 leading-relaxed">
+                                      {citation.citedText}
+                                    </p>
+                                  )}
+                                </div>
+                              </li>
+                            );
+                          })}
+                        </ol>
+                      </div>
+                    )}
+
+                    {/* Related Follow-Up Questions (from Magisterium AI) */}
+                    {!isUser && msg.relatedQuestions && msg.relatedQuestions.length > 0 && (
+                      <div className="mt-4 pt-3.5 border-t border-[#E5DEC9] space-y-2 text-left">
+                        <div className="font-cinzel text-xs font-bold text-amber-950">
+                          Related Theological Questions
+                        </div>
+                        <div className="space-y-1.5">
+                          {msg.relatedQuestions.map((question, qIdx) => (
+                            <button
+                              key={qIdx}
+                              type="button"
+                              disabled={isLoading}
+                              onClick={() => handleSubmit(undefined, question)}
+                              className="w-full text-left px-3 py-2 rounded-lg bg-[#FAF8F3] hover:bg-[#F2EBD9] border border-[#E5DEC9] text-xs sm:text-sm font-serif text-stone-900 transition-colors cursor-pointer disabled:opacity-50"
+                            >
+                              {question}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
                     )}
 
                     {/* Live Web & Internet Sources Consulted */}

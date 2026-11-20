@@ -2165,5 +2165,54 @@ export const CatholicBiblesBookIcon: React.FC<IconProps> = ({ className = 'w-5 h
   </svg>
 );
 
+/**
+ * Fio.fm Catholic Audio Icon: Sacred musical note & audio waves
+ */
+export const FioAudioNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Fio.fm Catholic Audio"
+  >
+    <path d="M9 17.5V6.5l10-2v11" />
+    <circle cx="6.5" cy="17.5" r="2.5" fill="currentColor" fillOpacity="0.16" />
+    <circle cx="16.5" cy="15.5" r="2.5" fill="currentColor" fillOpacity="0.16" />
+    <path d="M9 9.8l10-2" stroke="#FDE047" strokeWidth="1.4" />
+  </svg>
+);
 
+/**
+ * Magisterium AI Icon: Crossed Keys of St. Peter & Living Magisterium
+ */
+export const MagisteriumKeysIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Magisterium AI — Crossed Keys of the Magisterium"
+  >
+    {/* Key 1 (bottom-left bow to top-right ward) */}
+    <circle cx="6.5" cy="17.5" r="2.6" fill="currentColor" fillOpacity="0.14" />
+    <path d="M8.4 15.6L18.2 5.8" />
+    <path d="M15.4 5.8h2.8v2.8" />
+    <path d="M13.8 7.4l1.6 1.6" />
 
+    {/* Key 2 (bottom-right bow to top-left ward, golden highlight) */}
+    <circle cx="17.5" cy="17.5" r="2.6" stroke="#FDE047" fill="#FDE047" fillOpacity="0.12" />
+    <path d="M15.6 15.6L5.8 5.8" stroke="#FDE047" />
+    <path d="M8.6 5.8H5.8v2.8" stroke="#FDE047" />
+    <path d="M10.2 7.4L8.6 9.0" stroke="#FDE047" />
+
+    {/* Center binding knot */}
+    <circle cx="12" cy="12" r="1.1" fill="#FDE047" stroke="none" />
+  </svg>
+);
