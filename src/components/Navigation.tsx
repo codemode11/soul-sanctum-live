@@ -56,6 +56,7 @@ import {
   CatholicBiblesBookIcon,
   CatholicArticlesRssIcon,
   CatholicSocialShareIcon,
+  CatholicFacebookFeedIcon,
   FioAudioNavIcon,
   MagisteriumKeysIcon
 } from './SanctumIcons';
@@ -77,6 +78,7 @@ export type ActiveTab =
   | 'live-mass'
   | 'vatican-news'
   | 'catholic-articles'
+  | 'catholic-facebook'
   | 'catholic-social'
   | 'catholic-glossary'
   | 'treasury-prayers'
@@ -418,6 +420,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: CatholicArticlesRssIcon, 
       tag: 'RSS Feeds', 
       subtext: 'St. Paul Center, Catholic Answers, Word on Fire and More' 
+    },
+    { 
+      id: 'catholic-facebook', 
+      label: 'Catholic Facebook Feed', 
+      icon: CatholicFacebookFeedIcon, 
+      tag: 'Facebook', 
+      subtext: 'Live Favorites Feed from 20 Catholic Accounts' 
     },
     { 
       id: 'catholic-social', 

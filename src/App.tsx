@@ -20,6 +20,7 @@ import { CatholicTermView } from './components/CatholicTermView';
 import { CatholicNewsView } from './components/CatholicNewsView';
 import { CatholicArticlesView } from './components/CatholicArticlesView';
 import { CatholicSocialView } from './components/CatholicSocialView';
+import { CatholicFacebookView } from './components/CatholicFacebookSection';
 import { PrayerWallAndTreasuryView } from './components/PrayerWallAndTreasuryView';
 import { NotificationsModal } from './components/NotificationsModal';
 import { AngelusModal } from './components/AngelusModal';
@@ -805,7 +806,12 @@ export default function App() {
               />
             )}
 
-            {/* Catholic Social (Instagram) */}
+            {/* Catholic Facebook Feed (Live Favorites Feed) */}
+            {activeTab === 'catholic-facebook' && (
+              <CatholicFacebookView />
+            )}
+
+            {/* Catholic Social (EWTN, Facebook, Instagram & Christendom) */}
             {activeTab === 'catholic-social' && (
               <CatholicSocialView />
             )}
@@ -995,6 +1001,15 @@ export default function App() {
                 className="hover:text-amber-300 cursor-pointer transition-colors"
               >
                 Magisterium AI
+              </button>
+              <span>•</span>
+
+              {/* 5d. Catholic Facebook Feed */}
+              <button 
+                onClick={() => handleSelectTab('catholic-facebook')} 
+                className="hover:text-amber-300 cursor-pointer transition-colors"
+              >
+                Catholic Facebook Feed
               </button>
               <span>•</span>
 
