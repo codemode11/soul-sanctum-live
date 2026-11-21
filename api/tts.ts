@@ -518,7 +518,18 @@ async function synthesizeWithEdgeNeuralTts(
   const normalizedText = text
     .replace(/\bSts\.\s+(?=[A-Za-z])/gi, 'Saints ')
     .replace(/\bSS\.\s+(?=[A-Z])/g, 'Saints ')
-    .replace(/\bSt\.\s+(?=[A-Za-z])/gi, 'Saint ');
+    .replace(/\bSt\.\s+(?=[A-Za-z])/gi, 'Saint ')
+    .replace(/\bBl\.\s+(?=[A-Za-z])/gi, 'Blessed ')
+    .replace(/\b(?:Blessed|BLESSED)(?=\s+[A-Z])/g, 'Blessid')
+    .replace(/\bblessed(?=\s+(?:are|is|be|art)\b)/gi, 'Blessid')
+    .replace(
+      /\b(the|a|an|our|my|thy|your|his|her|their|this|that|these|those|most|ever|all|thrice|o|oh)\s+blessed\b/gi,
+      '$1 blessid'
+    )
+    .replace(
+      /\bblessed(?=\s+(?:virgin|mother|lady|sacrament|trinity|hope|life|soul|souls|martyrs|apostles|saints|angels|fruit|womb|cross|passion|memory|peace|vision|repose|foundation|doorkeeper|theophylact|lord|god|name|queen|heart)\b)/gi,
+      'blessid'
+    );
   const safeText = escapeXmlForSsml(normalizedText.slice(0, 1200));
   if (!safeText.trim()) return null;
 

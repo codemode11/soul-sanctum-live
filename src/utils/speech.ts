@@ -153,13 +153,29 @@ export function formatResponsorialPsalmForSpeech(
  * into full-stop pauses.
  */
 function expandEcclesiasticalAbbreviationsForSpeech(text: string): string {
-  return text
+  let out = text
     .replace(/\bSts\.\s+(?=[A-Za-z])/gi, 'Saints ')
     .replace(/\bSS\.\s+(?=[A-Z])/g, 'Saints ')
     .replace(/\bSt\.\s+(?=[A-Za-z])/gi, 'Saint ')
     .replace(/\bBl\.\s+(?=[A-Za-z])/gi, 'Blessed ')
     .replace(/\bVen\.\s+(?=[A-Za-z])/gi, 'Venerable ')
     .replace(/\bFr\.\s+(?=[A-Za-z])/gi, 'Father ');
+
+  // Pronounce liturgical/titular "Blessed" as two syllables ("BLESS-ed" -> "Blessid")
+  // while keeping past-tense verb uses ("He blessed the bread") as one syllable.
+  out = out
+    .replace(/\b(?:Blessed|BLESSED)(?=\s+[A-Z])/g, 'Blessid')
+    .replace(/\bblessed(?=\s+(?:are|is|be|art)\b)/gi, 'Blessid')
+    .replace(
+      /\b(the|a|an|our|my|thy|your|his|her|their|this|that|these|those|most|ever|all|thrice|o|oh)\s+blessed\b/gi,
+      '$1 blessid'
+    )
+    .replace(
+      /\bblessed(?=\s+(?:virgin|mother|lady|sacrament|trinity|hope|life|soul|souls|martyrs|apostles|saints|angels|fruit|womb|cross|passion|memory|peace|vision|repose|foundation|doorkeeper|theophylact|lord|god|name|queen|heart)\b)/gi,
+      'blessid'
+    );
+
+  return out;
 }
 
 export function prepareLiturgicalTextForSpeech(text: string): string {
@@ -1284,7 +1300,7 @@ export class SacredReader {
     const s = this.getSynth();
     if (!s) return false;
 
-    const chunks = this.splitIntoSpeechChunks(fullText, 240);
+    const chunks = this.splitIntoSpeechChunks(fullText, 420);
     if (chunks.length === 0) return false;
 
     for (let i = 0; i < chunks.length; i++) {
@@ -1361,36 +1377,125 @@ export class SacredReader {
     return voices.some(v => v.name === voiceKey);
   }
 
-  private static splitIntoSpeechChunks(text: string, maxLen = 300): string[] {
-    const cleaned = text.replace(/\s+/g, ' ').trim();
-    if (!cleaned) return [];
-    if (cleaned.length <= maxLen) return [cleaned];
+  /**
+   * Splits text into complete sentences without breaking on common abbreviations
+   * (e.g., "c.", "cf.", "S.J.", "A.D.", "B.C.", "Dr.", "Rev.").
+   */
+  private static splitIntoSentences(cleaned: string): string[] {
+    const abbrevRegex = /\b(?:c|cf|v|vv|p|pp|ch|no|vol|dr|mr|mrs|ms|rev|fr|st|sts|bl|ven|prof|jan|feb|mar|apr|aug|sept|sep|oct|nov|dec|s\.j|a\.d|b\.c|e\.g|i\.e)\.$/i;
+    const sentences: string[] = [];
+    let buf = '';
+    const tokens = cleaned.split(/\s+/);
 
-    const sentences = cleaned.match(/[^.!?;]+[.!?;]+|\s*[^.!?;]+$/g) || [cleaned];
-    const chunks: string[] = [];
+    for (let i = 0; i < tokens.length; i++) {
+      const tok = tokens[i];
+      buf = buf ? `${buf} ${tok}` : tok;
+      const endsSentence = /[.!?;]["'”’)\]]*$/.test(tok);
+      if (endsSentence) {
+        const bare = tok.replace(/["'”’)\]]+$/g, '');
+        if (!abbrevRegex.test(bare)) {
+          sentences.push(buf.trim());
+          buf = '';
+        }
+      }
+    }
+    if (buf.trim()) {
+      sentences.push(buf.trim());
+    }
+    return sentences.length > 0 ? sentences : [cleaned];
+  }
+
+  /**
+   * Splits an extraordinarily long single sentence ONLY at natural clause punctuation
+   * (semicolons first, then commas). Never chops mid-phrase before a comma unless a
+   * single comma-less run exceeds maxLen.
+   */
+  private static splitOversizedSentenceAtPunctuation(sentence: string, maxLen: number): string[] {
+    if (sentence.length <= maxLen) return [sentence];
+
+    // 1. Try splitting on semicolons / commas while preserving the punctuation on the left clause
+    const clauses = sentence.match(/[^,;]+[,;]+|\s*[^,;]+$/g) || [sentence];
+    const parts: string[] = [];
     let current = '';
 
-    for (const rawSentence of sentences) {
-      const sentence = rawSentence.trim();
-      if (!sentence) continue;
-      if ((current + ' ' + sentence).trim().length <= maxLen) {
-        current = (current + ' ' + sentence).trim();
-      } else {
-        if (current) chunks.push(current);
-        if (sentence.length <= maxLen) {
-          current = sentence;
+    for (const rawClause of clauses) {
+      const clause = rawClause.trim();
+      if (!clause) continue;
+      if (!current) {
+        if (clause.length <= maxLen) {
+          current = clause;
         } else {
-          const words = sentence.split(' ');
+          // Absolute fallback: single comma-less clause > maxLen
+          const words = clause.split(' ');
           let sub = '';
           for (const w of words) {
-            if ((sub + ' ' + w).trim().length <= maxLen) {
-              sub = (sub + ' ' + w).trim();
+            if (!sub || (sub.length + 1 + w.length) <= maxLen) {
+              sub = sub ? `${sub} ${w}` : w;
             } else {
-              if (sub) chunks.push(sub);
+              parts.push(sub);
               sub = w;
             }
           }
           current = sub;
+        }
+      } else if ((current.length + 1 + clause.length) <= maxLen) {
+        current = `${current} ${clause}`;
+      } else {
+        parts.push(current);
+        if (clause.length <= maxLen) {
+          current = clause;
+        } else {
+          const words = clause.split(' ');
+          let sub = '';
+          for (const w of words) {
+            if (!sub || (sub.length + 1 + w.length) <= maxLen) {
+              sub = sub ? `${sub} ${w}` : w;
+            } else {
+              parts.push(sub);
+              sub = w;
+            }
+          }
+          current = sub;
+        }
+      }
+    }
+    if (current) parts.push(current);
+    return parts;
+  }
+
+  private static splitIntoSpeechChunks(text: string, maxLen = 420): string[] {
+    const cleaned = text.replace(/\s+/g, ' ').trim();
+    if (!cleaned) return [];
+    if (cleaned.length <= maxLen) return [cleaned];
+
+    const sentences = this.splitIntoSentences(cleaned);
+    const chunks: string[] = [];
+    let current = '';
+
+    for (const sentence of sentences) {
+      if (!sentence) continue;
+      if (!current) {
+        if (sentence.length <= maxLen) {
+          current = sentence;
+        } else {
+          const clauseParts = this.splitOversizedSentenceAtPunctuation(sentence, maxLen);
+          for (let i = 0; i < clauseParts.length - 1; i++) {
+            chunks.push(clauseParts[i]);
+          }
+          current = clauseParts[clauseParts.length - 1] || '';
+        }
+      } else if ((current.length + 1 + sentence.length) <= maxLen) {
+        current = `${current} ${sentence}`;
+      } else {
+        chunks.push(current);
+        if (sentence.length <= maxLen) {
+          current = sentence;
+        } else {
+          const clauseParts = this.splitOversizedSentenceAtPunctuation(sentence, maxLen);
+          for (let i = 0; i < clauseParts.length - 1; i++) {
+            chunks.push(clauseParts[i]);
+          }
+          current = clauseParts[clauseParts.length - 1] || '';
         }
       }
     }
@@ -1472,45 +1577,54 @@ export class SacredReader {
   }
 
   /**
-   * Splits long passages progressively: a compact first chunk (<= 150 chars) so neural audio starts
-   * speaking in ~1 second, followed by crisp <= 290-char chunks prefetched in the background so
-   * every serverless TTS call finishes rapidly and never approaches timeout limits.
+   * Splits long passages cleanly along full sentence boundaries (and ONLY at comma/semicolon
+   * boundaries if a single sentence is extraordinarily long > hardSentenceLimit).
+   * Keeps the first chunk snappy (~1–2s startup) while NEVER chopping mid-phrase before a comma.
    */
-  private static splitIntoProgressiveChunks(text: string, firstMaxLen = 150, nextMaxLen = 290): string[] {
+  private static splitIntoProgressiveChunks(
+    text: string,
+    firstMaxLen = 360,
+    nextMaxLen = 620
+  ): string[] {
     const cleaned = text.replace(/\s+/g, ' ').trim();
     if (!cleaned) return [];
     if (cleaned.length <= firstMaxLen) return [cleaned];
 
-    const sentences = cleaned.match(/[^.!?;]+[.!?;]+|\s*[^.!?;]+$/g) || [cleaned];
+    // Allow a single complete sentence up to 540 chars in chunk 1 (or 720 chars in prefetched chunks)
+    // before ever falling back to comma-level splitting, preventing awkward mid-sentence pauses.
+    const sentences = this.splitIntoSentences(cleaned);
     const chunks: string[] = [];
     let current = '';
 
-    const currentLimit = () => (chunks.length === 0 ? firstMaxLen : nextMaxLen);
+    const softLimit = () => (chunks.length === 0 ? firstMaxLen : nextMaxLen);
+    const hardSingleSentenceLimit = () => (chunks.length === 0 ? 540 : 720);
 
-    for (const rawSentence of sentences) {
-      const sentence = rawSentence.trim();
+    for (const sentence of sentences) {
       if (!sentence) continue;
-      const limit = currentLimit();
-      if ((current + ' ' + sentence).trim().length <= limit) {
-        current = (current + ' ' + sentence).trim();
-      } else {
-        if (current) chunks.push(current);
-        const nextLimit = currentLimit();
-        if (sentence.length <= nextLimit) {
+      const limit = softLimit();
+      if (!current) {
+        if (sentence.length <= hardSingleSentenceLimit()) {
           current = sentence;
         } else {
-          const words = sentence.split(' ');
-          let sub = '';
-          for (const w of words) {
-            const wordLimit = currentLimit();
-            if ((sub + ' ' + w).trim().length <= wordLimit) {
-              sub = (sub + ' ' + w).trim();
-            } else {
-              if (sub) chunks.push(sub);
-              sub = w;
-            }
+          const clauseParts = this.splitOversizedSentenceAtPunctuation(sentence, limit);
+          for (let i = 0; i < clauseParts.length - 1; i++) {
+            chunks.push(clauseParts[i]);
           }
-          current = sub;
+          current = clauseParts[clauseParts.length - 1] || '';
+        }
+      } else if ((current.length + 1 + sentence.length) <= limit) {
+        current = `${current} ${sentence}`;
+      } else {
+        chunks.push(current);
+        const nextHard = hardSingleSentenceLimit();
+        if (sentence.length <= nextHard) {
+          current = sentence;
+        } else {
+          const clauseParts = this.splitOversizedSentenceAtPunctuation(sentence, softLimit());
+          for (let i = 0; i < clauseParts.length - 1; i++) {
+            chunks.push(clauseParts[i]);
+          }
+          current = clauseParts[clauseParts.length - 1] || '';
         }
       }
     }
@@ -1531,12 +1645,12 @@ export class SacredReader {
     }
 
     const isGeminiPrimaryVoice = voiceName === 'gemini-Kore' || voiceName === 'Kore';
-    // For authentic Gemini Kore, send up to 1800 chars in one single call (avoiding burst RPM 429s
-    // that previously switched Kore to a fallback voice on chunk 2). For Edge Neural voices, use
-    // fast progressive chunking (150/290 chars) for ~1s startup and fast serverless responses.
+    // For authentic Gemini Kore, send up to 1800 chars in one single call (avoiding burst RPM 429s).
+    // For Edge Neural voices, chunk strictly along full sentence boundaries (360/620 chars, with
+    // comma-only splitting for ultra-long sentences) so narrators never pause mid-phrase before a comma.
     const chunks = isGeminiPrimaryVoice
       ? this.splitIntoSpeechChunks(fullText, 1800)
-      : this.splitIntoProgressiveChunks(fullText, 150, 290);
+      : this.splitIntoProgressiveChunks(fullText, 360, 620);
     if (chunks.length === 0) return false;
 
     const saintPersona = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceName);
