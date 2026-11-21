@@ -165,7 +165,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
           setIsAudioPlaying(false);
           setActiveParagraphIndex(null);
         }, 
-        audioGender, 
+        undefined, 
         0.9
       );
     }
@@ -582,7 +582,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
                         : 'bg-black/5 hover:bg-black/10'
                     }`}
                   >
-                    Serene Contemplative (Female Lector)
+                    Jenny — Default Contemplative Lector
                   </button>
                 </div>
               </div>

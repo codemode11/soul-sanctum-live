@@ -64,15 +64,13 @@ export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps>
   const [speakingPrayerId, setSpeakingPrayerId] = useState<string | null>(null);
   const [treasuryLeaderVoice, setTreasuryLeaderVoice] = useState<string>(() => {
     if (typeof localStorage !== 'undefined') {
-      const migrated = localStorage.getItem('soul_sanctum_treasury_jenny_v1');
-      const saved = localStorage.getItem('soul_sanctum_treasury_prayer_leader');
+      const migrated = localStorage.getItem('soul_sanctum_treasury_jenny_v2');
       if (!migrated) {
-        localStorage.setItem('soul_sanctum_treasury_jenny_v1', '1');
-        if (!saved || saved === 'gemini-Kore' || saved === 'Kore') {
-          localStorage.setItem('soul_sanctum_treasury_prayer_leader', 'persona-jenny');
-          return 'persona-jenny';
-        }
+        localStorage.setItem('soul_sanctum_treasury_jenny_v2', '1');
+        localStorage.setItem('soul_sanctum_treasury_prayer_leader', 'persona-jenny');
+        return 'persona-jenny';
       }
+      const saved = localStorage.getItem('soul_sanctum_treasury_prayer_leader');
       if (saved && TREASURY_LEADER_OPTIONS.some(v => v.id === saved)) {
         return saved;
       }

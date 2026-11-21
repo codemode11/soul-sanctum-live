@@ -92,7 +92,7 @@ export const CatholicLinksView: React.FC = () => {
       SacredReader.stop();
       setSpeakingId(site.id);
       const textToRead = `${site.name}. ${site.tagline}. Why it is good: ${site.whyItsGood}`;
-      SacredReader.speak(textToRead, () => setSpeakingId(null), 'ava-grace');
+      SacredReader.speak(textToRead, () => setSpeakingId(null));
     }
   };
 

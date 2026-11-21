@@ -1855,15 +1855,14 @@ export class SacredReader {
     : 'ava-grace';
   private static activeSelectedVoiceKey: string = typeof localStorage !== 'undefined'
     ? (() => {
-        const migrated = localStorage.getItem('soul_sanctum_default_voice_jenny_v1');
-        const saved = localStorage.getItem('soul_sanctum_active_voice');
+        const migrated = localStorage.getItem('soul_sanctum_default_voice_jenny_v2');
         if (!migrated) {
-          localStorage.setItem('soul_sanctum_default_voice_jenny_v1', '1');
-          if (!saved || saved === 'gemini-Kore' || saved === 'Kore') {
-            localStorage.setItem('soul_sanctum_active_voice', 'persona-jenny');
-            return 'persona-jenny';
-          }
+          localStorage.setItem('soul_sanctum_default_voice_jenny_v2', '1');
+          localStorage.setItem('soul_sanctum_active_voice', 'persona-jenny');
+          localStorage.setItem('soul_sanctum_female_voice', 'persona-jenny');
+          return 'persona-jenny';
         }
+        const saved = localStorage.getItem('soul_sanctum_active_voice');
         if (!saved || saved.toLowerCase().includes('zira') || saved.toLowerCase().includes('mark') || saved.toLowerCase().includes('kokoro') || saved === 'zira') {
           return 'persona-jenny';
         }
@@ -2055,6 +2054,12 @@ export class SacredReader {
     if (voiceKey.startsWith('persona-')) {
       const p = SACRED_FEMALE_PERSONAS.find(f => f.id === voiceKey);
       if (p) {
+        if (voiceKey === 'persona-jenny' && s) {
+          const jennyLocal = s.getVoices().find(v => v.name.toLowerCase().includes('jenny'));
+          if (jennyLocal) {
+            return { voice: jennyLocal, pitch: p.pitch, rate: p.rate };
+          }
+        }
         const { voice } = this.getVoiceForAvaGrace();
         return { voice, pitch: p.pitch, rate: p.rate };
       }
