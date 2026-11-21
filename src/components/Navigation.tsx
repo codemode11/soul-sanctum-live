@@ -57,7 +57,8 @@ import {
   CatholicArticlesRssIcon,
   CatholicSocialShareIcon,
   FioAudioNavIcon,
-  MagisteriumKeysIcon
+  MagisteriumKeysIcon,
+  CatholicProphecyScrollIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -83,6 +84,7 @@ export type ActiveTab =
   | 'rosary'
   | 'eucharistic-miracles'
   | 'medjugorje'
+  | 'catholic-prophecy'
   | 'novenas'
   | 'calendar'
   | 'church-history'
@@ -460,6 +462,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: MaryPrayingOutlineIcon, 
       tag: 'Apparitions', 
       subtext: 'Church-Approved Worldwide Apparitions and Messages' 
+    },
+    { 
+      id: 'catholic-prophecy', 
+      label: 'Catholic Prophecy', 
+      icon: CatholicProphecyScrollIcon, 
+      tag: 'End Times', 
+      subtext: 'Scripture, Marian Warnings, Saints and Mystics for Our Age' 
     },
     { 
       id: 'novenas', 

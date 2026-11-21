@@ -29,6 +29,7 @@ import { VisioDivinaView } from './components/VisioDivinaView';
 import { CebuParishesModal } from './components/CebuParishesModal';
 import { MedjugorjeMessagesView } from './components/MedjugorjeMessagesView';
 import { MarianApparitionsView } from './components/MarianApparitionsView';
+import { CatholicProphecyView } from './components/CatholicProphecyView';
 import { SpiritualBooksReaderView } from './components/SpiritualBooksReaderView';
 import { CatholicPodcastsView } from './components/CatholicPodcastsView';
 import { FioAudioView } from './components/FioAudioView';
@@ -857,6 +858,9 @@ export default function App() {
 
             {/* Marian Messages and Apparitions */}
             {activeTab === 'medjugorje' && <MarianApparitionsView />}
+
+            {/* Catholic Prophecy & End Times Archive */}
+            {activeTab === 'catholic-prophecy' && <CatholicProphecyView />}
 
             {/* 11. Novena Tracker */}
             {activeTab === 'novenas' && (

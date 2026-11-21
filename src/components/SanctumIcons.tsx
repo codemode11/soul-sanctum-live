@@ -2249,4 +2249,36 @@ export const PapalMiterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) =
   </svg>
 );
 
+/**
+ * Catholic Prophecy Icon: Unsealed Sacred Prophetic Scroll with Radiant Star & Cross Crest
+ */
+export const CatholicProphecyScrollIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Catholic Prophecy — Sacred Prophetic Scroll"
+  >
+    {/* Radiant prophetic star / flame crest above the scroll */}
+    <path d="M12 1.8v3.0" stroke="#FDE047" strokeWidth="1.5" />
+    <path d="M10.5 3.3h3.0" stroke="#FDE047" strokeWidth="1.5" />
+    {/* Top scroll roller */}
+    <rect x="4.5" y="6.2" width="15" height="2.4" rx="1.1" fill="currentColor" fillOpacity="0.16" />
+    {/* Parchment body */}
+    <path d="M6.2 8.6v8.8h11.6V8.6" fill="currentColor" fillOpacity="0.08" />
+    {/* Sacred inscription lines inside scroll */}
+    <path d="M9 11.4h6" strokeWidth="1.35" opacity="0.85" />
+    <path d="M9 14.2h4.4" strokeWidth="1.35" opacity="0.7" />
+    {/* Wax seal emblem on lower right corner of scroll */}
+    <circle cx="15.8" cy="14.6" r="1.45" stroke="#FDE047" fill="#FDE047" fillOpacity="0.22" strokeWidth="1.3" />
+    {/* Bottom scroll roller */}
+    <rect x="4.5" y="17.4" width="15" height="2.4" rx="1.1" fill="currentColor" fillOpacity="0.16" />
+  </svg>
+);
+
+
 

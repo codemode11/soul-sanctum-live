@@ -119,6 +119,11 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
     description:
       'Explore Lourdes, Fátima, Guadalupe, Knock, Akita, and Marian devotion with Church-approved history and prayers on Soul Sanctum.',
   },
+  'catholic-prophecy': {
+    title: 'Catholic Prophecy – Bible, Jesus, Mary & Saints | Soul Sanctum',
+    description:
+      'Explore Catholic Bible End Times prophecies, prophecies of Jesus Christ, messages of the Blessed Virgin Mary, and witnesses of Saints, Popes, and mystics discerned under the Catechism and May 2024 Vatican Norms.',
+  },
   novenas: {
     title: 'Catholic Novena Tracker – 9-Day Prayers | Soul Sanctum',
     description:
