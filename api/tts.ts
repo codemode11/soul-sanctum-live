@@ -219,11 +219,11 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
       geminiStyle: 'Warm, pastoral Irish priest voice',
     },
 
-    // Church Father & Saint Personas (distributed across 8 distinct neural speakers)
+    // Church Father & Saint Personas (21 distinct live-verified neural male voices — zero overlap across major Catena Aurea Fathers)
     'saint-thomas-aquinas': {
       edgeVoice: 'en-US-ChristopherNeural',
       edgeRate: '-7%',
-      edgePitch: '-3Hz',
+      edgePitch: '-2Hz',
       geminiVoice: 'Orus',
       gender: 'male',
       geminiStyle: 'Deep, measured medieval Dominican theologian',
@@ -239,10 +239,50 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
     'saint-augustine': {
       edgeVoice: 'en-US-AndrewNeural',
       edgeRate: '-7%',
-      edgePitch: '-3Hz',
+      edgePitch: '-2Hz',
       geminiVoice: 'Algenib',
       gender: 'male',
       geminiStyle: 'Soulful, deeply reflective Latin Church Father',
+    },
+    'saint-ambrose': {
+      edgeVoice: 'en-US-EricNeural',
+      edgeRate: '-4%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Orus',
+      gender: 'male',
+      geminiStyle: 'Commanding Roman bishop speaking with clarity',
+    },
+    'venerable-bede': {
+      edgeVoice: 'en-GB-RyanNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Fenrir',
+      gender: 'male',
+      geminiStyle: 'Warm, serene Anglo-Saxon monastic historian',
+    },
+    'pope-saint-gregory': {
+      edgeVoice: 'en-US-RogerNeural',
+      edgeRate: '-6%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Fenrir',
+      gender: 'male',
+      geminiStyle: 'Paternal, solemn Supreme Pontiff',
+    },
+    'saint-cyril': {
+      edgeVoice: 'en-ZA-LukeNeural',
+      edgeRate: '-5%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Charon',
+      gender: 'male',
+      geminiStyle: 'Authoritative Alexandrian Patriarch',
+    },
+    'blessed-theophylact': {
+      edgeVoice: 'en-IE-ConnorNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Puck',
+      gender: 'male',
+      geminiStyle: 'Warm, lyrical Byzantine archbishop',
     },
     'saint-jerome': {
       edgeVoice: 'en-GB-ThomasNeural',
@@ -252,45 +292,37 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
       gender: 'male',
       geminiStyle: 'Austere, firm monastic biblical scholar',
     },
-    'pope-saint-gregory': {
-      edgeVoice: 'en-GB-RyanNeural',
-      edgeRate: '-6%',
-      edgePitch: '-2Hz',
-      geminiVoice: 'Fenrir',
-      gender: 'male',
-      geminiStyle: 'Paternal, solemn Supreme Pontiff',
-    },
-    'saint-ambrose': {
-      edgeVoice: 'en-US-BrianNeural',
+    'saint-hilary': {
+      edgeVoice: 'en-CA-LiamNeural',
       edgeRate: '-5%',
       edgePitch: '-1Hz',
       geminiVoice: 'Orus',
       gender: 'male',
-      geminiStyle: 'Commanding Roman bishop speaking with clarity',
+      geminiStyle: 'Lucid, steadfast Gallic Doctor of the Church',
     },
-    'saint-cyril': {
-      edgeVoice: 'en-GB-ThomasNeural',
+    'father-titus-of-bostra': {
+      edgeVoice: 'en-NZ-MitchellNeural',
       edgeRate: '-5%',
-      edgePitch: '-2Hz',
-      geminiVoice: 'Charon',
-      gender: 'male',
-      geminiStyle: 'Authoritative Eastern Patriarch',
-    },
-    'venerable-bede': {
-      edgeVoice: 'en-IE-ConnorNeural',
-      edgeRate: '-6%',
       edgePitch: '-1Hz',
       geminiVoice: 'Fenrir',
       gender: 'male',
-      geminiStyle: 'Serene monastic historian',
+      geminiStyle: 'Measured, earnest Eastern scriptural exegete',
+    },
+    'father-origen': {
+      edgeVoice: 'en-US-SteffanNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Puck',
+      gender: 'male',
+      geminiStyle: 'Analytical, articulate Alexandrian scholar',
     },
     'saint-basil': {
-      edgeVoice: 'en-AU-WilliamMultilingualNeural',
+      edgeVoice: 'en-AU-WilliamNeural',
       edgeRate: '-6%',
       edgePitch: '-2Hz',
       geminiVoice: 'Algenib',
       gender: 'male',
-      geminiStyle: 'Dignified Eastern bishop',
+      geminiStyle: 'Dignified Cappadocian Father and bishop',
     },
     'cornelius-a-lapide': {
       edgeVoice: 'en-US-BrianNeural',
@@ -300,41 +332,97 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
       gender: 'male',
       geminiStyle: 'Illuminating Jesuit biblical exegete',
     },
-    'blessed-theophylact': {
-      edgeVoice: 'en-IE-ConnorNeural',
-      edgeRate: '-4%',
-      edgePitch: '+0Hz',
-      geminiVoice: 'Puck',
+    'father-alcuin': {
+      edgeVoice: 'en-HK-SamNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      geminiStyle: 'Warm Byzantine archbishop',
+      geminiStyle: 'Clear Carolingian monastic scholar of York',
+    },
+    'father-rabanus': {
+      edgeVoice: 'en-SG-WayneNeural',
+      edgeRate: '-5%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Algenib',
+      gender: 'male',
+      geminiStyle: 'Measured Benedictine abbot and exegete',
+    },
+    'pope-saint-leo': {
+      edgeVoice: 'en-US-ChristopherNeural',
+      edgeRate: '-5%',
+      edgePitch: '-3Hz',
+      geminiVoice: 'Orus',
+      gender: 'male',
+      geminiStyle: 'Majestic Roman Pontiff and Doctor of the Church',
+    },
+    'father-eusebius': {
+      edgeVoice: 'en-IN-PrabhatNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Algenib',
+      gender: 'male',
+      geminiStyle: 'Thoughtful patristic Church historian',
+    },
+    'saint-cyprian': {
+      edgeVoice: 'en-KE-ChilembaNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Charon',
+      gender: 'male',
+      geminiStyle: 'Deep, steadfast North African bishop and martyr',
+    },
+    'saint-athanasius': {
+      edgeVoice: 'en-NG-AbeoNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Orus',
+      gender: 'male',
+      geminiStyle: 'Resolute Alexandrian defender of Nicene orthodoxy',
+    },
+    'saint-gregory-nyssa': {
+      edgeVoice: 'en-TZ-ElimuNeural',
+      edgeRate: '-6%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Algenib',
+      gender: 'male',
+      geminiStyle: 'Mystical Cappadocian contemplative bishop',
+    },
+    'saint-bernard': {
+      edgeVoice: 'en-PH-JamesNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Fenrir',
+      gender: 'male',
+      geminiStyle: 'Warm, devotional Cistercian Mellifluous Doctor',
     },
     'saint-bonaventure': {
-      edgeVoice: 'en-US-AndrewNeural',
-      edgeRate: '-5%',
+      edgeVoice: 'en-PH-JamesNeural',
+      edgeRate: '-4%',
       edgePitch: '+0Hz',
       geminiVoice: 'Fenrir',
       gender: 'male',
-      geminiStyle: 'Devotional Franciscan theologian',
+      geminiStyle: 'Devotional Franciscan Seraphic Doctor',
     },
     'saint-alphonsus': {
-      edgeVoice: 'en-GB-RyanNeural',
-      edgeRate: '-5%',
+      edgeVoice: 'en-HK-SamNeural',
+      edgeRate: '-6%',
       edgePitch: '-1Hz',
       geminiVoice: 'Algenib',
       gender: 'male',
       geminiStyle: 'Pastoral Redemptorist doctor',
     },
     'saint-bellarmine': {
-      edgeVoice: 'en-US-ChristopherNeural',
+      edgeVoice: 'en-US-SteffanNeural',
       edgeRate: '-5%',
-      edgePitch: '-1Hz',
+      edgePitch: '-2Hz',
       geminiVoice: 'Orus',
       gender: 'male',
       geminiStyle: 'Articulate cardinal apologist',
     },
     'saint-albert': {
-      edgeVoice: 'en-AU-WilliamMultilingualNeural',
-      edgeRate: '-6%',
+      edgeVoice: 'en-AU-WilliamNeural',
+      edgeRate: '-7%',
       edgePitch: '-3Hz',
       geminiVoice: 'Charon',
       gender: 'male',
@@ -351,7 +439,7 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
     'vatican-magisterium': {
       edgeVoice: 'en-GB-RyanNeural',
       edgeRate: '-5%',
-      edgePitch: '-1Hz',
+      edgePitch: '-2Hz',
       geminiVoice: 'Fenrir',
       gender: 'male',
       geminiStyle: 'Clear Magisterial reader',
@@ -361,25 +449,52 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
   if (exactSpecs[chosenVoice]) return exactSpecs[chosenVoice];
 
   const lower = (chosenVoice || '').toLowerCase();
-  if (lower.includes('david') || lower.includes('deacon') || lower.includes('thomas') || lower.includes('bellarmine')) {
+  if (lower.includes('nyssa') || lower.includes('nazianzen')) return exactSpecs['saint-gregory-nyssa'];
+  if (lower.includes('chrysostom')) return exactSpecs['saint-john-chrysostom'];
+  if (lower.includes('augustine')) return exactSpecs['saint-augustine'];
+  if (lower.includes('ambrose')) return exactSpecs['saint-ambrose'];
+  if (lower.includes('bede')) return exactSpecs['venerable-bede'];
+  if (lower.includes('leo')) return exactSpecs['pope-saint-leo'];
+  if (lower.includes('gregory')) return exactSpecs['pope-saint-gregory'];
+  if (lower.includes('cyril')) return exactSpecs['saint-cyril'];
+  if (lower.includes('theophylact')) return exactSpecs['blessed-theophylact'];
+  if (lower.includes('jerome')) return exactSpecs['saint-jerome'];
+  if (lower.includes('hilary')) return exactSpecs['saint-hilary'];
+  if (lower.includes('titus')) return exactSpecs['father-titus-of-bostra'];
+  if (lower.includes('origen')) return exactSpecs['father-origen'];
+  if (lower.includes('basil')) return exactSpecs['saint-basil'];
+  if (lower.includes('lapide')) return exactSpecs['cornelius-a-lapide'];
+  if (lower.includes('alcuin')) return exactSpecs['father-alcuin'];
+  if (lower.includes('rabanus')) return exactSpecs['father-rabanus'];
+  if (lower.includes('eusebius')) return exactSpecs['father-eusebius'];
+  if (lower.includes('cyprian')) return exactSpecs['saint-cyprian'];
+  if (lower.includes('athanasius')) return exactSpecs['saint-athanasius'];
+  if (lower.includes('bernard')) return exactSpecs['saint-bernard'];
+  if (lower.includes('aquinas') || lower.includes('thomas')) return exactSpecs['saint-thomas-aquinas'];
+  if (lower.includes('bonaventure')) return exactSpecs['saint-bonaventure'];
+  if (lower.includes('alphonsus')) return exactSpecs['saint-alphonsus'];
+  if (lower.includes('bellarmine')) return exactSpecs['saint-bellarmine'];
+  if (lower.includes('albert')) return exactSpecs['saint-albert'];
+  if (lower.includes('magisterium') || lower.includes('catechism') || lower.includes('vatican')) return exactSpecs['vatican-magisterium'];
+  if (lower.includes('david') || lower.includes('deacon')) {
     return exactSpecs['liturgical-deacon'];
   }
-  if (lower.includes('augustine') || lower.includes('monk') || lower.includes('andrew')) {
+  if (lower.includes('monk') || lower.includes('andrew')) {
     return exactSpecs['liturgical-monk'];
   }
-  if (lower.includes('scholar') || lower.includes('brian') || lower.includes('lapide') || lower.includes('ambrose')) {
+  if (lower.includes('scholar') || lower.includes('brian')) {
     return exactSpecs['liturgical-scholar'];
   }
-  if (lower.includes('charon') || lower.includes('jerome') || lower.includes('cyril')) {
+  if (lower.includes('charon')) {
     return exactSpecs['gemini-Charon'];
   }
-  if (lower.includes('fenrir') || lower.includes('ryan') || lower.includes('gregory') || lower.includes('alphonsus')) {
+  if (lower.includes('fenrir') || lower.includes('ryan')) {
     return exactSpecs['gemini-Fenrir'];
   }
-  if (lower.includes('puck') || lower.includes('guy') || lower.includes('chrysostom')) {
+  if (lower.includes('puck') || lower.includes('guy')) {
     return exactSpecs['gemini-Puck'];
   }
-  if (lower.includes('connor') || lower.includes('bede') || lower.includes('theophylact')) {
+  if (lower.includes('connor')) {
     return exactSpecs['liturgical-connor'];
   }
   if (lower.includes('sonia')) return exactSpecs['persona-sonia'];
@@ -389,8 +504,9 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
   if (lower.includes('jenny')) return exactSpecs['persona-jenny'];
   if (lower.includes('zephyr') || lower.includes('aria')) return exactSpecs['gemini-Zephyr'];
   if (lower.includes('ava')) return exactSpecs['persona-ava'];
+  if (lower.includes('kore')) return exactSpecs['gemini-Kore'];
 
-  return exactSpecs['gemini-Kore'];
+  return exactSpecs['persona-jenny'];
 }
 
 async function synthesizeWithEdgeNeuralTts(
@@ -399,7 +515,11 @@ async function synthesizeWithEdgeNeuralTts(
   rate?: string,
   pitch?: string
 ): Promise<Buffer | null> {
-  const safeText = escapeXmlForSsml(text.slice(0, 1200));
+  const normalizedText = text
+    .replace(/\bSts\.\s+(?=[A-Za-z])/gi, 'Saints ')
+    .replace(/\bSS\.\s+(?=[A-Z])/g, 'Saints ')
+    .replace(/\bSt\.\s+(?=[A-Za-z])/gi, 'Saint ');
+  const safeText = escapeXmlForSsml(normalizedText.slice(0, 1200));
   if (!safeText.trim()) return null;
 
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -451,13 +571,13 @@ export default async function handler(req: any, res: any) {
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
-    const { text, voiceName = 'gemini-Kore', apiKey } = body;
+    const { text, voiceName = 'persona-jenny', apiKey } = body;
 
     if (!text || typeof text !== 'string' || !text.trim()) {
       return res.status(400).json({ error: 'Text prompt is required for TTS.' });
     }
 
-    const chosenVoice = voiceName || 'gemini-Kore';
+    const chosenVoice = voiceName || 'persona-jenny';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
     const spec = resolveUnifiedVoiceSpec(chosenVoice);
     const cacheLimit = spec.preferGeminiFirst ? 2200 : 1200;
@@ -593,6 +713,6 @@ export default async function handler(req: any, res: any) {
       gender: spec.gender,
     });
   } catch {
-    return res.status(200).json({ fallbackWebSpeech: true, voiceName: 'gemini-Kore', gender: 'female' });
+    return res.status(200).json({ fallbackWebSpeech: true, voiceName: 'persona-jenny', gender: 'female' });
   }
 }

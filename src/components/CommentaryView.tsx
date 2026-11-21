@@ -62,8 +62,10 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const [activeSpeakingSection, setActiveSpeakingSection] = useState<CommentarySaintSection | null>(null);
   const [speakingSectionIndex, setSpeakingSectionIndex] = useState(0);
+  const [activeCardKey, setActiveCardKey] = useState<string | null>(null);
+  const [loadingCardKey, setLoadingCardKey] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'gemini-Kore');
+  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'persona-jenny');
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
   
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -75,14 +77,20 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
     });
   }, []);
 
+  const stopAllCommentaryAudio = () => {
+    SacredReader.stop();
+    setIsReadingAloud(false);
+    setActiveSpeakingSection(null);
+    setActiveCardKey(null);
+    setLoadingCardKey(null);
+    setIsPaused(false);
+  };
+
   const handleVoiceSelect = (voiceKey: string) => {
     setActiveVoiceKey(voiceKey);
     SacredReader.setActiveLectorVoiceKey(voiceKey);
-    if (isReadingAloud) {
-      SacredReader.stop();
-      setIsReadingAloud(false);
-      setActiveSpeakingSection(null);
-      setIsPaused(false);
+    if (isReadingAloud || activeCardKey || loadingCardKey) {
+      stopAllCommentaryAudio();
     }
   };
 
@@ -100,10 +108,8 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
           setSelectedCommentary(dynamicList[0]);
         }
       }
-      if (isReadingAloud) {
-        SacredReader.stop();
-        setIsReadingAloud(false);
-        setActiveSpeakingSection(null);
+      if (isReadingAloud || activeCardKey || loadingCardKey) {
+        stopAllCommentaryAudio();
       }
     }
   }, [currentReading, ninetyTwoCommentaries]);
@@ -202,15 +208,14 @@ ${selectedCommentary.practicalApplication}`;
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Toggle complete commentary recitation with different male voices per Saint
+  // Toggle complete commentary recitation with distinct voices per Saint
   const handleToggleSpeak = () => {
-    if (isReadingAloud) {
-      SacredReader.stop();
-      setIsReadingAloud(false);
-      setActiveSpeakingSection(null);
-      setIsPaused(false);
+    if (isReadingAloud || activeCardKey || loadingCardKey) {
+      stopAllCommentaryAudio();
     } else {
       setIsReadingAloud(true);
+      setActiveCardKey(null);
+      setLoadingCardKey(null);
       setIsPaused(false);
       SacredReader.speakCommentaryBySaints(
         selectedCommentary,
@@ -221,33 +226,46 @@ ${selectedCommentary.practicalApplication}`;
         () => {
           setIsReadingAloud(false);
           setActiveSpeakingSection(null);
+          setActiveCardKey(null);
+          setLoadingCardKey(null);
           setIsPaused(false);
         }
       );
     }
   };
 
-  // Play a single saint's exposition in their specific voice
-  const handleSpeakSingleSaint = (section: CommentarySaintSection) => {
-    if (isReadingAloud && activeSpeakingSection?.id === section.id) {
-      SacredReader.stop();
-      setIsReadingAloud(false);
-      setActiveSpeakingSection(null);
-      setIsPaused(false);
-    } else {
-      setIsReadingAloud(true);
-      setIsPaused(false);
-      setActiveSpeakingSection(section);
-      SacredReader.speakSingleSaintExposition(
-        section.persona.id || section.saintName,
-        section.text,
-        () => {
-          setIsReadingAloud(false);
-          setActiveSpeakingSection(null);
-          setIsPaused(false);
-        }
-      );
+  // Play a single Catena Aurea saint (or Lapide / Magisterium section) in their distinct neural voice
+  const handleSpeakCommentaryCard = (
+    sectionKey: string,
+    authorName: string,
+    textToSpeak: string,
+    isCurrentlyActive: boolean
+  ) => {
+    if (isCurrentlyActive || activeCardKey === sectionKey || loadingCardKey === sectionKey) {
+      stopAllCommentaryAudio();
+      return;
     }
+    setIsReadingAloud(true);
+    setIsPaused(false);
+    setActiveSpeakingSection(null);
+    setActiveCardKey(null);
+    setLoadingCardKey(sectionKey);
+
+    SacredReader.speakSingleSaintExposition(
+      authorName,
+      textToSpeak,
+      () => {
+        setIsReadingAloud(false);
+        setActiveCardKey(null);
+        setLoadingCardKey(null);
+        setActiveSpeakingSection(null);
+        setIsPaused(false);
+      },
+      () => {
+        setLoadingCardKey((prev) => (prev === sectionKey ? null : prev));
+        setActiveCardKey(sectionKey);
+      }
+    );
   };
 
   const handleTogglePause = () => {
@@ -287,7 +305,7 @@ ${selectedCommentary.practicalApplication}`;
     if (firstInMonth) {
       setSelectedCommentary(firstInMonth);
       if (firstInMonth.dateKey && onSelectDate) onSelectDate(firstInMonth.dateKey);
-      if (isReadingAloud) SacredReader.stop();
+      if (isReadingAloud || activeCardKey || loadingCardKey) stopAllCommentaryAudio();
     }
   };
 
@@ -296,10 +314,8 @@ ${selectedCommentary.practicalApplication}`;
     if (comm.dateKey && onSelectDate) {
       onSelectDate(comm.dateKey);
     }
-    if (isReadingAloud) {
-      SacredReader.stop();
-      setIsReadingAloud(false);
-      setActiveSpeakingSection(null);
+    if (isReadingAloud || activeCardKey || loadingCardKey) {
+      stopAllCommentaryAudio();
     }
   };
 
@@ -308,7 +324,7 @@ ${selectedCommentary.practicalApplication}`;
       const prev = activeList[currentIndex - 1];
       setSelectedCommentary(prev);
       if (prev.dateKey && onSelectDate) onSelectDate(prev.dateKey);
-      if (isReadingAloud) SacredReader.stop();
+      if (isReadingAloud || activeCardKey || loadingCardKey) stopAllCommentaryAudio();
     }
   };
 
@@ -317,7 +333,7 @@ ${selectedCommentary.practicalApplication}`;
       const next = activeList[currentIndex + 1];
       setSelectedCommentary(next);
       if (next.dateKey && onSelectDate) onSelectDate(next.dateKey);
-      if (isReadingAloud) SacredReader.stop();
+      if (isReadingAloud || activeCardKey || loadingCardKey) stopAllCommentaryAudio();
     }
   };
 
@@ -404,18 +420,18 @@ ${selectedCommentary.practicalApplication}`;
                 )}
               </div>
 
-              {/* 2. Voice Selector (All Curated Voices, Kore Default) */}
+              {/* 2. Voice Selector (All Curated Voices, Jenny Default) */}
               <div className="flex items-center gap-1.5 shrink-0">
                 <span className="text-xs font-medium text-stone-600">Voice:</span>
                 <select
-                  value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'gemini-Kore'}
+                  value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'persona-jenny'}
                   onChange={(e) => handleVoiceSelect(e.target.value)}
                   aria-label="Select commentary narrator voice"
                   className="px-2.5 py-1 rounded-md text-xs font-serif font-semibold bg-stone-200/90 hover:bg-stone-200 border border-stone-300 text-stone-900 focus:outline-none focus:ring-1 focus:ring-amber-700 cursor-pointer"
                 >
                   {CURATED_SANCTUM_VOICES.map((v) => (
                     <option key={v.id} value={v.id}>
-                      {v.id === 'gemini-Kore' ? 'Kore (Default)' : v.shortName}
+                      {v.id === 'persona-jenny' ? 'Jenny (Default)' : v.shortName}
                     </option>
                   ))}
                 </select>
@@ -635,6 +651,10 @@ ${selectedCommentary.practicalApplication}`;
             commentaryText={selectedCommentary.commentaryText} 
             fontSizeStyle={commentaryStyle}
             hideHomily={true}
+            onSpeakSection={handleSpeakCommentaryCard}
+            activeSpeakingKey={activeCardKey}
+            loadingSpeakingKey={loadingCardKey}
+            activeSpeakingAuthor={activeSpeakingSection?.saintName || null}
           />
         </div>
 

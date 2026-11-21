@@ -1,5 +1,7 @@
 import React from 'react';
+import { Volume2, VolumeX, Loader2 } from 'lucide-react';
 import { toCurvedQuotes } from '../utils/typography';
+import { getSaintReaderPersona } from '../utils/speech';
 
 export interface StructuredCommentaryData {
   homilyTitle: string;
@@ -154,39 +156,159 @@ export const StylizedDivider: React.FC<{ title: string }> = ({ title }) => (
   </div>
 );
 
+function formatAuthorLabel(rawAuthor: string): string {
+  return rawAuthor
+    .toLowerCase()
+    .replace(/\b(st\.|pope|the|of|in|and|s\.j\.)\b/g, (w) => {
+      if (w === 's.j.') return 'S.J.';
+      if (w === 'of' || w === 'in' || w === 'and') return w;
+      return w.charAt(0).toUpperCase() + w.slice(1);
+    })
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .replace(/\bOf\b/g, 'of')
+    .replace(/\bThe\b/g, (m, offset) => (offset === 0 ? 'The' : 'the'))
+    .replace(/\bAnd\b/g, 'and')
+    .replace(/\bS\.j\./g, 'S.J.')
+    .replace(/\bCcc\b/g, 'CCC')
+    .replace(/\bIi\b/g, 'II')
+    .replace(/\bXi\b/g, 'XI')
+    .replace(/\bXii\b/g, 'XII')
+    .replace(/\bXvi\b/g, 'XVI')
+    .replace(/\bVi\b/g, 'VI');
+}
+
+function normalizeForMatch(name: string): string {
+  return (name || '')
+    .toLowerCase()
+    .replace(/\bsaint\b/g, 'st')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
 interface StructuredCommentaryDisplayProps {
   commentaryText: string;
   fontSizeStyle?: React.CSSProperties;
   homilyOnly?: boolean;
   hideHomily?: boolean;
+  onSpeakSection?: (sectionKey: string, authorName: string, textToSpeak: string, isCurrentlyActive: boolean) => void;
+  activeSpeakingKey?: string | null;
+  loadingSpeakingKey?: string | null;
+  activeSpeakingAuthor?: string | null;
 }
 
 export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayProps> = ({
   commentaryText,
   fontSizeStyle,
   homilyOnly = false,
-  hideHomily = false
+  hideHomily = false,
+  onSpeakSection,
+  activeSpeakingKey = null,
+  loadingSpeakingKey = null,
+  activeSpeakingAuthor = null,
 }) => {
   const data = parseStructuredCommentary(commentaryText);
+  const normActiveAuthor = activeSpeakingAuthor ? normalizeForMatch(activeSpeakingAuthor) : '';
 
-  const renderCommentaryParagraph = (para: string, key: React.Key, containerClasses: string) => {
-    const colonIdx = para.indexOf(':');
-    if (colonIdx !== -1 && colonIdx < 90) {
-      const author = para.substring(0, colonIdx).trim();
-      const bodyText = para.substring(colonIdx + 1);
+  const isSectionActive = (sectionKey: string, authorName: string): boolean => {
+    if (activeSpeakingKey) {
+      return activeSpeakingKey === sectionKey;
+    }
+    if (normActiveAuthor && authorName) {
+      const normAuthor = normalizeForMatch(authorName);
       return (
-        <p key={key} className={`whitespace-pre-line ${containerClasses}`}>
-          <strong className="font-bold text-[#2A1B0E] font-serif tracking-normal">{toCurvedQuotes(author)}:</strong>
-          {toCurvedQuotes(bodyText)}
-        </p>
+        normActiveAuthor === normAuthor ||
+        normActiveAuthor.includes(normAuthor) ||
+        normAuthor.includes(normActiveAuthor)
       );
     }
+    return false;
+  };
+
+  const renderAudioIconButton = (
+    sectionKey: string,
+    authorName: string,
+    textToSpeak: string,
+    isActive: boolean,
+    isLoading: boolean
+  ) => {
+    if (!onSpeakSection) return null;
+    const persona = getSaintReaderPersona(authorName);
+    const displayAuthor = formatAuthorLabel(authorName);
+    const tooltip = isLoading
+      ? `Loading ${displayAuthor}…`
+      : isActive
+      ? `Stop ${displayAuthor}`
+      : `Listen to ${displayAuthor} (${persona.timbreDescription})`;
+
     return (
-      <p key={key} className={`whitespace-pre-line ${containerClasses}`}>
-        {toCurvedQuotes(para)}
-      </p>
+      <button
+        type="button"
+        onClick={() => onSpeakSection(sectionKey, authorName, textToSpeak, isActive || isLoading)}
+        title={tooltip}
+        aria-label={tooltip}
+        aria-pressed={isActive}
+        className={`float-right ml-2.5 mb-1 inline-flex items-center justify-center w-8 h-8 rounded-full border transition-all cursor-pointer shrink-0 ${
+          isActive
+            ? 'bg-[#6B4423] text-amber-50 border-[#8B5A2B] shadow-sm ring-2 ring-amber-400/50'
+            : isLoading
+            ? 'bg-amber-100 text-[#6B4423] border-amber-400/70'
+            : 'bg-white/90 hover:bg-[#6B4423] text-[#6B4423] hover:text-amber-50 border-[#D8C7AE] hover:border-[#6B4423] shadow-2xs'
+        }`}
+      >
+        {isLoading ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : isActive ? (
+          <VolumeX className="w-4 h-4" />
+        ) : (
+          <Volume2 className="w-4 h-4" />
+        )}
+      </button>
     );
   };
+
+  const renderCommentaryParagraph = (
+    para: string,
+    sectionKey: string,
+    containerClasses: string,
+    fallbackAuthor: string
+  ) => {
+    const colonIdx = para.indexOf(':');
+    const hasHeading = colonIdx !== -1 && colonIdx < 90;
+    const author = hasHeading ? para.substring(0, colonIdx).trim() : fallbackAuthor;
+    const bodyText = hasHeading ? para.substring(colonIdx + 1) : para;
+    const spokenAuthor = formatAuthorLabel(author)
+      .replace(/\bSts\.\s+/gi, 'Saints ')
+      .replace(/\bSt\.\s+/gi, 'Saint ');
+    const spokenText = hasHeading
+      ? `${spokenAuthor}: ${bodyText.trim()}`
+      : bodyText.trim();
+
+    const isActive = isSectionActive(sectionKey, author);
+    const isLoading = loadingSpeakingKey === sectionKey;
+
+    const activeCardClasses = isActive
+      ? 'bg-amber-50/95 border-amber-500/75 ring-1 ring-amber-400/50 shadow-sm'
+      : '';
+
+    return (
+      <div
+        key={sectionKey}
+        className={`relative transition-all duration-200 ${containerClasses} ${activeCardClasses}`}
+      >
+        {renderAudioIconButton(sectionKey, author, spokenText, isActive, isLoading)}
+        <p className="whitespace-pre-line">
+          {hasHeading && (
+            <strong className="font-bold text-[#2A1B0E] font-serif tracking-normal">
+              {toCurvedQuotes(author)}:
+            </strong>
+          )}
+          {toCurvedQuotes(bodyText)}
+        </p>
+      </div>
+    );
+  };
+
+  let lastCatenaAuthor = 'Patristic Lector';
 
   return (
     <div className="space-y-6">
@@ -226,9 +348,18 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
           </div>
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
-            {data.catenaAureaParagraphs.map((para, idx) =>
-              renderCommentaryParagraph(para, idx, "p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DEC8]")
-            )}
+            {data.catenaAureaParagraphs.map((para, idx) => {
+              const colonIdx = para.indexOf(':');
+              if (colonIdx !== -1 && colonIdx < 90) {
+                lastCatenaAuthor = para.substring(0, colonIdx).trim();
+              }
+              return renderCommentaryParagraph(
+                para,
+                `catena-${idx}`,
+                'p-3.5 rounded-xl bg-[#FAF7F2] border border-[#E8DEC8]',
+                lastCatenaAuthor
+              );
+            })}
           </div>
         </div>
       )}
@@ -244,10 +375,26 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
               const cleanPara = para
                 .replace(/^(?:CORNELIUS\s+[ÀA]\s+LAPIDE|FR\.\s+LAPIDE|LAPIDE)(?:,\s*S\.?J\.?)?:\s*/i, '')
                 .trim();
+              const sectionKey = `lapide-${idx}`;
+              const authorName = 'Cornelius à Lapide, S.J.';
+              const isActive = isSectionActive(sectionKey, authorName);
+              const isLoading = loadingSpeakingKey === sectionKey;
               return (
-                <p key={idx} className="whitespace-pre-line p-4 rounded-xl bg-[#F8F3EA] border border-[#E5D8C3] shadow-2xs">
-                  {toCurvedQuotes(cleanPara)}
-                </p>
+                <div
+                  key={sectionKey}
+                  className={`relative p-4 rounded-xl bg-[#F8F3EA] border border-[#E5D8C3] shadow-2xs transition-all duration-200 ${
+                    isActive ? 'bg-amber-50/95 border-amber-500/75 ring-1 ring-amber-400/50 shadow-sm' : ''
+                  }`}
+                >
+                  {renderAudioIconButton(
+                    sectionKey,
+                    authorName,
+                    `Cornelius à Lapide: ${cleanPara}`,
+                    isActive,
+                    isLoading
+                  )}
+                  <p className="whitespace-pre-line">{toCurvedQuotes(cleanPara)}</p>
+                </div>
               );
             })}
           </div>
@@ -262,7 +409,12 @@ export const StructuredCommentaryDisplay: React.FC<StructuredCommentaryDisplayPr
 
           <div className="space-y-4 font-serif-sacred text-[#2C1C0E] leading-relaxed" style={fontSizeStyle}>
             {data.magisteriumParagraphs.map((para, idx) =>
-              renderCommentaryParagraph(para, idx, "p-4 rounded-xl bg-[#F3EDE3] border border-[#DDD0BC] shadow-2xs")
+              renderCommentaryParagraph(
+                para,
+                `magisterium-${idx}`,
+                'p-4 rounded-xl bg-[#F3EDE3] border border-[#DDD0BC] shadow-2xs',
+                'Vatican Magisterium'
+              )
             )}
           </div>
         </div>

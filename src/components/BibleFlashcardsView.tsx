@@ -43,7 +43,7 @@ export const BibleFlashcardsView: React.FC = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [copied, setCopied] = useState(false);
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
-  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'gemini-Kore');
+  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'persona-jenny');
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
 
   useEffect(() => {
@@ -926,16 +926,16 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
                   <span>{isSpeaking ? 'Stop Audio' : 'Listen Aloud'}</span>
                 </button>
 
-                {/* Curated Voice Selector (Kore Default) */}
+                {/* Curated Voice Selector (Jenny Default) */}
                 <select
-                  value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'gemini-Kore'}
+                  value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'persona-jenny'}
                   onChange={(e) => handleVoiceSelect(e.target.value)}
                   aria-label="Select verse recitation voice"
                   className="px-2.5 py-1.5 rounded-lg bg-white hover:bg-stone-50 border border-stone-200 shadow-xs text-xs font-serif font-semibold text-stone-800 focus:outline-none focus:ring-1 focus:ring-amber-700 cursor-pointer"
                 >
                   {CURATED_SANCTUM_VOICES.map((v) => (
                     <option key={v.id} value={v.id}>
-                      {v.id === 'gemini-Kore' ? 'Kore (Default)' : v.shortName}
+                      {v.id === 'persona-jenny' ? 'Jenny (Default)' : v.shortName}
                     </option>
                   ))}
                 </select>

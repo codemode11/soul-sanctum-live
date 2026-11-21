@@ -811,7 +811,7 @@ export const CatholicProphecyView: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Audio (Kore) & Copy Controls */}
+                  {/* Audio & Copy Controls */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button
                       type="button"
@@ -821,7 +821,7 @@ export const CatholicProphecyView: React.FC = () => {
                           ? 'bg-slate-900 text-[#FBF9F5] border-slate-900'
                           : 'bg-[#F4EFE6] text-stone-700 border-[#D4C9B6] hover:bg-[#EAE2D3] hover:text-stone-950'
                       }`}
-                      title={isPlaying ? 'Stop audio narration' : 'Listen with Kore voice'}
+                      title={isPlaying ? 'Stop audio narration' : 'Listen aloud'}
                     >
                       {isPlaying ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
                       <span className="hidden sm:inline">{isPlaying ? 'Stop' : 'Listen'}</span>

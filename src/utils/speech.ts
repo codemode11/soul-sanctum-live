@@ -152,6 +152,16 @@ export function formatResponsorialPsalmForSpeech(
  * chapter numbers, verse numbers, or the word "colon", while turning prose colons
  * into full-stop pauses.
  */
+function expandEcclesiasticalAbbreviationsForSpeech(text: string): string {
+  return text
+    .replace(/\bSts\.\s+(?=[A-Za-z])/gi, 'Saints ')
+    .replace(/\bSS\.\s+(?=[A-Z])/g, 'Saints ')
+    .replace(/\bSt\.\s+(?=[A-Za-z])/gi, 'Saint ')
+    .replace(/\bBl\.\s+(?=[A-Za-z])/gi, 'Blessed ')
+    .replace(/\bVen\.\s+(?=[A-Za-z])/gi, 'Venerable ')
+    .replace(/\bFr\.\s+(?=[A-Za-z])/gi, 'Father ');
+}
+
 export function prepareLiturgicalTextForSpeech(text: string): string {
   let cleaned = text
     .replace(/<[^>]*>/g, '')
@@ -173,6 +183,9 @@ export function prepareLiturgicalTextForSpeech(text: string): string {
 
   // Strip any remaining chapter:verse patterns like "1:11-14" or "12:1-7" so no numbers/colons are read aloud
   cleaned = cleaned.replace(/\b\d+:\d+(?:[-–]\d+[a-z]*)?\b/g, '');
+
+  // Expand ecclesiastical titles so TTS engines always say "Saint" instead of "S T" or "Street"
+  cleaned = expandEcclesiasticalAbbreviationsForSpeech(cleaned);
 
   // Convert em-dashes and en-dashes into natural breathing pauses (commas)
   cleaned = cleaned.replace(/[—–]/g, ', ');
@@ -212,6 +225,9 @@ export function splitLiturgicalTextByColons(text: string): string[] {
 
   // Strip chapter:verse patterns first so scripture numbers are not treated as prose colons
   cleaned = cleaned.replace(/\b\d+:\d+(?:[-–]\d+[a-z]*)?\b/g, '');
+
+  // Expand ecclesiastical titles so TTS engines always say "Saint" instead of "S T" or "Street"
+  cleaned = expandEcclesiasticalAbbreviationsForSpeech(cleaned);
 
   // Convert em-dashes and en-dashes into commas
   cleaned = cleaned.replace(/[—–]/g, ', ');
@@ -308,17 +324,17 @@ export interface CuratedSanctumVoice {
 
 /**
  * Unified catalog of verified, distinct voices across Soul Sanctum.
- * Default website voice: Kore ('gemini-Kore').
+ * Default website voice: Jenny ('persona-jenny').
  * Default Holy Gospel voice: Microsoft David ('david', with automatic solemn male fallback on non-Windows devices).
  */
 export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
   {
-    id: 'gemini-Kore',
-    shortName: 'Kore',
-    label: 'Kore — Serene Devotional Female (Default)',
+    id: 'persona-jenny',
+    shortName: 'Jenny',
+    label: 'Jenny — Crisp Articulate Lector (Default)',
     group: 'default',
     gender: 'female',
-    description: 'Warm, serene, reverent female Catholic lector (default website voice)',
+    description: 'Clear, articulate American liturgical female reader (default website voice)',
   },
   {
     id: 'david',
@@ -327,6 +343,14 @@ export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
     group: 'default',
     gender: 'male',
     description: 'Traditional solemn male Gospel voice (default for Holy Gospel)',
+  },
+  {
+    id: 'gemini-Kore',
+    shortName: 'Kore',
+    label: 'Kore — Serene Devotional Female',
+    group: 'female',
+    gender: 'female',
+    description: 'Warm, serene, reverent female Catholic lector',
   },
   {
     id: 'persona-ava',
@@ -367,14 +391,6 @@ export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
     group: 'female',
     gender: 'female',
     description: 'Warm, lyrical Irish Catholic narrator',
-  },
-  {
-    id: 'persona-jenny',
-    shortName: 'Jenny',
-    label: 'Jenny — Crisp Articulate Lector (US)',
-    group: 'female',
-    gender: 'female',
-    description: 'Clear, crisp American liturgical narrator',
   },
   {
     id: 'gemini-Zephyr',
@@ -455,6 +471,7 @@ export function isMaleVoiceKey(voiceKey: string): boolean {
     voiceKey === 'gemini-Algenib' ||
     voiceKey.startsWith('liturgical-') ||
     voiceKey.startsWith('saint-') ||
+    voiceKey.startsWith('father-') ||
     voiceKey.startsWith('pope-') ||
     voiceKey.startsWith('venerable-') ||
     voiceKey.startsWith('cornelius-') ||
@@ -472,7 +489,7 @@ export function getVoiceDisplayLabel(voiceKey: string): string {
   if (curated) return curated.label;
   const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
   if (saint) return `${saint.saintName} (${saint.title})`;
-  return voiceKey || 'Kore — Serene Devotional Female (Default)';
+  return voiceKey || 'Jenny — Crisp Articulate Lector (Default)';
 }
 
 export function getVoiceShortName(voiceKey: string): string {
@@ -481,7 +498,7 @@ export function getVoiceShortName(voiceKey: string): string {
   const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
   if (saint) return saint.saintName;
   if (voiceKey.startsWith('gemini-')) return voiceKey.replace('gemini-', '');
-  return voiceKey || 'Kore';
+  return voiceKey || 'Jenny';
 }
 
 export interface SaintReaderPersona {
@@ -663,6 +680,127 @@ export const SACRED_MALE_SAINT_PERSONAS: SaintReaderPersona[] = [
     sampleQuote: 'The aim of natural science is not simply to accept the statements of others, but to investigate the causes that are at work in nature.'
   },
   {
+    id: 'saint-hilary',
+    saintName: 'St. Hilary of Poitiers',
+    title: 'Doctor of the Church (Athanasius of the West)',
+    timbreDescription: 'Lucid Gallic Baritone • Clear and Steadfast',
+    era: '310–367 • Bishop of Poitiers',
+    pitch: 0.94,
+    rate: 0.90,
+    voiceKeywords: ['liam', 'daniel', 'david'],
+    sampleQuote: 'Everything that is created has been made through Christ and for Christ.'
+  },
+  {
+    id: 'father-titus-of-bostra',
+    saintName: 'Titus of Bostra',
+    title: 'Early Christian Biblical Exegete',
+    timbreDescription: 'Measured Eastern Baritone • Earnest and Clear',
+    era: '4th Century • Bishop of Bostra',
+    pitch: 0.92,
+    rate: 0.89,
+    voiceKeywords: ['mitchell', 'james', 'david'],
+    sampleQuote: 'The Word of God illuminates every heart that listens with humility.'
+  },
+  {
+    id: 'father-origen',
+    saintName: 'Origen of Alexandria',
+    title: 'Alexandrian Scriptural Scholar',
+    timbreDescription: 'Analytical Baritone • Articulate and Penetrating',
+    era: '185–253 • Biblical Commentator',
+    pitch: 0.96,
+    rate: 0.92,
+    voiceKeywords: ['steffan', 'brian', 'david'],
+    sampleQuote: 'Every word of Sacred Scripture holds a deeper spiritual sense for the seeking soul.'
+  },
+  {
+    id: 'father-alcuin',
+    saintName: 'Alcuin of York',
+    title: 'Carolingian Monastic Scholar',
+    timbreDescription: 'Clear Scholarly Tenor • Poised and Measured',
+    era: '735–804 • Abbot of Tours',
+    pitch: 1.0,
+    rate: 0.90,
+    voiceKeywords: ['sam', 'george', 'daniel'],
+    sampleQuote: 'In the reading of Sacred Scripture, God speaks directly to the attentive soul.'
+  },
+  {
+    id: 'father-rabanus',
+    saintName: 'Rabanus Maurus',
+    title: 'Benedictine Abbot and Exegete',
+    timbreDescription: 'Measured Monastic Baritone • Calm and Instructive',
+    era: '780–856 • Archbishop of Mainz',
+    pitch: 0.88,
+    rate: 0.88,
+    voiceKeywords: ['wayne', 'david', 'george'],
+    sampleQuote: 'Come, Creator Spirit, visit the minds of those who are yours.'
+  },
+  {
+    id: 'pope-saint-leo',
+    saintName: 'Pope St. Leo the Great',
+    title: 'Doctor of the Church',
+    timbreDescription: 'Majestic Pontifical Baritone • Authoritative and Resonant',
+    era: '400–461 • Supreme Pontiff',
+    pitch: 0.80,
+    rate: 0.86,
+    voiceKeywords: ['christopher', 'david', 'george'],
+    sampleQuote: 'Christian, recognize your dignity, and having become a partner in the divine nature, do not return to your former baseness.'
+  },
+  {
+    id: 'father-eusebius',
+    saintName: 'Eusebius of Caesarea',
+    title: 'Father of Church History',
+    timbreDescription: 'Thoughtful Historical Baritone • Deliberate and Clear',
+    era: '260–339 • Bishop of Caesarea',
+    pitch: 0.90,
+    rate: 0.89,
+    voiceKeywords: ['prabhat', 'daniel', 'david'],
+    sampleQuote: 'The witness of the Gospel shines forth across every nation and age.'
+  },
+  {
+    id: 'saint-cyprian',
+    saintName: 'St. Cyprian of Carthage',
+    title: 'Bishop and Martyr',
+    timbreDescription: 'Deep North African Baritone • Steadfast and Solemn',
+    era: '210–258 • Bishop of Carthage',
+    pitch: 0.84,
+    rate: 0.88,
+    voiceKeywords: ['chilemba', 'david', 'charles'],
+    sampleQuote: 'He cannot have God for his Father who does not have the Church for his Mother.'
+  },
+  {
+    id: 'saint-athanasius',
+    saintName: 'St. Athanasius of Alexandria',
+    title: 'Doctor of the Church (Father of Orthodoxy)',
+    timbreDescription: 'Resolute Alexandrian Baritone • Firm and Bold',
+    era: '296–373 • Patriarch of Alexandria',
+    pitch: 0.86,
+    rate: 0.90,
+    voiceKeywords: ['abeo', 'david', 'thomas'],
+    sampleQuote: 'The Son of God became man so that we might become partakers of the divine life.'
+  },
+  {
+    id: 'saint-gregory-nyssa',
+    saintName: 'St. Gregory of Nyssa',
+    title: 'Cappadocian Mystical Father',
+    timbreDescription: 'Contemplative Eastern Baritone • Gentle and Deep',
+    era: '335–395 • Bishop of Nyssa',
+    pitch: 0.88,
+    rate: 0.86,
+    voiceKeywords: ['elimu', 'daniel', 'david'],
+    sampleQuote: 'The true perfection of the soul is never to stop growing toward the infinite goodness of God.'
+  },
+  {
+    id: 'saint-bernard',
+    saintName: 'St. Bernard of Clairvaux',
+    title: 'Doctor Mellifluus (Honey-Sweet Doctor)',
+    timbreDescription: 'Warm Devotional Baritone • Lyrical and Ardent',
+    era: '1090–1153 • Cistercian Abbot',
+    pitch: 0.98,
+    rate: 0.89,
+    voiceKeywords: ['james', 'ryan', 'daniel'],
+    sampleQuote: 'The measure of loving God is to love Him without measure.'
+  },
+  {
     id: 'general-lector',
     saintName: 'Patristic Lector',
     title: 'Reverent Catholic Lector',
@@ -677,22 +815,7 @@ export const SACRED_MALE_SAINT_PERSONAS: SaintReaderPersona[] = [
 
 export function getSaintReaderPersona(nameOrExcerpt: string): SaintReaderPersona {
   const norm = (nameOrExcerpt || '').toLowerCase();
-  if (norm.includes('chrysostom')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-john-chrysostom')!;
-  if (norm.includes('augustine')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-augustine')!;
-  if (norm.includes('jerome')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-jerome')!;
-  if (norm.includes('gregory') || norm.includes('leo')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'pope-saint-gregory')!;
-  if (norm.includes('ambrose') || norm.includes('hilary') || norm.includes('gaudentius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-ambrose')!;
-  if (norm.includes('cyril') || norm.includes('athanasius') || norm.includes('irenaeus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-cyril')!;
-  if (norm.includes('bede') || norm.includes('alcuin') || norm.includes('remigius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'venerable-bede')!;
-  if (norm.includes('basil') || norm.includes('damascene') || norm.includes('maximus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-basil')!;
-  if (norm.includes('lapide')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'cornelius-a-lapide')!;
-  if (norm.includes('theophylact') || norm.includes('titus') || norm.includes('theodoret') || norm.includes('theodotus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'blessed-theophylact')!;
-  if (norm.includes('bonaventure') || norm.includes('bernard') || norm.includes('ephrem')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bonaventure')!;
-  if (norm.includes('alphonsus') || norm.includes('liguori') || norm.includes('caesarius') || norm.includes('chromatius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-alphonsus')!;
-  if (norm.includes('bellarmine') || norm.includes('robert') || norm.includes('cyprian') || norm.includes('fulgentius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bellarmine')!;
-  if (norm.includes('albert') || norm.includes('origen') || norm.includes('eusebius') || norm.includes('rabanus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-albert')!;
-  if (norm.includes('thomas') || norm.includes('aquinas') || norm.includes('catena')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-thomas-aquinas')!;
-  if (norm.includes('vatican') || norm.includes('catechism') || norm.includes('ccc') || norm.includes('magisterium') || norm.includes('benedict') || norm.includes('francis') || norm.includes('john paul') || norm.includes('trent') || norm.includes('pius')) {
+  if (norm.includes('vatican') || norm.includes('catechism') || norm.includes('ccc') || norm.includes('magisterium') || norm.includes('benedict') || norm.includes('francis') || norm.includes('john paul') || norm.includes('trent') || norm.includes('pius') || norm.includes('paul vi')) {
     return {
       id: 'vatican-magisterium',
       saintName: 'Vatican Magisterial Teaching',
@@ -705,6 +828,32 @@ export function getSaintReaderPersona(nameOrExcerpt: string): SaintReaderPersona
       sampleQuote: 'The Sacred Liturgy is the summit toward which the activity of the Church is directed.'
     };
   }
+  if (norm.includes('chrysostom')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-john-chrysostom')!;
+  if (norm.includes('augustine')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-augustine')!;
+  if (norm.includes('ambrose') || norm.includes('gaudentius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-ambrose')!;
+  if (norm.includes('bede') || norm.includes('remigius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'venerable-bede')!;
+  if (norm.includes('nyssa') || norm.includes('nazianzen')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-gregory-nyssa')!;
+  if (norm.includes('leo')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'pope-saint-leo')!;
+  if (norm.includes('gregory')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'pope-saint-gregory')!;
+  if (norm.includes('cyril') || norm.includes('irenaeus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-cyril')!;
+  if (norm.includes('theophylact') || norm.includes('theodoret') || norm.includes('theodotus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'blessed-theophylact')!;
+  if (norm.includes('jerome')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-jerome')!;
+  if (norm.includes('hilary')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-hilary')!;
+  if (norm.includes('titus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'father-titus-of-bostra')!;
+  if (norm.includes('origen')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'father-origen')!;
+  if (norm.includes('basil') || norm.includes('damascene') || norm.includes('maximus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-basil')!;
+  if (norm.includes('lapide')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'cornelius-a-lapide')!;
+  if (norm.includes('alcuin')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'father-alcuin')!;
+  if (norm.includes('rabanus')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'father-rabanus')!;
+  if (norm.includes('eusebius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'father-eusebius')!;
+  if (norm.includes('cyprian') || norm.includes('fulgentius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-cyprian')!;
+  if (norm.includes('athanasius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-athanasius')!;
+  if (norm.includes('bernard') || norm.includes('ephrem')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bernard')!;
+  if (norm.includes('bonaventure')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bonaventure')!;
+  if (norm.includes('alphonsus') || norm.includes('liguori') || norm.includes('caesarius') || norm.includes('chromatius')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-alphonsus')!;
+  if (norm.includes('bellarmine') || norm.includes('robert')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-bellarmine')!;
+  if (norm.includes('albert')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-albert')!;
+  if (norm.includes('thomas') || norm.includes('aquinas') || norm.includes('catena')) return SACRED_MALE_SAINT_PERSONAS.find(p => p.id === 'saint-thomas-aquinas')!;
   // Deterministically assign any other cited ecclesiastical writer across distinct Saint personas
   const namedPool = SACRED_MALE_SAINT_PERSONAS.filter(p => p.id !== 'general-lector');
   if (norm.trim().length > 0 && namedPool.length > 0) {
@@ -893,16 +1042,12 @@ export function parseCommentaryBySaints(commentary: BibleCommentary): Commentary
           .replace(/St\./g, 'Saint');
       }
 
-      const titleAnnouncement = persona.title && !persona.title.includes('General') && !persona.title.includes('Catholic Lector') 
-        ? `, ${persona.title},` 
-        : '';
-
       sections.push({
         id: `saint-${matchesFound}`,
         saintName: formattedName,
         saintTitle: persona.title,
         persona,
-        text: `${formattedName}${titleAnnouncement} writes: ${body}`,
+        text: `${formattedName}: ${body}`,
         bodyOnly: body
       });
     }
@@ -1198,6 +1343,7 @@ export class SacredReader {
       voiceKey.startsWith('persona-') ||
       voiceKey.startsWith('liturgical-') ||
       voiceKey.startsWith('saint-') ||
+      voiceKey.startsWith('father-') ||
       voiceKey.startsWith('pope-') ||
       voiceKey.startsWith('venerable-') ||
       voiceKey.startsWith('cornelius-') ||
@@ -1589,29 +1735,37 @@ export class SacredReader {
     }
   }
 
-  private static selectedFemaleVoiceName: string | null = typeof localStorage !== 'undefined' ? (localStorage.getItem('soul_sanctum_female_voice') || 'gemini-Kore') : 'gemini-Kore';
+  private static selectedFemaleVoiceName: string | null = typeof localStorage !== 'undefined' ? (localStorage.getItem('soul_sanctum_female_voice') || 'persona-jenny') : 'persona-jenny';
   private static selectedRecitationVoiceId: RecitationVoiceId = typeof localStorage !== 'undefined' 
     ? ((localStorage.getItem('soul_sanctum_recitation_voice') as RecitationVoiceId) || 'ava-grace') 
     : 'ava-grace';
   private static activeSelectedVoiceKey: string = typeof localStorage !== 'undefined'
     ? (() => {
+        const migrated = localStorage.getItem('soul_sanctum_default_voice_jenny_v1');
         const saved = localStorage.getItem('soul_sanctum_active_voice');
+        if (!migrated) {
+          localStorage.setItem('soul_sanctum_default_voice_jenny_v1', '1');
+          if (!saved || saved === 'gemini-Kore' || saved === 'Kore') {
+            localStorage.setItem('soul_sanctum_active_voice', 'persona-jenny');
+            return 'persona-jenny';
+          }
+        }
         if (!saved || saved.toLowerCase().includes('zira') || saved.toLowerCase().includes('mark') || saved.toLowerCase().includes('kokoro') || saved === 'zira') {
-          return 'gemini-Kore';
+          return 'persona-jenny';
         }
         return saved;
       })()
-    : 'gemini-Kore';
+    : 'persona-jenny';
 
   public static getActiveLectorVoiceKey(): string {
     if (!this.activeSelectedVoiceKey || this.activeSelectedVoiceKey === 'zira') {
-      return 'gemini-Kore';
+      return 'persona-jenny';
     }
     return this.activeSelectedVoiceKey;
   }
 
   public static setActiveLectorVoiceKey(voiceKey: string): void {
-    const finalKey = !voiceKey || voiceKey === 'zira' ? 'gemini-Kore' : voiceKey;
+    const finalKey = !voiceKey || voiceKey === 'zira' ? 'persona-jenny' : voiceKey;
     this.activeSelectedVoiceKey = finalKey;
     this.selectedRecitationVoiceId = isMaleVoiceKey(finalKey) ? 'david' : 'ava-grace';
     if (typeof localStorage !== 'undefined') {
@@ -1623,10 +1777,10 @@ export class SacredReader {
 
   /**
    * Returns the human-readable short name of the voice that will proclaim a given liturgical part.
-   * Defaults: Kore for First Reading / Psalm / Second Reading, Microsoft David for the Holy Gospel.
+   * Defaults: Jenny for First Reading / Psalm / Second Reading, Microsoft David for the Holy Gospel.
    */
   public static getEffectiveVoiceNameForPart(partId?: string | null): string {
-    const activeVoiceKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+    const activeVoiceKey = this.getActiveLectorVoiceKey() || 'persona-jenny';
     const isExplicitSystem = this.isExplicitInstalledSystemVoice(activeVoiceKey);
     const isCustomMale = isMaleVoiceKey(activeVoiceKey) && activeVoiceKey !== 'david';
 
@@ -1960,7 +2114,7 @@ export class SacredReader {
       this.cachedVoices = this.synth.getVoices();
     }
 
-    const currentSelection = this.selectedFemaleVoiceName || 'gemini-Kore';
+    const currentSelection = this.selectedFemaleVoiceName || 'persona-jenny';
 
     // 1. Include the Sacred Female Voice Personas (Ava Grace first)
     const personaItems = SACRED_FEMALE_PERSONAS.map(p => ({
@@ -2164,7 +2318,7 @@ export class SacredReader {
 
   /**
    * Speak a single passage with requested voice or rate.
-   * Default female voice: Kore ('gemini-Kore').
+   * Default female voice: Jenny ('persona-jenny').
    * Default male voice: Microsoft David ('david').
    */
   public static async speak(
@@ -2182,10 +2336,10 @@ export class SacredReader {
     if (!cleanText) return;
 
     // Always honor explicitVoiceKey if provided; otherwise honor the user's chosen global voice
-    // (which defaults to Kore 'gemini-Kore'), unless the caller explicitly requested 'david'.
+    // (which defaults to Jenny 'persona-jenny'), unless the caller explicitly requested 'david'.
     const activeKey = explicitVoiceKey
       || (voiceOrGenderOrRate === 'david' ? 'david' : this.getActiveLectorVoiceKey())
-      || 'gemini-Kore';
+      || 'persona-jenny';
 
     const rateOverride = typeof voiceOrGenderOrRate === 'number'
       ? voiceOrGenderOrRate
@@ -2288,8 +2442,8 @@ export class SacredReader {
 
   /**
    * Speak multiple parts in sequence, alternating voices per liturgical role:
-   * - First Reading, Responsorial Psalm, Second Reading: User's active voice (defaults to Kore 'gemini-Kore').
-   * - The Holy Gospel: Microsoft David by default (when Kore, David, or any female lector is active),
+   * - First Reading, Responsorial Psalm, Second Reading: User's active voice (defaults to Jenny 'persona-jenny').
+   * - The Holy Gospel: Microsoft David by default (when Jenny, David, or any female lector is active),
    *   with seamless fallback to Cathedral Deacon on devices without Microsoft David installed;
    *   or the user's chosen male neural / installed voice if explicitly selected.
    */
@@ -2307,7 +2461,7 @@ export class SacredReader {
     this.isSequenceActive = true;
     this.sequenceQueue = [...parts];
 
-    const activeVoiceKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+    const activeVoiceKey = this.getActiveLectorVoiceKey() || 'persona-jenny';
 
     const playNext = async (index: number) => {
       if (!this.isSequenceActive || this.activePlaybackToken !== token || index >= this.sequenceQueue.length) {
@@ -2394,13 +2548,13 @@ export class SacredReader {
         }
       }
 
-      // 3. Determine target server Gemini 3.8 Neural voice for this part
-      let targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
+      // 3. Determine target server neural voice for this part
+      let targetVoiceForPart = activeVoiceKey || 'persona-jenny';
       if (isGospelPart) {
-        // If Microsoft David wasn't installed on this OS/browser, fall back to solemn Cathedral Deacon (Orus)
+        // If Microsoft David wasn't installed on this OS/browser, fall back to solemn Cathedral Deacon
         targetVoiceForPart = isCustomMaleServerVoice ? activeVoiceKey : 'liturgical-deacon';
       } else {
-        targetVoiceForPart = activeVoiceKey === 'david' ? 'liturgical-deacon' : (activeVoiceKey || 'gemini-Kore');
+        targetVoiceForPart = activeVoiceKey === 'david' ? 'liturgical-deacon' : (activeVoiceKey || 'persona-jenny');
       }
 
       const playedServer = await this.playServerTtsSequence(
@@ -2594,14 +2748,18 @@ export class SacredReader {
   public static async speakSingleSaintExposition(
     saintName: string, 
     text: string, 
-    onEnd?: () => void
+    onEnd?: () => void,
+    onStart?: () => void
   ): Promise<void> {
     this.stop();
     this.unlockSharedAudio();
     const token = this.activePlaybackToken;
 
     const cleanText = prepareLiturgicalTextForSpeech(text);
-    if (!cleanText) return;
+    if (!cleanText) {
+      if (onEnd) onEnd();
+      return;
+    }
 
     const persona = getSaintReaderPersona(saintName);
 
@@ -2609,7 +2767,10 @@ export class SacredReader {
       cleanText,
       persona.id,
       token,
-      () => this.notify(true, persona.id)
+      () => {
+        this.notify(true, persona.id);
+        if (onStart) onStart();
+      }
     );
 
     if (playedServer) {
@@ -2635,6 +2796,7 @@ export class SacredReader {
     utterance.onstart = () => {
       this.startKeepAlive();
       this.notify(true, persona.id);
+      if (onStart) onStart();
     };
 
     utterance.onend = () => {
@@ -2686,7 +2848,7 @@ export class SacredReader {
       }
 
       const isFramingSection = sec.id === 'intro' || sec.id === 'practical-application';
-      const activeGlobalKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+      const activeGlobalKey = this.getActiveLectorVoiceKey() || 'persona-jenny';
 
       if (isFramingSection && activeGlobalKey === 'david') {
         const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;

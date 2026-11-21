@@ -33,7 +33,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   const [systemVoices, setSystemVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>(() => {
     const active = SacredReader.getActiveLectorVoiceKey();
-    return active || 'gemini-Kore';
+    return active || 'persona-jenny';
   });
   const [currentRate, setCurrentRate] = useState<number>(() => SacredReader.getPlaybackRate());
   const [showSettings, setShowSettings] = useState(false);
@@ -41,8 +41,8 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   const [isTtsLoading, setIsTtsLoading] = useState<string | null>(null);
 
   useEffect(() => {
-    // Ensure Kore is synchronized as default on mount
-    SacredReader.setActiveLectorVoiceKey(selectedVoiceId || 'gemini-Kore');
+    // Ensure Jenny is synchronized as default on mount
+    SacredReader.setActiveLectorVoiceKey(selectedVoiceId || 'persona-jenny');
 
     const unsubVoice = SacredReader.addVoiceChangeListener((voiceKey) => {
       setSelectedVoiceId(voiceKey);
@@ -345,7 +345,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                 </span>
               </div>
               <span className="text-[10px] text-amber-200/80 font-medium">
-                Default Voice: Kore · Holy Gospel: Microsoft David
+                Default Voice: Jenny · Holy Gospel: Microsoft David
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -380,7 +380,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                     )}
                     <span>
                       {v.shortName}
-                      {v.id === 'gemini-Kore' ? ' (Default)' : v.id === 'david' ? ' (Gospel)' : ''}
+                      {v.id === 'persona-jenny' ? ' (Default)' : v.id === 'david' ? ' (Gospel)' : ''}
                     </span>
                   </button>
                 );

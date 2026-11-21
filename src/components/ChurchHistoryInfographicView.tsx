@@ -53,7 +53,7 @@ type MainSection = 'timeline' | 'councils' | 'demographics' | 'facts';
 
 export const ChurchHistoryInfographicView: React.FC = () => {
   const [activeSection, setActiveSection] = useState<MainSection>('timeline');
-  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'gemini-Kore');
+  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'persona-jenny');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakingItemId, setSpeakingItemId] = useState<string | null>(null);
 
@@ -171,18 +171,18 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               <span className="text-xs text-[#EAE2D3] font-serif">AD 33 – 2026</span>
             </div>
 
-            {/* Recitation Voice Selector (All Curated Voices, Kore Default) */}
+            {/* Recitation Voice Selector (All Curated Voices, Jenny Default) */}
             <div className="flex items-center gap-2 bg-slate-950/70 border border-slate-700/80 rounded-xl px-2.5 py-1 text-xs">
               <span className="text-[#DFD5C3] hidden sm:inline font-serif">Voice:</span>
               <select
-                value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'gemini-Kore'}
+                value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'persona-jenny'}
                 onChange={(e) => handleVoiceSelect(e.target.value)}
                 aria-label="Select Church History narrator voice"
                 className="bg-transparent text-[#FBF9F5] font-serif font-semibold text-xs focus:outline-none cursor-pointer pr-1"
               >
                 {CURATED_SANCTUM_VOICES.map((v) => (
                   <option key={v.id} value={v.id} className="bg-slate-900 text-[#FBF9F5]">
-                    {v.id === 'gemini-Kore' ? 'Kore (Default)' : v.shortName}
+                    {v.id === 'persona-jenny' ? 'Jenny (Default)' : v.shortName}
                   </option>
                 ))}
               </select>

@@ -53,7 +53,7 @@ export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps>
   const [newName, setNewName] = useState('');
   const [newCategory, setNewCategory] = useState<PrayerCategory>('Healing');
 
-  // Prayers Treasury state — uses unified 13-voice verified catalog (Kore default)
+  // Prayers Treasury state — uses unified verified voice catalog (Jenny default)
   const TREASURY_LEADER_OPTIONS = CURATED_SANCTUM_VOICES;
 
   const [selectedPrayer, setSelectedPrayer] = useState<CatholicPrayer>(CATHOLIC_PRAYERS_DATABASE[1]); // Our Father
@@ -64,12 +64,20 @@ export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps>
   const [speakingPrayerId, setSpeakingPrayerId] = useState<string | null>(null);
   const [treasuryLeaderVoice, setTreasuryLeaderVoice] = useState<string>(() => {
     if (typeof localStorage !== 'undefined') {
+      const migrated = localStorage.getItem('soul_sanctum_treasury_jenny_v1');
       const saved = localStorage.getItem('soul_sanctum_treasury_prayer_leader');
+      if (!migrated) {
+        localStorage.setItem('soul_sanctum_treasury_jenny_v1', '1');
+        if (!saved || saved === 'gemini-Kore' || saved === 'Kore') {
+          localStorage.setItem('soul_sanctum_treasury_prayer_leader', 'persona-jenny');
+          return 'persona-jenny';
+        }
+      }
       if (saved && TREASURY_LEADER_OPTIONS.some(v => v.id === saved)) {
         return saved;
       }
     }
-    return 'gemini-Kore';
+    return 'persona-jenny';
   });
   const treasuryStripRef = useRef<HTMLDivElement>(null);
 
@@ -322,7 +330,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 >
                   {TREASURY_LEADER_OPTIONS.map(opt => (
                     <option key={opt.id} value={opt.id} className="bg-[#1C1008] text-amber-50">
-                      {opt.id === 'gemini-Kore' ? 'Kore (Default)' : opt.shortName}
+                      {opt.id === 'persona-jenny' ? 'Jenny (Default)' : opt.shortName}
                     </option>
                   ))}
                 </select>
