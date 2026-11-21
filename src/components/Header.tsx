@@ -92,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Website Masthead */}
       <div className={`relative z-10 w-full mx-auto pt-6 pb-2.5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7 flex-1 sm:flex-initial flex flex-col ${
         activeEstablishingImageId === 'christ-the-king-main-story'
-          ? 'px-5 sm:px-7 md:px-8 lg:px-10'
+          ? 'px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20'
           : 'max-w-7xl px-5 sm:px-10 md:px-12 lg:px-14'
       }`}>
         {layoutVariant === 'solemn-centered' ? (

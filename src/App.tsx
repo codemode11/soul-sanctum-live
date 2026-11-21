@@ -693,7 +693,7 @@ export default function App() {
               const mottoText = activeScheduledMasthead?.mottoText || 'Pray without ceasing.';
               const mottoCitation = activeScheduledMasthead?.mottoCitation || '1 Thessalonians 5:17';
               return (
-                <div className="w-full mx-auto px-5 sm:px-7 md:px-8 lg:px-10 mt-20 sm:mt-[30vh] md:mt-[33vh] lg:mt-[35vh] pointer-events-auto">
+                <div className="w-full mx-auto px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20 mt-20 sm:mt-[30vh] md:mt-[33vh] lg:mt-[35vh] pointer-events-auto">
                   <div className="pl-14 sm:pl-[72px] max-w-[330px] sm:max-w-[380px] text-left">
                     <div className="flex flex-col">
                       <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
