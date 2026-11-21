@@ -44,6 +44,7 @@ import { PersonalCatholicDashboardView } from './components/PersonalCatholicDash
 import { InMemoriamView } from './components/InMemoriamView';
 import { PodcastEpisode } from './types';
 import { getTopVaticanHeadline } from './data/news';
+import { applySeoMetadata, getInitialTabFromLocation } from './utils/seo';
 import { SacredReader } from './utils/speech';
 import {
   CatholicArticleItem,
@@ -80,7 +81,7 @@ export default function App() {
   const [currentDateStr, setCurrentDateStr] = useState<string>(() => {
     return getTodayDateStr();
   });
-  const [activeTab, setActiveTab] = useState<ActiveTab>('divine-office');
+  const [activeTab, setActiveTab] = useState<ActiveTab>(() => getInitialTabFromLocation());
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isAngelusOpen, setIsAngelusOpen] = useState(false);
   const [isAdorationOpen, setIsAdorationOpen] = useState(false);
@@ -404,6 +405,17 @@ export default function App() {
     setIsAdorationOpen(false);
     setActiveTab(tab);
 
+    if (typeof window !== 'undefined') {
+      const targetPath = `/${tab}`;
+      if (window.location.pathname !== targetPath) {
+        try {
+          window.history.pushState({ tab }, '', targetPath);
+        } catch {
+          // Ignore restricted history mutations in sandboxed embeds
+        }
+      }
+    }
+
     if (mainContentRef.current) {
       const rect = mainContentRef.current.getBoundingClientRect();
       const absoluteTop = rect.top + window.pageYOffset;
@@ -417,6 +429,14 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveTab(getInitialTabFromLocation());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const handleOpenArtFromReadings = (artId: string) => {
     setSelectedArtId(artId);
     handleSelectTab('sacred-art');
@@ -427,6 +447,10 @@ export default function App() {
     (window.location.pathname.startsWith('/dashboard') ||
       new URLSearchParams(window.location.search).has('dashboard') ||
       window.location.hash === '#dashboard');
+
+  useEffect(() => {
+    applySeoMetadata(activeTab, isStandaloneDashboardSite);
+  }, [activeTab, isStandaloneDashboardSite]);
 
   if (isStandaloneDashboardSite) {
     return (
