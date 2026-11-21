@@ -90,7 +90,11 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="relative z-30 text-white bg-transparent flex-1 sm:flex-initial flex flex-col">
       {/* Website Masthead */}
-      <div className="relative z-10 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-4 pb-2.5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7 flex-1 sm:flex-initial flex flex-col">
+      <div className={`relative z-10 w-full mx-auto pt-6 pb-2.5 sm:pt-9 sm:pb-6 md:pt-10 md:pb-7 flex-1 sm:flex-initial flex flex-col ${
+        activeEstablishingImageId === 'christ-the-king-main-story'
+          ? 'px-5 sm:px-7 md:px-8 lg:px-10'
+          : 'max-w-7xl px-5 sm:px-10 md:px-12 lg:px-14'
+      }`}>
         {layoutVariant === 'solemn-centered' ? (
           /* =====================================================================
              SOLEMNITY CENTERED MASTHEAD LAYOUT (FOR SPECIAL FEAST DAYS)
@@ -242,7 +246,11 @@ export const Header: React.FC<HeaderProps> = ({
             
             {/* Brand Lockup Row + Liturgical Day Title Aligned Under Text Column */}
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-3 sm:gap-5">
+              <div className={`flex items-start ${
+                activeEstablishingImageId === 'christ-the-king-main-story'
+                  ? 'gap-3 sm:gap-4'
+                  : 'gap-3 sm:gap-5'
+              }`}>
                 <div 
                   className={`relative flex items-center justify-center w-11 h-11 sm:w-14 sm:h-14 bg-[#120A05] ${activeColorTheme.bgGradient} ${activeFrame.previewClass} overflow-hidden text-amber-100 shrink-0 border border-[#8B5A2B]/70 shadow-[0_4px_20px_rgba(0,0,0,0.9)] mt-0.5 sm:mt-1 select-none`}
                   title={activeEmblem.name}
@@ -286,27 +294,31 @@ export const Header: React.FC<HeaderProps> = ({
                     </h1>
                   </div>
 
-                  <div className="flex flex-col pt-0 -mt-0.5">
-                    <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide drop-shadow-md">
-                      {mottoText}
-                    </span>
-                    <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#D4AF37] tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)] mt-0.5">
-                      {mottoCitation}
-                    </span>
-                  </div>
+                  {activeEstablishingImageId !== 'christ-the-king-main-story' && (
+                    <>
+                      <div className="flex flex-col pt-0 -mt-0.5">
+                        <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide drop-shadow-md">
+                          {mottoText}
+                        </span>
+                        <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#D4AF37] tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.85)] mt-0.5">
+                          {mottoCitation}
+                        </span>
+                      </div>
 
-                  {/* Liturgical Day Title Aligned With Left Text Column */}
-                  <div className="flex flex-col items-start gap-0.5 text-left pt-2">
-                    <span className="font-serif font-bold text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
-                      {mainTitlePart}
-                    </span>
+                      {/* Liturgical Day Title Aligned With Left Text Column */}
+                      <div className="flex flex-col items-start gap-0.5 text-left pt-2">
+                        <span className="font-serif font-bold text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
+                          {mainTitlePart}
+                        </span>
 
-                    {memorialPart && (
-                      <span className="font-serif font-bold not-italic text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
-                        {memorialPart}
-                      </span>
-                    )}
-                  </div>
+                        {memorialPart && (
+                          <span className="font-serif font-bold not-italic text-xs sm:text-sm text-white leading-snug whitespace-normal sm:whitespace-nowrap [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.9))]">
+                            {memorialPart}
+                          </span>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -372,7 +384,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               )}
 
-              {onOpenAdoration && activeEstablishingImageId !== 'faith-scholarship-science' && activeEstablishingImageId !== 'pope-leo-peru-homecoming' && activeEstablishingImageId !== 'our-lady-monstrance-connors' && (
+              {onOpenAdoration && activeEstablishingImageId !== 'faith-scholarship-science' && activeEstablishingImageId !== 'pope-leo-peru-homecoming' && activeEstablishingImageId !== 'our-lady-monstrance-connors' && activeEstablishingImageId !== 'christ-the-king-main-story' && (
                 <div className="flex flex-col items-end mt-6 lg:mt-10 max-w-[195px] sm:max-w-[210px] md:max-w-[220px]">
                   <div
                     className="flex flex-col items-end text-right px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-xl bg-black/65 text-amber-200 backdrop-blur-md shadow-2xl w-full border border-white/15"

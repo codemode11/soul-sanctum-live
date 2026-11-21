@@ -101,6 +101,9 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         const idx = list.findIndex(
           a =>
             a.id === initialArticleId ||
+            (initialArticleId === 'catholic-exchange-christ-the-king' &&
+              (a.link?.includes('how-is-christ-the-king-in-your-life') ||
+                a.title.toLowerCase().includes('how is christ the king in your life'))) ||
             (initialArticleId === 'aleteia-peru-homecoming' &&
               (a.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
                 a.title.toLowerCase().includes('what a homecoming')))
@@ -152,6 +155,11 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
           const matchedIdx = result.articles.findIndex(
             a =>
               a.id === targetArticleId ||
+              (targetArticleId === 'catholic-exchange-christ-the-king' ||
+              targetArticleId.includes('how-is-christ-the-king-in-your-life')
+                ? a.link?.includes('how-is-christ-the-king-in-your-life') ||
+                  a.title.toLowerCase().includes('how is christ the king in your life')
+                : false) ||
               (targetArticleId.includes('what-a-homecoming') || targetArticleId === 'aleteia-peru-homecoming'
                 ? a.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
                   a.title.toLowerCase().includes('what a homecoming')

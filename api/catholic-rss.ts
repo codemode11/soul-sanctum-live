@@ -1,4 +1,7 @@
 const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
+  'catholic-exchange': [
+    'https://catholicexchange.com/feed/',
+  ],
   'st-paul-center': [
     'https://catholicexchange.com/feed/',
     'https://www.catholicworldreport.com/feed/',

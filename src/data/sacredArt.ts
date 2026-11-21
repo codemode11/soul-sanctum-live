@@ -15,6 +15,17 @@ export interface NiepokalanowHighResImage {
 
 export const NIEPOKALANOW_HIGH_RES_IMAGES: NiepokalanowHighResImage[] = [
   {
+    id: 'christ-the-king-main-story',
+    title: 'How Is Christ the King in Your Life?',
+    shortLabel: '0. Christ the King of the Universe',
+    resolution: 'High-Res Masthead Artwork',
+    imageUrl: '/assets/aistudio/CHRIST_THE_KING_2_04718613.jpg',
+    description: 'Christ the King crowned in glory, flanked by St. Michael the Archangel and the Blessed Virgin Mary, blessing all the nations assembled before His throne.',
+    attributionText: 'Solemnity of Our Lord Jesus Christ, King of the Universe',
+    attributionUrl: 'https://catholicexchange.com/how-is-christ-the-king-in-your-life/',
+    objectPosition: '50% 18%'
+  },
+  {
     id: 'our-lady-monstrance-connors',
     title: 'Our Lady’s Call to Prayer, Penance, and Devotion to the Most Blessed Sacrament',
     shortLabel: '0. Our Lady & Most Blessed Sacrament Monstrance',

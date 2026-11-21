@@ -27,6 +27,15 @@ export interface CatholicArticleItem {
 
 export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
   {
+    id: 'catholic-exchange',
+    name: 'Catholic Exchange',
+    shortName: 'Catholic Exchange',
+    rssUrl: 'https://catholicexchange.com/feed/',
+    websiteUrl: 'https://catholicexchange.com',
+    tagline: 'Catholic spirituality, Scripture reflections, and daily Christian living',
+    location: 'United States'
+  },
+  {
     id: 'st-paul-center',
     name: 'St. Paul Center',
     shortName: 'St. Paul Center',
@@ -628,6 +637,66 @@ When humanity forgets that its existence, reason, and relational capacity are gi
     imageUrl: 'https://churchlifejournal.nd.edu/assets/686581/1900px_gozzoli_augustine_teaching_rhetoric_in_rome.jpg',
     categories: ['Theology', 'Magisterium', 'St. Augustine', 'University of Notre Dame'],
     isFullContentLoaded: true
+  },
+  // Catholic Exchange — Featured Main Story
+  {
+    id: 'catholic-exchange-christ-the-king',
+    sourceId: 'catholic-exchange',
+    sourceName: 'Catholic Exchange',
+    title: 'How Is Christ the King in Your Life?',
+    author: 'Carolyn McKinney',
+    publishedDate: 'November 20, 2026',
+    readTime: '6 min read',
+    summary: 'In Sunday’s Gospel, Jesus turns from parable to prophecy. How have the parables prepared us for this prophecy on the Solemnity of Christ the King?',
+    content: `In Sunday’s Gospel, Jesus turns from parable to prophecy. How have the parables prepared us for this prophecy?
+
+Gospel (Read Mt. 25:31–46)
+
+On this Solemnity of Christ the King, the last Sunday of the liturgical calendar, the Church gives us a Gospel reading that looks back and looks ahead (something we often routinely do at the end of our calendar year). Our readings lately in St. Matthew have taught us that Jesus, like the bridegroom and the master in the parables of the virgins and the talents, will return. We have understood from both of them that His return will precipitate an accounting. (Have we been wise? Have we been faithful stewards of His graces?) Here, Jesus describes this future event, no longer using stories to make His point.
+
+Yet the lessons from those parables, instructing us to be rich in the good works that come from our faith in Him, pervade His description of it. What in it seems familiar?
+
+First, we notice that in both the parables of the virgins and talents, there was an invitation given. At the wedding feast, after a long delay, a cry went up, “Behold, the bridegroom! Come out to meet him!” (Mt. 25:6). In the parable of the talents, also after a long delay, the faithful servants heard from their master, “Come, share your master’s joy!” (Mt. 25:21). Here, as Jesus describes His return as the Son of Man who sits on a throne (yes, after a long delay), with “all the nations…assembled before Him,” the righteous will hear, “Come, you who are blessed by My Father. Inherit the kingdom prepared for you from the foundation of the world” (Mt. 25:34).
+
+The parables prepared us for this final invitation the Lord will extend to the righteous in “all nations.” Why do they receive the invitation? It is because throughout their lives, in response to their faith in Jesus, they took seriously His teaching about love of neighbor. They understand that true love of God must express itself in true love of neighbor. Any love of God that neglects neighbor is the kind Jesus constantly warned us about in the Gospels, in His many run-ins with the Pharisees. It is empty and hypocritical.
+
+Next, notice that both the righteous and the accursed have trouble remembering actually seeing Jesus. They seem to have no sense of having cared for or neglected Him. They simply lived their lives according to their allegiances. The righteous cared about following Jesus and so heeded His words. Jesus counts their actions as having been done for Him, too, so closely does He identify Himself with people for whom He died. The “accursed” neglected or ignored others. Their allegiance was to themselves. They are shocked that in their self-absorption, they were blind to Jesus. In the end, they go to the place of utter, relentless self-absorption, an “eternal punishment.”
+
+What a timely reading this is for us as we end one liturgical year and begin another! We are reminded of the inevitability of Christ’s return and our day of reckoning. We have our imaginations full of the many stories and teachings Jesus has given us in this past year to live our faith in Him, to be doers of the Word, not just hearers. No matter what we find in ourselves as we review our readiness to see Jesus, now is the time to check our allegiance. With Whom do we want to spend eternity? A babe and His mother will soon invite us to the side of a manger. May we be ready to answer their call to “Come!”
+
+Possible response: Lord Jesus, help me to really believe that the best way I can prepare to see You is to see You now in my neighbor.
+
+First Reading (Read Ezek. 34:11–12, 15–17)
+
+This prophecy was written by Ezekiel during the time when Judah was in captivity in Babylon, about 592–570 B.C. Judah was in exile there because of the complete collapse of the kings who sat on David’s throne in Jerusalem. Although there were a few good kings from time to time, most of them broke faith with Israel’s covenant with God, often practicing idolatry and making alliances with foreign powers to protect them from enemies, instead of trusting God. Kings in Israel were supposed to be like the shepherd-king, David, described in Scripture as “a man after God’s own heart” (1 Sam. 13:13–14). By the time of the Exile, so utterly had the kings failed that God vows: “I Myself will look after and tend My sheep.”
+
+The LORD goes on to describe Himself as the Good Shepherd, Who cares lovingly for His sheep, pasturing and protecting them, seeking out the lost and healing the injured. We know, of course, that this is a prophecy of the Incarnation. Jesus, the Son of David and true Shepherd-King, fulfills all these promises made so long ago: “I am the Good Shepherd. The Good Shepherd lays down His life for the sheep” (Jn. 10:11).
+
+Notice that Ezekiel speaks of a coming judgment of the sheep and goats, just as Jesus did in our Gospel reading. The idea of a final judgment was not new in Israel. That is why Jesus, Who called Himself by the same name God gave Ezekiel, “Son of Man,” uses this prophecy to describe the separation of sheep from goats at the end of time. God has long prepared His people for this event in salvation history. He is still preparing us now, if we have ears to hear.
+
+Possible response: Heavenly Father, thank You for not leaving Your sheep without a shepherd. Every bishop’s staff reminds me of Your love.
+
+Psalm (Read Ps. 23:1–3, 5–6)
+
+The psalm picks up the theme of Ezekiel’s prophecy and Jesus’ fulfillment of it: “The LORD is my shepherd; there is nothing I shall want.” How ironic that David, the first shepherd-king of Israel, wrote a beautiful poem that recognized the LORD as his own Shepherd. Even before the Incarnation, David experienced God’s loving kindness and protection in his life, making the comparison with how a good shepherd cares for his sheep. On this Solemnity of Christ the King, let us remember that Jesus will one day return as King over all the nations (He already rules as King in His Church) with a shepherd’s tender heart, and He will call His sheep to “dwell in the house of the LORD for years to come.”
+
+Possible response: The psalm is, itself, a response to our other readings. Read it again prayerfully to make it your own.
+
+Second Reading (Read 1 Cor. 15:20–26, 28)
+
+St. Paul fills out for us some more details of the return of Christ the King at the end of time. He tells us that not only will all those “who belong to Christ” be brought to eternal life, but all God’s enemies will be thoroughly vanquished: “every sovereignty and every authority and power.” The last of His enemies to be destroyed will be death itself.
+
+If we ever wonder why Jesus is taking so long to return, we can surmise that it has something to do with the royal battle happening now that is knocking out His enemies. We might be tempted to think, as we look around us, that it doesn’t look like the kingdom’s enemies are being defeated. However, did it look like sin, death, and the devil had been dealt a mortal blow while Jesus hung on the Cross? Looks can be deceiving.
+
+When all has been accomplished, Jesus will hand over the kingdom to His God and Father. That is when His own will hear the words we long for: “Come, you who are blessed by My Father. Inherit the kingdom prepared for you from the foundation of the world.”
+
+King Jesus, come!
+
+Possible response: Lord Jesus, help me never to doubt the victory of goodness, truth, and life that You have already won.`,
+    link: 'https://catholicexchange.com/how-is-christ-the-king-in-your-life/',
+    imageUrl: '/assets/aistudio/CHRIST_THE_KING_2_04718613.jpg',
+    categories: ['Christ the King', 'Gospel of Matthew', 'Good Shepherd', 'Liturgical Year', 'Prayer & Spirituality'],
+    isFullContentLoaded: true
   }
 ];
 
@@ -733,10 +802,14 @@ export async function fetchCatholicRssFeedWithStatus(
         if (matchedCurated) {
           return {
             ...item,
+            author: matchedCurated.author || item.author,
             readTime: matchedCurated.readTime || item.readTime,
             imageUrl: matchedCurated.imageUrl || item.imageUrl,
             imageCredit: matchedCurated.imageCredit || item.imageCredit,
-            content: matchedCurated.content.length > item.content.length ? matchedCurated.content : item.content,
+            content:
+              matchedCurated.isFullContentLoaded || matchedCurated.content.length > item.content.length
+                ? matchedCurated.content
+                : item.content,
             isFullContentLoaded: matchedCurated.isFullContentLoaded || item.isFullContentLoaded
           };
         }

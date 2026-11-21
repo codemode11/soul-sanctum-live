@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics, type BeforeSendEvent } from '@vercel/analytics/react';
 import { Header } from './components/Header';
 import { Navigation, ActiveTab } from './components/Navigation';
 import { DailyMassReadingsView } from './components/DailyMassReadingsView';
@@ -70,6 +70,53 @@ import { Sparkles } from 'lucide-react';
 import { MaryAndBlessedSacramentIcon, GoldenMonstranceIcon } from './components/SanctumIcons';
 import { NIEPOKALANOW_HIGH_RES_IMAGES, NiepokalanowHighResImage } from './data/sacredArt';
 
+const ANALYTICS_EXCLUDE_STORAGE_KEY = 'sanctum_exclude_analytics';
+
+function syncOwnerAnalyticsExclusion(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const flag = params.get('exclude_me');
+    if (flag === '1' || flag === 'true') {
+      localStorage.setItem(ANALYTICS_EXCLUDE_STORAGE_KEY, 'true');
+      params.delete('exclude_me');
+      const nextSearch = params.toString();
+      const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ''}${window.location.hash}`;
+      window.history.replaceState(null, '', nextUrl);
+      return true;
+    }
+    if (flag === '0' || flag === 'false') {
+      localStorage.removeItem(ANALYTICS_EXCLUDE_STORAGE_KEY);
+      params.delete('exclude_me');
+      const nextSearch = params.toString();
+      const nextUrl = `${window.location.pathname}${nextSearch ? `?${nextSearch}` : ''}${window.location.hash}`;
+      window.history.replaceState(null, '', nextUrl);
+      return false;
+    }
+    return localStorage.getItem(ANALYTICS_EXCLUDE_STORAGE_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+const IS_OWNER_ANALYTICS_EXCLUDED = syncOwnerAnalyticsExclusion();
+
+const analyticsBeforeSend = (event: BeforeSendEvent): BeforeSendEvent | null => {
+  try {
+    if (
+      IS_OWNER_ANALYTICS_EXCLUDED ||
+      localStorage.getItem(ANALYTICS_EXCLUDE_STORAGE_KEY) === 'true' ||
+      event.url.includes('exclude_me=1') ||
+      event.url.includes('exclude_me=true')
+    ) {
+      return null;
+    }
+  } catch {
+    if (IS_OWNER_ANALYTICS_EXCLUDED) return null;
+  }
+  return event;
+};
+
 const getTodayDateStr = () => {
   const now = new Date();
   const year = now.getFullYear();
@@ -94,14 +141,14 @@ export default function App() {
   const [selectedArtId, setSelectedArtId] = useState<string | undefined>(undefined);
   const [activeEstablishingImageId, setActiveEstablishingImageId] = useState<string>(() => {
     try {
-      const stored = localStorage.getItem('sanctum_establishing_image_v7');
+      const stored = localStorage.getItem('sanctum_establishing_image_v8');
       if (!stored) {
-        localStorage.setItem('sanctum_establishing_image_v7', 'our-lady-monstrance-connors');
-        return 'our-lady-monstrance-connors';
+        localStorage.setItem('sanctum_establishing_image_v8', 'christ-the-king-main-story');
+        return 'christ-the-king-main-story';
       }
       return stored;
     } catch {
-      return 'our-lady-monstrance-connors';
+      return 'christ-the-king-main-story';
     }
   });
 
@@ -150,7 +197,7 @@ export default function App() {
   const handleSelectEstablishingImage = (img: NiepokalanowHighResImage) => {
     setActiveEstablishingImageId(img.id);
     try {
-      localStorage.setItem('sanctum_establishing_image_v7', img.id);
+      localStorage.setItem('sanctum_establishing_image_v8', img.id);
     } catch {
       // ignore storage errors
     }
@@ -292,7 +339,7 @@ export default function App() {
   const [activeCatholicArticleSourceId, setActiveCatholicArticleSourceId] = useState<string | null>(null);
   const [activeCatholicArticleId, setActiveCatholicArticleId] = useState<string | null>(null);
   const [featuredMastheadArticle] = useState<CatholicArticleItem>(
-    () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'sign-org-curated-1') || CURATED_CATHOLIC_ARTICLES[0]
+    () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'catholic-exchange-christ-the-king') || CURATED_CATHOLIC_ARTICLES[0]
   );
 
   // Audio state for Catholic Podcasts
@@ -456,7 +503,9 @@ export default function App() {
   if (isStandaloneDashboardSite) {
     return (
       <div className="min-h-screen bg-[#18110C] text-[#24140B] py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
-        <Analytics route="/dashboard" path="/dashboard" debug={false} />
+        {!IS_OWNER_ANALYTICS_EXCLUDED && (
+          <Analytics route="/dashboard" path="/dashboard" debug={false} beforeSend={analyticsBeforeSend} />
+        )}
         <div className="max-w-7xl mx-auto">
           <PersonalCatholicDashboardView
             currentDateStr={currentDateStr}
@@ -470,7 +519,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen relative flex flex-col overflow-x-clip bg-stone-950 text-stone-900 selection:bg-amber-300 selection:text-amber-950">
-      <Analytics route={`/${activeTab}`} path={`/${activeTab}`} debug={false} />
+      {!IS_OWNER_ANALYTICS_EXCLUDED && (
+        <Analytics route={`/${activeTab}`} path={`/${activeTab}`} debug={false} beforeSend={analyticsBeforeSend} />
+      )}
       
       {/* Fixed Full-Website Sacred Sanctum Background: Centered and Enlarged */}
       <div className="fixed inset-0 z-0 select-none pointer-events-none overflow-hidden flex flex-col items-center justify-start px-4 sm:px-6 lg:px-8">
@@ -515,6 +566,23 @@ export default function App() {
               />
               {/* Subtle bottom edge feathering so the priest remains completely visible */}
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
+            </div>
+          ) : activeEstablishingImage.id === 'christ-the-king-main-story' ? (
+            <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
+              <img
+                src={activeEstablishingImage.imageUrl}
+                alt={activeEstablishingImage.title}
+                decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('niepokalanow_white_host_sanctuary.jpg')) {
+                    target.src = '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg';
+                  }
+                }}
+                className="w-full h-full mx-auto object-cover object-[50%_18%] brightness-[0.99] contrast-[1.04] transform-gpu"
+              />
+              {/* Subtle bottom gradient behind Main Story card */}
+              <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-stone-950/85 to-transparent pointer-events-none" />
             </div>
           ) : activeEstablishingImage.id === 'our-lady-monstrance-connors' ? (
             <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
@@ -595,7 +663,9 @@ export default function App() {
       <div className="relative z-10 flex flex-col min-h-screen">
         
         {/* Masthead Section: On mobile, fills viewport down to just above the 5 bottom icons */}
-        <div className="w-full min-h-[calc(100dvh-74px)] sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between pb-3 sm:pb-10">
+        <div className={`w-full min-h-[calc(100dvh-74px)] sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between ${
+          effectiveEstablishingImageId === 'christ-the-king-main-story' ? 'pb-4 sm:pb-6' : 'pb-3 sm:pb-10'
+        }`}>
           {/* Sacred Top Header */}
           <Header
             currentDateStr={currentDateStr}
@@ -613,12 +683,50 @@ export default function App() {
             scheduledMasthead={activeScheduledMasthead}
           />
 
-          {/* Main Story: Featured Catholic Article Masthead Dispatch (stacked right below the Date banner and slightly above the 5 bottom icons on mobile) */}
-          <div className={`max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-0 ${
-            effectiveEstablishingImageId === 'our-lady-monstrance-connors'
-              ? 'mt-3 sm:mt-6 md:mt-8 lg:mt-10'
-              : 'sm:mt-64 md:mt-72 lg:mt-80'
-          }`}>
+          {/* Lower Masthead: Transferred Motto & Liturgical Day (aligned with Soul Sanctum around St. Michael's knees) + Lowered Main Story Card */}
+          <div className="w-full flex flex-col">
+            {effectiveEstablishingImageId === 'christ-the-king-main-story' && (!activeScheduledMasthead || activeScheduledMasthead.layoutVariant === 'classic-split') && (() => {
+              const cleanLiturgicalTitle = currentMassReading.liturgicalDay.replace(/\s*\(Blessed Virgin Mary on Saturday\)/gi, '').trim();
+              const hasMemorialSplit = cleanLiturgicalTitle.includes(' / ');
+              const mainTitlePart = hasMemorialSplit ? cleanLiturgicalTitle.split(' / ')[0] : cleanLiturgicalTitle;
+              const memorialPart = hasMemorialSplit ? cleanLiturgicalTitle.split(' / ')[1] : null;
+              const mottoText = activeScheduledMasthead?.mottoText || 'Pray without ceasing.';
+              const mottoCitation = activeScheduledMasthead?.mottoCitation || '1 Thessalonians 5:17';
+              return (
+                <div className="w-full mx-auto px-5 sm:px-7 md:px-8 lg:px-10 mt-20 sm:mt-[30vh] md:mt-[33vh] lg:mt-[35vh] pointer-events-auto">
+                  <div className="pl-14 sm:pl-[72px] max-w-[330px] sm:max-w-[380px] text-left">
+                    <div className="flex flex-col">
+                      <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                        {mottoText}
+                      </span>
+                      <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#E8C55A] tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_6px_rgba(0,0,0,0.95))] mt-0.5">
+                        {mottoCitation}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-start gap-0.5 text-left pt-2">
+                      <span className="font-serif font-bold text-xs sm:text-sm text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                        {mainTitlePart}
+                      </span>
+                      {memorialPart && (
+                        <span className="font-serif font-bold not-italic text-xs sm:text-sm text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                          {memorialPart}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Main Story: Featured Catholic Article Masthead Dispatch */}
+            <div className={`max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-0 ${
+              effectiveEstablishingImageId === 'christ-the-king-main-story'
+                ? 'mt-20 sm:mt-[24vh] md:mt-[26vh] lg:mt-[28vh]'
+                : effectiveEstablishingImageId === 'our-lady-monstrance-connors'
+                  ? 'mt-3 sm:mt-6 md:mt-8 lg:mt-10'
+                  : 'sm:mt-64 md:mt-72 lg:mt-80'
+            }`}>
             <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/30 sm:bg-black/40 hover:bg-black/50 border border-amber-500/45 hover:border-amber-400 text-amber-100 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.55)] transition-all py-3.5 px-4 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
@@ -647,14 +755,21 @@ export default function App() {
               </h2>
 
               {/* Subtitle & Call to Action */}
-              <p className="text-xs sm:text-sm md:text-base text-stone-100 font-serif italic max-w-3xl mx-auto leading-relaxed pt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] line-clamp-2">
-                {featuredMastheadArticle.summary}
+              <p className="text-xs sm:text-sm md:text-base text-stone-100 font-serif italic max-w-4xl mx-auto leading-relaxed pt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                {featuredMastheadArticle.summary.endsWith(' on the Solemnity of Christ the King?') ? (
+                  <>
+                    <span>{featuredMastheadArticle.summary.slice(0, -' on the Solemnity of Christ the King?'.length)}</span>
+                    <span className="block">on the Solemnity of Christ the King?</span>
+                  </>
+                ) : (
+                  featuredMastheadArticle.summary
+                )}
               </p>
 
               <div className="pt-1.5 sm:pt-2 flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center gap-2.5 md:gap-3">
                 <div className="hidden md:block" aria-hidden="true" />
                 <span className="text-[11px] sm:text-xs font-serif text-amber-200/90 text-center">
-                  By {featuredMastheadArticle.author} • {featuredMastheadArticle.publishedDate}
+                  by {featuredMastheadArticle.author}
                 </span>
                 <div className="w-full md:w-auto flex justify-end md:justify-self-end">
                   <button
@@ -679,6 +794,7 @@ export default function App() {
                 </span>
               </div>
             )}
+            </div>
           </div>
         </div>
 
