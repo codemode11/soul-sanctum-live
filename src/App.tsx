@@ -581,8 +581,8 @@ export default function App() {
                 }}
                 className="w-full h-full mx-auto object-cover object-[50%_18%] brightness-[0.99] contrast-[1.04] transform-gpu"
               />
-              {/* Subtle bottom gradient behind Main Story card */}
-              <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-stone-950/85 to-transparent pointer-events-none" />
+              {/* Light bottom edge feathering so the people's heads remain clearly visible */}
+              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-stone-950/35 to-transparent pointer-events-none" />
             </div>
           ) : activeEstablishingImage.id === 'our-lady-monstrance-connors' ? (
             <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
@@ -663,8 +663,10 @@ export default function App() {
       <div className="relative z-10 flex flex-col min-h-screen">
         
         {/* Masthead Section: On mobile, fills viewport down to just above the 5 bottom icons */}
-        <div className={`w-full min-h-[calc(100dvh-74px)] sm:min-h-[92vh] lg:min-h-screen flex flex-col justify-between ${
-          effectiveEstablishingImageId === 'christ-the-king-main-story' ? 'pb-4 sm:pb-6' : 'pb-3 sm:pb-10'
+        <div className={`w-full flex flex-col justify-between ${
+          effectiveEstablishingImageId === 'christ-the-king-main-story'
+            ? 'min-h-[calc(100dvh-74px)] sm:min-h-[100dvh] pb-3 sm:pb-4'
+            : 'min-h-[calc(100dvh-74px)] sm:min-h-[92vh] lg:min-h-screen pb-3 sm:pb-10'
         }`}>
           {/* Sacred Top Header */}
           <Header
@@ -683,8 +685,8 @@ export default function App() {
             scheduledMasthead={activeScheduledMasthead}
           />
 
-          {/* Lower Masthead: Transferred Motto & Liturgical Day (aligned with Soul Sanctum around St. Michael's knees) + Lowered Main Story Card */}
-          <div className="w-full flex flex-col">
+          {/* Lower Masthead: Transferred Motto & Liturgical Day (aligned with Soul Sanctum around St. Michael's knees) + Semi-Transparent Main Story Card */}
+          <div className={effectiveEstablishingImageId === 'christ-the-king-main-story' ? 'w-full mt-auto flex flex-col' : 'w-full flex flex-col'}>
             {effectiveEstablishingImageId === 'christ-the-king-main-story' && (!activeScheduledMasthead || activeScheduledMasthead.layoutVariant === 'classic-split') && (() => {
               const cleanLiturgicalTitle = currentMassReading.liturgicalDay.replace(/\s*\(Blessed Virgin Mary on Saturday\)/gi, '').trim();
               const hasMemorialSplit = cleanLiturgicalTitle.includes(' / ');
@@ -693,7 +695,7 @@ export default function App() {
               const mottoText = activeScheduledMasthead?.mottoText || 'Pray without ceasing.';
               const mottoCitation = activeScheduledMasthead?.mottoCitation || '1 Thessalonians 5:17';
               return (
-                <div className="w-full mx-auto px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20 mt-20 sm:mt-[30vh] md:mt-[33vh] lg:mt-[35vh] pointer-events-auto">
+                <div className="w-full mx-auto px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20 mb-2.5 sm:mb-3 md:mb-4 lg:mb-6 xl:mb-8 pointer-events-auto">
                   <div className="pl-14 sm:pl-[72px] max-w-[330px] sm:max-w-[380px] text-left">
                     <div className="flex flex-col">
                       <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
@@ -722,12 +724,16 @@ export default function App() {
             {/* Main Story: Featured Catholic Article Masthead Dispatch */}
             <div className={`max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 pt-0 ${
               effectiveEstablishingImageId === 'christ-the-king-main-story'
-                ? 'mt-20 sm:mt-[24vh] md:mt-[26vh] lg:mt-[28vh]'
+                ? 'mt-0'
                 : effectiveEstablishingImageId === 'our-lady-monstrance-connors'
                   ? 'mt-3 sm:mt-6 md:mt-8 lg:mt-10'
                   : 'sm:mt-64 md:mt-72 lg:mt-80'
             }`}>
-            <div className="w-full max-w-4xl mx-auto rounded-xl bg-black/30 sm:bg-black/40 hover:bg-black/50 border border-amber-500/45 hover:border-amber-400 text-amber-100 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.55)] transition-all py-3.5 px-4 sm:py-5 sm:px-8 text-center space-y-2 sm:space-y-2.5">
+            <div className={`w-full max-w-4xl mx-auto rounded-xl text-amber-100 transition-all text-center ${
+              effectiveEstablishingImageId === 'christ-the-king-main-story'
+                ? 'bg-black/15 sm:bg-black/18 hover:bg-black/28 border border-amber-400/50 hover:border-amber-300 backdrop-blur-[1px] shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-3 px-4 sm:py-4 sm:px-7 space-y-1.5 sm:space-y-2'
+                : 'bg-black/30 sm:bg-black/40 hover:bg-black/50 border border-amber-500/45 hover:border-amber-400 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.55)] py-3.5 px-4 sm:py-5 sm:px-8 space-y-2 sm:space-y-2.5'
+            }`}>
               <div className="flex items-center justify-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
                 <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
