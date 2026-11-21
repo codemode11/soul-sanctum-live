@@ -277,10 +277,10 @@ export const RECITATION_VOICES: RecitationVoiceOption[] = [
 ];
 
 export const SACRED_FEMALE_PERSONAS: FemaleVoiceProfile[] = [
-  { id: 'persona-ava', name: 'Ava Grace — Gentle Devotional Lector (Gemini)', description: 'Gentle, heartfelt, peaceful female devotional voice', pitch: 1.06, rate: 0.90, voiceKeyword: 'ava' },
-  { id: 'persona-sonia', name: 'Sister Sonia — Cathedral Contemplative Soprano (Gemini)', description: 'Solemn, serene cathedral cadence', pitch: 1.12, rate: 0.88, voiceKeyword: 'sonia' },
-  { id: 'persona-clara', name: 'St. Clare Choir — Soft Meditative Tone (Gemini)', description: 'Hushed, contemplative tone for Eucharistic adoration', pitch: 1.04, rate: 0.87, voiceKeyword: 'clara' },
-  { id: 'persona-grace', name: 'Grace — Warm Narrative Reader (Gemini)', description: 'Warm, expressive voice for Saints and Catholic articles', pitch: 1.05, rate: 0.92, voiceKeyword: 'grace' }
+  { id: 'persona-ava', name: 'Ava Grace — Gentle Devotional Female', description: 'Gentle, heartfelt, peaceful female devotional voice', pitch: 1.06, rate: 0.90, voiceKeyword: 'ava' },
+  { id: 'persona-sonia', name: 'Sister Sonia — Cathedral Contemplative Female', description: 'Poised, serene cathedral cadence', pitch: 1.12, rate: 0.88, voiceKeyword: 'sonia' },
+  { id: 'persona-clara', name: 'Clara — Soft Meditative Female', description: 'Hushed, contemplative tone for Eucharistic adoration', pitch: 1.04, rate: 0.87, voiceKeyword: 'clara' },
+  { id: 'persona-grace', name: 'Grace — Warm Pastoral Narrator', description: 'Warm, expressive voice for Saints and Catholic articles', pitch: 1.05, rate: 0.92, voiceKeyword: 'grace' }
 ];
 
 export interface MaleLectorProfile {
@@ -292,10 +292,173 @@ export interface MaleLectorProfile {
 }
 
 export const SACRED_MALE_LITURGICAL_PERSONAS: MaleLectorProfile[] = [
-  { id: 'liturgical-deacon', name: 'Cathedral Deacon — Solemn Gospel Proclamation (Gemini)', description: 'Solemn, authoritative deacon proclaiming the Gospel', pitch: 0.88, rate: 0.88 },
-  { id: 'liturgical-monk', name: 'Benedictine Abbot — Monastic Lectio Divina (Gemini)', description: 'Deep, unhurried Benedictine cadence', pitch: 0.86, rate: 0.86 },
-  { id: 'liturgical-scholar', name: 'Biblical Scholar — Crisp Theological Reader (Gemini)', description: 'Clear, articulate reader for Catechism and Scripture', pitch: 1.0, rate: 0.94 }
+  { id: 'liturgical-deacon', name: 'Cathedral Deacon — Solemn Gospel Baritone', description: 'Solemn, authoritative deacon proclaiming the Gospel', pitch: 0.88, rate: 0.88 },
+  { id: 'liturgical-monk', name: 'Benedictine Abbot — Monastic Lectio Divina', description: 'Deep, unhurried Benedictine cadence', pitch: 0.86, rate: 0.86 },
+  { id: 'liturgical-scholar', name: 'Biblical Scholar — Crisp Theological Reader', description: 'Clear, articulate reader for Catechism and Scripture', pitch: 1.0, rate: 0.94 }
 ];
+
+export interface CuratedSanctumVoice {
+  id: string;
+  shortName: string;
+  label: string;
+  group: 'default' | 'female' | 'male';
+  gender: 'female' | 'male';
+  description: string;
+}
+
+/**
+ * Unified catalog of verified, distinct voices across Soul Sanctum.
+ * Default website voice: Kore ('gemini-Kore').
+ * Default Holy Gospel voice: Microsoft David ('david', with automatic solemn male fallback on non-Windows devices).
+ */
+export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
+  {
+    id: 'gemini-Kore',
+    shortName: 'Kore',
+    label: 'Kore — Serene Devotional Female (Default)',
+    group: 'default',
+    gender: 'female',
+    description: 'Warm, serene, reverent female Catholic lector (default website voice)',
+  },
+  {
+    id: 'david',
+    shortName: 'Microsoft David',
+    label: 'Microsoft David — Solemn Gospel Lector (Gospel Default)',
+    group: 'default',
+    gender: 'male',
+    description: 'Traditional solemn male Gospel voice (default for Holy Gospel)',
+  },
+  {
+    id: 'persona-ava',
+    shortName: 'Ava Grace',
+    label: 'Ava Grace — Gentle Contemplative Female',
+    group: 'female',
+    gender: 'female',
+    description: 'Gentle, lyrical female devotional voice',
+  },
+  {
+    id: 'persona-sonia',
+    shortName: 'Sister Sonia',
+    label: 'Sister Sonia — Cathedral Contemplative Female',
+    group: 'female',
+    gender: 'female',
+    description: 'Poised, dignified cathedral lector',
+  },
+  {
+    id: 'persona-clara',
+    shortName: 'Clara',
+    label: 'Clara — Soft Meditative Female',
+    group: 'female',
+    gender: 'female',
+    description: 'Delicate, meditative tone for adoration & prayers',
+  },
+  {
+    id: 'persona-grace',
+    shortName: 'Grace',
+    label: 'Grace — Warm Pastoral Narrator',
+    group: 'female',
+    gender: 'female',
+    description: 'Warm, compassionate Catholic narrator',
+  },
+  {
+    id: 'gemini-Zephyr',
+    shortName: 'Zephyr',
+    label: 'Zephyr — Smooth Liturgical Reader',
+    group: 'female',
+    gender: 'female',
+    description: 'Balanced, calm, melodic liturgical reader',
+  },
+  {
+    id: 'liturgical-deacon',
+    shortName: 'Cathedral Deacon',
+    label: 'Cathedral Deacon — Solemn Gospel Baritone',
+    group: 'male',
+    gender: 'male',
+    description: 'Firm, authoritative cathedral deacon voice',
+  },
+  {
+    id: 'liturgical-monk',
+    shortName: 'Benedictine Abbot',
+    label: 'Benedictine Abbot — Deep Monastic Baritone',
+    group: 'male',
+    gender: 'male',
+    description: 'Unhurried, resonant monastic lectio divina voice',
+  },
+  {
+    id: 'liturgical-scholar',
+    shortName: 'Biblical Scholar',
+    label: 'Biblical Scholar — Crisp Theological Reader',
+    group: 'male',
+    gender: 'male',
+    description: 'Lucid, knowledgeable exegete and Catechism reader',
+  },
+  {
+    id: 'gemini-Charon',
+    shortName: 'Charon',
+    label: 'Charon — Deep Monastic Bass',
+    group: 'male',
+    gender: 'male',
+    description: 'Deep, solemn, contemplative monastic bass',
+  },
+  {
+    id: 'gemini-Fenrir',
+    shortName: 'Fenrir',
+    label: 'Fenrir — Resonant Benedictine Baritone',
+    group: 'male',
+    gender: 'male',
+    description: 'Warm, steady resonant baritone reader',
+  },
+  {
+    id: 'gemini-Puck',
+    shortName: 'Puck',
+    label: 'Puck — Expressive Clear Tenor',
+    group: 'male',
+    gender: 'male',
+    description: 'Articulate, clear, expressive tenor voice',
+  },
+];
+
+export function isMaleVoiceKey(voiceKey: string): boolean {
+  if (!voiceKey) return false;
+  if (voiceKey === 'david') return true;
+  const curated = CURATED_SANCTUM_VOICES.find(v => v.id === voiceKey);
+  if (curated) return curated.gender === 'male';
+  if (
+    voiceKey === 'gemini-Charon' ||
+    voiceKey === 'gemini-Fenrir' ||
+    voiceKey === 'gemini-Puck' ||
+    voiceKey === 'gemini-Orus' ||
+    voiceKey === 'gemini-Algenib' ||
+    voiceKey.startsWith('liturgical-') ||
+    voiceKey.startsWith('saint-') ||
+    voiceKey.startsWith('pope-') ||
+    voiceKey.startsWith('venerable-') ||
+    voiceKey.startsWith('cornelius-') ||
+    voiceKey.startsWith('blessed-') ||
+    voiceKey === 'vatican-magisterium' ||
+    voiceKey === 'general-lector'
+  ) {
+    return true;
+  }
+  return false;
+}
+
+export function getVoiceDisplayLabel(voiceKey: string): string {
+  const curated = CURATED_SANCTUM_VOICES.find(v => v.id === voiceKey);
+  if (curated) return curated.label;
+  const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
+  if (saint) return `${saint.saintName} (${saint.title})`;
+  return voiceKey || 'Kore — Serene Devotional Female (Default)';
+}
+
+export function getVoiceShortName(voiceKey: string): string {
+  const curated = CURATED_SANCTUM_VOICES.find(v => v.id === voiceKey);
+  if (curated) return curated.shortName;
+  const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
+  if (saint) return saint.saintName;
+  if (voiceKey.startsWith('gemini-')) return voiceKey.replace('gemini-', '');
+  return voiceKey || 'Kore';
+}
 
 export interface SaintReaderPersona {
   id: string;
@@ -830,10 +993,21 @@ export class SacredReader {
         SacredReader.cachedVoices = window.speechSynthesis.getVoices();
       };
       loadVoices();
-      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      if (typeof window.speechSynthesis.addEventListener === 'function') {
+        window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+      } else if (window.speechSynthesis.onvoiceschanged !== undefined) {
         window.speechSynthesis.onvoiceschanged = loadVoices;
       }
     }
+  }
+
+  private static voiceChangeListeners: ((voiceKey: string) => void)[] = [];
+
+  public static addVoiceChangeListener(listener: (voiceKey: string) => void): () => void {
+    this.voiceChangeListeners.push(listener);
+    return () => {
+      this.voiceChangeListeners = this.voiceChangeListeners.filter(l => l !== listener);
+    };
   }
 
   public static addListener(listener: (speaking: boolean, currentPartId?: string) => void): () => void {
@@ -925,7 +1099,7 @@ export class SacredReader {
 
   private static async speakWithLocalVoiceChunks(
     fullText: string,
-    voice: SpeechSynthesisVoice,
+    voice: SpeechSynthesisVoice | null,
     pitch: number,
     rate: number,
     token: number,
@@ -947,10 +1121,14 @@ export class SacredReader {
           return;
         }
         const utterance = new SpeechSynthesisUtterance(chunks[i]);
-        utterance.voice = voice;
-        utterance.lang = voice.lang || 'en-US';
+        if (voice) {
+          utterance.voice = voice;
+          utterance.lang = voice.lang || 'en-US';
+        } else {
+          utterance.lang = 'en-US';
+        }
         utterance.pitch = pitch;
-        utterance.rate = rate;
+        utterance.rate = Math.max(0.65, Math.min(1.4, rate));
         this.activeUtterance = utterance;
 
         utterance.onstart = () => {
@@ -1043,7 +1221,43 @@ export class SacredReader {
     return chunks;
   }
 
-  private static async fetchServerTtsAudioUrl(chunkText: string, voiceName: string): Promise<string | null> {
+  private static clientTtsBlobCache = new Map<string, Blob>();
+  private static activeObjectUrl: string | null = null;
+
+  private static revokeActiveObjectUrl(): void {
+    if (this.activeObjectUrl) {
+      try {
+        URL.revokeObjectURL(this.activeObjectUrl);
+      } catch {}
+      this.activeObjectUrl = null;
+    }
+  }
+
+  private static dataUrlToBlob(dataUrl: string): Blob | null {
+    try {
+      const commaIdx = dataUrl.indexOf(',');
+      if (commaIdx === -1) return null;
+      const meta = dataUrl.slice(0, commaIdx);
+      const b64 = dataUrl.slice(commaIdx + 1);
+      const mimeMatch = /data:([^;]+)/.exec(meta);
+      const mime = mimeMatch ? mimeMatch[1] : 'audio/wav';
+      const binary = atob(b64);
+      const len = binary.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      return new Blob([bytes], { type: mime });
+    } catch {
+      return null;
+    }
+  }
+
+  private static async fetchServerTtsBlob(chunkText: string, voiceName: string): Promise<Blob | null> {
+    const cacheKey = `${voiceName}::${chunkText}`;
+    const cached = this.clientTtsBlobCache.get(cacheKey);
+    if (cached) return cached;
+
     const customApiKey = typeof localStorage !== 'undefined' ? (localStorage.getItem('sanctum_tts_api_key') || undefined) : undefined;
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
@@ -1058,12 +1272,23 @@ export class SacredReader {
         });
         if (res.ok) {
           const data = await res.json();
-          if (data && data.audioUrl) {
-            return data.audioUrl as string;
+          if (data && data.fallbackWebSpeech) {
+            return null;
+          }
+          if (data && typeof data.audioUrl === 'string' && data.audioUrl.length > 100) {
+            const blob = this.dataUrlToBlob(data.audioUrl);
+            if (blob && blob.size > 100) {
+              if (this.clientTtsBlobCache.size >= 60) {
+                const oldestKey = this.clientTtsBlobCache.keys().next().value;
+                if (oldestKey) this.clientTtsBlobCache.delete(oldestKey);
+              }
+              this.clientTtsBlobCache.set(cacheKey, blob);
+              return blob;
+            }
           }
         }
       } catch {
-        // Retry once on network hiccup
+        // Retry once on transient network hiccup
       }
     }
     return null;
@@ -1081,34 +1306,36 @@ export class SacredReader {
       return false;
     }
 
-    const chunkMaxLen = 950;
+    const chunkMaxLen = 1400;
     const chunks = this.splitIntoSpeechChunks(fullText, chunkMaxLen);
     if (chunks.length === 0) return false;
 
     const saintPersona = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceName);
     const rateMultiplier = saintPersona ? Math.max(0.92, Math.min(1.06, saintPersona.rate / 0.90)) : 1.0;
 
-    // Prefetch first chunk immediately, and pipeline the next chunk while playing
-    let nextUrlPromise: Promise<string | null> | null = this.fetchServerTtsAudioUrl(chunks[0], voiceName);
+    let nextBlobPromise: Promise<Blob | null> | null = this.fetchServerTtsBlob(chunks[0], voiceName);
 
     for (let i = 0; i < chunks.length; i++) {
       await this.waitIfPaused(token);
       if (this.activePlaybackToken !== token) return true;
 
-      const currentUrl = nextUrlPromise ? await nextUrlPromise : await this.fetchServerTtsAudioUrl(chunks[i], voiceName);
+      const currentBlob = nextBlobPromise ? await nextBlobPromise : await this.fetchServerTtsBlob(chunks[i], voiceName);
       await this.waitIfPaused(token);
       if (this.activePlaybackToken !== token) return true;
 
-      // Start prefetching chunk i + 1 in the background while chunk i plays
       if (i + 1 < chunks.length) {
-        nextUrlPromise = this.fetchServerTtsAudioUrl(chunks[i + 1], voiceName);
+        nextBlobPromise = this.fetchServerTtsBlob(chunks[i + 1], voiceName);
       } else {
-        nextUrlPromise = null;
+        nextBlobPromise = null;
       }
 
-      if (!currentUrl) {
+      if (!currentBlob) {
         return false;
       }
+
+      const objectUrl = URL.createObjectURL(currentBlob);
+      this.revokeActiveObjectUrl();
+      this.activeObjectUrl = objectUrl;
 
       const played = await new Promise<boolean>((resolve) => {
         if (this.activePlaybackToken !== token) {
@@ -1118,9 +1345,25 @@ export class SacredReader {
         const audio = this.sharedAudio || new Audio();
         this.sharedAudio = audio;
         this.activeAudioElement = audio;
+
+        // Clear any stale handlers before assigning new source
+        audio.onplay = null;
+        audio.onended = null;
+        audio.onerror = null;
+
         audio.volume = 1.0;
-        audio.src = currentUrl;
+        audio.src = objectUrl;
         audio.playbackRate = Math.max(0.7, Math.min(1.35, this.currentRate * rateMultiplier));
+
+        let settled = false;
+        const finish = (ok: boolean) => {
+          if (settled) return;
+          settled = true;
+          audio.onplay = null;
+          audio.onended = null;
+          audio.onerror = null;
+          resolve(ok);
+        };
 
         audio.onplay = () => {
           if (this.activePlaybackToken !== token) return;
@@ -1129,25 +1372,19 @@ export class SacredReader {
           }
         };
 
-        audio.onended = () => {
-          resolve(true);
-        };
-
-        audio.onerror = () => {
-          resolve(false);
-        };
-
-        if (this.isPausedState) {
-          if (i === 0 && onFirstChunkPlay) {
-            onFirstChunkPlay();
-          }
-          return;
-        }
+        audio.onended = () => finish(true);
+        audio.onerror = () => finish(false);
 
         audio.play().catch(() => {
-          resolve(false);
+          finish(false);
         });
       });
+
+      if (this.activeObjectUrl === objectUrl) {
+        this.revokeActiveObjectUrl();
+      } else {
+        try { URL.revokeObjectURL(objectUrl); } catch {}
+      }
 
       if (!played && this.activePlaybackToken === token) {
         return false;
@@ -1236,6 +1473,7 @@ export class SacredReader {
       SacredReader.pauseTimer = null;
     }
     SacredReader.stopKeepAlive();
+    SacredReader.revokeActiveObjectUrl();
     if (SacredReader.activeAudioElement) {
       try {
         SacredReader.activeAudioElement.onended = null;
@@ -1279,9 +1517,155 @@ export class SacredReader {
   public static setActiveLectorVoiceKey(voiceKey: string): void {
     const finalKey = !voiceKey || voiceKey === 'zira' ? 'gemini-Kore' : voiceKey;
     this.activeSelectedVoiceKey = finalKey;
+    this.selectedRecitationVoiceId = isMaleVoiceKey(finalKey) ? 'david' : 'ava-grace';
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('soul_sanctum_active_voice', finalKey);
+      localStorage.setItem('soul_sanctum_recitation_voice', this.selectedRecitationVoiceId);
     }
+    this.voiceChangeListeners.forEach(cb => cb(finalKey));
+  }
+
+  /**
+   * Returns the human-readable short name of the voice that will proclaim a given liturgical part.
+   * Defaults: Kore for First Reading / Psalm / Second Reading, Microsoft David for the Holy Gospel.
+   */
+  public static getEffectiveVoiceNameForPart(partId?: string | null): string {
+    const activeVoiceKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+    const isExplicitSystem = this.isExplicitInstalledSystemVoice(activeVoiceKey);
+    const isCustomMale = isMaleVoiceKey(activeVoiceKey) && activeVoiceKey !== 'david';
+
+    if (partId === 'gospel') {
+      if (isCustomMale || isExplicitSystem) {
+        return getVoiceShortName(activeVoiceKey);
+      }
+      return 'Microsoft David';
+    }
+    return getVoiceShortName(activeVoiceKey);
+  }
+
+  /**
+   * Play a short voice sample through the unified SacredReader engine (zero race conditions).
+   */
+  public static async previewVoice(
+    voiceKey: string,
+    customText?: string,
+    callbacks?: { onLoading?: () => void; onStart?: () => void; onEnd?: () => void }
+  ): Promise<void> {
+    this.stop();
+    this.unlockSharedAudio();
+    const token = this.activePlaybackToken;
+
+    let sampleText = customText;
+    if (!sampleText) {
+      if (voiceKey === 'david') {
+        sampleText = 'Laudetur Jesus Christus! A reading from the Holy Gospel, proclaimed with Microsoft David.';
+      } else {
+        const shortName = getVoiceShortName(voiceKey);
+        const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
+        if (saint) {
+          sampleText = `${saint.saintName}: "${saint.sampleQuote}"`;
+        } else {
+          sampleText = `Laudetur Jesus Christus! Proclaiming Sacred Scripture with ${shortName}.`;
+        }
+      }
+    }
+
+    const cleanText = prepareLiturgicalTextForSpeech(sampleText);
+    if (!cleanText) {
+      callbacks?.onEnd?.();
+      return;
+    }
+
+    callbacks?.onLoading?.();
+
+    // 1. Microsoft David (installed local Windows/Edge voice, with solemn male neural fallback)
+    if (voiceKey === 'david') {
+      const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
+      if (davidVoice) {
+        const playedDavid = await this.speakWithLocalVoiceChunks(
+          cleanText,
+          davidVoice,
+          1.0,
+          this.currentRate || 0.92,
+          token,
+          () => {
+            if (this.activePlaybackToken === token) {
+              callbacks?.onStart?.();
+            }
+          }
+        );
+        if (playedDavid && this.activePlaybackToken === token) {
+          callbacks?.onEnd?.();
+          return;
+        }
+      }
+      if (this.activePlaybackToken !== token) return;
+      // Fallback to Cathedral Deacon if Microsoft David is unavailable on this OS
+      const playedFallback = await this.playServerTtsSequence(
+        cleanText,
+        'liturgical-deacon',
+        token,
+        () => {
+          if (this.activePlaybackToken === token) callbacks?.onStart?.();
+        }
+      );
+      if (playedFallback && this.activePlaybackToken === token) {
+        this.activeAudioElement = null;
+        callbacks?.onEnd?.();
+        return;
+      }
+    }
+
+    // 2. Explicit installed browser/OS voice
+    if (this.isExplicitInstalledSystemVoice(voiceKey)) {
+      const voiceConfig = this.getVoiceConfigForActiveKey(voiceKey, isMaleVoiceKey(voiceKey) ? 'male' : 'female');
+      await this.speakWithLocalVoiceChunks(
+        cleanText,
+        voiceConfig.voice,
+        voiceConfig.pitch,
+        this.currentRate || voiceConfig.rate,
+        token,
+        () => {
+          if (this.activePlaybackToken === token) callbacks?.onStart?.();
+        }
+      );
+      if (this.activePlaybackToken === token) callbacks?.onEnd?.();
+      return;
+    }
+
+    // 3. Server Gemini 3.8 Neural TTS (cached)
+    const playedServer = await this.playServerTtsSequence(
+      cleanText,
+      voiceKey,
+      token,
+      () => {
+        if (this.activePlaybackToken === token) callbacks?.onStart?.();
+      }
+    );
+
+    if (playedServer) {
+      if (this.activePlaybackToken === token) {
+        this.activeAudioElement = null;
+        callbacks?.onEnd?.();
+      }
+      return;
+    }
+
+    if (this.activePlaybackToken !== token) return;
+
+    // 4. Clean gender-matched local Web Speech fallback
+    const voiceConfig = this.getVoiceConfigForActiveKey(voiceKey, isMaleVoiceKey(voiceKey) ? 'male' : 'female');
+    await this.speakWithLocalVoiceChunks(
+      cleanText,
+      voiceConfig.voice,
+      voiceConfig.pitch,
+      this.currentRate || voiceConfig.rate,
+      token,
+      () => {
+        if (this.activePlaybackToken === token) callbacks?.onStart?.();
+      }
+    );
+    if (this.activePlaybackToken === token) callbacks?.onEnd?.();
   }
 
   public static getVoiceConfigForActiveKey(voiceKey: string, gender: 'female' | 'male'): { voice: SpeechSynthesisVoice | null; pitch: number; rate: number } {
@@ -1701,27 +2085,20 @@ export class SacredReader {
     const cleanText = prepareLiturgicalTextForSpeech(text);
     if (!cleanText) return;
 
-    const activeKey = explicitVoiceKey || this.getActiveLectorVoiceKey() || 'gemini-Kore';
+    // Always honor explicitVoiceKey if provided; otherwise honor the user's chosen global voice
+    // (which defaults to Kore 'gemini-Kore'), unless the caller explicitly requested 'david'.
+    const activeKey = explicitVoiceKey
+      || (voiceOrGenderOrRate === 'david' ? 'david' : this.getActiveLectorVoiceKey())
+      || 'gemini-Kore';
 
-    // Only force local Microsoft David if explicitly requested via 'david' (or global activeKey is 'david' without an explicit non-David voice)
-    const isCustomServerVoice =
-      activeKey.startsWith('gemini-') ||
-      activeKey.startsWith('persona-') ||
-      activeKey.startsWith('liturgical-') ||
-      activeKey.startsWith('saint-');
+    const rateOverride = typeof voiceOrGenderOrRate === 'number'
+      ? voiceOrGenderOrRate
+      : (customRate || this.currentRate || 0.92);
 
-    const shouldUseLocalDavid = explicitVoiceKey
-      ? explicitVoiceKey === 'david'
-      : (
-          voiceOrGenderOrRate === 'david' ||
-          (activeKey === 'david' && voiceOrGenderOrRate !== 'female' && voiceOrGenderOrRate !== 'ava-grace') ||
-          (voiceOrGenderOrRate === 'male' && !isCustomServerVoice)
-        );
-
-    if (shouldUseLocalDavid) {
+    // 1. Microsoft David (local Windows/Edge voice, with solemn male Gemini fallback on non-Windows devices)
+    if (activeKey === 'david') {
       const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
       if (davidVoice) {
-        const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : (customRate || this.currentRate || 0.92);
         const playedDavid = await this.speakWithLocalVoiceChunks(
           cleanText,
           davidVoice,
@@ -1736,23 +2113,43 @@ export class SacredReader {
           return;
         }
       }
+      if (this.activePlaybackToken !== token) return;
+      // Seamless fallback to solemn Cathedral Deacon neural voice if Microsoft David isn't installed
+      const playedDeacon = await this.playServerTtsSequence(
+        cleanText,
+        'liturgical-deacon',
+        token,
+        () => this.notify(true)
+      );
+      if (playedDeacon && this.activePlaybackToken === token) {
+        this.activeAudioElement = null;
+        this.notify(false);
+        if (onEnd) onEnd();
+        return;
+      }
+      if (this.activePlaybackToken !== token) return;
     }
 
-    let targetVoiceKey = activeKey;
-    if (explicitVoiceKey) {
-      targetVoiceKey = explicitVoiceKey === 'david' ? 'liturgical-deacon' : explicitVoiceKey;
-    } else if (voiceOrGenderOrRate === 'david') {
-      targetVoiceKey = 'liturgical-deacon';
-    } else if (voiceOrGenderOrRate === 'male' && !isCustomServerVoice) {
-      targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey) ? activeKey : 'gemini-Charon';
-    } else if (voiceOrGenderOrRate === 'ava-grace' || voiceOrGenderOrRate === 'female') {
-      targetVoiceKey = this.isExplicitInstalledSystemVoice(activeKey)
-        ? activeKey
-        : activeKey.startsWith('gemini-') || activeKey.startsWith('persona-')
-          ? activeKey
-          : 'gemini-Kore';
+    // 2. Explicit installed browser/OS voice
+    if (this.isExplicitInstalledSystemVoice(activeKey)) {
+      const sysConfig = this.getVoiceConfigForActiveKey(activeKey, isMaleVoiceKey(activeKey) ? 'male' : 'female');
+      await this.speakWithLocalVoiceChunks(
+        cleanText,
+        sysConfig.voice,
+        sysConfig.pitch,
+        rateOverride || sysConfig.rate,
+        token,
+        () => this.notify(true)
+      );
+      if (this.activePlaybackToken === token) {
+        this.notify(false);
+        if (onEnd) onEnd();
+      }
+      return;
     }
 
+    // 3. Server Gemini 3.8 Neural TTS
+    const targetVoiceKey = activeKey === 'david' ? 'liturgical-deacon' : activeKey;
     const playedServer = await this.playServerTtsSequence(
       cleanText,
       targetVoiceKey,
@@ -1771,55 +2168,34 @@ export class SacredReader {
 
     if (this.activePlaybackToken !== token) return;
 
-    if (!this.synth && typeof window !== 'undefined') {
-      this.synth = window.speechSynthesis;
-    }
-    if (!this.synth) return;
-
+    // 4. Clean chunked client Web Speech fallback (never cuts off long texts)
     const isMaleTarget =
       voiceOrGenderOrRate === 'male' ||
       voiceOrGenderOrRate === 'david' ||
-      targetVoiceKey === 'david' ||
-      targetVoiceKey === 'gemini-Charon' ||
-      targetVoiceKey === 'gemini-Fenrir' ||
-      targetVoiceKey === 'gemini-Puck' ||
-      targetVoiceKey.startsWith('liturgical-') ||
-      targetVoiceKey.startsWith('saint-');
+      isMaleVoiceKey(targetVoiceKey);
 
     const voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceKey, isMaleTarget ? 'male' : 'female');
-    const rateOverride = typeof voiceOrGenderOrRate === 'number' ? voiceOrGenderOrRate : customRate;
+    await this.speakWithLocalVoiceChunks(
+      cleanText,
+      voiceConfig.voice,
+      voiceConfig.pitch,
+      rateOverride || voiceConfig.rate,
+      token,
+      () => this.notify(true)
+    );
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    if (voiceConfig.voice) utterance.voice = voiceConfig.voice;
-    utterance.pitch = voiceConfig.pitch;
-    utterance.rate = rateOverride || voiceConfig.rate;
-
-    this.activeUtterance = utterance;
-
-    utterance.onstart = () => {
-      this.startKeepAlive();
-      this.notify(true);
-    };
-
-    utterance.onend = () => {
-      this.stopKeepAlive();
+    if (this.activePlaybackToken === token) {
       this.notify(false);
       if (onEnd) onEnd();
-    };
-
-    utterance.onerror = () => {
-      this.stopKeepAlive();
-      this.notify(false);
-      if (onEnd) onEnd();
-    };
-
-    this.synth.speak(utterance);
+    }
   }
 
   /**
-   * Speak multiple parts in sequence, alternating voices per part:
-   * First Reading by Kore (default female voice), Responsorial Psalm by Kore (default female voice),
-   * Holy Gospel by Microsoft David (default male voice).
+   * Speak multiple parts in sequence, alternating voices per liturgical role:
+   * - First Reading, Responsorial Psalm, Second Reading: User's active voice (defaults to Kore 'gemini-Kore').
+   * - The Holy Gospel: Microsoft David by default (when Kore, David, or any female lector is active),
+   *   with seamless fallback to Cathedral Deacon on devices without Microsoft David installed;
+   *   or the user's chosen male neural / installed voice if explicitly selected.
    */
   public static speakLiturgicalSequence(
     parts: SpeechPart[],
@@ -1856,20 +2232,24 @@ export class SacredReader {
         return;
       }
 
-      const isUserMaleServerVoice =
-        activeVoiceKey === 'gemini-Charon' ||
-        activeVoiceKey === 'gemini-Fenrir' ||
-        activeVoiceKey === 'gemini-Puck' ||
-        activeVoiceKey.startsWith('liturgical-') ||
-        activeVoiceKey.startsWith('saint-');
+      const isExplicitSystemVoice = this.isExplicitInstalledSystemVoice(activeVoiceKey);
+      const isCustomMaleServerVoice = isMaleVoiceKey(activeVoiceKey) && activeVoiceKey !== 'david' && !isExplicitSystemVoice;
+      const isGospelPart = currentPart.id === 'gospel' || currentPart.gender === 'male';
 
-      // Use installed Microsoft David for Gospel only when user selected 'david' (or default voice fallback) rather than a custom Gemini male lector
-      if (activeVoiceKey === 'david' || (currentPart.id === 'gospel' && !isUserMaleServerVoice && !this.isExplicitInstalledSystemVoice(activeVoiceKey))) {
-        const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
-        if (davidVoice && activeVoiceKey === 'david') {
+      // 1. Proclaim with installed Microsoft David when:
+      //    - The user selected Microsoft David ('david'), OR
+      //    - This is the Holy Gospel and the user is on default Kore (or any female voice).
+      const shouldUseDavidForPart =
+        activeVoiceKey === 'david' ||
+        (isGospelPart && !isCustomMaleServerVoice && !isExplicitSystemVoice);
+
+      if (shouldUseDavidForPart) {
+        const installedDavid = this.getInstalledDavidVoice();
+        const localDavidOrMale = installedDavid || (activeVoiceKey === 'david' ? this.getVoiceForDavid().voice : null);
+        if (localDavidOrMale) {
           const playedDavid = await this.speakWithLocalVoiceChunks(
             cleanText,
-            davidVoice,
+            localDavidOrMale,
             1.0,
             this.currentRate || 0.92,
             token,
@@ -1892,17 +2272,41 @@ export class SacredReader {
         }
       }
 
-      // Determine voice to use for server TTS (Gemini Neural Voices)
-      let targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
-      if (currentPart.id === 'gospel' || currentPart.gender === 'male') {
-        targetVoiceForPart = isUserMaleServerVoice || this.isExplicitInstalledSystemVoice(activeVoiceKey)
-          ? activeVoiceKey
-          : 'liturgical-deacon';
-      } else {
-        targetVoiceForPart = activeVoiceKey === 'david' ? 'gemini-Kore' : (activeVoiceKey || 'gemini-Kore');
+      // 2. Explicit installed browser/OS voice
+      if (isExplicitSystemVoice) {
+        const sysConfig = this.getVoiceConfigForActiveKey(activeVoiceKey, isGospelPart ? 'male' : 'female');
+        const playedLocal = await this.speakWithLocalVoiceChunks(
+          cleanText,
+          sysConfig.voice,
+          sysConfig.pitch,
+          this.currentRate || sysConfig.rate,
+          token,
+          () => {
+            if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+            this.notify(true, currentPart.id);
+            if (onPartStart) onPartStart(currentPart, index);
+          }
+        );
+        if (playedLocal) {
+          if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+          this.pauseTimer = setTimeout(() => {
+            if (this.isSequenceActive && this.activePlaybackToken === token) {
+              playNext(index + 1);
+            }
+          }, 350);
+          return;
+        }
       }
 
-      // 1. Play via server-side Gemini 3.8 TTS (Kore for First Reading/Psalm) with chunked prefetching
+      // 3. Determine target server Gemini 3.8 Neural voice for this part
+      let targetVoiceForPart = activeVoiceKey || 'gemini-Kore';
+      if (isGospelPart) {
+        // If Microsoft David wasn't installed on this OS/browser, fall back to solemn Cathedral Deacon (Orus)
+        targetVoiceForPart = isCustomMaleServerVoice ? activeVoiceKey : 'liturgical-deacon';
+      } else {
+        targetVoiceForPart = activeVoiceKey === 'david' ? 'liturgical-deacon' : (activeVoiceKey || 'gemini-Kore');
+      }
+
       const playedServer = await this.playServerTtsSequence(
         cleanText,
         targetVoiceForPart,
@@ -1927,48 +2331,27 @@ export class SacredReader {
 
       if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
 
-      // 2. Client Web Speech synthesis fallback
-      if (!this.synth && typeof window !== 'undefined') {
-        this.synth = window.speechSynthesis;
-      }
-      if (!this.synth) {
-        playNext(index + 1);
-        return;
-      }
+      // 4. Clean chunked client Web Speech synthesis fallback
+      const voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceForPart, isGospelPart ? 'male' : 'female');
+      await this.speakWithLocalVoiceChunks(
+        cleanText,
+        voiceConfig.voice,
+        voiceConfig.pitch,
+        this.currentRate || voiceConfig.rate,
+        token,
+        () => {
+          if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+          this.notify(true, currentPart.id);
+          if (onPartStart) onPartStart(currentPart, index);
+        }
+      );
 
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      const voiceConfig = this.getVoiceConfigForActiveKey(targetVoiceForPart, currentPart.gender);
-
-      if (voiceConfig.voice) utterance.voice = voiceConfig.voice;
-      utterance.pitch = voiceConfig.pitch;
-      utterance.rate = voiceConfig.rate;
-
-      this.activeUtterance = utterance;
-
-      utterance.onstart = () => {
-        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
-        this.startKeepAlive();
-        this.notify(true, currentPart.id);
-        if (onPartStart) onPartStart(currentPart, index);
-      };
-
-      utterance.onend = () => {
-        this.stopKeepAlive();
-        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
-        this.pauseTimer = setTimeout(() => {
-          if (this.isSequenceActive && this.activePlaybackToken === token) {
-            playNext(index + 1);
-          }
-        }, 400);
-      };
-
-      utterance.onerror = () => {
-        this.stopKeepAlive();
-        if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
-        playNext(index + 1);
-      };
-
-      this.synth.speak(utterance);
+      if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+      this.pauseTimer = setTimeout(() => {
+        if (this.isSequenceActive && this.activePlaybackToken === token) {
+          playNext(index + 1);
+        }
+      }, 400);
     };
 
     playNext(0);
@@ -2207,8 +2590,37 @@ export class SacredReader {
       }
 
       const isFramingSection = sec.id === 'intro' || sec.id === 'practical-application';
+      const activeGlobalKey = this.getActiveLectorVoiceKey() || 'gemini-Kore';
+
+      if (isFramingSection && activeGlobalKey === 'david') {
+        const davidVoice = this.getInstalledDavidVoice() || this.getVoiceForDavid().voice;
+        if (davidVoice) {
+          const playedDavid = await this.speakWithLocalVoiceChunks(
+            cleanText,
+            davidVoice,
+            1.0,
+            this.currentRate || 0.92,
+            token,
+            () => {
+              if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+              this.notify(true, sec.id);
+              if (onSectionStart) onSectionStart(sec, idx, sections.length);
+            }
+          );
+          if (playedDavid) {
+            if (!this.isSequenceActive || this.activePlaybackToken !== token) return;
+            this.pauseTimer = setTimeout(() => {
+              if (this.isSequenceActive && this.activePlaybackToken === token) {
+                playSection(idx + 1);
+              }
+            }, 450);
+            return;
+          }
+        }
+      }
+
       const voiceKey = isFramingSection
-        ? ((preferredVoice || this.getRecitationVoice()) === 'david' ? 'liturgical-deacon' : 'gemini-Kore')
+        ? (activeGlobalKey === 'david' ? 'liturgical-deacon' : activeGlobalKey)
         : (sec.persona ? sec.persona.id : 'liturgical-scholar');
       const playedServer = await this.playServerTtsSequence(
         cleanText,

@@ -26,7 +26,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { BIBLE_MEMORY_VERSES, BibleFlashcard } from '../data/bibleMemoryVerses';
-import { SacredReader } from '../utils/speech';
+import { SacredReader, CURATED_SANCTUM_VOICES, getVoiceShortName } from '../utils/speech';
 
 type StudyMode = 'flip' | 'cloze' | 'first-letter' | 'scramble';
 type MasteryStatus = 'unlearned' | 'learning' | 'mastered';
@@ -43,12 +43,18 @@ export const BibleFlashcardsView: React.FC = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [copied, setCopied] = useState(false);
   const [fontSize, setFontSize] = useState<'normal' | 'large' | 'xlarge'>('normal');
-  const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
+  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'gemini-Kore');
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
 
-  const handleVoiceSelect = (v: 'ava-grace' | 'david') => {
-    setRecitationVoice(v);
-    SacredReader.setRecitationVoice(v);
+  useEffect(() => {
+    return SacredReader.addVoiceChangeListener((voiceKey) => {
+      setActiveVoiceKey(voiceKey);
+    });
+  }, []);
+
+  const handleVoiceSelect = (voiceKey: string) => {
+    setActiveVoiceKey(voiceKey);
+    SacredReader.setActiveLectorVoiceKey(voiceKey);
     if (isSpeaking) {
       SacredReader.stop();
       setIsSpeaking(false);
@@ -213,7 +219,7 @@ export const BibleFlashcardsView: React.FC = () => {
     } else {
       setIsSpeaking(true);
       const textToRead = `${currentVerse.title}. ${currentVerse.reference}. ${currentVerse.text}`;
-      SacredReader.speak(textToRead, () => setIsSpeaking(false), recitationVoice);
+      SacredReader.speak(textToRead, () => setIsSpeaking(false));
     }
   };
 
@@ -914,39 +920,25 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
                       ? 'bg-[#6B4423] text-white animate-pulse'
                       : 'bg-white hover:bg-[#FAF4EE] text-[#5A381C] border border-stone-200'
                   }`}
-                  title={`Listen to this verse in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
+                  title={`Listen to this verse in ${getVoiceShortName(activeVoiceKey)}`}
                 >
                   {isSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-[#6B4423]" />}
                   <span>{isSpeaking ? 'Stop Audio' : 'Listen Aloud'}</span>
                 </button>
 
-                {/* Recitation Voice Option: Ava Grace (Prioritized) and David */}
-                <div className="inline-flex items-center bg-white border border-stone-200 rounded-xl p-0.5 shadow-xs text-xs">
-                  <button
-                    type="button"
-                    onClick={() => handleVoiceSelect('ava-grace')}
-                    className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer flex items-center gap-1 ${
-                      recitationVoice === 'ava-grace'
-                        ? 'bg-amber-900 text-white font-bold shadow-xs'
-                        : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
-                    }`}
-                    title="Ava Grace (Prioritized Serene Devotional Voice)"
-                  >
-                    <span>Ava Grace</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleVoiceSelect('david')}
-                    className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer flex items-center gap-1 ${
-                      recitationVoice === 'david'
-                        ? 'bg-amber-900 text-white font-bold shadow-xs'
-                        : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
-                    }`}
-                    title="Microsoft David (Traditional Solemn Male Voice)"
-                  >
-                    <span>David</span>
-                  </button>
-                </div>
+                {/* Curated Voice Selector (Kore Default) */}
+                <select
+                  value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'gemini-Kore'}
+                  onChange={(e) => handleVoiceSelect(e.target.value)}
+                  aria-label="Select verse recitation voice"
+                  className="px-2.5 py-1.5 rounded-lg bg-white hover:bg-stone-50 border border-stone-200 shadow-xs text-xs font-serif font-semibold text-stone-800 focus:outline-none focus:ring-1 focus:ring-amber-700 cursor-pointer"
+                >
+                  {CURATED_SANCTUM_VOICES.map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.id === 'gemini-Kore' ? 'Kore (Default)' : v.shortName}
+                    </option>
+                  ))}
+                </select>
 
                 <button
                   onClick={handleCopy}

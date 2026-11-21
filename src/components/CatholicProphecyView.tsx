@@ -158,10 +158,7 @@ export const CatholicProphecyView: React.FC = () => {
       spokenText,
       () => {
         setPlayingId(null);
-      },
-      'female',
-      undefined,
-      'gemini-Kore'
+      }
     );
   };
 
@@ -182,10 +179,7 @@ export const CatholicProphecyView: React.FC = () => {
       spokenText,
       () => {
         setPlayingId(null);
-      },
-      'female',
-      undefined,
-      'gemini-Kore'
+      }
     );
   };
 

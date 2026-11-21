@@ -20,7 +20,9 @@ import { getThreeMonthDailyCommentaries, getDailyGospelCommentaries } from '../d
 import { 
   SacredReader, 
   parseCommentaryBySaints, 
-  CommentarySaintSection 
+  CommentarySaintSection,
+  CURATED_SANCTUM_VOICES,
+  getVoiceShortName,
 } from '../utils/speech';
 import { StructuredCommentaryDisplay } from './StructuredCommentary';
 import { toCurvedQuotes } from '../utils/typography';
@@ -61,15 +63,21 @@ export const CommentaryView: React.FC<CommentaryViewProps> = ({
   const [activeSpeakingSection, setActiveSpeakingSection] = useState<CommentarySaintSection | null>(null);
   const [speakingSectionIndex, setSpeakingSectionIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
+  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'gemini-Kore');
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
   
   const scrollRef = useRef<HTMLDivElement>(null);
   const pillRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  const handleVoiceSelect = (v: 'ava-grace' | 'david') => {
-    setRecitationVoice(v);
-    SacredReader.setRecitationVoice(v);
+  useEffect(() => {
+    return SacredReader.addVoiceChangeListener((voiceKey) => {
+      setActiveVoiceKey(voiceKey);
+    });
+  }, []);
+
+  const handleVoiceSelect = (voiceKey: string) => {
+    setActiveVoiceKey(voiceKey);
+    SacredReader.setActiveLectorVoiceKey(voiceKey);
     if (isReadingAloud) {
       SacredReader.stop();
       setIsReadingAloud(false);
@@ -214,8 +222,7 @@ ${selectedCommentary.practicalApplication}`;
           setIsReadingAloud(false);
           setActiveSpeakingSection(null);
           setIsPaused(false);
-        },
-        recitationVoice
+        }
       );
     }
   };
@@ -378,7 +385,7 @@ ${selectedCommentary.practicalApplication}`;
                       ? 'bg-[#6B4423] text-white animate-pulse'
                       : 'bg-[#5A381C] hover:bg-[#6B4423] text-amber-100 border border-[#8B5A2B]/70'
                   }`}
-                  title={`Listen to Commentary in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
+                  title={`Listen to Commentary in ${getVoiceShortName(activeVoiceKey)}`}
                   aria-label="Listen to Commentary"
                 >
                   {isReadingAloud ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-300" />}
@@ -397,35 +404,21 @@ ${selectedCommentary.practicalApplication}`;
                 )}
               </div>
 
-              {/* 2. Voice */}
+              {/* 2. Voice Selector (All Curated Voices, Kore Default) */}
               <div className="flex items-center gap-1.5 shrink-0">
                 <span className="text-xs font-medium text-stone-600">Voice:</span>
-                <div className="flex items-center bg-stone-200/90 border border-stone-300 rounded-md p-0.5 text-xs">
-                  <button
-                    type="button"
-                    onClick={() => handleVoiceSelect('ava-grace')}
-                    className={`px-2.5 py-1 rounded-sm text-xs font-serif font-medium transition-all cursor-pointer ${
-                      recitationVoice === 'ava-grace'
-                        ? 'bg-[#6B4423] text-white font-bold shadow-xs'
-                        : 'text-stone-700 hover:text-stone-950'
-                    }`}
-                    title="Ava Grace (Prioritized Devotional Voice)"
-                  >
-                    Ava Grace
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleVoiceSelect('david')}
-                    className={`px-2.5 py-1 rounded-sm text-xs font-serif font-medium transition-all cursor-pointer ${
-                      recitationVoice === 'david'
-                        ? 'bg-[#6B4423] text-white font-bold shadow-xs'
-                        : 'text-stone-700 hover:text-stone-950'
-                    }`}
-                    title="Microsoft David (Traditional Solemn Male Voice)"
-                  >
-                    David
-                  </button>
-                </div>
+                <select
+                  value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'gemini-Kore'}
+                  onChange={(e) => handleVoiceSelect(e.target.value)}
+                  aria-label="Select commentary narrator voice"
+                  className="px-2.5 py-1 rounded-md text-xs font-serif font-semibold bg-stone-200/90 hover:bg-stone-200 border border-stone-300 text-stone-900 focus:outline-none focus:ring-1 focus:ring-amber-700 cursor-pointer"
+                >
+                  {CURATED_SANCTUM_VOICES.map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.id === 'gemini-Kore' ? 'Kore (Default)' : v.shortName}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* 3. Text Size */}

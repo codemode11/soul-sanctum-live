@@ -47,13 +47,13 @@ import {
   CountryCatholicData, 
   InterestingChurchFact 
 } from '../data/catholicDemographics';
-import { SacredReader } from '../utils/speech';
+import { SacredReader, CURATED_SANCTUM_VOICES, getVoiceShortName } from '../utils/speech';
 
 type MainSection = 'timeline' | 'councils' | 'demographics' | 'facts';
 
 export const ChurchHistoryInfographicView: React.FC = () => {
   const [activeSection, setActiveSection] = useState<MainSection>('timeline');
-  const [recitationVoice, setRecitationVoice] = useState<'ava-grace' | 'david'>(() => SacredReader.getRecitationVoice());
+  const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'gemini-Kore');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakingItemId, setSpeakingItemId] = useState<string | null>(null);
 
@@ -73,9 +73,15 @@ export const ChurchHistoryInfographicView: React.FC = () => {
   const [factCategory, setFactCategory] = useState<string>('All');
   const [copiedFactId, setCopiedFactId] = useState<string | null>(null);
 
-  const handleVoiceSelect = (v: 'ava-grace' | 'david') => {
-    setRecitationVoice(v);
-    SacredReader.setRecitationVoice(v);
+  React.useEffect(() => {
+    return SacredReader.addVoiceChangeListener((voiceKey) => {
+      setActiveVoiceKey(voiceKey);
+    });
+  }, []);
+
+  const handleVoiceSelect = (voiceKey: string) => {
+    setActiveVoiceKey(voiceKey);
+    SacredReader.setActiveLectorVoiceKey(voiceKey);
     if (isSpeaking) {
       SacredReader.stop();
       setIsSpeaking(false);
@@ -94,7 +100,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
       SacredReader.speak(text, () => {
         setIsSpeaking(false);
         setSpeakingItemId(null);
-      }, recitationVoice);
+      });
     }
   };
 
@@ -165,33 +171,21 @@ export const ChurchHistoryInfographicView: React.FC = () => {
               <span className="text-xs text-[#EAE2D3] font-serif">AD 33 – 2026</span>
             </div>
 
-            {/* Recitation Voice Option */}
-            <div className="flex items-center gap-2 bg-slate-950/60 border border-slate-700/80 rounded-xl p-1 text-xs">
-              <span className="text-[#DFD5C3] pl-1.5 hidden sm:inline font-serif">Recitation:</span>
-              <button
-                type="button"
-                onClick={() => handleVoiceSelect('ava-grace')}
-                className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer flex items-center gap-1 ${
-                  recitationVoice === 'ava-grace'
-                    ? 'bg-[#F4EFE6] text-slate-900 font-bold shadow-xs'
-                    : 'text-[#EAE2D3] hover:text-[#FBF9F5]'
-                }`}
-                title="Ava Grace (Prioritized Devotional Voice)"
+            {/* Recitation Voice Selector (All Curated Voices, Kore Default) */}
+            <div className="flex items-center gap-2 bg-slate-950/70 border border-slate-700/80 rounded-xl px-2.5 py-1 text-xs">
+              <span className="text-[#DFD5C3] hidden sm:inline font-serif">Voice:</span>
+              <select
+                value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'gemini-Kore'}
+                onChange={(e) => handleVoiceSelect(e.target.value)}
+                aria-label="Select Church History narrator voice"
+                className="bg-transparent text-[#FBF9F5] font-serif font-semibold text-xs focus:outline-none cursor-pointer pr-1"
               >
-                <span>Ava Grace</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleVoiceSelect('david')}
-                className={`px-2.5 py-1 rounded-lg font-medium transition-all cursor-pointer flex items-center gap-1 ${
-                  recitationVoice === 'david'
-                    ? 'bg-[#F4EFE6] text-slate-900 font-bold shadow-xs'
-                    : 'text-[#EAE2D3] hover:text-[#FBF9F5]'
-                }`}
-                title="Microsoft David (Traditional Solemn Male Voice)"
-              >
-                <span>David</span>
-              </button>
+                {CURATED_SANCTUM_VOICES.map((v) => (
+                  <option key={v.id} value={v.id} className="bg-slate-900 text-[#FBF9F5]">
+                    {v.id === 'gemini-Kore' ? 'Kore (Default)' : v.shortName}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -421,7 +415,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                                 ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68]'
                                 : 'bg-[#EFE9DC] hover:bg-[#E5DEC9] text-slate-800 border-[#D8CFC0]'
                             }`}
-                            title={`Listen to this event in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
+                            title={`Listen to this event in ${getVoiceShortName(activeVoiceKey)}`}
                           >
                             {isEventSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                             <span className="hidden sm:inline">{isEventSpeaking ? 'Stop' : 'Listen'}</span>
@@ -847,7 +841,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                           ? 'bg-[#334E68] text-[#FBF9F5] border-[#334E68] animate-pulse'
                           : 'bg-[#EFE9DC] hover:bg-[#E5DEC9] text-slate-800 border-[#D8CFC0]'
                       }`}
-                      title={`Listen in ${recitationVoice === 'ava-grace' ? 'Ava Grace' : 'Microsoft David'}`}
+                      title={`Listen in ${getVoiceShortName(activeVoiceKey)}`}
                     >
                       {isFactSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                       <span>{isFactSpeaking ? 'Stop Audio' : 'Listen Aloud'}</span>

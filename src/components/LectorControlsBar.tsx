@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, VolumeX, Pause, Play, Square, Settings2, Mic, User, Gauge, Sparkles, Scroll, ChevronDown, Key, CheckCircle2 } from 'lucide-react';
-import { SacredReader, SACRED_MALE_SAINT_PERSONAS, SACRED_FEMALE_PERSONAS, SACRED_MALE_LITURGICAL_PERSONAS } from '../utils/speech';
+import { Volume2, Pause, Play, Square, Settings2, Mic, User, Gauge, Sparkles, ChevronDown } from 'lucide-react';
+import {
+  SacredReader,
+  CURATED_SANCTUM_VOICES,
+  SACRED_MALE_SAINT_PERSONAS,
+  getVoiceDisplayLabel,
+  getVoiceShortName,
+} from '../utils/speech';
 
 interface LectorControlsBarProps {
   onPlay?: () => void;
@@ -23,196 +29,93 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
   isPaused = false,
   currentPartId,
   className = '',
-  title = 'Sacred Lector Audio Proclamation'
 }) => {
   const [systemVoices, setSystemVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoiceId, setSelectedVoiceId] = useState<string>(() => {
-    if (typeof localStorage !== 'undefined') {
-      const saved = localStorage.getItem('soul_sanctum_active_voice');
-      if (
-        saved &&
-        !saved.toLowerCase().includes('zira') &&
-        !saved.toLowerCase().includes('mark') &&
-        !saved.toLowerCase().includes('kokoro') &&
-        saved !== 'zira'
-      ) {
-        return saved;
-      }
-      localStorage.setItem('soul_sanctum_active_voice', 'gemini-Kore');
-    }
-    return 'gemini-Kore';
+    const active = SacredReader.getActiveLectorVoiceKey();
+    return active || 'gemini-Kore';
   });
-  const [selectedVoiceLabel, setSelectedVoiceLabel] = useState<string>('Kore — Serene Devotional Soprano (Default Female)');
   const [currentRate, setCurrentRate] = useState<number>(() => SacredReader.getPlaybackRate());
   const [showSettings, setShowSettings] = useState(false);
   const [activePlayingVoice, setActivePlayingVoice] = useState<string | null>(null);
   const [isTtsLoading, setIsTtsLoading] = useState<string | null>(null);
 
   useEffect(() => {
-    // Sync SacredReader active lector voice on mount so Kore is guaranteed as the default female voice
+    // Ensure Kore is synchronized as default on mount
     SacredReader.setActiveLectorVoiceKey(selectedVoiceId || 'gemini-Kore');
+
+    const unsubVoice = SacredReader.addVoiceChangeListener((voiceKey) => {
+      setSelectedVoiceId(voiceKey);
+    });
 
     const updateVoices = () => {
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        const excluded = ['mark', 'zira', 'espeak', 'robot', 'klatt', 'mbrola'];
         const voices = window.speechSynthesis
           .getVoices()
-          .filter(v => !v.name.toLowerCase().includes('mark'));
+          .filter(v => !excluded.some(k => v.name.toLowerCase().includes(k)));
         setSystemVoices(voices);
       }
     };
 
     updateVoices();
     if (typeof window !== 'undefined' && window.speechSynthesis) {
-      window.speechSynthesis.onvoiceschanged = updateVoices;
+      if (typeof window.speechSynthesis.addEventListener === 'function') {
+        window.speechSynthesis.addEventListener('voiceschanged', updateVoices);
+      }
     }
+
+    return () => {
+      unsubVoice();
+      if (typeof window !== 'undefined' && window.speechSynthesis && typeof window.speechSynthesis.removeEventListener === 'function') {
+        window.speechSynthesis.removeEventListener('voiceschanged', updateVoices);
+      }
+    };
   }, []);
 
-  const playVoiceSample = async (voiceKey: string, customText?: string) => {
-    // 1. Stop active speech synthesis or audio and synchronously unlock HTMLAudioElement
-    SacredReader.stop();
-    const unlockedAudio = SacredReader.unlockSharedAudio();
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
-
+  const playVoiceSample = (voiceKey: string, customText?: string) => {
     setIsTtsLoading(voiceKey);
     setActivePlayingVoice(null);
 
-    // Get appropriate sample text for previewing the voice
-    let sampleText = customText;
-    if (!sampleText) {
-      if (voiceKey === 'david') {
-        sampleText = `Laudetur Jesus Christus! A reading from the Holy Gospel, proclaimed with Microsoft David.`;
-      } else if (voiceKey.startsWith('gemini-')) {
-        const gName = voiceKey.replace('gemini-', '');
-        sampleText = `Laudetur Jesus Christus! Proclaiming sacred Scripture with the ${gName} voice.`;
-      } else if (voiceKey.startsWith('saint-') || SACRED_MALE_SAINT_PERSONAS.some(s => s.id === voiceKey)) {
-        const saint = SACRED_MALE_SAINT_PERSONAS.find(s => s.id === voiceKey);
-        sampleText = saint ? `${saint.saintName}: "${saint.sampleQuote}"` : 'Laudetur Jesus Christus!';
-      } else if (voiceKey.startsWith('persona-')) {
-        const persona = SACRED_FEMALE_PERSONAS.find(p => p.id === voiceKey);
-        sampleText = persona ? `${persona.name.split('—')[0].trim()}. Proclaiming the holy word in quiet contemplation.` : 'Laudetur Jesus Christus!';
-      } else if (voiceKey.startsWith('liturgical-')) {
-        const lector = SACRED_MALE_LITURGICAL_PERSONAS.find(l => l.id === voiceKey);
-        sampleText = lector ? `${lector.name.split('—')[0].trim()}. A reading from the Holy Gospel.` : 'Laudetur Jesus Christus!';
-      } else {
-        sampleText = `Laudetur Jesus Christus! Proclaiming sacred Scripture.`;
-      }
-    }
-
-    // Check if the user explicitly selected Microsoft David or an installed browser/OS voice
-    const isInstalledLocalVoice =
-      voiceKey === 'david' ||
-      (!voiceKey.startsWith('gemini-') &&
-        !voiceKey.startsWith('persona-') &&
-        !voiceKey.startsWith('liturgical-') &&
-        !voiceKey.startsWith('saint-') &&
-        !SACRED_MALE_SAINT_PERSONAS.some(s => s.id === voiceKey) &&
-        typeof window !== 'undefined' &&
-        'speechSynthesis' in window &&
-        window.speechSynthesis.getVoices().some(v => v.name === voiceKey));
-
-    let playedServerAudio = false;
-    if (!isInstalledLocalVoice) {
-      try {
-        const res = await fetch('/api/tts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: sampleText,
-            voiceName: voiceKey,
-          }),
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.audioUrl) {
-            const audio = unlockedAudio || new Audio();
-            audio.volume = 1.0;
-            audio.src = data.audioUrl;
-            audio.playbackRate = currentRate;
-            audio.onplay = () => {
-              setActivePlayingVoice(voiceKey);
-              setIsTtsLoading(null);
-            };
-            audio.onended = () => setActivePlayingVoice(null);
-            audio.onerror = () => {
-              setActivePlayingVoice(null);
-              setIsTtsLoading(null);
-            };
-            await audio.play();
-            playedServerAudio = true;
-          }
-        }
-      } catch {
-        // Fall back to Web Speech API only if server audio fails
-      }
-    }
-
-    if (!playedServerAudio) {
-      setIsTtsLoading(null);
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(sampleText);
-        const voiceConfig = SacredReader.getVoiceConfigForActiveKey(
-          voiceKey,
-          voiceKey === 'david' ? 'male' : 'female'
-        );
-        if (voiceConfig.voice) utterance.voice = voiceConfig.voice;
-        utterance.pitch = voiceConfig.pitch;
-        utterance.rate = voiceConfig.rate;
-
-        utterance.onstart = () => setActivePlayingVoice(voiceKey);
-        utterance.onend = () => setActivePlayingVoice(null);
-        utterance.onerror = () => setActivePlayingVoice(null);
-
-        window.speechSynthesis.speak(utterance);
-      }
-    }
+    SacredReader.previewVoice(voiceKey, customText, {
+      onLoading: () => {
+        setIsTtsLoading(voiceKey);
+      },
+      onStart: () => {
+        setIsTtsLoading(null);
+        setActivePlayingVoice(voiceKey);
+      },
+      onEnd: () => {
+        setIsTtsLoading((prev) => (prev === voiceKey ? null : prev));
+        setActivePlayingVoice((prev) => (prev === voiceKey ? null : prev));
+      },
+    });
   };
 
   const handleSelectVoiceChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     setSelectedVoiceId(val);
     SacredReader.setActiveLectorVoiceKey(val);
-
-    const geminiMap: Record<string, string> = {
-      'gemini-Kore': 'Kore — Serene Devotional Soprano (Default Female)',
-      'david': 'Microsoft David — Traditional Solemn Lector (Default Male)',
-      'gemini-Puck': 'Puck (Lively Young Tenor)',
-      'gemini-Charon': 'Charon (Deep Monastic Bass)',
-      'gemini-Fenrir': 'Fenrir (Resonant Benedictine Baritone)',
-      'gemini-Zephyr': 'Zephyr (Smooth UK Liturgical Reader)'
-    };
-
-    if (val === 'david') {
-      setSelectedVoiceLabel('Microsoft David — Traditional Solemn Lector (Default Male)');
-      SacredReader.setRecitationVoice('david');
-    } else if (geminiMap[val]) {
-      setSelectedVoiceLabel(geminiMap[val]);
-      SacredReader.setRecitationVoice('ava-grace');
-    } else if (val.startsWith('saint-') || SACRED_MALE_SAINT_PERSONAS.some(p => p.id === val)) {
-      const s = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === val);
-      if (s) setSelectedVoiceLabel(`${s.saintName} (${s.title})`);
-      SacredReader.setRecitationVoice('david');
-    } else if (val.startsWith('persona-')) {
-      const p = SACRED_FEMALE_PERSONAS.find(f => f.id === val);
-      if (p) setSelectedVoiceLabel(p.name);
-      SacredReader.setRecitationVoice('ava-grace');
-      SacredReader.setSelectedFemaleVoiceName(val);
-    } else if (val.startsWith('liturgical-')) {
-      const l = SACRED_MALE_LITURGICAL_PERSONAS.find(m => m.id === val);
-      if (l) setSelectedVoiceLabel(l.name);
-      SacredReader.setRecitationVoice('david');
-    } else {
-      setSelectedVoiceLabel(val);
-    }
-
     playVoiceSample(val);
+  };
+
+  const handleQuickVoiceSelect = (voiceId: string) => {
+    setSelectedVoiceId(voiceId);
+    SacredReader.setActiveLectorVoiceKey(voiceId);
+    playVoiceSample(voiceId);
   };
 
   const handleRateChange = (rate: number) => {
     setCurrentRate(rate);
     SacredReader.setPlaybackRate(rate);
   };
+
+  const defaultVoices = CURATED_SANCTUM_VOICES.filter(v => v.group === 'default');
+  const femaleVoices = CURATED_SANCTUM_VOICES.filter(v => v.group === 'female');
+  const maleVoices = CURATED_SANCTUM_VOICES.filter(v => v.group === 'male');
+
+  const selectedVoiceLabel = getVoiceDisplayLabel(selectedVoiceId);
+  const effectiveVoiceForPart = SacredReader.getEffectiveVoiceNameForPart(currentPartId);
 
   return (
     <div className={`bg-[#1C120C]/95 border border-[#8B5A2B]/60 rounded-xl p-4 sm:p-5 text-[#F7EBE1] shadow-xl backdrop-blur-xl space-y-3.5 ${className}`}>
@@ -223,11 +126,16 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
           <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 text-xs font-serif font-semibold animate-pulse">
             <Mic className="w-3.5 h-3.5 text-amber-300" />
             <span>
-              {currentPartId === 'first-reading' && (isPaused ? 'Lector Paused — First Reading (Kore)' : 'Lector — First Reading (Kore)')}
-              {currentPartId === 'psalm' && (isPaused ? 'Lector Paused — Responsorial Psalm (Kore)' : 'Lector — Responsorial Psalm (Kore)')}
-              {currentPartId === 'second-reading' && (isPaused ? 'Lector Paused — Second Reading (Kore)' : 'Lector — Second Reading (Kore)')}
-              {currentPartId === 'gospel' && (isPaused ? 'Lector Paused — Holy Gospel (Microsoft David)' : 'Lector — Holy Gospel (Microsoft David)')}
-              {!currentPartId && (isPaused ? 'Lector Paused' : 'Lector Proclaiming')}
+              {currentPartId === 'first-reading' &&
+                `${isPaused ? 'Lector Paused' : 'Lector'} — First Reading (${effectiveVoiceForPart})`}
+              {currentPartId === 'psalm' &&
+                `${isPaused ? 'Lector Paused' : 'Lector'} — Responsorial Psalm (${effectiveVoiceForPart})`}
+              {currentPartId === 'second-reading' &&
+                `${isPaused ? 'Lector Paused' : 'Lector'} — Second Reading (${effectiveVoiceForPart})`}
+              {currentPartId === 'gospel' &&
+                `${isPaused ? 'Lector Paused' : 'Lector'} — Holy Gospel (${effectiveVoiceForPart})`}
+              {!currentPartId &&
+                `${isPaused ? 'Lector Paused' : 'Lector Proclaiming'} (${getVoiceShortName(selectedVoiceId)})`}
             </span>
           </div>
         </div>
@@ -301,6 +209,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
           )}
 
           <button
+            type="button"
             onClick={() => setShowSettings(!showSettings)}
             className={`flex items-center gap-1.5 px-3 py-2.5 rounded-lg font-serif text-xs transition-all cursor-pointer border ${
               showSettings
@@ -323,37 +232,34 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
             <select
               value={selectedVoiceId}
               onChange={handleSelectVoiceChange}
+              aria-label="Select website voice"
               className="w-full bg-[#1C120C] text-stone-100 border border-[#8B5A2B]/60 rounded px-2.5 py-1.5 text-xs font-serif focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer appearance-none pr-7"
             >
               <optgroup label="Default Liturgical Voices">
-                <option value="gemini-Kore">Kore — Serene Devotional Soprano (Default Female)</option>
-                <option value="david">Microsoft David — Traditional Solemn Lector (Default Male)</option>
-              </optgroup>
-
-              <optgroup label="AI Prebuilt Voices">
-                <option value="gemini-Puck">Puck — Lively Young Tenor Lector</option>
-                <option value="gemini-Charon">Charon — Deep Monastic Bass</option>
-                <option value="gemini-Fenrir">Fenrir — Resonant Benedictine Baritone</option>
-                <option value="gemini-Zephyr">Zephyr — Smooth UK Liturgical Reader</option>
-              </optgroup>
-
-              <optgroup label="Sacred Devotional Female Personas (Gemini)">
-                {SACRED_FEMALE_PERSONAS.map(p => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
+                {defaultVoices.map(v => (
+                  <option key={v.id} value={v.id}>
+                    {v.label}
                   </option>
                 ))}
               </optgroup>
 
-              <optgroup label="Sacred Male Liturgical Lectors (Gemini)">
-                {SACRED_MALE_LITURGICAL_PERSONAS.map(m => (
-                  <option key={m.id} value={m.id}>
-                    {m.name}
+              <optgroup label="Female Voices">
+                {femaleVoices.map(v => (
+                  <option key={v.id} value={v.id}>
+                    {v.label}
                   </option>
                 ))}
               </optgroup>
 
-              <optgroup label="Church Father & Saint Personas (Gemini)">
+              <optgroup label="Male Voices">
+                {maleVoices.map(v => (
+                  <option key={v.id} value={v.id}>
+                    {v.label}
+                  </option>
+                ))}
+              </optgroup>
+
+              <optgroup label="Church Father & Saint Voices">
                 {SACRED_MALE_SAINT_PERSONAS.filter(s => s.id !== 'general-lector').map(s => (
                   <option key={s.id} value={s.id}>
                     {s.saintName} — {s.timbreDescription}
@@ -363,13 +269,11 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
 
               {systemVoices.length > 0 && (
                 <optgroup label="Device & Browser Installed Voices">
-                  {systemVoices
-                    .filter(v => !v.name.toLowerCase().includes('mark'))
-                    .map(v => (
-                      <option key={v.name} value={v.name}>
-                        {v.name} ({v.lang})
-                      </option>
-                    ))}
+                  {systemVoices.map(v => (
+                    <option key={v.name} value={v.name}>
+                      {v.name} ({v.lang})
+                    </option>
+                  ))}
                 </optgroup>
               )}
             </select>
@@ -385,7 +289,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
             {activePlayingVoice === selectedVoiceId ? (
               <Volume2 className="w-3.5 h-3.5 text-amber-200 animate-pulse" />
             ) : isTtsLoading === selectedVoiceId ? (
-              <span className="w-3 h-3 rounded-full bg-amber-300 animate-spin" />
+              <span className="w-3 h-3 rounded-full border-2 border-amber-300 border-t-transparent animate-spin" />
             ) : (
               <Volume2 className="w-3.5 h-3.5 text-amber-300" />
             )}
@@ -395,7 +299,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
 
       </div>
 
-      {/* Expanded Lector Settings (Rate / Pacing and Quick Prebuilt Badges) */}
+      {/* Expanded Lector Settings (Rate / Pacing and Quick Voice Buttons) */}
       {showSettings && (
         <div className="pt-3 border-t border-[#8B5A2B]/30 space-y-3 text-xs font-serif animate-fadeIn">
           
@@ -412,6 +316,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                 ].map((item) => (
                   <button
                     key={item.rate}
+                    type="button"
                     onClick={() => handleRateChange(item.rate)}
                     className={`px-2.5 py-1 rounded-md text-[11px] transition-all cursor-pointer ${
                       currentRate === item.rate
@@ -426,38 +331,25 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
             </div>
 
             <p className="text-[11px] text-amber-200/80 italic">
-              Selected Lector Persona: <strong className="text-amber-100">{selectedVoiceLabel}</strong>
+              Active Voice: <strong className="text-amber-100">{selectedVoiceLabel}</strong>
             </p>
           </div>
 
-          {/* Liturgical & Prebuilt Voice Quick Buttons */}
+          {/* Curated Voice Quick Buttons */}
           <div className="pt-2.5 border-t border-[#8B5A2B]/40 flex flex-col gap-2">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
                 <span className="text-amber-200 font-cinzel font-semibold text-[11px]">
-                  Voice Quick Buttons:
+                  Quick Voice Selector ({CURATED_SANCTUM_VOICES.length} Voices):
                 </span>
               </div>
               <span className="text-[10px] text-amber-200/80 font-medium">
-                Default Female: Kore • Default Male: Microsoft David
+                Default Voice: Kore · Holy Gospel: Microsoft David
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-1.5">
-              {[
-                { id: 'gemini-Kore', label: 'Kore (Default Female ♀)', fullLabel: 'Kore — Serene Devotional Soprano (Default Female)' },
-                { id: 'persona-ava', label: 'Ava Grace (Devotional ♀)', fullLabel: 'Ava Grace — Gentle Devotional Lector (Gemini)' },
-                { id: 'persona-sonia', label: 'Sister Sonia (Cathedral ♀)', fullLabel: 'Sister Sonia — Cathedral Contemplative Soprano (Gemini)' },
-                { id: 'persona-clara', label: 'St. Clare Choir (Meditative ♀)', fullLabel: 'St. Clare Choir — Soft Meditative Tone (Gemini)' },
-                { id: 'liturgical-deacon', label: 'Cathedral Deacon (Gospel ♂)', fullLabel: 'Cathedral Deacon — Solemn Gospel Proclamation (Gemini)' },
-                { id: 'liturgical-monk', label: 'Benedictine Abbot (Monastic ♂)', fullLabel: 'Benedictine Abbot — Monastic Lectio Divina (Gemini)' },
-                { id: 'gemini-Puck', label: 'Puck (Lively Tenor ♂)', fullLabel: 'Puck — Lively Young Tenor Lector' },
-                { id: 'gemini-Charon', label: 'Charon (Deep Monastic Bass ♂)', fullLabel: 'Charon — Deep Monastic Bass' },
-                { id: 'gemini-Fenrir', label: 'Fenrir (Benedictine Baritone ♂)', fullLabel: 'Fenrir — Resonant Benedictine Baritone' },
-                { id: 'gemini-Zephyr', label: 'Zephyr (Balanced Reader)', fullLabel: 'Zephyr — Smooth Liturgical Reader' },
-                { id: 'saint-augustine', label: 'St. Augustine (Father ♂)', fullLabel: 'St. Augustine of Hippo — Deep Contemplative Baritone' },
-                { id: 'david', label: 'Microsoft David (Local ♂)', fullLabel: 'Microsoft David — Traditional Solemn Lector (Local Device)' },
-              ].map((v) => {
+              {CURATED_SANCTUM_VOICES.map((v) => {
                 const isSelected = selectedVoiceId === v.id;
                 const isPlayingThis = activePlayingVoice === v.id;
                 const isLoadingThis = isTtsLoading === v.id;
@@ -467,12 +359,7 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                     key={v.id}
                     type="button"
                     disabled={isLoadingThis}
-                    onClick={() => {
-                      setSelectedVoiceId(v.id);
-                      SacredReader.setActiveLectorVoiceKey(v.id);
-                      setSelectedVoiceLabel(v.fullLabel);
-                      playVoiceSample(v.id);
-                    }}
+                    onClick={() => handleQuickVoiceSelect(v.id)}
                     className={`px-2.5 py-1 rounded-md text-[11px] font-serif transition-all cursor-pointer border flex items-center gap-1.5 ${
                       isSelected
                         ? 'bg-amber-600 text-white font-bold border-amber-300 shadow-md ring-1 ring-amber-400/50'
@@ -482,16 +369,19 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
                         ? 'bg-[#251710] text-amber-300 border-amber-500/60 animate-pulse'
                         : 'bg-[#120A05] hover:bg-[#3B1E08] text-stone-200 hover:text-amber-200 border-[#8B5A2B]/60 shadow-2xs'
                     }`}
-                    title={`Sample and set ${v.fullLabel}`}
+                    title={`Sample and set ${v.label}`}
                   >
                     {isLoadingThis ? (
-                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-spin" />
+                      <span className="w-2.5 h-2.5 rounded-full border-2 border-amber-300 border-t-transparent animate-spin" />
                     ) : isPlayingThis ? (
                       <Volume2 className="w-3 h-3 text-white animate-pulse" />
                     ) : (
                       <Volume2 className="w-3.5 h-3.5 text-amber-400/80" />
                     )}
-                    <span>{v.label}</span>
+                    <span>
+                      {v.shortName}
+                      {v.id === 'gemini-Kore' ? ' (Default)' : v.id === 'david' ? ' (Gospel)' : ''}
+                    </span>
                   </button>
                 );
               })}
@@ -504,4 +394,3 @@ export const LectorControlsBar: React.FC<LectorControlsBarProps> = ({
     </div>
   );
 };
-

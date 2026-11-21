@@ -24,7 +24,7 @@ import { CatholicPrayer, PrayerRequest, PrayerCategory } from '../types';
 import { CATHOLIC_PRAYERS_DATABASE } from '../data/prayers';
 import { INITIAL_PRAYER_REQUESTS } from '../data/prayerRequests';
 import { bellSynth } from '../utils/audioSynth';
-import { SacredReader } from '../utils/speech';
+import { SacredReader, CURATED_SANCTUM_VOICES } from '../utils/speech';
 
 interface PrayerWallAndTreasuryViewProps {
   initialSection?: 'wall' | 'treasury';
@@ -53,17 +53,8 @@ export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps>
   const [newName, setNewName] = useState('');
   const [newCategory, setNewCategory] = useState<PrayerCategory>('Healing');
 
-  // Prayers Treasury state
-  const TREASURY_LEADER_OPTIONS = [
-    { id: 'gemini-Kore', shortName: 'Kore', label: 'Kore — Serene Devotional Soprano (Default)' },
-    { id: 'persona-ava', shortName: 'Ava Grace', label: 'Ava Grace — Gentle Devotional Voice' },
-    { id: 'persona-sonia', shortName: 'Sister Sonia', label: 'Sister Sonia — Cathedral Contemplative' },
-    { id: 'persona-clara', shortName: 'Clara', label: 'Clara — Adoration & Meditative' },
-    { id: 'gemini-Zephyr', shortName: 'Zephyr', label: 'Zephyr — Peaceful Liturgical Reader' },
-    { id: 'gemini-Charon', shortName: 'Charon', label: 'Charon — Deep Monastic Bass' },
-    { id: 'gemini-Fenrir', shortName: 'Fenrir', label: 'Fenrir — Resonant Benedictine Baritone' },
-    { id: 'liturgical-deacon', shortName: 'Deacon', label: 'Cathedral Deacon — Solemn Proclaimer' },
-  ] as const;
+  // Prayers Treasury state — uses unified 13-voice verified catalog (Kore default)
+  const TREASURY_LEADER_OPTIONS = CURATED_SANCTUM_VOICES;
 
   const [selectedPrayer, setSelectedPrayer] = useState<CatholicPrayer>(CATHOLIC_PRAYERS_DATABASE[1]); // Our Father
   const [prayerSearch, setPrayerSearch] = useState('');
