@@ -51,9 +51,9 @@ interface UnifiedVoiceSpec {
 
 function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
   const exactSpecs: Record<string, UnifiedVoiceSpec> = {
-    // Default Website Voice: Kore (tries Gemini Kore first when quota is available, seamless Edge AvaNeural fallback)
+    // Default Website Voice: Kore (tries Gemini Kore first when quota is available, seamless Edge MichelleNeural fallback)
     'gemini-Kore': {
-      edgeVoice: 'en-US-AvaNeural',
+      edgeVoice: 'en-US-MichelleNeural',
       edgeRate: '-4%',
       edgePitch: '+0Hz',
       geminiVoice: 'Kore',
@@ -62,7 +62,7 @@ function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
       geminiStyle: 'Warm, serene, reverent female Catholic lector reading with clear, gentle cadence',
     },
     Kore: {
-      edgeVoice: 'en-US-AvaNeural',
+      edgeVoice: 'en-US-MichelleNeural',
       edgeRate: '-4%',
       edgePitch: '+0Hz',
       geminiVoice: 'Kore',
@@ -460,7 +460,7 @@ export default async function handler(req: any, res: any) {
     const chosenVoice = voiceName || 'gemini-Kore';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
     const spec = resolveUnifiedVoiceSpec(chosenVoice);
-    const cacheKey = `tts:v7:${chosenVoice}:${cleanText.slice(0, 1200)}`;
+    const cacheKey = `tts:v8:${chosenVoice}:${cleanText.slice(0, 1200)}`;
 
     const cached = vercelTtsCache.get(cacheKey);
     if (cached) {
