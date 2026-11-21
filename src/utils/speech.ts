@@ -331,39 +331,55 @@ export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
   {
     id: 'persona-ava',
     shortName: 'Ava Grace',
-    label: 'Ava Grace — Gentle Contemplative Female',
+    label: 'Ava Grace — Gentle Contemplative Female (US)',
     group: 'female',
     gender: 'female',
-    description: 'Gentle, lyrical female devotional voice',
+    description: 'Gentle, lyrical American female devotional voice',
+  },
+  {
+    id: 'persona-emma',
+    shortName: 'Emma',
+    label: 'Emma — Clear Heartfelt Female (US)',
+    group: 'female',
+    gender: 'female',
+    description: 'Warm, heartfelt American female Scripture reader',
   },
   {
     id: 'persona-sonia',
     shortName: 'Sister Sonia',
-    label: 'Sister Sonia — Cathedral Contemplative Female',
+    label: 'Sister Sonia — British Cathedral Contemplative (UK)',
     group: 'female',
     gender: 'female',
-    description: 'Poised, dignified cathedral lector',
+    description: 'Poised, dignified British cathedral lector',
   },
   {
     id: 'persona-clara',
     shortName: 'Clara',
-    label: 'Clara — Soft Meditative Female',
+    label: 'Clara — Soft Meditative Female (CA)',
     group: 'female',
     gender: 'female',
-    description: 'Delicate, meditative tone for adoration & prayers',
+    description: 'Delicate, meditative Canadian voice for adoration & prayers',
   },
   {
     id: 'persona-grace',
     shortName: 'Grace',
-    label: 'Grace — Warm Pastoral Narrator',
+    label: 'Grace — Warm Irish Pastoral Narrator (IE)',
     group: 'female',
     gender: 'female',
-    description: 'Warm, compassionate Catholic narrator',
+    description: 'Warm, lyrical Irish Catholic narrator',
+  },
+  {
+    id: 'persona-jenny',
+    shortName: 'Jenny',
+    label: 'Jenny — Crisp Articulate Lector (US)',
+    group: 'female',
+    gender: 'female',
+    description: 'Clear, crisp American liturgical narrator',
   },
   {
     id: 'gemini-Zephyr',
     shortName: 'Zephyr',
-    label: 'Zephyr — Smooth Liturgical Reader',
+    label: 'Zephyr — Smooth Liturgical Reader (US)',
     group: 'female',
     gender: 'female',
     description: 'Balanced, calm, melodic liturgical reader',
@@ -371,7 +387,7 @@ export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
   {
     id: 'liturgical-deacon',
     shortName: 'Cathedral Deacon',
-    label: 'Cathedral Deacon — Solemn Gospel Baritone',
+    label: 'Cathedral Deacon — Solemn Gospel Baritone (US)',
     group: 'male',
     gender: 'male',
     description: 'Firm, authoritative cathedral deacon voice',
@@ -379,7 +395,7 @@ export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
   {
     id: 'liturgical-monk',
     shortName: 'Benedictine Abbot',
-    label: 'Benedictine Abbot — Deep Monastic Baritone',
+    label: 'Benedictine Abbot — Warm Monastic Baritone (US)',
     group: 'male',
     gender: 'male',
     description: 'Unhurried, resonant monastic lectio divina voice',
@@ -387,7 +403,7 @@ export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
   {
     id: 'liturgical-scholar',
     shortName: 'Biblical Scholar',
-    label: 'Biblical Scholar — Crisp Theological Reader',
+    label: 'Biblical Scholar — Crisp Theological Reader (US)',
     group: 'male',
     gender: 'male',
     description: 'Lucid, knowledgeable exegete and Catechism reader',
@@ -395,26 +411,34 @@ export const CURATED_SANCTUM_VOICES: CuratedSanctumVoice[] = [
   {
     id: 'gemini-Charon',
     shortName: 'Charon',
-    label: 'Charon — Deep Monastic Bass',
+    label: 'Charon — Deep British Monastic Bass (UK)',
     group: 'male',
     gender: 'male',
-    description: 'Deep, solemn, contemplative monastic bass',
+    description: 'Deep, solemn, contemplative British monastic bass',
   },
   {
     id: 'gemini-Fenrir',
     shortName: 'Fenrir',
-    label: 'Fenrir — Resonant Benedictine Baritone',
+    label: 'Fenrir — British Cathedral Baritone (UK)',
     group: 'male',
     gender: 'male',
-    description: 'Warm, steady resonant baritone reader',
+    description: 'Warm, steady resonant British baritone reader',
   },
   {
     id: 'gemini-Puck',
     shortName: 'Puck',
-    label: 'Puck — Expressive Clear Tenor',
+    label: 'Puck — Expressive Clear Tenor (US)',
     group: 'male',
     gender: 'male',
-    description: 'Articulate, clear, expressive tenor voice',
+    description: 'Articulate, clear, expressive American tenor voice',
+  },
+  {
+    id: 'liturgical-connor',
+    shortName: 'Father Connor',
+    label: 'Father Connor — Pastoral Irish Priest (IE)',
+    group: 'male',
+    gender: 'male',
+    description: 'Warm, gentle Irish pastoral baritone voice',
   },
 ];
 
@@ -1046,13 +1070,14 @@ export class SacredReader {
 
   private static activeAudioElement: HTMLAudioElement | null = null;
   private static sharedAudio: HTMLAudioElement | null = null;
+  private static audioUnlocked = false;
   private static isPausedState = false;
   private static activePlaybackToken = 0;
 
   /**
-   * Synchronously unlocks a shared HTMLAudioElement during the user's click/tap gesture
+   * Synchronously unlocks a shared HTMLAudioElement once per session during a user's click/tap gesture
    * so that subsequent async playback after fetch('/api/tts') is never blocked by browser
-   * autoplay policies (which previously caused a silent catch -> fallback to Microsoft Zira).
+   * autoplay policies and never races with cached Blob audio playback.
    */
   public static unlockSharedAudio(): HTMLAudioElement | null {
     if (typeof window === 'undefined' || typeof Audio === 'undefined') return null;
@@ -1061,19 +1086,25 @@ export class SacredReader {
         this.sharedAudio = new Audio();
         this.sharedAudio.preload = 'auto';
       }
-      // Only play silent unlock frame if not currently playing real audio
-      if (this.sharedAudio.paused || this.sharedAudio.ended || !this.sharedAudio.src) {
-        this.sharedAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+      if (!this.audioUnlocked) {
+        this.audioUnlocked = true;
+        const unlockSrc = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+        this.sharedAudio.src = unlockSrc;
         this.sharedAudio.volume = 0.01;
         const p = this.sharedAudio.play();
         if (p !== undefined) {
           p.then(() => {
-            if (this.sharedAudio && this.sharedAudio.src.startsWith('data:audio/wav;base64,UklGRig')) {
+            if (this.sharedAudio && this.sharedAudio.src === unlockSrc) {
               this.sharedAudio.pause();
               this.sharedAudio.currentTime = 0;
               this.sharedAudio.volume = 1.0;
             }
-          }).catch(() => {});
+          }).catch(() => {
+            this.audioUnlocked = false;
+            if (this.sharedAudio) {
+              this.sharedAudio.volume = 1.0;
+            }
+          });
         }
       }
       return this.sharedAudio;
@@ -1294,6 +1325,53 @@ export class SacredReader {
     return null;
   }
 
+  /**
+   * Splits long passages progressively: a compact first chunk (<= 150 chars) so neural audio starts
+   * speaking in ~1 second, followed by crisp <= 290-char chunks prefetched in the background so
+   * every serverless TTS call finishes rapidly and never approaches timeout limits.
+   */
+  private static splitIntoProgressiveChunks(text: string, firstMaxLen = 150, nextMaxLen = 290): string[] {
+    const cleaned = text.replace(/\s+/g, ' ').trim();
+    if (!cleaned) return [];
+    if (cleaned.length <= firstMaxLen) return [cleaned];
+
+    const sentences = cleaned.match(/[^.!?;]+[.!?;]+|\s*[^.!?;]+$/g) || [cleaned];
+    const chunks: string[] = [];
+    let current = '';
+
+    const currentLimit = () => (chunks.length === 0 ? firstMaxLen : nextMaxLen);
+
+    for (const rawSentence of sentences) {
+      const sentence = rawSentence.trim();
+      if (!sentence) continue;
+      const limit = currentLimit();
+      if ((current + ' ' + sentence).trim().length <= limit) {
+        current = (current + ' ' + sentence).trim();
+      } else {
+        if (current) chunks.push(current);
+        const nextLimit = currentLimit();
+        if (sentence.length <= nextLimit) {
+          current = sentence;
+        } else {
+          const words = sentence.split(' ');
+          let sub = '';
+          for (const w of words) {
+            const wordLimit = currentLimit();
+            if ((sub + ' ' + w).trim().length <= wordLimit) {
+              sub = (sub + ' ' + w).trim();
+            } else {
+              if (sub) chunks.push(sub);
+              sub = w;
+            }
+          }
+          current = sub;
+        }
+      }
+    }
+    if (current) chunks.push(current);
+    return chunks;
+  }
+
   private static async playServerTtsSequence(
     fullText: string,
     voiceName: string,
@@ -1306,8 +1384,7 @@ export class SacredReader {
       return false;
     }
 
-    const chunkMaxLen = 1400;
-    const chunks = this.splitIntoSpeechChunks(fullText, chunkMaxLen);
+    const chunks = this.splitIntoProgressiveChunks(fullText, 150, 290);
     if (chunks.length === 0) return false;
 
     const saintPersona = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceName);
@@ -1353,6 +1430,7 @@ export class SacredReader {
 
         audio.volume = 1.0;
         audio.src = objectUrl;
+        audio.load();
         audio.playbackRate = Math.max(0.7, Math.min(1.35, this.currentRate * rateMultiplier));
 
         let settled = false;
@@ -1375,9 +1453,21 @@ export class SacredReader {
         audio.onended = () => finish(true);
         audio.onerror = () => finish(false);
 
-        audio.play().catch(() => {
-          finish(false);
-        });
+        const attemptPlay = (canRetry: boolean) => {
+          if (this.activePlaybackToken !== token) {
+            finish(true);
+            return;
+          }
+          audio.play().catch((err: any) => {
+            if (canRetry && err?.name === 'AbortError' && this.activePlaybackToken === token) {
+              setTimeout(() => attemptPlay(false), 60);
+              return;
+            }
+            finish(false);
+          });
+        };
+
+        attemptPlay(true);
       });
 
       if (this.activeObjectUrl === objectUrl) {

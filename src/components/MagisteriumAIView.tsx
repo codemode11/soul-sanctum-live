@@ -24,6 +24,7 @@ import {
   searchCatholicInternet,
   synthesizeResearchResponse,
 } from '../utils/catholicInternetResearch';
+import { SacredReader } from '../utils/speech';
 
 export interface MagisterialCitation {
   citedText: string;
@@ -229,9 +230,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
 
   useEffect(() => {
     return () => {
-      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      SacredReader.stop();
     };
   }, []);
 
@@ -288,9 +287,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
   };
 
   const handleNewInquiry = () => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    SacredReader.stop();
     setSpeakingId(null);
     setErrorMessage(null);
     const fresh = createFreshSession();
@@ -327,23 +324,18 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
   };
 
   const handleSpeak = (id: string, text: string) => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     if (speakingId === id) {
-      window.speechSynthesis.cancel();
+      SacredReader.stop();
       setSpeakingId(null);
       return;
     }
-    window.speechSynthesis.cancel();
+    SacredReader.stop();
     const cleanText = text
       .replace(/[*#_`>~]/g, '')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
       .replace(/\n\n+/g, '. ');
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = 0.95;
-    utterance.onend = () => setSpeakingId(null);
-    utterance.onerror = () => setSpeakingId(null);
     setSpeakingId(id);
-    window.speechSynthesis.speak(utterance);
+    SacredReader.speak(cleanText, () => setSpeakingId(null));
   };
 
   const handleSubmit = async (e?: React.FormEvent, overridePrompt?: string) => {

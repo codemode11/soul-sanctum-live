@@ -30,6 +30,7 @@ import {
 } from '../utils/catholicInternetResearch';
 
 import { MagisterialCitation } from './MagisteriumAIView';
+import { SacredReader } from '../utils/speech';
 
 export interface ChatMessage {
   id: string;
@@ -487,9 +488,7 @@ export const CatholicAIAssistantView: React.FC = () => {
   };
 
   const handleStartNewChat = () => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    SacredReader.stop();
     setSpeakingMessageId(null);
     setErrorMessage(null);
 
@@ -500,9 +499,7 @@ export const CatholicAIAssistantView: React.FC = () => {
   };
 
   const handleSelectSession = (session: ChatSession) => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    SacredReader.stop();
     setSpeakingMessageId(null);
     setErrorMessage(null);
     setActiveSessionId(session.id);
@@ -564,35 +561,24 @@ export const CatholicAIAssistantView: React.FC = () => {
   };
 
   const handleSpeak = (id: string, text: string) => {
-    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-
     if (speakingMessageId === id) {
-      window.speechSynthesis.cancel();
+      SacredReader.stop();
       setSpeakingMessageId(null);
       return;
     }
 
-    window.speechSynthesis.cancel();
+    SacredReader.stop();
     const cleanText = text
       .replace(/[*#_`>~]/g, '')
       .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
       .replace(/\n\n+/g, '. ');
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = 0.95;
-    utterance.pitch = 0.98;
-
-    utterance.onend = () => setSpeakingMessageId(null);
-    utterance.onerror = () => setSpeakingMessageId(null);
-
     setSpeakingMessageId(id);
-    window.speechSynthesis.speak(utterance);
+    SacredReader.speak(cleanText, () => setSpeakingMessageId(null));
   };
 
   const handleClearCurrentChat = () => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      window.speechSynthesis.cancel();
-    }
+    SacredReader.stop();
     setSpeakingMessageId(null);
     const resetMsg: ChatMessage = {
       id: `welcome-${Date.now()}`,

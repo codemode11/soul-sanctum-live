@@ -1,7 +1,9 @@
 import { GoogleGenAI } from '@google/genai';
 import OpenAI from 'openai';
+import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
 const vercelTtsCache = new Map<string, { audioUrl: string; voiceName: string; provider: string }>();
+let geminiQuotaCooldownUntil = 0;
 
 function wrapPcm24kMonoToWav(pcmBuffer: Buffer, sampleRate: number = 24000): Buffer {
   const numChannels = 1;
@@ -28,312 +30,414 @@ function wrapPcm24kMonoToWav(pcmBuffer: Buffer, sampleRate: number = 24000): Buf
   return Buffer.concat([header, pcmBuffer]);
 }
 
-function splitTextIntoSentences(text: string, maxChunkLen: number = 190): string[] {
-  const clean = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
-  if (clean.length <= maxChunkLen) return [clean];
-
-  const rawSegments = clean.split(/(?<=[.!?])\s+/);
-  const chunks: string[] = [];
-  let currentChunk = '';
-
-  for (const seg of rawSegments) {
-    if ((currentChunk + ' ' + seg).trim().length <= maxChunkLen) {
-      currentChunk = (currentChunk + ' ' + seg).trim();
-    } else {
-      if (currentChunk) chunks.push(currentChunk);
-      if (seg.length > maxChunkLen) {
-        const clauses = seg.split(/(?<=[,;:—–])\s+/);
-        let clauseChunk = '';
-        for (const c of clauses) {
-          if ((clauseChunk + ' ' + c).trim().length <= maxChunkLen) {
-            clauseChunk = (clauseChunk + ' ' + c).trim();
-          } else {
-            if (clauseChunk) chunks.push(clauseChunk);
-            clauseChunk = c.slice(0, maxChunkLen);
-          }
-        }
-        if (clauseChunk) chunks.push(clauseChunk);
-        currentChunk = '';
-      } else {
-        currentChunk = seg;
-      }
-    }
-  }
-  if (currentChunk) chunks.push(currentChunk);
-  return chunks.filter(c => c.length > 0);
+function escapeXmlForSsml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 }
 
-type VerifiedGeminiPrebuiltVoice =
-  | 'Kore'
-  | 'Aoede'
-  | 'Leda'
-  | 'Vindemiatrix'
-  | 'Despina'
-  | 'Zephyr'
-  | 'Orus'
-  | 'Algenib'
-  | 'Charon'
-  | 'Fenrir'
-  | 'Puck';
-
-interface ResolvedVoiceSpec {
-  prebuiltVoice: VerifiedGeminiPrebuiltVoice;
-  style: string;
+interface UnifiedVoiceSpec {
+  edgeVoice: string;
+  edgeRate?: string;
+  edgePitch?: string;
+  geminiVoice?: 'Kore' | 'Aoede' | 'Leda' | 'Vindemiatrix' | 'Despina' | 'Zephyr' | 'Orus' | 'Algenib' | 'Charon' | 'Fenrir' | 'Puck';
+  geminiStyle: string;
+  preferGeminiFirst?: boolean;
   gender: 'female' | 'male';
 }
 
-function resolveGeminiTtsVoiceSpec(chosenVoice: string): ResolvedVoiceSpec {
-  const exactSpecs: Record<string, ResolvedVoiceSpec> = {
-    // Verified Female Neural Voices
+function resolveUnifiedVoiceSpec(chosenVoice: string): UnifiedVoiceSpec {
+  const exactSpecs: Record<string, UnifiedVoiceSpec> = {
+    // Default Website Voice: Kore (tries Gemini Kore first when quota is available, seamless Edge AvaNeural fallback)
     'gemini-Kore': {
-      prebuiltVoice: 'Kore',
+      edgeVoice: 'en-US-AvaNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Kore',
+      preferGeminiFirst: true,
       gender: 'female',
-      style: 'Warm, serene, reverent female Catholic lector reading with clear, gentle cadence',
+      geminiStyle: 'Warm, serene, reverent female Catholic lector reading with clear, gentle cadence',
     },
     Kore: {
-      prebuiltVoice: 'Kore',
+      edgeVoice: 'en-US-AvaNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Kore',
+      preferGeminiFirst: true,
       gender: 'female',
-      style: 'Warm, serene, reverent female Catholic lector reading with clear, gentle cadence',
+      geminiStyle: 'Warm, serene, reverent female Catholic lector reading with clear, gentle cadence',
     },
+
+    // Female Studio Neural Voices (7 genuinely distinct speakers)
     'persona-ava': {
-      prebuiltVoice: 'Aoede',
+      edgeVoice: 'en-US-AvaNeural',
+      edgeRate: '-5%',
+      edgePitch: '+1Hz',
+      geminiVoice: 'Aoede',
       gender: 'female',
-      style: 'Gentle, heartfelt, melodic female devotional voice praying softly and unhurriedly',
+      geminiStyle: 'Gentle, heartfelt, melodic female devotional voice',
     },
-    'gemini-Aoede': {
-      prebuiltVoice: 'Aoede',
+    'persona-emma': {
+      edgeVoice: 'en-US-EmmaNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Aoede',
       gender: 'female',
-      style: 'Gentle, heartfelt, melodic female devotional voice praying softly and unhurriedly',
+      geminiStyle: 'Clear, heartfelt warm American Catholic reader',
     },
     'persona-sonia': {
-      prebuiltVoice: 'Vindemiatrix',
+      edgeVoice: 'en-GB-SoniaNeural',
+      edgeRate: '-5%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Vindemiatrix',
       gender: 'female',
-      style: 'Poised, gentle, mature cathedral sister reading Sacred Scripture with calm reverence',
-    },
-    'gemini-Vindemiatrix': {
-      prebuiltVoice: 'Vindemiatrix',
-      gender: 'female',
-      style: 'Poised, gentle, mature cathedral sister reading Sacred Scripture with calm reverence',
+      geminiStyle: 'Poised, gentle British cathedral sister reading Sacred Scripture',
     },
     'persona-clara': {
-      prebuiltVoice: 'Leda',
+      edgeVoice: 'en-CA-ClaraNeural',
+      edgeRate: '-6%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Leda',
       gender: 'female',
-      style: 'Soft, delicate, meditative contemplative female voice suited for Eucharistic adoration',
-    },
-    'gemini-Leda': {
-      prebuiltVoice: 'Leda',
-      gender: 'female',
-      style: 'Soft, delicate, meditative contemplative female voice suited for Eucharistic adoration',
+      geminiStyle: 'Soft, delicate, meditative contemplative female voice',
     },
     'persona-grace': {
-      prebuiltVoice: 'Despina',
+      edgeVoice: 'en-IE-EmilyNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Despina',
       gender: 'female',
-      style: 'Warm, smooth, compassionate Catholic narrator telling lives of the saints',
+      geminiStyle: 'Warm, lyrical Irish pastoral narrator',
     },
-    'gemini-Despina': {
-      prebuiltVoice: 'Despina',
+    'persona-jenny': {
+      edgeVoice: 'en-US-JennyNeural',
+      edgeRate: '-3%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Kore',
       gender: 'female',
-      style: 'Warm, smooth, compassionate Catholic narrator telling lives of the saints',
+      geminiStyle: 'Crisp, articulate liturgical narrator',
     },
     'gemini-Zephyr': {
-      prebuiltVoice: 'Zephyr',
+      edgeVoice: 'en-US-AriaNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Zephyr',
       gender: 'female',
-      style: 'Smooth, balanced, peaceful liturgical reader with gentle phrasing',
+      geminiStyle: 'Smooth, balanced, peaceful liturgical reader',
     },
     Zephyr: {
-      prebuiltVoice: 'Zephyr',
+      edgeVoice: 'en-US-AriaNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Zephyr',
       gender: 'female',
-      style: 'Smooth, balanced, peaceful liturgical reader with gentle phrasing',
+      geminiStyle: 'Smooth, balanced, peaceful liturgical reader',
     },
 
-    // Verified Male Neural Voices
+    // Male Studio Neural Voices (7 genuinely distinct speakers)
     'liturgical-deacon': {
-      prebuiltVoice: 'Orus',
+      edgeVoice: 'en-US-ChristopherNeural',
+      edgeRate: '-6%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Orus',
       gender: 'male',
-      style: 'Firm, solemn, authoritative Catholic cathedral deacon proclaiming the Holy Gospel',
-    },
-    'gemini-Orus': {
-      prebuiltVoice: 'Orus',
-      gender: 'male',
-      style: 'Firm, solemn, authoritative Catholic cathedral deacon proclaiming the Holy Gospel',
+      geminiStyle: 'Firm, solemn Catholic cathedral deacon proclaiming the Holy Gospel',
     },
     'liturgical-monk': {
-      prebuiltVoice: 'Algenib',
+      edgeVoice: 'en-US-AndrewNeural',
+      edgeRate: '-6%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Algenib',
       gender: 'male',
-      style: 'Deep, unhurried, resonant Benedictine abbot reading monastic lectio divina',
-    },
-    'gemini-Algenib': {
-      prebuiltVoice: 'Algenib',
-      gender: 'male',
-      style: 'Deep, unhurried, resonant Benedictine abbot reading monastic lectio divina',
+      geminiStyle: 'Warm, contemplative Benedictine abbot reading monastic lectio divina',
     },
     'liturgical-scholar': {
-      prebuiltVoice: 'Fenrir',
+      edgeVoice: 'en-US-BrianNeural',
+      edgeRate: '-3%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      style: 'Knowledgeable, crisp, lucid Catholic theologian explaining Scripture and doctrine',
+      geminiStyle: 'Crisp, lucid Catholic theologian explaining Scripture and doctrine',
     },
     'gemini-Charon': {
-      prebuiltVoice: 'Charon',
+      edgeVoice: 'en-GB-ThomasNeural',
+      edgeRate: '-7%',
+      edgePitch: '-3Hz',
+      geminiVoice: 'Charon',
       gender: 'male',
-      style: 'Deep, solemn, contemplative monastic bass speaking with reverent authority',
+      geminiStyle: 'Deep, solemn, contemplative British monastic bass',
     },
     Charon: {
-      prebuiltVoice: 'Charon',
+      edgeVoice: 'en-GB-ThomasNeural',
+      edgeRate: '-7%',
+      edgePitch: '-3Hz',
+      geminiVoice: 'Charon',
       gender: 'male',
-      style: 'Deep, solemn, contemplative monastic bass speaking with reverent authority',
+      geminiStyle: 'Deep, solemn, contemplative British monastic bass',
     },
     'gemini-Fenrir': {
-      prebuiltVoice: 'Fenrir',
+      edgeVoice: 'en-GB-RyanNeural',
+      edgeRate: '-5%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      style: 'Warm, resonant Benedictine baritone reading Sacred Scripture steadily',
+      geminiStyle: 'Warm, resonant British cathedral baritone',
     },
     Fenrir: {
-      prebuiltVoice: 'Fenrir',
+      edgeVoice: 'en-GB-RyanNeural',
+      edgeRate: '-5%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      style: 'Warm, resonant Benedictine baritone reading Sacred Scripture steadily',
+      geminiStyle: 'Warm, resonant British cathedral baritone',
     },
     'gemini-Puck': {
-      prebuiltVoice: 'Puck',
+      edgeVoice: 'en-US-GuyNeural',
+      edgeRate: '-2%',
+      edgePitch: '+1Hz',
+      geminiVoice: 'Puck',
       gender: 'male',
-      style: 'Bright, articulate, lively tenor reader with clear theological diction',
+      geminiStyle: 'Expressive, articulate American tenor reader',
     },
     Puck: {
-      prebuiltVoice: 'Puck',
+      edgeVoice: 'en-US-GuyNeural',
+      edgeRate: '-2%',
+      edgePitch: '+1Hz',
+      geminiVoice: 'Puck',
       gender: 'male',
-      style: 'Bright, articulate, lively tenor reader with clear theological diction',
+      geminiStyle: 'Expressive, articulate American tenor reader',
+    },
+    'liturgical-connor': {
+      edgeVoice: 'en-IE-ConnorNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Algenib',
+      gender: 'male',
+      geminiStyle: 'Warm, pastoral Irish priest voice',
     },
 
-    // Church Father & Saint Personas (all mapped to 100%-verified distinct Gemini 3.8 male voices + distinct style prompts)
+    // Church Father & Saint Personas (distributed across 8 distinct neural speakers)
     'saint-thomas-aquinas': {
-      prebuiltVoice: 'Orus',
+      edgeVoice: 'en-US-ChristopherNeural',
+      edgeRate: '-7%',
+      edgePitch: '-3Hz',
+      geminiVoice: 'Orus',
       gender: 'male',
-      style: 'Deep, measured, contemplative medieval Dominican theologian speaking with calm clarity',
+      geminiStyle: 'Deep, measured medieval Dominican theologian',
     },
     'saint-john-chrysostom': {
-      prebuiltVoice: 'Puck',
+      edgeVoice: 'en-US-GuyNeural',
+      edgeRate: '-2%',
+      edgePitch: '+1Hz',
+      geminiVoice: 'Puck',
       gender: 'male',
-      style: 'Eloquent, vibrant golden-mouthed Church Father preaching with spiritual warmth and rhetorical cadence',
+      geminiStyle: 'Eloquent golden-mouthed Church Father',
     },
     'saint-augustine': {
-      prebuiltVoice: 'Algenib',
+      edgeVoice: 'en-US-AndrewNeural',
+      edgeRate: '-7%',
+      edgePitch: '-3Hz',
+      geminiVoice: 'Algenib',
       gender: 'male',
-      style: 'Soulful, gravelly, deeply reflective Latin Church Father speaking with humility and depth',
+      geminiStyle: 'Soulful, deeply reflective Latin Church Father',
     },
     'saint-jerome': {
-      prebuiltVoice: 'Charon',
+      edgeVoice: 'en-GB-ThomasNeural',
+      edgeRate: '-6%',
+      edgePitch: '-3Hz',
+      geminiVoice: 'Charon',
       gender: 'male',
-      style: 'Austere, firm, resonant monastic biblical scholar speaking with conviction',
+      geminiStyle: 'Austere, firm monastic biblical scholar',
     },
     'pope-saint-gregory': {
-      prebuiltVoice: 'Fenrir',
+      edgeVoice: 'en-GB-RyanNeural',
+      edgeRate: '-6%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      style: 'Paternal, solemn, clear Supreme Pontiff speaking with gentle gravity',
+      geminiStyle: 'Paternal, solemn Supreme Pontiff',
     },
     'saint-ambrose': {
-      prebuiltVoice: 'Orus',
+      edgeVoice: 'en-US-BrianNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Orus',
       gender: 'male',
-      style: 'Smooth, commanding Roman bishop speaking with clarity and apostolic firmness',
+      geminiStyle: 'Commanding Roman bishop speaking with clarity',
     },
     'saint-cyril': {
-      prebuiltVoice: 'Charon',
+      edgeVoice: 'en-GB-ThomasNeural',
+      edgeRate: '-5%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Charon',
       gender: 'male',
-      style: 'Authoritative, resolute Eastern Patriarch explaining doctrine clearly',
+      geminiStyle: 'Authoritative Eastern Patriarch',
     },
     'venerable-bede': {
-      prebuiltVoice: 'Fenrir',
+      edgeVoice: 'en-IE-ConnorNeural',
+      edgeRate: '-6%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      style: 'Even, serene monastic historian speaking with quiet scholarly devotion',
+      geminiStyle: 'Serene monastic historian',
     },
     'saint-basil': {
-      prebuiltVoice: 'Algenib',
+      edgeVoice: 'en-AU-WilliamMultilingualNeural',
+      edgeRate: '-6%',
+      edgePitch: '-2Hz',
+      geminiVoice: 'Algenib',
       gender: 'male',
-      style: 'Dignified, ascetic Eastern bishop speaking with lucid spiritual wisdom',
+      geminiStyle: 'Dignified Eastern bishop',
     },
     'cornelius-a-lapide': {
-      prebuiltVoice: 'Orus',
+      edgeVoice: 'en-US-BrianNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Orus',
       gender: 'male',
-      style: 'Knowledgeable, illuminating Jesuit biblical exegete explaining Sacred Scripture',
+      geminiStyle: 'Illuminating Jesuit biblical exegete',
     },
     'blessed-theophylact': {
-      prebuiltVoice: 'Puck',
+      edgeVoice: 'en-IE-ConnorNeural',
+      edgeRate: '-4%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Puck',
       gender: 'male',
-      style: 'Warm, lyrical, reverent Byzantine archbishop offering Gospel commentary',
+      geminiStyle: 'Warm Byzantine archbishop',
     },
     'saint-bonaventure': {
-      prebuiltVoice: 'Fenrir',
+      edgeVoice: 'en-US-AndrewNeural',
+      edgeRate: '-5%',
+      edgePitch: '+0Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      style: 'Luminous, devotional Franciscan theologian speaking with seraphic warmth',
+      geminiStyle: 'Devotional Franciscan theologian',
     },
     'saint-alphonsus': {
-      prebuiltVoice: 'Algenib',
+      edgeVoice: 'en-GB-RyanNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Algenib',
       gender: 'male',
-      style: 'Earnest, paternal, pastoral Redemptorist doctor speaking tenderly to the heart',
+      geminiStyle: 'Pastoral Redemptorist doctor',
     },
     'saint-bellarmine': {
-      prebuiltVoice: 'Orus',
+      edgeVoice: 'en-US-ChristopherNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Orus',
       gender: 'male',
-      style: 'Authoritative, articulate cardinal apologist explaining Catholic teaching with precision',
+      geminiStyle: 'Articulate cardinal apologist',
     },
     'saint-albert': {
-      prebuiltVoice: 'Charon',
+      edgeVoice: 'en-AU-WilliamMultilingualNeural',
+      edgeRate: '-6%',
+      edgePitch: '-3Hz',
+      geminiVoice: 'Charon',
       gender: 'male',
-      style: 'Wise, deep-voiced German Dominican philosopher investigating creation with calm depth',
+      geminiStyle: 'Wise Dominican philosopher',
     },
     'general-lector': {
-      prebuiltVoice: 'Orus',
+      edgeVoice: 'en-US-ChristopherNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Orus',
       gender: 'male',
-      style: 'Solemn, reverent Catholic patristic lector',
+      geminiStyle: 'Solemn Catholic patristic lector',
     },
     'vatican-magisterium': {
-      prebuiltVoice: 'Fenrir',
+      edgeVoice: 'en-GB-RyanNeural',
+      edgeRate: '-5%',
+      edgePitch: '-1Hz',
+      geminiVoice: 'Fenrir',
       gender: 'male',
-      style: 'Solemn, clear Magisterial reader proclaiming Church teaching',
+      geminiStyle: 'Clear Magisterial reader',
     },
   };
 
   if (exactSpecs[chosenVoice]) return exactSpecs[chosenVoice];
 
   const lower = (chosenVoice || '').toLowerCase();
-  if (lower.includes('augustine') || lower.includes('monk') || lower.includes('basil') || lower.includes('alphonsus') || lower.includes('algenib')) {
-    return { prebuiltVoice: 'Algenib', gender: 'male', style: 'Soulful, deep Catholic patristic voice' };
+  if (lower.includes('david') || lower.includes('deacon') || lower.includes('thomas') || lower.includes('bellarmine')) {
+    return exactSpecs['liturgical-deacon'];
   }
-  if (lower.includes('jerome') || lower.includes('cyril') || lower.includes('albert') || lower.includes('charon')) {
-    return { prebuiltVoice: 'Charon', gender: 'male', style: 'Deep, solemn Catholic male voice' };
+  if (lower.includes('augustine') || lower.includes('monk') || lower.includes('andrew')) {
+    return exactSpecs['liturgical-monk'];
   }
-  if (lower.includes('thomas') || lower.includes('deacon') || lower.includes('ambrose') || lower.includes('bellarmine') || lower.includes('lapide') || lower.includes('orus') || lower.includes('david')) {
-    return { prebuiltVoice: 'Orus', gender: 'male', style: 'Measured, firm solemn Gospel deacon voice' };
+  if (lower.includes('scholar') || lower.includes('brian') || lower.includes('lapide') || lower.includes('ambrose')) {
+    return exactSpecs['liturgical-scholar'];
   }
-  if (lower.includes('gregory') || lower.includes('bede') || lower.includes('bonaventure') || lower.includes('scholar') || lower.includes('fenrir')) {
-    return { prebuiltVoice: 'Fenrir', gender: 'male', style: 'Warm Catholic male baritone voice' };
+  if (lower.includes('charon') || lower.includes('jerome') || lower.includes('cyril')) {
+    return exactSpecs['gemini-Charon'];
   }
-  if (lower.includes('chrysostom') || lower.includes('theophylact') || lower.includes('puck')) {
-    return { prebuiltVoice: 'Puck', gender: 'male', style: 'Crisp, articulate Catholic tenor voice' };
+  if (lower.includes('fenrir') || lower.includes('ryan') || lower.includes('gregory') || lower.includes('alphonsus')) {
+    return exactSpecs['gemini-Fenrir'];
   }
-  if (lower.includes('clara') || lower.includes('leda')) {
-    return { prebuiltVoice: 'Leda', gender: 'female', style: 'Soft, serene, contemplative liturgical voice' };
+  if (lower.includes('puck') || lower.includes('guy') || lower.includes('chrysostom')) {
+    return exactSpecs['gemini-Puck'];
   }
-  if (lower.includes('sonia') || lower.includes('vindemiatrix')) {
-    return { prebuiltVoice: 'Vindemiatrix', gender: 'female', style: 'Calm, mature cathedral contemplative voice' };
+  if (lower.includes('connor') || lower.includes('bede') || lower.includes('theophylact')) {
+    return exactSpecs['liturgical-connor'];
   }
-  if (lower.includes('grace') || lower.includes('despina')) {
-    return { prebuiltVoice: 'Despina', gender: 'female', style: 'Warm, compassionate Catholic narrator voice' };
-  }
-  if (lower.includes('ava') || lower.includes('aoede')) {
-    return { prebuiltVoice: 'Aoede', gender: 'female', style: 'Gentle, heartfelt female devotional voice' };
-  }
-  if (lower.includes('zephyr')) {
-    return { prebuiltVoice: 'Zephyr', gender: 'female', style: 'Smooth, balanced liturgical reader' };
-  }
+  if (lower.includes('sonia')) return exactSpecs['persona-sonia'];
+  if (lower.includes('clara')) return exactSpecs['persona-clara'];
+  if (lower.includes('grace') || lower.includes('emily')) return exactSpecs['persona-grace'];
+  if (lower.includes('emma')) return exactSpecs['persona-emma'];
+  if (lower.includes('jenny')) return exactSpecs['persona-jenny'];
+  if (lower.includes('zephyr') || lower.includes('aria')) return exactSpecs['gemini-Zephyr'];
+  if (lower.includes('ava')) return exactSpecs['persona-ava'];
 
-  return {
-    prebuiltVoice: 'Kore',
-    gender: 'female',
-    style: 'Warm, serene, reverent female Catholic lector',
-  };
+  return exactSpecs['gemini-Kore'];
 }
 
-function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+async function synthesizeWithEdgeNeuralTts(
+  text: string,
+  voiceName: string,
+  rate?: string,
+  pitch?: string
+): Promise<Buffer | null> {
+  const safeText = escapeXmlForSsml(text.slice(0, 1200));
+  if (!safeText.trim()) return null;
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const tts = new MsEdgeTTS({ connectionTimeoutMs: 6000, synthesisTimeoutMs: 12000 });
+    try {
+      await tts.setMetadata(voiceName, OUTPUT_FORMAT.AUDIO_24KHZ_48KBITRATE_MONO_MP3);
+      const { audioStream } = tts.toStream(safeText, {
+        ...(rate ? { rate } : {}),
+        ...(pitch ? { pitch } : {}),
+      });
+      const chunks: Buffer[] = [];
+      await new Promise<void>((resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error('Edge TTS timeout')), 12000);
+        audioStream.on('data', (chunk: Buffer) => chunks.push(chunk));
+        audioStream.on('end', () => {
+          clearTimeout(timer);
+          resolve();
+        });
+        audioStream.on('error', (err: Error) => {
+          clearTimeout(timer);
+          reject(err);
+        });
+      });
+      const fullBuf = Buffer.concat(chunks);
+      if (fullBuf.length > 200) {
+        return fullBuf;
+      }
+    } catch {
+      if (attempt === 0) {
+        await new Promise(resolve => setTimeout(resolve, 250));
+      }
+    } finally {
+      try {
+        tts.close();
+      } catch {}
+    }
+  }
+  return null;
 }
 
 export default async function handler(req: any, res: any) {
@@ -355,50 +459,42 @@ export default async function handler(req: any, res: any) {
 
     const chosenVoice = voiceName || 'gemini-Kore';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
-    const spec = resolveGeminiTtsVoiceSpec(chosenVoice);
-    const cacheKey = `tts:v6:${chosenVoice}:${cleanText.slice(0, 1800)}`;
+    const spec = resolveUnifiedVoiceSpec(chosenVoice);
+    const cacheKey = `tts:v7:${chosenVoice}:${cleanText.slice(0, 1200)}`;
 
     const cached = vercelTtsCache.get(cacheKey);
     if (cached) {
       return res.status(200).json(cached);
     }
 
-    // 1. Primary: Gemini 3.8 Neural TTS (gemini-3.8-flash-lite-tts primary for fast high-throughput reliability,
-    //    falling back to gemini-3.8-flash-tts on separate quota pool)
+    const saveCache = (payload: { audioUrl: string; voiceName: string; provider: string }) => {
+      if (vercelTtsCache.size > 150) {
+        const oldestKey = vercelTtsCache.keys().next().value;
+        if (oldestKey) vercelTtsCache.delete(oldestKey);
+      }
+      vercelTtsCache.set(cacheKey, payload);
+      return payload;
+    };
+
+    // 1. For default Kore voice: try Gemini 3.8 Neural TTS first when quota is available
     const geminiKey = process.env.GEMINI_API_KEY;
-    if (geminiKey) {
-      const textSnippet = cleanText.slice(0, 1800);
-      const isCoreVoice = ['Kore', 'Puck', 'Charon', 'Fenrir', 'Zephyr'].includes(spec.prebuiltVoice);
-      const safeCoreVoice: VerifiedGeminiPrebuiltVoice = spec.gender === 'female' ? 'Kore' : 'Charon';
-
-      const attempts: Array<{ model: string; voice: VerifiedGeminiPrebuiltVoice; isSecondaryModel?: boolean }> = [
-        { model: 'gemini-3.8-flash-lite-tts', voice: spec.prebuiltVoice },
-        { model: 'gemini-3.8-flash-tts', voice: spec.prebuiltVoice, isSecondaryModel: true },
-        ...(!isCoreVoice
-          ? [{ model: 'gemini-3.8-flash-lite-tts', voice: safeCoreVoice }]
-          : []),
-      ];
-
+    if (spec.preferGeminiFirst && geminiKey && Date.now() >= geminiQuotaCooldownUntil) {
       const ai = new GoogleGenAI({
         apiKey: geminiKey,
         apiVersion: 'v1alpha',
         httpOptions: { headers: { 'User-Agent': 'aistudio-build' } },
       });
-
-      for (let i = 0; i < attempts.length; i++) {
-        const cfg = attempts[i];
+      for (const model of ['gemini-3.8-flash-lite-tts', 'gemini-3.8-flash-tts']) {
         try {
           const ttsResponse = await ai.models.generateContent({
-            model: cfg.model,
+            model,
             contents: [
               {
                 role: 'user',
                 parts: [
                   {
-                    text: textSnippet,
-                    speechMetadata: {
-                      style: spec.style,
-                    },
+                    text: cleanText.slice(0, 1200),
+                    speechMetadata: { style: spec.geminiStyle },
                   } as any,
                 ],
               },
@@ -406,11 +502,10 @@ export default async function handler(req: any, res: any) {
             config: {
               responseModalities: ['AUDIO'],
               speechConfig: {
-                voiceConfig: { prebuiltVoiceConfig: { voiceName: cfg.voice } },
+                voiceConfig: { prebuiltVoiceConfig: { voiceName: spec.geminiVoice || 'Kore' } },
               },
             },
           });
-
           const inlinePart = ttsResponse.candidates?.[0]?.content?.parts?.find((p: any) => p?.inlineData?.data);
           if (inlinePart?.inlineData?.data) {
             const rawBuffer = Buffer.from(inlinePart.inlineData.data, 'base64');
@@ -418,111 +513,80 @@ export default async function handler(req: any, res: any) {
             const hasRiffHeader = rawBuffer.length >= 4 && rawBuffer.subarray(0, 4).toString('ascii') === 'RIFF';
             const isWav = mimeType.toLowerCase().includes('wav') || hasRiffHeader;
             const finalBuffer = isWav ? rawBuffer : wrapPcm24kMonoToWav(rawBuffer, 24000);
-            const payload = {
-              audioUrl: `data:audio/wav;base64,${finalBuffer.toString('base64')}`,
-              voiceName: chosenVoice,
-              provider: `gemini-tts-${cfg.voice.toLowerCase()}`,
-            };
-            if (vercelTtsCache.size > 120) {
-              const oldestKey = vercelTtsCache.keys().next().value;
-              if (oldestKey) vercelTtsCache.delete(oldestKey);
-            }
-            vercelTtsCache.set(cacheKey, payload);
-            return res.status(200).json(payload);
+            return res.status(200).json(
+              saveCache({
+                audioUrl: `data:audio/wav;base64,${finalBuffer.toString('base64')}`,
+                voiceName: chosenVoice,
+                provider: `gemini-tts-${(spec.geminiVoice || 'kore').toLowerCase()}`,
+              })
+            );
           }
         } catch (err: any) {
           const msg = String(err?.message || err);
-          const isQuota = msg.includes('429') || String(err?.status) === '429';
-          if (isQuota && !cfg.isSecondaryModel) {
-            await delay(400);
-            continue;
-          }
-          if (isQuota && cfg.isSecondaryModel) {
+          if (msg.includes('429') || String(err?.status) === '429') {
+            geminiQuotaCooldownUntil = Date.now() + 5 * 60 * 1000;
             break;
           }
         }
       }
     }
 
-    // 2. Secondary: Optional OpenAI Neural TTS if explicitly configured (preserving gender accuracy)
+    // 2. Primary Unlimited Multi-Voice Studio Engine: Microsoft Edge Neural TTS (distinct human neural voices, zero quota limits)
+    let edgeBuffer = await synthesizeWithEdgeNeuralTts(
+      cleanText,
+      spec.edgeVoice,
+      spec.edgeRate,
+      spec.edgePitch
+    );
+    let usedEdgeVoice = spec.edgeVoice;
+    if (!edgeBuffer) {
+      const backupEdgeVoice = spec.gender === 'male' ? 'en-US-ChristopherNeural' : 'en-US-AriaNeural';
+      if (backupEdgeVoice !== spec.edgeVoice) {
+        edgeBuffer = await synthesizeWithEdgeNeuralTts(
+          cleanText,
+          backupEdgeVoice,
+          spec.edgeRate,
+          spec.edgePitch
+        );
+        usedEdgeVoice = backupEdgeVoice;
+      }
+    }
+    if (edgeBuffer) {
+      return res.status(200).json(
+        saveCache({
+          audioUrl: `data:audio/mp3;base64,${edgeBuffer.toString('base64')}`,
+          voiceName: chosenVoice,
+          provider: `edge-neural-${usedEdgeVoice.toLowerCase()}`,
+        })
+      );
+    }
+
+    // 3. Secondary Fallback: Optional OpenAI Neural TTS if configured
     const openAiKey = apiKey || process.env.OPENAI_API_KEY;
     if (openAiKey) {
       try {
         const openai = new OpenAI({ apiKey: openAiKey });
-        const voiceMap: Record<string, 'alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer'> = {
-          'gemini-Kore': 'shimmer',
-          Kore: 'shimmer',
-          'gemini-Puck': 'alloy',
-          Puck: 'alloy',
-          'gemini-Charon': 'onyx',
-          Charon: 'onyx',
-          'gemini-Fenrir': 'echo',
-          Fenrir: 'echo',
-          'gemini-Zephyr': 'fable',
-          Zephyr: 'fable',
-          'persona-ava': 'nova',
-          'persona-grace': 'shimmer',
-          'persona-sonia': 'fable',
-          'persona-clara': 'shimmer',
-          'liturgical-deacon': 'onyx',
-          'liturgical-monk': 'echo',
-          'liturgical-scholar': 'alloy',
-        };
-        const targetVoice = voiceMap[chosenVoice] || (spec.gender === 'male' ? 'onyx' : 'shimmer');
+        const targetVoice = spec.gender === 'male' ? 'onyx' : 'shimmer';
         const mp3Response = await openai.audio.speech.create({
           model: 'tts-1',
           voice: targetVoice,
-          input: cleanText.slice(0, 2000),
+          input: cleanText.slice(0, 1500),
           speed: targetVoice === 'onyx' ? 0.88 : 0.95,
         });
         const buffer = Buffer.from(await mp3Response.arrayBuffer());
-        const payload = {
-          audioUrl: `data:audio/mp3;base64,${buffer.toString('base64')}`,
-          voiceName: chosenVoice,
-          provider: 'openai-tts',
-        };
-        return res.status(200).json(payload);
-      } catch {
-        // Fall through to client Web Speech fallback
-      }
-    }
-
-    // 3. Last-resort fallback ONLY when no GEMINI_API_KEY is configured and voice is female;
-    //    NEVER substitute a robotic female Google Translate voice for a male voice!
-    if (!geminiKey && spec.gender === 'female') {
-      try {
-        const sentences = splitTextIntoSentences(cleanText, 190).slice(0, 15);
-        const chunkBuffers = await Promise.all(
-          sentences.map(async (chunkText) => {
-            const gtUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunkText)}&tl=en-US&client=tw-ob`;
-            const gtRes = await fetch(gtUrl, {
-              headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-              },
-            });
-            if (gtRes.ok) {
-              const buf = Buffer.from(await gtRes.arrayBuffer());
-              if (buf.length > 300) return buf;
-            }
-            return null;
+        return res.status(200).json(
+          saveCache({
+            audioUrl: `data:audio/mp3;base64,${buffer.toString('base64')}`,
+            voiceName: chosenVoice,
+            provider: 'openai-tts',
           })
         );
-        const validBuffers: Uint8Array[] = [];
-        for (const b of chunkBuffers) {
-          if (b) validBuffers.push(b);
-        }
-        if (validBuffers.length > 0) {
-          return res.status(200).json({
-            audioUrl: `data:audio/mp3;base64,${Buffer.concat(validBuffers).toString('base64')}`,
-            voiceName: chosenVoice,
-            provider: 'google-translate-tts-en-US',
-          });
-        }
       } catch {
         // Fall through
       }
     }
 
+    // 4. Clean gender-matched client Web Speech fallback
     return res.status(200).json({
       fallbackWebSpeech: true,
       voiceName: chosenVoice,
