@@ -1384,7 +1384,13 @@ export class SacredReader {
       return false;
     }
 
-    const chunks = this.splitIntoProgressiveChunks(fullText, 150, 290);
+    const isGeminiPrimaryVoice = voiceName === 'gemini-Kore' || voiceName === 'Kore';
+    // For authentic Gemini Kore, send up to 1800 chars in one single call (avoiding burst RPM 429s
+    // that previously switched Kore to a fallback voice on chunk 2). For Edge Neural voices, use
+    // fast progressive chunking (150/290 chars) for ~1s startup and fast serverless responses.
+    const chunks = isGeminiPrimaryVoice
+      ? this.splitIntoSpeechChunks(fullText, 1800)
+      : this.splitIntoProgressiveChunks(fullText, 150, 290);
     if (chunks.length === 0) return false;
 
     const saintPersona = SACRED_MALE_SAINT_PERSONAS.find(p => p.id === voiceName);
@@ -1400,7 +1406,7 @@ export class SacredReader {
       await this.waitIfPaused(token);
       if (this.activePlaybackToken !== token) return true;
 
-      if (i + 1 < chunks.length) {
+      if (!isGeminiPrimaryVoice && i + 1 < chunks.length) {
         nextBlobPromise = this.fetchServerTtsBlob(chunks[i + 1], voiceName);
       } else {
         nextBlobPromise = null;

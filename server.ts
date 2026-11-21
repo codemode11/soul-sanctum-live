@@ -111,7 +111,7 @@ function wrapPcm24kMonoToWav(pcmBuffer: Buffer, sampleRate: number = 24000): Buf
 }
 
 const ttsMemoryCache = new Map<string, { audioUrl: string; provider: string; voiceName: string }>();
-let geminiQuotaCooldownUntil = 0;
+const geminiModelCooldownUntil: Record<string, number> = {};
 
 function escapeXmlForSsml(text: string): string {
   return text
@@ -538,7 +538,8 @@ app.post('/api/tts', async (req, res) => {
     const chosenVoice = voiceName || 'gemini-Kore';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
     const spec = resolveUnifiedVoiceSpec(chosenVoice);
-    const cacheKey = `tts:v8:${chosenVoice}:${cleanText.slice(0, 1200)}`;
+    const cacheLimit = spec.preferGeminiFirst ? 2200 : 1200;
+    const cacheKey = `tts:v9:${chosenVoice}:${cleanText.slice(0, cacheLimit)}`;
 
     const cached = ttsMemoryCache.get(cacheKey);
     if (cached) {
@@ -554,24 +555,22 @@ app.post('/api/tts', async (req, res) => {
       return payload;
     };
 
-    // 1. For default Kore voice: try Gemini 3.8 Neural TTS first when quota is available
-    if (spec.preferGeminiFirst && process.env.GEMINI_API_KEY && Date.now() >= geminiQuotaCooldownUntil) {
+    // 1. For default Kore voice: render authentic Gemini Kore (pure prebuilt voice without style distortion).
+    //    Uses separate short RPM cooldowns for flash-lite-tts and flash-tts so a burst on one pool seamlessly
+    //    uses the second authentic Gemini Kore pool instead of switching voices.
+    if (spec.preferGeminiFirst && process.env.GEMINI_API_KEY) {
       const aiClient = getGenAI('v1alpha');
       for (const model of ['gemini-3.8-flash-lite-tts', 'gemini-3.8-flash-tts']) {
+        if (Date.now() < (geminiModelCooldownUntil[model] || 0)) {
+          continue;
+        }
         try {
           const ttsResponse = await aiClient.models.generateContent({
             model,
             contents: [
               {
                 role: 'user',
-                parts: [
-                  {
-                    text: cleanText.slice(0, 1200),
-                    speechMetadata: {
-                      style: spec.geminiStyle,
-                    },
-                  } as any,
-                ],
+                parts: [{ text: cleanText.slice(0, 2200) }],
               },
             ],
             config: {
@@ -599,16 +598,15 @@ app.post('/api/tts', async (req, res) => {
               saveCache({
                 audioUrl: `data:audio/wav;base64,${finalBuffer.toString('base64')}`,
                 voiceName: chosenVoice,
-                provider: `gemini-tts-${(spec.geminiVoice || 'kore').toLowerCase()}`,
+                provider: `gemini-tts-${(spec.geminiVoice || 'kore').toLowerCase()}-${model.includes('lite') ? 'lite' : 'flash'}`,
               })
             );
           }
         } catch (err: any) {
           const msg = String(err?.message || err);
           if (msg.includes('429') || String(err?.status) === '429') {
-            geminiQuotaCooldownUntil = Date.now() + 5 * 60 * 1000;
-            console.warn('[TTS] Gemini quota reached; switching Kore seamlessly to Edge Neural TTS for 5 minutes.');
-            break;
+            geminiModelCooldownUntil[model] = Date.now() + 25 * 1000;
+            console.warn(`[TTS] ${model} RPM/quota pause (25s); trying next authentic Gemini Kore model.`);
           }
         }
       }

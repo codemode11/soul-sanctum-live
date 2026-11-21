@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 import { MsEdgeTTS, OUTPUT_FORMAT } from 'msedge-tts';
 
 const vercelTtsCache = new Map<string, { audioUrl: string; voiceName: string; provider: string }>();
-let geminiQuotaCooldownUntil = 0;
+const geminiModelCooldownUntil: Record<string, number> = {};
 
 function wrapPcm24kMonoToWav(pcmBuffer: Buffer, sampleRate: number = 24000): Buffer {
   const numChannels = 1;
@@ -460,7 +460,8 @@ export default async function handler(req: any, res: any) {
     const chosenVoice = voiceName || 'gemini-Kore';
     const cleanText = text.replace(/<[^>]*>/g, '').replace(/[*_#]/g, '').trim();
     const spec = resolveUnifiedVoiceSpec(chosenVoice);
-    const cacheKey = `tts:v8:${chosenVoice}:${cleanText.slice(0, 1200)}`;
+    const cacheLimit = spec.preferGeminiFirst ? 2200 : 1200;
+    const cacheKey = `tts:v9:${chosenVoice}:${cleanText.slice(0, cacheLimit)}`;
 
     const cached = vercelTtsCache.get(cacheKey);
     if (cached) {
@@ -476,27 +477,27 @@ export default async function handler(req: any, res: any) {
       return payload;
     };
 
-    // 1. For default Kore voice: try Gemini 3.8 Neural TTS first when quota is available
+    // 1. For default Kore voice: render authentic Gemini Kore (pure prebuilt voice without style distortion).
+    //    Uses separate short RPM cooldowns for flash-lite-tts and flash-tts so a burst on one pool seamlessly
+    //    uses the second authentic Gemini Kore pool instead of switching voices.
     const geminiKey = process.env.GEMINI_API_KEY;
-    if (spec.preferGeminiFirst && geminiKey && Date.now() >= geminiQuotaCooldownUntil) {
+    if (spec.preferGeminiFirst && geminiKey) {
       const ai = new GoogleGenAI({
         apiKey: geminiKey,
         apiVersion: 'v1alpha',
         httpOptions: { headers: { 'User-Agent': 'aistudio-build' } },
       });
       for (const model of ['gemini-3.8-flash-lite-tts', 'gemini-3.8-flash-tts']) {
+        if (Date.now() < (geminiModelCooldownUntil[model] || 0)) {
+          continue;
+        }
         try {
           const ttsResponse = await ai.models.generateContent({
             model,
             contents: [
               {
                 role: 'user',
-                parts: [
-                  {
-                    text: cleanText.slice(0, 1200),
-                    speechMetadata: { style: spec.geminiStyle },
-                  } as any,
-                ],
+                parts: [{ text: cleanText.slice(0, 2200) }],
               },
             ],
             config: {
@@ -517,15 +518,14 @@ export default async function handler(req: any, res: any) {
               saveCache({
                 audioUrl: `data:audio/wav;base64,${finalBuffer.toString('base64')}`,
                 voiceName: chosenVoice,
-                provider: `gemini-tts-${(spec.geminiVoice || 'kore').toLowerCase()}`,
+                provider: `gemini-tts-${(spec.geminiVoice || 'kore').toLowerCase()}-${model.includes('lite') ? 'lite' : 'flash'}`,
               })
             );
           }
         } catch (err: any) {
           const msg = String(err?.message || err);
           if (msg.includes('429') || String(err?.status) === '429') {
-            geminiQuotaCooldownUntil = Date.now() + 5 * 60 * 1000;
-            break;
+            geminiModelCooldownUntil[model] = Date.now() + 25 * 1000;
           }
         }
       }
