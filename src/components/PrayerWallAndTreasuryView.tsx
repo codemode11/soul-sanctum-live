@@ -298,27 +298,27 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
       
       {/* Top Banner — Context-aware for Treasury of Prayers vs. Community Prayer Wall */}
       {activeSection === 'treasury' ? (
-        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-br from-[#2B1A0F] via-[#3B2314] to-[#1C1008] rounded-xl text-amber-50 shadow-xl border border-[#A67B4E]/65 relative overflow-hidden flex flex-col justify-between gap-3">
-          <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-amber-300/15 blur-3xl" />
+        <div className="sanctum-top-banner px-4 py-3.5 sm:px-6 sm:py-4 min-h-[148px] bg-gradient-to-br from-[#2B1A0F] via-[#3B2314] to-[#1C1008] rounded-xl text-amber-50 shadow-lg border border-[#A67B4E]/60 relative overflow-hidden flex flex-col justify-between gap-2.5">
+          <div className="pointer-events-none absolute -right-12 -bottom-12 w-64 h-36 rounded-full bg-amber-300/15 blur-3xl" />
 
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 text-[11px] font-cinzel font-bold uppercase tracking-[0.18em] text-[#DFB991]">
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="space-y-0.5 min-w-0">
+              <div className="flex items-center gap-1.5 text-[11px] font-cinzel font-bold uppercase tracking-[0.16em] text-[#DFB991]">
                 <BookOpen className="w-3.5 h-3.5 text-amber-300 shrink-0" />
                 <span>Thesaurus Precum Catholicarum</span>
                 <span aria-hidden="true">·</span>
                 <span>{CATHOLIC_PRAYERS_DATABASE.length} Bilingual Prayers</span>
               </div>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FDF8F0] tracking-wide">
+              <h2 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-[#FDF8F0] tracking-wide leading-tight">
                 Treasury of Prayers
               </h2>
-              <p className="text-xs sm:text-sm text-[#EAD7C0] font-serif-sacred max-w-2xl leading-relaxed">
-                &ldquo;Ask, and it shall be given you; seek, and you shall find; knock, and it shall be opened to you.&rdquo; (Matthew 7:7) — Classic English and Ecclesiastical Latin devotions.
+              <p className="text-xs text-[#EAD7C0]/90 font-serif-sacred leading-snug truncate">
+                &ldquo;Ask, and it shall be given you; seek, and you shall find.&rdquo; (Mt 7:7) — Classic English &amp; Latin devotions.
               </p>
             </div>
 
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0 self-start">
-              <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#1A0F08]/95 border border-[#8B5A2B]/70 text-xs">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0">
+              <div className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md bg-[#1A0F08]/95 border border-[#8B5A2B]/65 text-xs">
                 <span className="font-cinzel font-semibold text-[#DFB991] whitespace-nowrap">
                   Leader:
                 </span>
@@ -326,7 +326,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                   value={treasuryLeaderVoice}
                   onChange={(e) => handleTreasuryLeaderChange(e.target.value)}
                   aria-label="Select Treasury Prayer Leader voice"
-                  className="bg-transparent text-amber-100 font-cinzel font-semibold text-xs focus:outline-none cursor-pointer pr-1"
+                  className="bg-transparent text-amber-100 font-cinzel font-semibold text-xs focus:outline-none cursor-pointer pr-0.5"
                 >
                   {TREASURY_LEADER_OPTIONS.map(opt => (
                     <option key={opt.id} value={opt.id} className="bg-[#1C1008] text-amber-50">
@@ -339,7 +339,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               <button
                 type="button"
                 onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
-                className={`px-4 py-2 rounded-lg text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 whitespace-nowrap ${
+                className={`h-8 px-3 rounded-md text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
                   speakingPrayerId === selectedPrayer.id
                     ? 'bg-amber-600 hover:bg-amber-500 text-white border border-amber-300/60'
                     : 'bg-[#1D1109]/90 hover:bg-[#4E2F1B] text-amber-100 border border-[#C89F72]/60'
@@ -347,12 +347,12 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               >
                 {speakingPrayerId === selectedPrayer.id ? (
                   <>
-                    <VolumeX className="w-4 h-4 text-white" />
+                    <VolumeX className="w-3.5 h-3.5 text-white" />
                     <span>Stop {activeLeader.shortName}</span>
                   </>
                 ) : (
                   <>
-                    <Volume2 className="w-4 h-4 text-amber-300" />
+                    <Volume2 className="w-3.5 h-3.5 text-amber-300" />
                     <span>Listen ({activeLeader.shortName})</span>
                   </>
                 )}
@@ -360,9 +360,9 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
             </div>
           </div>
 
-          {/* Interactive Filter & Search Utility Strip */}
-          <div className="relative z-10 pt-3 border-t border-[#8B5A2B]/45 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-            <div className="flex flex-wrap items-center gap-2 flex-1">
+          {/* Compact Filter & Search Utility Strip (h-8 controls matching Daily Mass Readings) */}
+          <div className="relative z-10 pt-2.5 border-t border-[#8B5A2B]/40 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 flex-1 min-w-0">
               <select
                 value={selectedPrayerCategory}
                 onChange={(e) => {
@@ -380,7 +380,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                   if (firstMatch) setSelectedPrayer(firstMatch);
                 }}
                 aria-label="Filter prayers by category"
-                className="px-3 py-1.5 rounded-lg bg-[#1A0F08]/95 border border-[#8B5A2B]/70 text-xs font-cinzel font-semibold text-amber-100 focus:outline-none focus:border-amber-400 cursor-pointer"
+                className="h-8 px-2.5 rounded-md bg-[#1A0F08]/95 border border-[#8B5A2B]/65 text-xs font-cinzel font-semibold text-amber-100 focus:outline-none focus:border-amber-400 cursor-pointer shrink-0"
               >
                 {prayerCategories.map(cat => (
                   <option key={cat} value={cat}>
@@ -391,14 +391,14 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 ))}
               </select>
 
-              <div className="relative flex-1 min-w-[200px] max-w-sm">
-                <Search className="w-3.5 h-3.5 text-[#C89F72] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <div className="relative flex-1 min-w-[170px] max-w-xs">
+                <Search className="w-3.5 h-3.5 text-[#C89F72] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 <input
                   type="text"
                   value={prayerSearch}
                   onChange={(e) => setPrayerSearch(e.target.value)}
                   placeholder="Search saint, title, Latin, indulgence..."
-                  className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-[#1A0F08]/90 border border-[#8B5A2B]/70 text-xs text-amber-50 placeholder-[#C89F72]/70 focus:outline-none focus:border-amber-400"
+                  className="w-full h-8 pl-8 pr-7 rounded-md bg-[#1A0F08]/90 border border-[#8B5A2B]/65 text-xs text-amber-50 placeholder-[#C89F72]/70 focus:outline-none focus:border-amber-400"
                 />
                 {prayerSearch && (
                   <button
@@ -415,10 +415,10 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               <button
                 type="button"
                 onClick={() => setShowIndulgenceGuide(prev => !prev)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-semibold transition-colors cursor-pointer border flex items-center gap-1.5 whitespace-nowrap ${
+                className={`h-8 px-2.5 rounded-md text-xs font-cinzel font-semibold transition-colors cursor-pointer border flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   showIndulgenceGuide
                     ? 'bg-amber-400 text-stone-950 border-amber-200'
-                    : 'bg-[#1A0F08]/90 hover:bg-[#3A2213] text-amber-200 border-[#8B5A2B]/70'
+                    : 'bg-[#1A0F08]/90 hover:bg-[#3A2213] text-amber-200 border-[#8B5A2B]/65'
                 }`}
               >
                 <Award className="w-3.5 h-3.5" />
@@ -426,7 +426,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               </button>
             </div>
 
-            <div className="text-[11px] font-cinzel font-semibold text-[#DFB991] shrink-0 tabular-nums">
+            <div className="text-[11px] font-cinzel font-semibold text-[#DFB991] shrink-0 tabular-nums whitespace-nowrap">
               {filteredTreasuryPrayers.length} {filteredTreasuryPrayers.length === 1 ? 'prayer' : 'prayers'} shown
             </div>
           </div>
