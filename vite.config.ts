@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import path from 'path';
 import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import {
   cleanUserQuestion,
@@ -1857,7 +1858,150 @@ export default defineConfig(() => {
     plugins: [
       react(),
       tailwindcss(),
-      vaticanNewsPlugin()
+      vaticanNewsPlugin(),
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: [
+          'apple-touch-icon.png',
+          'icon.svg',
+          'pwa-192x192.png',
+          'pwa-512x512.png',
+          'pwa-maskable-512x512.png',
+        ],
+        manifest: {
+          id: '/',
+          name: 'Soul Sanctum — Catholic Companion',
+          short_name: 'Soul Sanctum',
+          description:
+            'Daily Catholic Mass Readings, Divine Office, Rosary, Treasury of Prayers, Saint of the Day, Catechism, Holy Mass Live, and 2,000-Year Church History.',
+          theme_color: '#1A110B',
+          background_color: '#120A05',
+          display: 'standalone',
+          orientation: 'any',
+          start_url: '/',
+          scope: '/',
+          categories: ['lifestyle', 'books', 'education'],
+          shortcuts: [
+            {
+              name: 'Daily Mass Readings',
+              short_name: 'Readings',
+              description: "Open today's Catholic Mass Readings and Gospel",
+              url: '/readings',
+              icons: [{ src: '/pwa-192x192.png', sizes: '192x192', type: 'image/png' }],
+            },
+            {
+              name: 'Divine Office',
+              short_name: 'Breviary',
+              description: 'Pray the Liturgy of the Hours',
+              url: '/divine-office',
+              icons: [{ src: '/pwa-192x192.png', sizes: '192x192', type: 'image/png' }],
+            },
+            {
+              name: 'Saint of the Day',
+              short_name: 'Saints',
+              description: "Read today's Catholic Saint biography and prayer",
+              url: '/saints',
+              icons: [{ src: '/pwa-192x192.png', sizes: '192x192', type: 'image/png' }],
+            },
+            {
+              name: 'Holy Mass Live',
+              short_name: 'Live Mass',
+              description: 'Watch Live Holy Mass & 24/7 Eucharistic Adoration',
+              url: '/live-mass',
+              icons: [{ src: '/pwa-192x192.png', sizes: '192x192', type: 'image/png' }],
+            },
+          ],
+          icons: [
+            {
+              src: '/pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'any',
+            },
+            {
+              src: '/pwa-maskable-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable',
+            },
+          ],
+        },
+        workbox: {
+          maximumFileSizeToCacheInBytes: 15 * 1024 * 1024,
+          globPatterns: ['**/*.{js,css,html,ico,svg,woff,woff2}', 'pwa-*.png', 'apple-touch-icon.png'],
+          navigateFallbackDenylist: [/^\/api\//],
+          cleanupOutdatedCaches: true,
+          runtimeCaching: [
+            {
+              urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts-cache',
+                expiration: {
+                  maxEntries: 20,
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /^https:\/\/fonts\.cdnfonts\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'cdn-fonts-cache',
+                expiration: {
+                  maxEntries: 15,
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /\/(?:images|assets|bibles)\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'sanctum-media-cache',
+                expiration: {
+                  maxEntries: 80,
+                  maxAgeSeconds: 60 * 60 * 24 * 30,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              urlPattern: /\/api\/(?:vatican-news|catholic-rss|medjugorje-messages|ewtn-epg).*/i,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'sanctum-daily-feeds-cache',
+                networkTimeoutSeconds: 5,
+                expiration: {
+                  maxEntries: 40,
+                  maxAgeSeconds: 60 * 60 * 24,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+          ],
+        },
+        devOptions: {
+          enabled: true,
+          type: 'module',
+        },
+      }),
     ],
     resolve: {
       alias: {

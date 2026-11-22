@@ -43,6 +43,8 @@ import { CatholicLinksView } from './components/CatholicLinksView';
 import { PersonalPietyDashboard } from './components/PersonalPietyDashboard';
 import { PersonalCatholicDashboardView } from './components/PersonalCatholicDashboardView';
 import { InMemoriamView } from './components/InMemoriamView';
+import { PWAInstallButton } from './components/PWAInstallButton';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { PodcastEpisode } from './types';
 import { getTopVaticanHeadline } from './data/news';
 import { applySeoMetadata, getInitialTabFromLocation } from './utils/seo';
@@ -872,6 +874,8 @@ export default function App() {
             ? 'max-w-none px-2 sm:px-4 lg:px-6'
             : 'max-w-7xl'
         }`}>
+          {/* Dismissible In-App PWA Install Banner (auto-hidden when running in standalone app mode) */}
+          <PWAInstallButton variant="banner" className="mb-3 sm:mb-5" />
           
           {/* Dual Column Container: Left Navigation Index + Centered Main View */}
           <div 
@@ -1154,6 +1158,9 @@ export default function App() {
                   </div>
                 </div>
               </div>
+              <div className="shrink-0">
+                <PWAInstallButton variant="header" />
+              </div>
             </div>
 
             {/* Bottom Footer Navigation Links */}
@@ -1288,6 +1295,9 @@ export default function App() {
         isOpen={isCebuParishesOpen}
         onClose={() => setIsCebuParishesOpen(false)}
       />
+
+      {/* PWA Offline Connectivity Indicator */}
+      <OfflineIndicator />
 
       {/* Catholic Podcast Floating Bottom Player Bar */}
       {currentPlayingEpisode && (
