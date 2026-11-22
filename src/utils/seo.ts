@@ -84,6 +84,11 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
     description:
       'Find nearby Catholic churches, Holy Mass times, Confession schedules, Eucharistic Adoration chapels, and live directions anywhere in the world on Soul Sanctum.',
   },
+  'virtual-pilgrimage': {
+    title: 'Virtual Pilgrimages to the Holiest Catholic Sites | Soul Sanctum',
+    description:
+      'Take guided Catholic virtual pilgrimages to St. Peter’s Basilica, the Holy Sepulchre, Bethlehem, Lourdes, Fátima, Guadalupe, Assisi, and Santiago de Compostela with audio guides, vigil candles, and a Pilgrim Passport.',
+  },
   'vatican-news': {
     title: 'Vatican News – Latest Papal & Church News | Soul Sanctum',
     description:

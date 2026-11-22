@@ -2306,6 +2306,40 @@ export const ParishFinderPinIcon: React.FC<IconProps> = ({ className = 'w-5 h-5'
   </svg>
 );
 
+/**
+ * Virtual Pilgrimages Icon: Traditional Catholic Pilgrim Scallop Shell with Sacred Cross Crest
+ */
+export const VirtualPilgrimageShellIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Virtual Pilgrimages — Pilgrim Scallop Shell & Cross"
+  >
+    {/* Scallop shell fan dome */}
+    <path
+      d="M12 18.8C6.2 18.8 3 15.2 3 10.6C3 6.2 7 3 12 3s9 3.2 9 7.6c0 4.6-3.2 8.2-9 8.2Z"
+      fill="currentColor"
+      fillOpacity="0.12"
+    />
+    {/* Radiating pilgrim shell grooves converging at hinge */}
+    <path d="M12 18.8L6.2 6.6" strokeWidth="1.25" opacity="0.78" />
+    <path d="M12 18.8L17.8 6.6" strokeWidth="1.25" opacity="0.78" />
+    <path d="M12 18.8L4.2 11.4" strokeWidth="1.2" opacity="0.65" />
+    <path d="M12 18.8L19.8 11.4" strokeWidth="1.2" opacity="0.65" />
+    {/* Shell hinge base */}
+    <path d="M8.6 18.8l1.2 2.2h4.4l1.2-2.2" strokeWidth="1.6" />
+    {/* Golden Sacred Cross at the center of the pilgrim shell */}
+    <path d="M12 6.2v7.8" stroke="#FDE047" strokeWidth="1.9" />
+    <path d="M9.4 9.0h5.2" stroke="#FDE047" strokeWidth="1.9" />
+  </svg>
+);
+
+
 
 
 

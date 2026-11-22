@@ -59,7 +59,8 @@ import {
   FioAudioNavIcon,
   MagisteriumKeysIcon,
   CatholicProphecyScrollIcon,
-  ParishFinderPinIcon
+  ParishFinderPinIcon,
+  VirtualPilgrimageShellIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -78,6 +79,7 @@ export type ActiveTab =
   | 'fio-audio'
   | 'live-mass'
   | 'parish-finder'
+  | 'virtual-pilgrimage'
   | 'vatican-news'
   | 'catholic-articles'
   | 'catholic-social'
@@ -415,6 +417,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: ParishFinderPinIcon,
       tag: 'Nearby',
       subtext: 'Parishes, Mass, Confession & Adoration Map'
+    },
+    {
+      id: 'virtual-pilgrimage',
+      label: 'Virtual Pilgrimages',
+      icon: VirtualPilgrimageShellIcon,
+      tag: 'Shrines',
+      subtext: 'Rome, Jerusalem, Bethlehem, Lourdes, Fátima, Guadalupe, Assisi & Santiago'
     },
     { 
       id: 'vatican-news', 

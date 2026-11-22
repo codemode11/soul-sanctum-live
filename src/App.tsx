@@ -38,6 +38,7 @@ import { PodcastEpisodeModal } from './components/PodcastEpisodeModal';
 import { EucharisticCatechismView } from './components/EucharisticCatechismView';
 import { HolyMassLivePlayerView } from './components/HolyMassLivePlayerView';
 import { ParishFinderView } from './components/ParishFinderView';
+import { VirtualPilgrimageView } from './components/VirtualPilgrimageView';
 import { BibleFlashcardsView } from './components/BibleFlashcardsView';
 import { ChurchHistoryInfographicView } from './components/ChurchHistoryInfographicView';
 import { CatholicLinksView } from './components/CatholicLinksView';
@@ -1023,6 +1024,9 @@ export default function App() {
 
             {/* Nearby Mass, Confession & Adoration Finder */}
             {activeTab === 'parish-finder' && <ParishFinderView />}
+
+            {/* Virtual Pilgrimages to the Holiest Catholic Sites */}
+            {activeTab === 'virtual-pilgrimage' && <VirtualPilgrimageView />}
 
             {/* 7. Vatican News */}
             {activeTab === 'vatican-news' && (
