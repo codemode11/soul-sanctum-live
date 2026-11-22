@@ -240,8 +240,8 @@ export const SanctumAdorationModal: React.FC<SanctumAdorationModalProps> = ({
             )}
           </div>
 
-          {/* Main Visual Altar Card */}
-          <div className="relative rounded-xl overflow-hidden border border-amber-500/30 shadow-2xl bg-black w-full group aspect-[16/9] max-h-[420px]">
+          {/* Main Visual Altar Card (True 16:9 Horizontal Widescreen) */}
+          <div className="relative rounded-xl overflow-hidden border border-amber-500/30 shadow-2xl bg-black w-full max-w-[760px] mx-auto group aspect-video">
             {altarMode === 'ewtn-live' ? (
               <EwtnLiveVideoPlayer
                 key={ewtnChapel}

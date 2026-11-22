@@ -2911,7 +2911,7 @@ export function getLiturgicalDayInfo(year: number, monthIndex0: number, day: num
   // 2. CHECK ADVENT & CHRISTMAS SEASON
   else if (diffFromAdvent1 === -7) {
     season = 'Ordinary Time';
-    title = 'SOLEMNITY OF OUR LORD JESUS CHRIST, KING OF THE UNIVERSE';
+    title = 'Solemnity of Our Lord Jesus Christ, King of the Universe';
     rank = 'Solemnity';
     color = 'white';
   } else if (diffFromAdvent1 >= 0 && !(monthIndex0 === 11 && day >= 25)) {

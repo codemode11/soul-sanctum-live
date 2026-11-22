@@ -326,7 +326,7 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
     setIsOverlayFullscreen(true);
   };
 
-  // If no HLS stream is active (or HLS failed and embedUrl fallback is available), render the live iframe player
+  // If no HLS stream is active (or HLS failed and embedUrl fallback is available), render the live horizontal 16:9 iframe player
   if ((!activeHlsUrl || hasError) && embedUrl) {
     return (
       <div className="relative w-full aspect-video bg-black overflow-hidden">
@@ -334,7 +334,7 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
           key={`${embedUrl}-${reloadNonce}`}
           src={embedUrl}
           title={title}
-          className="w-full h-full border-0"
+          className="absolute inset-0 w-full h-full border-0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
@@ -356,7 +356,7 @@ export const EwtnLiveVideoPlayer: React.FC<EwtnLiveVideoPlayerProps> = ({
     >
       <video
         ref={videoRef}
-        className="w-full h-full object-contain bg-black cursor-pointer"
+        className="absolute inset-0 w-full h-full object-contain bg-black cursor-pointer"
         playsInline
         onClick={handleTogglePlay}
         onDoubleClick={handleFullscreen}

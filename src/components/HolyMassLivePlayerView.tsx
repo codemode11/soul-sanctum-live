@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Tv, 
   Globe, 
@@ -42,6 +42,7 @@ export const HolyMassLivePlayerView: React.FC<HolyMassLivePlayerViewProps> = ({
   const [copied, setCopied] = useState(false);
   const [streamKey, setStreamKey] = useState(Date.now());
   const [isTopSettingsOpen, setIsTopSettingsOpen] = useState(false);
+  const playerStageRef = useRef<HTMLDivElement>(null);
 
   // Filter streams
   const filteredStreams = HOLY_MASS_LIVESTREAMS.filter(stream => {
@@ -119,14 +120,17 @@ Live on Soul Sanctum Catholic Sanctuary.`;
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-6 transition-all duration-300">
       
       {/* 1. Top Masthead & Active Sanctuary Stage Card */}
-      <div className="rounded-xl overflow-hidden bg-gradient-to-b from-stone-900 via-[#1A110B] to-stone-950 border border-amber-500/35 shadow-2xl text-stone-100">
+      <div
+        ref={playerStageRef}
+        className="rounded-xl overflow-hidden bg-gradient-to-b from-stone-900 via-[#1A110B] to-stone-950 border border-amber-500/35 shadow-2xl text-stone-100"
+      >
         
         {/* Top Header Bar with Settings Drop-Down Icon */}
         <div className="bg-gradient-to-r from-stone-900 via-[#1C120C] to-stone-900 text-stone-100 border-b border-amber-500/25">
           <div className="px-4 py-3 sm:px-6 flex items-center justify-between gap-3">
             <div className="space-y-0.5 text-left min-w-0">
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[10.5px] font-cinzel font-bold tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-red-400 animate-ping" />
+              <div className="inline-flex items-center gap-2 max-w-full px-2.5 py-0.5 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[10.5px] font-cinzel font-bold tracking-wider uppercase">
+                <span className="w-2 h-2 rounded-full bg-red-400 animate-ping shrink-0" />
                 <span className="truncate">Live: {selectedStream.sanctuary}</span>
               </div>
 
@@ -208,25 +212,25 @@ Live on Soul Sanctum Catholic Sanctuary.`;
           )}
         </div>
 
-        {/* Full-Width Livestream Video Player */}
-        <div className="relative w-full bg-black border-b border-amber-500/30 aspect-[16/9] min-h-[360px] sm:min-h-[480px] md:min-h-[580px]">
+        {/* Full-Width 16:9 Horizontal Livestream Video Player */}
+        <div className="relative w-full aspect-video bg-black border-b border-amber-500/30 overflow-hidden">
           <iframe
             key={`${selectedStream.id}-${streamKey}`}
             src={selectedStream.videoEmbedUrl}
             title={selectedStream.name}
-            className="w-full h-full object-cover border-0"
+            className="absolute inset-0 w-full h-full border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />
 
           {/* Top-Left Live Sanctuary Badge */}
-          <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2 pointer-events-none z-10">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-600/90 text-white font-sans text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-md">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 right-2 flex items-center gap-1.5 sm:gap-2 pointer-events-none z-10">
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-red-600/90 text-white font-sans text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-md shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
               LIVE
             </span>
-            <span className="px-2.5 py-1 rounded-full bg-black/75 text-amber-200 text-[11px] font-serif border border-white/20 backdrop-blur-md">
+            <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-black/75 text-amber-200 text-[10px] sm:text-[11px] font-serif border border-white/20 backdrop-blur-md truncate max-w-[65%]">
               {selectedStream.sanctuary}
             </span>
           </div>
@@ -413,11 +417,12 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                 onClick={() => {
                   setSelectedStream(stream);
                   setStreamKey(Date.now());
-                  const mainArea = document.getElementById('main-content-area');
-                  if (mainArea) {
-                    const rect = mainArea.getBoundingClientRect();
-                    const absoluteTop = rect.top + window.pageYOffset;
-                    window.scrollTo({ top: Math.max(0, absoluteTop - 80), behavior: 'smooth' });
+                  const targetEl = playerStageRef.current || document.getElementById('main-content-area');
+                  if (targetEl) {
+                    const rect = targetEl.getBoundingClientRect();
+                    const topInset = window.innerWidth < 640 ? 10 : 20;
+                    const absoluteTop = rect.top + window.scrollY;
+                    window.scrollTo({ top: Math.max(0, absoluteTop - topInset), behavior: 'smooth' });
                   }
                 }}
                 className={`p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between gap-3 text-left group ${
@@ -433,13 +438,13 @@ Live on Soul Sanctum Catholic Sanctuary.`;
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 border border-stone-200 shadow-xs">
+                    <div className="relative w-24 sm:w-28 aspect-video rounded-lg overflow-hidden shrink-0 bg-stone-950 border border-stone-200 shadow-xs">
                       <img 
                         src={stream.thumbnailUrl} 
                         alt={stream.name} 
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
-                      <div className="absolute inset-0 bg-black/25 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                         <Tv className="w-4 h-4 text-white drop-shadow-md" />
                       </div>
                     </div>

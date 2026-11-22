@@ -297,7 +297,14 @@ ${reading.gospel.text}`;
             
             {/* Line 2: Complete Liturgical Day Title (wraps onto a second line when needed) */}
             <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
-              {reading.liturgicalDay.replace(/,\s*Bishop.*$/, '')}
+              {/^solemnity of our lord jesus christ,\s*king of the universe$/i.test(reading.liturgicalDay.trim()) ? (
+                <>
+                  <span className="block">Solemnity of Our Lord Jesus Christ</span>
+                  <span className="block">King of the Universe</span>
+                </>
+              ) : (
+                reading.liturgicalDay.replace(/,\s*Bishop.*$/, '')
+              )}
             </h2>
           </div>
 

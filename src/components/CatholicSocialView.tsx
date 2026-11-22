@@ -353,6 +353,15 @@ export const CatholicSocialView: React.FC = () => {
   const [isEwtnTvPlaying, setIsEwtnTvPlaying] = useState<boolean>(false);
   const [shouldAutoPlayTv, setShouldAutoPlayTv] = useState<boolean>(false);
   const [tvPlaySignal, setTvPlaySignal] = useState<number>(0);
+  const ewtnStageRef = useRef<HTMLDivElement>(null);
+
+  const scrollToEwtnStage = useCallback(() => {
+    const el = ewtnStageRef.current;
+    if (!el) return;
+    const topInset = window.innerWidth < 640 ? 12 : 20;
+    const absoluteTop = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: Math.max(0, absoluteTop - topInset), behavior: 'smooth' });
+  }, []);
 
   const handleWatchEwtnTvChannel = useCallback((channelId: string) => {
     setShouldAutoPlayTv(true);
@@ -1445,7 +1454,10 @@ export const CatholicSocialView: React.FC = () => {
           <div className="p-4 sm:p-6 space-y-5">
             {/* Embedded 16:9 Live Video Player for EWTN Television & EWTN 24/7 Adoration */}
             {(ewtnHubTab === 'tv' || ewtnHubTab === 'adoration') && (
-              <div className="rounded-xl overflow-hidden border border-amber-500/35 bg-black shadow-lg">
+              <div
+                ref={ewtnStageRef}
+                className="rounded-xl overflow-hidden border border-amber-500/35 bg-black shadow-lg"
+              >
                 <EwtnLiveVideoPlayer
                   key={`${ewtnStageVideo.id}-${ewtnStageKey}`}
                   streamUrl={ewtnStageVideo.streamUrl}
@@ -1811,7 +1823,10 @@ export const CatholicSocialView: React.FC = () => {
                         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-[#D6C2AC]/80">
                           <button
                             type="button"
-                            onClick={() => setSelectedAdorationId(chapel.id)}
+                            onClick={() => {
+                              setSelectedAdorationId(chapel.id);
+                              scrollToEwtnStage();
+                            }}
                             className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-xs ${
                               isActiveChapel
                                 ? 'bg-[#3B2314] text-[#FAF5EE] border border-[#2A180D]'

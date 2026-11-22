@@ -447,11 +447,14 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
                 <div className="flex flex-col sm:flex-row gap-3.5 items-start">
                   {item.imageUrl && (
-                    <div className="w-full sm:w-36 h-24 shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative group-hover:shadow-xs transition-all">
+                    <div
+                      onClick={() => setActiveArticle(item)}
+                      className="w-full aspect-[16/10] sm:w-44 sm:aspect-[3/2] shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative group-hover:shadow-xs transition-all cursor-pointer"
+                    >
                       <img
                         src={item.imageUrl}
                         alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover object-top origin-top group-hover:scale-[1.03] transition-transform duration-300"
                         loading="lazy"
                         onError={(e) => {
                           const container = e.currentTarget.parentElement;
@@ -636,11 +639,11 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
             {/* Official Photograph if present */}
             {activeArticle.imageUrl && (
-              <div className="rounded-xl overflow-hidden border border-stone-300 bg-stone-100">
+              <div className="rounded-xl overflow-hidden border border-stone-300 bg-stone-100/90">
                 <img
                   src={activeArticle.imageUrl}
                   alt={activeArticle.title}
-                  className="w-full max-h-72 object-cover"
+                  className="w-full h-auto max-h-[28rem] object-contain mx-auto block"
                 />
                 {activeArticle.imageCaption && (
                   <p className="p-2 text-center text-xs text-stone-600 font-serif italic bg-stone-50 border-t border-stone-200">

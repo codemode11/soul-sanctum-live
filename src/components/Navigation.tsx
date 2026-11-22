@@ -546,12 +546,14 @@ export const Navigation: React.FC<NavigationProps> = ({
     }
   }, []);
 
-  const renderNavList = () => (
+  const renderNavList = (isMobileDrawer = false) => (
     <div className="space-y-3.5">
       {/* Top Sidebar Header with Index aligned with Mass Readings icon */}
       <div 
-        className="relative pb-3 pr-2 border-b border-[#D4AF37]/35 flex items-center justify-between"
-        style={{ paddingLeft: `max(0.5rem, calc(50% - ${massReadingsMidpointPx + 28}px))` }}
+        className={`relative pb-3 border-b border-[#D4AF37]/35 flex items-center justify-between ${
+          isMobileDrawer ? 'px-2.5' : 'pr-2'
+        }`}
+        style={isMobileDrawer ? undefined : { paddingLeft: `max(0.5rem, calc(50% - ${massReadingsMidpointPx + 28}px))` }}
       >
         <span className="font-cinzel text-base sm:text-lg font-bold text-[#FFD700] drop-shadow-[0_0_8px_rgba(212,175,55,0.45)] tracking-[0.2em] uppercase text-left">
           INDEX
@@ -585,8 +587,8 @@ export const Navigation: React.FC<NavigationProps> = ({
         </div>
       </div>
 
-      {/* Unnumbered List: Mass Readings icon + text centered; all other items follow the Mass Readings icon column */}
-      <div className="space-y-1.5 pt-1">
+      {/* Unnumbered List: Mass Readings icon + text centered on desktop; full-width clean touch rows on mobile drawer */}
+      <div className="space-y-1 sm:space-y-1.5 pt-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -600,15 +602,17 @@ export const Navigation: React.FC<NavigationProps> = ({
                 onSelectTab(item.id);
                 if (onCloseMobile) onCloseMobile();
               }}
-              style={{ paddingLeft: `max(0.5rem, calc(50% - ${massReadingsMidpointPx + 28}px))` }}
-              className={`w-full flex items-center justify-start pr-2 py-3 rounded-lg cursor-pointer select-none group text-left border transition-colors duration-500 ease-out ${
+              style={isMobileDrawer ? undefined : { paddingLeft: `max(0.5rem, calc(50% - ${massReadingsMidpointPx + 28}px))` }}
+              className={`w-full flex items-center justify-start rounded-lg cursor-pointer select-none group text-left border transition-colors duration-500 ease-out ${
+                isMobileDrawer ? 'px-2.5 py-2.5 min-h-[46px]' : 'pr-2 py-3'
+              } ${
                 isActive
                   ? 'bg-gradient-to-r from-[#C89F72]/40 via-[#D4A373]/30 to-[#B88B5E]/40 text-[#FFF8DC] border-[#FFD700]/60 shadow-[0_0_18px_rgba(212,175,55,0.28)] backdrop-blur-md'
                   : 'text-stone-300 hover:text-[#FFD700] hover:bg-white/10 hover:border-[#FFD700]/30 border-transparent'
               }`}
             >
-              {/* Unified Content Wrapper: Mass Readings is centered; all other items follow the Mass Readings icon */}
-              <div className="sanctum-nav-item-content flex items-center gap-3 min-w-0 h-9">
+              {/* Unified Content Wrapper */}
+              <div className="sanctum-nav-item-content flex items-center gap-3 min-w-0 w-full h-9">
                 <div className={`sanctum-nav-item-icon-box p-2 rounded-lg transition-colors duration-500 ease-out shrink-0 flex items-center justify-center ${
                   isActive 
                     ? 'bg-[#FFD700]/25 text-[#FFD700] shadow-[0_0_10px_rgba(255,215,0,0.3)]' 
@@ -618,12 +622,14 @@ export const Navigation: React.FC<NavigationProps> = ({
                     isActive ? 'text-[#FFD700]' : 'text-stone-400 group-hover:text-[#FFD700]'
                   }`} />
                 </div>
-                <div className="min-w-0 h-9 flex items-center overflow-visible">
+                <div className={`min-w-0 flex-1 h-9 flex items-center ${isMobileDrawer ? 'overflow-hidden' : 'overflow-visible'}`}>
                   <span
-                    ref={isMassReadings ? measureMassReadingsLabelRef : undefined}
-                    className={`sanctum-nav-item-label ${
-                      isMassReadings ? 'sanctum-nav-item-label-readings' : ''
-                    } font-serif whitespace-nowrap text-left transition-colors duration-500 ease-out ${
+                    ref={!isMobileDrawer && isMassReadings ? measureMassReadingsLabelRef : undefined}
+                    className={`${
+                      isMobileDrawer
+                        ? 'text-[16px] font-medium truncate'
+                        : `sanctum-nav-item-label ${isMassReadings ? 'sanctum-nav-item-label-readings' : ''} whitespace-nowrap`
+                    } font-serif text-left transition-colors duration-500 ease-out ${
                       isActive
                         ? 'text-[#FFD700]'
                         : 'text-stone-200 group-hover:text-[#FFD700]'
@@ -803,7 +809,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             </div>
 
             <div className="flex-1 overflow-y-auto no-scrollbar">
-              {renderNavList()}
+              {renderNavList(true)}
             </div>
           </div>
         </div>

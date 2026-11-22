@@ -448,6 +448,7 @@ export default function App() {
   };
 
   const mainContentRef = React.useRef<HTMLDivElement>(null);
+  const mainViewRef = React.useRef<HTMLElement>(null);
 
   const handleSelectTab = (tab: ActiveTab) => {
     setIsAdorationOpen(false);
@@ -462,18 +463,23 @@ export default function App() {
           // Ignore restricted history mutations in sandboxed embeds
         }
       }
-    }
 
-    if (mainContentRef.current) {
-      const rect = mainContentRef.current.getBoundingClientRect();
-      const absoluteTop = rect.top + window.pageYOffset;
-      const targetY = Math.max(0, absoluteTop - 80);
+      const scrollToSelectedBanner = () => {
+        const targetEl = mainViewRef.current || mainContentRef.current;
+        if (targetEl) {
+          const rect = targetEl.getBoundingClientRect();
+          const absoluteTop = rect.top + window.scrollY;
+          const topInset = window.innerWidth >= 768 ? 20 : 10;
+          const targetY = Math.max(0, Math.round(absoluteTop - topInset));
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      };
 
-      if (window.scrollY > targetY) {
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
-      }
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.requestAnimationFrame(() => {
+        scrollToSelectedBanner();
+      });
     }
   };
 
@@ -524,11 +530,32 @@ export default function App() {
       )}
       
       {/* Fixed Full-Website Sacred Sanctum Background: Centered and Enlarged */}
-      <div className="fixed inset-0 z-0 select-none pointer-events-none overflow-hidden flex flex-col items-center justify-start px-4 sm:px-6 lg:px-8">
+      <div className={`fixed inset-0 z-0 select-none pointer-events-none overflow-hidden flex flex-col items-center justify-start ${
+        activeEstablishingImage.id === 'christ-the-king-main-story'
+          ? 'px-0'
+          : 'px-4 sm:px-6 lg:px-8'
+      }`}>
+        {/* Full-Bleed Frosted Glass Ambient Extension (replaces gray side/top/bottom margins on all screens) */}
+        {activeEstablishingImage.id === 'christ-the-king-main-story' && (
+          <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+            <img
+              src={activeEstablishingImage.imageUrl}
+              alt=""
+              decoding="async"
+              className="w-full h-full object-cover object-center scale-110 blur-2xl brightness-[0.95] contrast-[1.04] saturate-[1.12] transform-gpu"
+            />
+            <div className="absolute inset-0 bg-white/10 backdrop-blur-2xl" />
+          </div>
+        )}
+
         {/* Enlarged and Centered Image Container with GPU-Accelerated Smooth Vertical-Only Parallax */}
         <div 
           ref={imageParallaxRef}
-          className="relative w-full max-w-7xl mx-auto flex items-start justify-center overflow-hidden will-change-transform backface-hidden"
+          className={`relative w-full mx-auto flex items-start justify-center overflow-hidden will-change-transform backface-hidden ${
+            activeEstablishingImage.id === 'christ-the-king-main-story'
+              ? 'hidden sm:flex max-w-[1440px]'
+              : 'max-w-7xl'
+          }`}
         >
           {activeEstablishingImage.id === 'faith-scholarship-science' ? (
             <div className="relative w-full overflow-hidden transform-gpu flex justify-center">
@@ -568,21 +595,21 @@ export default function App() {
               <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-stone-950/75 to-transparent pointer-events-none" />
             </div>
           ) : activeEstablishingImage.id === 'christ-the-king-main-story' ? (
-            <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
-              <img
-                src={activeEstablishingImage.imageUrl}
-                alt={activeEstablishingImage.title}
-                decoding="async"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  if (!target.src.includes('niepokalanow_white_host_sanctuary.jpg')) {
-                    target.src = '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg';
-                  }
-                }}
-                className="w-full h-full mx-auto object-cover object-[50%_18%] brightness-[0.99] contrast-[1.04] transform-gpu"
-              />
-              {/* Light bottom edge feathering so the people's heads remain clearly visible */}
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-stone-950/35 to-transparent pointer-events-none" />
+            <div className="relative w-full sm:pt-[92px] lg:pt-0 flex flex-col items-center justify-start overflow-hidden transform-gpu">
+              <div className="relative w-full flex items-center justify-center overflow-hidden">
+                <img
+                  src={activeEstablishingImage.imageUrl}
+                  alt={activeEstablishingImage.title}
+                  decoding="async"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.includes('niepokalanow_white_host_sanctuary.jpg')) {
+                      target.src = '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg';
+                    }
+                  }}
+                  className="w-full h-auto max-h-[100vh] mx-auto object-contain block brightness-[0.99] contrast-[1.04] transform-gpu shadow-[0_12px_48px_rgba(0,0,0,0.28)]"
+                />
+              </div>
             </div>
           ) : activeEstablishingImage.id === 'our-lady-monstrance-connors' ? (
             <div className="relative w-full h-[84vh] sm:h-[100vh] flex items-center justify-center overflow-hidden transform-gpu">
@@ -644,14 +671,22 @@ export default function App() {
         </div>
 
         {/* Seamless Atmospheric Gradient Transitions from Masthead into Contents */}
-        <div className="absolute inset-0 bg-stone-950/5" />
+        {activeEstablishingImage.id !== 'christ-the-king-main-story' && (
+          <div className="absolute inset-0 bg-stone-950/5" />
+        )}
         {/* Seamless vertical gradient fade */}
         <div 
           ref={gradientOverlayRef}
-          className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-stone-950/80 pointer-events-none will-change-[opacity]"
+          className={`absolute inset-0 pointer-events-none will-change-[opacity] ${
+            activeEstablishingImage.id === 'christ-the-king-main-story'
+              ? 'bg-gradient-to-b from-transparent via-transparent to-black/20'
+              : 'bg-gradient-to-b from-transparent via-transparent to-stone-950/80'
+          }`}
         />
-        {/* Symmetrical left and right vignettes to frame the altar equally */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(12,10,9,0.35)_0%,transparent_10%,transparent_90%,rgba(12,10,9,0.35)_100%)] pointer-events-none" />
+        {/* Symmetrical left and right vignettes to frame non-frosted scenes */}
+        {activeEstablishingImage.id !== 'christ-the-king-main-story' && (
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(12,10,9,0.35)_0%,transparent_10%,transparent_90%,rgba(12,10,9,0.35)_100%)] pointer-events-none" />
+        )}
         {/* Warm altar candlelight glow extending across bottom contents with gentle parallax rise */}
         <div 
           ref={candleGlowRef}
@@ -662,11 +697,11 @@ export default function App() {
       {/* Foreground Container with Frosted Glass Transparency and Sacred Ambiance */}
       <div className="relative z-10 flex flex-col min-h-screen">
         
-        {/* Masthead Section: On mobile, fills viewport down to just above the 5 bottom icons */}
-        <div className={`w-full flex flex-col justify-between ${
+        {/* Masthead Section: Clean stacked flow on smartphone; full-viewport hero on tablet/desktop */}
+        <div className={`w-full flex flex-col ${
           effectiveEstablishingImageId === 'christ-the-king-main-story'
-            ? 'min-h-[calc(100dvh-74px)] sm:min-h-[100dvh] pb-3 sm:pb-4'
-            : 'min-h-[calc(100dvh-74px)] sm:min-h-[92vh] lg:min-h-screen pb-3 sm:pb-10'
+            ? 'justify-start sm:justify-between min-h-0 sm:min-h-[100dvh] pb-4 sm:pb-4'
+            : 'justify-between min-h-[calc(100dvh-74px)] sm:min-h-[92vh] lg:min-h-screen pb-3 sm:pb-10'
         }`}>
           {/* Sacred Top Header */}
           <Header
@@ -685,33 +720,60 @@ export default function App() {
             scheduledMasthead={activeScheduledMasthead}
           />
 
-          {/* Lower Masthead: Transferred Motto & Liturgical Day (aligned with Soul Sanctum around St. Michael's knees) + Semi-Transparent Main Story Card */}
-          <div className={effectiveEstablishingImageId === 'christ-the-king-main-story' ? 'w-full mt-auto flex flex-col' : 'w-full flex flex-col'}>
+          {/* Smartphone-Only Full-Width Uncropped Christ the King Artwork over Frosted Glass Backdrop */}
+          {effectiveEstablishingImageId === 'christ-the-king-main-story' && (
+            <div className="sm:hidden relative w-full overflow-hidden select-none shadow-[0_8px_28px_rgba(0,0,0,0.28)]">
+              <img
+                src={activeEstablishingImage.imageUrl}
+                alt={activeEstablishingImage.title}
+                decoding="async"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('niepokalanow_white_host_sanctuary.jpg')) {
+                    target.src = '/images/sacred-art/niepokalanow_white_host_sanctuary.jpg';
+                  }
+                }}
+                className="w-full h-auto block brightness-[1.01] contrast-[1.04]"
+              />
+            </div>
+          )}
+
+          {/* Lower Masthead: Transferred Motto & Liturgical Day + Main Story Card */}
+          <div className={effectiveEstablishingImageId === 'christ-the-king-main-story' ? 'w-full mt-2.5 sm:mt-auto flex flex-col' : 'w-full flex flex-col'}>
             {effectiveEstablishingImageId === 'christ-the-king-main-story' && (!activeScheduledMasthead || activeScheduledMasthead.layoutVariant === 'classic-split') && (() => {
               const cleanLiturgicalTitle = currentMassReading.liturgicalDay.replace(/\s*\(Blessed Virgin Mary on Saturday\)/gi, '').trim();
               const hasMemorialSplit = cleanLiturgicalTitle.includes(' / ');
-              const mainTitlePart = hasMemorialSplit ? cleanLiturgicalTitle.split(' / ')[0] : cleanLiturgicalTitle;
-              const memorialPart = hasMemorialSplit ? cleanLiturgicalTitle.split(' / ')[1] : null;
+              const isChristTheKingTitle = /^solemnity of our lord jesus christ,\s*king of the universe$/i.test(cleanLiturgicalTitle);
+              const mainTitlePart = isChristTheKingTitle
+                ? 'Solemnity of Our Lord Jesus Christ'
+                : hasMemorialSplit
+                  ? cleanLiturgicalTitle.split(' / ')[0]
+                  : cleanLiturgicalTitle;
+              const memorialPart = isChristTheKingTitle
+                ? 'King of the Universe'
+                : hasMemorialSplit
+                  ? cleanLiturgicalTitle.split(' / ')[1]
+                  : null;
               const mottoText = activeScheduledMasthead?.mottoText || 'Pray without ceasing.';
               const mottoCitation = activeScheduledMasthead?.mottoCitation || '1 Thessalonians 5:17';
               return (
-                <div className="w-full mx-auto px-6 sm:px-10 md:px-12 lg:px-16 xl:px-20 mb-2.5 sm:mb-3 md:mb-4 lg:mb-6 xl:mb-8 pointer-events-auto">
-                  <div className="pl-14 sm:pl-[72px] max-w-[330px] sm:max-w-[380px] text-left">
-                    <div className="flex flex-col">
+                <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 mb-3 sm:mb-3 md:mb-4 lg:mb-6 xl:mb-8 pointer-events-auto">
+                  <div className="pl-0 sm:pl-[64px] xl:pl-[74px] 2xl:pl-[84px] max-w-md sm:max-w-[380px] mx-auto sm:mx-0 text-center sm:text-left">
+                    <div className="flex flex-row sm:flex-col items-baseline justify-center sm:items-start gap-x-2 flex-wrap">
                       <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
                         {mottoText}
                       </span>
-                      <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#E8C55A] tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_6px_rgba(0,0,0,0.95))] mt-0.5">
+                      <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#E8C55A] tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_6px_rgba(0,0,0,0.95))] sm:mt-0.5">
                         {mottoCitation}
                       </span>
                     </div>
 
-                    <div className="flex flex-col items-start gap-0.5 text-left pt-2">
-                      <span className="font-serif font-bold text-xs sm:text-sm text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                    <div className="flex flex-col items-center sm:items-start gap-0.5 text-center sm:text-left pt-1 sm:pt-2">
+                      <span className="font-serif font-bold text-xs sm:text-sm text-amber-100/95 sm:text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
                         {mainTitlePart}
                       </span>
                       {memorialPart && (
-                        <span className="font-serif font-bold not-italic text-xs sm:text-sm text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                        <span className="font-serif font-bold not-italic text-xs sm:text-sm text-amber-100/95 sm:text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
                           {memorialPart}
                         </span>
                       )}
@@ -731,12 +793,12 @@ export default function App() {
             }`}>
             <div className={`w-full max-w-4xl mx-auto rounded-xl text-amber-100 transition-all text-center ${
               effectiveEstablishingImageId === 'christ-the-king-main-story'
-                ? 'bg-black/15 sm:bg-black/18 hover:bg-black/28 border border-amber-400/50 hover:border-amber-300 backdrop-blur-[1px] shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-3 px-4 sm:py-4 sm:px-7 space-y-1.5 sm:space-y-2'
+                ? 'bg-[#2B1A0F]/32 sm:bg-[#2B1A0F]/22 hover:bg-[#2B1A0F]/36 border border-amber-300/45 sm:border-amber-400/50 hover:border-amber-300 backdrop-blur-md sm:backdrop-blur-[2px] shadow-[0_8px_32px_rgba(0,0,0,0.32)] py-3 px-3.5 sm:py-4 sm:px-7 space-y-1.5 sm:space-y-2'
                 : 'bg-black/30 sm:bg-black/40 hover:bg-black/50 border border-amber-500/45 hover:border-amber-400 backdrop-blur-[2px] shadow-[0_12px_40px_rgba(0,0,0,0.55)] py-3.5 px-4 sm:py-5 sm:px-8 space-y-2 sm:space-y-2.5'
             }`}>
               <div className="flex items-center justify-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase text-amber-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shrink-0" />
+                <span className="font-cinzel text-[10px] sm:text-xs font-bold tracking-[0.18em] sm:tracking-[0.25em] uppercase text-amber-300 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
                   CATHOLIC ARTICLES • {featuredMastheadArticle.sourceName}
                 </span>
               </div>
@@ -748,7 +810,7 @@ export default function App() {
                   setActiveCatholicArticleId(featuredMastheadArticle.id);
                   handleSelectTab('catholic-articles');
                 }}
-                className="font-serif text-lg sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.98)] tracking-tight cursor-pointer transition-colors"
+                className="font-serif text-[19px] sm:text-2xl md:text-3xl font-extrabold text-white hover:text-amber-200 leading-snug max-w-4xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.98)] tracking-tight cursor-pointer transition-colors"
               >
                 {featuredMastheadArticle.title.endsWith(' Most Blessed Sacrament') ? (
                   <>
@@ -761,30 +823,30 @@ export default function App() {
               </h2>
 
               {/* Subtitle & Call to Action */}
-              <p className="text-xs sm:text-sm md:text-base text-stone-100 font-serif italic max-w-4xl mx-auto leading-relaxed pt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              <p className="text-[12.5px] sm:text-sm md:text-base text-stone-100 font-serif italic max-w-4xl mx-auto leading-relaxed pt-0.5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                 {featuredMastheadArticle.summary.endsWith(' on the Solemnity of Christ the King?') ? (
                   <>
                     <span>{featuredMastheadArticle.summary.slice(0, -' on the Solemnity of Christ the King?'.length)}</span>
-                    <span className="block">on the Solemnity of Christ the King?</span>
+                    <span className="sm:block"> on the Solemnity of Christ the King?</span>
                   </>
                 ) : (
                   featuredMastheadArticle.summary
                 )}
               </p>
 
-              <div className="pt-1.5 sm:pt-2 flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center gap-2.5 md:gap-3">
+              <div className="pt-1.5 sm:pt-2 flex flex-col md:grid md:grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-2.5 md:gap-3">
                 <div className="hidden md:block" aria-hidden="true" />
                 <span className="text-[11px] sm:text-xs font-serif text-amber-200/90 text-center">
                   by {featuredMastheadArticle.author}
                 </span>
-                <div className="w-full md:w-auto flex justify-end md:justify-self-end">
+                <div className="w-full md:w-auto flex justify-center md:justify-self-end">
                   <button
                     onClick={() => {
                       setActiveCatholicArticleSourceId(featuredMastheadArticle.sourceId);
                       setActiveCatholicArticleId(featuredMastheadArticle.id);
                       handleSelectTab('catholic-articles');
                     }}
-                    className="inline-flex items-center min-h-[38px] px-4 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
+                    className="inline-flex items-center justify-center min-h-[40px] px-5 py-1.5 sm:px-5 sm:py-2 rounded-lg bg-[#A67C52] hover:bg-[#966B43] border border-[#C49B6E]/60 text-amber-50 font-cinzel text-[11px] sm:text-xs font-bold tracking-wider uppercase transition-all shadow-[0_4px_18px_rgba(166,124,82,0.4)] hover:scale-102 cursor-pointer"
                     title="Read this full story in Catholic Articles"
                   >
                     <span>Read Full Story</span>
@@ -794,7 +856,7 @@ export default function App() {
             </div>
             {effectiveEstablishingImageId !== 'our-lady-monstrance-connors' &&
               (featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort) && (
-              <div className="max-w-4xl mx-auto mt-1.5 px-2 text-right">
+              <div className="max-w-4xl mx-auto mt-1.5 px-1 sm:px-2 text-center sm:text-right">
                 <span className="text-[10px] sm:text-[11px] font-cinzel tracking-wider uppercase text-amber-100/80 drop-shadow-[0_1px_4px_rgba(0,0,0,0.95)]">
                   Credit: {featuredMastheadArticle.imageCredit || activeEstablishingImage.creditShort}
                 </span>
@@ -835,9 +897,12 @@ export default function App() {
             </div>
 
             {/* Main Content Area */}
-            <main className={`flex-1 w-full min-w-0 transition-all duration-300 ${
-              activeTab === 'catholic-ai' ? 'max-w-full' : 'max-w-4xl'
-            }`}>
+            <main
+              ref={mainViewRef}
+              className={`flex-1 w-full min-w-0 transition-all duration-300 ${
+                activeTab === 'catholic-ai' ? 'max-w-full' : 'max-w-4xl'
+              }`}
+            >
 
             {/* 1. Mass Readings */}
             {activeTab === 'readings' && (
