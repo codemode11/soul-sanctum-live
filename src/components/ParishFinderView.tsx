@@ -1699,8 +1699,8 @@ export const ParishFinderView: React.FC = () => {
         if (data?.paused) {
           setServerPaused(true);
           setMapsApiKey('');
-        } else if (data?.apiKey && !mapsApiKey) {
-          setMapsApiKey(String(data.apiKey).trim());
+        } else if (data?.apiKey) {
+          setMapsApiKey((prev) => prev || String(data.apiKey).trim());
         }
       })
       .catch(() => {
@@ -1713,7 +1713,7 @@ export const ParishFinderView: React.FC = () => {
     return () => {
       cancelled = true;
     };
-  }, [mapsApiKey]);
+  }, []);
 
   // Count one map load per active session mount when Maps is allowed
   useEffect(() => {
@@ -1758,21 +1758,27 @@ export const ParishFinderView: React.FC = () => {
     }
   };
 
+  const showFallbackFinder = quotaGuard.isStopped || !mapsApiKey;
+
   const stopHeadline =
-    quotaGuard.stopReason === 'near_limit'
-      ? 'Google Maps Automatically Paused (Near Free Quota Limit)'
-      : quotaGuard.stopReason === 'api_quota_exceeded'
-        ? 'Google Maps Paused (Quota Limit Reached)'
-        : quotaGuard.stopReason === 'server_paused'
-          ? 'Google Maps Feature Temporarily Paused'
-          : 'Google Maps Paused by Safety Switch';
+    !mapsApiKey && !quotaGuard.isStopped
+      ? 'Parish Locator & Live Schedule Lookup'
+      : quotaGuard.stopReason === 'near_limit'
+        ? 'Google Maps Automatically Paused (Near Free Quota Limit)'
+        : quotaGuard.stopReason === 'api_quota_exceeded'
+          ? 'Google Maps Paused (Quota Limit Reached)'
+          : quotaGuard.stopReason === 'server_paused'
+            ? 'Google Maps Feature Temporarily Paused'
+            : 'Google Maps Paused by Safety Switch';
 
   const stopDescription =
-    quotaGuard.stopReason === 'near_limit'
-      ? `Interactive Google Maps automatically stopped at ${quotaGuard.maxPercentUsed}% of your safe monthly budget to prevent unexpected billing charges. It will automatically reset next month, or you can use the free parish tools below right now.`
-      : quotaGuard.stopReason === 'api_quota_exceeded'
-        ? 'Google Maps reported that the current quota limit has been reached, so interactive map requests have been stopped to protect your account. You can continue using the free parish tools below.'
-        : 'Interactive Google Maps requests are currently paused (zero Google Maps API calls are being made). You can continue finding parishes and Mass times using the free tools below.';
+    !mapsApiKey && !quotaGuard.isStopped
+      ? 'Find nearby Catholic churches on Google Maps, browse worldwide Mass & Confession times on MassTimes.org, or look up any parish’s published schedule directly below.'
+      : quotaGuard.stopReason === 'near_limit'
+        ? `Interactive Google Maps automatically stopped at ${quotaGuard.maxPercentUsed}% of your safe monthly budget to prevent unexpected billing charges. It will automatically reset next month, or you can use the free parish tools below right now.`
+        : quotaGuard.stopReason === 'api_quota_exceeded'
+          ? 'Google Maps reported that the current quota limit has been reached, so interactive map requests have been stopped to protect your account. You can continue using the free parish tools below.'
+          : 'Interactive Google Maps requests are currently paused (zero Google Maps API calls are being made). You can continue finding parishes and Mass times using the free tools below.';
 
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
@@ -1814,7 +1820,7 @@ export const ParishFinderView: React.FC = () => {
       </div>
 
       {/* Gentle Warning Banner when approaching 80% auto-stop limit */}
-      {!quotaGuard.isStopped && quotaGuard.isApproaching && (
+      {!showFallbackFinder && quotaGuard.isApproaching && (
         <div className="rounded-xl bg-amber-50 border border-amber-300 px-4 py-3 text-xs sm:text-sm text-amber-950 flex flex-wrap items-center justify-between gap-2 shadow-xs">
           <span className="flex items-center gap-2 font-serif">
             <AlertCircle className="w-4 h-4 text-amber-700 shrink-0" />
@@ -1838,11 +1844,11 @@ export const ParishFinderView: React.FC = () => {
           <Loader2 className="w-7 h-7 animate-spin text-amber-800 mx-auto" />
           <p className="text-sm font-cinzel text-stone-700">Preparing Interactive Parish Map...</p>
         </div>
-      ) : quotaGuard.isStopped ? (
+      ) : showFallbackFinder ? (
         <div className="rounded-xl bg-[#FAF6F0]/95 border border-amber-300/80 p-5 sm:p-7 space-y-5 shadow-xl text-stone-900">
           <div className="flex flex-col sm:flex-row sm:items-start gap-3.5 border-b border-amber-200/80 pb-4">
             <div className="w-10 h-10 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center shrink-0">
-              <AlertCircle className="w-5 h-5 text-amber-800" />
+              <MapPin className="w-5 h-5 text-amber-800" />
             </div>
             <div className="space-y-1 flex-1">
               <h3 className="font-cinzel text-lg font-bold text-stone-900">{stopHeadline}</h3>
@@ -1860,10 +1866,10 @@ export const ParishFinderView: React.FC = () => {
             >
               <div className="space-y-0.5">
                 <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-900 block">
-                  Free External Map Search
+                  Nearby Catholic Churches on Google Maps
                 </span>
                 <span className="text-xs sm:text-sm font-serif text-stone-700 block">
-                  Open &ldquo;Catholic Church near me&rdquo; directly in Google Maps (no API cost)
+                  Open &ldquo;Catholic Church near me&rdquo; directly in Google Maps with directions
                 </span>
               </div>
               <ExternalLink className="w-4 h-4 text-amber-800 shrink-0" />
@@ -1891,7 +1897,7 @@ export const ParishFinderView: React.FC = () => {
           <div className="p-4 sm:p-5 rounded-xl bg-white border border-stone-200 space-y-3">
             <div>
               <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-900 block">
-                Direct Parish Mass &amp; Confession Lookup (No Maps API Used)
+                Direct Parish Mass &amp; Confession Schedule Lookup
               </span>
               <p className="text-xs text-stone-600 font-serif">
                 Enter any Catholic parish name and city to check its published Mass, Confession, and Adoration schedule.
@@ -1954,16 +1960,6 @@ export const ParishFinderView: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
-      ) : !mapsApiKey ? (
-        <div className="rounded-xl bg-[#FAF6F0]/95 border border-amber-300/70 p-6 sm:p-8 text-center space-y-3 shadow-xl">
-          <MapPin className="w-8 h-8 text-amber-800 mx-auto" />
-          <h3 className="font-cinzel text-lg font-bold text-stone-900">
-            Google Maps API Key Not Configured
-          </h3>
-          <p className="text-sm text-stone-700 font-serif max-w-lg mx-auto">
-            Set <code className="px-1.5 py-0.5 rounded bg-amber-100 text-amber-950 text-xs">VITE_GOOGLE_MAPS_API_KEY</code> in your environment secrets (or deployment settings) to enable the live interactive Catholic Parish Finder.
-          </p>
         </div>
       ) : (
         <APIProvider

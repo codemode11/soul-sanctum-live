@@ -44,7 +44,6 @@ import { CatholicLinksView } from './components/CatholicLinksView';
 import { PersonalPietyDashboard } from './components/PersonalPietyDashboard';
 import { PersonalCatholicDashboardView } from './components/PersonalCatholicDashboardView';
 import { InMemoriamView } from './components/InMemoriamView';
-import { PWAInstallButton } from './components/PWAInstallButton';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { PodcastEpisode } from './types';
 import { getTopVaticanHeadline } from './data/news';
@@ -901,9 +900,6 @@ export default function App() {
             ? 'max-w-none px-2 sm:px-4 lg:px-6'
             : 'max-w-7xl'
         }`}>
-          {/* Dismissible In-App PWA Install Banner (auto-hidden when running in standalone app mode) */}
-          <PWAInstallButton variant="banner" className="mb-3 sm:mb-5" />
-          
           {/* Dual Column Container: Left Navigation Index + Centered Main View */}
           <div 
             ref={mainContentRef}
@@ -1187,9 +1183,6 @@ export default function App() {
                     </p>
                   </div>
                 </div>
-              </div>
-              <div className="shrink-0">
-                <PWAInstallButton variant="header" />
               </div>
             </div>
 

@@ -61,7 +61,6 @@ import {
   CatholicProphecyScrollIcon,
   ParishFinderPinIcon
 } from './SanctumIcons';
-import { PWAInstallButton } from './PWAInstallButton';
 
 export type ActiveTab = 
   | 'readings'
@@ -595,11 +594,6 @@ export const Navigation: React.FC<NavigationProps> = ({
             <span className="font-cinzel text-[11px] font-black tracking-tight leading-none">AI</span>
           </button>
         </div>
-      </div>
-
-      {/* Install Soul Sanctum Standalone App CTA (auto-hides once installed) */}
-      <div className={isMobileDrawer ? 'px-1' : 'pr-1'}>
-        <PWAInstallButton variant="sidebar" />
       </div>
 
       {/* Unnumbered List: Mass Readings icon + text centered on desktop; full-width clean touch rows on mobile drawer */}

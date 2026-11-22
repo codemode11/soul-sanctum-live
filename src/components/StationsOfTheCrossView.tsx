@@ -691,8 +691,8 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         if (data?.paused) {
           setServerPaused(true);
           setMapsApiKey('');
-        } else if (data?.apiKey && !mapsApiKey) {
-          setMapsApiKey(String(data.apiKey).trim());
+        } else if (data?.apiKey) {
+          setMapsApiKey((prev) => prev || String(data.apiKey).trim());
         }
         setMapsKeyLoaded(true);
       })
@@ -702,7 +702,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
     return () => {
       active = false;
     };
-  }, [mapsApiKey]);
+  }, []);
 
   // Record one map load per active session when the interactive map mounts
   useEffect(() => {
@@ -1033,8 +1033,12 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         </div>
       </div>
 
-      {/* Live Interactive Jerusalem Map for Every Station (auto-pauses near quota limit) */}
-      {quotaGuard.isStopped ? (
+      {/* Live Interactive Jerusalem Map for Every Station (auto-pauses near quota limit or when key unavailable) */}
+      {!mapsKeyLoaded ? (
+        <div className="p-5 rounded-xl bg-stone-100 border border-stone-200 text-center text-sm text-stone-600">
+          Loading Jerusalem Via Dolorosa map...
+        </div>
+      ) : quotaGuard.isStopped || !mapsApiKey ? (
         <div className="rounded-2xl overflow-hidden bg-[#FAF6F0] border border-amber-300/80 shadow-sm">
           <div className="px-4 py-3 bg-gradient-to-r from-[#2D0E0E] via-[#451313] to-[#29130D] text-amber-50 flex flex-wrap items-center justify-between gap-2 border-b border-amber-400/30">
             <div className="min-w-0">
@@ -1054,9 +1058,11 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                     : STATIONS_CONCLUDING_PRAYER.jerusalemSiteName}
               </h4>
             </div>
-            <span className="px-2.5 py-1 rounded-md bg-amber-400/20 border border-amber-300/40 text-amber-200 text-[10px] font-cinzel font-bold uppercase tracking-wider">
-              Map Paused • Quota Protected
-            </span>
+            {quotaGuard.isStopped && (
+              <span className="px-2.5 py-1 rounded-md bg-amber-400/20 border border-amber-300/40 text-amber-200 text-[10px] font-cinzel font-bold uppercase tracking-wider">
+                Map Paused • Quota Protected
+              </span>
+            )}
           </div>
 
           <div className="p-4 sm:p-5 space-y-3">
@@ -1069,7 +1075,9 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             </p>
             <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-stone-200/80">
               <p className="text-xs text-stone-600 font-serif italic">
-                The embedded Jerusalem map is paused to stay safely within free Google Maps quota. All 14 Stations and Jenny&rsquo;s narration remain fully available.
+                {quotaGuard.isStopped
+                  ? 'The embedded Jerusalem map is paused to stay safely within free Google Maps quota. All 14 Stations and Jenny’s narration remain fully available.'
+                  : 'Open this station’s exact location along the Via Dolorosa in Jerusalem on Google Maps.'}
               </p>
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -1083,13 +1091,13 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                 rel="noopener noreferrer"
                 className="shrink-0 px-3 py-1.5 rounded-lg bg-white hover:bg-amber-50 border border-stone-300 text-red-900 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-2xs"
               >
-                <span>View Site on Google Maps (Free Link)</span>
+                <span>View Site on Google Maps</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>
         </div>
-      ) : mapsApiKey ? (
+      ) : (
         <APIProvider
           apiKey={mapsApiKey}
           libraries={['places', 'marker', 'routes']}
@@ -1109,12 +1117,6 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             }
           />
         </APIProvider>
-      ) : (
-        <div className="p-5 rounded-xl bg-stone-100 border border-stone-200 text-center text-sm text-stone-600">
-          {mapsKeyLoaded
-            ? 'Configure VITE_GOOGLE_MAPS_API_KEY to view the live interactive Jerusalem map for every station.'
-            : 'Loading Jerusalem Via Dolorosa map...'}
-        </div>
       )}
 
       {/* Main Sacred Devotion Text Card */}
