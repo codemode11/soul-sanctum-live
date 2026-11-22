@@ -40,9 +40,12 @@ import {
 } from '@/data/faustinaDivineMercy';
 import { SacredReader } from '@/utils/speech';
 import { bellSynth } from '@/utils/audioSynth';
+import { StationsOfTheCrossView } from './StationsOfTheCrossView';
 
 export const RosaryAndChapletView: React.FC = () => {
-  const [activeDevotion, setActiveDevotion] = useState<'divine-mercy' | 'faustina' | 'three-oclock' | 'rosary' | 'marian-promises' | 'angelus'>('divine-mercy');
+  const [activeDevotion, setActiveDevotion] = useState<
+    'divine-mercy' | 'faustina' | 'three-oclock' | 'stations-of-the-cross' | 'rosary' | 'marian-promises' | 'angelus'
+  >('divine-mercy');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [copiedPromiseNum, setCopiedPromiseNum] = useState<number | null>(null);
   const [copiedMarianNum, setCopiedMarianNum] = useState<number | null>(null);
@@ -348,8 +351,8 @@ export const RosaryAndChapletView: React.FC = () => {
           </button>
         </div>
 
-        {/* Six-Button Devotion Picker: 3 Divine Mercy (Red) + 3 Marian (Blue) */}
-        <div className="grid grid-cols-3 sm:grid-cols-6 items-stretch rounded-xl bg-[#F4ECE1]/95 p-1 w-full shadow-inner border border-[#D5C3AE] gap-1">
+        {/* Seven-Button Devotion Picker: 4 Divine Mercy & Passion (Red) + 3 Marian (Blue) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-stretch rounded-xl bg-[#F4ECE1]/95 p-1 w-full shadow-inner border border-[#D5C3AE] gap-1">
           {/* 1. Chaplet (Dark Red) */}
           <button
             onClick={() => {
@@ -402,6 +405,26 @@ export const RosaryAndChapletView: React.FC = () => {
             }`}
           >
             <span>3 O&apos;Clock Prayer</span>
+          </button>
+
+          {/* 4. Stations of the Cross (Dark Red — Requested by Jesus at 3:00 PM to St. Faustina) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setActiveDevotion('stations-of-the-cross');
+              setIsAutoAdvancing(false);
+              SacredReader.stop();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+              activeDevotion === 'stations-of-the-cross'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+            title="Interactive Stations of the Cross by St. Alphonsus Liguori (with Jerusalem Map & Jenny Audio)"
+          >
+            <span>Stations of the Cross</span>
           </button>
 
           {/* 4. Holy Rosary (Dark Blue - 1st Marian Button) */}
@@ -533,6 +556,24 @@ export const RosaryAndChapletView: React.FC = () => {
         <p className="font-bold text-[#5C3A1E] pt-3.5 border-t border-[#D5BE9F]/60">
           Jesus, King of Mercy, We trust in you!
         </p>
+
+        <div className="pt-4 border-t border-[#D5BE9F]/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <p className="text-xs sm:text-sm italic text-[#5C3A1E] leading-snug">
+            Jesus told St. Faustina (<em>Diary</em> §1572): &ldquo;Try your best to make the Stations of the Cross in this hour.&rdquo;
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              SacredReader.stop();
+              setIsReadingThreeOClock(false);
+              setActiveDevotion('stations-of-the-cross');
+            }}
+            className="shrink-0 self-start sm:self-auto px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#7F1D1D] to-[#560F0F] hover:from-[#991B1B] hover:to-[#6E1414] text-amber-50 font-cinzel font-bold text-xs shadow-xs border border-amber-300/60 transition-all cursor-pointer flex items-center gap-1.5"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <span>Pray Stations of the Cross</span>
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -933,14 +974,26 @@ export const RosaryAndChapletView: React.FC = () => {
                 "{DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyIntro}"
               </p>
             </div>
-            <div className="h-8 flex items-center justify-between gap-2.5 mt-auto shrink-0">
-              <button
-                onClick={() => setActiveDevotion('three-oclock')}
-                className="h-8 px-2.5 rounded-md bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                <Sparkles className="w-3 h-3 text-amber-300" />
-                <span>Pray The 3 O'Clock Prayer</span>
-              </button>
+            <div className="h-8 flex items-center justify-between gap-2 mt-auto shrink-0">
+              <div className="flex items-center gap-2 min-w-0">
+                <button
+                  onClick={() => setActiveDevotion('three-oclock')}
+                  className="h-8 px-2.5 rounded-md bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                >
+                  <Sparkles className="w-3 h-3 text-amber-300" />
+                  <span>3 O&apos;Clock Prayer</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setIsAutoAdvancing(false);
+                    SacredReader.stop();
+                    setActiveDevotion('stations-of-the-cross');
+                  }}
+                  className="h-8 px-2.5 rounded-md bg-red-900/70 hover:bg-red-800/80 border border-amber-300/45 text-amber-100 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                >
+                  <span>Stations of the Cross</span>
+                </button>
+              </div>
               {renderSettingsToggleButton('dark')}
             </div>
           </div>
@@ -2097,6 +2150,17 @@ export const RosaryAndChapletView: React.FC = () => {
           </div>
 
         </div>
+      )}
+
+      {/* =========================================================================
+          STATIONS OF THE CROSS VIEW (ST. ALPHONSUS LIGUORI + JERUSALEM MAP + JENNY)
+         ========================================================================= */}
+      {activeDevotion === 'stations-of-the-cross' && (
+        <StationsOfTheCrossView
+          renderSettingsToggleButton={renderSettingsToggleButton}
+          renderSettingsDropdown={renderSettingsDropdown}
+          onSwitchToThreeOClock={() => setActiveDevotion('three-oclock')}
+        />
       )}
 
     </div>

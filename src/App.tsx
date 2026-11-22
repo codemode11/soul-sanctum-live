@@ -37,6 +37,7 @@ import { PodcastPlayerBar } from './components/PodcastPlayerBar';
 import { PodcastEpisodeModal } from './components/PodcastEpisodeModal';
 import { EucharisticCatechismView } from './components/EucharisticCatechismView';
 import { HolyMassLivePlayerView } from './components/HolyMassLivePlayerView';
+import { ParishFinderView } from './components/ParishFinderView';
 import { BibleFlashcardsView } from './components/BibleFlashcardsView';
 import { ChurchHistoryInfographicView } from './components/ChurchHistoryInfographicView';
 import { CatholicLinksView } from './components/CatholicLinksView';
@@ -137,6 +138,7 @@ export default function App() {
   const [isAdorationOpen, setIsAdorationOpen] = useState(false);
   const [isCebuParishesOpen, setIsCebuParishesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [gmpQuotaExceeded, setGmpQuotaExceeded] = useState(false);
   const [showContactEmail, setShowContactEmail] = useState(false);
   const [currentEmblem] = useState<SacredEmblem>(getSavedEmblem);
   const [iconStyleConfig] = useState<IconStyleConfig>(getSavedIconStyle);
@@ -173,6 +175,15 @@ export default function App() {
       window.removeEventListener('focus', checkDate);
     };
   }, [currentDateStr]);
+
+  // Listen for Google Maps Platform quota-exceeded events at top-level App scope
+  useEffect(() => {
+    const handleQuotaExceeded = () => setGmpQuotaExceeded(true);
+    window.addEventListener('gmp-quota-exceeded', handleQuotaExceeded);
+    return () => {
+      window.removeEventListener('gmp-quota-exceeded', handleQuotaExceeded);
+    };
+  }, []);
 
   const activeScheduledMasthead = getActiveScheduledMastheadForDate(currentDateStr);
 
@@ -527,6 +538,22 @@ export default function App() {
 
   return (
     <div className="min-h-screen relative flex flex-col overflow-x-clip bg-stone-950 text-stone-900 selection:bg-amber-300 selection:text-amber-950">
+      {gmpQuotaExceeded && (
+        <div className="bg-amber-50 border-b border-amber-200 text-amber-900 px-4 py-2.5 text-xs md:text-sm text-center sticky top-0 z-50 shadow-sm">
+          <span>
+            Google Maps Platform quota reached. If you are the app owner, visit{' '}
+            <a
+              href="https://developers.google.com/maps/ai/ai-studio?utm_campaign=gmp_mcp_codeassist_v1_aistudio#quota_exceeded_errors"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline font-semibold text-amber-950 hover:text-amber-800"
+            >
+              maps developer site
+            </a>{' '}
+            for instructions to update your account.
+          </span>
+        </div>
+      )}
       {!IS_OWNER_ANALYTICS_EXCLUDED && (
         <Analytics route={`/${activeTab}`} path={`/${activeTab}`} debug={false} beforeSend={analyticsBeforeSend} />
       )}
@@ -997,6 +1024,9 @@ export default function App() {
                 currentReading={currentMassReading}
               />
             )}
+
+            {/* Nearby Mass, Confession & Adoration Finder */}
+            {activeTab === 'parish-finder' && <ParishFinderView />}
 
             {/* 7. Vatican News */}
             {activeTab === 'vatican-news' && (

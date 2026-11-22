@@ -58,7 +58,8 @@ import {
   CatholicSocialShareIcon,
   FioAudioNavIcon,
   MagisteriumKeysIcon,
-  CatholicProphecyScrollIcon
+  CatholicProphecyScrollIcon,
+  ParishFinderPinIcon
 } from './SanctumIcons';
 import { PWAInstallButton } from './PWAInstallButton';
 
@@ -77,6 +78,7 @@ export type ActiveTab =
   | 'catholic-podcasts'
   | 'fio-audio'
   | 'live-mass'
+  | 'parish-finder'
   | 'vatican-news'
   | 'catholic-articles'
   | 'catholic-social'
@@ -408,6 +410,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       tag: 'Live', 
       subtext: 'St. Peter\'s and Global Sanctuaries' 
     },
+    {
+      id: 'parish-finder',
+      label: 'Mass & Confession Finder',
+      icon: ParishFinderPinIcon,
+      tag: 'Nearby',
+      subtext: 'Parishes, Mass, Confession & Adoration Map'
+    },
     { 
       id: 'vatican-news', 
       label: 'Vatican News', 
@@ -448,7 +457,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: 'Chaplet and Rosary', 
       icon: RosaryAndChapletIcon, 
       tag: 'Marian', 
-      subtext: 'Guided Mysteries and Chaplet' 
+      subtext: 'Divine Mercy, Stations of the Cross & Rosary' 
     },
     { 
       id: 'eucharistic-miracles', 

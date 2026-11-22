@@ -1853,12 +1853,185 @@ app.get('/api/medjugorje-messages', async (_req, res) => {
   }
 });
 
+// Expose configured Google Maps Platform client key (never hardcoded in bundle)
+app.get('/api/maps-config', (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  const paused =
+    String(process.env.GOOGLE_MAPS_PAUSED || '').toLowerCase() === 'true' ||
+    String(process.env.VITE_GOOGLE_MAPS_PAUSED || '').toLowerCase() === 'true';
+  if (paused) {
+    return res.status(200).json({
+      apiKey: '',
+      configured: false,
+      paused: true,
+    });
+  }
+  const apiKey =
+    process.env.VITE_GOOGLE_MAPS_API_KEY ||
+    process.env.GOOGLE_MAPS_API_KEY ||
+    '';
+  return res.status(200).json({
+    apiKey,
+    configured: Boolean(apiKey),
+    paused: false,
+  });
+});
+
+// On-demand web-grounded Catholic parish Mass, Confession & Adoration schedule lookup
+app.post('/api/parish-schedule', async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  try {
+    const parishName = String(req.body?.parishName || '').trim().slice(0, 180);
+    const address = String(req.body?.address || '').trim().slice(0, 260);
+    const websiteUri = String(req.body?.websiteUri || '').trim().slice(0, 300);
+
+    if (!parishName) {
+      return res.status(400).json({ error: 'Parish name is required.' });
+    }
+
+    if (!process.env.GEMINI_API_KEY) {
+      return res.status(503).json({
+        error: 'Live parish schedule lookup is unavailable in this environment. Please check the parish website or phone number directly.',
+      });
+    }
+
+    const ai = getGenAI();
+    const todayLabel = new Date().toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+
+    const prompt = [
+      `Find the current published Catholic Mass times, Confession (Reconciliation) schedule, and Eucharistic Adoration hours for:`,
+      `Parish: ${parishName}`,
+      address ? `Address: ${address}` : '',
+      websiteUri ? `Official Website: ${websiteUri}` : '',
+      `Today's date: ${todayLabel}`,
+      ``,
+      `Instructions:`,
+      `- Search the parish's official website, diocesan directory, or MassTimes listings.`,
+      `- Present ONLY verifiable schedule details found in search results. Never guess or invent times.`,
+      `- If a particular schedule (for example Confession or Adoration) is not published online, explicitly state "Not listed online — please verify with the parish office."`,
+      `- Format concisely with clear markdown headings:`,
+      `  ### Sunday & Saturday Vigil Mass`,
+      `  ### Weekday / Daily Mass`,
+      `  ### Confession (Reconciliation)`,
+      `  ### Eucharistic Adoration`,
+      `  ### Helpful Notes`,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-4-hydrogen',
+      contents: prompt,
+      config: {
+        tools: [{ googleSearch: {} }],
+        thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
+      },
+    });
+
+    const scheduleMarkdown = (response.text || '').trim();
+    const rawChunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+    const seen = new Set<string>();
+    const sources: { title: string; uri: string }[] = [];
+
+    for (const chunk of rawChunks as any[]) {
+      const uri = chunk?.web?.uri;
+      const title = chunk?.web?.title;
+      if (typeof uri === 'string' && /^https?:\/\//i.test(uri) && !seen.has(uri)) {
+        seen.add(uri);
+        sources.push({
+          uri,
+          title: typeof title === 'string' && title.trim() ? title.trim() : uri,
+        });
+      }
+    }
+
+    return res.status(200).json({
+      parishName,
+      scheduleMarkdown:
+        scheduleMarkdown ||
+        'No published Mass, Confession, or Adoration schedule was found online. Please verify directly with the parish website or office.',
+      sources: sources.slice(0, 6),
+      checkedAt: new Date().toISOString(),
+    });
+  } catch (err: any) {
+    console.error('[/api/parish-schedule] error:', err);
+    return res.status(502).json({
+      error: err?.message || 'Unable to look up live parish schedule right now.',
+    });
+  }
+});
+
 async function startServer() {
   if (!isProd) {
+    // Serve a zero-WebSocket /@vite/client shim in dev so CSS injection & HMR APIs work without
+    // Vite 8 attempting a blocked HMR WebSocket connection (Error: WebSocket closed without opened.)
+    const noWsViteClientJs = `
+const sheetsMap = new Map();
+let lastInsertedStyle;
+export function updateStyle(id, content) {
+  let style = sheetsMap.get(id);
+  if (!style) {
+    style = document.createElement('style');
+    style.setAttribute('type', 'text/css');
+    style.setAttribute('data-vite-dev-id', id);
+    style.textContent = content;
+    if (!lastInsertedStyle) {
+      document.head.appendChild(style);
+      setTimeout(() => { lastInsertedStyle = undefined; }, 0);
+    } else {
+      lastInsertedStyle.insertAdjacentElement('afterend', style);
+    }
+    lastInsertedStyle = style;
+  } else if (style.textContent !== content) {
+    style.textContent = content;
+  }
+  sheetsMap.set(id, style);
+}
+export function removeStyle(id) {
+  const style = sheetsMap.get(id);
+  if (style) {
+    if (style.parentNode) style.parentNode.removeChild(style);
+    sheetsMap.delete(id);
+  }
+}
+export function createHotContext() {
+  return {
+    data: {},
+    accept() {},
+    acceptExports() {},
+    dispose() {},
+    prune() {},
+    decline() {},
+    invalidate() {},
+    on() {},
+    off() {},
+    send() {},
+  };
+}
+export function injectQuery(url, queryToInject) {
+  if (url[0] !== '.' && url[0] !== '/') return url;
+  const pathname = url.replace(/[?#].*$/, '');
+  const { search, hash } = new URL(url, 'http://vite.dev');
+  return pathname + '?' + queryToInject + (search ? '&' + search.slice(1) : '') + (hash || '');
+}
+export class ErrorOverlay extends HTMLElement {}
+`.trim();
+
+    app.get('/@vite/client', (_req, res) => {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+      res.send(noWsViteClientJs);
+    });
+
     // In dev, mount Vite middlewares so SPA and all existing Vite plugins (Vatican News, RSS, etc.) run smoothly
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: { middlewareMode: true, ws: false, hmr: false },
       appType: 'spa',
     });
     app.use(vite.middlewares);

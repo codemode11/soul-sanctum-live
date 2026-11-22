@@ -2280,5 +2280,32 @@ export const CatholicProphecyScrollIcon: React.FC<IconProps> = ({ className = 'w
   </svg>
 );
 
+/**
+ * Nearby Mass, Confession & Adoration Finder Icon: Map Pin with Sacred Cross Crest
+ */
+export const ParishFinderPinIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Nearby Mass, Confession & Adoration Finder — Sacred Parish Map Pin"
+  >
+    {/* Teardrop Map Pin */}
+    <path
+      d="M12 21.5c-4.5-4.3-7.5-7.7-7.5-11.3a7.5 7.5 0 1 1 15 0c0 3.6-3 7-7.5 11.3Z"
+      fill="currentColor"
+      fillOpacity="0.13"
+    />
+    {/* Sacred Cross inside the pin */}
+    <path d="M12 6.2v7.2" stroke="#FDE047" strokeWidth="1.9" />
+    <path d="M9.3 8.9h5.4" stroke="#FDE047" strokeWidth="1.9" />
+  </svg>
+);
+
+
 
 

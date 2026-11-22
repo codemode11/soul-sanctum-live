@@ -79,6 +79,11 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
     description:
       'Watch live Catholic Holy Mass and 24/7 Eucharistic Adoration from St. Peter’s Basilica, EWTN, Lourdes, Fátima, and shrines worldwide.',
   },
+  'parish-finder': {
+    title: 'Nearby Mass, Confession & Adoration Finder | Soul Sanctum',
+    description:
+      'Find nearby Catholic churches, Holy Mass times, Confession schedules, Eucharistic Adoration chapels, and live directions anywhere in the world on Soul Sanctum.',
+  },
   'vatican-news': {
     title: 'Vatican News – Latest Papal & Church News | Soul Sanctum',
     description:
@@ -105,9 +110,9 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
       'Pray nearly 100 bilingual English and Latin Catholic prayers by the Saints, with historical context, plenary and partial indulgences, and audio.',
   },
   rosary: {
-    title: 'Holy Rosary & Divine Mercy Chaplet Guide | Soul Sanctum',
+    title: 'Holy Rosary, Divine Mercy Chaplet & Stations of the Cross | Soul Sanctum',
     description:
-      'Pray the Holy Rosary with Joyful, Sorrowful, Glorious, and Luminous Mysteries and the Divine Mercy Chaplet with audio on Soul Sanctum.',
+      'Pray the Holy Rosary, Divine Mercy Chaplet, 3 O’Clock Prayer, and Interactive Stations of the Cross by St. Alphonsus Liguori with Jerusalem maps and audio on Soul Sanctum.',
   },
   'eucharistic-miracles': {
     title: 'Eucharistic Miracles & Real Presence | Soul Sanctum',
