@@ -29,18 +29,18 @@ import {
   Maximize2,
   X,
 } from 'lucide-react';
-import station01Img from '../assets/images/caravaggio_station_01_condemned_1795424460698.jpg';
+import station01Img from '../assets/images/caravaggio_v2_station_01_1795436688352.jpg';
 import station02Img from '../assets/images/caravaggio_station_02_carries_cross_1795424460096.jpg';
-import station03Img from '../assets/images/caravaggio_station_03_first_fall_1795424460800.jpg';
-import station04Img from '../assets/images/caravaggio_station_04_meets_mother_1795424461191.jpg';
-import station05Img from '../assets/images/caravaggio_station_05_simon_cyrene_1795424461880.jpg';
+import station03Img from '../assets/images/caravaggio_v2_station_03_1795436687142.jpg';
+import station04Img from '../assets/images/caravaggio_v2_station_04_1795436687574.jpg';
+import station05Img from '../assets/images/caravaggio_v2_station_05_1795436686711.jpg';
 import station06Img from '../assets/images/caravaggio_station_06_veronica_wipes_1795424461011.jpg';
-import station07Img from '../assets/images/caravaggio_station_07_second_fall_1795424458557.jpg';
-import station08Img from '../assets/images/caravaggio_station_08_women_jerusalem_1795424461385.jpg';
-import station09Img from '../assets/images/caravaggio_station_09_third_fall_1795424458318.jpg';
-import station10Img from '../assets/images/caravaggio_station_10_stripped_1795424483232.jpg';
-import station11Img from '../assets/images/caravaggio_station_11_nailed_1795424461382.jpg';
-import station12Img from '../assets/images/caravaggio_station_12_dies_1795424458975.jpg';
+import station07Img from '../assets/images/caravaggio_v2_station_07_1795436687911.jpg';
+import station08Img from '../assets/images/caravaggio_v2_station_08_1795436686818.jpg';
+import station09Img from '../assets/images/caravaggio_v2_station_09_1795436687139.jpg';
+import station10Img from '../assets/images/caravaggio_v2_station_10_1795436687944.jpg';
+import station11Img from '../assets/images/caravaggio_v2_station_11_1795436688513.jpg';
+import station12Img from '../assets/images/caravaggio_v2_station_12_1795436687671.jpg';
 import station13Img from '../assets/images/caravaggio_station_13_taken_down_1795424462234.jpg';
 import station14Img from '../assets/images/caravaggio_station_14_sepulchre_1795424461047.jpg';
 import {
