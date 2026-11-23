@@ -292,7 +292,16 @@ export const FallbackParishFinderWorkspace: React.FC<FallbackParishFinderWorkspa
       }
     });
 
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => {
+            map.invalidateSize({ animate: false });
+          })
+        : null;
+    resizeObserver?.observe(container);
+
     return () => {
+      resizeObserver?.disconnect();
       map.remove();
       leafletMapRef.current = null;
       markersLayerRef.current = null;
@@ -812,9 +821,9 @@ export const FallbackParishFinderWorkspace: React.FC<FallbackParishFinderWorkspa
       </div>
 
       {/* Interactive Map + Parish Results Split Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
-        <div className="lg:col-span-7 rounded-xl overflow-hidden border border-amber-500/40 bg-stone-900 shadow-2xl relative">
-          <div className="relative w-full h-[380px] sm:h-[460px]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:items-stretch">
+        <div className="lg:col-span-7 rounded-xl overflow-hidden border border-amber-500/40 bg-stone-900 shadow-2xl relative flex flex-col lg:h-[520px]">
+          <div className="relative w-full h-[380px] sm:h-[460px] lg:h-full lg:flex-1">
             <div ref={mapContainerRef} className="w-full h-full z-0" />
 
             {mapPannedSinceSearch && !isSearching && (
@@ -838,7 +847,7 @@ export const FallbackParishFinderWorkspace: React.FC<FallbackParishFinderWorkspa
         </div>
 
         {/* Scrollable Parish Directory Column */}
-        <div className="lg:col-span-5 rounded-xl bg-[#FAF6F0]/95 backdrop-blur-md border border-amber-300/60 shadow-xl overflow-hidden flex flex-col max-h-[460px] sm:max-h-[520px]">
+        <div className="lg:col-span-5 rounded-xl bg-[#FAF6F0]/95 backdrop-blur-md border border-amber-300/60 shadow-xl overflow-hidden flex flex-col max-h-[460px] sm:max-h-[520px] lg:h-[520px]">
           <div className="px-4 py-3 bg-[#26150B] text-amber-100 border-b border-amber-500/35 flex items-center justify-between gap-2 shrink-0">
             <div className="min-w-0">
               <h3 className="font-cinzel text-xs sm:text-sm font-bold tracking-wider uppercase text-amber-200 truncate">
