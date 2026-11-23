@@ -982,8 +982,7 @@ export default function App() {
               />
             )}
 
-            {/* 6. Wisdom of the Saints */}
-            {activeTab === 'wisdom' && <WisdomTreasuryView />}
+
 
             {/* Quotations */}
             {activeTab === 'quotations' && <QuotationsView />}

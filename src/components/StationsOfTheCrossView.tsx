@@ -28,6 +28,11 @@ import {
   BookOpen,
   Maximize2,
   X,
+  Sun,
+  Flame,
+  Eye,
+  ZoomIn,
+  ZoomOut,
 } from 'lucide-react';
 import station01Img from '../assets/images/caravaggio_v2_station_01_1795436688352.jpg';
 import station02Img from '../assets/images/caravaggio_station_02_carries_cross_1795424460096.jpg';
@@ -58,6 +63,14 @@ import {
   useMapsQuotaGuard,
 } from '@/utils/mapsQuotaGuard';
 
+type GalleryLightingMode = 'spotlight' | 'candlelight' | 'shadow-study';
+
+const GALLERY_LIGHTING_FILTER: Record<GalleryLightingMode, string> = {
+  spotlight: 'contrast(1.05) saturate(1.06) brightness(1.03)',
+  candlelight: 'contrast(1.08) saturate(1.1) sepia(0.14) brightness(1.01)',
+  'shadow-study': 'brightness(1.22) contrast(1.01) saturate(1.06)',
+};
+
 interface StationArtworkEntry {
   stationNumber: number;
   roman: string;
@@ -66,6 +79,7 @@ interface StationArtworkEntry {
   alt: string;
   plateTitle: string;
   caption: string;
+  chiaroscuroNote: string;
 }
 
 const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
@@ -76,7 +90,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station01Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station I: Jesus stands crowned with thorns in a crimson mantle before Pontius Pilate beneath a sharp beam of light',
     plateTitle: 'Station I · Jesus Is Condemned to Death',
-    caption: 'Plate I · Praetorium / Antonia Fortress, Jerusalem',
+    caption: 'Plate I · Oil on Canvas (Manner of Caravaggio) · Praetorium, Jerusalem',
+    chiaroscuroNote:
+      'A raking light isolates Christ’s bound wrists and cinnabar mantle against the shadowed Praetorium crowd while catching Pilate’s hesitant open hands.',
   },
   2: {
     stationNumber: 2,
@@ -85,7 +101,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station02Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station II: Jesus embraces the rough wooden Cross upon His shoulder out of deep obsidian shadows',
     plateTitle: 'Station II · Jesus Carries His Cross',
-    caption: 'Plate II · Chapel of the Condemnation, Jerusalem',
+    caption: 'Plate II · Oil on Canvas (Manner of Caravaggio) · Chapel of the Condemnation',
+    chiaroscuroNote:
+      'Against an obsidian umber void, warm tenebrist light models the rough-hewn timber grain and the tender resolve of Christ’s tear-lit upward gaze.',
   },
   3: {
     stationNumber: 3,
@@ -94,7 +112,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station03Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station III: Jesus falls beneath the heavy timber Cross upon dark flagstones lit by a single diagonal shaft',
     plateTitle: 'Station III · Jesus Falls the First Time',
-    caption: 'Plate III · El-Wad Road Intersection, Jerusalem',
+    caption: 'Plate III · Oil on Canvas (Manner of Caravaggio) · El-Wad Road, Jerusalem',
+    chiaroscuroNote:
+      'Sculptural Baroque foreshortening and dramatic diagonal thrust emphasize the crushing weight of the Cross over worn cobblestones.',
   },
   4: {
     stationNumber: 4,
@@ -103,7 +123,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station04Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station IV: Jesus pauses beneath the Cross to gaze tenderly at His Mother Mary wrapped in deep lapis and ochre',
     plateTitle: 'Station IV · Jesus Meets His Afflicted Mother',
-    caption: 'Plate IV · Church of Our Lady of the Spasm, Jerusalem',
+    caption: 'Plate IV · Oil on Canvas (Manner of Caravaggio) · Church of Our Lady of the Spasm',
+    chiaroscuroNote:
+      'Luminous flesh tones and Mary’s lapis-and-ochre drapery emerge from velvet darkness around the silent dialogue of their reaching hands.',
   },
   5: {
     stationNumber: 5,
@@ -112,7 +134,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station05Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station V: Simon of Cyrene strains to bear the Cross behind Jesus under dramatic tenebrist spotlighting',
     plateTitle: 'Station V · Simon of Cyrene Helps Jesus Carry His Cross',
-    caption: 'Plate V · Chapel of Simon of Cyrene, Jerusalem',
+    caption: 'Plate V · Oil on Canvas (Manner of Caravaggio) · Chapel of Simon of Cyrene',
+    chiaroscuroNote:
+      'A sharp upper-left shaft highlights the sinew of Simon’s weathered arms as earthy ochre linen meets the deep madder crimson of Christ’s tunic.',
   },
   6: {
     stationNumber: 6,
@@ -121,7 +145,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station06Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station VI: Saint Veronica emerges from shadow holding a crisp white linen cloth to wipe the brow of Jesus',
     plateTitle: 'Station VI · Veronica Wipes the Face of Jesus',
-    caption: 'Plate VI · Church of Saint Veronica, Jerusalem',
+    caption: 'Plate VI · Oil on Canvas (Manner of Caravaggio) · Church of Saint Veronica',
+    chiaroscuroNote:
+      'Pure lead-white linen anchors the composition’s focal brilliance, bridging Veronica’s tender mercy and the blood-streaked brow of the Lord.',
   },
   7: {
     stationNumber: 7,
@@ -130,7 +156,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station07Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station VII: Exhausted near a stone archway, Jesus falls a second time onto cold flagstones beneath the Cross',
     plateTitle: 'Station VII · Jesus Falls the Second Time',
-    caption: 'Plate VII · Ancient Judgment Gate, Jerusalem',
+    caption: 'Plate VII · Oil on Canvas (Manner of Caravaggio) · Ancient Judgment Gate',
+    chiaroscuroNote:
+      'A golden aperture cuts through heavy ashlar masonry, glancing off Roman steel helmets and Christ’s trembling hand pressed against cold stone.',
   },
   8: {
     stationNumber: 8,
@@ -139,7 +167,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station08Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station VIII: Jesus turns gently to console the weeping women of Jerusalem huddled in warm shadowed light',
     plateTitle: 'Station VIII · Jesus Consoles the Women of Jerusalem',
-    caption: 'Plate VIII · Monastery of St. Charalambos, Jerusalem',
+    caption: 'Plate VIII · Oil on Canvas (Manner of Caravaggio) · Monastery of St. Charalambos',
+    chiaroscuroNote:
+      'Intimate half-length framing draws the viewer directly beside the weeping daughters of Jerusalem as Christ raises His hand in quiet admonition.',
   },
   9: {
     stationNumber: 9,
@@ -148,7 +178,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station09Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station IX: Prostrate on dark rock at the approach to Calvary, Jesus lies beneath the Cross in raking golden light',
     plateTitle: 'Station IX · Jesus Falls the Third Time',
-    caption: 'Plate IX · Threshold of Golgotha, Jerusalem',
+    caption: 'Plate IX · Oil on Canvas (Manner of Caravaggio) · Threshold of Golgotha',
+    chiaroscuroNote:
+      'Severe low-key tenebrism strips away the crowd entirely, isolating Christ prostrate upon jagged Golgotha rock beneath an immense shadow.',
   },
   10: {
     stationNumber: 10,
@@ -157,7 +189,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station10Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station X: Jesus stands in humble dignity as His crimson garment is lifted away under stark tenebrist light',
     plateTitle: 'Station X · Jesus Is Stripped of His Garments',
-    caption: 'Plate X · Chapel of the Franks, Calvary',
+    caption: 'Plate X · Oil on Canvas (Manner of Caravaggio) · Chapel of the Franks, Calvary',
+    chiaroscuroNote:
+      'Symmetrical framing of the executioners parting the crimson cloak heightens the quiet, luminous stillness of Christ’s lowered eyes.',
   },
   11: {
     stationNumber: 11,
@@ -166,7 +200,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station11Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station XI: Diagonal composition of Jesus reclining with outstretched arms upon the Cross across rocky Calvary',
     plateTitle: 'Station XI · Jesus Is Nailed to the Cross',
-    caption: 'Plate XI · Altar of the Nailing, Golgotha',
+    caption: 'Plate XI · Oil on Canvas (Manner of Caravaggio) · Altar of the Nailing, Golgotha',
+    chiaroscuroNote:
+      'Echoing Caravaggio’s stark diagonal realism, taut ropes and timber lines converge upon Christ’s upturned gaze offered to the Father.',
   },
   12: {
     stationNumber: 12,
@@ -175,7 +211,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station12Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station XII: Jesus bows His head on the Cross against an abyss of darkness as Mary and St. John watch below',
     plateTitle: 'Station XII · Jesus Dies on the Cross',
-    caption: 'Plate XII · Rock of Golgotha, Holy Sepulchre',
+    caption: 'Plate XII · Oil on Canvas (Manner of Caravaggio) · Rock of Golgotha, Holy Sepulchre',
+    chiaroscuroNote:
+      'A single celestial shaft pierces the pitch-black sky of the ninth hour, uniting the bowed head of the Crucified with Mary and St. John below.',
   },
   13: {
     stationNumber: 13,
@@ -184,7 +222,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station13Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station XIII: Joseph of Arimathea and Nicodemus lower Jesus from the Cross into the grieving arms of Mary',
     plateTitle: 'Station XIII · Jesus Is Taken Down from the Cross',
-    caption: 'Plate XIII · Stone of Anointing, Holy Sepulchre',
+    caption: 'Plate XIII · Oil on Canvas (Manner of Caravaggio) · Stone of Anointing, Holy Sepulchre',
+    chiaroscuroNote:
+      'Inspired by Caravaggio’s Vatican Entombment, sculptural drapery and cascading white linen guide the eye from the empty Cross to Mary’s open arms.',
   },
   14: {
     stationNumber: 14,
@@ -193,7 +233,9 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     src: station14Img,
     alt: 'Caravaggio-style chiaroscuro oil painting of Station XIV: Illuminated by candle glow inside the dark stone tomb, Jesus is laid in crisp white linen',
     plateTitle: 'Station XIV · Jesus Is Placed in the Sepulchre',
-    caption: 'Plate XIV · The Holy Sepulchre (Edicule), Jerusalem',
+    caption: 'Plate XIV · Oil on Canvas (Manner of Caravaggio) · The Holy Sepulchre, Jerusalem',
+    chiaroscuroNote:
+      'A solitary tallow candle kindles warm umber rock walls and crisp white burial folds, casting an intimate nocturne of sorrow and expectant peace.',
   },
 };
 
@@ -852,7 +894,49 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
   const [mapTypeId, setMapTypeId] = useState<'roadmap' | 'hybrid'>('hybrid');
   const [lightboxStation, setLightboxStation] = useState<number | null>(null);
   const [brokenImages, setBrokenImages] = useState<Record<string, boolean>>({});
+  const [lightingMode, setLightingMode] = useState<GalleryLightingMode>('spotlight');
+  const [lightboxZoom, setLightboxZoom] = useState<number>(1);
+  const [lightboxPan, setLightboxPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isDraggingPan, setIsDraggingPan] = useState<boolean>(false);
+  const panOriginRef = useRef<{ x: number; y: number; panX: number; panY: number } | null>(null);
   const mapLoadRecordedRef = useRef<boolean>(false);
+
+  // Reset zoom & pan whenever Lightbox plate changes or closes
+  useEffect(() => {
+    setLightboxZoom(1);
+    setLightboxPan({ x: 0, y: 0 });
+    setIsDraggingPan(false);
+    panOriginRef.current = null;
+  }, [lightboxStation]);
+
+  // Keyboard navigation inside the Caravaggio Museum Lightbox
+  useEffect(() => {
+    if (lightboxStation === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setLightboxStation(null);
+      } else if (e.key === 'ArrowLeft') {
+        setLightboxStation((prev) => (prev !== null && prev > 1 ? prev - 1 : prev));
+      } else if (e.key === 'ArrowRight') {
+        setLightboxStation((prev) =>
+          prev !== null && prev < STATIONS_OF_THE_CROSS.length ? prev + 1 : prev
+        );
+      } else if (e.key === '+' || e.key === '=') {
+        setLightboxZoom((z) => (z < 1.75 ? 1.75 : 2.5));
+      } else if (e.key === '-') {
+        setLightboxZoom((z) => {
+          const next = z > 1.75 ? 1.75 : 1;
+          if (next === 1) setLightboxPan({ x: 0, y: 0 });
+          return next;
+        });
+      } else if (e.key === '0') {
+        setLightboxZoom(1);
+        setLightboxPan({ x: 0, y: 0 });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxStation]);
 
   const quotaGuard = useMapsQuotaGuard(serverPaused);
 
@@ -1353,54 +1437,141 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         {/* Card Body: Museum-Editorial Two-Column Split (Sacred Artwork + Prayers) */}
         <div className="p-5 sm:p-7">
           <div className="lg:grid lg:grid-cols-12 lg:gap-7 items-start space-y-6 lg:space-y-0">
-            {/* Left Column: Caravaggio-Style Chiaroscuro Plate */}
-            <figure className="lg:col-span-5 lg:sticky lg:top-6 space-y-2.5">
-              <button
-                type="button"
-                onClick={() => setLightboxStation(activeArtwork.stationNumber)}
-                className="group relative block w-full aspect-[4/3] bg-[#120A07] border border-[#D8C2A6] rounded-xl overflow-hidden shadow-md cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7D1A1A]"
-                aria-label={`Enlarge oil painting: ${activeArtwork.plateTitle}`}
+            {/* Left Column: Museum-Framed Caravaggio Chiaroscuro Oil Painting */}
+            <figure className="lg:col-span-5 lg:sticky lg:top-6 space-y-3">
+              {/* Museum Gallery Lighting Switcher */}
+              <div
+                className="flex flex-wrap items-center justify-between gap-2"
+                role="group"
+                aria-label="Gallery lighting mode"
               >
-                {!brokenImages[`main-${activeArtwork.stationNumber}`] ? (
-                  <img
-                    key={`main-plate-${activeArtwork.stationNumber}`}
-                    src={activeArtwork.src}
-                    alt={activeArtwork.alt}
-                    referrerPolicy="no-referrer"
-                    onError={() => markImageBroken(`main-${activeArtwork.stationNumber}`)}
-                    className="w-full h-full object-cover scale-[1.02] transition-transform duration-500 group-hover:scale-[1.04]"
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-[#2A0E0A] to-[#140705] text-amber-100">
-                    <svg
-                      viewBox="0 0 48 48"
-                      className="w-10 h-10 text-amber-300/80 mb-2"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      aria-hidden="true"
-                    >
-                      <path d="M24 6v36M14 16h20" />
-                    </svg>
-                    <span className="font-cinzel text-xs font-bold tracking-widest uppercase text-amber-200">
-                      Station {activeArtwork.roman}
-                    </span>
-                  </div>
-                )}
-              </button>
-
-              <figcaption className="flex items-start justify-between gap-3 pt-0.5">
-                <span className="font-serif italic text-xs sm:text-[13px] text-[#5C3A21] leading-snug">
-                  {activeArtwork.caption}
+                <span className="font-cinzel text-[10px] font-bold uppercase tracking-widest text-[#7D1A1A]">
+                  Gallery Lighting
                 </span>
-                <button
-                  type="button"
-                  onClick={() => setLightboxStation(activeArtwork.stationNumber)}
-                  className="whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[#D8C2A6] bg-[#FAF6F0] hover:bg-[#F3E7D6] text-[#7D1A1A] text-[11px] font-cinzel font-bold transition-colors cursor-pointer"
-                >
-                  <Maximize2 className="w-3 h-3" />
-                  <span>Enlarge Plate</span>
-                </button>
+                <div className="inline-flex rounded-lg border border-[#D8C2A6] bg-[#FAF6F0] p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setLightingMode('spotlight')}
+                    aria-pressed={lightingMode === 'spotlight'}
+                    className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-md font-cinzel text-[10px] font-bold transition-colors cursor-pointer ${
+                      lightingMode === 'spotlight'
+                        ? 'bg-[#2B140C] text-amber-100 shadow-2xs'
+                        : 'text-[#6B4423] hover:text-[#2D140C]'
+                    }`}
+                  >
+                    <Sun className="w-3 h-3" />
+                    <span>Spotlight</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLightingMode('candlelight')}
+                    aria-pressed={lightingMode === 'candlelight'}
+                    className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-md font-cinzel text-[10px] font-bold transition-colors cursor-pointer ${
+                      lightingMode === 'candlelight'
+                        ? 'bg-[#7D1A1A] text-amber-50 shadow-2xs'
+                        : 'text-[#6B4423] hover:text-[#2D140C]'
+                    }`}
+                  >
+                    <Flame className="w-3 h-3" />
+                    <span>Candlelight</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLightingMode('shadow-study')}
+                    aria-pressed={lightingMode === 'shadow-study'}
+                    className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-md font-cinzel text-[10px] font-bold transition-colors cursor-pointer ${
+                      lightingMode === 'shadow-study'
+                        ? 'bg-[#4E3524] text-amber-50 shadow-2xs'
+                        : 'text-[#6B4423] hover:text-[#2D140C]'
+                    }`}
+                    title="Lift Caravaggio's darkest shadows to inspect hidden background figures"
+                  >
+                    <Eye className="w-3 h-3" />
+                    <span>Shadow Reveal</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Layered Baroque Ebony & Antique-Gold Fillet Museum Frame (crisp unrounded oil canvas) */}
+              <div className="bg-gradient-to-b from-[#1E120C] via-[#130A07] to-[#0B0604] p-2.5 sm:p-3 border border-[#8E6A3A]/60 shadow-[0_14px_32px_rgba(20,10,5,0.34)]">
+                <div className="p-[2px] bg-gradient-to-br from-[#C8A15A]/75 via-[#6E4F26]/55 to-[#B68D45]/75">
+                  <button
+                    type="button"
+                    onClick={() => setLightboxStation(activeArtwork.stationNumber)}
+                    className="group relative block w-full aspect-[4/3] bg-[#0B0604] overflow-hidden cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+                    aria-label={`Inspect Caravaggio oil painting in high-resolution museum viewer: ${activeArtwork.plateTitle}`}
+                  >
+                    {!brokenImages[`main-${activeArtwork.stationNumber}`] ? (
+                      <>
+                        <img
+                          key={`main-plate-${activeArtwork.stationNumber}`}
+                          src={activeArtwork.src}
+                          alt={activeArtwork.alt}
+                          referrerPolicy="no-referrer"
+                          onError={() => markImageBroken(`main-${activeArtwork.stationNumber}`)}
+                          style={{ filter: GALLERY_LIGHTING_FILTER[lightingMode] }}
+                          className="w-full h-full object-cover scale-[1.01] transition-all duration-500 group-hover:scale-[1.035]"
+                        />
+                        {/* Museum Picture-Lamp Spotlight or Baroque Candlelight Sheen */}
+                        {lightingMode === 'spotlight' && (
+                          <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 caravaggio-gallery-spotlight"
+                          />
+                        )}
+                        {lightingMode === 'candlelight' && (
+                          <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 caravaggio-candle-sheen"
+                          />
+                        )}
+                        {/* Subtle recessed inner shadow simulating deep Baroque frame rabbet */}
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0 shadow-[inset_0_0_24px_rgba(0,0,0,0.55)]"
+                        />
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-[#2A0E0A] to-[#140705] text-amber-100">
+                        <svg
+                          viewBox="0 0 48 48"
+                          className="w-10 h-10 text-amber-300/80 mb-2"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          aria-hidden="true"
+                        >
+                          <path d="M24 6v36M14 16h20" />
+                        </svg>
+                        <span className="font-cinzel text-xs font-bold tracking-widest uppercase text-amber-200">
+                          Station {activeArtwork.roman}
+                        </span>
+                      </div>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              <figcaption className="space-y-2 pt-0.5">
+                <div className="flex items-start justify-between gap-3">
+                  <span className="font-serif italic text-xs sm:text-[13px] text-[#5C3A21] leading-snug">
+                    {activeArtwork.caption}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setLightboxStation(activeArtwork.stationNumber)}
+                    className="whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-[#D8C2A6] bg-[#FAF6F0] hover:bg-[#F3E7D6] text-[#7D1A1A] text-[11px] font-cinzel font-bold transition-colors cursor-pointer"
+                  >
+                    <Maximize2 className="w-3 h-3" />
+                    <span>Inspect Plate</span>
+                  </button>
+                </div>
+                <p className="font-serif text-xs sm:text-[13px] leading-relaxed text-stone-600 border-t border-stone-200/80 pt-2">
+                  <span className="font-cinzel text-[10px] font-bold uppercase tracking-wider text-[#7D1A1A] mr-1.5">
+                    Chiaroscuro Study:
+                  </span>
+                  {activeArtwork.chiaroscuroNote}
+                </p>
               </figcaption>
             </figure>
 
@@ -1568,7 +1739,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-3 border-b border-stone-200/80">
           <div>
             <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-[#7D1A1A] block">
-              XIV Chiaroscuro Plates • Style of Caravaggio
+              XIV Chiaroscuro Oil Paintings • Manner of Caravaggio
             </span>
             <h4
               id="stations-gallery-heading"
@@ -1578,7 +1749,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             </h4>
           </div>
           <p className="text-xs font-serif italic text-[#6B4423]">
-            Select any painting to pray that Station and view its site in Jerusalem
+            Select any canvas to pray that Station, study its chiaroscuro, and view its site in Jerusalem
           </p>
         </div>
 
@@ -1591,28 +1762,38 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                 key={st.number}
                 type="button"
                 onClick={() => handleSelectStep(st.number)}
-                className={`group text-left rounded-xl p-1.5 border transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7D1A1A] ${
+                className={`group text-left rounded-lg p-1.5 border transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7D1A1A] ${
                   isSelected
                     ? 'bg-[#FAF3EA] border-[#7D1A1A] ring-2 ring-[#7D1A1A]/35 shadow-xs'
-                    : 'bg-[#FCF9F4] border-stone-200 hover:border-[#C49E72] hover:bg-[#FAF6F0]'
+                    : 'bg-[#FCF9F4] border-stone-200 hover:border-[#B68D45] hover:bg-[#FAF6F0]'
                 }`}
                 aria-current={isSelected ? 'step' : undefined}
               >
-                <div className="w-full aspect-[4/3] rounded-lg overflow-hidden bg-[#120A07] border border-[#D8C2A6]/70">
-                  {!brokenImages[`thumb-${st.number}`] ? (
-                    <img
-                      src={art.src}
-                      alt={art.alt}
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                      onError={() => markImageBroken(`thumb-${st.number}`)}
-                      className="w-full h-full object-cover scale-[1.02] transition-transform duration-300 group-hover:scale-[1.06]"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-[#230E0A] text-amber-200 font-cinzel text-xs font-bold">
-                      {st.roman}
-                    </div>
-                  )}
+                {/* Miniature ebony & gold-fillet museum frame (crisp unrounded oil canvas) */}
+                <div className="w-full p-[3px] bg-[#140B07] border border-[#8E6A3A]/55 shadow-xs">
+                  <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#0B0604]">
+                    {!brokenImages[`thumb-${st.number}`] ? (
+                      <>
+                        <img
+                          src={art.src}
+                          alt={art.alt}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          onError={() => markImageBroken(`thumb-${st.number}`)}
+                          style={{ filter: GALLERY_LIGHTING_FILTER[lightingMode] }}
+                          className="w-full h-full object-cover scale-[1.01] transition-transform duration-300 group-hover:scale-[1.06]"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0 shadow-[inset_0_0_10px_rgba(0,0,0,0.45)]"
+                        />
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-[#230E0A] text-amber-200 font-cinzel text-xs font-bold">
+                        {st.roman}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="pt-1.5 px-0.5 space-y-0.5">
                   <span
@@ -1632,24 +1813,24 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         </div>
       </section>
 
-      {/* Lightbox Modal for Full-Resolution Station Illustration */}
+      {/* Full-Screen Museum Lightbox Inspector for High-Resolution Caravaggio Oil Paintings */}
       {lightboxEntry && lightboxStationData && (
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="station-lightbox-title"
-          className="fixed inset-0 z-50 bg-stone-950/92 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-50 bg-stone-950/95 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-5"
           onClick={() => setLightboxStation(null)}
         >
           <div
-            className="w-full max-w-4xl bg-[#160B08] border border-[#D8C2A6]/45 rounded-2xl overflow-hidden shadow-2xl text-amber-50 flex flex-col"
+            className="w-full max-w-5xl max-h-[94vh] bg-[#140A07] border border-[#C8A15A]/45 rounded-xl overflow-hidden shadow-2xl text-amber-50 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header */}
-            <div className="px-4 py-3 sm:px-6 bg-[#23100C] border-b border-amber-300/20 flex items-center justify-between gap-3">
+            {/* Modal Header + Museum Lighting & Zoom Controls */}
+            <div className="px-4 py-3 sm:px-6 bg-[#1F0F0B] border-b border-amber-300/20 flex flex-wrap items-center justify-between gap-3">
               <div className="min-w-0">
                 <span className="font-cinzel text-[10px] font-bold uppercase tracking-widest text-amber-300 block">
-                  Station {lightboxEntry.roman} of XIV • {lightboxStationData.scriptureRef}
+                  Plate {lightboxEntry.roman} of XIV • {lightboxStationData.scriptureRef}
                 </span>
                 <h5
                   id="station-lightbox-title"
@@ -1658,26 +1839,183 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                   {lightboxStationData.title}
                 </h5>
               </div>
-              <button
-                type="button"
-                onClick={() => setLightboxStation(null)}
-                className="whitespace-nowrap shrink-0 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-amber-100 border border-amber-300/30 transition-colors cursor-pointer"
-                aria-label="Close illustration preview"
-              >
-                <X className="w-4 h-4" />
-              </button>
+
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
+                {/* Gallery Lighting Switcher */}
+                <div
+                  className="inline-flex rounded-md border border-amber-300/25 bg-black/40 p-0.5"
+                  role="group"
+                  aria-label="Lightbox lighting mode"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setLightingMode('spotlight')}
+                    aria-pressed={lightingMode === 'spotlight'}
+                    className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-cinzel font-bold transition-colors cursor-pointer ${
+                      lightingMode === 'spotlight'
+                        ? 'bg-amber-400 text-stone-950'
+                        : 'text-amber-100/80 hover:text-amber-50'
+                    }`}
+                  >
+                    <Sun className="w-3 h-3" />
+                    <span className="hidden sm:inline">Spotlight</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLightingMode('candlelight')}
+                    aria-pressed={lightingMode === 'candlelight'}
+                    className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-cinzel font-bold transition-colors cursor-pointer ${
+                      lightingMode === 'candlelight'
+                        ? 'bg-amber-400 text-stone-950'
+                        : 'text-amber-100/80 hover:text-amber-50'
+                    }`}
+                  >
+                    <Flame className="w-3 h-3" />
+                    <span className="hidden sm:inline">Candlelight</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLightingMode('shadow-study')}
+                    aria-pressed={lightingMode === 'shadow-study'}
+                    className={`whitespace-nowrap shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-cinzel font-bold transition-colors cursor-pointer ${
+                      lightingMode === 'shadow-study'
+                        ? 'bg-amber-400 text-stone-950'
+                        : 'text-amber-100/80 hover:text-amber-50'
+                    }`}
+                  >
+                    <Eye className="w-3 h-3" />
+                    <span className="hidden sm:inline">Shadow Reveal</span>
+                  </button>
+                </div>
+
+                {/* Impasto Zoom Controls */}
+                <div className="inline-flex items-center rounded-md border border-amber-300/25 bg-black/40 p-0.5">
+                  <button
+                    type="button"
+                    disabled={lightboxZoom <= 1}
+                    onClick={() => {
+                      const next = lightboxZoom > 1.75 ? 1.75 : 1;
+                      setLightboxZoom(next);
+                      if (next === 1) setLightboxPan({ x: 0, y: 0 });
+                    }}
+                    className="whitespace-nowrap shrink-0 p-1.5 rounded text-amber-100 hover:bg-white/10 disabled:opacity-35 disabled:cursor-not-allowed cursor-pointer"
+                    aria-label="Zoom out"
+                    title="Zoom out"
+                  >
+                    <ZoomOut className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLightboxZoom(1);
+                      setLightboxPan({ x: 0, y: 0 });
+                    }}
+                    className="whitespace-nowrap shrink-0 px-1.5 font-cinzel text-[10px] font-bold text-amber-200 hover:text-amber-50 cursor-pointer"
+                    title="Reset zoom"
+                  >
+                    {Math.round(lightboxZoom * 100)}%
+                  </button>
+                  <button
+                    type="button"
+                    disabled={lightboxZoom >= 2.5}
+                    onClick={() => setLightboxZoom((z) => (z < 1.75 ? 1.75 : 2.5))}
+                    className="whitespace-nowrap shrink-0 p-1.5 rounded text-amber-100 hover:bg-white/10 disabled:opacity-35 disabled:cursor-not-allowed cursor-pointer"
+                    aria-label="Zoom in to inspect brushwork"
+                    title="Zoom in to inspect brushwork"
+                  >
+                    <ZoomIn className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setLightboxStation(null)}
+                  className="whitespace-nowrap shrink-0 p-2 rounded-lg bg-white/10 hover:bg-white/20 text-amber-100 border border-amber-300/30 transition-colors cursor-pointer"
+                  aria-label="Close museum viewer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
-            {/* Framed Artwork */}
-            <div className="bg-[#0F0705] flex items-center justify-center p-3 sm:p-5">
+            {/* Interactive Zoomable & Pannable Framed Canvas */}
+            <div
+              className={`relative bg-[#0A0504] flex items-center justify-center p-3 sm:p-5 overflow-hidden select-none ${
+                lightboxZoom > 1
+                  ? isDraggingPan
+                    ? 'cursor-grabbing'
+                    : 'cursor-grab'
+                  : 'cursor-zoom-in'
+              }`}
+              onPointerDown={(e) => {
+                if (lightboxZoom <= 1) return;
+                (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
+                setIsDraggingPan(true);
+                panOriginRef.current = {
+                  x: e.clientX,
+                  y: e.clientY,
+                  panX: lightboxPan.x,
+                  panY: lightboxPan.y,
+                };
+              }}
+              onPointerMove={(e) => {
+                if (!isDraggingPan || !panOriginRef.current) return;
+                const maxOffset = lightboxZoom >= 2.5 ? 280 : 170;
+                const nextX = Math.max(
+                  -maxOffset,
+                  Math.min(maxOffset, panOriginRef.current.panX + (e.clientX - panOriginRef.current.x))
+                );
+                const nextY = Math.max(
+                  -maxOffset,
+                  Math.min(maxOffset, panOriginRef.current.panY + (e.clientY - panOriginRef.current.y))
+                );
+                setLightboxPan({ x: nextX, y: nextY });
+              }}
+              onPointerUp={() => {
+                setIsDraggingPan(false);
+                panOriginRef.current = null;
+              }}
+              onPointerCancel={() => {
+                setIsDraggingPan(false);
+                panOriginRef.current = null;
+              }}
+              onClick={() => {
+                if (lightboxZoom === 1) {
+                  setLightboxZoom(1.75);
+                }
+              }}
+            >
               {!brokenImages[`lightbox-${lightboxEntry.stationNumber}`] ? (
-                <img
-                  src={lightboxEntry.src}
-                  alt={lightboxEntry.alt}
-                  referrerPolicy="no-referrer"
-                  onError={() => markImageBroken(`lightbox-${lightboxEntry.stationNumber}`)}
-                  className="max-h-[65vh] w-auto max-w-full object-contain rounded-lg border border-[#D8C2A6]/40 shadow-lg"
-                />
+                <div className="p-2 bg-gradient-to-b from-[#1E120C] to-[#0D0705] border border-[#C8A15A]/55 shadow-2xl overflow-hidden">
+                  <div className="relative overflow-hidden bg-[#0A0504]">
+                    <img
+                      src={lightboxEntry.src}
+                      alt={lightboxEntry.alt}
+                      draggable={false}
+                      referrerPolicy="no-referrer"
+                      onError={() => markImageBroken(`lightbox-${lightboxEntry.stationNumber}`)}
+                      style={{
+                        filter: GALLERY_LIGHTING_FILTER[lightingMode],
+                        transform: `translate3d(${lightboxPan.x}px, ${lightboxPan.y}px, 0) scale(${lightboxZoom})`,
+                      }}
+                      className={`max-h-[62vh] w-auto max-w-full object-contain block ${
+                        isDraggingPan ? '' : 'transition-transform duration-300 ease-out'
+                      }`}
+                    />
+                    {lightingMode === 'spotlight' && (
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 caravaggio-gallery-spotlight"
+                      />
+                    )}
+                    {lightingMode === 'candlelight' && (
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 caravaggio-candle-sheen"
+                      />
+                    )}
+                  </div>
+                </div>
               ) : (
                 <div className="h-64 w-full flex flex-col items-center justify-center text-amber-200 font-cinzel text-sm">
                   Station {lightboxEntry.roman}: {lightboxStationData.title}
@@ -1685,13 +2023,19 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
               )}
             </div>
 
-            {/* Modal Footer & Plate Navigation */}
-            <div className="px-4 py-3 sm:px-6 bg-[#23100C] border-t border-amber-300/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <p className="font-serif italic text-xs sm:text-sm text-amber-100/85">
-                {lightboxEntry.caption} — {lightboxStationData.jerusalemQuarter}
-              </p>
+            {/* Modal Footer: Curatorial Chiaroscuro Study & Plate Navigation */}
+            <div className="px-4 py-3 sm:px-6 bg-[#1F0F0B] border-t border-amber-300/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="space-y-1 min-w-0">
+                <p className="font-serif italic text-xs sm:text-sm text-amber-100/90">
+                  {lightboxEntry.caption} — {lightboxStationData.jerusalemQuarter}
+                </p>
+                <p className="font-serif text-xs text-amber-200/75 leading-relaxed">
+                  {lightboxEntry.chiaroscuroNote}
+                  {lightboxZoom > 1 ? ' Drag canvas to pan details.' : ' Click canvas or zoom to inspect impasto brushwork.'}
+                </p>
+              </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-wrap items-center gap-2 shrink-0">
                 <button
                   type="button"
                   disabled={lightboxEntry.stationNumber <= 1}
@@ -1701,7 +2045,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                   className="whitespace-nowrap shrink-0 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-35 disabled:cursor-not-allowed text-amber-100 border border-amber-300/30 text-xs font-cinzel font-bold flex items-center gap-1 transition-colors cursor-pointer"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
-                  <span>Previous Plate</span>
+                  <span>Previous</span>
                 </button>
                 <button
                   type="button"
@@ -1723,7 +2067,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                   }
                   className="whitespace-nowrap shrink-0 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-35 disabled:cursor-not-allowed text-amber-100 border border-amber-300/30 text-xs font-cinzel font-bold flex items-center gap-1 transition-colors cursor-pointer"
                 >
-                  <span>Next Plate</span>
+                  <span>Next</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>

@@ -41,10 +41,20 @@ import {
 import { SacredReader } from '@/utils/speech';
 import { bellSynth } from '@/utils/audioSynth';
 import { StationsOfTheCrossView } from './StationsOfTheCrossView';
+import { CATHOLIC_PRAYERS_DATABASE } from '@/data/prayers';
+
+const MEMORARE_PRAYER = CATHOLIC_PRAYERS_DATABASE.find((p) => p.id === 'prayer-memorare');
 
 export const RosaryAndChapletView: React.FC = () => {
   const [activeDevotion, setActiveDevotion] = useState<
-    'divine-mercy' | 'faustina' | 'three-oclock' | 'stations-of-the-cross' | 'rosary' | 'marian-promises' | 'angelus'
+    | 'divine-mercy'
+    | 'faustina'
+    | 'three-oclock'
+    | 'stations-of-the-cross'
+    | 'rosary'
+    | 'marian-promises'
+    | 'memorare'
+    | 'angelus'
   >('divine-mercy');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [copiedPromiseNum, setCopiedPromiseNum] = useState<number | null>(null);
@@ -53,6 +63,9 @@ export const RosaryAndChapletView: React.FC = () => {
   const [readingExcerptId, setReadingExcerptId] = useState<string | null>(null);
   const [isReadingThreeOClock, setIsReadingThreeOClock] = useState(false);
   const [copiedThreeOClock, setCopiedThreeOClock] = useState(false);
+  const [isReadingMemorare, setIsReadingMemorare] = useState(false);
+  const [copiedMemorare, setCopiedMemorare] = useState(false);
+  const [memorareShowLatin, setMemorareShowLatin] = useState(false);
   const [angelusBellStatus, setAngelusBellStatus] = useState<string>('');
   const [isReadingAngelus, setIsReadingAngelus] = useState(false);
   const [copiedAngelus, setCopiedAngelus] = useState(false);
@@ -351,18 +364,20 @@ export const RosaryAndChapletView: React.FC = () => {
           </button>
         </div>
 
-        {/* Seven-Button Devotion Picker: 4 Divine Mercy & Passion (Red) + 3 Marian (Blue) */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 items-stretch rounded-xl bg-[#F4ECE1]/95 p-1 w-full shadow-inner border border-[#D5C3AE] gap-1">
-          {/* 1. Chaplet (Dark Red) */}
+        {/* Eight-Button Balanced Devotion Picker: 4 Divine Mercy (Dark Red) + 4 Mother of Mercy (Dark Blue) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 items-stretch rounded-xl bg-[#F4ECE1]/95 p-1 w-full shadow-inner border border-[#D5C3AE] gap-1">
+          {/* 1. Chaplet (Dark Red — 1st Divine Mercy Button) */}
           <button
             onClick={() => {
               bellSynth.stopBells();
               setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
               setActiveDevotion('divine-mercy');
               handleReset();
               setIsSettingsOpen(false);
             }}
-            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
               activeDevotion === 'divine-mercy'
                 ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
                 : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
@@ -371,16 +386,18 @@ export const RosaryAndChapletView: React.FC = () => {
             <span>Chaplet</span>
           </button>
 
-          {/* 2. 14 Promises (Dark Red) */}
+          {/* 2. 14 Promises (Dark Red — 2nd Divine Mercy Button) */}
           <button
             onClick={() => {
               bellSynth.stopBells();
               setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
               setActiveDevotion('faustina');
               SacredReader.stop();
               setIsSettingsOpen(false);
             }}
-            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
               activeDevotion === 'faustina'
                 ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
                 : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
@@ -389,35 +406,19 @@ export const RosaryAndChapletView: React.FC = () => {
             <span>14 Promises</span>
           </button>
 
-          {/* 3. 3 O'Clock Prayer (Dark Red) */}
+          {/* 3. Stations of the Cross (Dark Red — 3rd Divine Mercy Button) */}
           <button
             onClick={() => {
               bellSynth.stopBells();
               setAngelusBellStatus('');
-              setActiveDevotion('three-oclock');
-              SacredReader.stop();
-              setIsSettingsOpen(false);
-            }}
-            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
-              activeDevotion === 'three-oclock'
-                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
-                : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
-            }`}
-          >
-            <span>3 O&apos;Clock Prayer</span>
-          </button>
-
-          {/* 4. Stations of the Cross (Dark Red — Requested by Jesus at 3:00 PM to St. Faustina) */}
-          <button
-            onClick={() => {
-              bellSynth.stopBells();
-              setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
               setActiveDevotion('stations-of-the-cross');
               setIsAutoAdvancing(false);
               SacredReader.stop();
               setIsSettingsOpen(false);
             }}
-            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
               activeDevotion === 'stations-of-the-cross'
                 ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
                 : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
@@ -427,16 +428,38 @@ export const RosaryAndChapletView: React.FC = () => {
             <span>Stations of the Cross</span>
           </button>
 
-          {/* 4. Holy Rosary (Dark Blue - 1st Marian Button) */}
+          {/* 4. 3 O'Clock Prayer (Dark Red — 4th Divine Mercy Button) */}
           <button
             onClick={() => {
               bellSynth.stopBells();
               setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
+              setActiveDevotion('three-oclock');
+              SacredReader.stop();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
+              activeDevotion === 'three-oclock'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#8B2323] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+          >
+            <span>3 O&apos;Clock Prayer</span>
+          </button>
+
+          {/* 5. Holy Rosary (Dark Blue — 1st Mother of Mercy Button) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
               setActiveDevotion('rosary');
               handleReset();
               setIsSettingsOpen(false);
             }}
-            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
               activeDevotion === 'rosary'
                 ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
                 : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
@@ -445,16 +468,18 @@ export const RosaryAndChapletView: React.FC = () => {
             <span>Holy Rosary</span>
           </button>
 
-          {/* 5. Promises of Mary (Dark Blue - 2nd Marian Button) */}
+          {/* 6. Promises of Mary (Dark Blue — 2nd Mother of Mercy Button) */}
           <button
             onClick={() => {
               bellSynth.stopBells();
               setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
               setActiveDevotion('marian-promises');
               SacredReader.stop();
               setIsSettingsOpen(false);
             }}
-            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
               activeDevotion === 'marian-promises'
                 ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
                 : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
@@ -463,16 +488,39 @@ export const RosaryAndChapletView: React.FC = () => {
             <span>Promises of Mary</span>
           </button>
 
-          {/* 6. The Angelus (Dark Blue - 3rd Marian Button, no bell icon) */}
+          {/* 7. The Memorare (Dark Blue — 3rd Mother of Mercy Button, placed before The Angelus) */}
           <button
             onClick={() => {
               bellSynth.stopBells();
               setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
+              setActiveDevotion('memorare');
+              SacredReader.stop();
+              setIsSettingsOpen(false);
+            }}
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+              activeDevotion === 'memorare'
+                ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
+                : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
+            }`}
+            title="Memorare — Prayer of Confidence to the Mother of Mercy"
+          >
+            <span>Memorare</span>
+          </button>
+
+          {/* 8. The Angelus (Dark Blue — 4th Mother of Mercy Button) */}
+          <button
+            onClick={() => {
+              bellSynth.stopBells();
+              setAngelusBellStatus('');
+              setIsReadingMemorare(false);
+              setIsReadingAngelus(false);
               setActiveDevotion('angelus');
               SacredReader.stop();
               setIsSettingsOpen(false);
             }}
-            className={`w-full min-w-0 py-2 sm:py-2.5 px-1.5 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
+            className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
               activeDevotion === 'angelus'
                 ? 'border-amber-300 ring-2 ring-amber-400/90 shadow-lg scale-[1.01]'
                 : 'border-[#2B4C9E] hover:border-amber-300/70 hover:scale-[1.01]'
@@ -977,13 +1025,6 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="h-8 flex items-center justify-between gap-2 mt-auto shrink-0">
               <div className="flex items-center gap-2 min-w-0">
                 <button
-                  onClick={() => setActiveDevotion('three-oclock')}
-                  className="h-8 px-2.5 rounded-md bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
-                >
-                  <Sparkles className="w-3 h-3 text-amber-300" />
-                  <span>3 O&apos;Clock Prayer</span>
-                </button>
-                <button
                   onClick={() => {
                     setIsAutoAdvancing(false);
                     SacredReader.stop();
@@ -992,6 +1033,13 @@ export const RosaryAndChapletView: React.FC = () => {
                   className="h-8 px-2.5 rounded-md bg-red-900/70 hover:bg-red-800/80 border border-amber-300/45 text-amber-100 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
                 >
                   <span>Stations of the Cross</span>
+                </button>
+                <button
+                  onClick={() => setActiveDevotion('three-oclock')}
+                  className="h-8 px-2.5 rounded-md bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                >
+                  <Sparkles className="w-3 h-3 text-amber-300" />
+                  <span>3 O&apos;Clock Prayer</span>
                 </button>
               </div>
               {renderSettingsToggleButton('dark')}
@@ -1921,7 +1969,183 @@ export const RosaryAndChapletView: React.FC = () => {
       )}
 
       {/* =========================================================================
-          5. THE ANGELUS (ANGELUS DOMINI) — MARIAN DEVOTION WITH SANCTUARY CHIMES
+          5. THE MEMORARE — MARIAN PRAYER OF CONFIDENCE TO THE MOTHER OF MERCY
+         ========================================================================= */}
+      {activeDevotion === 'memorare' && MEMORARE_PRAYER && (
+        <div className="relative isolate space-y-6 animate-in fade-in duration-300">
+          {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/80 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+            <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
+            <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
+
+            <div className="relative z-10 space-y-1">
+              <span className="text-xs font-cinzel font-bold tracking-widest text-blue-900 uppercase block truncate">
+                Mother of Mercy • Ancient Marian Prayer of Confidence
+              </span>
+              <h3 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-stone-900 leading-tight line-clamp-1">
+                Memorare
+              </h3>
+              <p className="text-xs sm:text-sm font-serif text-stone-700 leading-snug line-clamp-1">
+                {MEMORARE_PRAYER.scripturalOrTraditionOrigin}
+              </p>
+            </div>
+
+            {/* Bottom Row: Audio, Latin Toggle, Copy on Left; Settings Toggle on Right */}
+            <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                <button
+                  onClick={() => {
+                    if (isReadingMemorare) {
+                      SacredReader.stop();
+                      setIsReadingMemorare(false);
+                    } else {
+                      setIsReadingMemorare(true);
+                      const spoken = `Memorare. ... ${formatDevotionalPrayerForSpeech(MEMORARE_PRAYER.englishText)}`;
+                      SacredReader.speak(spoken, () => setIsReadingMemorare(false), 'female', 0.82);
+                    }
+                  }}
+                  className={`whitespace-nowrap shrink-0 h-8 px-2.5 rounded-md text-[10px] sm:text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
+                    isReadingMemorare
+                      ? 'bg-[#172B69] text-amber-100 border border-amber-300 animate-pulse'
+                      : 'bg-white/80 hover:bg-white text-[#172B69] border border-blue-300/80'
+                  }`}
+                >
+                  {isReadingMemorare ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3 text-blue-800" />}
+                  <span>{isReadingMemorare ? 'Stop Audio' : 'Listen to Prayer'}</span>
+                </button>
+
+                <button
+                  onClick={() => setMemorareShowLatin((prev) => !prev)}
+                  className={`whitespace-nowrap shrink-0 h-8 px-2.5 rounded-md text-[10px] sm:text-[11px] font-cinzel font-bold border transition-all cursor-pointer ${
+                    memorareShowLatin
+                      ? 'bg-[#172B69] text-amber-200 border-amber-300'
+                      : 'bg-white/80 hover:bg-white text-blue-950 border-blue-300/80'
+                  }`}
+                >
+                  {memorareShowLatin ? 'English Only' : 'Latin / English'}
+                </button>
+
+                <button
+                  onClick={() => {
+                    const copyBody = [
+                      'MEMORARE',
+                      '',
+                      MEMORARE_PRAYER.englishText,
+                      ...(memorareShowLatin && MEMORARE_PRAYER.latinText ? ['', MEMORARE_PRAYER.latinText] : []),
+                    ].join('\n');
+                    navigator.clipboard.writeText(copyBody);
+                    setCopiedMemorare(true);
+                    setTimeout(() => setCopiedMemorare(false), 2000);
+                  }}
+                  className="whitespace-nowrap shrink-0 h-8 px-2.5 rounded-md bg-white/80 hover:bg-white text-blue-900 border border-blue-300/80 transition-colors cursor-pointer flex items-center justify-center"
+                  title="Copy Memorare Prayer"
+                >
+                  {copiedMemorare ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                </button>
+              </div>
+
+              {renderSettingsToggleButton('light')}
+            </div>
+          </div>
+
+          {renderSettingsDropdown()}
+
+          {/* Contemplative Memorare Prayer Card */}
+          <div className="relative isolate overflow-hidden rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-[#EAF3FC]/85 via-[#E2EEFA]/75 to-[#F5EFE5]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] space-y-5 text-stone-900">
+            <div className="relative z-10 p-6 sm:p-8 rounded-xl bg-white/80 backdrop-blur-md border border-white/95 ring-1 ring-blue-200/80 shadow-xs space-y-5">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-blue-100 pb-3">
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#172B69]">
+                  Prayer to the Mother of the Word Incarnate
+                </span>
+                {MEMORARE_PRAYER.author && (
+                  <span className="font-serif italic text-xs text-stone-600">
+                    {MEMORARE_PRAYER.author}
+                  </span>
+                )}
+              </div>
+
+              <div className="space-y-2 font-serif text-lg sm:text-xl md:text-[22px] leading-relaxed text-stone-900">
+                {MEMORARE_PRAYER.englishText.split('\n').map((line, idx) => (
+                  <p key={idx} className={idx === 0 ? 'font-medium text-[#122254]' : ''}>
+                    {line}
+                  </p>
+                ))}
+              </div>
+
+              {memorareShowLatin && MEMORARE_PRAYER.latinText && (
+                <div className="pt-4 border-t border-blue-200/70 space-y-1.5">
+                  <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-blue-900 block">
+                    Textus Latinus — {MEMORARE_PRAYER.latinTitle}
+                  </span>
+                  <div className="space-y-1 font-serif italic text-base sm:text-lg leading-relaxed text-blue-950/90">
+                    {MEMORARE_PRAYER.latinText.split('\n').map((line, idx) => (
+                      <p key={idx}>{line}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Historical Context & Indulgence Card */}
+            <div className="relative z-10 p-5 sm:p-6 rounded-xl bg-gradient-to-br from-[#172B69] via-[#1B337A] to-[#0F1E4D] text-amber-50 border border-amber-300/70 shadow-lg space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-blue-400/30 pb-2.5">
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+                  Tradition &amp; Spiritual Heritage
+                </span>
+                {MEMORARE_PRAYER.usageTime && (
+                  <span className="font-serif italic text-xs text-blue-200">
+                    {MEMORARE_PRAYER.usageTime}
+                  </span>
+                )}
+              </div>
+
+              {MEMORARE_PRAYER.historicalContext && (
+                <p className="font-serif text-sm sm:text-base leading-relaxed text-amber-50/95">
+                  {MEMORARE_PRAYER.historicalContext}
+                </p>
+              )}
+
+              {MEMORARE_PRAYER.indulgence && (
+                <div className="p-3.5 rounded-lg bg-black/25 border border-amber-300/35 text-xs sm:text-sm font-serif text-blue-100 space-y-0.5">
+                  <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300 block">
+                    {MEMORARE_PRAYER.indulgence.type} Indulgence • {MEMORARE_PRAYER.indulgence.grantReference}
+                  </span>
+                  <p>{MEMORARE_PRAYER.indulgence.summary}</p>
+                </div>
+              )}
+
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-blue-400/25">
+                <button
+                  type="button"
+                  onClick={() => {
+                    SacredReader.stop();
+                    setIsReadingMemorare(false);
+                    setActiveDevotion('rosary');
+                  }}
+                  className="whitespace-nowrap shrink-0 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-amber-100 border border-amber-300/35 text-xs font-cinzel font-bold transition-colors cursor-pointer"
+                >
+                  Pray the Holy Rosary
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    SacredReader.stop();
+                    setIsReadingMemorare(false);
+                    setActiveDevotion('angelus');
+                  }}
+                  className="whitespace-nowrap shrink-0 px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-950 text-xs font-cinzel font-bold inline-flex items-center gap-1 transition-colors cursor-pointer"
+                >
+                  <span>Continue to The Angelus</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================================
+          6. THE ANGELUS (ANGELUS DOMINI) — MARIAN DEVOTION WITH SANCTUARY CHIMES
          ========================================================================= */}
       {activeDevotion === 'angelus' && (
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">

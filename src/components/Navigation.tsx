@@ -72,7 +72,6 @@ export type ActiveTab =
   | 'divine-office'
   | 'catholic-bibles'
   | 'visio-divina'
-  | 'wisdom'
   | 'quotations'
   | 'spiritual-books'
   | 'catholic-podcasts'
@@ -370,16 +369,9 @@ export const Navigation: React.FC<NavigationProps> = ({
       subtext: 'Contemplation of Sacred Art' 
     },
     { 
-      id: 'wisdom', 
-      label: 'Wisdom of the Saints', 
-      icon: DoveWithHaloIcon, 
-      tag: 'Fathers', 
-      subtext: 'Doctors and Popes Treasury' 
-    },
-    { 
       id: 'quotations', 
       label: 'Quotations', 
-      icon: QuotationsRightFacingIcon, 
+      icon: DoveWithHaloIcon, 
       tag: 'Quotes', 
       subtext: 'The Holy Trinity, Jesus Christ and The Blessed Virgin Mary' 
     },

@@ -49,11 +49,7 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
     description:
       'Practice Visio Divina by praying with classic Catholic sacred masterpieces, Gospel meditations, and contemplative silence on Soul Sanctum.',
   },
-  wisdom: {
-    title: 'Wisdom of the Saints – Catholic Treasury | Soul Sanctum',
-    description:
-      'Meditate on timeless spiritual wisdom, counsels, and writings from Catholic Saints and Doctors of the Church on Soul Sanctum.',
-  },
+
   quotations: {
     title: 'Catholic Quotations of the Saints & Popes | Soul Sanctum',
     description:

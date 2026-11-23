@@ -19,7 +19,10 @@ import {
   Settings,
   ChevronDown,
   X,
+  Download,
+  Maximize2,
 } from 'lucide-react';
+import aiForCatholicsImg from '../assets/images/ai_for_catholics_1795442802534.jpg';
 import {
   searchCatholicInternet,
   synthesizeResearchResponse,
@@ -127,17 +130,6 @@ const MAGISTERIUM_DOMAINS: DomainPrompt[] = [
 const SESSIONS_KEY = 'sanctum_magisterium_ai_sessions_v1';
 const ACTIVE_SESSION_KEY = 'sanctum_magisterium_ai_active_v1';
 
-function createWelcomeMessage(): MagisteriumMessage {
-  return {
-    id: `mag-welcome-${Date.now()}`,
-    role: 'assistant',
-    content: `**Pax Christi.** Welcome to **Magisterium AI** inside Soul Sanctum — a dedicated Catholic research desk grounded in the living Magisterium of the Church.
-
-Ask any question concerning **the Catechism of the Catholic Church**, **the 1983 Code of Canon Law**, **the 21 Ecumenical Councils**, **Papal Encyclicals**, **Sacred Scripture**, or **the Fathers and Doctors of the Church**. Every response is accompanied by numbered Magisterial document citations and follow-up questions for deeper study.`,
-    timestamp: Date.now(),
-  };
-}
-
 function createFreshSession(): MagisteriumSession {
   const now = Date.now();
   return {
@@ -145,7 +137,7 @@ function createFreshSession(): MagisteriumSession {
     title: 'New Magisterial Inquiry',
     createdAt: now,
     updatedAt: now,
-    messages: [createWelcomeMessage()],
+    messages: [],
   };
 }
 
@@ -156,7 +148,12 @@ function loadSessions(): MagisteriumSession[] {
     if (!raw) return [createFreshSession()];
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed) && parsed.length > 0) {
-      return parsed;
+      return parsed.map((session: MagisteriumSession) => ({
+        ...session,
+        messages: Array.isArray(session.messages)
+          ? session.messages.filter((m) => !m?.id?.startsWith('mag-welcome'))
+          : [],
+      }));
     }
   } catch {
     // ignore corrupted local storage
@@ -191,6 +188,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [isDomainMenuOpen, setIsDomainMenuOpen] = useState(false);
+  const [isBannerLightboxOpen, setIsBannerLightboxOpen] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -201,7 +199,10 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
     return sessions.find((s) => s.id === activeSessionId) || sessions[0];
   }, [sessions, activeSessionId]);
 
-  const messages = activeSession?.messages || [];
+  const messages = useMemo(
+    () => (activeSession?.messages || []).filter((m) => !m.id.startsWith('mag-welcome')),
+    [activeSession]
+  );
   const hasUserMessages = messages.some((m) => m.role === 'user');
 
   useEffect(() => {
@@ -256,6 +257,17 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isDomainMenuOpen]);
+
+  useEffect(() => {
+    if (!isBannerLightboxOpen) return;
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsBannerLightboxOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleEsc);
+    return () => document.removeEventListener('keydown', handleEsc);
+  }, [isBannerLightboxOpen]);
 
   const filteredSessions = useMemo(() => {
     const q = historySearch.trim().toLowerCase();
@@ -555,29 +567,62 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
   return (
     <div className="space-y-5 w-full pb-12 text-left">
       {/* 1. Archival Editorial Header */}
-      <section className="bg-[#FDFBF7] rounded-xl border border-[#E5DEC9] shadow-xs relative">
-        <div className="px-5 py-5 sm:px-7 sm:py-6 rounded-xl bg-gradient-to-r from-[#FDFBF7] via-[#F7F2E7] to-[#FDFBF7] space-y-4">
+      <section className="bg-[#1B0F08] rounded-xl border border-[#3D2313] shadow-md relative overflow-hidden">
+        {/* Dark brown background gradient container with central image and gradient transition */}
+        <div className="pt-5 pb-3 px-4 sm:px-6 bg-gradient-to-r from-[#1B0F08] via-[#2A170D] to-[#1B0F08] flex flex-col items-center">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => setIsBannerLightboxOpen(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setIsBannerLightboxOpen(true);
+              }
+            }}
+            aria-label="View AI for Catholics futuristic artwork full screen"
+            className="relative w-full max-w-4xl aspect-video rounded-xl overflow-hidden border border-amber-500/35 bg-[#0B101B] group cursor-zoom-in shadow-xl"
+          >
+            <img
+              src={aiForCatholicsImg}
+              alt="AI for Catholics — Futuristic luminous cathedral sacred artwork"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover block transition-transform duration-500 group-hover:scale-[1.015]"
+            />
+            {/* Gradient overlay transitioning from dark brown to central image & bottom right text */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1B0F08]/85 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 p-4 flex items-end justify-between pointer-events-none">
+              <div />
+              <span className="font-cinzel text-xs sm:text-sm font-semibold text-amber-200 tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.98)]">
+                Ai for Catholics.
+              </span>
+            </div>
+            <span className="absolute bottom-3 left-3 p-2 rounded-lg bg-black/55 backdrop-blur-xs border border-amber-300/35 text-amber-100 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              <Maximize2 className="w-4 h-4" />
+            </span>
+          </div>
+        </div>
+
+        <div className="px-5 py-5 sm:px-7 sm:py-6 bg-[#1B0F08] space-y-4 border-t border-[#3D2313]">
           <div className="space-y-1.5">
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-600 font-serif flex-wrap">
-              <strong className="text-amber-900 font-cinzel font-bold">Magisterium AI</strong>
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-amber-200/80 font-serif flex-wrap">
+              <span className="text-amber-400 font-cinzel font-bold">28,000+ Church Documents</span>
               <span aria-hidden="true">·</span>
-              <span>28,000+ Church Documents</span>
-              <span aria-hidden="true">·</span>
-              <span>Catechism, Canon Law &amp; Ecumenical Councils</span>
+              <span className="text-amber-100/90">Catechism, Canon Law &amp; Ecumenical Councils</span>
             </div>
 
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 tracking-tight text-balance">
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight text-balance">
               Magisterium AI
             </h2>
 
-            <p className="font-serif text-sm sm:text-base text-stone-700 max-w-2xl leading-relaxed">
+            <p className="font-serif text-sm sm:text-base text-amber-100/85 max-w-2xl leading-relaxed">
               Consult the authentic teaching authority of the Catholic Church with cited references
               from the Catechism, Code of Canon Law, Councils, Papal Encyclicals, and Doctors of the Church.
             </p>
           </div>
 
           {/* Primary & Utility Action Row */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-[#E5DEC9]/80">
+          <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-[#3D2313]">
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
@@ -812,8 +857,9 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
         {/* Active Conversation Thread */}
         <div className="space-y-5 min-w-0 w-full">
           {/* Message Stream */}
-          <div className="space-y-4">
-            {messages.map((msg) => {
+          {(messages.length > 0 || isLoading || errorMessage) && (
+            <div className="space-y-4">
+              {messages.map((msg) => {
               const isUser = msg.role === 'user';
               return (
                 <article
@@ -967,19 +1013,17 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
                       )}
 
                       {/* Quiet Editorial Footer */}
-                      {!msg.id.startsWith('mag-welcome') && (
-                        <div className="mt-4 pt-2.5 border-t border-stone-200/70 flex flex-wrap items-center justify-between gap-2 text-xs font-serif text-stone-500">
-                          <span>
-                            Grounded in the Catechism, Code of Canon Law, Councils &amp; Papal Documents
-                          </span>
-                          <span className="font-mono text-[11px] tabular-nums">
-                            {new Date(msg.timestamp).toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit',
-                            })}
-                          </span>
-                        </div>
-                      )}
+                      <div className="mt-4 pt-2.5 border-t border-stone-200/70 flex flex-wrap items-center justify-between gap-2 text-xs font-serif text-stone-500">
+                        <span>
+                          Grounded in the Catechism, Code of Canon Law, Councils &amp; Papal Documents
+                        </span>
+                        <span className="font-mono text-[11px] tabular-nums">
+                          {new Date(msg.timestamp).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </span>
+                      </div>
                     </>
                   )}
                 </article>
@@ -1009,6 +1053,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
 
             <div ref={messagesEndRef} />
           </div>
+          )}
 
           {/* Sticky Inquiry Composer */}
           <form
@@ -1049,6 +1094,49 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
           </form>
         </div>
       </div>
+
+      {/* Full-Screen Lightbox for "AI for Catholics" Artwork */}
+      {isBannerLightboxOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/88 backdrop-blur-xs flex items-center justify-center p-4 sm:p-8"
+          onClick={() => setIsBannerLightboxOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="AI for Catholics artwork preview"
+        >
+          <div
+            className="relative max-w-6xl w-full space-y-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-end gap-2">
+              <a
+                href={aiForCatholicsImg}
+                download="ai-for-catholics.jpg"
+                className="px-3.5 py-2 rounded-lg bg-amber-800 hover:bg-amber-700 text-white font-cinzel text-xs font-bold flex items-center gap-1.5 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Image</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setIsBannerLightboxOpen(false)}
+                className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                aria-label="Close full-screen preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="rounded-xl overflow-hidden border border-amber-300/30 shadow-2xl bg-[#0B101B]">
+              <img
+                src={aiForCatholicsImg}
+                alt="AI for Catholics — Futuristic luminous cathedral sacred artwork"
+                referrerPolicy="no-referrer"
+                className="w-full h-auto max-h-[82vh] object-contain mx-auto block"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
