@@ -60,6 +60,11 @@ import {
   WebResearchSource,
 } from './src/utils/catholicInternetResearch.js';
 import { fetchLiveCatholicFacebookPosts } from './src/utils/catholicFacebookFeedServer.js';
+import {
+  FallbackFilterId,
+  handleParishSearch,
+  handleParishSuggest,
+} from './src/utils/parishSearchServer.js';
 
 app.get('/api/catholic-ai/health', (_req, res) => {
   res.json({
@@ -1875,6 +1880,46 @@ app.get('/api/maps-config', (_req, res) => {
     configured: Boolean(apiKey),
     paused: false,
   });
+});
+
+// Keyless OpenStreetMap + Nominatim/Photon fallback parish search when Google Maps is unconfigured or paused
+app.get('/api/parish-search', async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  try {
+    const mode = String(req.query.mode || 'search').toLowerCase();
+    if (mode === 'suggest') {
+      const q = String(req.query.q || '');
+      const lat = req.query.lat != null ? Number(req.query.lat) : undefined;
+      const lng = req.query.lng != null ? Number(req.query.lng) : undefined;
+      const result = await handleParishSuggest(q, lat, lng);
+      return res.status(200).json(result);
+    }
+
+    const lat = Number(req.query.lat ?? 41.9022);
+    const lng = Number(req.query.lng ?? 12.4539);
+    const radiusMeters = Number(req.query.radius ?? 10000);
+    const rawFilter = String(req.query.filter || 'all') as FallbackFilterId;
+    const filter: FallbackFilterId = ['all', 'mass', 'confession', 'adoration', 'shrines'].includes(rawFilter)
+      ? rawFilter
+      : 'all';
+    const queryText = String(req.query.q || '');
+    const areaLabel = String(req.query.areaLabel || '');
+
+    const result = await handleParishSearch({
+      lat: Number.isFinite(lat) ? lat : 41.9022,
+      lng: Number.isFinite(lng) ? lng : 12.4539,
+      radiusMeters: Number.isFinite(radiusMeters) ? radiusMeters : 10000,
+      filter,
+      queryText,
+      areaLabel,
+    });
+    return res.status(200).json(result);
+  } catch (err: any) {
+    return res.status(502).json({
+      error: err?.message || 'Unable to search nearby Catholic parishes.',
+      parishes: [],
+    });
+  }
 });
 
 // On-demand web-grounded Catholic parish Mass, Confession & Adoration schedule lookup

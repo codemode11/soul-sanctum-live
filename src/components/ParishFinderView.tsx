@@ -47,6 +47,7 @@ import {
   recordGoogleMapsUsage,
   useMapsQuotaGuard,
 } from '../utils/mapsQuotaGuard';
+import { FallbackParishFinderWorkspace } from './FallbackParishFinderWorkspace';
 
 const ATTRIBUTION_ID = 'gmp_mcp_codeassist_v1_aistudio';
 const DEMO_MAP_ID = 'DEMO_MAP_ID';
@@ -1752,13 +1753,6 @@ export const ParishFinderView: React.FC = () => {
   const [configChecked, setConfigChecked] = useState<boolean>(false);
   const mapLoadRecordedRef = useRef<boolean>(false);
 
-  // Free direct schedule lookup state when Google Maps is paused
-  const [manualParishName, setManualParishName] = useState<string>('');
-  const [manualParishCity, setManualParishCity] = useState<string>('');
-  const [manualScheduleLoading, setManualScheduleLoading] = useState<boolean>(false);
-  const [manualScheduleResult, setManualScheduleResult] = useState<ParishScheduleResponse | null>(null);
-  const [manualScheduleError, setManualScheduleError] = useState<ParishScheduleErrorState | null>(null);
-
   const quotaGuard = useMapsQuotaGuard(serverPaused);
 
   useEffect(() => {
@@ -1798,75 +1792,27 @@ export const ParishFinderView: React.FC = () => {
     }
   }, [configChecked, mapsApiKey, quotaGuard.isStopped]);
 
-  const handleManualScheduleLookup = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const name = manualParishName.trim();
-    const city = manualParishCity.trim();
-    if (!name) return;
-    setManualScheduleLoading(true);
-    setManualScheduleError(null);
-    setManualScheduleResult(null);
-
-    const defaultFallbackLinks: ParishScheduleFallbackLinks = {
-      masstimesUrl: 'https://masstimes.org/',
-      googleSearchUrl: `https://www.google.com/search?q=${encodeURIComponent(`${name} ${city} Catholic Mass Confession Adoration times`.trim())}`,
-    };
-
-    try {
-      const res = await fetch('/api/parish-schedule', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          parishName: name,
-          address: city,
-          websiteUri: '',
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setManualScheduleError({
-          message:
-            data?.error ||
-            'Unable to look up parish schedule right now. Please check the parish website or links below directly.',
-          isQuotaError: res.status === 429 || Boolean(data?.isQuotaError),
-          fallbackLinks: data?.fallbackLinks || defaultFallbackLinks,
-        });
-        return;
-      }
-      setManualScheduleResult(data as ParishScheduleResponse);
-    } catch (err: any) {
-      setManualScheduleError({
-        message:
-          err?.message ||
-          'Unable to look up parish schedule right now. Please check the parish website directly.',
-        fallbackLinks: defaultFallbackLinks,
-      });
-    } finally {
-      setManualScheduleLoading(false);
-    }
-  };
-
   const showFallbackFinder = quotaGuard.isStopped || !mapsApiKey;
 
   const stopHeadline =
     !mapsApiKey && !quotaGuard.isStopped
-      ? 'Church Finder & Live Schedule Lookup'
+      ? 'Google Maps API Key Not Configured on Live Host — Interactive OpenStreetMap Directory Active'
       : quotaGuard.stopReason === 'near_limit'
-        ? 'Google Maps Automatically Paused (Near Free Quota Limit)'
+        ? 'Google Maps Paused at Quota Safety Limit — Interactive OpenStreetMap Directory Active'
         : quotaGuard.stopReason === 'api_quota_exceeded'
-          ? 'Google Maps Paused (Quota Limit Reached)'
+          ? 'Google Maps Quota Reached — Interactive OpenStreetMap Directory Active'
           : quotaGuard.stopReason === 'server_paused'
-            ? 'Google Maps Feature Temporarily Paused'
-            : 'Google Maps Paused by Safety Switch';
+            ? 'Google Maps Paused — Interactive OpenStreetMap Directory Active'
+            : 'Google Maps Paused by Safety Switch — Interactive OpenStreetMap Directory Active';
 
   const stopDescription =
     !mapsApiKey && !quotaGuard.isStopped
-      ? 'Find nearby Catholic churches on Google Maps, browse worldwide Mass & Confession times on MassTimes.org, or look up any parish’s published schedule directly below.'
+      ? 'To enable the live Google Maps layer on this domain, add GOOGLE_MAPS_API_KEY (or VITE_GOOGLE_MAPS_API_KEY) to your hosting environment variables and redeploy. Meanwhile, search parishes, view map pins, and check Mass & Confession times below.'
       : quotaGuard.stopReason === 'near_limit'
-        ? `Interactive Google Maps automatically stopped at ${quotaGuard.maxPercentUsed}% of your safe monthly budget to prevent unexpected billing charges. It will automatically reset next month, or you can use the free parish tools below right now.`
+        ? `Google Maps paused automatically at ${quotaGuard.maxPercentUsed}% of the safe monthly cap to prevent billing charges. You can continue finding nearby parishes and Mass times using the interactive directory below.`
         : quotaGuard.stopReason === 'api_quota_exceeded'
-          ? 'Google Maps reported that the current quota limit has been reached, so interactive map requests have been stopped to protect your account. You can continue using the free parish tools below.'
-          : 'Interactive Google Maps requests are currently paused (zero Google Maps API calls are being made). You can continue finding parishes and Mass times using the free tools below.';
+          ? 'Google Maps reported a quota limit, so Church Finder switched seamlessly to the free interactive OpenStreetMap parish directory below.'
+          : 'Google Maps requests are currently paused. Use Resume Maps above anytime, or continue using the full interactive parish finder below.';
 
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
@@ -1933,149 +1879,10 @@ export const ParishFinderView: React.FC = () => {
           <p className="text-sm font-cinzel text-stone-700">Preparing Interactive Parish Map...</p>
         </div>
       ) : showFallbackFinder ? (
-        <div className="rounded-xl bg-[#FAF6F0]/95 border border-amber-300/80 p-5 sm:p-7 space-y-5 shadow-xl text-stone-900">
-          <div className="flex flex-col sm:flex-row sm:items-start gap-3.5 border-b border-amber-200/80 pb-4">
-            <div className="w-10 h-10 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center shrink-0">
-              <MapPin className="w-5 h-5 text-amber-800" />
-            </div>
-            <div className="space-y-1 flex-1">
-              <h3 className="font-cinzel text-lg font-bold text-stone-900">{stopHeadline}</h3>
-              <p className="text-sm font-serif text-stone-700 leading-relaxed">{stopDescription}</p>
-            </div>
-          </div>
-
-          {/* 100% Free, Zero-Maps-API Alternatives */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=Catholic+Church+near+me"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 rounded-xl bg-white hover:bg-amber-50/70 border border-amber-200 flex items-center justify-between gap-3 transition-colors shadow-2xs"
-            >
-              <div className="space-y-0.5">
-                <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-900 block">
-                  Nearby Catholic Churches on Google Maps
-                </span>
-                <span className="text-xs sm:text-sm font-serif text-stone-700 block">
-                  Open &ldquo;Catholic Church near me&rdquo; directly in Google Maps with directions
-                </span>
-              </div>
-              <ExternalLink className="w-4 h-4 text-amber-800 shrink-0" />
-            </a>
-
-            <a
-              href="https://masstimes.org/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-4 rounded-xl bg-white hover:bg-amber-50/70 border border-amber-200 flex items-center justify-between gap-3 transition-colors shadow-2xs"
-            >
-              <div className="space-y-0.5">
-                <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-900 block">
-                  MassTimes.org Directory
-                </span>
-                <span className="text-xs sm:text-sm font-serif text-stone-700 block">
-                  Free worldwide directory of Catholic Mass, Confession &amp; Adoration times
-                </span>
-              </div>
-              <ExternalLink className="w-4 h-4 text-amber-800 shrink-0" />
-            </a>
-          </div>
-
-          {/* Direct Parish Schedule Lookup (No Google Maps API required) */}
-          <div className="p-4 sm:p-5 rounded-xl bg-white border border-stone-200 space-y-3">
-            <div>
-              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-900 block">
-                Direct Parish Mass &amp; Confession Schedule Lookup
-              </span>
-              <p className="text-xs text-stone-600 font-serif">
-                Enter any Catholic parish name and city to check its published Mass, Confession, and Adoration schedule.
-              </p>
-            </div>
-            <form onSubmit={handleManualScheduleLookup} className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              <input
-                type="text"
-                value={manualParishName}
-                onChange={(e) => setManualParishName(e.target.value)}
-                placeholder="Parish name (e.g. St. Patrick Cathedral)"
-                className="h-10 px-3 rounded-lg border border-stone-300 text-sm text-stone-900 outline-none focus:border-amber-700"
-                required
-              />
-              <input
-                type="text"
-                value={manualParishCity}
-                onChange={(e) => setManualParishCity(e.target.value)}
-                placeholder="City / Country (optional)"
-                className="h-10 px-3 rounded-lg border border-stone-300 text-sm text-stone-900 outline-none focus:border-amber-700"
-              />
-              <button
-                type="submit"
-                disabled={manualScheduleLoading}
-                className="h-10 px-4 rounded-lg bg-amber-800 hover:bg-amber-900 text-amber-50 text-xs font-cinzel font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-60"
-              >
-                {manualScheduleLoading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <CalendarClock className="w-4 h-4" />
-                )}
-                <span>Check Schedule</span>
-              </button>
-            </form>
-
-            {manualScheduleError && (
-              <div className="p-3.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 space-y-2">
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-                  <span className="leading-relaxed">{manualScheduleError.message}</span>
-                </div>
-                <div className="flex flex-wrap gap-2 pl-6">
-                  <a
-                    href={manualScheduleError.fallbackLinks.googleSearchUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white hover:bg-amber-100 border border-amber-300 font-semibold text-amber-950 transition-colors"
-                  >
-                    <Search className="w-3 h-3 text-amber-800" />
-                    <span>Search Mass Times on Google</span>
-                    <ExternalLink className="w-3 h-3 opacity-70" />
-                  </a>
-                  <a
-                    href={manualScheduleError.fallbackLinks.masstimesUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white hover:bg-amber-100 border border-amber-300 font-semibold text-amber-950 transition-colors"
-                  >
-                    <CalendarClock className="w-3 h-3 text-amber-800" />
-                    <span>MassTimes.org</span>
-                    <ExternalLink className="w-3 h-3 opacity-70" />
-                  </a>
-                </div>
-              </div>
-            )}
-
-            {manualScheduleResult && (
-              <div className="p-4 rounded-lg bg-[#FCF9F4] border border-amber-200 space-y-2.5 text-sm font-serif text-stone-800 whitespace-pre-line">
-                <p className="font-cinzel font-bold text-amber-950">{manualScheduleResult.parishName}</p>
-                <div>{manualScheduleResult.scheduleMarkdown}</div>
-                {manualScheduleResult.sources?.length > 0 && (
-                  <div className="pt-2 border-t border-amber-200/70 flex flex-wrap gap-2 text-xs">
-                    {manualScheduleResult.sources.map((src, i) => (
-                      <a
-                        key={`${src.uri}-${i}`}
-                        href={src.uri}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-amber-900 underline hover:text-amber-700"
-                      >
-                        <span>{src.title}</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+        <FallbackParishFinderWorkspace
+          noticeHeadline={stopHeadline}
+          noticeDescription={stopDescription}
+        />
       ) : (
         <APIProvider
           apiKey={mapsApiKey}

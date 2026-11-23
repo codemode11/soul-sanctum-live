@@ -261,7 +261,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
   const dateFormatted = formatLongDate(selectedDate);
 
   return (
-    <div className="max-w-7xl mx-auto p-3 sm:p-5 md:p-6 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-5 mb-8">
+    <div className="max-w-4xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-8">
 
       {/* 1. TOP BANNER: Vatican News and Church Dispatches */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
@@ -343,7 +343,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
           </div>
         </div>
 
-        {/* Collapsible Panel: Historical Vatican Archive (Horizontal Grid) */}
+        {/* Collapsible Panel: Historical Vatican Archive */}
         {isTopSettingsOpen && (
           <div className="p-4 sm:p-5 bg-white/85 backdrop-blur-md border-t border-stone-200/80 space-y-3 animate-fadeIn">
             <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
@@ -356,33 +356,33 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
             </div>
 
             {archiveStories.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="space-y-3">
                 {archiveStories.map(item => (
                   <article
                     key={item.id}
                     onClick={() => setActiveArticle(item)}
-                    className="bg-white/90 backdrop-blur-md p-3.5 rounded-xl border border-stone-200 hover:bg-white transition-all cursor-pointer flex flex-col justify-between gap-2 group shadow-2xs"
+                    className="bg-white/90 backdrop-blur-md p-3.5 sm:p-4 rounded-xl border border-stone-200 hover:bg-white transition-all cursor-pointer flex flex-col justify-between gap-2 group shadow-2xs"
                   >
                     <div className="space-y-1.5">
-                      <div className="flex flex-wrap items-center justify-between gap-1.5 text-xs">
-                        <span className="px-2 py-0.5 rounded-md bg-stone-200 text-stone-800 font-semibold font-cinzel text-[10px]">
+                      <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                        <span className="px-2 py-0.5 rounded-md bg-stone-200 text-stone-800 font-semibold font-cinzel text-[11px]">
                           {item.category}
                         </span>
-                        <span className="text-stone-500 text-[11px]">{item.date} • {item.readTime}</span>
+                        <span className="text-stone-500 text-xs">{item.date} • {item.readTime}</span>
                       </div>
-                      <h4 className="font-cinzel text-sm font-bold text-stone-800 group-hover:text-amber-900 transition-colors line-clamp-2">
+                      <h4 className="font-cinzel text-sm sm:text-base font-bold text-stone-800 group-hover:text-amber-900 transition-colors">
                         {toCurvedQuotes(item.title)}
                       </h4>
-                      <p className="text-xs text-stone-600 font-serif-sacred line-clamp-2">
+                      <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred line-clamp-2">
                         {toCurvedQuotes(item.summary)}
                       </p>
                     </div>
 
                     <div className="flex items-center justify-between pt-2 border-t border-stone-100 text-xs text-stone-500">
-                      <span className="truncate max-w-[160px] text-[11px]">{item.source}</span>
-                      <span className="text-amber-800 font-semibold flex items-center gap-1 text-[11px] shrink-0">
+                      <span>{item.source}</span>
+                      <span className="text-amber-800 font-semibold flex items-center gap-1">
                         <span>Read Article</span>
-                        <BookOpen className="w-3 h-3" />
+                        <BookOpen className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </article>
@@ -397,181 +397,167 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         )}
       </div>
 
-      {/* 2. HORIZONTAL BROADSHEET WORKSPACE: Dispatches (Left) + Official Live Widget (Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      {/* 2. DAILY 5 HOLY SEE DISPATCHES (VERTICAL EDITORIAL STACK) */}
+      <section className="space-y-3.5">
+        <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
+          <h3 className="font-cinzel text-xs sm:text-sm font-bold text-stone-900 uppercase tracking-wide">
+            Today&apos;s Vatican Dispatches ({dateFormatted})
+          </h3>
+          <span className="text-xs font-serif text-stone-500">
+            {filteredFiveStories.length} of 5 daily dispatches
+          </span>
+        </div>
 
-        {/* LEFT PANE: 5 Daily Dispatches in a Horizontal Multi-Card Grid */}
-        <section className="lg:col-span-7 space-y-3">
-          <div className="flex items-center justify-between border-b border-stone-200/80 pb-1.5">
-            <h3 className="font-cinzel text-xs sm:text-sm font-bold text-stone-900 uppercase tracking-wide">
-              Today&apos;s Vatican Dispatches ({dateFormatted})
-            </h3>
-            <span className="text-[11px] font-serif text-stone-500">
-              {filteredFiveStories.length} of 5 daily dispatches
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {filteredFiveStories.map((item, index) => {
-              const signatureBadge = FIVE_STORY_BADGES[index] || item.category;
-              const isLead = index === 0;
-              return (
-                <article
-                  key={item.id}
-                  className={`bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-3.5 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs hover:bg-white/75 transition-all flex flex-col justify-between gap-2.5 group ${
-                    isLead ? 'md:col-span-2' : ''
-                  }`}
-                >
-                  <div className="space-y-2.5">
-                    <div className="flex flex-wrap items-center justify-between gap-1.5 text-xs">
-                      <span className="px-2 py-0.5 rounded-md bg-amber-100 text-amber-900 font-bold font-cinzel text-[10.5px]">
-                        {signatureBadge}
+        <div className="space-y-3.5">
+          {filteredFiveStories.map((item, index) => {
+            const signatureBadge = FIVE_STORY_BADGES[index] || item.category;
+            return (
+              <article
+                key={item.id}
+                className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 p-4 sm:p-5 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs hover:bg-white/75 transition-all flex flex-col justify-between gap-3 group"
+              >
+                <div className="space-y-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span className="px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-900 font-bold font-cinzel text-[11px]">
+                      {signatureBadge}
+                    </span>
+                    <div className="flex items-center gap-2 text-stone-500 text-xs">
+                      <span className="font-serif italic">{item.date}</span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {item.readTime}
                       </span>
-                      <div className="flex items-center gap-2 text-stone-500 text-[11px]">
-                        <span className="font-serif italic">{item.date}</span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {item.readTime}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-row gap-3 items-start">
-                      {item.imageUrl && (
-                        <div
-                          onClick={() => setActiveArticle(item)}
-                          className={`${
-                            isLead
-                              ? 'w-28 h-24 sm:w-44 sm:h-28'
-                              : 'w-20 h-20 sm:w-24 sm:h-20'
-                          } shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative group-hover:shadow-xs transition-all cursor-pointer`}
-                        >
-                          <img
-                            src={item.imageUrl}
-                            alt={item.title}
-                            className="w-full h-full object-cover object-top origin-top group-hover:scale-[1.03] transition-transform duration-300"
-                            loading="lazy"
-                            onError={(e) => {
-                              const container = e.currentTarget.parentElement;
-                              if (container) container.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                      )}
-                      <div className="space-y-1 flex-1 min-w-0">
-                        <h4
-                          onClick={() => setActiveArticle(item)}
-                          className={`font-cinzel font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer leading-snug line-clamp-2 ${
-                            isLead ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'
-                          }`}
-                        >
-                          {toCurvedQuotes(item.title)}
-                        </h4>
-                        <p className="text-[11px] text-amber-950 font-serif italic line-clamp-1">
-                          {toCurvedQuotes(item.subtitle)}
-                        </p>
-                        <p className={`text-xs text-stone-600 font-serif-sacred leading-relaxed ${isLead ? 'line-clamp-2' : 'line-clamp-2 text-[11.5px]'}`}>
-                          {toCurvedQuotes(item.summary)}
-                        </p>
-                      </div>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-between pt-2 border-t border-stone-200/60 text-xs text-stone-500 gap-2">
-                    <span className="text-[10.5px] truncate max-w-[150px] sm:max-w-[200px]">{item.source}</span>
-
-                    <div className="flex items-center gap-1">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleReadAloud(item)}
-                        className="h-7 px-2 rounded bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 transition-colors cursor-pointer flex items-center gap-1 text-[11px]"
-                        title="Listen"
-                        aria-label="Listen"
-                      >
-                        <Volume2 className="w-3 h-3 text-amber-800" />
-                        <span className={isLead ? 'hidden sm:inline' : 'hidden'}>Listen</span>
-                      </button>
-
-                      <button
-                        type="button"
-                        onClick={() => handleCopyArticle(item)}
-                        className="h-7 px-2 rounded bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 transition-colors cursor-pointer flex items-center gap-1 text-[11px]"
-                        title="Copy"
-                        aria-label="Copy"
-                      >
-                        {copied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                        <span className={isLead ? 'hidden sm:inline' : 'hidden'}>Copy</span>
-                      </button>
-
-                      <button
-                        type="button"
+                  <div className="flex flex-col sm:flex-row gap-3.5 items-start">
+                    {item.imageUrl && (
+                      <div
                         onClick={() => setActiveArticle(item)}
-                        className="h-7 px-2.5 rounded bg-stone-900 hover:bg-stone-800 text-white font-cinzel text-[10.5px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                        className="w-full sm:w-36 h-40 sm:h-28 shrink-0 rounded-lg overflow-hidden bg-stone-200 border border-stone-300 relative group-hover:shadow-xs transition-all cursor-pointer"
                       >
-                        <span>Read Dispatch</span>
-                        <BookOpen className="w-3 h-3" />
-                      </button>
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title}
+                          className="w-full h-full object-cover object-top origin-top group-hover:scale-[1.03] transition-transform duration-300"
+                          loading="lazy"
+                          onError={(e) => {
+                            const container = e.currentTarget.parentElement;
+                            if (container) container.style.display = 'none';
+                          }}
+                        />
+                      </div>
+                    )}
+                    <div className="space-y-1.5 flex-1 min-w-0">
+                      <h4
+                        onClick={() => setActiveArticle(item)}
+                        className="font-cinzel text-sm sm:text-base font-bold text-stone-900 group-hover:text-amber-900 transition-colors cursor-pointer leading-snug"
+                      >
+                        {toCurvedQuotes(item.title)}
+                      </h4>
+                      <p className="text-xs text-amber-950 font-serif italic">
+                        {toCurvedQuotes(item.subtitle)}
+                      </p>
+                      <p className="text-xs sm:text-sm text-stone-600 font-serif-sacred leading-relaxed line-clamp-3">
+                        {toCurvedQuotes(item.summary)}
+                      </p>
                     </div>
                   </div>
-                </article>
-              );
-            })}
-          </div>
-        </section>
+                </div>
 
-        {/* RIGHT PANE: OFFICIAL EMBEDDED VATICAN NEWS WIDGET */}
-        <section className="lg:col-span-5 lg:sticky lg:top-4 bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs overflow-hidden">
-          {/* Top Editorial Banner */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 border-b border-amber-900/15 bg-white/30 flex items-center justify-between gap-3">
-            <div className="space-y-0.5 text-left min-w-0">
-              <div className="flex items-center gap-1.5 text-[10px] font-cinzel font-bold uppercase tracking-[0.18em] text-amber-900">
-                <Globe className="w-3.5 h-3.5 text-amber-800 shrink-0" />
-                <span className="truncate">Dicastery for Communication • Rome</span>
-              </div>
-              <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900 tracking-wide">
-                Vatican News Live Widget
-              </h3>
+                <div className="flex flex-wrap items-center justify-between pt-2.5 border-t border-stone-200/60 text-xs text-stone-500 gap-2">
+                  <span className="text-xs truncate max-w-[220px] sm:max-w-xs">{item.source}</span>
+
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => handleToggleReadAloud(item)}
+                      className="h-7 px-2.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 transition-colors cursor-pointer flex items-center gap-1 text-xs"
+                      title="Listen"
+                      aria-label="Listen"
+                    >
+                      <Volume2 className="w-3.5 h-3.5 text-amber-800" />
+                      <span className="hidden sm:inline">Listen</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleCopyArticle(item)}
+                      className="h-7 px-2.5 rounded bg-stone-100 hover:bg-stone-200 text-stone-700 border border-stone-300 transition-colors cursor-pointer flex items-center gap-1 text-xs"
+                      title="Copy"
+                      aria-label="Copy"
+                    >
+                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span className="hidden sm:inline">Copy</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveArticle(item)}
+                      className="h-7 px-3 rounded bg-stone-900 hover:bg-stone-800 text-white font-cinzel text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <span>Read Dispatch</span>
+                      <BookOpen className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 3. OFFICIAL EMBEDDED VATICAN NEWS WIDGET */}
+      <section className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl border border-white/70 ring-1 ring-inset ring-white/40 shadow-xs overflow-hidden">
+        {/* Top Editorial Banner */}
+        <div className="px-4 py-3.5 sm:px-6 sm:py-4 border-b border-amber-900/15 bg-white/30 flex items-center justify-between gap-3">
+          <div className="space-y-0.5 text-left min-w-0">
+            <div className="flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.18em] text-amber-900">
+              <Globe className="w-3.5 h-3.5 text-amber-800 shrink-0" />
+              <span className="truncate">Dicastery for Communication • Rome</span>
             </div>
-
-            <a
-              href="https://www.vaticannews.va/en.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#FAF6EE]/80 hover:bg-white border border-amber-900/20 text-amber-950 font-cinzel text-[10.5px] font-bold tracking-wider uppercase transition-all shadow-2xs shrink-0"
-              title="Visit official Vatican News portal"
-            >
-              <span>vaticannews.va</span>
-              <ExternalLink className="w-3 h-3 text-amber-800" />
-            </a>
+            <h3 className="font-cinzel text-sm sm:text-base font-bold text-stone-900 tracking-wide">
+              Vatican News Live Widget
+            </h3>
           </div>
 
-          {/* Framed Live Widget Stage */}
-          <div className="p-3 sm:p-4">
-            <div className="rounded-lg bg-[#FAF8F5]/85 border border-amber-900/10 p-2 sm:p-3 shadow-inner">
-              <VaticanNewsWidgetEmbed
-                lang="en"
-                fontSize="13"
-                carouselVideoAuto="true"
-                carouselVideoTime="medium"
-              />
-            </div>
-          </div>
+          <a
+            href="https://www.vaticannews.va/en.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FAF6EE]/80 hover:bg-white border border-amber-900/20 text-amber-950 font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all shadow-2xs shrink-0"
+            title="Visit official Vatican News portal"
+          >
+            <span>vaticannews.va</span>
+            <ExternalLink className="w-3.5 h-3.5 text-amber-800" />
+          </a>
+        </div>
 
-          {/* Papal Quote Footer Strip */}
-          <div className="px-4 py-3 sm:px-5 sm:py-3.5 border-t border-amber-900/15 bg-[#FAF6EE]/45">
-            <blockquote className="space-y-1.5 text-xs text-stone-700 font-serif italic leading-relaxed border-l-2 border-amber-800/70 pl-3">
-              <p>
-                &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country.&rdquo;
-              </p>
-              <footer className="not-italic font-cinzel text-[11px] font-bold text-amber-950 tracking-wide">
-                — In Christ, Leo XIV
-              </footer>
-            </blockquote>
+        {/* Framed Live Widget Stage */}
+        <div className="p-3.5 sm:p-5">
+          <div className="rounded-lg bg-[#FAF8F5]/85 border border-amber-900/10 p-2.5 sm:p-4 shadow-inner">
+            <VaticanNewsWidgetEmbed
+              lang="en"
+              fontSize="13"
+              carouselVideoAuto="true"
+              carouselVideoTime="medium"
+            />
           </div>
-        </section>
+        </div>
 
-      </div>
+        {/* Papal Quote Footer Strip */}
+        <div className="px-4 py-3.5 sm:px-6 sm:py-4 border-t border-amber-900/15 bg-[#FAF6EE]/45">
+          <blockquote className="space-y-1.5 text-xs sm:text-sm text-stone-700 font-serif italic leading-relaxed border-l-2 border-amber-800/70 pl-3.5">
+            <p>
+              &ldquo;This initiative by Vatican News is a tool for evangelisation, offering an opportunity to create a network and exchange gifts between Rome and the Church in your country.&rdquo;
+            </p>
+            <footer className="not-italic font-cinzel text-[11px] font-bold text-amber-950 tracking-wide">
+              — In Christ, Leo XIV
+            </footer>
+          </blockquote>
+        </div>
+      </section>
 
       {/* Full Article Reader Modal with Audio Narration, Image, and Official Verification Link */}
       {activeArticle && (

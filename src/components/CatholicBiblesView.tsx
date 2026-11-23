@@ -477,13 +477,13 @@ export const CatholicBiblesView: React.FC = () => {
         
         {/* RECTANGLE 1: Standardized Main Title Banner (Daily Mass Readings Banner Dimensions) */}
         <div
-          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative overflow-hidden px-5 py-4 sm:px-6 sm:py-5 min-h-[196px] sm:min-h-[224px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
           {/* Right-Side Consecrated Holy Bible, Statues & Candles Photography with Seamless Dark Brown Gradient Blend */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[78%] md:w-[74%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[68%] sm:w-[48%] overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -491,101 +491,103 @@ export const CatholicBiblesView: React.FC = () => {
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[74%_46%] brightness-[0.96] contrast-[1.04]"
+              className="h-full w-full object-cover object-[50%_46%] brightness-[0.98] contrast-[1.03]"
             />
           </div>
-          {/* Smooth multi-stop horizontal gradient from dark brown background into the open Holy Bible home altar */}
+          {/* Smooth multi-stop horizontal gradient from dark brown background into the dark left wall behind the home altar */}
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_40%,rgba(28,18,12,0.46)_58%,rgba(28,18,12,0.10)_80%,rgba(28,18,12,0.18)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_30%,rgba(28,18,12,0.88)_44%,rgba(28,18,12,0.38)_60%,rgba(28,18,12,0.08)_82%,rgba(28,18,12,0.15)_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_32%,rgba(28,18,12,0.9)_44%,rgba(28,18,12,0.45)_58%,rgba(28,18,12,0)_70%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_52%,rgba(28,18,12,0.92)_58%,rgba(28,18,12,0.45)_64%,rgba(28,18,12,0)_70%)]"
             aria-hidden="true"
           />
-          {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
+          {/* Subtle bottom feathering leaving statues, candles, and Bible completely clear */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/70 via-transparent to-[#1C120C]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1.5 max-w-[82%] sm:max-w-[60%]">
-            {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
-            <div className="flex items-center gap-2.5 flex-wrap overflow-hidden">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">
-                <BookOpen className="w-3.5 h-3.5 text-amber-950" />
-                <span>Sacred Scripture</span>
-              </span>
-              <span className="text-sm sm:text-base text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
-                {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
-              </span>
+          <div className="relative z-10 flex flex-col justify-between gap-4 max-w-full sm:max-w-[54%] my-auto">
+            <div className="space-y-1.5">
+              {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
+              <div className="flex items-center gap-2.5 flex-wrap overflow-hidden">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">
+                  <BookOpen className="w-3.5 h-3.5 text-amber-950" />
+                  <span>Sacred Scripture</span>
+                </span>
+                <span className="text-sm sm:text-base text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                  {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
+                </span>
+              </div>
+
+              {/* Line 2: Main Title */}
+              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                Holy Bible
+              </h2>
             </div>
 
-            {/* Line 2: Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-              Holy Bible
-            </h2>
-          </div>
+            {/* Line 3: View Switcher & Drop-Down Settings Button kept strictly on the left */}
+            <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-2.5 shrink-0">
+              <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 backdrop-blur-xs text-amber-100 p-0.5 shadow-xs">
+                <button
+                  type="button"
+                  onClick={() => setActiveViewMode('reader')}
+                  className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeViewMode === 'reader'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
+                      : 'text-stone-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Reader</span>
+                </button>
 
-          {/* Line 3: View Switcher & Drop-Down Settings Button lowered at bottom right */}
-          <div className="relative z-10 flex flex-wrap items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
-            <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 backdrop-blur-xs text-amber-100 p-0.5 shadow-xs">
+                <button
+                  type="button"
+                  onClick={() => setActiveViewMode('modern-editions')}
+                  className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeViewMode === 'modern-editions'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
+                      : 'text-stone-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Globe className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Modern Bibles</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveViewMode('bookmarks')}
+                  className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeViewMode === 'bookmarks'
+                      ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
+                      : 'text-stone-300 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  <Bookmark className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Saved ({bookmarks.length})</span>
+                </button>
+              </div>
+
+              {/* Settings Drop-Down Toggle Button */}
               <button
                 type="button"
-                onClick={() => setActiveViewMode('reader')}
-                className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  activeViewMode === 'reader'
-                    ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                    : 'text-stone-300 hover:text-white hover:bg-white/10'
+                onClick={() => setIsTopSettingsOpen((prev) => !prev)}
+                aria-expanded={isTopSettingsOpen}
+                className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border backdrop-blur-xs ${
+                  isTopSettingsOpen
+                    ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                    : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
                 }`}
+                title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
               >
-                <BookOpen className="w-3.5 h-3.5 text-amber-300" />
-                <span>Reader</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveViewMode('modern-editions')}
-                className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  activeViewMode === 'modern-editions'
-                    ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                    : 'text-stone-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Globe className="w-3.5 h-3.5 text-amber-300" />
-                <span>Modern Bibles</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveViewMode('bookmarks')}
-                className={`h-full px-2.5 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  activeViewMode === 'bookmarks'
-                    ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
-                    : 'text-stone-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <Bookmark className="w-3.5 h-3.5 text-amber-300" />
-                <span>Saved ({bookmarks.length})</span>
+                <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+                <span className="text-xs font-cinzel font-semibold">Settings</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                    isTopSettingsOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
             </div>
-
-            {/* Settings Drop-Down Toggle Button */}
-            <button
-              type="button"
-              onClick={() => setIsTopSettingsOpen((prev) => !prev)}
-              aria-expanded={isTopSettingsOpen}
-              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border backdrop-blur-xs ${
-                isTopSettingsOpen
-                  ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
-                  : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
-              }`}
-              title={isTopSettingsOpen ? 'Hide Settings' : 'Show Settings'}
-            >
-              <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-              <span className="text-xs font-cinzel font-semibold">Settings</span>
-              <ChevronDown
-                className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
-                  isTopSettingsOpen ? 'rotate-180' : ''
-                }`}
-              />
-            </button>
           </div>
         </div>
 
