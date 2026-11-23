@@ -1794,25 +1794,23 @@ export const ParishFinderView: React.FC = () => {
 
   const showFallbackFinder = quotaGuard.isStopped || !mapsApiKey;
 
-  const stopHeadline =
-    !mapsApiKey && !quotaGuard.isStopped
-      ? 'Google Maps API Key Not Configured on Live Host — Interactive OpenStreetMap Directory Active'
-      : quotaGuard.stopReason === 'near_limit'
-        ? 'Google Maps Paused at Quota Safety Limit — Interactive OpenStreetMap Directory Active'
-        : quotaGuard.stopReason === 'api_quota_exceeded'
-          ? 'Google Maps Quota Reached — Interactive OpenStreetMap Directory Active'
-          : quotaGuard.stopReason === 'server_paused'
-            ? 'Google Maps Paused — Interactive OpenStreetMap Directory Active'
-            : 'Google Maps Paused by Safety Switch — Interactive OpenStreetMap Directory Active';
+  const stopHeadline = !quotaGuard.isStopped
+    ? undefined
+    : quotaGuard.stopReason === 'near_limit'
+      ? 'Google Maps Paused at Quota Safety Limit — Interactive OpenStreetMap Directory Active'
+      : quotaGuard.stopReason === 'api_quota_exceeded'
+        ? 'Google Maps Quota Reached — Interactive OpenStreetMap Directory Active'
+        : quotaGuard.stopReason === 'server_paused'
+          ? 'Google Maps Paused — Interactive OpenStreetMap Directory Active'
+          : 'Google Maps Paused by Safety Switch — Interactive OpenStreetMap Directory Active';
 
-  const stopDescription =
-    !mapsApiKey && !quotaGuard.isStopped
-      ? 'To enable the live Google Maps layer on this domain, add GOOGLE_MAPS_API_KEY (or VITE_GOOGLE_MAPS_API_KEY) to your hosting environment variables and redeploy. Meanwhile, search parishes, view map pins, and check Mass & Confession times below.'
-      : quotaGuard.stopReason === 'near_limit'
-        ? `Google Maps paused automatically at ${quotaGuard.maxPercentUsed}% of the safe monthly cap to prevent billing charges. You can continue finding nearby parishes and Mass times using the interactive directory below.`
-        : quotaGuard.stopReason === 'api_quota_exceeded'
-          ? 'Google Maps reported a quota limit, so Church Finder switched seamlessly to the free interactive OpenStreetMap parish directory below.'
-          : 'Google Maps requests are currently paused. Use Resume Maps above anytime, or continue using the full interactive parish finder below.';
+  const stopDescription = !quotaGuard.isStopped
+    ? undefined
+    : quotaGuard.stopReason === 'near_limit'
+      ? `Google Maps paused automatically at ${quotaGuard.maxPercentUsed}% of the safe monthly cap to prevent billing charges. You can continue finding nearby parishes and Mass times using the interactive directory below.`
+      : quotaGuard.stopReason === 'api_quota_exceeded'
+        ? 'Google Maps reported a quota limit, so Church Finder switched seamlessly to the free interactive OpenStreetMap parish directory below.'
+        : 'Google Maps requests are currently paused. Use Resume Maps above anytime, or continue using the full interactive parish finder below.';
 
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
