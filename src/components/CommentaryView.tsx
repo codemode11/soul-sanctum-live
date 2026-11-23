@@ -26,6 +26,7 @@ import {
 } from '../utils/speech';
 import { StructuredCommentaryDisplay } from './StructuredCommentary';
 import { toCurvedQuotes } from '../utils/typography';
+import bibleCommentaryBannerImg from '../assets/images/bible_commentary_study_1795405319292.jpg';
 
 export interface CommentaryViewProps {
   currentGospelCitation?: string;
@@ -351,23 +352,47 @@ ${selectedCommentary.practicalApplication}`;
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
         {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-2 my-auto">
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          {/* Right-Side Bible Study & Commentaries Photography with Seamless Dark Brown Gradient Blend */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden"
+            aria-hidden="true"
+          >
+            <img
+              src={bibleCommentaryBannerImg}
+              alt=""
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[76%_56%] brightness-[0.96] contrast-[1.04]"
+            />
+          </div>
+          {/* Smooth multi-stop horizontal gradient from dark brown background into the Bible study scene */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.50)_60%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.20)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_32%,rgba(28,18,12,0.90)_46%,rgba(28,18,12,0.42)_63%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.16)_100%)]"
+            aria-hidden="true"
+          />
+          {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 space-y-2 my-auto max-w-[82%] sm:max-w-[60%]">
             {/* Main Title: Commentary on Luke 15:1-10 */}
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Commentary on {selectedCommentary.scriptureReference}
             </h2>
-            <p className="text-xs sm:text-sm text-amber-300/80 font-cinzel uppercase tracking-wider">
+            <p className="text-xs sm:text-sm text-amber-200/90 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Catena Aurea • Cornelius à Lapide, S.J. • Magisterium
             </p>
           </div>
 
           {/* Lower Row: Settings Toggle Button */}
-          <div className="flex items-center justify-end mt-auto pt-2 shrink-0">
+          <div className="relative z-10 flex items-center justify-end mt-auto pt-2 shrink-0">
             <button
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border backdrop-blur-xs ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'

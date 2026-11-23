@@ -6,13 +6,20 @@ import fatimaImg from '../assets/images/pilgrimage_fatima_sanctuary_179537066571
 import guadalupeImg from '../assets/images/pilgrimage_guadalupe_mexico_1795370664696.jpg';
 import assisiImg from '../assets/images/pilgrimage_assisi_basilica_1795370664830.jpg';
 import santiagoImg from '../assets/images/pilgrimage_santiago_compostela_1795370665195.jpg';
+import medjugorjeImg from '../assets/images/pilgrimage_medjugorje_shrine_1795409713765.jpg';
+import krakowMercyImg from '../assets/images/pilgrimage_krakow_mercy_1795409713798.jpg';
+import chartresImg from '../assets/images/pilgrimage_chartres_cathedral_1795409712698.jpg';
+import montSaintMichelImg from '../assets/images/pilgrimage_mont_saint_michel_1795409713662.jpg';
+import sevenChurchesImg from '../assets/images/pilgrimage_seven_churches_1795409713805.jpg';
+import zeitounImg from '../assets/images/pilgrimage_zeitoun_egypt_1795409713708.jpg';
 
 export type PilgrimageRegion =
   | 'All Shrines'
   | 'Holy Land'
   | 'Rome & Italy'
   | 'Marian Shrines'
-  | 'Apostolic Ways';
+  | 'European Sanctuaries'
+  | 'Apostolic & Biblical';
 
 export interface PilgrimageStop {
   id: string;
@@ -59,7 +66,8 @@ export const PILGRIMAGE_REGIONS: PilgrimageRegion[] = [
   'Holy Land',
   'Rome & Italy',
   'Marian Shrines',
-  'Apostolic Ways',
+  'European Sanctuaries',
+  'Apostolic & Biblical',
 ];
 
 export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
@@ -717,7 +725,7 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
     shortName: 'Santiago de Compostela',
     location: 'Santiago de Compostela, Galicia',
     country: 'Spain',
-    region: 'Apostolic Ways',
+    region: 'Apostolic & Biblical',
     patronOrMystery: 'Tomb of St. James the Greater & Destination of the Camino',
     founded: '814 AD (Discovery of Tomb) · 1075–1211 (Romanesque Cathedral)',
     feastDay: 'July 25 — Feast of St. James the Apostle',
@@ -798,6 +806,560 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
           'The end of every pilgrimage is truly a beginning: strengthened by the Eucharist, we return to our families and communities carrying the fragrance of Christ.',
         prayer:
           'Ultreia et Suseia! Go with us, Lord, as we return to daily life, that our words, work, and charity may always point others toward Your heavenly Kingdom. Amen.',
+      },
+    ],
+  },
+  {
+    id: 'our-lady-of-medjugorje',
+    indexLabel: '09',
+    name: 'Shrine of Our Lady of Medjugorje',
+    shortName: 'Our Lady of Medjugorje',
+    location: 'Medjugorje, Herzegovina',
+    country: 'Bosnia & Herzegovina',
+    region: 'Marian Shrines',
+    patronOrMystery: 'Queen of Peace (Gospa) · Prayer, Fasting & Reconciliation',
+    founded: 'June 24, 1981 (First Apparition) · 2024 Vatican Nulla Osta',
+    feastDay: 'June 25 — Anniversary of Our Lady, Queen of Peace',
+    imageSrc: medjugorjeImg,
+    imageCaption:
+      'Fig. 09 — Twin pale limestone towers of St. James Parish Church in Medjugorje framed by cypresses and the rocky hillsides of Podbrdo and Križevac.',
+    placesQuery: 'St. James Church Medjugorje Bosnia and Herzegovina',
+    placesFallbackQuery: 'Medjugorje Bosnia and Herzegovina',
+    summary:
+      'Ascend rocky Podbrdo and gather at St. James Church where millions have experienced Confession, Eucharistic adoration, and the call of Our Lady, Queen of Peace.',
+    historicalOverview:
+      'Beginning on June 24, 1981, six young parishioners reported apparitions of the Blessed Virgin Mary as Queen of Peace on Crnica Hill above the village of Medjugorje. Over four decades, this quiet valley has grown into one of the Catholic world’s great centers of Confession, Rosary prayer, fasting, and Eucharistic Adoration—leading the Vatican’s Dicastery for the Doctrine of the Faith in September 2024 to grant a formal Nulla Osta ("The Queen of Peace") approving public devotion and spiritual pilgrimage.',
+    pilgrimTradition:
+      'Climbing rocky Apparition Hill (Podbrdo) while praying the Joyful and Sorrowful Mysteries, walking the Stations up Cross Mountain (Križevac), going to Confession at St. James Church, and joining evening Adoration.',
+    spiritualGraceNote:
+      'At the heart of Medjugorje’s spirituality stand five simple Gospel “stones”: daily Rosary prayer, Holy Mass and Adoration, fasting on Wednesdays and Fridays, daily Sacred Scripture, and monthly Confession.',
+    officialTourUrl: 'https://www.medjugorje.hr/en/',
+    officialTourLabel: 'Official Parish of St. James Medjugorje',
+    shrinePrayerTitle: 'Prayer to Our Lady, Queen of Peace (Medjugorje)',
+    shrinePrayer:
+      'Mary, Mother of Jesus and Queen of Peace, look upon our restless hearts and our divided world. Teach us to pray with our hearts, to seek reconciliation in the Sacrament of Confession, and to adore your Son Jesus in the Eucharist with childlike trust. Obtain peace for our families, our parishes, and all nations. Amen.',
+    stops: [
+      {
+        id: 'med-1',
+        stepNumber: '01',
+        title: 'Apparition Hill (Podbrdo)',
+        subtitle: 'Climbing Bare Limestone Through the Mysteries of the Rosary',
+        scriptureRef: 'Luke 1:39–45',
+        scriptureText:
+          'Mary set out and traveled to the hill country in haste... “Blessed are you who believed that what was spoken to you by the Lord would be fulfilled.”',
+        narrative:
+          'Rough red-earth footpaths wind upward over sharp, sunlit Herzegovina limestone smoothed by the footsteps of millions of barefoot and sandal-clad pilgrims. Bronze bas-reliefs along the climb invite slow contemplation of the Joyful and Sorrowful Mysteries until one reaches the summit clearing where the white marble statue of Our Lady, Queen of Peace looks out silently over the valley of Medjugorje.',
+        spiritualReflection:
+          'Prayer is not meant to be rushed; like climbing Podbrdo step by step, persevering faith grows stronger over uneven stone.',
+        prayer:
+          'Queen of Peace, guide our footsteps up every steep hill of trial and teach us to pray from the depths of our hearts. Amen.',
+      },
+      {
+        id: 'med-2',
+        stepNumber: '02',
+        title: 'St. James Parish Church & the Evening Rosary',
+        subtitle: '“Confessional of the World” and Living Parish Liturgy',
+        scriptureRef: 'Acts 1:14',
+        scriptureText:
+          'All these devoted themselves with one accord to prayer, together with some women, and Mary the mother of Jesus.',
+        narrative:
+          'Consecrated in 1969 long before the events of 1981, St. James Church opens onto a broad paved courtyard flanked by rows of multilingual confessionals. Every evening at dusk, bells gather thousands into three hours of Rosary, international Holy Mass, Healing Prayer, and hushed Eucharistic Adoration beneath the stars—turning an ordinary village parish into a global school of sacramental conversion.',
+        spiritualReflection:
+          'When did I last receive the Sacrament of Reconciliation with a sincere, open heart? Mercy is always waiting.',
+        prayer:
+          'Lord Jesus, Good Shepherd, pour out Your healing forgiveness in the Sacrament of Confession and draw every prodigal child home. Amen.',
+      },
+      {
+        id: 'med-3',
+        stepNumber: '03',
+        title: 'Cross Mountain (Križevac)',
+        subtitle: 'The Twenty-Eight-Foot Concrete Cross Raised in 1934',
+        scriptureRef: 'John 19:25–27',
+        scriptureText:
+          'Standing by the cross of Jesus were his mother... “Behold, your mother.” And from that hour the disciple took her into his home.',
+        narrative:
+          'Nearly fifty years before 1981, villagers hauled sand, cement, and steel up the steep 1,700-foot summit of Križevac on their backs to erect a monumental cross commemorating the 1900th anniversary of Christ’s Redemption, enshrining a relic of the True Cross inside its beam. Walking the fourteen bronze Stations of the Cross up its slope unites physical exertion with tender gratitude for Calvary.',
+        spiritualReflection:
+          'Stand beside Mary at the foot of Križevac and entrust one heavy cross in your family to the redemptive triumph of Jesus.',
+        prayer:
+          'We adore You, O Christ, and we bless You, for by Your holy Cross You have redeemed the world. Grant us grace to carry our daily cross with love. Amen.',
+      },
+      {
+        id: 'med-4',
+        stepNumber: '04',
+        title: 'The Blue Cross & Chapel of Perpetual Adoration',
+        subtitle: 'Silence Before Jesus Truly Present in the Monstrance',
+        scriptureRef: 'John 14:27',
+        scriptureText:
+          'Peace I leave with you; my peace I give to you. Not as the world gives do I give it to you.',
+        narrative:
+          'At the base of Podbrdo stands the weathered Blue Cross where prayer groups still gather in twilight song, while beside St. James Church opens the quiet Chapel of Adoration. Framed by warm stone and soft candlelight, pilgrims kneel in uninterrupted stillness before the Blessed Sacrament—remembering Our Lady’s constant focus on her Son: “Adore my Son continuously in the Most Holy Sacrament of the Altar.”',
+        spiritualReflection:
+          'Every authentic Marian shrine leads straight to Jesus in the Eucharist. Rest in His peaceful gaze for a quiet minute right now.',
+        prayer:
+          'Jesus, Prince of Peace hidden in the Blessed Sacrament, I love You, I adore You, and I place my whole trust in You. Amen.',
+      },
+    ],
+  },
+  {
+    id: 'shrine-of-divine-mercy-krakow',
+    indexLabel: '10',
+    name: 'Shrine of Divine Mercy (Kraków, Poland)',
+    shortName: 'Shrine of Divine Mercy (Kraków, Poland)',
+    location: 'Łagiewniki, Kraków',
+    country: 'Poland',
+    region: 'European Sanctuaries',
+    patronOrMystery: 'St. Faustina Kowalska & World Capital of Divine Mercy',
+    founded: '1891 (Convent) · 2002 (Basilica Consecrated by St. John Paul II)',
+    feastDay: 'Second Sunday of Easter — Divine Mercy Sunday',
+    imageSrc: krakowMercyImg,
+    imageCaption:
+      'Fig. 10 — The Sanctuary of Divine Mercy in Łagiewniki, Kraków, uniting the historic Sisters of Our Lady of Mercy convent and the modern basilica consecrated by St. John Paul II.',
+    placesQuery: 'Sanctuary of Divine Mercy Krakow Lagiewniki Poland',
+    placesFallbackQuery: 'Sanktuarium Bozego Milosierdzia Krakow Poland',
+    summary:
+      'Visit Kraków-Łagiewniki, where Christ revealed the Chaplet and Image of Divine Mercy to St. Faustina and where St. John Paul II entrusted the entire world to God’s mercy.',
+    historicalOverview:
+      'Within the quiet brick convent of the Congregation of the Sisters of Our Lady of Mercy in Kraków-Łagiewniki, St. Maria Faustina Kowalska spent her final years recording Jesus’ revelations in her Diary: Divine Mercy in My Soul (1934–1938). During the Nazi occupation, a young quarry worker named Karol Wojtyła prayed in this very chapel—returning decades later as Pope St. John Paul II in 2002 to consecrate the new Basilica and solemnly entrust humanity to Divine Mercy.',
+    pilgrimTradition:
+      'Venerating the miraculous Image of Merciful Jesus (“Jesus, I Trust in You”), praying before St. Faustina’s relics in the Convent Chapel, observing the 3:00 PM Hour of Great Mercy, and praying the Chaplet of Divine Mercy.',
+    spiritualGraceNote:
+      'Jesus promised St. Faustina that “mankind will not have peace until it turns with trust to My mercy”—a message echoed at every 3:00 PM Hour of Mercy in Kraków.',
+    officialTourUrl: 'https://www.faustyna.pl/zmbm/en/',
+    officialTourLabel: 'Official Shrine of Divine Mercy (Łagiewniki)',
+    secondaryPortalUrl: 'https://www.milosierdzie.pl/en/',
+    secondaryPortalLabel: 'Sanctuary of Divine Mercy Basilica Portal',
+    shrinePrayerTitle: 'Act of Entrustment & Prayer to Divine Mercy',
+    shrinePrayer:
+      'Eternal Father, I offer You the Body and Blood, Soul and Divinity of Your dearly beloved Son, Our Lord Jesus Christ, in atonement for our sins and those of the whole world. For the sake of His sorrowful Passion, have mercy on us and on the whole world. Jesus, I trust in You! Amen.',
+    stops: [
+      {
+        id: 'krk-1',
+        stepNumber: '01',
+        title: 'The Convent Chapel & Image of Merciful Jesus',
+        subtitle: '“Jesus, I Trust in You” — Rays of Blood and Water',
+        scriptureRef: 'John 20:19–22',
+        scriptureText:
+          'Jesus came and stood in their midst and said to them, “Peace be with you.” When he had said this, he showed them his hands and his side.',
+        narrative:
+          'Inside the intimate neo-Gothic convent chapel of St. Joseph gleams Adolf Hyła’s 1944 painting of the Risen Christ striding forward with right hand raised in blessing and left hand parting His tunic over His pierced Heart. From His Heart stream two luminous rays—pale water making souls righteous and red blood giving life to souls—above the immortal petition requested by Christ Himself: Jezu, ufam Tobie.',
+        spiritualReflection:
+          'Notice that Christ is stepping forward toward you, not retreating in anger. Speak those five words slowly from the heart: “Jesus, I trust in You.”',
+        prayer:
+          'O Blood and Water, which gushed forth from the Heart of Jesus as a fount of mercy for us, I trust in You! Amen.',
+      },
+      {
+        id: 'krk-2',
+        stepNumber: '02',
+        title: 'The Reliquary Tomb of St. Faustina Kowalska',
+        subtitle: 'Secretary of Divine Mercy (1905–1938)',
+        scriptureRef: 'Psalm 136:1',
+        scriptureText:
+          'Praise the Lord, for he is good, for his mercy endures forever.',
+        narrative:
+          'Directly beneath the Image of Merciful Jesus rests the white marble sarcophagus containing the relics of St. Faustina, canonized in 2000 as the first saint of the third millennium. Though she served quietly in the convent kitchen, garden, and gatehouse and died at thirty-three from tuberculosis, her humble obedience carried the message of Mercy from Łagiewniki to every nation on earth.',
+        spiritualReflection:
+          'God chooses hidden, humble souls to renew the whole Church. Offer your hidden labors and patience today in union with St. Faustina.',
+        prayer:
+          'Saint Faustina, faithful apostle of Divine Mercy, obtain for us an unshakable confidence in the tender compassion of God our Father. Amen.',
+      },
+      {
+        id: 'krk-3',
+        stepNumber: '03',
+        title: 'The Basilica of Divine Mercy & Papal Altar',
+        subtitle: '“The World Will Find Peace Only in Turning to Mercy”',
+        scriptureRef: '1 John 4:16',
+        scriptureText:
+          'We have come to know and to believe in the love God has for us. God is love, and whoever remains in love remains in God and God in him.',
+        narrative:
+          'Rising beside the old convent like a radiant ship of salvation, the two-story elliptical Basilica—crowned with a 250-foot tower overlooking Kraków—was consecrated by Pope St. John Paul II on August 17, 2002. Beneath the global globe-framed tabernacle sculpted as a bush ablaze with the fire of love, the Pontiff entrusted all peoples and future generations to the merciful Heart of Christ.',
+        spiritualReflection:
+          'Bring before the Lord any nation, family member, or wound in society that seems beyond repair, entrusting them without reserve to Divine Mercy.',
+        prayer:
+          'God, merciful Father, in Your Son Jesus Christ You have revealed Your love and poured it out upon us in the Holy Spirit: we entrust to You today the destiny of the world and of every human soul. Amen.',
+      },
+      {
+        id: 'krk-4',
+        stepNumber: '04',
+        title: 'The Hour of Great Mercy (3:00 PM)',
+        subtitle: 'Standing Beneath the Cross in Intercession for Sinners',
+        scriptureRef: 'Luke 23:44–46',
+        scriptureText:
+          'It was now about noon and darkness came over the whole land until three in the afternoon... Jesus cried out in a loud voice, “Father, into your hands I commend my spirit.”',
+        narrative:
+          'At three o’clock every afternoon, bells across Łagiewniki call pilgrims to pause everything for the Hour of Great Mercy, the moment Christ breathed His last on Calvary and His side was opened by the lance. Through the Chaplet of Divine Mercy prayed on ordinary Rosary beads, believers stand spiritually beside Mary and John to plead for grace for the dying and hardened hearts everywhere.',
+        spiritualReflection:
+          'Remember today anyone who is dying or feeling unforgivable, and offer one slow decade of the Chaplet of Divine Mercy for their peace.',
+        prayer:
+          'Holy God, Holy Mighty One, Holy Immortal One, have mercy on us and on the whole world. Amen.',
+      },
+    ],
+  },
+  {
+    id: 'chartres-cathedral-france',
+    indexLabel: '11',
+    name: 'Chartres Cathedral (Notre-Dame de Chartres)',
+    shortName: 'Chartres Cathedral, France',
+    location: 'Chartres, Eure-et-Loir',
+    country: 'France',
+    region: 'European Sanctuaries',
+    patronOrMystery: 'Veil of the Blessed Virgin Mary (Sancta Camisa) & High Gothic Light',
+    founded: '1194–1220 (Present Gothic Cathedral) · 876 AD (Relic Arrival)',
+    feastDay: 'August 15 & September 8 — Marian Solemnities at Chartres',
+    imageSrc: chartresImg,
+    imageCaption:
+      'Fig. 11 — Chartres Cathedral (Notre-Dame de Chartres) rising above the Beauce plain with its mismatched twin spires, Royal Portal, and renowned Chartres-blue glass.',
+    placesQuery: 'Chartres Cathedral France',
+    placesFallbackQuery: 'Cathédrale Notre-Dame de Chartres France',
+    summary:
+      'Step into the luminous stone hymn of High Gothic Christendom, guardian of the Sancta Camisa Marian tunic and 176 original medieval stained-glass windows.',
+    historicalOverview:
+      'Standing atop an ancient spring sanctified since the dawn of Christianity in Gaul, Chartres was rebuilt in an astonishing burst of faith between 1194 and 1220 after a devastating fire spared the cherished Sancta Camisa—the tunic relic traditionally worn by the Virgin Mary at the Annunciation and Nativity, gifted to Chartres in 876 AD. Guild artisans, nobles, and peasants alike pulled stone carts together to raise one of humanity’s supreme temples of theological light.',
+    pilgrimTradition:
+      'Making the Pentecost walking pilgrimage from Notre-Dame de Paris to Chartres, walking the ancient stone floor labyrinth in silent prayer, venerating the Sancta Camisa, and contemplating the twelfth-century Madonna of the Pillar.',
+    spiritualGraceNote:
+      'For medieval Christians, Chartres’ cobalt-blue stained glass was theology made visible—proclaiming that divine light passes cleanly through human fragility without breaking it.',
+    officialTourUrl: 'https://www.cathedrale-chartres.org/en/',
+    officialTourLabel: 'Official Cathedral of Notre-Dame de Chartres',
+    shrinePrayerTitle: 'Pilgrim Prayer of Notre-Dame de Chartres',
+    shrinePrayer:
+      'Our Lady of Chartres, Star of the Morning and Temple of the Incarnate Word, illuminate the stone of our hearts with the light of grace. As you carried Christ beneath your heart, help us walk the winding path of our lives with steadfast faith until we reach the heavenly Jerusalem. Amen.',
+    stops: [
+      {
+        id: 'chr-1',
+        stepNumber: '01',
+        title: 'The Royal Portal & Asymmetrical Twin Spires',
+        subtitle: 'A Catechism Carved in Living Beauce Limestone',
+        scriptureRef: 'Psalm 122:1–2',
+        scriptureText:
+          'I rejoiced when they said to me, “Let us go to the house of the Lord.” And now our feet are standing within your gates, Jerusalem.',
+        narrative:
+          'Rising above the golden wheat fields of the Beauce, Chartres’ twin spires embody centuries of living faith: the austere twelfth-century Romanesque Old Tower beside the soaring flamboyant Gothic North Spire. Below, the three carved doorways of the Royal Portal invite pilgrims inside through the majesty of Christ Pantocrator, flanked by serene elongated figures of Old Testament kings, queens, and prophets.',
+        spiritualReflection:
+          'Notice how two very different towers stand side by side in harmony on one facade: God weaves different temperaments and generations into a single house of praise.',
+        prayer:
+          'Lord of beauty and truth, establish my steps within Your Church and let my life reflect Your harmony and order. Amen.',
+      },
+      {
+        id: 'chr-2',
+        stepNumber: '02',
+        title: 'Notre-Dame de la Belle Verrière & Chartres Blue Glass',
+        subtitle: 'Light of Christ Illuminating the Sanctuary',
+        scriptureRef: 'John 1:4–5',
+        scriptureText:
+          'What came to be through him was life, and this life was the light of the human race; the light shines in the darkness, and the darkness has not overcome it.',
+        narrative:
+          'Crossing into the vast nave, the eye is hushed by deep cobalt blues, ruby reds, and emerald greens preserved across eight centuries. Over 26,000 square feet of original medieval stained glass tell the entire drama of salvation—culminating in the twelfth-century window of Notre-Dame de la Belle Verrière (“Our Lady of the Beautiful Window”), where Mary holds the Christ Child amidst luminous angels.',
+        spiritualReflection:
+          'Just as stained glass stays dark from the outside yet blazes with color when sunlight passes through it from within, grace reveals beauty when God dwells inside the soul.',
+        prayer:
+          'Christ, Light of the World, shine through every corner of my soul so others may glimpse Your goodness through my life. Amen.',
+      },
+      {
+        id: 'chr-3',
+        stepNumber: '03',
+        title: 'The Medieval Nave Labyrinth',
+        subtitle: 'Eleven Concentric Rings of the Pilgrim’s Journey',
+        scriptureRef: 'Psalm 25:4–5',
+        scriptureText:
+          'Make known to me your ways, Lord; teach me your paths. Guide me by your truth and teach me, for you are God my savior.',
+        narrative:
+          'Inlaid directly into the limestone floor of the nave around 1200, Chartres’ circular labyrinth spans forty-two feet in alternating white and dark stone. Unlike a maze with dead ends, the single winding 858-foot path leads faithfully to the center rosette—used for centuries as a contemplative “Jerusalem Road” for pilgrims unable to sail to the Holy Land.',
+        spiritualReflection:
+          'Often in life God’s path curves sharply inward and outward when we expect a straight road. Trust that Christ holds the center and never breaks the thread.',
+        prayer:
+          'Good Shepherd, even when my path winds through uncertainty, keep me walking steadily toward Your center of peace. Amen.',
+      },
+      {
+        id: 'chr-4',
+        stepNumber: '04',
+        title: 'The Sancta Camisa & Crypt of Our Lady Under the Earth',
+        subtitle: 'Venerating the Sacred Relic in Silent Memory',
+        scriptureRef: 'Luke 1:38',
+        scriptureText:
+          'Mary said, “Behold, I am the handmaid of the Lord. May it be done to me according to your word.”',
+        narrative:
+          'In the ambulatory treasury reposes the treasured Sancta Camisa, a fine cream silk-and-linen tunic venerated since 876 AD as the garment worn by Mary at Nazareth, carried onto the city ramparts during medieval sieges as a sign of maternal protection. Beneath the choir stretches Europe’s largest cathedral crypt, where candlelight flickers beside Notre-Dame de Sous-Terre and the ancient Well of the Saints-Forts.',
+        spiritualReflection:
+          'Echo Mary’s Fiat in the silent crypt of your own heart: “Let it be done to me today according to Your word.”',
+        prayer:
+          'Notre-Dame de Chartres, shelter us under your mantle and teach us your humble “yes” to the will of God. Amen.',
+      },
+    ],
+  },
+  {
+    id: 'mont-saint-michel',
+    indexLabel: '12',
+    name: 'Abbey of Mont-Saint-Michel',
+    shortName: 'Mont-Saint-Michel',
+    location: 'Normandy Coast',
+    country: 'France',
+    region: 'European Sanctuaries',
+    patronOrMystery: 'Sanctuary of St. Michael the Archangel & Monastic Citadel',
+    founded: '708 AD (Bishop St. Aubert) · 966 AD (Benedictine Abbey)',
+    feastDay: 'September 29 — Feast of Sts. Michael, Gabriel & Raphael, Archangels',
+    imageSrc: montSaintMichelImg,
+    imageCaption:
+      'Fig. 12 — The Abbey of Mont-Saint-Michel crowning its tidal granite peak off Normandy, reflected in golden dawn tidewaters.',
+    placesQuery: 'Mont-Saint-Michel Abbey Normandy France',
+    placesFallbackQuery: 'Le Mont-Saint-Michel France',
+    summary:
+      'Cross the tidal sands to the granite sanctuary where St. Michael the Archangel bade St. Aubert raise a monastery—a citadel of prayer rising between sea and sky.',
+    historicalOverview:
+      'In 708 AD, St. Aubert, Bishop of Avranches, received three visions of the Archangel St. Michael commanding him to build an oratory atop the rocky tidal islet then known as Mont-Tombe. Populated by Benedictine monks in 966 AD and crowned over centuries by Romanesque churches and the Gothic “Marvel” (La Merveille), Mont-Saint-Michel became a beloved Western shrine of spiritual warfare, hospitality, and daily monastic praise.',
+    pilgrimTradition:
+      'Crossing the shifting bay sands at low tide with a guide toward the Archangel’s golden spire, climbing the 350 abbey steps, praying before the statue of St. Michael, and joining the Monastic Fraternities of Jerusalem for Vespers.',
+    spiritualGraceNote:
+      'Surrounded twice daily by rushing Atlantic tides yet anchored in solid granite, Mont-Saint-Michel stands as an enduring icon of the soul rooted in God amid the storms of history.',
+    officialTourUrl: 'https://www.abbaye-mont-saint-michel.fr/en/',
+    officialTourLabel: 'Official Abbey of Mont-Saint-Michel',
+    shrinePrayerTitle: 'Prayer to St. Michael at Mont-Saint-Michel',
+    shrinePrayer:
+      'Saint Michael the Archangel, defend us in battle. Be our protection against the wickedness and snares of the devil. May God rebuke him, we humbly pray; and do thou, O Prince of the Heavenly Host, by the power of God, thrust into hell Satan and all the evil spirits who prowl about the world seeking the ruin of souls. Amen.',
+    stops: [
+      {
+        id: 'msm-1',
+        stepNumber: '01',
+        title: 'Crossing the Tidal Bay at Dawn',
+        subtitle: 'Approaching the Granite Fortress Between Sea and Sky',
+        scriptureRef: 'Psalm 91:11–12',
+        scriptureText:
+          'For he commands his angels with regard to you, to guard you wherever you go. With their hands they shall support you.',
+        narrative:
+          'Across miles of silver wet sand where Europe’s fastest tides rise and fall, medieval miquelots walked singing psalms toward the silhouette of the Abbey crowned by Emmanuel Frémiet’s gilded statue of St. Michael 500 feet above the sea. Each step across the open flats strips away distraction, turning the horizon itself into a sanctuary of silence and anticipation.',
+        spiritualReflection:
+          'What shifting anxieties surround your life like rising tides right now? Look upward to the unchanging Rock of God’s faithfulness.',
+        prayer:
+          'Lord, my Rock and my Fortress, place Your holy angels around my path and anchor my soul against every fear. Amen.',
+      },
+      {
+        id: 'msm-2',
+        stepNumber: '02',
+        title: 'The Grand Stairway & Abbey Church',
+        subtitle: 'Prayer Raised on the Summit of Mount Tumba',
+        scriptureRef: 'Revelation 12:7–10',
+        scriptureText:
+          'Then war broke out in heaven; Michael and his angels battled against the dragon... Now have salvation and power come, and the kingdom of our God.',
+        narrative:
+          'Ascending the steep fortified granite stairwell known as the Grand Degré between massive stone buttresses, the pilgrim emerges onto the bright West Terrace looking over the Channel before entering the Abbey Church. Built directly atop four colossal masonry crypts supporting the mount’s peak, the Romanesque nave and luminous Flamboyant Gothic choir host daily Mass and liturgical chanting by resident monks and nuns.',
+        spiritualReflection:
+          'St. Michael’s very name—Mi-ka-El—asks “Who is like God?” Humility, not pride, is the secret victory of every Christian battle.',
+        prayer:
+          'Saint Michael, Prince of the Heavenly Host, teach us to say with steadfast humility: Who is like God! Grant us courage in every temptation. Amen.',
+      },
+      {
+        id: 'msm-3',
+        stepNumber: '03',
+        title: 'La Merveille — The Cloister Suspended Over the Sea',
+        subtitle: 'Open-Air Monastic Solitude Beneath Double Stone Arcades',
+        scriptureRef: 'Psalm 46:2–5',
+        scriptureText:
+          'God is our refuge and our strength, an ever-present help in distress... A river’s streams gladden the city of God, the holy dwelling of the Most High.',
+        narrative:
+          'Built across three breathtaking vertical tiers on the northern cliff face between 1204 and 1228, La Merveille culminates in a tranquil thirteenth-century cloister supported by staggered pink and cream Caen limestone columns. Opening onto sheer sea air and gulls wheeling high above the surf, its quiet square courtyard invites prayerful contemplation midway between earth and heaven.',
+        spiritualReflection:
+          'Carve out a quiet inner cloister amid daily work—a few uninterrupted minutes where only God’s voice is heard.',
+        prayer:
+          'Be still and know that I am God. Lord of sea and sky, quiet every storm within me and dwell in my heart in peace. Amen.',
+      },
+      {
+        id: 'msm-4',
+        stepNumber: '04',
+        title: 'Crypt of Our Lady of Thirty Candles & Carolingian Chapel',
+        subtitle: 'Ancient Stone Roots of French Christian Devotion',
+        scriptureRef: 'Jude 1:20–21',
+        scriptureText:
+          'Build yourselves up in your most holy faith; pray in the Holy Spirit. Keep yourselves in the love of God and wait for the mercy of our Lord Jesus Christ.',
+        narrative:
+          'Far beneath the bright upper church endures the dark, pillar-filled crypt of Notre-Dame des Trente Cierges (“Our Lady of Thirty Candles”) alongside the pre-Romanesque tenth-century nave of Notre-Dame-Sous-Terre—the earliest masonry foundations on the mount. Here, lit by warm beeswax candles, pilgrims have knelt for over a millennium uniting devotion to the Queen of Angels with St. Michael’s protection.',
+        spiritualReflection:
+          'Deep underground foundations carry the entire soaring spire above. Tend your unseen life of daily prayer, charity, and fidelity.',
+        prayer:
+          'Holy Mary, Queen of Angels, together with St. Michael the Archangel, guard our homes, strengthen the Church, and bring us safely to eternal life. Amen.',
+      },
+    ],
+  },
+  {
+    id: 'seven-churches-of-revelation',
+    indexLabel: '13',
+    name: 'Seven Churches of Revelation (Asia Minor)',
+    shortName: 'Seven Churches of Revelation',
+    location: 'Western Anatolia (Ephesus to Laodicea)',
+    country: 'Türkiye',
+    region: 'Apostolic & Biblical',
+    patronOrMystery: 'Letters of the Risen Christ to the Seven Churches (Rev 1–3)',
+    founded: 'First Century AD (Apostolic Age · St. John & St. Paul)',
+    feastDay: 'December 27 — Feast of St. John the Apostle & Evangelist',
+    imageSrc: sevenChurchesImg,
+    imageCaption:
+      'Fig. 13 — Sunlit columns and Byzantine brick arches of the Basilica of St. John at Ephesus, first of the Seven Churches addressed in the Book of Revelation.',
+    placesQuery: 'Basilica of St. John Ephesus Selcuk Turkey',
+    placesFallbackQuery: 'Ephesus Ancient City Selcuk Turkey',
+    summary:
+      'Trace the ancient Roman postal circuit of western Anatolia—Ephesus, Smyrna, Pergamum, Thyatira, Sardis, Philadelphia, and Laodicea—hearing Christ’s timeless words to the Church.',
+    historicalOverview:
+      'Exiled on nearby Patmos around 95 AD, the Apostle St. John received the Book of Revelation addressed to seven historic Christian communities forming a clockwise crescent along the imperial road of Roman Asia: Ephesus, Smyrna, Pergamum, Thyatira, Sardis, Philadelphia, and Laodicea. Linked closely to St. Paul’s missionary journeys, St. Ignatius of Antioch, St. Polycarp of Smyrna, and the ancient tradition honoring Ephesus as Mary’s later home, these seven churches mirror the spiritual trials and triumphs of the Church in every age.',
+    pilgrimTradition:
+      'Meditating sequentially through Revelation Chapters 2–3 while visiting Ephesus (and the nearby House of the Virgin Mary on Mount Coressus), St. Polycarp’s Smyrna, Pergamum, Thyatira, Sardis, Philadelphia, and Laodicea.',
+    spiritualGraceNote:
+      '“Whoever has ears ought to hear what the Spirit says to the churches”—Christ’s seven letters diagnose our own hearts today with tender honesty and unconquerable hope.',
+    officialTourUrl: 'https://whc.unesco.org/en/list/1018/',
+    officialTourLabel: 'Ephesus Historic Sanctuary Overview (UNESCO)',
+    shrinePrayerTitle: 'Prayer Across the Seven Churches of Revelation',
+    shrinePrayer:
+      'Lord Jesus Christ, Alpha and Omega, who walk among the seven golden lampstands of Your Church, renew our first love as at Ephesus, give us Smyrna’s courage under trial, wake our hearts from Sardis’ slumber, and open before us Philadelphia’s door of mission. Stand at the door of our hearts today as we welcome You in. Amen.',
+    stops: [
+      {
+        id: 'rev-1',
+        stepNumber: '01',
+        title: 'Ephesus & Basilica of St. John — Returning to First Love',
+        subtitle: 'Church 1 of 7 · Apostle John, St. Paul & Marian Tradition',
+        scriptureRef: 'Revelation 2:2, 4–5',
+        scriptureText:
+          '“I know your works, your labor, and your endurance... Yet I hold this against you: you have lost the love you had at first. Realize how far you have fallen. Repent, and do the works you did at first.”',
+        narrative:
+          'On Ayasoluk Hill overlooking the marble colonnades of ancient Ephesus rise the brick-and-marble vaults of Emperor Justinian’s sixth-century Basilica built over the tomb of St. John the Evangelist, just miles from the tranquil House of the Virgin Mary (Meryem Ana) on Mount Coressus and the Basilica of the Council of 431 AD that proclaimed Mary Theotokos, Mother of God. Even an orthodox, hardworking church can grow mechanically dutiful if love cools.',
+        spiritualReflection:
+          'Where has routine replaced tenderness in your prayer or family life? Ask Jesus to rekindle your “first love.”',
+        prayer:
+          'Lord Jesus, cleanse my heart from weary routine and restore the joyful ardor of my first love for You. Amen.',
+      },
+      {
+        id: 'rev-2',
+        stepNumber: '02',
+        title: 'Smyrna & Pergamum — Faithful Unto the Crown of Life',
+        subtitle: 'Churches 2 & 3 of 7 · Courage in Persecution & Pagan Culture',
+        scriptureRef: 'Revelation 2:10, 17',
+        scriptureText:
+          '“Remain faithful until death, and I will give you the crown of life... To the victor I shall give some of the hidden manna; I shall also give a white amulet upon which is inscribed a new name.”',
+        narrative:
+          'North along the Aegean coast stands ancient Smyrna (modern İzmir), church of the aged martyr-bishop St. Polycarp—disciple of St. John—to whom Christ had only praise despite poverty and slander. Farther north on a sheer hilltop acropolis sits Pergamum, crowned by monumental pagan altars, where Antipas bore witness unto death and believers were called to resist subtle compromise with idolatry in daily commerce and public life.',
+        spiritualReflection:
+          'Faithfulness in small hidden choices builds courage for great trials. Pray for persecuted Christians suffering around the world today.',
+        prayer:
+          'Christ our King, strengthen all Christians enduring persecution and keep us unstained by the idols of our age. Amen.',
+      },
+      {
+        id: 'rev-3',
+        stepNumber: '03',
+        title: 'Thyatira & Sardis — Watchful Hearts & White Garments',
+        subtitle: 'Churches 4 & 5 of 7 · Discernment and Spiritual Awakening',
+        scriptureRef: 'Revelation 3:1–3',
+        scriptureText:
+          '“I know your works, that you have the reputation of being alive, but you are dead. Be watchful and strengthen what is left, which is going to die.”',
+        narrative:
+          'Inland through fertile Lydian valleys lay prosperous Thyatira—praised for charity and perseverance yet warned against moral complacency—and wealthy Sardis, perched on rugged cliffs twice conquered while its sentries slept overconfident. Excavations beside the colossal Temple of Artemis reveal an early fourth-century Christian chapel tucked quietly against ancient marble columns—a reminder to stay spiritually awake.',
+        spiritualReflection:
+          'Reputation before the world means nothing if prayer has grown cold inside. What part of my spiritual life needs gentle awakening today?',
+        prayer:
+          'Holy Spirit, awaken whatever sleeps within my soul and clothe me anew in the grace of my Baptism. Amen.',
+      },
+      {
+        id: 'rev-4',
+        stepNumber: '04',
+        title: 'Philadelphia & Laodicea — The Open Door & He Who Knocks',
+        subtitle: 'Churches 6 & 7 of 7 · Fidelity and Warmth of Heart',
+        scriptureRef: 'Revelation 3:8, 20',
+        scriptureText:
+          '“Look, I have left an open door before you, which no one can close... Behold, I stand at the door and knock. If anyone hears my voice and opens the door, then I will enter his house and dine with him.”',
+        narrative:
+          'At the eastern arc of the seven-city route stand Philadelphia—the modest, earthquake-tested community promised an unbreakable open door—and prosperous Laodicea, whose aqueducts carried mineral water that arrived lukewarm compared with Hierapolis’s hot springs and Colossae’s cold mountain streams. Yet even to lukewarm Laodicea, Christ speaks not with rejection but tender invitation: standing patiently at the door, knocking for Eucharistic communion.',
+        spiritualReflection:
+          'Open the door of your daily life to Christ right now. Trade lukewarm hesitation for wholehearted love.',
+        prayer:
+          'Come in, Lord Jesus! I open the door of my heart to You today; dine with me and make me wholly Yours. Amen.',
+      },
+    ],
+  },
+  {
+    id: 'our-lady-of-zeitoun-egypt',
+    indexLabel: '14',
+    name: 'Church of the Virgin Mary, Zeitoun',
+    shortName: 'Zeitoun, Egypt',
+    location: 'Zeitoun District, Cairo',
+    country: 'Egypt',
+    region: 'Marian Shrines',
+    patronOrMystery: 'Our Lady of Light (1968–1971 Apparitions) · Witnessed by All Peoples',
+    founded: '1924 (Church Built) · April 2, 1968 – 1971 (Apparitions of Light)',
+    feastDay: 'April 2 — Commemoration of the Apparitions of Our Lady of Zeitoun',
+    imageSrc: zeitounImg,
+    imageCaption:
+      'Fig. 14 — The twin white domes and palm-lined courtyard of St. Mary’s Church in Zeitoun, Cairo, illuminated beneath a serene evening sky.',
+    placesQuery: 'St. Mary Church Zeitoun Cairo Egypt',
+    placesFallbackQuery: 'Church of the Virgin Mary Zeitoun Cairo',
+    summary:
+      'Visit Zeitoun in Cairo, along the ancient path of the Holy Family in Egypt, where luminous Marian apparitions above the church domes were witnessed by hundreds of thousands from 1968 to 1971.',
+    historicalOverview:
+      'Erected in 1924 in northern Cairo near Matariyah—where Christian memory treasures the resting place of the Holy Family during their flight into Egypt—St. Mary’s Coptic Orthodox Church became the focal point of remarkable public Marian apparitions beginning on the night of April 2, 1968, and continuing periodically until 1971. Photographed in newspapers and beheld simultaneously by vast crowds of Coptic Orthodox, Catholic, Protestant, and Muslim Egyptians, the silent figure of the Blessed Virgin Mary bathed in radiant light above the domes moved Coptic Patriarch Cyril VI to issue an official declaration of authenticity, while Catholic authorities—including Cardinal Stephanos I Sidarouss and observers sent on behalf of Pope St. Paul VI—welcomed the extraordinary spiritual renewal and documented healings.',
+    pilgrimTradition:
+      'Gathering in evening vigil prayer beneath the domes of St. Mary’s in Zeitoun, singing ancient Marian hymns of Egypt, venerating the Holy Family’s pilgrimage route, and praying for Christian unity and peace in the Middle East.',
+    spiritualGraceNote:
+      'In Zeitoun, Mary never spoke a recorded word aloud—letting silent heavenly light, luminous doves, and healed hearts proclaim the glory of her Son across religious and cultural borders.',
+    officialTourUrl: 'https://www.zeitun-eg.org/',
+    officialTourLabel: 'Historical Chronicle of St. Mary’s Zeitoun',
+    shrinePrayerTitle: 'Prayer to Our Lady of Light (Zeitoun, Egypt)',
+    shrinePrayer:
+      'O Virgin Mary, Mother of True Light, who blessed the land of Egypt in the Flight of the Holy Family and shone peacefully above the domes of Zeitoun, pour out your gentle light upon darkened and anxious hearts. Heal the sick, strengthen Christians across the Middle East, unite East and West in charity, and lead all nations to Jesus Christ, the Light of the World. Amen.',
+    stops: [
+      {
+        id: 'zei-1',
+        stepNumber: '01',
+        title: 'The White Domes at Dusk — April 2, 1968',
+        subtitle: '“Arise, Shine, for Your Light Has Come”',
+        scriptureRef: 'Isaiah 60:1–3',
+        scriptureText:
+          'Rise up in splendor! Your light has come, the glory of the Lord shines upon you... Nations shall walk by your light, and kings by your shining radiance.',
+        narrative:
+          'On the evening of April 2, 1968, transit mechanics across the street from St. Mary’s Church noticed a radiant figure draped in white light standing silently beside the central rooftop dome cross. Thinking someone might fall, bystanders shouted in alarm before realizing the luminous figure was not earthly flesh and blood. Night after night for nearly three years, crowds swelling to tens of thousands kept peaceful vigil in the streets until dawn.',
+        spiritualReflection:
+          'In seasons of national grief or darkness—Zeitoun occurred less than a year after devastating regional war—God sends quiet signs of hope rather than despair.',
+        prayer:
+          'Lord Jesus, Light from Light, shine upon every city and home weighed down by grief, war, or uncertainty today. Amen.',
+      },
+      {
+        id: 'zei-2',
+        stepNumber: '02',
+        title: 'Luminous Doves & the Silent Woman Clothed with Light',
+        subtitle: 'Heavenly Peace Above the Rooftop Cross',
+        scriptureRef: 'Song of Songs 6:10',
+        scriptureText:
+          'Who is this that comes forth like the dawn, as beautiful as the moon, as resplendent as the sun?',
+        narrative:
+          'Eyewitnesses—including engineers, journalists, police officers, and visiting bishops—described doves of pure white light gliding swiftly without flapping their wings across the night sky before the appearance of Our Lady, accompanied by sweet clouds of luminous incense rising from the roof. Bowing silently toward the cross atop the main dome and blessing the gathered multitudes in every direction, the Virgin spoke wholly through reverent presence.',
+        spiritualReflection:
+          'Sometimes the deepest witness is silent reverence before the Cross of Christ rather than many anxious words.',
+        prayer:
+          'Mary, Temple of the Holy Spirit, teach us to point always to the Cross of your Son through gentle peace and luminous charity. Amen.',
+      },
+      {
+        id: 'zei-3',
+        stepNumber: '03',
+        title: 'Along the Holy Family’s Egyptian Route',
+        subtitle: 'Matariyah, Zeitoun & Ancient Bridges of East and West',
+        scriptureRef: 'Matthew 2:13–15',
+        scriptureText:
+          '“Rise, take the child and his mother, flee to Egypt, and stay there until I tell you.” ... Out of Egypt I called my son.',
+        narrative:
+          'Zeitoun lies just minutes from historic Matariyah, where ancient Christian tradition recalls the Virgin Mary resting beside a fresh spring and ancient sycamore tree with the Infant Jesus and St. Joseph during Herod’s persecution. Here in Cairo, Coptic, Catholic, and neighboring traditions alike share reverence for the pure Mother of Jesus, creating an extraordinary living bridge of mutual respect.',
+        spiritualReflection:
+          'Pray today for refugees, displaced families, and Christian unity between Catholic and Eastern Apostolic Churches.',
+        prayer:
+          'Jesus, Mary, and Joseph, refugees in Egypt, protect every displaced family in our world today and hasten the full visible unity of all Christians. Amen.',
+      },
+      {
+        id: 'zei-4',
+        stepNumber: '04',
+        title: 'Courtyard Hymns, Healings & Witness Before the Nations',
+        subtitle: 'Blessed Among Women Across Generations',
+        scriptureRef: 'Luke 1:48–50',
+        scriptureText:
+          'From now on will all ages call me blessed. The Mighty One has done great things for me, and holy is his name.',
+        narrative:
+          'Inside the sunlit sanctuary courtyard of Zeitoun, marble plaques and medical commissions—including investigations led by Catholic and Orthodox physicians—recorded numerous unexplained healings among the sick brought during the 1968–1971 vigils. Today, gentle evening hymns still rise among palm trees beside the white limestone facade, reminding pilgrims that Mary’s Magnificat echoes across every language and shore.',
+        spiritualReflection:
+          'Join your own gratitude to Mary’s Magnificat tonight for one blessing God has quietly worked in your family this week.',
+        prayer:
+          'My soul proclaims the greatness of the Lord! Thank You, Father, for keeping Your mercy from age to age upon those who trust in You. Amen.',
       },
     ],
   },

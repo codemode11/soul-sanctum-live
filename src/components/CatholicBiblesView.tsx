@@ -32,6 +32,7 @@ import {
   BibleVerse
 } from '../data/catholicBibles';
 import { SacredReader } from '../utils/speech';
+import holyBibleBannerImg from '../assets/images/holy_bible_facing_left_1795406851246.jpg';
 
 interface SavedBibleBookmark {
   id: string;
@@ -476,31 +477,55 @@ export const CatholicBiblesView: React.FC = () => {
         
         {/* RECTANGLE 1: Standardized Main Title Banner (Daily Mass Readings Banner Dimensions) */}
         <div
-          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          <div className="space-y-1.5">
+          {/* Right-Side Consecrated Holy Bible, Statues & Candles Photography with Seamless Dark Brown Gradient Blend */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[78%] md:w-[74%] overflow-hidden"
+            aria-hidden="true"
+          >
+            <img
+              src={holyBibleBannerImg}
+              alt=""
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[74%_46%] brightness-[0.96] contrast-[1.04]"
+            />
+          </div>
+          {/* Smooth multi-stop horizontal gradient from dark brown background into the open Holy Bible home altar */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_40%,rgba(28,18,12,0.46)_58%,rgba(28,18,12,0.10)_80%,rgba(28,18,12,0.18)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_30%,rgba(28,18,12,0.88)_44%,rgba(28,18,12,0.38)_60%,rgba(28,18,12,0.08)_82%,rgba(28,18,12,0.15)_100%)]"
+            aria-hidden="true"
+          />
+          {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/70 via-transparent to-[#1C120C]/20"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 space-y-1.5 max-w-[82%] sm:max-w-[60%]">
             {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
             <div className="flex items-center gap-2.5 flex-wrap overflow-hidden">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">
                 <BookOpen className="w-3.5 h-3.5 text-amber-950" />
                 <span>Sacred Scripture</span>
               </span>
-              <span className="text-sm sm:text-base text-stone-300 font-serif">
+              <span className="text-sm sm:text-base text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
               </span>
             </div>
 
             {/* Line 2: Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Holy Bible
             </h2>
           </div>
 
           {/* Line 3: View Switcher & Drop-Down Settings Button lowered at bottom right */}
-          <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
-            <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-amber-100 p-0.5 shadow-xs">
+          <div className="relative z-10 flex flex-wrap items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
+            <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 backdrop-blur-xs text-amber-100 p-0.5 shadow-xs">
               <button
                 type="button"
                 onClick={() => setActiveViewMode('reader')}
@@ -546,7 +571,7 @@ export const CatholicBiblesView: React.FC = () => {
               type="button"
               onClick={() => setIsTopSettingsOpen((prev) => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border ${
+              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border backdrop-blur-xs ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'

@@ -80,14 +80,14 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
       'Watch live Catholic Holy Mass and 24/7 Eucharistic Adoration from St. Peter’s Basilica, EWTN, Lourdes, Fátima, and shrines worldwide.',
   },
   'parish-finder': {
-    title: 'Nearby Mass, Confession & Adoration Finder | Soul Sanctum',
+    title: 'Church Finder – Parishes, Mass & Confession | Soul Sanctum',
     description:
       'Find nearby Catholic churches, Holy Mass times, Confession schedules, Eucharistic Adoration chapels, and live directions anywhere in the world on Soul Sanctum.',
   },
   'virtual-pilgrimage': {
-    title: 'Virtual Pilgrimages to the Holiest Catholic Sites | Soul Sanctum',
+    title: 'Virtual Pilgrimages to Catholic Sacred Sites | Soul Sanctum',
     description:
-      'Take guided Catholic virtual pilgrimages to St. Peter’s Basilica, the Holy Sepulchre, Bethlehem, Lourdes, Fátima, Guadalupe, Assisi, and Santiago de Compostela with audio guides, vigil candles, and a Pilgrim Passport.',
+      'Take guided virtual pilgrimages to Rome, Jerusalem, Bethlehem, Lourdes, Fátima, Guadalupe, Medjugorje, Kraków Divine Mercy, Chartres Cathedral, Mont-Saint-Michel, Assisi, Santiago, the Seven Churches of Revelation, and Zeitoun with audio guides, vigil candles, and a Pilgrim Passport.',
   },
   'vatican-news': {
     title: 'Vatican News – Latest Papal & Church News | Soul Sanctum',

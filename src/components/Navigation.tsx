@@ -413,7 +413,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     {
       id: 'parish-finder',
-      label: 'Mass & Confession Finder',
+      label: 'Church Finder',
       icon: ParishFinderPinIcon,
       tag: 'Nearby',
       subtext: 'Parishes, Mass, Confession & Adoration Map'
@@ -423,7 +423,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       label: 'Virtual Pilgrimages',
       icon: VirtualPilgrimageShellIcon,
       tag: 'Shrines',
-      subtext: 'Rome, Jerusalem, Bethlehem, Lourdes, Fátima, Guadalupe, Assisi & Santiago'
+      subtext: '14 Catholic Sacred Sites Worldwide'
     },
     { 
       id: 'vatican-news', 

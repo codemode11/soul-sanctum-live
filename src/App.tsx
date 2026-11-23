@@ -1025,7 +1025,7 @@ export default function App() {
             {/* Nearby Mass, Confession & Adoration Finder */}
             {activeTab === 'parish-finder' && <ParishFinderView />}
 
-            {/* Virtual Pilgrimages to the Holiest Catholic Sites */}
+            {/* Virtual Pilgrimages to Catholic Sacred Sites */}
             {activeTab === 'virtual-pilgrimage' && <VirtualPilgrimageView />}
 
             {/* 7. Vatican News */}

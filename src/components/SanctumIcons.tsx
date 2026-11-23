@@ -2281,7 +2281,7 @@ export const CatholicProphecyScrollIcon: React.FC<IconProps> = ({ className = 'w
 );
 
 /**
- * Nearby Mass, Confession & Adoration Finder Icon: Map Pin with Sacred Cross Crest
+ * Church Finder Icon: Map Pin with Sacred Cross Crest
  */
 export const ParishFinderPinIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
@@ -2292,7 +2292,7 @@ export const ParishFinderPinIcon: React.FC<IconProps> = ({ className = 'w-5 h-5'
     strokeLinecap="round"
     strokeLinejoin="round"
     className={className}
-    aria-label="Nearby Mass, Confession & Adoration Finder — Sacred Parish Map Pin"
+    aria-label="Church Finder — Sacred Parish Map Pin"
   >
     {/* Teardrop Map Pin */}
     <path

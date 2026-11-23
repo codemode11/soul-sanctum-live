@@ -686,13 +686,14 @@ export const VirtualPilgrimageView: React.FC = () => {
               Sacred Geography · Universal Church Archive
             </p>
             <h1 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#1C1917] [text-wrap:balance]">
-              Virtual Pilgrimages to the Holiest Catholic Sites
+              Virtual Pilgrimages to Catholic Sacred Sites
             </h1>
             <p className="font-serif text-sm sm:text-base text-stone-700 leading-relaxed">
-              Walk in spirit through the Church’s most venerable sanctuaries—from Golgotha and Bethlehem to St. Peter’s Tomb, Lourdes, Fátima, Guadalupe, Assisi, and Santiago de Compostela—with guided reflections, audio narration, vigil candles, and your personal Pilgrim Passport.
+              Walk in spirit through the Church’s sacred sanctuaries—from Jerusalem, Bethlehem, and Rome to Lourdes, Fátima, Guadalupe, Medjugorje, Kraków, Chartres, Mont-Saint-Michel, Assisi, Santiago, the Seven Churches of Revelation, and Zeitoun—with guided reflections, audio narration, vigil candles, and your personal Pilgrim Passport.
             </p>
             <p className="pt-1 text-xs font-medium tracking-wide text-stone-500">
-              {VIRTUAL_PILGRIMAGE_SITES.length} Historic Shrines · 32 Guided Prayer Stops ·{' '}
+              {VIRTUAL_PILGRIMAGE_SITES.length} Sacred Shrines ·{' '}
+              {VIRTUAL_PILGRIMAGE_SITES.reduce((sum, s) => sum + s.stops.length, 0)} Guided Prayer Stops ·{' '}
               {stampedCount} of {VIRTUAL_PILGRIMAGE_SITES.length} Stamped in Credencial
             </p>
           </div>
@@ -776,7 +777,7 @@ export const VirtualPilgrimageView: React.FC = () => {
               </button>
             </div>
 
-            {/* 8 Shrine Stamp Seals */}
+            {/* Shrine Stamp Seals */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {VIRTUAL_PILGRIMAGE_SITES.map((site) => {
                 const stampedDate = passport.stampedShrines[site.id];
@@ -806,7 +807,7 @@ export const VirtualPilgrimageView: React.FC = () => {
                         </span>
                       ) : (
                         <span className="text-[11px] text-stone-500">
-                          {visitedCount}/4 stops
+                          {visitedCount}/{site.stops.length} stops
                         </span>
                       )}
                     </div>
@@ -935,7 +936,7 @@ export const VirtualPilgrimageView: React.FC = () => {
                   </div>
 
                   <div className="mt-3 flex items-center justify-between border-t border-stone-200 pt-2 text-[11px] text-stone-500">
-                    <span>4 Guided Stops</span>
+                    <span>{site.stops.length} Guided Stops</span>
                     {siteCandleCount > 0 ? (
                       <span className="inline-flex items-center gap-1 font-medium text-[#B45309]">
                         <Flame className="h-3 w-3" />

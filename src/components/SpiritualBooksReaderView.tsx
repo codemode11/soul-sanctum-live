@@ -30,6 +30,7 @@ import {
   BookCategory 
 } from '../data/spiritualBooks';
 import { SacredReader } from '../utils/speech';
+import spiritualClassicsBannerImg from '../assets/images/spiritual_classics_shelf_1795407880839.jpg';
 
 type ReadingTheme = 'parchment' | 'sepia' | 'dark' | 'white';
 type FontSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -765,59 +766,84 @@ export const SpiritualBooksReaderView: React.FC = () => {
     <div className="max-w-5xl mx-auto space-y-5 sm:space-y-6 pb-16">
       
       {/* Sacred Masthead Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-br from-[#2B1B10] via-[#4A2E1B] to-[#1A0F08] border border-[#C89F72]/50 shadow-xl text-stone-100 space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[184px] rounded-xl bg-[#1C120C] border border-[#C89F72]/50 shadow-xl text-stone-100 flex flex-col justify-between gap-3">
+        {/* Right-Side Antique Spiritual Classics Shelf & Angel Bookends Photography (16:9 aspect preserved on sm+ so both angel bookends are completely uncropped) */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[92%] sm:w-auto sm:aspect-[16/9] overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={spiritualClassicsBannerImg}
+            alt=""
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-right brightness-[0.98] contrast-[1.04]"
+          />
+        </div>
+        {/* Seamless multi-stop horizontal gradient from dark brown background into the bookshelf & both angel bookends */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.92)_48%,rgba(28,18,12,0.52)_64%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.06)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_52%,rgba(28,18,12,0.94)_62%,rgba(28,18,12,0.55)_73%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.02)_100%)]"
+          aria-hidden="true"
+        />
+        {/* Subtle top/bottom warm dark brown feathering for edge polish */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/20"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 space-y-2 max-w-full sm:max-w-[60%]">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] sm:text-[11px] uppercase font-cinzel tracking-[0.2em] text-[#D4A373] font-bold">
+              <span className="text-[10px] sm:text-[11px] uppercase font-cinzel tracking-[0.2em] text-[#D4A373] font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Sancta Lectio • In-App Spiritual Library
               </span>
             </div>
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold tracking-wider text-white">
+            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold tracking-wider text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Spiritual Classics
             </h2>
-            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-relaxed">
-              Immerse your soul in the timeless spiritual masterworks of the Doctors of the Church and canonized saints. Formatted for contemplative *Lectio Divina*, reverent audio proclamation, and interior peace.
+            <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              Immerse your soul in the timeless spiritual masterworks of the Doctors of the Church and canonized saints. Formatted for contemplative Lectio Divina, reverent audio proclamation, and interior peace.
             </p>
           </div>
 
-          {/* Quick Lectio Divina Guide Button */}
-          <button
-            onClick={() => setIsLectioGuideOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-gradient-to-r from-[#8B5A2B]/60 to-[#5C3A21]/70 hover:from-[#9C6B3B] hover:to-[#6B4423] border border-[#D4A373]/60 text-amber-100 text-xs font-cinzel font-bold transition-all shadow-md shrink-0 cursor-pointer self-start sm:self-center"
-          >
-            <Compass className="w-4 h-4 text-[#D4A373]" />
-            <span>How to Pray with Spiritual Reading</span>
-          </button>
-        </div>
-
-        {/* Search Bar and Stats */}
-        <div className="pt-1 flex flex-col sm:flex-row items-center gap-2.5">
-          <div className="relative flex-1 w-full">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
-            <input
-              type="text"
-              value={librarySearch}
-              onChange={(e) => setLibrarySearch(e.target.value)}
-              placeholder="Search books, authors, or spiritual themes (e.g. Kempis, Teresa, Humility, Mary, Carmel)..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-black/40 border border-[#8B5A2B]/40 text-xs sm:text-sm text-stone-200 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 transition-all"
-            />
-            {librarySearch && (
-              <button 
-                onClick={() => setLibrarySearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 p-1 cursor-pointer"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
-
-          {bookmarks.length > 0 && (
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#3A2313] to-[#24160E] border border-[#C89F72]/50 text-xs text-[#F5D7B2] font-cinzel shrink-0">
-              <BookmarkCheck className="w-4 h-4 text-amber-400 fill-amber-400" />
-              <span>{bookmarks.length} Active {bookmarks.length === 1 ? 'Bookmark' : 'Bookmarks'}</span>
+          {/* Search Bar, Lectio Guide & Bookmarks kept on left so the right shelf and both angel bookends remain unobstructed */}
+          <div className="pt-1 flex flex-col gap-2">
+            <div className="relative w-full">
+              <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-300" />
+              <input
+                type="text"
+                value={librarySearch}
+                onChange={(e) => setLibrarySearch(e.target.value)}
+                placeholder="Search books, authors, or themes (e.g. Kempis, Teresa, Carmel)..."
+                className="w-full pl-10 pr-8 py-2 rounded-lg bg-[#1C120C]/85 backdrop-blur-xs border border-[#8B5A2B]/50 text-xs sm:text-sm text-stone-100 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-[#D4A373]/50 transition-all"
+              />
+              {librarySearch && (
+                <button
+                  onClick={() => setLibrarySearch('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-200 p-1 cursor-pointer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
             </div>
-          )}
+
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => setIsLectioGuideOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#25170F]/95 hover:bg-[#3A2313] border border-[#D4A373]/60 text-amber-100 text-xs font-cinzel font-bold transition-all shadow-md shrink-0 cursor-pointer backdrop-blur-xs"
+              >
+                <Compass className="w-3.5 h-3.5 text-[#D4A373]" />
+                <span>How to Pray with Spiritual Reading</span>
+              </button>
+
+              {bookmarks.length > 0 && (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-[#3A2313]/95 to-[#24160E]/95 border border-[#C89F72]/50 text-xs text-[#F5D7B2] font-cinzel shrink-0 backdrop-blur-xs">
+                  <BookmarkCheck className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                  <span>{bookmarks.length} Active {bookmarks.length === 1 ? 'Bookmark' : 'Bookmarks'}</span>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

@@ -158,6 +158,18 @@ interface ParishScheduleResponse {
   checkedAt: string;
 }
 
+interface ParishScheduleFallbackLinks {
+  websiteUri?: string;
+  masstimesUrl: string;
+  googleSearchUrl: string;
+}
+
+interface ParishScheduleErrorState {
+  message: string;
+  isQuotaError?: boolean;
+  fallbackLinks: ParishScheduleFallbackLinks;
+}
+
 function haversineDistanceMeters(
   a: google.maps.LatLngLiteral,
   b: google.maps.LatLngLiteral
@@ -466,7 +478,7 @@ const ParishFinderWorkspace: React.FC<ParishFinderWorkspaceProps> = ({ defaultCe
   // On-demand web-grounded schedule state (keyed by parish Place ID using plain Record to avoid Map shadowing)
   const [scheduleByParishId, setScheduleByParishId] = useState<Record<string, ParishScheduleResponse>>({});
   const [scheduleLoadingId, setScheduleLoadingId] = useState<string | null>(null);
-  const [scheduleErrorByParishId, setScheduleErrorByParishId] = useState<Record<string, string>>({});
+  const [scheduleErrorByParishId, setScheduleErrorByParishId] = useState<Record<string, ParishScheduleErrorState>>({});
 
   const detailCardRef = useRef<HTMLDivElement>(null);
   const searchNonceRef = useRef<number>(0);
@@ -550,7 +562,7 @@ const ParishFinderWorkspace: React.FC<ParishFinderWorkspaceProps> = ({ defaultCe
 
             if (firstPhoto && typeof firstPhoto.getURI === 'function') {
               try {
-                photoUri = firstPhoto.getURI({ maxWidth: 640 });
+                photoUri = firstPhoto.getURI({ maxWidth: 800, maxHeight: 800 });
               } catch {
                 photoUri = null;
               }
@@ -799,12 +811,19 @@ const ParishFinderWorkspace: React.FC<ParishFinderWorkspaceProps> = ({ defaultCe
   );
 
   const handleLookupSchedule = useCallback(async (parish: ParishResult) => {
+    const isRefresh = Boolean(scheduleByParishId[parish.id]);
     setScheduleLoadingId(parish.id);
     setScheduleErrorByParishId((prev) => {
       const next = { ...prev };
       delete next[parish.id];
       return next;
     });
+
+    const defaultFallbackLinks: ParishScheduleFallbackLinks = {
+      ...(parish.websiteURI ? { websiteUri: parish.websiteURI } : {}),
+      masstimesUrl: 'https://masstimes.org/',
+      googleSearchUrl: `https://www.google.com/search?q=${encodeURIComponent(`${parish.displayName} ${parish.formattedAddress} Catholic Mass Confession Adoration times`)}`,
+    };
 
     try {
       const res = await fetch('/api/parish-schedule', {
@@ -814,11 +833,22 @@ const ParishFinderWorkspace: React.FC<ParishFinderWorkspaceProps> = ({ defaultCe
           parishName: parish.displayName,
           address: parish.formattedAddress,
           websiteUri: parish.websiteURI || '',
+          forceRefresh: isRefresh,
         }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(data?.error || 'Could not retrieve parish schedule.');
+        setScheduleErrorByParishId((prev) => ({
+          ...prev,
+          [parish.id]: {
+            message:
+              data?.error ||
+              'Unable to fetch published Mass and Confession times right now. Please use the direct links below.',
+            isQuotaError: res.status === 429 || Boolean(data?.isQuotaError),
+            fallbackLinks: data?.fallbackLinks || defaultFallbackLinks,
+          },
+        }));
+        return;
       }
       setScheduleByParishId((prev) => ({
         ...prev,
@@ -827,14 +857,17 @@ const ParishFinderWorkspace: React.FC<ParishFinderWorkspaceProps> = ({ defaultCe
     } catch (err: any) {
       setScheduleErrorByParishId((prev) => ({
         ...prev,
-        [parish.id]:
-          err?.message ||
-          'Unable to fetch published Mass and Confession times right now. Please check the parish website or phone number.',
+        [parish.id]: {
+          message:
+            err?.message ||
+            'Unable to fetch published Mass and Confession times right now. Please check the parish website or phone number.',
+          fallbackLinks: defaultFallbackLinks,
+        },
       }));
     } finally {
       setScheduleLoadingId(null);
     }
-  }, []);
+  }, [scheduleByParishId]);
 
   // Sort markers by descending latitude so southern pins render cleanly above northern ones
   const sortedMarkers = useMemo(
@@ -1420,11 +1453,11 @@ const ParishFinderWorkspace: React.FC<ParishFinderWorkspaceProps> = ({ defaultCe
               <div className="space-y-3">
                 {selectedParish.photoUri && (
                   <div className="space-y-1">
-                    <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-amber-500/30 bg-stone-900">
+                    <div className="relative w-full rounded-lg overflow-hidden border border-amber-500/30 bg-[#120A05] flex items-center justify-center">
                       <img
                         src={selectedParish.photoUri}
                         alt={selectedParish.displayName}
-                        className="w-full h-full object-cover"
+                        className="w-full h-auto max-h-[340px] object-contain"
                         loading="lazy"
                       />
                     </div>
@@ -1594,9 +1627,47 @@ const ParishFinderWorkspace: React.FC<ParishFinderWorkspaceProps> = ({ defaultCe
                 </div>
 
                 {scheduleErrorByParishId[selectedParish.id] && (
-                  <div className="p-3.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-start gap-2">
-                    <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
-                    <span>{scheduleErrorByParishId[selectedParish.id]}</span>
+                  <div className="p-3.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 space-y-2.5">
+                    <div className="flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                      <span className="leading-relaxed">
+                        {scheduleErrorByParishId[selectedParish.id].message}
+                      </span>
+                    </div>
+                    <div className="flex flex-wrap gap-2 pl-6">
+                      {scheduleErrorByParishId[selectedParish.id].fallbackLinks.websiteUri && (
+                        <a
+                          href={scheduleErrorByParishId[selectedParish.id].fallbackLinks.websiteUri}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white hover:bg-amber-100 border border-amber-300 font-semibold text-amber-950 transition-colors"
+                        >
+                          <Globe className="w-3 h-3 text-amber-800" />
+                          <span>Parish Website</span>
+                          <ExternalLink className="w-3 h-3 opacity-70" />
+                        </a>
+                      )}
+                      <a
+                        href={scheduleErrorByParishId[selectedParish.id].fallbackLinks.googleSearchUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white hover:bg-amber-100 border border-amber-300 font-semibold text-amber-950 transition-colors"
+                      >
+                        <Search className="w-3 h-3 text-amber-800" />
+                        <span>Search Mass Times on Google</span>
+                        <ExternalLink className="w-3 h-3 opacity-70" />
+                      </a>
+                      <a
+                        href={scheduleErrorByParishId[selectedParish.id].fallbackLinks.masstimesUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white hover:bg-amber-100 border border-amber-300 font-semibold text-amber-950 transition-colors"
+                      >
+                        <CalendarClock className="w-3 h-3 text-amber-800" />
+                        <span>MassTimes.org</span>
+                        <ExternalLink className="w-3 h-3 opacity-70" />
+                      </a>
+                    </div>
                   </div>
                 )}
 
@@ -1686,7 +1757,7 @@ export const ParishFinderView: React.FC = () => {
   const [manualParishCity, setManualParishCity] = useState<string>('');
   const [manualScheduleLoading, setManualScheduleLoading] = useState<boolean>(false);
   const [manualScheduleResult, setManualScheduleResult] = useState<ParishScheduleResponse | null>(null);
-  const [manualScheduleError, setManualScheduleError] = useState<string | null>(null);
+  const [manualScheduleError, setManualScheduleError] = useState<ParishScheduleErrorState | null>(null);
 
   const quotaGuard = useMapsQuotaGuard(serverPaused);
 
@@ -1730,29 +1801,46 @@ export const ParishFinderView: React.FC = () => {
   const handleManualScheduleLookup = async (e: React.FormEvent) => {
     e.preventDefault();
     const name = manualParishName.trim();
+    const city = manualParishCity.trim();
     if (!name) return;
     setManualScheduleLoading(true);
     setManualScheduleError(null);
     setManualScheduleResult(null);
+
+    const defaultFallbackLinks: ParishScheduleFallbackLinks = {
+      masstimesUrl: 'https://masstimes.org/',
+      googleSearchUrl: `https://www.google.com/search?q=${encodeURIComponent(`${name} ${city} Catholic Mass Confession Adoration times`.trim())}`,
+    };
+
     try {
       const res = await fetch('/api/parish-schedule', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           parishName: name,
-          address: manualParishCity.trim(),
+          address: city,
           websiteUri: '',
         }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(data?.error || 'Could not retrieve parish schedule.');
+        setManualScheduleError({
+          message:
+            data?.error ||
+            'Unable to look up parish schedule right now. Please check the parish website or links below directly.',
+          isQuotaError: res.status === 429 || Boolean(data?.isQuotaError),
+          fallbackLinks: data?.fallbackLinks || defaultFallbackLinks,
+        });
+        return;
       }
       setManualScheduleResult(data as ParishScheduleResponse);
     } catch (err: any) {
-      setManualScheduleError(
-        err?.message || 'Unable to look up parish schedule right now. Please check the parish website directly.'
-      );
+      setManualScheduleError({
+        message:
+          err?.message ||
+          'Unable to look up parish schedule right now. Please check the parish website directly.',
+        fallbackLinks: defaultFallbackLinks,
+      });
     } finally {
       setManualScheduleLoading(false);
     }
@@ -1762,7 +1850,7 @@ export const ParishFinderView: React.FC = () => {
 
   const stopHeadline =
     !mapsApiKey && !quotaGuard.isStopped
-      ? 'Parish Locator & Live Schedule Lookup'
+      ? 'Church Finder & Live Schedule Lookup'
       : quotaGuard.stopReason === 'near_limit'
         ? 'Google Maps Automatically Paused (Near Free Quota Limit)'
         : quotaGuard.stopReason === 'api_quota_exceeded'
@@ -1791,7 +1879,7 @@ export const ParishFinderView: React.FC = () => {
               Global Catholic Parish Locator
             </div>
             <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide">
-              Nearby Mass, Confession &amp; Adoration Finder
+              Church Finder
             </h2>
             <p className="text-xs sm:text-sm text-amber-100/80 font-serif max-w-2xl">
               Locate Catholic parishes, Eucharistic Adoration chapels, and shrines nearby or anywhere you travel, with live directions and published sacramental schedules.
@@ -1934,7 +2022,34 @@ export const ParishFinderView: React.FC = () => {
             </form>
 
             {manualScheduleError && (
-              <p className="text-xs text-red-700 font-medium">{manualScheduleError}</p>
+              <div className="p-3.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 space-y-2">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">{manualScheduleError.message}</span>
+                </div>
+                <div className="flex flex-wrap gap-2 pl-6">
+                  <a
+                    href={manualScheduleError.fallbackLinks.googleSearchUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white hover:bg-amber-100 border border-amber-300 font-semibold text-amber-950 transition-colors"
+                  >
+                    <Search className="w-3 h-3 text-amber-800" />
+                    <span>Search Mass Times on Google</span>
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </a>
+                  <a
+                    href={manualScheduleError.fallbackLinks.masstimesUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white hover:bg-amber-100 border border-amber-300 font-semibold text-amber-950 transition-colors"
+                  >
+                    <CalendarClock className="w-3 h-3 text-amber-800" />
+                    <span>MassTimes.org</span>
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </a>
+                </div>
+              </div>
             )}
 
             {manualScheduleResult && (

@@ -29,6 +29,7 @@ import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { LectorControlsBar } from './LectorControlsBar';
 import { getDailySaintHomily } from '../data/dailyHomilies';
+import massLectorBannerImg from '../assets/images/mass_young_lector_banner_1795404989633.jpg';
 
 interface DailyMassReadingsViewProps {
   reading: MassReading;
@@ -278,25 +279,45 @@ ${reading.gospel.text}`;
       
       {/* Liturgical Day Banner and Date Bar */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-1.5">
+        <div className={`sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          {/* Overflow-clipped Backdrop so Calendar Dropdown Can Extend Outside Banner */}
+          <div
+            className={`pointer-events-none select-none absolute inset-0 overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}
+            aria-hidden="true"
+          >
+            <div className="absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden">
+              <img
+                src={massLectorBannerImg}
+                alt=""
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-[76%_36%] brightness-[0.96] contrast-[1.04]"
+              />
+            </div>
+            {/* Seamless multi-stop horizontal gradient from dark brown background into the Liturgy of the Word scene */}
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.50)_60%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.20)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_32%,rgba(28,18,12,0.90)_46%,rgba(28,18,12,0.42)_63%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.16)_100%)]" />
+            {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20" />
+          </div>
+
+          <div className="relative z-10 space-y-1.5 max-w-[82%] sm:max-w-[62%]">
             {/* Line 1: Liturgical Color/Rank & Season (raised) */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap sm:flex-nowrap overflow-hidden">
               <span 
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0"
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 shadow-xs"
                 style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
               >
                 <span>{colorMeta.name}</span>
                 <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
                 <span>{reading.liturgicalRank}</span>
               </span>
-              <span className="text-xs sm:text-base text-stone-300 font-serif sm:whitespace-nowrap">
+              <span className="text-xs sm:text-base text-stone-200 font-serif sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {reading.liturgicalSeason}
               </span>
             </div>
             
             {/* Line 2: Complete Liturgical Day Title (wraps onto a second line when needed) */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               {/^solemnity of our lord jesus christ,\s*king of the universe$/i.test(reading.liturgicalDay.trim()) ? (
                 <>
                   <span className="block">Solemnity of Our Lord Jesus Christ</span>
@@ -309,7 +330,7 @@ ${reading.gospel.text}`;
           </div>
 
           {/* Line 3: Calendar and Settings lowered together at the right side */}
-          <div className="flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
+          <div className="relative z-10 flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
             {/* Unified Single Element: [ < | Calendar Date | > ] with Thin Separators */}
             <div className="relative shrink-0">
               <div
