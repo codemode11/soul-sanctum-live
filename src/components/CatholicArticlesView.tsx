@@ -455,131 +455,227 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
   return (
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
       {/* Top Banner & Source Selector */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-between">
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2 group">
-              <CatholicArticlesRssIcon className="w-4 h-4 text-amber-400" />
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-                Catholic Press &amp; Theological Journals
-              </span>
+      <div className="rounded-xl overflow-hidden bg-[#1C120C] text-amber-50 shadow-md border border-amber-900/40">
+        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[212px] sm:min-h-[228px] bg-[#1C120C] flex flex-col justify-between">
+          {/* Desktop / Tablet Layered Publication Covers Showcase (Right Side) */}
+          <div
+            className="hidden sm:block pointer-events-none select-none absolute inset-y-0 right-0 w-[56%] overflow-hidden"
+            aria-hidden="true"
+          >
+            {/* Layer 6 (Backmost): U.S. Catholic */}
+            <div className="absolute right-[342px] md:right-[374px] bottom-3 w-[106px] md:w-[118px] aspect-[3/4] overflow-hidden border border-amber-200/25 shadow-[-8px_8px_18px_rgba(0,0,0,0.68)] -rotate-[14deg] z-10 brightness-[0.88]">
+              <img
+                src="/assets/aistudio/image_b7c5319b.png"
+                alt=""
+                decoding="async"
+                className="h-full w-full object-cover object-top"
+              />
             </div>
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-              Catholic Articles
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl">
-              Select a publication below or click Refresh Feed to fetch today&apos;s newest Catholic articles and step through live dispatches.
-            </p>
+
+            {/* Layer 5: Catholic Digest */}
+            <div className="absolute right-[282px] md:right-[310px] bottom-2.5 w-[110px] md:w-[122px] aspect-[3/4] overflow-hidden border border-amber-200/30 shadow-[-8px_8px_18px_rgba(0,0,0,0.72)] -rotate-[10deg] z-20 brightness-[0.92]">
+              <img
+                src="/assets/aistudio/image_a4bdeb02.png"
+                alt=""
+                decoding="async"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+
+            {/* Layer 4: Catholic Answers Magazine */}
+            <div className="absolute right-[222px] md:right-[246px] bottom-3.5 w-[114px] md:w-[126px] aspect-[3/4] overflow-hidden border border-amber-200/35 shadow-[-8px_8px_20px_rgba(0,0,0,0.75)] -rotate-[7deg] z-30 brightness-[0.95]">
+              <img
+                src="/assets/aistudio/image_9aad468b.png"
+                alt=""
+                decoding="async"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+
+            {/* Layer 3: Signs & Wonders for Our Times */}
+            <div className="absolute right-[156px] md:right-[174px] bottom-2.5 w-[118px] md:w-[132px] aspect-[3/4] overflow-hidden border border-amber-200/45 shadow-[-10px_10px_22px_rgba(0,0,0,0.78)] -rotate-[4deg] z-40">
+              <img
+                src="/assets/aistudio/image_6b7ae47f.png"
+                alt=""
+                decoding="async"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+
+            {/* Layer 2: National Catholic Register */}
+            <div className="absolute right-[86px] md:right-[98px] bottom-3 w-[122px] md:w-[136px] aspect-[3/4] overflow-hidden border border-amber-200/55 shadow-[-10px_10px_24px_rgba(0,0,0,0.82)] -rotate-[1.5deg] z-50">
+              <img
+                src="/assets/aistudio/image_332d1a4e.png"
+                alt=""
+                decoding="async"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+
+            {/* Layer 1 (Top / Frontmost): Catholic Answers */}
+            <div className="absolute right-4 sm:right-5 bottom-2.5 w-[126px] md:w-[140px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-[-12px_12px_26px_rgba(0,0,0,0.88)] rotate-[2.5deg] z-[60] bg-[#140C08]">
+              <img
+                src="/assets/aistudio/image_12421551.png"
+                alt=""
+                decoding="async"
+                className="h-full w-full object-cover object-center scale-[1.15]"
+              />
+            </div>
+
+            {/* Soft Dark-Brown Feather Blend on the Far Left Edge of the Fan */}
+            <div className="absolute inset-y-0 left-0 w-[30%] bg-gradient-to-r from-[#1C120C] via-[#1C120C]/70 to-transparent z-[70]" />
           </div>
 
-          <div className="flex flex-col items-start sm:items-end gap-1.5 shrink-0">
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                disabled={isLoading && !isRefreshingAll}
-                onClick={() => loadSourceFeed(selectedSourceId, true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-75 active:scale-[0.99] text-stone-950 text-xs font-cinzel font-bold transition-all cursor-pointer shadow-sm shrink-0"
-                title="Refresh this publication's live RSS feed for the latest articles"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 text-stone-950 ${isLoading && !isRefreshingAll ? 'animate-spin' : ''}`} />
-                <span>{isLoading && !isRefreshingAll ? 'Refreshing…' : 'Refresh Feed'}</span>
-              </button>
-
-              <button
-                type="button"
-                disabled={isRefreshingAll}
-                onClick={handleRefreshAllFeeds}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 disabled:opacity-75 active:scale-[0.99] border border-amber-500/40 text-amber-200 text-xs font-cinzel font-semibold transition-all cursor-pointer shrink-0"
-                title={`Refresh all ${CATHOLIC_RSS_SOURCES.length} Catholic RSS feeds simultaneously`}
-              >
-                <RefreshCw className={`w-3.5 h-3.5 text-amber-400 ${isRefreshingAll ? 'animate-spin' : ''}`} />
-                <span>
-                  {isRefreshingAll && refreshAllProgress
-                    ? `Syncing ${refreshAllProgress.completed}/${refreshAllProgress.total}…`
-                    : `Refresh All ${CATHOLIC_RSS_SOURCES.length} Feeds`}
+          <div className="relative z-20 max-w-full sm:max-w-[54%] space-y-3">
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2 group">
+                <CatholicArticlesRssIcon className="w-4 h-4 text-amber-400" />
+                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                  Catholic Press &amp; Theological Journals
                 </span>
-              </button>
+              </div>
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                Catholic Articles
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                Select a publication below or click Refresh Feed to fetch today&apos;s newest Catholic articles and step through live dispatches.
+              </p>
             </div>
 
-            {isRefreshingAll && refreshAllProgress ? (
-              <span className="text-[11px] font-serif text-amber-300 inline-flex items-center gap-1.5">
-                <RefreshCw className="w-3 h-3 animate-spin" />
-                Syncing all publications ({refreshAllProgress.completed}/{refreshAllProgress.total} complete, {refreshAllProgress.liveCount} live)…
-              </span>
-            ) : refreshAllSummary ? (
-              <span className="text-[11px] font-serif text-emerald-300 inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                Refreshed {refreshAllSummary.liveSources}/{refreshAllSummary.total} live feeds at {formatTime(refreshAllSummary.syncedAt)} • {sourceArticles.length} articles shown
-              </span>
-            ) : activeSourceStatus?.isLive ? (
-              <span className="text-[11px] font-serif text-emerald-300/95 inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                Live RSS synced {formatTime(activeSourceStatus.syncedAt || lastRefreshedAt)} • {activeSourceStatus.liveCount} live {activeSourceStatus.liveCount === 1 ? 'article' : 'articles'}
-              </span>
-            ) : activeSourceStatus && !activeSourceStatus.isLive ? (
-              <span className="text-[11px] font-serif text-amber-300/95 inline-flex items-center gap-1.5">
-                <AlertCircle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                Live feed unavailable ({activeSourceStatus.error || 'network timeout'}) • showing archive
-              </span>
-            ) : (
-              <span className="text-[11px] font-serif text-amber-200/80">
-                Connecting to {activeSourceMeta.shortName} RSS… ({sourceArticles.length} archived ready)
-              </span>
-            )}
+            <div className="flex flex-col items-start gap-1.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  disabled={isLoading && !isRefreshingAll}
+                  onClick={() => loadSourceFeed(selectedSourceId, true)}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:opacity-75 active:scale-[0.99] text-stone-950 text-xs font-cinzel font-bold transition-all cursor-pointer shadow-sm shrink-0"
+                  title="Refresh this publication's live RSS feed for the latest articles"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 text-stone-950 ${isLoading && !isRefreshingAll ? 'animate-spin' : ''}`} />
+                  <span>{isLoading && !isRefreshingAll ? 'Refreshing…' : 'Refresh Feed'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  disabled={isRefreshingAll}
+                  onClick={handleRefreshAllFeeds}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-stone-800/90 hover:bg-stone-700 disabled:opacity-75 active:scale-[0.99] border border-amber-500/40 text-amber-200 text-xs font-cinzel font-semibold transition-all cursor-pointer shrink-0"
+                  title={`Refresh all ${CATHOLIC_RSS_SOURCES.length} Catholic RSS feeds simultaneously`}
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 text-amber-400 ${isRefreshingAll ? 'animate-spin' : ''}`} />
+                  <span>
+                    {isRefreshingAll && refreshAllProgress
+                      ? `Syncing ${refreshAllProgress.completed}/${refreshAllProgress.total}…`
+                      : `Refresh All ${CATHOLIC_RSS_SOURCES.length} Feeds`}
+                  </span>
+                </button>
+              </div>
+
+              {isRefreshingAll && refreshAllProgress ? (
+                <span className="text-[11px] font-serif text-amber-300 inline-flex items-center gap-1.5">
+                  <RefreshCw className="w-3 h-3 animate-spin" />
+                  Syncing all publications ({refreshAllProgress.completed}/{refreshAllProgress.total} complete, {refreshAllProgress.liveCount} live)…
+                </span>
+              ) : refreshAllSummary ? (
+                <span className="text-[11px] font-serif text-emerald-300 inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  Refreshed {refreshAllSummary.liveSources}/{refreshAllSummary.total} live feeds at {formatTime(refreshAllSummary.syncedAt)} • {sourceArticles.length} articles shown
+                </span>
+              ) : activeSourceStatus?.isLive ? (
+                <span className="text-[11px] font-serif text-emerald-300/95 inline-flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  Live RSS synced {formatTime(activeSourceStatus.syncedAt || lastRefreshedAt)} • {activeSourceStatus.liveCount} live {activeSourceStatus.liveCount === 1 ? 'article' : 'articles'}
+                </span>
+              ) : activeSourceStatus && !activeSourceStatus.isLive ? (
+                <span className="text-[11px] font-serif text-amber-300/95 inline-flex items-center gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  Live feed unavailable ({activeSourceStatus.error || 'network timeout'}) • showing archive
+                </span>
+              ) : (
+                <span className="text-[11px] font-serif text-amber-200/80">
+                  Connecting to {activeSourceMeta.shortName} RSS… ({sourceArticles.length} archived ready)
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Layered Covers Row */}
+          <div className="sm:hidden relative h-[118px] mt-4 flex items-end justify-end overflow-hidden pointer-events-none select-none" aria-hidden="true">
+            <div className="relative w-full h-full">
+              <div className="absolute right-[216px] bottom-1 w-[68px] aspect-[3/4] overflow-hidden border border-amber-200/25 shadow-md -rotate-[12deg] z-10">
+                <img src="/assets/aistudio/image_b7c5319b.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+              </div>
+              <div className="absolute right-[174px] bottom-1 w-[70px] aspect-[3/4] overflow-hidden border border-amber-200/30 shadow-md -rotate-[9deg] z-20">
+                <img src="/assets/aistudio/image_a4bdeb02.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+              </div>
+              <div className="absolute right-[132px] bottom-1.5 w-[72px] aspect-[3/4] overflow-hidden border border-amber-200/35 shadow-md -rotate-[6deg] z-30">
+                <img src="/assets/aistudio/image_9aad468b.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+              </div>
+              <div className="absolute right-[90px] bottom-1 w-[76px] aspect-[3/4] overflow-hidden border border-amber-200/45 shadow-lg -rotate-[3deg] z-40">
+                <img src="/assets/aistudio/image_6b7ae47f.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+              </div>
+              <div className="absolute right-[48px] bottom-1.5 w-[78px] aspect-[3/4] overflow-hidden border border-amber-200/55 shadow-lg -rotate-[1deg] z-50">
+                <img src="/assets/aistudio/image_332d1a4e.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+              </div>
+              <div className="absolute right-2 bottom-1 w-[82px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-xl rotate-[2deg] z-[60] bg-[#140C08]">
+                <img src="/assets/aistudio/image_12421551.png" alt="" decoding="async" className="h-full w-full object-cover object-center scale-[1.15]" />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Catholic Publications Filter Bar */}
-        <div className="flex flex-wrap gap-2 mt-5">
-          {CATHOLIC_RSS_SOURCES.map(src => {
-            const isSelected = selectedSourceId === src.id;
-            const count = (articlesBySource[src.id] || []).length;
-            const srcStatus = feedStatusBySource[src.id];
-            return (
-              <button
-                key={src.id}
-                type="button"
-                onClick={() => handleSelectSource(src.id)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-cinzel transition-all cursor-pointer inline-flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-amber-400 text-amber-950 font-bold shadow-xs'
-                    : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-                }`}
-              >
-                {srcStatus?.syncedAt && (
-                  <span
-                    className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                      srcStatus.isLive
-                        ? isSelected
-                          ? 'bg-emerald-800'
-                          : 'bg-emerald-400'
-                        : isSelected
-                          ? 'bg-amber-900'
-                          : 'bg-amber-500/70'
-                    }`}
-                    title={srcStatus.isLive ? 'Live RSS connected' : 'Using archive fallback'}
-                  />
-                )}
-                <span>{src.shortName}</span>
-                {count > 0 && (
-                  <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                      isSelected ? 'bg-amber-950/20 text-amber-950' : 'bg-stone-700 text-amber-300/90'
-                    }`}
-                  >
-                    {count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
+        {/* Catholic Publications Filter Bar & Active Publication Info Strip (Separated Below Banner Covers) */}
+        <div className="px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#24160D] via-[#2C1A10] to-[#24160D] border-t border-amber-800/40 space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {CATHOLIC_RSS_SOURCES.map(src => {
+              const isSelected = selectedSourceId === src.id;
+              const count = (articlesBySource[src.id] || []).length;
+              const srcStatus = feedStatusBySource[src.id];
+              return (
+                <button
+                  key={src.id}
+                  type="button"
+                  onClick={() => handleSelectSource(src.id)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-medium font-cinzel transition-all cursor-pointer inline-flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-amber-400 text-amber-950 font-bold shadow-xs'
+                      : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                  }`}
+                >
+                  {srcStatus?.syncedAt && (
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                        srcStatus.isLive
+                          ? isSelected
+                            ? 'bg-emerald-800'
+                            : 'bg-emerald-400'
+                          : isSelected
+                            ? 'bg-amber-900'
+                            : 'bg-amber-500/70'
+                      }`}
+                      title={srcStatus.isLive ? 'Live RSS connected' : 'Using archive fallback'}
+                    />
+                  )}
+                  <span>{src.shortName}</span>
+                  {count > 0 && (
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                        isSelected ? 'bg-amber-950/20 text-amber-950' : 'bg-stone-700 text-amber-300/90'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
 
-        {/* Active Publication Info Strip */}
-        <div className="mt-4 pt-3 border-t border-amber-800/40 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-          <div className="text-amber-100/90 font-serif italic">
-            <strong className="not-italic font-cinzel text-amber-300">{activeSourceMeta.name}: </strong>
-            {activeSourceMeta.tagline}
+          <div className="pt-2.5 border-t border-amber-800/35 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+            <div className="text-amber-100/90 font-serif italic">
+              <strong className="not-italic font-cinzel text-amber-300">{activeSourceMeta.name}: </strong>
+              {activeSourceMeta.tagline}
+            </div>
           </div>
         </div>
       </div>
