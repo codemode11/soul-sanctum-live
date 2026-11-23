@@ -477,13 +477,13 @@ export const CatholicBiblesView: React.FC = () => {
         
         {/* RECTANGLE 1: Standardized Main Title Banner (Daily Mass Readings Banner Dimensions) */}
         <div
-          className={`sanctum-top-banner relative overflow-hidden px-5 py-4 sm:px-6 sm:py-5 min-h-[196px] sm:min-h-[224px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative overflow-hidden px-5 py-4 sm:px-6 sm:py-5 min-h-[204px] sm:min-h-[236px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Side Consecrated Holy Bible, Statues & Candles Photography with Seamless Dark Brown Gradient Blend */}
+          {/* Right-Center Consecrated Holy Bible, Statues & Candles Photography (shifted slightly left & forward) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[68%] sm:w-[48%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-[3%] sm:right-[7%] w-[78%] sm:w-auto sm:aspect-[16/9] overflow-hidden z-[15]"
             aria-hidden="true"
           >
             <img
@@ -491,21 +491,22 @@ export const CatholicBiblesView: React.FC = () => {
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[50%_46%] brightness-[0.98] contrast-[1.03]"
+              className="h-full w-full object-cover object-[64%_42%] scale-[1.11] origin-[64%_42%] brightness-[1.03] contrast-[1.05]"
             />
+            {/* Seamless Left-Edge Feathering into Banner Background (Stops Before Candle & Bible) */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-[34%] bg-gradient-to-r from-[#1C120C] via-[#1C120C]/75 to-transparent" />
+            {/* Subtle Right-Edge Feathering so Leftward Shift Has No Hard Edge */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-[10%] bg-gradient-to-l from-[#1C120C] via-[#1C120C]/40 to-transparent" />
+            {/* Subtle Bottom Edge Polish */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/50 to-transparent" />
           </div>
-          {/* Smooth multi-stop horizontal gradient from dark brown background into the dark left wall behind the home altar */}
+          {/* Mobile Readability Gradient Behind Left Controls */}
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_32%,rgba(28,18,12,0.9)_44%,rgba(28,18,12,0.45)_58%,rgba(28,18,12,0)_70%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_52%,rgba(28,18,12,0.92)_58%,rgba(28,18,12,0.45)_64%,rgba(28,18,12,0)_70%)]"
-            aria-hidden="true"
-          />
-          {/* Subtle bottom feathering leaving statues, candles, and Bible completely clear */}
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
+            className="sm:hidden pointer-events-none absolute inset-0 z-[16] bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_28%,rgba(28,18,12,0.88)_42%,rgba(28,18,12,0.38)_56%,rgba(28,18,12,0)_68%)]"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 flex flex-col justify-between gap-4 max-w-full sm:max-w-[54%] my-auto">
+          <div className="relative z-20 flex flex-col justify-between gap-4 max-w-full sm:max-w-[48%] my-auto">
             <div className="space-y-1.5">
               {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
               <div className="flex items-center gap-2.5 flex-wrap overflow-hidden">

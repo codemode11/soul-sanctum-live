@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import {
   ExternalLink,
   Plus,
@@ -90,6 +90,31 @@ function getInitials(name: string): string {
   return (words[0][0] + words[1][0]).toUpperCase();
 }
 
+function formatClientRelativeDate(timestampMs: number | undefined, fallback: string, nowMs: number): string {
+  if (!timestampMs || Number.isNaN(timestampMs)) return fallback;
+  const diffMs = Math.max(0, nowMs - timestampMs);
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 2) return 'Just now';
+  if (diffMins < 60) return `${diffMins} mins ago`;
+  if (diffHours < 24) return `${diffHours} ${diffHours === 1 ? 'hr' : 'hrs'} ago`;
+  if (diffDays === 1) {
+    const t = new Date(timestampMs).toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+    return `Yesterday at ${t}`;
+  }
+  if (diffDays < 7) return `${diffDays} days ago`;
+  return new Date(timestampMs).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
 export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = ({
   favoriteIds,
   isFavorite,
@@ -111,7 +136,25 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [livePosts, setLivePosts] = useState<CatholicFacebookPost[]>([]);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_POSTS);
+  const [feedBatchOffset, setFeedBatchOffset] = useState(0);
+  const [nowTick, setNowTick] = useState(() => Date.now());
+  const [syncStatus, setSyncStatus] = useState<{
+    message: string;
+    isError?: boolean;
+  } | null>(null);
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+  const activeRequestIdRef = useRef(0);
+  const livePostsRef = useRef<CatholicFacebookPost[]>([]);
+
+  useEffect(() => {
+    livePostsRef.current = livePosts;
+  }, [livePosts]);
+
+  // Keep relative timestamps accurate and auto-refresh every 5 minutes
+  useEffect(() => {
+    const ticker = setInterval(() => setNowTick(Date.now()), 60 * 1000);
+    return () => clearInterval(ticker);
+  }, []);
 
   const allSources = useMemo(
     () => [...customFbSources, ...CATHOLIC_FACEBOOK_SOURCES],
@@ -134,34 +177,134 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
     async (sourceIdsCsv: string, manualRefresh = false) => {
       if (!sourceIdsCsv) {
         setLivePosts([]);
+        setFeedBatchOffset(0);
+        setSyncStatus(null);
         return;
       }
+
+      const requestId = ++activeRequestIdRef.current;
       setIsRefreshing(true);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+
       try {
         const res = await fetch(
           `/api/catholic-facebook?sources=${encodeURIComponent(sourceIdsCsv)}&_t=${Date.now()}`,
-          { cache: 'no-store' }
-        );
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data?.posts) && data.posts.length > 0) {
-            setLivePosts(data.posts);
-            if (manualRefresh) {
-              setVisibleCount(INITIAL_VISIBLE_POSTS);
-            }
+          {
+            cache: 'no-store',
+            headers: {
+              'Cache-Control': 'no-cache, no-store, max-age=0',
+              Pragma: 'no-cache',
+            },
+            signal: controller.signal,
           }
+        );
+
+        if (requestId !== activeRequestIdRef.current) return;
+
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
         }
-      } catch {
-        // Keep previously loaded and curated posts gracefully on network failure
+
+        const data = await res.json();
+        if (requestId !== activeRequestIdRef.current) return;
+
+        const fetchedPosts: CatholicFacebookPost[] = Array.isArray(data?.posts) ? data.posts : [];
+        const timeStr = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+        setNowTick(Date.now());
+
+        if (fetchedPosts.length > 0) {
+          const prevKeys = new Set(
+            livePostsRef.current.map((p) => p.postUrl || p.id)
+          );
+          const newCount =
+            livePostsRef.current.length > 0
+              ? fetchedPosts.filter((p) => !prevKeys.has(p.postUrl || p.id)).length
+              : 0;
+
+          setLivePosts(fetchedPosts);
+          setFailedImages({});
+
+          const succeededCount = Number(data?.sourcesSucceeded) || favoriteSources.length;
+
+          if (manualRefresh) {
+            setVisibleCount(INITIAL_VISIBLE_POSTS);
+            if (newCount > 0) {
+              setFeedBatchOffset(0);
+              setSyncStatus({
+                message: `Refreshed at ${timeStr} · ${newCount} new ${newCount === 1 ? 'post' : 'posts'} loaded · ${fetchedPosts.length} live posts across ${succeededCount} accounts`,
+              });
+            } else {
+              // Step forward through the live chronological stream so clicking Refresh always reveals fresh unseen dispatches
+              const step = 6;
+              setFeedBatchOffset((prev) => {
+                const next = fetchedPosts.length > step ? (prev + step) % fetchedPosts.length : 0;
+                const displayStart = next + 1;
+                const displayEnd = Math.min(next + INITIAL_VISIBLE_POSTS, fetchedPosts.length);
+                setSyncStatus({
+                  message:
+                    next === 0
+                      ? `Synced at ${timeStr} · Back to latest posts (${fetchedPosts.length} live across ${succeededCount} accounts)`
+                      : `Refreshed at ${timeStr} · Showing dispatches #${displayStart}–#${displayEnd} of ${fetchedPosts.length} live posts`,
+                });
+                return next;
+              });
+            }
+          } else {
+            setSyncStatus({
+              message: `Synced at ${timeStr} · ${fetchedPosts.length} live posts across ${succeededCount} accounts`,
+            });
+          }
+        } else {
+          setSyncStatus({
+            message: `Checked at ${timeStr} · Showing curated Catholic Favorites archive`,
+          });
+        }
+      } catch (err: any) {
+        if (requestId !== activeRequestIdRef.current) return;
+        const timeStr = new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+        if (manualRefresh && livePostsRef.current.length > 0) {
+          // Even if network hiccups temporarily, rotate through cached live stream so UI stays responsive
+          setFeedBatchOffset((prev) =>
+            livePostsRef.current.length > 6 ? (prev + 6) % livePostsRef.current.length : 0
+          );
+        }
+        setSyncStatus({
+          message:
+            err?.name === 'AbortError'
+              ? `Feed request timed out at ${timeStr} · Showing last synced posts`
+              : `Live feed sync paused at ${timeStr} · Showing available Catholic posts`,
+          isError: true,
+        });
       } finally {
-        setIsRefreshing(false);
+        clearTimeout(timeoutId);
+        if (requestId === activeRequestIdRef.current) {
+          setIsRefreshing(false);
+        }
       }
     },
-    []
+    [favoriteSources.length]
   );
 
   useEffect(() => {
+    setFeedBatchOffset(0);
     fetchLatestFavoritePosts(favoriteSourceIdsParam, false);
+  }, [favoriteSourceIdsParam, fetchLatestFavoritePosts]);
+
+  useEffect(() => {
+    if (!favoriteSourceIdsParam) return;
+    const interval = setInterval(() => {
+      fetchLatestFavoritePosts(favoriteSourceIdsParam, false);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
   }, [favoriteSourceIdsParam, fetchLatestFavoritePosts]);
 
   const handleRefreshFeed = () => {
@@ -233,10 +376,15 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
         balancedLive.push(remaining.splice(pickedIdx, 1)[0]);
       }
 
+      // Rotate live stream when user manually refreshes and no newer items were published yet
+      const shift = balancedLive.length > 1 ? feedBatchOffset % balancedLive.length : 0;
+      const orderedLive =
+        shift > 0 ? [...balancedLive.slice(shift), ...balancedLive.slice(0, shift)] : balancedLive;
+
       // Gently weave in curated posts (including official Facebook post embeds) after live posts
       let curatedIdx = 0;
-      for (let i = 0; i < balancedLive.length; i++) {
-        const livePost = balancedLive[i];
+      for (let i = 0; i < orderedLive.length; i++) {
+        const livePost = orderedLive[i];
         if (!seenPostIds.has(livePost.id)) {
           seenPostIds.add(livePost.id);
           combinedPosts.push(livePost);
@@ -275,7 +423,7 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
     }
 
     return entries;
-  }, [customFbPosts, favoriteSources, focusedSourceId, livePosts]);
+  }, [customFbPosts, favoriteSources, focusedSourceId, livePosts, feedBatchOffset]);
 
   const visibleEntries = useMemo(
     () => unifiedFeedEntries.slice(0, visibleCount),
@@ -446,6 +594,39 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
           </a>
         </div>
       </div>
+
+      {/* Live Sync Status Strip */}
+      {syncStatus && (
+        <div
+          className={`px-4 py-2 sm:px-6 border-b text-xs font-serif flex flex-wrap items-center justify-between gap-2 ${
+            syncStatus.isError
+              ? 'bg-amber-50/90 border-amber-200 text-amber-950'
+              : 'bg-[#FAF7F0] border-[#E5DEC9] text-stone-700'
+          }`}
+        >
+          <span>{syncStatus.message}</span>
+          {feedBatchOffset > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                setFeedBatchOffset(0);
+                setVisibleCount(INITIAL_VISIBLE_POSTS);
+                setSyncStatus((prev) =>
+                  prev
+                    ? {
+                        ...prev,
+                        message: `Showing newest live posts from ${favoriteSources.length} accounts`,
+                      }
+                    : null
+                );
+              }}
+              className="font-cinzel font-semibold text-[#1877F2] hover:underline cursor-pointer whitespace-nowrap"
+            >
+              Jump to Newest
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Collapsible Manage Favorites Drawer (Hidden by Default for Clean Reading) */}
       {isManageOpen && (
@@ -698,7 +879,7 @@ export const CatholicFacebookSection: React.FC<CatholicFacebookSectionProps> = (
                           )}
                         </div>
                         <div className="text-xs font-serif text-stone-500">
-                          {post.postDate} · {post.category}
+                          {formatClientRelativeDate(post.publishedAt, post.postDate, nowTick)} · {post.category}
                         </div>
                       </div>
                     </div>

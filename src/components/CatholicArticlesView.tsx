@@ -513,13 +513,19 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
             </div>
 
             {/* Layer 1 (Top / Frontmost): Catholic Answers */}
-            <div className="absolute right-4 sm:right-5 bottom-2.5 w-[126px] md:w-[140px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-[-12px_12px_26px_rgba(0,0,0,0.88)] rotate-[2.5deg] z-[60] bg-[#140C08]">
-              <img
-                src="/assets/aistudio/image_12421551.png"
-                alt=""
-                decoding="async"
-                className="h-full w-full object-cover object-center scale-[1.15]"
-              />
+            <div className="absolute right-4 sm:right-5 bottom-2.5 w-[138px] md:w-[154px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-[-12px_12px_26px_rgba(0,0,0,0.88)] rotate-[2.5deg] z-[60] bg-[#06090E] pt-3.5 px-2.5 pb-3.5 md:pt-4 md:px-3 md:pb-4">
+              <div className="relative w-full h-full overflow-hidden bg-[#06090E]">
+                <img
+                  src="/assets/aistudio/image_12421551.png"
+                  alt=""
+                  decoding="async"
+                  className="w-full h-auto -mt-[10%] block"
+                />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-gradient-to-b from-[#06090E] to-transparent" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-2 bg-gradient-to-r from-[#06090E] to-transparent" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-2 bg-gradient-to-l from-[#06090E] to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-gradient-to-t from-[#06090E] to-transparent" />
+              </div>
             </div>
 
             {/* Soft Dark-Brown Feather Blend on the Far Left Edge of the Fan */}
@@ -617,8 +623,14 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
               <div className="absolute right-[48px] bottom-1.5 w-[78px] aspect-[3/4] overflow-hidden border border-amber-200/55 shadow-lg -rotate-[1deg] z-50">
                 <img src="/assets/aistudio/image_332d1a4e.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
               </div>
-              <div className="absolute right-2 bottom-1 w-[82px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-xl rotate-[2deg] z-[60] bg-[#140C08]">
-                <img src="/assets/aistudio/image_12421551.png" alt="" decoding="async" className="h-full w-full object-cover object-center scale-[1.15]" />
+              <div className="absolute right-2 bottom-1 w-[88px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-xl rotate-[2deg] z-[60] bg-[#06090E] pt-2 px-1.5 pb-2">
+                <div className="relative w-full h-full overflow-hidden bg-[#06090E]">
+                  <img src="/assets/aistudio/image_12421551.png" alt="" decoding="async" className="w-full h-auto -mt-[10%] block" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-gradient-to-b from-[#06090E] to-transparent" />
+                  <div className="pointer-events-none absolute inset-y-0 left-0 w-1.5 bg-gradient-to-r from-[#06090E] to-transparent" />
+                  <div className="pointer-events-none absolute inset-y-0 right-0 w-1.5 bg-gradient-to-l from-[#06090E] to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-t from-[#06090E] to-transparent" />
+                </div>
               </div>
             </div>
           </div>

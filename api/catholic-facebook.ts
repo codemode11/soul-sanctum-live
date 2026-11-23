@@ -349,8 +349,17 @@ function hashSeed(input: string): number {
   return Math.abs(h);
 }
 
+function extractChannelTimestamp(xml: string): number | null {
+  const beforeFirstItem = xml.split(/<(?:item|entry)[\s>]/i)[0] || '';
+  const channelDateRaw = extractTag(beforeFirstItem, ['lastBuildDate', 'pubDate', 'updated']);
+  if (!channelDateRaw) return null;
+  const parsed = Date.parse(decodeEntities(channelDateRaw).trim());
+  return !Number.isNaN(parsed) ? parsed : null;
+}
+
 function parseXmlToPosts(xml: string, cfg: SourceFeedConfig, maxItems: number): LiveCatholicFacebookPost[] {
   const blocks = xml.match(/<(?:item|entry)[\s>][\s\S]*?<\/(?:item|entry)>/gi) || [];
+  const channelTs = extractChannelTimestamp(xml);
   const results: LiveCatholicFacebookPost[] = [];
   const seenTitles = new Set<string>();
 
@@ -383,7 +392,10 @@ function parseXmlToPosts(xml: string, cfg: SourceFeedConfig, maxItems: number): 
 
     const rawDate = extractTag(block, ['pubDate', 'published', 'updated', 'dc:date']);
     const parsedTs = rawDate ? Date.parse(decodeEntities(rawDate).trim()) : NaN;
-    const publishedAt = !Number.isNaN(parsedTs) ? parsedTs : Date.now() - i * 3600000;
+    const fallbackBase = channelTs ?? Date.now();
+    const publishedAt = !Number.isNaN(parsedTs)
+      ? parsedTs
+      : fallbackBase - (i + 1) * 12 * 3600000;
 
     const postUrl = extractLink(block, cfg.pageUrl);
     const imageUrl = extractGenuineImageUrl(block);
@@ -425,24 +437,39 @@ function parseXmlToPosts(xml: string, cfg: SourceFeedConfig, maxItems: number): 
 }
 
 async function fetchFeedText(url: string): Promise<string | null> {
-  try {
-    const res = await fetch(url, {
-      cache: 'no-store',
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
-        'Cache-Control': 'no-cache, no-store, max-age=0',
-      },
-      signal: AbortSignal.timeout(5500),
-    });
-    if (!res.ok) return null;
-    const text = await res.text();
-    if (!/<(?:item|entry)[\s>]/i.test(text)) return null;
-    return text;
-  } catch {
-    return null;
+  const attempts: Array<Record<string, string>> = [
+    {
+      'User-Agent': 'SoulSanctumCatholicDashboard/1.0 (+https://catholic-dashboard.vercel.app; RSS Reader)',
+      Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
+      'Cache-Control': 'no-cache, no-store, max-age=0',
+      Pragma: 'no-cache',
+    },
+    {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+      Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*',
+      'Cache-Control': 'no-cache, no-store, max-age=0',
+      Pragma: 'no-cache',
+    },
+  ];
+
+  for (const headers of attempts) {
+    try {
+      const res = await fetch(url, {
+        cache: 'no-store',
+        headers,
+        signal: AbortSignal.timeout(6000),
+      });
+      if (!res.ok) continue;
+      const text = await res.text();
+      if (/<(?:item|entry)[\s>]/i.test(text)) {
+        return text;
+      }
+    } catch {
+      // Try next UA attempt
+    }
   }
+  return null;
 }
 
 async function fetchLiveCatholicFacebookPosts(requestedSourceIds?: string[]): Promise<{
@@ -468,11 +495,10 @@ async function fetchLiveCatholicFacebookPosts(requestedSourceIds?: string[]): Pr
       const collected: LiveCatholicFacebookPost[] = [];
       const seenUrls = new Set<string>();
 
-      for (const feedUrl of cfg.feedUrls) {
-        if (collected.length >= maxItems) break;
-        const xml = await fetchFeedText(feedUrl);
+      const xmlResults = await Promise.all(cfg.feedUrls.map((feedUrl) => fetchFeedText(feedUrl)));
+      for (const xml of xmlResults) {
         if (!xml) continue;
-        const parsed = parseXmlToPosts(xml, cfg, maxItems - collected.length);
+        const parsed = parseXmlToPosts(xml, cfg, maxItems);
         for (const p of parsed) {
           if (!seenUrls.has(p.postUrl)) {
             seenUrls.add(p.postUrl);
@@ -481,10 +507,13 @@ async function fetchLiveCatholicFacebookPosts(requestedSourceIds?: string[]): Pr
         }
       }
 
-      if (collected.length > 0) {
+      collected.sort((a, b) => b.publishedAt - a.publishedAt);
+      const trimmed = collected.slice(0, maxItems);
+
+      if (trimmed.length > 0) {
         sourcesSucceeded++;
       }
-      return collected;
+      return trimmed;
     })
   );
 
