@@ -294,13 +294,13 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 max-w-[82%] sm:max-w-[60%]">
+          <div className="relative z-10 space-y-2 max-w-[86%] sm:max-w-[65%]">
             {/* Line 1: Heading, Paragraphs Range & Subtitle */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel shadow-xs">
                 Catechism
               </span>
-              <span className="text-[11px] sm:text-xs font-semibold text-amber-200/95 font-cinzel truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <span className="text-[10.5px] sm:text-xs font-semibold text-amber-200/95 font-cinzel leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
                   ? selectedTopic.paragraphsRange
                   : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
@@ -308,14 +308,16 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             </div>
 
             {/* Line 2: Topic Title */}
-            <h2 className="font-serif text-lg sm:text-2xl font-bold text-amber-100 leading-tight line-clamp-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-[15px] sm:text-[17px] md:text-[18.5px] font-bold text-amber-100 leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               {toCurvedQuotes(selectedTopic.topicTitle)}
             </h2>
 
             {/* Subtitle / Theme description */}
-            <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
-              {toCurvedQuotes(selectedTopic.topicSubtitle)}
-            </p>
+            {selectedTopic.topicSubtitle && (
+              <p className="text-[11px] sm:text-xs text-stone-200 font-serif-sacred leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)] pt-0.5">
+                {toCurvedQuotes(selectedTopic.topicSubtitle)}
+              </p>
+            )}
           </div>
 
           {/* Line 3: Bottom Bar with Topic Navigation & Action Buttons */}
@@ -339,7 +341,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 title="Open Settings to view Topics and Daily Gospel Topics"
               >
                 <BookOpen className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                <span className="truncate leading-none font-cinzel text-amber-200 text-[11px] sm:text-xs max-w-[130px] sm:max-w-[210px] md:max-w-[280px]">
+                <span className="leading-none font-cinzel text-amber-200 text-[10.5px] sm:text-xs whitespace-nowrap">
                   {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
                 </span>
               </button>

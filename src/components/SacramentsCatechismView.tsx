@@ -171,7 +171,7 @@ export const SacramentsCatechismView: React.FC = () => {
           <h3 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-normal leading-tight">
             Catechism on the Seven Sacraments
           </h3>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif max-w-3xl leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif max-w-3xl leading-snug">
             "The sacraments are efficacious signs of grace, instituted by Christ and entrusted to the Church, by which divine life is dispensed to us." (CCC 1131)
           </p>
         </div>

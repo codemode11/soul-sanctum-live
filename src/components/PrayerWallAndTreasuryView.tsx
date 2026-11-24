@@ -330,14 +330,14 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
             <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[58%] gap-2">
               <div className="space-y-1 min-w-0">
-                <div className="flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.14em] text-[#DFB991] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] truncate">
+                <div className="flex items-center gap-1.5 text-[10px] sm:text-[10.5px] font-cinzel font-bold uppercase tracking-[0.12em] text-[#DFB991] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] leading-snug">
                   <BookOpen className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                  <span className="truncate">Thesaurus Precum Catholicarum · {CATHOLIC_PRAYERS_DATABASE.length} Bilingual Prayers</span>
+                  <span>Thesaurus Precum Catholicarum · {CATHOLIC_PRAYERS_DATABASE.length} Bilingual Prayers</span>
                 </div>
-                <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FDF8F0] tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-[#FDF8F0] tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                   Treasury of Prayers
                 </h2>
-                <p className="text-xs text-[#EAD7C0]/95 font-serif-sacred leading-snug line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                <p className="text-[11px] sm:text-xs text-[#EAD7C0]/95 font-serif-sacred leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   &ldquo;Ask, and it shall be given you; seek, and you shall find.&rdquo; (Mt 7:7) — Classic English &amp; Latin devotions.
                 </p>
               </div>
@@ -482,14 +482,14 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           <div className="space-y-1 min-w-0">
             <div className="flex items-center gap-2">
               <Flame className="w-4 h-4 text-amber-400 shrink-0" />
-              <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300 truncate">
+              <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-300 leading-snug">
                 Communion of Saints • Fraternal Intercession
               </span>
             </div>
-            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+            <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide leading-snug">
               Community Prayer Requests Wall
             </h2>
-            <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl line-clamp-2 leading-snug">
+            <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif-sacred max-w-xl leading-snug">
               &ldquo;Bear one another&apos;s burdens, and so fulfill the law of Christ&rdquo; (Galatians 6:2). Post your intentions, pray a decade for a brother or sister in Christ, and light a vigil candle.
             </p>
           </div>

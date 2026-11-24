@@ -17,7 +17,7 @@ export const RessourcementView: React.FC = () => {
           <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             The Church's Direction Towards Ressourcement
           </h3>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif-sacred max-w-3xl leading-snug">
             "True development consists not in cutting away the roots of Tradition, but in plunging ever more deeply into the pristine apostolic wellsprings of Sacred Scripture and the Church Fathers."
           </p>
         </div>

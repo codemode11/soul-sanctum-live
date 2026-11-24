@@ -896,17 +896,18 @@ export default function App() {
         </div>
 
         {/* Main Body Layout */}
-        <div className={`flex-1 w-full mx-auto px-2.5 sm:px-6 lg:px-8 pt-3 sm:pt-8 pb-24 sm:pb-24 flex flex-col items-center transition-all duration-300 ${
-          activeTab === 'catholic-ai'
-            ? 'max-w-none px-2 sm:px-4 lg:px-6'
-            : 'max-w-7xl'
-        }`}>
-          {/* Dual Column Container: Left Navigation Index + Centered Main View */}
-          <div 
-            ref={mainContentRef}
-            id="main-content-area"
-            className="w-full flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-8 items-start justify-center transition-all duration-300"
-          >
+        <div className="flex-1 w-full mx-auto pt-3 sm:pt-8 flex flex-col items-center transition-all duration-300">
+          {/* Edge-to-Edge Semi-Transparent Light Frosted Glass Background Container */}
+          <div className="w-full flex-1 backdrop-blur-2xl backdrop-brightness-125 backdrop-saturate-125 bg-white/42 sm:bg-white/48 border-t border-white/60 shadow-[0_-12px_40px_rgba(255,255,255,0.2)] pt-6 sm:pt-10 pb-20 sm:pb-28 px-3 sm:px-6 lg:px-12 text-[#1C120A]">
+            <div className={`w-full mx-auto transition-all duration-300 ${
+              activeTab === 'catholic-ai' ? 'max-w-none px-2 sm:px-4 lg:px-6' : 'max-w-7xl'
+            }`}>
+              {/* Dual Column Container: Left Navigation Index + Centered Main View */}
+              <div 
+                ref={mainContentRef}
+                id="main-content-area"
+                className="w-full flex flex-col md:flex-row gap-4 sm:gap-6 lg:gap-8 items-start justify-center transition-all duration-300"
+              >
             
             {/* Left-Side Liturgical Menu */}
             <div className="shrink-0 md:self-stretch transition-all duration-300">
@@ -1056,11 +1057,7 @@ export default function App() {
             )}
 
             {/* 8. Catholic Glossary */}
-            {activeTab === 'catholic-glossary' && (
-              <div className="max-w-4xl mx-auto space-y-6 pb-12">
-                <CatholicTermView />
-              </div>
-            )}
+            {activeTab === 'catholic-glossary' && <CatholicTermView />}
 
             {/* 9. Treasury of Prayers */}
             {activeTab === 'treasury-prayers' && (
@@ -1141,9 +1138,11 @@ export default function App() {
           </main>
         </div>
       </div>
+    </div>
+  </div>
 
         {/* Reverent Catholic Footer */}
-        <footer className="bg-stone-950/85 backdrop-blur-xl text-stone-300 border-t border-amber-500/20 mt-10 sm:mt-24 pt-10 pb-24 sm:py-16 text-xs shadow-2xl">
+        <footer className="bg-stone-950/85 backdrop-blur-xl text-stone-300 border-t border-amber-500/20 pt-10 pb-24 sm:py-16 text-xs shadow-2xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
               <div className="flex items-start gap-4">

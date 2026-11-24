@@ -282,7 +282,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">
             Catholic Novena Tracker
           </h2>
-          <p className="text-xs sm:text-sm text-amber-50/90 font-serif-sacred leading-snug line-clamp-2 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+ <p className="text-[11px] sm:text-[12.5px] text-amber-50/90 font-serif-sacred leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             In imitation of the Apostles and the Blessed Virgin Mary who persevered for nine days in the Upper Room awaiting the Holy Spirit, track your ongoing nine-day devotions and prepare for upcoming feasts.
           </p>
         </div>

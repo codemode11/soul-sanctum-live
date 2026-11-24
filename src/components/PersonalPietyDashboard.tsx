@@ -649,14 +649,14 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
           <div className="w-10 h-10 rounded-xl bg-slate-800/90 border border-slate-600/70 flex items-center justify-center text-[#EAE2D3] shadow-xs shrink-0">
             <NotebookWithBallpenIcon className="w-5 h-5 text-[#EAE2D3]" />
           </div>
-          <div className="min-w-0">
-            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-[#DFD5C3] block">
+          <div className="min-w-0 space-y-0.5">
+            <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-[#DFD5C3] block leading-snug">
               Rule of Life • Daily Devotional Order
             </span>
-            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] truncate leading-tight">
+            <h2 className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-[#FBF9F5] leading-snug">
               Spiritual Checklist &amp; Prayer Habit Tracker
             </h2>
-            <p className="text-xs text-[#EAE2D3] font-serif line-clamp-1">
+            <p className="text-[11.5px] sm:text-xs text-[#EAE2D3] font-serif leading-snug">
               Track your daily Catholic prayers, precepts, examen, and November suffrages for the Holy Souls.
             </p>
           </div>

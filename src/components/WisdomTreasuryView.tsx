@@ -77,7 +77,7 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
           </span>
         </div>
 
-        <p className="relative z-10 text-xs sm:text-sm text-amber-100/90 font-serif-sacred leading-snug line-clamp-2 max-w-3xl">
+ <p className="relative z-10 text-[11px] sm:text-[12.5px] text-amber-100/90 font-serif-sacred leading-snug max-w-3xl">
           Luminous counsels from the saints, Church Fathers, and spiritual masters on prayer, humility, the Eucharist, and union with God.
         </p>
       </div>

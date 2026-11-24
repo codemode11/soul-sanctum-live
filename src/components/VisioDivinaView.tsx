@@ -186,7 +186,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
             </h2>
 
             {/* Line 3: Contemplative Subtitle */}
-            <p className="text-xs sm:text-sm text-stone-300 font-serif line-clamp-1">
+ <p className="leading-snug text-[11px] sm:text-[12.5px] text-stone-300 font-serif">
               Contemplating God through the luminous beauty of Catholic sacred art
             </p>
           </div>

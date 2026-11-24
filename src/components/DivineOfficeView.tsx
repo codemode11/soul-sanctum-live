@@ -372,7 +372,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               Divine Office
             </h2>
 
-            <p className="text-xs sm:text-sm text-stone-200 font-serif font-medium line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+ <p className="leading-snug text-[11px] sm:text-[12.5px] text-stone-200 font-serif font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
               {toCurvedQuotes(hourData.liturgicalDay)} · {hourData.formattedDate}
             </p>
           </div>

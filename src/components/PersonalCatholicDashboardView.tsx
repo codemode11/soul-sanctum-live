@@ -1059,15 +1059,15 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
       <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.22)] text-[#24140B] flex flex-col justify-center overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-cinzel font-bold text-[#6B3E1E]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] sm:text-xs font-cinzel font-bold text-[#6B3E1E] leading-snug">
               <span>Horarium &amp; Rule of Life</span>
               <span aria-hidden="true">·</span>
-              <span className="truncate">{currentReading.liturgicalDay}</span>
+              <span>{currentReading.liturgicalDay}</span>
             </div>
-            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#24140B] leading-tight truncate">
+            <h2 className="font-cinzel text-lg sm:text-xl md:text-[22px] font-bold text-[#24140B] leading-snug">
               Personal Catholic Daily Dashboard
             </h2>
-            <p className="text-xs sm:text-sm font-serif text-[#4A2B17] leading-snug line-clamp-2">
+            <p className="text-[11px] sm:text-[12.5px] font-serif text-[#4A2B17] leading-snug">
               Integrated daily sanctuary with Liturgical Calendar, Mass Readings &amp; Homily, Scripture Stopwatch, Prayer Checklist, Prophecies, Indulgences, Alarms, News &amp; Flashcards.
             </p>
           </div>

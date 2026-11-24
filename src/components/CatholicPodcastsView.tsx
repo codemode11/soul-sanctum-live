@@ -206,11 +206,11 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
             <span>Catholic Podcasts</span>
           </div>
 
-          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+          <h2 className="font-cinzel text-lg sm:text-[22px] font-bold text-white tracking-wide leading-snug">
             Nourish Your Soul with Faithful Catholic Audio
           </h2>
 
-          <p className="text-xs sm:text-sm text-stone-300 font-serif leading-snug line-clamp-2">
+          <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif leading-snug">
             Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Fr. Joseph Roesch MIC, Bishop Robert Barron, Dr. Scott Hahn, Jimmy Akin, Jeff Cavins, Matt Fradd, and the Holy See.
           </p>
         </div>
@@ -231,10 +231,10 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
               <span className="text-[10px] font-bold font-cinzel uppercase tracking-widest text-amber-400">
                 FEATURED EPISODE OF THE DAY
               </span>
-              <h3 className="text-sm sm:text-base font-serif font-bold text-white truncate max-w-lg">
+              <h3 className="text-sm sm:text-base font-serif font-bold text-white leading-snug max-w-lg">
                 {featuredEpisode.title}
               </h3>
-              <p className="text-xs text-stone-300 line-clamp-1 font-serif">
+              <p className="text-xs text-stone-300 font-serif leading-snug">
                 {featuredEpisode.podcastTitle} with {featuredEpisode.podcastHost} • {featuredEpisode.durationFormatted}
               </p>
             </div>

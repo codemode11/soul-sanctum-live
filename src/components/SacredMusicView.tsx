@@ -72,7 +72,7 @@ ${hymn.theologicalContext}`;
           <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             Catholic Sacred Music Treasury
           </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif-sacred max-w-2xl leading-snug">
             "He who sings prays twice" (St. Augustine). Immerse in the timeless modal chants of the Church, with Latin lyrics, English translations, and sacred spiritual reflection.
           </p>
         </div>

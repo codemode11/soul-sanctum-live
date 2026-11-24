@@ -714,9 +714,6 @@ export const VirtualPilgrimageView: React.FC = () => {
 
           <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between my-auto">
             <div className="space-y-2.5 max-w-2xl sm:max-w-[58%]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7A4B21]">
-                Sacred Geography · Universal Church Archive
-              </p>
               <h1 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#1F140D] [text-wrap:balance] drop-shadow-[0_1px_2px_rgba(255,250,242,0.7)]">
                 Virtual Pilgrimages to Catholic Sacred Sites
               </h1>

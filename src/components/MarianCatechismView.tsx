@@ -17,7 +17,7 @@ export const MarianCatechismView: React.FC = () => {
           <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             Catechism on Mary and Her Sacred Apparitions
           </h3>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif-sacred max-w-3xl leading-snug">
             "What the Catholic faith believes about Mary is based on what it believes about Christ, and what it teaches about Mary illumines in turn its faith in Christ." (CCC 487)
           </p>
         </div>

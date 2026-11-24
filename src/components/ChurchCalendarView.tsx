@@ -304,7 +304,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
           <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
             Liturgical Calendar and Feasts
           </h2>
-          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif leading-snug line-clamp-1">
+ <p className="text-[11px] sm:text-[12.5px] text-[#EAE2D3] font-serif leading-snug">
             Liturgical seasons, colors, Solemnities, Feasts, Memorials, and Holy Days of Obligation.
           </p>
         </div>

@@ -810,20 +810,20 @@ export const CatholicSocialView: React.FC = () => {
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[90%] sm:max-w-[66%]">
+          <div className="relative z-10 space-y-1.5 my-auto max-w-[92%] sm:max-w-[68%]">
             {/* Line 1: Badge & Subtitle */}
-            <div className="flex items-center gap-2 flex-nowrap overflow-hidden">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-xs text-[10.5px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
                 <CatholicSocialShareIcon className="w-3 h-3" />
                 <span>CATHOLIC SOCIAL &amp; MEDIA</span>
               </span>
-              <span className="text-xs sm:text-sm text-stone-200 font-serif whitespace-nowrap truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+              <span className="text-[11px] sm:text-xs text-stone-200 font-serif leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 Curated Posts from Faithful Catholic Apostolates &amp; Christendom
               </span>
             </div>
 
             {/* Line 2: Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight truncate drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-base sm:text-xl font-bold tracking-normal text-amber-100 leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               EWTN, Facebook, Instagram &amp; Christendom.com
             </h2>
           </div>

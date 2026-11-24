@@ -760,20 +760,63 @@ SOUL SANCTUM`;
   return (
     <div className="max-w-5xl mx-auto space-y-5 pb-12">
       
-      {/* Top Banner — Slate Gray & Bleached Sand */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 relative overflow-hidden flex flex-col justify-center">
-        <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
-        <div className="relative z-10 space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-[#DFD5C3] flex items-center gap-1.5 truncate">
-              <Sparkles className="w-3.5 h-3.5 text-[#EAE2D3] shrink-0" />
+      {/* Top Banner — Eucharistic Miracles with Lanciano Reliquary */}
+      <div
+        className="sanctum-top-banner relative isolate px-4 py-3 sm:px-6 sm:py-4 h-[196px] sm:h-[212px] rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 overflow-hidden flex flex-col justify-center"
+        style={{
+          background:
+            'linear-gradient(100deg, #0D1729 0%, #152846 38%, #224474 66%, #3E6FAE 86%, #568ACE 100%)',
+        }}
+      >
+        {/* Soft continuous atmospheric glow bridging banner blue into the Lanciano sky */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background:
+              'radial-gradient(ellipse 46% 95% at 88% 42%, rgba(126, 178, 240, 0.42) 0%, rgba(74, 126, 194, 0.16) 48%, transparent 78%)',
+          }}
+        />
+
+        {/* Right-aligned Eucharistic Miracle of Lanciano Reliquary */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 flex items-center justify-end z-0"
+          aria-hidden="true"
+        >
+          <img
+            src="/assets/aistudio/EUCHARISTIC_MIRACLE_OF_LANCIANO_b56e5fa6.jpg"
+            alt="Reliquary of the Eucharistic Miracle of Lanciano"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-auto max-w-none block"
+            style={{
+              maskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.12) 7%, rgba(0,0,0,0.42) 15%, rgba(0,0,0,0.78) 24%, rgba(0,0,0,0.95) 33%, black 42%)',
+              WebkitMaskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.12) 7%, rgba(0,0,0,0.42) 15%, rgba(0,0,0,0.78) 24%, rgba(0,0,0,0.95) 33%, black 42%)',
+            }}
+          />
+        </div>
+
+        {/* Continuous full-width translucent sweep smoothing left-to-right transition and bottom edge */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(13,23,41,0.72) 0%, rgba(21,40,70,0.5) 48%, rgba(34,68,116,0.18) 76%, transparent 94%), linear-gradient(to top, rgba(13,23,41,0.42) 0%, transparent 24%)',
+          }}
+        />
+
+        <div className="relative z-10 space-y-1 pr-[106px] sm:pr-[128px]">
+          <div className="flex items-center gap-1.5">
+            <span className="leading-tight font-cinzel text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wider text-[#DFD5C3] flex items-center gap-1.5">
+              <Sparkles className="w-3 h-3 text-[#EAE2D3] shrink-0" />
               <span>Sacramentum Caritatis • Source and Summit of Catholic Faith</span>
             </span>
           </div>
-          <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+          <h3 className="font-cinzel text-[15px] sm:text-xl font-bold text-[#FBF9F5] tracking-wide leading-snug">
             Catechism on the Eucharist and Miracles Approved by the Vatican
           </h3>
-          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+          <p className="text-[10.5px] sm:text-[11.5px] text-[#EAE2D3] font-serif max-w-3xl leading-[1.32]">
             &ldquo;The Eucharist is the heart and the summit of the Church&apos;s life, for in it Christ associates his Church and all her members with his sacrifice of praise and thanksgiving offered once for all on the cross to his Father.&rdquo; (CCC 1407)
           </p>
         </div>

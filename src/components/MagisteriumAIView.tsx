@@ -20,7 +20,7 @@ import {
   ChevronDown,
   X,
 } from 'lucide-react';
-import magisteriumBannerImg from '../assets/images/magisterium_michelangelo_graph_1795492644307.jpg';
+import magisteriumBannerImg from '../assets/images/magisterium_stylized_ihs_graph_1795533899890.jpg';
 import {
   searchCatholicInternet,
   synthesizeResearchResponse,
@@ -559,9 +559,9 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
             isDomainMenuOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Side Futuristic Michelangelo & Obsidian Graph Artwork with Seamless Dark Brown Gradient Blend */}
+          {/* Right-Side Obsidian Knowledge Graph Artwork with Seamless Dark Brown Blend */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[70%] md:w-[66%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[72%] md:w-[68%] overflow-hidden pr-1 sm:pr-3 py-1 mix-blend-lighten"
             aria-hidden="true"
           >
             <img
@@ -569,32 +569,28 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-contain object-right brightness-[1.04] contrast-[1.04]"
+              className="h-full w-full object-contain object-right brightness-[1.08] contrast-[1.06]"
             />
-            {/* Seamless feathering along top, bottom, and right edges into #1C120C */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#1C120C] via-[#1C120C]/55 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120C]/75 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120C]/80 to-transparent" />
           </div>
 
-          {/* Smooth multi-stop horizontal gradient transitioning from dark brown (#1C120C) into the right-side futuristic artwork */}
+          {/* Smooth multi-stop horizontal gradient transitioning from dark brown (#1C120C) into the right-side Obsidian graph */}
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_28%,rgba(28,18,12,0.92)_44%,rgba(28,18,12,0.52)_62%,rgba(28,18,12,0.14)_82%,rgba(28,18,12,0.20)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.92)_48%,rgba(28,18,12,0.44)_64%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.16)_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_32%,rgba(28,18,12,0.86)_48%,rgba(28,18,12,0.34)_64%,rgba(28,18,12,0.04)_82%,rgba(28,18,12,0.08)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_38%,rgba(28,18,12,0.82)_52%,rgba(28,18,12,0.22)_66%,rgba(28,18,12,0)_80%,rgba(28,18,12,0.06)_100%)]"
             aria-hidden="true"
           />
           {/* Subtle top/bottom warm dark brown feathering so text & controls stay crisp */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[85%] sm:max-w-[58%]">
-            <div className="flex items-center gap-2 text-[11px] sm:text-xs font-serif flex-nowrap overflow-hidden">
-              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[88%] sm:max-w-[60%]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] sm:text-xs font-serif">
+              <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-300 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 28,000+ Church Documents
               </span>
               <span className="text-amber-200/70 shrink-0" aria-hidden="true">·</span>
-              <span className="text-stone-200 truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <span className="text-stone-200 leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Catechism, Canon Law &amp; Ecumenical Councils
               </span>
             </div>
@@ -603,7 +599,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
               Magisterium AI
             </h2>
 
-            <p className="text-xs text-stone-200 font-serif font-medium max-w-xl leading-snug line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+            <p className="text-[11px] sm:text-xs text-stone-200 font-serif font-medium max-w-xl leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Consult the authentic teaching authority of the Catholic Church with cited references from the Catechism, Canon Law, Councils, and Doctors of the Church.
             </p>
           </div>

@@ -203,7 +203,7 @@ export const CatholicLinksView: React.FC = () => {
               Catholic Links
             </h2>
 
-            <p className="text-xs sm:text-sm text-stone-300 font-serif leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif leading-snug">
               A trusted guide to the finest Catholic websites across the internet — with clear explanations of why each site is spiritually and intellectually valuable.
             </p>
           </div>

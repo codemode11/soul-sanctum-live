@@ -294,14 +294,14 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
                 <Globe className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300 truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+ <span className="leading-snug font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   Acta Apostolicae Sedis &amp; Vatican News
                 </span>
               </div>
               <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                 Vatican News and Church Dispatches
               </h2>
-              <p className="text-xs text-stone-200 font-serif-sacred max-w-2xl line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+ <p className="leading-snug text-[11px] sm:text-xs text-stone-200 font-serif-sacred max-w-2xl drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Updated daily with real-time reports covering the Holy Father&apos;s homily, Dicastery directives, and universal Church missions.
               </p>
             </div>
@@ -315,7 +315,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                 title="Pull 5 new stories from Holy See live feed"
               >
                 <RefreshCw className={`w-3 h-3 text-stone-950 ${isFetchingLive ? 'animate-spin' : ''}`} />
-                <span>{isFetchingLive ? 'Refreshing…' : 'Refresh Feed'}</span>
+                <span>{isFetchingLive ? 'Refreshing' : 'Refresh Feed'}</span>
               </button>
               <button
                 type="button"
@@ -336,7 +336,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                   }`}
                 />
               </button>
-              <span className="hidden md:inline text-[11px] font-serif text-amber-200/90 truncate max-w-[140px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
+ <span className="leading-snug hidden md:inline text-[11px] font-serif text-amber-200/90 max-w-[140px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
                 {lastLiveSync}
               </span>
             </div>

@@ -1486,7 +1486,7 @@ export const GOSPEL_CATECHISM_REGISTRY: Record<string, GospelCatechismTemplate> 
   'luke 13:31-35':   {
     gospelCitation: 'Luke 13:31-35',
     topicTitle: 'Gathered Under the Wings of the Redeemer: Christ\'s Tears, Messianic Kingship & The Papacy',
-    topicSubtitle: 'How often would I have gathered your children together as a hen gathers her brood under her wings: divine maternal tenderness and apostolic authority',
+    topicSubtitle: '',
     pillar: '',
     part: 'Part One: The Profession of Faith',
     section: 'Section Two: The Profession of Christian Faith',
@@ -1534,7 +1534,7 @@ export const GOSPEL_CATECHISM_REGISTRY: Record<string, GospelCatechismTemplate> 
   'lk 13:31-35':   {
     gospelCitation: 'Luke 13:31-35',
     topicTitle: 'Gathered Under the Wings of the Redeemer: Christ\'s Tears, Messianic Kingship & The Papacy',
-    topicSubtitle: 'How often would I have gathered your children together as a hen gathers her brood under her wings: divine maternal tenderness and apostolic authority',
+    topicSubtitle: '',
     pillar: '',
     part: 'Part One: The Profession of Faith',
     section: 'Section Two: The Profession of Christian Faith',
@@ -1582,7 +1582,7 @@ export const GOSPEL_CATECHISM_REGISTRY: Record<string, GospelCatechismTemplate> 
   'luke 13:31':   {
     gospelCitation: 'Luke 13:31-35',
     topicTitle: 'Gathered Under the Wings of the Redeemer: Christ\'s Tears, Messianic Kingship & The Papacy',
-    topicSubtitle: 'How often would I have gathered your children together as a hen gathers her brood under her wings: divine maternal tenderness and apostolic authority',
+    topicSubtitle: '',
     pillar: '',
     part: 'Part One: The Profession of Faith',
     section: 'Section Two: The Profession of Christian Faith',

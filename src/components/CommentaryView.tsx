@@ -379,10 +379,10 @@ ${selectedCommentary.practicalApplication}`;
 
           <div className="relative z-10 space-y-1 my-auto max-w-[82%] sm:max-w-[60%]">
             {/* Main Title: Commentary on Luke 15:1-10 */}
-            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight line-clamp-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+ <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Commentary on {selectedCommentary.scriptureReference}
             </h2>
-            <p className="text-[11px] sm:text-xs text-amber-200/90 font-cinzel uppercase tracking-wider line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+ <p className="leading-snug text-[11px] sm:text-xs text-amber-200/90 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Catena Aurea • Cornelius à Lapide, S.J. • Magisterium
             </p>
           </div>

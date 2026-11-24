@@ -798,14 +798,14 @@ export const SpiritualBooksReaderView: React.FC = () => {
           <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[58%] gap-2">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10.5px] uppercase font-cinzel tracking-[0.18em] text-[#D4A373] font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)] truncate">
+ <span className="leading-snug text-[10.5px] uppercase font-cinzel tracking-[0.18em] text-[#D4A373] font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   Sancta Lectio • In-App Spiritual Library
                 </span>
               </div>
               <h2 className="font-cinzel text-xl sm:text-2xl font-bold tracking-wider text-white leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 Spiritual Classics
               </h2>
-              <p className="text-xs text-stone-200 font-serif-sacred leading-snug line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+ <p className="text-[11px] sm:text-xs text-stone-200 font-serif-sacred leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Timeless spiritual masterworks of the Doctors of the Church and canonized saints for Lectio Divina.
               </p>
             </div>

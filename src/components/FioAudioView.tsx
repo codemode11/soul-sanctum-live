@@ -83,9 +83,9 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.18)_0%,transparent_70%)] pointer-events-none" />
 
         <div className="relative z-10 flex items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider truncate">
+ <div className="leading-snug inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider">
             <Music className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span className="truncate">Fio.fm • Integrated Catholic Audio Streaming</span>
+ <span className="leading-snug ">Fio.fm • Integrated Catholic Audio Streaming</span>
           </div>
 
           <a
@@ -103,7 +103,7 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
           <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             Fio Catholic Music, Podcasts and Audiobooks
           </h2>
-          <p className="text-xs text-stone-300 font-serif leading-snug line-clamp-1">
+ <p className="text-[11px] sm:text-xs text-stone-300 font-serif leading-snug">
             Stream faithful Catholic music, Gregorian chant, over 1,000 Catholic podcasts, and spiritual audiobooks through the official Fio web player.
           </p>
         </div>
@@ -139,7 +139,7 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
         <div className="px-4 py-2.5 bg-gradient-to-r from-stone-900 via-[#1E1612] to-stone-900 border-b border-amber-500/25 flex flex-wrap items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 min-w-0">
             <Headphones className="w-4 h-4 text-amber-400 shrink-0" />
-            <span className="font-cinzel font-bold text-amber-100 truncate">
+ <span className="leading-snug font-cinzel font-bold text-amber-100">
               Fio Web Player — {activeLabel}
             </span>
           </div>

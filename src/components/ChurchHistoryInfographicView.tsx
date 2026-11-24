@@ -163,7 +163,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
 
         <div className="relative z-10 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="font-cinzel text-[11px] uppercase tracking-widest text-[#DFD5C3] font-bold truncate">
+ <span className="leading-snug font-cinzel text-[11px] uppercase tracking-widest text-[#DFD5C3] font-bold">
               HISTORIA ET POPULUS ECCLESIAE · AD 33 – 2026
             </span>
           </div>
@@ -190,7 +190,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           <h1 className="font-serif-heading text-xl sm:text-2xl font-extrabold text-[#FBF9F5] tracking-tight leading-tight">
             History, Councils, and Infographics of the Church
           </h1>
-          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif italic max-w-3xl leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-[#EAE2D3] font-serif italic max-w-3xl leading-snug">
             Explore 2,000 years of unbroken apostolic history from Pentecost to the present, the 21 Ecumenical Councils, worldwide Catholic demographics, and extraordinary milestones.
           </p>
         </div>

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import cebuChurchesMapImg from '../assets/images/cebu_city_churches_banner_1795532547609.jpg';
 import {
   APIProvider,
   APILoadingStatus,
@@ -1813,18 +1814,44 @@ export const ParishFinderView: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
-      {/* Compact Soul Sanctum Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl overflow-hidden bg-gradient-to-r from-stone-900 via-[#22140C] to-stone-900 border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-center">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1 min-w-0">
-            <div className="inline-flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.2em] text-amber-300">
-              <MapPin className="w-3.5 h-3.5" />
-              Global Catholic Parish Locator
+      {/* Compact Soul Sanctum Banner with Dark Brown to Cebu City Churches Map Gradient */}
+      <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl overflow-hidden bg-[#1C120C] border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-center">
+        {/* Right-Side Illustrated Map of Cebu City with Historic Churches */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={cebuChurchesMapImg}
+            alt="Illustrated map of Cebu City with historic Catholic churches along Mactan Channel"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-[70%_46%] brightness-[0.98] contrast-[1.05]"
+          />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120C]/55 to-transparent" />
+        </div>
+
+        {/* Seamless Multi-Stop Horizontal Gradient from Dark Brown (#1C120C) into the Cebu City Churches Map */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.52)_60%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.18)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_30%,rgba(28,18,12,0.90)_44%,rgba(28,18,12,0.42)_60%,rgba(28,18,12,0.06)_80%,rgba(28,18,12,0.14)_100%)]"
+          aria-hidden="true"
+        />
+        {/* Subtle Top/Bottom Dark Brown Feathering for Crisp Text Legibility */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/25"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-1.5 min-w-0 max-w-[88%] sm:max-w-[54%]">
+            <div className="inline-flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.2em] text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+              <MapPin className="w-3.5 h-3.5 shrink-0" />
+              <span>Global Catholic Parish Locator</span>
             </div>
-            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
               Church Finder
             </h2>
-            <p className="text-xs sm:text-sm text-amber-100/80 font-serif max-w-2xl leading-snug line-clamp-2">
+            <p className="text-[11px] sm:text-[12.5px] text-amber-100/95 font-serif leading-snug drop-shadow-[0_1px_5px_rgba(0,0,0,0.92)]">
               Locate Catholic parishes, Eucharistic Adoration chapels, and shrines nearby or anywhere you travel, with live directions and published sacramental schedules.
             </p>
           </div>
@@ -1833,10 +1860,10 @@ export const ParishFinderView: React.FC = () => {
             <button
               type="button"
               onClick={() => (quotaGuard.isStopped ? quotaGuard.resumeMaps() : quotaGuard.pauseMaps())}
-              className={`self-start sm:self-center shrink-0 h-8 px-3 rounded-lg text-[11px] font-cinzel font-bold uppercase tracking-wider border transition-colors cursor-pointer ${
+              className={`self-start sm:self-end shrink-0 h-8 px-3 rounded-lg text-[11px] font-cinzel font-bold uppercase tracking-wider border backdrop-blur-xs transition-colors cursor-pointer ${
                 quotaGuard.isStopped
-                  ? 'bg-emerald-800/80 hover:bg-emerald-700 text-emerald-50 border-emerald-400/50'
-                  : 'bg-white/10 hover:bg-white/20 text-amber-200 border-amber-400/40'
+                  ? 'bg-emerald-900/90 hover:bg-emerald-800 text-emerald-50 border-emerald-400/60'
+                  : 'bg-[#1C120C]/85 hover:bg-[#2E1E14] text-amber-200 border-amber-400/50'
               }`}
               title={
                 quotaGuard.isStopped

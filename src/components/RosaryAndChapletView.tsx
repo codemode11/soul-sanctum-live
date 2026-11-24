@@ -42,7 +42,7 @@ import { SacredReader } from '@/utils/speech';
 import { bellSynth } from '@/utils/audioSynth';
 import { StationsOfTheCrossView } from './StationsOfTheCrossView';
 import { CATHOLIC_PRAYERS_DATABASE } from '@/data/prayers';
-import divineMercyImg from '../assets/images/divine_mercy_vilnius_1795509656341.jpg';
+import divineMercyImg from '../assets/images/divine_mercy_user_exact.jpg';
 
 const MEMORARE_PRAYER = CATHOLIC_PRAYERS_DATABASE.find((p) => p.id === 'prayer-memorare');
 
@@ -335,6 +335,7 @@ export const RosaryAndChapletView: React.FC = () => {
       aria-label={isSettingsOpen ? 'Hide Settings' : 'Show Settings'}
     >
       <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+      <span className="hidden sm:inline text-[11px] font-cinzel font-semibold whitespace-nowrap">Settings</span>
       <ChevronDown
         className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
           isSettingsOpen ? 'rotate-180' : ''
@@ -637,7 +638,7 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
           {/* Holy Rosary Top Banner — Marian Blue with Our Lady of Medjugorje */}
-          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between gap-2 text-stone-900">
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
@@ -660,9 +661,9 @@ export const RosaryAndChapletView: React.FC = () => {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
             </div>
 
-            <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-              <div className="flex items-center gap-2 overflow-hidden">
-                <span className="font-cinzel text-xs font-bold text-blue-900 uppercase tracking-widest truncate">
+            <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-cinzel text-[10px] sm:text-[11px] font-bold text-blue-900 uppercase tracking-wider leading-tight">
                   THE MOST HOLY ROSARY • AUTOPLAY PRAYER MODE
                 </span>
                 <button
@@ -672,38 +673,40 @@ export const RosaryAndChapletView: React.FC = () => {
                   3 O'Clock Prayer
                 </button>
               </div>
-              <h3 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-stone-900 leading-tight line-clamp-2">
+              <h3 className="font-cinzel text-base sm:text-lg md:text-[21px] font-bold text-stone-900 leading-tight">
                 The Most Holy Rosary of the Blessed Virgin Mary
               </h3>
-              <p className="text-xs sm:text-sm text-stone-700 font-serif-sacred leading-snug line-clamp-2">
+              <p className="text-[11px] sm:text-xs text-stone-700 font-serif leading-[1.24] pt-0.5">
                 The leader continuously prays all prayers and mysteries sequentially without requiring manual bead presses.
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-between gap-2.5 mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
-              {!isAutoAdvancing ? (
-                <button
-                  onClick={() => {
-                    setHasStartedRosary(true);
-                    setSpokenAudioEnabled(true);
-                    setIsAutoAdvancing(true);
-                  }}
-                  className="h-8 flex items-center gap-1.5 px-3 rounded-md bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 font-cinzel font-bold text-[10px] sm:text-[11px] shadow-xs transition-all cursor-pointer border border-amber-300/80"
-                >
-                  <Play className="w-3 h-3 fill-current" />
-                  <span>START AUTOPLAY</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    setIsAutoAdvancing(false);
-                    SacredReader.stop();
-                  }}
-                  className="h-8 flex items-center gap-1.5 px-3 rounded-md bg-[#1E3A8A] hover:bg-[#172B69] text-amber-100 font-cinzel font-bold text-[10px] sm:text-[11px] shadow-xs transition-all cursor-pointer border border-amber-300 animate-pulse"
-                >
-                  <Pause className="w-3 h-3 fill-current" />
-                  <span>Pause Continuous Prayer</span>
-                </button>
-              )}
+            <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
+              <div className="flex items-center gap-2 min-w-0 overflow-x-auto no-scrollbar">
+                {!isAutoAdvancing ? (
+                  <button
+                    onClick={() => {
+                      setHasStartedRosary(true);
+                      setSpokenAudioEnabled(true);
+                      setIsAutoAdvancing(true);
+                    }}
+                    className="h-8 whitespace-nowrap shrink-0 flex items-center gap-1.5 px-3 rounded-md bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] hover:from-[#2547A8] hover:to-[#15296B] text-amber-100 font-cinzel font-bold text-[10px] sm:text-[11px] shadow-xs transition-all cursor-pointer border border-amber-300/80"
+                  >
+                    <Play className="w-3 h-3 fill-current" />
+                    <span>START AUTOPLAY</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setIsAutoAdvancing(false);
+                      SacredReader.stop();
+                    }}
+                    className="h-8 whitespace-nowrap shrink-0 flex items-center gap-1.5 px-3 rounded-md bg-[#1E3A8A] hover:bg-[#172B69] text-amber-100 font-cinzel font-bold text-[10px] sm:text-[11px] shadow-xs transition-all cursor-pointer border border-amber-300 animate-pulse"
+                  >
+                    <Pause className="w-3 h-3 fill-current" />
+                    <span>Pause Continuous Prayer</span>
+                  </button>
+                )}
+              </div>
               {renderSettingsToggleButton('light')}
             </div>
           </div>
@@ -1027,7 +1030,7 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="space-y-6">
           
           {/* 3:00 PM Hour of Great Mercy Banner */}
-          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between overflow-hidden">
+          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
               className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
               aria-hidden="true"
@@ -1046,37 +1049,37 @@ export const RosaryAndChapletView: React.FC = () => {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
-            <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-              <div className="flex items-center gap-2 overflow-hidden">
-                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0" />
-                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-red-300 truncate">
+            <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
+                <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-300 leading-tight">
                   {DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyTitle}
                 </span>
               </div>
-              <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 leading-tight line-clamp-1">
+              <h3 className="font-cinzel text-lg sm:text-[22px] font-bold text-amber-100 leading-tight">
                 The Chaplet of the Divine Mercy
               </h3>
-              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred italic leading-snug line-clamp-2">
-                "{DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyIntro}"
+              <p className="text-[10.5px] sm:text-[11.5px] text-stone-300 font-serif italic leading-[1.22] pt-0.5">
+                &ldquo;{DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyIntro}&rdquo;
               </p>
             </div>
             <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-1.5 min-w-0 overflow-x-auto no-scrollbar">
                 <button
                   onClick={() => {
                     setIsAutoAdvancing(false);
                     SacredReader.stop();
                     setActiveDevotion('stations-of-the-cross');
                   }}
-                  className="h-8 px-2.5 rounded-md bg-red-900/70 hover:bg-red-800/80 border border-amber-300/45 text-amber-100 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                  className="h-8 px-2.5 rounded-md bg-red-900/70 hover:bg-red-800/80 border border-amber-300/45 text-amber-100 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap"
                 >
                   <span>Stations of the Cross</span>
                 </button>
                 <button
                   onClick={() => setActiveDevotion('three-oclock')}
-                  className="h-8 px-2.5 rounded-md bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                  className="h-8 px-2.5 rounded-md bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shrink-0 whitespace-nowrap"
                 >
-                  <Sparkles className="w-3 h-3 text-amber-300" />
+                  <Sparkles className="w-3 h-3 text-amber-300 shrink-0" />
                   <span>3 O&apos;Clock Prayer</span>
                 </button>
               </div>
@@ -1457,7 +1460,7 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'faustina' && (
         <div className="relative isolate space-y-6 animate-fadeIn">
           {/* Header Banner — Patterned after the Chaplet of the Divine Mercy Banner */}
-          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between overflow-hidden">
+          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
               className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
               aria-hidden="true"
@@ -1476,18 +1479,18 @@ export const RosaryAndChapletView: React.FC = () => {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
-            <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-              <div className="flex items-center gap-2 overflow-hidden">
-                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0" />
-                <span className="font-cinzel text-xs font-bold text-red-300 tracking-widest uppercase block truncate">
+            <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
+                <span className="font-cinzel text-[10px] sm:text-[11px] font-bold text-red-300 tracking-wider uppercase leading-tight">
                   Saint Maria Faustina Kowalska • Vilnius and Kraków
                 </span>
               </div>
-              <h2 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-amber-100 leading-tight line-clamp-2">
+              <h2 className="font-cinzel text-base sm:text-xl md:text-[22px] font-bold text-amber-100 leading-tight">
                 The Diary and The 14 Promises of Jesus
               </h2>
-              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred italic leading-snug line-clamp-2">
-                "My Heart overflows with great mercy for souls... The graces of My mercy are drawn by means of one vessel only, and that is—trust" (Diary 1731).
+              <p className="text-[11px] sm:text-xs text-stone-300 font-serif italic leading-[1.24] pt-0.5">
+                &ldquo;My Heart overflows with great mercy for souls. The graces of My mercy are drawn by means of one vessel only, and that is—trust&rdquo; (Diary 1731).
               </p>
             </div>
             <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
@@ -1813,7 +1816,7 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'three-oclock' && (
         <div className="space-y-6 animate-in fade-in duration-300">
           {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
-          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] text-white shadow-md border border-red-900/40 flex flex-col justify-between">
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2">
             <div
               className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
               aria-hidden="true"
@@ -1832,18 +1835,18 @@ export const RosaryAndChapletView: React.FC = () => {
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
-            <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-              <div className="flex items-center gap-2 overflow-hidden">
-                <span className="w-3 h-3 rounded-full bg-red-500 animate-ping shrink-0" />
-                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-red-300 truncate">
+            <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
+                <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-300 leading-tight">
                   Hour of Great Mercy • 3:00 PM Devotion
                 </span>
               </div>
-              <h2 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 leading-tight line-clamp-1">
+              <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-amber-100 leading-tight">
                 The Three O'Clock Prayer
               </h2>
-              <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred italic leading-snug line-clamp-2">
-                "At three o'clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion" (Diary 1320).
+              <p className="text-[11px] sm:text-xs text-stone-300 font-serif italic leading-[1.24] pt-0.5">
+                &ldquo;At three o&apos;clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion&rdquo; (Diary 1320).
               </p>
             </div>
             <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
@@ -1887,14 +1890,14 @@ export const RosaryAndChapletView: React.FC = () => {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
             </div>
 
-            <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-              <span className="text-[11px] sm:text-xs font-cinzel font-bold tracking-widest text-blue-900 uppercase block truncate">
+            <div className="relative z-10 space-y-1 pr-[132px] sm:pr-[168px]">
+              <span className="text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider text-blue-900 uppercase block leading-snug">
                 The Secret of the Rosary • Saint Louis-Marie de Montfort
               </span>
-              <h3 className="font-cinzel text-lg sm:text-2xl md:text-[26px] font-bold text-stone-900 leading-tight line-clamp-2">
+              <h3 className="font-cinzel text-base sm:text-xl md:text-[21px] font-bold text-stone-900 leading-snug">
                 The 15 Promises of Mary to Devotees of the Holy Rosary
               </h3>
-              <p className="text-xs sm:text-sm font-serif text-stone-700 leading-snug line-clamp-2">
+              <p className="text-[11px] sm:text-[12.5px] font-serif text-stone-700 leading-snug">
                 As revealed to Saint Dominic and Blessed Alan de la Roche, and compiled by Saint Louis-Marie Grignion de Montfort in <span className="italic text-blue-900 font-semibold">The Secret of the Rosary</span>.
               </p>
             </div>
@@ -2090,14 +2093,14 @@ export const RosaryAndChapletView: React.FC = () => {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
             </div>
 
-            <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-              <span className="text-xs font-cinzel font-bold tracking-widest text-blue-900 uppercase block truncate">
+            <div className="relative z-10 space-y-1 pr-[132px] sm:pr-[168px]">
+              <span className="text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider text-blue-900 uppercase block leading-snug">
                 Mother of Mercy • Ancient Marian Prayer of Confidence
               </span>
-              <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 leading-tight line-clamp-1">
+              <h3 className="font-cinzel text-lg sm:text-2xl font-bold text-stone-900 leading-snug">
                 Memorare
               </h3>
-              <p className="text-xs sm:text-sm font-serif text-stone-700 leading-snug line-clamp-2">
+              <p className="text-[11px] sm:text-[12.5px] font-serif text-stone-700 leading-snug">
                 {MEMORARE_PRAYER.scripturalOrTraditionOrigin}
               </p>
             </div>
@@ -2286,14 +2289,14 @@ export const RosaryAndChapletView: React.FC = () => {
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
             </div>
 
-            <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-              <span className="text-xs font-cinzel font-bold tracking-widest text-blue-900 uppercase block truncate">
+            <div className="relative z-10 space-y-1 pr-[132px] sm:pr-[168px]">
+              <span className="text-[10px] sm:text-[11px] font-cinzel font-bold tracking-wider text-blue-900 uppercase block leading-snug">
                 Traditional 6:00 AM, 12:00 Noon &amp; 6:00 PM Marian Devotion
               </span>
-              <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 leading-tight line-clamp-1">
+              <h3 className="font-cinzel text-lg sm:text-2xl font-bold text-stone-900 leading-snug">
                 The Angelus (Angelus Domini)
               </h3>
-              <p className="text-xs sm:text-sm font-serif text-stone-700 leading-snug line-clamp-2">
+              <p className="text-[11px] sm:text-[12.5px] font-serif text-stone-700 leading-snug">
                 For centuries, at dawn (6:00 AM), noon (12:00 PM), and dusk (6:00 PM), the faithful pause their labor to venerate the Mystery of the Incarnation.
               </p>
             </div>

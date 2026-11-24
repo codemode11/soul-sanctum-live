@@ -17,7 +17,7 @@ export const TrinityCatechismView: React.FC = () => {
           <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             Catechism on the Most Holy Trinity
           </h3>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif-sacred max-w-3xl leading-snug">
             "The mystery of the Most Holy Trinity is the central mystery of Christian faith and life. It is the mystery of God in himself. It is therefore the source of all the other mysteries of faith, the light that enlightens them." (CCC 234)
           </p>
         </div>

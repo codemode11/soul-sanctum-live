@@ -331,13 +331,13 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
             <HolyWaterIcon className="w-5 h-5 text-amber-300" />
           </div>
           <div className="min-w-0">
-            <span className="font-cinzel text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300 block truncate">
+ <span className="leading-snug font-cinzel text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300 block">
               Requiem Aeternam • Commemoration of the Faithful Departed
             </span>
             <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white mt-0.5 leading-tight">
               In Memoriam
             </h2>
-            <p className="text-xs sm:text-sm font-serif text-stone-200 mt-1 max-w-2xl leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] font-serif text-stone-200 mt-1 max-w-2xl leading-snug">
               Sacred remembrance and eulogies for our beloved <strong>priests</strong>, <strong>former seminarians</strong>, and <strong>members of the laity</strong> who have passed away—inviting the community to pray for their souls.
             </p>
           </div>

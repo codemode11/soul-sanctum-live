@@ -1089,7 +1089,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
                 Timeline of the 21 Ecumenical Councils
               </h2>
 
-              <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif leading-snug line-clamp-2">
+ <p className="text-[11px] sm:text-[12.5px] text-[#EAE2D3] font-serif leading-snug">
                 From the First Council of Nicaea (325 AD) to the Second Vatican Council (1962–1965), journey through seventeen centuries of Holy Spirit-guided discernment, popes, saints, and dogmas defined.
               </p>
             </div>

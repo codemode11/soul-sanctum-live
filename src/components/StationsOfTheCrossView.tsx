@@ -34,21 +34,16 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import station01Img from '../assets/images/caravaggio_v2_station_01_1795436688352.jpg';
-import station02Img from '../assets/images/caravaggio_station_02_carries_cross_1795424460096.jpg';
-import station03Img from '../assets/images/caravaggio_v2_station_03_1795436687142.jpg';
-import station04Img from '../assets/images/caravaggio_v2_station_04_1795436687574.jpg';
-import station05Img from '../assets/images/caravaggio_v2_station_05_1795436686711.jpg';
-import station06Img from '../assets/images/caravaggio_station_06_veronica_wipes_1795424461011.jpg';
-import station07Img from '../assets/images/caravaggio_v2_station_07_1795436687911.jpg';
-import station08Img from '../assets/images/caravaggio_v2_station_08_1795436686818.jpg';
-import station09Img from '../assets/images/caravaggio_v2_station_09_1795436687139.jpg';
-import station10Img from '../assets/images/caravaggio_v2_station_10_1795436687944.jpg';
-import station11Img from '../assets/images/caravaggio_v2_station_11_1795436688513.jpg';
-import station12Img from '../assets/images/caravaggio_v2_station_12_1795436687671.jpg';
-import station13Img from '../assets/images/caravaggio_station_13_taken_down_1795424462234.jpg';
-import station14Img from '../assets/images/caravaggio_station_14_sepulchre_1795424461047.jpg';
-import divineMercyImg from '../assets/images/divine_mercy_vilnius_1795509656341.jpg';
+import station01Img from '../assets/images/watercolor_station_01_condemned_1795536338768.jpg';
+import station02Img from '../assets/images/watercolor_station_02_carries_cross_1795536334425.jpg';
+import station03Img from '../assets/images/watercolor_station_03_first_fall_1795536342941.jpg';
+import station05Img from '../assets/images/watercolor_station_05_simon_cyrene_1795536337736.jpg';
+import station07Img from '../assets/images/watercolor_station_07_second_fall_1795536338438.jpg';
+import station08Img from '../assets/images/watercolor_station_08_women_jerusalem_1795536386590.jpg';
+import station09Img from '../assets/images/watercolor_station_09_third_fall_1795536383077.jpg';
+import station10Img from '../assets/images/watercolor_station_10_stripped_1795536386102.jpg';
+import station13Img from '../assets/images/watercolor_station_13_pieta_deposition_1795536386065.jpg';
+import divineMercyImg from '../assets/images/divine_mercy_user_exact.jpg';
 import {
   STATIONS_AUTHOR_META,
   STATIONS_PREPARATORY_PRAYER,
@@ -64,12 +59,18 @@ import {
   useMapsQuotaGuard,
 } from '@/utils/mapsQuotaGuard';
 
+const station04Img = '/assets/aistudio/97cf27e01df68f49643e72ffe0df9e8f_e9c383cc.jpg';
+const station06Img = '/assets/aistudio/39ba7c7ce6d03e39bba8d6c0803b2252_a0decbce.jpg';
+const station11Img = '/assets/aistudio/49c85f20c4c91ef0ebd03cfe20e03c8d_84b3a315.jpg';
+const station12Img = '/assets/aistudio/d90ad465d061346c629449904527c366_3a1ec3f0.jpg';
+const station14Img = '/assets/aistudio/acff84785b9adf452c7b6eafe3a6b818_fa5e0823.jpg';
+
 type GalleryLightingMode = 'spotlight' | 'candlelight' | 'shadow-study';
 
 const GALLERY_LIGHTING_FILTER: Record<GalleryLightingMode, string> = {
-  spotlight: 'contrast(1.05) saturate(1.06) brightness(1.03)',
-  candlelight: 'contrast(1.08) saturate(1.1) sepia(0.14) brightness(1.01)',
-  'shadow-study': 'brightness(1.22) contrast(1.01) saturate(1.06)',
+  spotlight: 'contrast(1.03) saturate(1.04) brightness(1.0)',
+  candlelight: 'contrast(1.05) saturate(1.08) sepia(0.16) brightness(0.99)',
+  'shadow-study': 'contrast(1.16) saturate(0.92) brightness(1.02)',
 };
 
 interface StationArtworkEntry {
@@ -80,7 +81,11 @@ interface StationArtworkEntry {
   alt: string;
   plateTitle: string;
   caption: string;
-  chiaroscuroNote: string;
+  studyNote: string;
+  paperBg: string;
+  frameFit: 'cover' | 'contain' | 'clipped-contain';
+  baseScale?: number;
+  clipPath?: string;
 }
 
 const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
@@ -89,154 +94,186 @@ const STATION_ARTWORK: Record<number, StationArtworkEntry> = {
     roman: 'I',
     shortTitle: 'Condemned to Death',
     src: station01Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station I: Jesus stands crowned with thorns in a crimson mantle before Pontius Pilate beneath a sharp beam of light',
+    alt: 'Ink and watercolor illustration of Station I: Jesus stands crowned with thorns in quiet dignity before Pontius Pilate washing his hands beneath Jerusalem stone arches',
     plateTitle: 'Station I · Jesus Is Condemned to Death',
-    caption: 'Plate I · Oil on Canvas (Manner of Caravaggio) · Praetorium, Jerusalem',
-    chiaroscuroNote:
-      'A raking light isolates Christ’s bound wrists and cinnabar mantle against the shadowed Praetorium crowd while catching Pilate’s hesitant open hands.',
+    caption: 'Plate I · Ink & Watercolor on Cotton Paper · Praetorium, Jerusalem',
+    studyNote:
+      'Delicate sepia linework and translucent sienna washes frame Christ’s luminous halo and bound wrists against the cool slate-grey arches of the Praetorium.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   2: {
     stationNumber: 2,
     roman: 'II',
     shortTitle: 'Carries His Cross',
     src: station02Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station II: Jesus embraces the rough wooden Cross upon His shoulder out of deep obsidian shadows',
+    alt: 'Ink and watercolor illustration of Station II: Jesus embraces the heavy wooden Cross upon His shoulder along a sun-washed Jerusalem courtyard',
     plateTitle: 'Station II · Jesus Carries His Cross',
-    caption: 'Plate II · Oil on Canvas (Manner of Caravaggio) · Chapel of the Condemnation',
-    chiaroscuroNote:
-      'Against an obsidian umber void, warm tenebrist light models the rough-hewn timber grain and the tender resolve of Christ’s tear-lit upward gaze.',
+    caption: 'Plate II · Ink & Watercolor on Cotton Paper · Chapel of the Condemnation',
+    studyNote:
+      'Expressive raw-umber brushstrokes define the rough timber beam while crisp ink contours trace Christ’s serene resolve in open cream paper space.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   3: {
     stationNumber: 3,
     roman: 'III',
     shortTitle: 'First Fall',
     src: station03Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station III: Jesus falls beneath the heavy timber Cross upon dark flagstones lit by a single diagonal shaft',
+    alt: 'Ink and watercolor illustration of Station III: Jesus kneels beneath the heavy timber Cross on worn Jerusalem flagstones as muted figures watch',
     plateTitle: 'Station III · Jesus Falls the First Time',
-    caption: 'Plate III · Oil on Canvas (Manner of Caravaggio) · El-Wad Road, Jerusalem',
-    chiaroscuroNote:
-      'Sculptural Baroque foreshortening and dramatic diagonal thrust emphasize the crushing weight of the Cross over worn cobblestones.',
+    caption: 'Plate III · Ink & Watercolor on Cotton Paper · El-Wad Road, Jerusalem',
+    studyNote:
+      'Layered burnt-sienna drapery folds and fluid downward pigment bleeds convey the sudden weight of the Cross over warm ochre cobblestones.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   4: {
     stationNumber: 4,
     roman: 'IV',
     shortTitle: 'Meets His Mother',
     src: station04Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station IV: Jesus pauses beneath the Cross to gaze tenderly at His Mother Mary wrapped in deep lapis and ochre',
+    alt: 'Ink and watercolor illustration of Station IV: Jesus pauses beneath the Cross to clasp the hand of His Mother Mary along a sunlit Jerusalem archway',
     plateTitle: 'Station IV · Jesus Meets His Afflicted Mother',
-    caption: 'Plate IV · Oil on Canvas (Manner of Caravaggio) · Church of Our Lady of the Spasm',
-    chiaroscuroNote:
-      'Luminous flesh tones and Mary’s lapis-and-ochre drapery emerge from velvet darkness around the silent dialogue of their reaching hands.',
+    caption: 'Plate IV · Ink & Watercolor on Cotton Paper · Church of Our Lady of the Spasm',
+    studyNote:
+      'Angular ink-and-wash planes and interlocking circular halos draw the eye directly to the quiet, tender clasp of Mother and Son beneath Jerusalem domes.',
+    paperBg: '#F5F3EE',
+    frameFit: 'cover',
+    baseScale: 1.19,
+    clipPath: 'inset(16.4% 8.0% 16.4% 8.0%)',
   },
   5: {
     stationNumber: 5,
     roman: 'V',
     shortTitle: 'Simon of Cyrene',
     src: station05Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station V: Simon of Cyrene strains to bear the Cross behind Jesus under dramatic tenebrist spotlighting',
+    alt: 'Ink and watercolor illustration of Station V: Simon of Cyrene steps forward to lift the wooden Cross alongside Jesus on the narrow Via Dolorosa',
     plateTitle: 'Station V · Simon of Cyrene Helps Jesus Carry His Cross',
-    caption: 'Plate V · Oil on Canvas (Manner of Caravaggio) · Chapel of Simon of Cyrene',
-    chiaroscuroNote:
-      'A sharp upper-left shaft highlights the sinew of Simon’s weathered arms as earthy ochre linen meets the deep madder crimson of Christ’s tunic.',
+    caption: 'Plate V · Ink & Watercolor on Cotton Paper · Chapel of Simon of Cyrene',
+    studyNote:
+      'Warm terracotta and slate-blue washes unite Simon’s sturdy shoulders with Christ’s bowed frame along the shared diagonal of the wooden beam.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   6: {
     stationNumber: 6,
     roman: 'VI',
     shortTitle: 'Veronica’s Veil',
     src: station06Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station VI: Saint Veronica emerges from shadow holding a crisp white linen cloth to wipe the brow of Jesus',
+    alt: 'Ink and watercolor illustration of Station VI: Saint Veronica gently reaches out with a white linen cloth to wipe the brow of Jesus as He kneels beneath the Cross',
     plateTitle: 'Station VI · Veronica Wipes the Face of Jesus',
-    caption: 'Plate VI · Oil on Canvas (Manner of Caravaggio) · Church of Saint Veronica',
-    chiaroscuroNote:
-      'Pure lead-white linen anchors the composition’s focal brilliance, bridging Veronica’s tender mercy and the blood-streaked brow of the Lord.',
+    caption: 'Plate VI · Ink & Watercolor on Cotton Paper · Church of Saint Veronica',
+    studyNote:
+      'A glowing burnt-ochre nimbus crowns Veronica’s compassionate silhouette while untouched cream cotton paper highlights the pure white linen veil.',
+    paperBg: '#F4F3EE',
+    frameFit: 'clipped-contain',
+    baseScale: 1.18,
+    clipPath: 'inset(8.0% 16.4% 8.0% 16.4%)',
   },
   7: {
     stationNumber: 7,
     roman: 'VII',
     shortTitle: 'Second Fall',
     src: station07Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station VII: Exhausted near a stone archway, Jesus falls a second time onto cold flagstones beneath the Cross',
+    alt: 'Ink and watercolor illustration of Station VII: Exhausted beneath an ancient stone gate, Jesus falls a second time onto the cobblestones beneath the Cross',
     plateTitle: 'Station VII · Jesus Falls the Second Time',
-    caption: 'Plate VII · Oil on Canvas (Manner of Caravaggio) · Ancient Judgment Gate',
-    chiaroscuroNote:
-      'A golden aperture cuts through heavy ashlar masonry, glancing off Roman steel helmets and Christ’s trembling hand pressed against cold stone.',
+    caption: 'Plate VII · Ink & Watercolor on Cotton Paper · Ancient Judgment Gate',
+    studyNote:
+      'Soft grey-brown architectural washes recede into luminous mist behind the Judgment Gate, centering Christ’s trembling hand upon the stone.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   8: {
     stationNumber: 8,
     roman: 'VIII',
     shortTitle: 'Women of Jerusalem',
     src: station08Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station VIII: Jesus turns gently to console the weeping women of Jerusalem huddled in warm shadowed light',
+    alt: 'Ink and watercolor illustration of Station VIII: Jesus pauses beneath His Cross to console the veiled weeping women of Jerusalem gathered in prayer',
     plateTitle: 'Station VIII · Jesus Consoles the Women of Jerusalem',
-    caption: 'Plate VIII · Oil on Canvas (Manner of Caravaggio) · Monastery of St. Charalambos',
-    chiaroscuroNote:
-      'Intimate half-length framing draws the viewer directly beside the weeping daughters of Jerusalem as Christ raises His hand in quiet admonition.',
+    caption: 'Plate VIII · Ink & Watercolor on Cotton Paper · Monastery of St. Charalambos',
+    studyNote:
+      'Gentle amber and rose-ochre drapery flows across the clustered veiled women as Christ’s raised hand speaks quiet mercy through spare ink lines.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   9: {
     stationNumber: 9,
     roman: 'IX',
     shortTitle: 'Third Fall',
     src: station09Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station IX: Prostrate on dark rock at the approach to Calvary, Jesus lies beneath the Cross in raking golden light',
+    alt: 'Ink and watercolor illustration of Station IX: Prostrate upon the rocky ascent of Calvary, Jesus falls the third time beneath the timber Cross',
     plateTitle: 'Station IX · Jesus Falls the Third Time',
-    caption: 'Plate IX · Oil on Canvas (Manner of Caravaggio) · Threshold of Golgotha',
-    chiaroscuroNote:
-      'Severe low-key tenebrism strips away the crowd entirely, isolating Christ prostrate upon jagged Golgotha rock beneath an immense shadow.',
+    caption: 'Plate IX · Ink & Watercolor on Cotton Paper · Threshold of Golgotha',
+    studyNote:
+      'Generous negative space across the upper rag paper strips away the crowd, isolating Christ’s total self-emptying upon the rocky slope of Calvary.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   10: {
     stationNumber: 10,
     roman: 'X',
     shortTitle: 'Stripped of Garments',
     src: station10Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station X: Jesus stands in humble dignity as His crimson garment is lifted away under stark tenebrist light',
+    alt: 'Ink and watercolor illustration of Station X: Jesus stands in silent humility upon Calvary as His cloak is drawn away beneath soft misty skies',
     plateTitle: 'Station X · Jesus Is Stripped of His Garments',
-    caption: 'Plate X · Oil on Canvas (Manner of Caravaggio) · Chapel of the Franks, Calvary',
-    chiaroscuroNote:
-      'Symmetrical framing of the executioners parting the crimson cloak heightens the quiet, luminous stillness of Christ’s lowered eyes.',
+    caption: 'Plate X · Ink & Watercolor on Cotton Paper · Chapel of the Franks, Calvary',
+    studyNote:
+      'Muted rust-ochre cloak folds part around Christ’s still, vertical posture while delicate wet-on-wet washes dissolve the hilltop horizon into silence.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   11: {
     stationNumber: 11,
     roman: 'XI',
     shortTitle: 'Nailed to the Cross',
     src: station11Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station XI: Diagonal composition of Jesus reclining with outstretched arms upon the Cross across rocky Calvary',
+    alt: 'Ink and watercolor illustration of Station XI: Silhouetted against radiant clouds on Golgotha, Christ is raised upon the Cross surrounded by watching crowds and upright spears',
     plateTitle: 'Station XI · Jesus Is Nailed to the Cross',
-    caption: 'Plate XI · Oil on Canvas (Manner of Caravaggio) · Altar of the Nailing, Golgotha',
-    chiaroscuroNote:
-      'Echoing Caravaggio’s stark diagonal realism, taut ropes and timber lines converge upon Christ’s upturned gaze offered to the Father.',
+    caption: 'Plate XI · Ink & Watercolor on Cotton Paper · Altar of the Nailing, Golgotha',
+    studyNote:
+      'Vertical ink lances and hooded washes anchor the rocky ridge of Golgotha as the Cross rises into a luminous golden-ochre halo of clouds.',
+    paperBg: '#FAF7F2',
+    frameFit: 'contain',
   },
   12: {
     stationNumber: 12,
     roman: 'XII',
     shortTitle: 'Dies on the Cross',
     src: station12Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station XII: Jesus bows His head on the Cross against an abyss of darkness as Mary and St. John watch below',
+    alt: 'Ink and watercolor illustration of Station XII: Jesus bows His head in death upon the Cross framed by a thin dark halo as Mary and the faithful kneel in deep sienna washes below',
     plateTitle: 'Station XII · Jesus Dies on the Cross',
-    caption: 'Plate XII · Oil on Canvas (Manner of Caravaggio) · Rock of Golgotha, Holy Sepulchre',
-    chiaroscuroNote:
-      'A single celestial shaft pierces the pitch-black sky of the ninth hour, uniting the bowed head of the Crucified with Mary and St. John below.',
+    caption: 'Plate XII · Ink & Watercolor on Cotton Paper · Rock of Golgotha, Holy Sepulchre',
+    studyNote:
+      'A fine ink halo crowns Christ’s bowed head while rich burnt-sienna and umber washes cascade downward into the kneeling silhouettes of Mary and St. John.',
+    paperBg: '#EFE9DE',
+    frameFit: 'contain',
   },
   13: {
     stationNumber: 13,
     roman: 'XIII',
     shortTitle: 'Taken Down',
     src: station13Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station XIII: Joseph of Arimathea and Nicodemus lower Jesus from the Cross into the grieving arms of Mary',
+    alt: 'Ink and watercolor illustration of Station XIII: Jesus is lowered from the Cross and cradled tenderly in the sorrowful arms of His Mother Mary',
     plateTitle: 'Station XIII · Jesus Is Taken Down from the Cross',
-    caption: 'Plate XIII · Oil on Canvas (Manner of Caravaggio) · Stone of Anointing, Holy Sepulchre',
-    chiaroscuroNote:
-      'Inspired by Caravaggio’s Vatican Entombment, sculptural drapery and cascading white linen guide the eye from the empty Cross to Mary’s open arms.',
+    caption: 'Plate XIII · Ink & Watercolor on Cotton Paper · Stone of Anointing, Holy Sepulchre',
+    studyNote:
+      'Soft ivory shroud folds and warm sepia shadows form a contemplative Pietà at the foot of the bare Cross, echoing stillness and maternal sorrow.',
+    paperBg: '#F7F3EA',
+    frameFit: 'cover',
   },
   14: {
     stationNumber: 14,
     roman: 'XIV',
     shortTitle: 'Laid in the Sepulchre',
     src: station14Img,
-    alt: 'Caravaggio-style chiaroscuro oil painting of Station XIV: Illuminated by candle glow inside the dark stone tomb, Jesus is laid in crisp white linen',
+    alt: 'Ink and watercolor illustration of Station XIV: Wrapped in white linen, Jesus rests upon the burial stone surrounded by grieving disciples beneath luminous slate-and-gold washes',
     plateTitle: 'Station XIV · Jesus Is Placed in the Sepulchre',
-    caption: 'Plate XIV · Oil on Canvas (Manner of Caravaggio) · The Holy Sepulchre, Jerusalem',
-    chiaroscuroNote:
-      'A solitary tallow candle kindles warm umber rock walls and crisp white burial folds, casting an intimate nocturne of sorrow and expectant peace.',
+    caption: 'Plate XIV · Ink & Watercolor on Cotton Paper · The Holy Sepulchre, Jerusalem',
+    studyNote:
+      'Ethereal slate-blue mist opens into a soft golden radiance above the linen-draped bier as silent mourners keep watch in expectant peace.',
+    paperBg: '#FCFBF7',
+    frameFit: 'contain',
   },
 };
 
@@ -245,7 +282,7 @@ function getArtworkForStep(stepIndex: number): StationArtworkEntry {
     return {
       ...STATION_ARTWORK[2],
       plateTitle: 'Opening Plate · The Way of Sorrows',
-      caption: 'Opening Plate · Beginning the Via Dolorosa, Old City of Jerusalem',
+      caption: 'Opening Plate · Ink & Watercolor · Beginning the Via Dolorosa, Jerusalem',
     };
   }
   if (stepIndex >= 1 && stepIndex <= 14) {
@@ -254,7 +291,7 @@ function getArtworkForStep(stepIndex: number): StationArtworkEntry {
   return {
     ...STATION_ARTWORK[12],
     plateTitle: 'Closing Plate · Prayer Before Jesus Crucified',
-    caption: 'Closing Plate · Rock of Calvary, Church of the Holy Sepulchre',
+    caption: 'Closing Plate · Ink & Watercolor · Rock of Calvary, Church of the Holy Sepulchre',
   };
 }
 
@@ -910,7 +947,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
     panOriginRef.current = null;
   }, [lightboxStation]);
 
-  // Keyboard navigation inside the Caravaggio Museum Lightbox
+  // Keyboard navigation inside the Watercolor Gallery Lightbox
   useEffect(() => {
     if (lightboxStation === null) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -1104,7 +1141,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Passion & 3:00 PM Hour of Mercy Banner */}
-      <div className="sanctum-top-banner relative isolate min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between overflow-hidden">
+      <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between gap-2 overflow-hidden">
         <div
           className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
           aria-hidden="true"
@@ -1123,22 +1160,22 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
         </div>
 
-        <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
-          <div className="flex items-center gap-2 overflow-hidden">
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 truncate">
+        <div className="relative z-10 space-y-1 pr-[132px] sm:pr-[168px]">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-300 leading-tight">
               THE WAY OF THE CROSS • ST. ALPHONSUS LIGUORI • 3:00 PM DEVOTION
             </span>
           </div>
-          <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-amber-50 leading-tight line-clamp-1">
+          <h3 className="font-cinzel text-lg sm:text-2xl font-bold text-amber-50 leading-tight">
             Interactive Stations of the Cross
           </h3>
-          <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred italic leading-snug line-clamp-2">
+          <p className="text-[11px] sm:text-xs text-stone-200 font-serif italic leading-[1.24]">
             Pray all 14 Stations with Jenny and follow each sacred site in Jerusalem, Israel.
           </p>
         </div>
 
         <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 overflow-x-auto no-scrollbar">
             {!isAutoPlaying ? (
               <button
                 type="button"
@@ -1456,7 +1493,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         {/* Card Body: Museum-Editorial Two-Column Split (Sacred Artwork + Prayers) */}
         <div className="p-5 sm:p-7">
           <div className="lg:grid lg:grid-cols-12 lg:gap-7 items-start space-y-6 lg:space-y-0">
-            {/* Left Column: Museum-Framed Caravaggio Chiaroscuro Oil Painting */}
+            {/* Left Column: Gallery-Framed Ink & Watercolor Station Plate */}
             <figure className="lg:col-span-5 lg:sticky lg:top-6 space-y-3">
               {/* Museum Gallery Lighting Switcher */}
               <div
@@ -1479,7 +1516,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                     }`}
                   >
                     <Sun className="w-3 h-3" />
-                    <span>Spotlight</span>
+                    <span>Daylight</span>
                   </button>
                   <button
                     type="button"
@@ -1503,22 +1540,23 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                         ? 'bg-[#4E3524] text-amber-50 shadow-2xs'
                         : 'text-[#6B4423] hover:text-[#2D140C]'
                     }`}
-                    title="Lift Caravaggio's darkest shadows to inspect hidden background figures"
+                    title="Deepen sepia ink contours and watercolor washes for closer study"
                   >
                     <Eye className="w-3 h-3" />
-                    <span>Shadow Reveal</span>
+                    <span>Ink Study</span>
                   </button>
                 </div>
               </div>
 
-              {/* Layered Baroque Ebony & Antique-Gold Fillet Museum Frame (crisp unrounded oil canvas) */}
-              <div className="bg-gradient-to-b from-[#1E120C] via-[#130A07] to-[#0B0604] p-2.5 sm:p-3 border border-[#8E6A3A]/60 shadow-[0_14px_32px_rgba(20,10,5,0.34)]">
+              {/* Layered Ebony & Antique-Gold Fillet Museum Frame around archival cotton watercolor paper */}
+              <div className="bg-gradient-to-b from-[#1E120C] via-[#130A07] to-[#0B0604] p-2.5 sm:p-3 border border-[#8E6A3A]/60 shadow-[0_14px_32px_rgba(20,10,5,0.28)]">
                 <div className="p-[2px] bg-gradient-to-br from-[#C8A15A]/75 via-[#6E4F26]/55 to-[#B68D45]/75">
                   <button
                     type="button"
                     onClick={() => setLightboxStation(activeArtwork.stationNumber)}
-                    className="group relative block w-full aspect-[4/3] bg-[#0B0604] overflow-hidden cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
-                    aria-label={`Inspect Caravaggio oil painting in high-resolution museum viewer: ${activeArtwork.plateTitle}`}
+                    style={{ backgroundColor: activeArtwork.paperBg }}
+                    className="group relative flex items-center justify-center w-full aspect-[4/3] overflow-hidden cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300"
+                    aria-label={`Inspect watercolor plate in high-resolution museum viewer: ${activeArtwork.plateTitle}`}
                   >
                     {!brokenImages[`main-${activeArtwork.stationNumber}`] ? (
                       <>
@@ -1528,10 +1566,26 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                           alt={activeArtwork.alt}
                           referrerPolicy="no-referrer"
                           onError={() => markImageBroken(`main-${activeArtwork.stationNumber}`)}
-                          style={{ filter: GALLERY_LIGHTING_FILTER[lightingMode] }}
-                          className="w-full h-full object-cover scale-[1.01] transition-all duration-500 group-hover:scale-[1.035]"
+                          style={{
+                            filter: GALLERY_LIGHTING_FILTER[lightingMode],
+                            clipPath:
+                              activeArtwork.frameFit === 'clipped-contain'
+                                ? activeArtwork.clipPath
+                                : undefined,
+                            transform:
+                              activeArtwork.baseScale
+                                ? `scale(${activeArtwork.baseScale})`
+                                : undefined,
+                          }}
+                          className={
+                            activeArtwork.frameFit === 'clipped-contain'
+                              ? 'h-full w-auto max-w-none block transition-all duration-500'
+                              : activeArtwork.frameFit === 'contain'
+                                ? 'w-full h-full object-contain transition-all duration-500 group-hover:scale-[1.025]'
+                                : 'w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.03]'
+                          }
                         />
-                        {/* Museum Picture-Lamp Spotlight or Baroque Candlelight Sheen */}
+                        {/* Museum Picture-Lamp Daylight or Chapel Candlelight Sheen */}
                         {lightingMode === 'spotlight' && (
                           <span
                             aria-hidden="true"
@@ -1544,10 +1598,10 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                             className="pointer-events-none absolute inset-0 caravaggio-candle-sheen"
                           />
                         )}
-                        {/* Subtle recessed inner shadow simulating deep Baroque frame rabbet */}
+                        {/* Soft recessed archival matte vignette */}
                         <span
                           aria-hidden="true"
-                          className="pointer-events-none absolute inset-0 shadow-[inset_0_0_24px_rgba(0,0,0,0.55)]"
+                          className="pointer-events-none absolute inset-0 shadow-[inset_0_0_18px_rgba(72,46,24,0.18)]"
                         />
                       </>
                     ) : (
@@ -1587,9 +1641,9 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                 </div>
                 <p className="font-serif text-xs sm:text-[13px] leading-relaxed text-stone-600 border-t border-stone-200/80 pt-2">
                   <span className="font-cinzel text-[10px] font-bold uppercase tracking-wider text-[#7D1A1A] mr-1.5">
-                    Chiaroscuro Study:
+                    Watercolor Study:
                   </span>
-                  {activeArtwork.chiaroscuroNote}
+                  {activeArtwork.studyNote}
                 </p>
               </figcaption>
             </figure>
@@ -1758,7 +1812,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-3 border-b border-stone-200/80">
           <div>
             <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-[#7D1A1A] block">
-              XIV Chiaroscuro Oil Paintings • Manner of Caravaggio
+              XIV Sacred Ink &amp; Watercolor Plates • Cotton Rag Series
             </span>
             <h4
               id="stations-gallery-heading"
@@ -1768,7 +1822,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             </h4>
           </div>
           <p className="text-xs font-serif italic text-[#6B4423]">
-            Select any canvas to pray that Station, study its chiaroscuro, and view its site in Jerusalem
+            Select any watercolor plate to pray that Station, meditate on the artwork, and view its site in Jerusalem
           </p>
         </div>
 
@@ -1788,9 +1842,12 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                 }`}
                 aria-current={isSelected ? 'step' : undefined}
               >
-                {/* Miniature ebony & gold-fillet museum frame (crisp unrounded oil canvas) */}
+                {/* Miniature ebony & gold-fillet museum frame */}
                 <div className="w-full p-[3px] bg-[#140B07] border border-[#8E6A3A]/55 shadow-xs">
-                  <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#0B0604]">
+                  <div
+                    style={{ backgroundColor: art.paperBg }}
+                    className="relative flex items-center justify-center w-full aspect-[4/3] overflow-hidden"
+                  >
                     {!brokenImages[`thumb-${st.number}`] ? (
                       <>
                         <img
@@ -1799,12 +1856,23 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                           loading="lazy"
                           referrerPolicy="no-referrer"
                           onError={() => markImageBroken(`thumb-${st.number}`)}
-                          style={{ filter: GALLERY_LIGHTING_FILTER[lightingMode] }}
-                          className="w-full h-full object-cover scale-[1.01] transition-transform duration-300 group-hover:scale-[1.06]"
+                          style={{
+                            filter: GALLERY_LIGHTING_FILTER[lightingMode],
+                            clipPath:
+                              art.frameFit === 'clipped-contain' ? art.clipPath : undefined,
+                            transform: art.baseScale ? `scale(${art.baseScale})` : undefined,
+                          }}
+                          className={
+                            art.frameFit === 'clipped-contain'
+                              ? 'h-full w-auto max-w-none block transition-transform duration-300'
+                              : art.frameFit === 'contain'
+                                ? 'w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.04]'
+                                : 'w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.05]'
+                          }
                         />
                         <span
                           aria-hidden="true"
-                          className="pointer-events-none absolute inset-0 shadow-[inset_0_0_10px_rgba(0,0,0,0.45)]"
+                          className="pointer-events-none absolute inset-0 shadow-[inset_0_0_8px_rgba(72,46,24,0.16)]"
                         />
                       </>
                     ) : (
@@ -1832,7 +1900,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
         </div>
       </section>
 
-      {/* Full-Screen Museum Lightbox Inspector for High-Resolution Caravaggio Oil Paintings */}
+      {/* Full-Screen Museum Lightbox Inspector for High-Resolution Watercolor Plates */}
       {lightboxEntry && lightboxStationData && (
         <div
           role="dialog"
@@ -1877,7 +1945,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                     }`}
                   >
                     <Sun className="w-3 h-3" />
-                    <span className="hidden sm:inline">Spotlight</span>
+                    <span className="hidden sm:inline">Daylight</span>
                   </button>
                   <button
                     type="button"
@@ -1903,11 +1971,11 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                     }`}
                   >
                     <Eye className="w-3 h-3" />
-                    <span className="hidden sm:inline">Shadow Reveal</span>
+                    <span className="hidden sm:inline">Ink Study</span>
                   </button>
                 </div>
 
-                {/* Impasto Zoom Controls */}
+                {/* Watercolor Detail Zoom Controls */}
                 <div className="inline-flex items-center rounded-md border border-amber-300/25 bg-black/40 p-0.5">
                   <button
                     type="button"
@@ -2006,7 +2074,10 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             >
               {!brokenImages[`lightbox-${lightboxEntry.stationNumber}`] ? (
                 <div className="p-2 bg-gradient-to-b from-[#1E120C] to-[#0D0705] border border-[#C8A15A]/55 shadow-2xl overflow-hidden">
-                  <div className="relative overflow-hidden bg-[#0A0504]">
+                  <div
+                    style={{ backgroundColor: lightboxEntry.paperBg }}
+                    className="relative overflow-hidden"
+                  >
                     <img
                       src={lightboxEntry.src}
                       alt={lightboxEntry.alt}
@@ -2015,7 +2086,11 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
                       onError={() => markImageBroken(`lightbox-${lightboxEntry.stationNumber}`)}
                       style={{
                         filter: GALLERY_LIGHTING_FILTER[lightingMode],
-                        transform: `translate3d(${lightboxPan.x}px, ${lightboxPan.y}px, 0) scale(${lightboxZoom})`,
+                        clipPath: lightboxEntry.clipPath,
+                        transform: `translate3d(${lightboxPan.x}px, ${lightboxPan.y}px, 0) scale(${
+                          lightboxZoom *
+                          (lightboxEntry.clipPath ? (lightboxEntry.baseScale ?? 1.18) : 1)
+                        })`,
                       }}
                       className={`max-h-[62vh] w-auto max-w-full object-contain block ${
                         isDraggingPan ? '' : 'transition-transform duration-300 ease-out'
@@ -2042,15 +2117,15 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
               )}
             </div>
 
-            {/* Modal Footer: Curatorial Chiaroscuro Study & Plate Navigation */}
+            {/* Modal Footer: Watercolor Study & Plate Navigation */}
             <div className="px-4 py-3 sm:px-6 bg-[#1F0F0B] border-t border-amber-300/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-1 min-w-0">
                 <p className="font-serif italic text-xs sm:text-sm text-amber-100/90">
                   {lightboxEntry.caption} — {lightboxStationData.jerusalemQuarter}
                 </p>
                 <p className="font-serif text-xs text-amber-200/75 leading-relaxed">
-                  {lightboxEntry.chiaroscuroNote}
-                  {lightboxZoom > 1 ? ' Drag canvas to pan details.' : ' Click canvas or zoom to inspect impasto brushwork.'}
+                  {lightboxEntry.studyNote}
+                  {lightboxZoom > 1 ? ' Drag plate to pan details.' : ' Click plate or zoom to inspect ink and watercolor brushwork.'}
                 </p>
               </div>
 

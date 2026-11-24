@@ -953,7 +953,7 @@ export const CatholicAIAssistantView: React.FC = () => {
             </div>
 
             {/* Line 2: Prominent Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-stone-900 leading-tight truncate">
+            <h2 className="font-serif text-lg sm:text-xl md:text-2xl font-bold tracking-normal text-stone-900 leading-snug">
               Catholic Theological &amp; Scriptural Research Assistant
             </h2>
           </div>

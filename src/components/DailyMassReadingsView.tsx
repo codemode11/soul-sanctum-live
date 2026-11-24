@@ -300,9 +300,9 @@ ${reading.gospel.text}`;
             <div className="absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20" />
           </div>
 
-          <div className="relative z-10 space-y-1 max-w-[82%] sm:max-w-[62%]">
+          <div className="relative z-10 space-y-2 sm:space-y-2.5 max-w-[88%] sm:max-w-[68%]">
             {/* Line 1: Liturgical Color/Rank & Season (raised) */}
-            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap sm:flex-nowrap overflow-hidden">
+            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
               <span 
                 className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 shadow-xs"
                 style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
@@ -311,22 +311,41 @@ ${reading.gospel.text}`;
                 <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
                 <span>{reading.liturgicalRank}</span>
               </span>
-              <span className="text-xs sm:text-sm text-stone-200 font-serif sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <span className="text-xs sm:text-sm text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {reading.liturgicalSeason}
               </span>
             </div>
             
-            {/* Line 2: Complete Liturgical Day Title (wraps onto a second line when needed) */}
-            <h2 className="font-serif text-lg sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight break-words line-clamp-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            {/* Line 2: Complete Liturgical Day Title split into Line 1 and Line 2 without ellipses */}
+            <div className="font-serif tracking-normal text-amber-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] space-y-0.5">
               {/^solemnity of our lord jesus christ,\s*king of the universe$/i.test(reading.liturgicalDay.trim()) ? (
                 <>
-                  <span className="block">Solemnity of Our Lord Jesus Christ</span>
-                  <span className="block">King of the Universe</span>
+                  <div className="text-[15px] sm:text-lg font-bold leading-snug">Solemnity of Our Lord Jesus Christ</div>
+                  <div className="text-xs sm:text-sm font-semibold text-amber-200 leading-snug">King of the Universe</div>
                 </>
-              ) : (
-                reading.liturgicalDay.replace(/,\s*Bishop.*$/, '')
-              )}
-            </h2>
+              ) : (() => {
+                const cleanTitle = reading.liturgicalDay.replace(/,\s*Bishop.*$/, '').trim();
+                const parts = cleanTitle.split(' / ');
+                if (parts.length >= 2) {
+                  return (
+                    <>
+                      <div className="text-[15px] sm:text-[18.5px] font-bold leading-snug">
+                        {parts[0]}
+                      </div>
+                      <div className="text-[11px] sm:text-[13px] font-medium text-amber-200/95 leading-snug">
+                        {parts.slice(1).join(' / ')}
+                      </div>
+                    </>
+                  );
+                } else {
+                  return (
+                    <div className="text-[15px] sm:text-[19px] font-bold leading-snug">
+                      {cleanTitle}
+                    </div>
+                  );
+                }
+              })()}
+            </div>
           </div>
 
           {/* Line 3: Calendar and Settings lowered together at the right side */}

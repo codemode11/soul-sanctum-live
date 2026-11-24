@@ -11,6 +11,7 @@ import {
 import { MARIAN_APPARITIONS, MarianApparition } from '../data/marianApparitions';
 import { SacredReader } from '../utils/speech';
 import { MedjugorjeMessagesView } from './MedjugorjeMessagesView';
+import miracleOfSunColorizedImg from '../assets/images/miracle_of_sun_colorized_v2_1795538650143.jpg';
 
 export const MarianApparitionsView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'apparitions' | 'medjugorje'>('apparitions');
@@ -107,21 +108,65 @@ export const MarianApparitionsView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-12 animate-fadeIn text-slate-900">
       
-      {/* Marian Header Banner — Slate Gray & Bleached Sand (matching Eucharistic Miracles) */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] border border-slate-700/80 shadow-md relative overflow-hidden flex flex-col justify-between gap-2">
-        <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
-        
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
+      {/* Marian Header Banner — Slate Gray & Bleached Sand with Colorized Miracle of the Sun */}
+      <div
+        className="sanctum-top-banner relative isolate px-5 py-3.5 sm:px-6 min-h-[196px] sm:min-h-[212px] rounded-xl text-[#F9F6F0] border border-slate-700/80 shadow-md overflow-hidden flex flex-col justify-between gap-2"
+        style={{
+          background:
+            'linear-gradient(100deg, #0F172A 0%, #172235 42%, #253447 72%, #3D4E61 88%, #526478 100%)',
+        }}
+      >
+        {/* Subtle atmospheric sky glow bridging the slate gradient into the Fátima horizon */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background:
+              'radial-gradient(ellipse 42% 85% at 88% 30%, rgba(234, 226, 211, 0.22) 0%, rgba(100, 118, 138, 0.14) 48%, transparent 78%)',
+          }}
+        />
+
+        {/* Right-aligned Colorized 1917 Miracle of the Sun Photograph */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 flex items-center justify-end z-0"
+          aria-hidden="true"
+        >
+          <img
+            src={miracleOfSunColorizedImg}
+            alt="Colorized 1917 photograph of the Miracle of the Sun at Cova da Iria, Fátima, Portugal"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-auto max-w-none block"
+            style={{
+              maskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 8%, rgba(0,0,0,0.42) 18%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.96) 42%, black 52%)',
+              WebkitMaskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.1) 8%, rgba(0,0,0,0.42) 18%, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.96) 42%, black 52%)',
+            }}
+          />
+        </div>
+
+        {/* Continuous full-width translucent gradient smoothing the left-to-right transition */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(15,23,42,0.72) 0%, rgba(23,34,53,0.48) 50%, rgba(37,52,71,0.18) 74%, transparent 92%), linear-gradient(to top, rgba(15,23,42,0.34) 0%, transparent 24%)',
+          }}
+        />
+
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 pr-[136px] sm:pr-[172px]">
           <div className="flex items-center gap-2">
-            <span className="p-1 rounded-lg bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70">
+            <span className="p-1 rounded-lg bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70 shrink-0">
               <Star className="w-3.5 h-3.5" />
             </span>
-            <span className="font-cinzel text-[11px] font-bold text-[#DFD5C3] tracking-wider uppercase">
+            <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold text-[#DFD5C3] tracking-wider uppercase leading-snug">
               Sancta Maria, Regina Caeli • Major Marian Apparitions
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1 bg-slate-950/50 p-1 rounded-xl border border-slate-600/60">
+          <div className="flex flex-wrap items-center gap-1 bg-slate-950/60 backdrop-blur-xs p-1 rounded-xl border border-slate-600/60">
             <button
               onClick={() => setActiveTab('apparitions')}
               className={`h-7 px-2.5 rounded-lg text-[11px] font-cinzel transition-all cursor-pointer ${
@@ -145,12 +190,12 @@ export const MarianApparitionsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative z-10 space-y-1">
-          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+        <div className="relative z-10 space-y-1 pr-[136px] sm:pr-[172px]">
+          <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
             Major Marian Apparitions and Messages
           </h2>
-          
-          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+
+          <p className="text-[11px] sm:text-xs text-[#EAE2D3] font-serif max-w-2xl leading-[1.3]">
             &ldquo;A great sign appeared in heaven: a woman clothed with the sun, with the moon under her feet.&rdquo; Explore Church-approved Marian apparitions across centuries—from Guadalupe to Lourdes, Fátima, Akita, and Kibeho.
           </p>
         </div>

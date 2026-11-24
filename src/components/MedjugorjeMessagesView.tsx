@@ -763,7 +763,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
     <div className="space-y-6 pb-8 animate-fadeIn text-slate-900">
 
       {/* Marian Header Banner — Slate Gray & Bleached Sand */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md flex flex-col justify-between gap-2 relative overflow-hidden text-[#F9F6F0]">
+      <div className="sanctum-top-banner px-5 py-3.5 sm:px-6 min-h-[196px] sm:min-h-[212px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md flex flex-col justify-between gap-2 relative overflow-hidden text-[#F9F6F0]">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-60 h-44 bg-[#EAE2D3]/15 rounded-full blur-3xl" />
 
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
@@ -810,11 +810,11 @@ export const MedjugorjeMessagesView: React.FC = () => {
         </div>
 
         <div className="relative z-10 space-y-1">
-          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+          <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
             Messages of Our Lady to the Seers of Medjugorje
           </h2>
 
-          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+          <p className="text-[11px] sm:text-xs text-[#EAE2D3] font-serif max-w-3xl leading-[1.3]">
             &ldquo;Peace, peace, peace and only peace! Peace must reign between God and man and between men!&rdquo; Complete archive from June 24, 1981 through the latest monthly and annual messages.
           </p>
         </div>

@@ -1442,7 +1442,7 @@ svg.sanctum-holy-bible-icon:hover .sanctum-holy-bible-glow-layer {
     overscroll-behavior-y: none;
   }
 
-  .font-serif-sacred {
+  .font-serif-sacred:not(.sanctum-top-banner *) {
     font-size: 1.125rem;
     line-height: 1.68;
   }

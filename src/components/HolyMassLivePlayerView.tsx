@@ -129,12 +129,12 @@ Live on Soul Sanctum Catholic Sanctuary.`;
         <div className="bg-gradient-to-r from-stone-900 via-[#1C120C] to-stone-900 text-stone-100 border-b border-amber-500/25">
           <div className="px-4 py-3 sm:px-6 flex items-center justify-between gap-3">
             <div className="space-y-0.5 text-left min-w-0">
-              <div className="inline-flex items-center gap-2 max-w-full px-2.5 py-0.5 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[10.5px] font-cinzel font-bold tracking-wider uppercase">
+              <div className="inline-flex items-center gap-2 max-w-full px-2.5 py-0.5 rounded-full bg-red-600/30 border border-red-500/50 text-red-200 text-[10.5px] font-cinzel font-bold tracking-wider uppercase leading-snug">
                 <span className="w-2 h-2 rounded-full bg-red-400 animate-ping shrink-0" />
-                <span className="truncate">Live: {selectedStream.sanctuary}</span>
+                <span>Live: {selectedStream.sanctuary}</span>
               </div>
 
-              <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide truncate">
+              <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide leading-snug">
                 Holy Mass Live
               </h2>
             </div>
