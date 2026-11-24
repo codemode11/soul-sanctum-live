@@ -68,11 +68,10 @@ const RADIUS_OPTIONS = [
 ];
 
 const QUICK_DESTINATIONS: { label: string; center: LatLngLiteral }[] = [
-  { label: 'Vatican / Rome', center: { lat: 41.9022, lng: 12.4539 } },
   { label: 'Cebu City', center: { lat: 10.3157, lng: 123.8854 } },
   { label: 'Manila', center: { lat: 14.5915, lng: 120.9735 } },
+  { label: 'Vatican / Rome', center: { lat: 41.9022, lng: 12.4539 } },
   { label: 'New York', center: { lat: 40.7585, lng: -73.9760 } },
-  { label: 'Los Angeles', center: { lat: 34.0581, lng: -118.2450 } },
   { label: 'London', center: { lat: 51.4961, lng: -0.1398 } },
 ];
 
@@ -212,7 +211,7 @@ export const FallbackParishFinderWorkspace: React.FC<FallbackParishFinderWorkspa
   noticeDescription,
 }) => {
   const [searchCenter, setSearchCenter] = useState<LatLngLiteral>(QUICK_DESTINATIONS[0].center);
-  const [searchAreaLabel, setSearchAreaLabel] = useState<string>('Vatican / Rome');
+  const [searchAreaLabel, setSearchAreaLabel] = useState<string>(QUICK_DESTINATIONS[0].label);
   const [userLocation, setUserLocation] = useState<LatLngLiteral | null>(null);
   const [gpsLoading, setGpsLoading] = useState<boolean>(false);
   const [gpsError, setGpsError] = useState<string | null>(null);

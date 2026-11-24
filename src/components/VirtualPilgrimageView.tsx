@@ -35,6 +35,7 @@ import {
   PilgrimageSite,
   PilgrimageStop,
 } from '@/data/virtualPilgrimages';
+import stPetersBannerImg from '@/assets/images/pilgrimage_st_peters_vatican_1795370664776.jpg';
 import { SacredReader } from '@/utils/speech';
 import { isMapsQuotaError, notifyMapsQuotaExceeded } from '@/hooks/usePlaceAutocomplete';
 import {
@@ -679,78 +680,112 @@ export const VirtualPilgrimageView: React.FC = () => {
   return (
     <div className="space-y-8 pb-12 text-stone-900">
       {/* 1. Archival Editorial Masthead */}
-      <section className="rounded-xl border border-stone-200 bg-[#FBF9F5] p-6 sm:p-8 shadow-sm">
-        <div className="flex flex-col gap-6 border-b border-stone-200 pb-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="space-y-2.5 max-w-2xl">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8B5A2B]">
-              Sacred Geography · Universal Church Archive
-            </p>
-            <h1 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#1C1917] [text-wrap:balance]">
-              Virtual Pilgrimages to Catholic Sacred Sites
-            </h1>
-            <p className="font-serif text-sm sm:text-base text-stone-700 leading-relaxed">
-              Walk in spirit through the Church’s sacred sanctuaries—from Jerusalem, Bethlehem, and Rome to Lourdes, Fátima, Guadalupe, Medjugorje, Kraków, Chartres, Mont-Saint-Michel, Assisi, Santiago, the Seven Churches of Revelation, and Zeitoun—with guided reflections, audio narration, vigil candles, and your personal Pilgrim Passport.
-            </p>
-            <p className="pt-1 text-xs font-medium tracking-wide text-stone-500">
-              {VIRTUAL_PILGRIMAGE_SITES.length} Sacred Shrines ·{' '}
-              {VIRTUAL_PILGRIMAGE_SITES.reduce((sum, s) => sum + s.stops.length, 0)} Guided Prayer Stops ·{' '}
-              {stampedCount} of {VIRTUAL_PILGRIMAGE_SITES.length} Stamped in Credencial
-            </p>
+      <section className="rounded-xl border border-[#D8C7B2] bg-[#F5EDE1] shadow-sm overflow-hidden">
+        {/* Top Banner: Seamless Gradient from Light Brown Background into St. Peter's Basilica */}
+        <div className="relative overflow-hidden bg-[#EFE2D0] px-6 py-6 sm:px-8 sm:py-7 border-b border-[#D8C7B2] min-h-[212px] sm:min-h-[236px] flex flex-col justify-between">
+          {/* Right-Side St. Peter's Basilica Photography */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[70%] md:w-[66%] overflow-hidden"
+            aria-hidden="true"
+          >
+            <img
+              src={stPetersBannerImg}
+              alt=""
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[56%_38%] brightness-[1.01] contrast-[1.03]"
+            />
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <button
-              type="button"
-              onClick={() => setShowPassportPanel((prev) => !prev)}
-              className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
-                showPassportPanel
-                  ? 'border-[#7F1D1D] bg-[#7F1D1D] text-[#FBF9F5]'
-                  : 'border-stone-300 bg-[#F4EFE6] text-stone-900 hover:border-[#8B5A2B] hover:bg-[#EFE7D8]'
-              }`}
-            >
-              <Stamp className="h-4 w-4" />
-              <span>
-                Pilgrim Passport ({stampedCount}/{VIRTUAL_PILGRIMAGE_SITES.length})
-              </span>
-            </button>
-          </div>
-        </div>
+          {/* Smooth Multi-Stop Horizontal Gradient from Light Brown (#EFE2D0) into St. Peter's Basilica */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#EFE2D0_0%,#EFE2D0_28%,rgba(239,226,208,0.92)_46%,rgba(239,226,208,0.62)_66%,rgba(239,226,208,0.28)_86%,rgba(239,226,208,0.22)_100%)] sm:bg-[linear-gradient(90deg,#EFE2D0_0%,#EFE2D0_33%,rgba(239,226,208,0.94)_47%,rgba(239,226,208,0.50)_63%,rgba(239,226,208,0.10)_80%,rgba(239,226,208,0.14)_100%)]"
+            aria-hidden="true"
+          />
+          {/* Subtle Top, Bottom, and Right Edge Light-Brown Feathering */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#EFE2D0]/55 via-transparent to-[#EFE2D0]/25"
+            aria-hidden="true"
+          />
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#EFE2D0]/65 to-transparent"
+            aria-hidden="true"
+          />
 
-        {/* Region Filter Tabs (Clean Segmented Controls, Zero Decorative Pills) */}
-        <div className="mt-5 flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter shrines by region">
-          {PILGRIMAGE_REGIONS.map((region) => {
-            const isSelected = selectedRegion === region;
-            const count =
-              region === 'All Shrines'
-                ? VIRTUAL_PILGRIMAGE_SITES.length
-                : VIRTUAL_PILGRIMAGE_SITES.filter((s) => s.region === region).length;
-            return (
+          <div className="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between my-auto">
+            <div className="space-y-2.5 max-w-2xl sm:max-w-[58%]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7A4B21]">
+                Sacred Geography · Universal Church Archive
+              </p>
+              <h1 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#1F140D] [text-wrap:balance] drop-shadow-[0_1px_2px_rgba(255,250,242,0.7)]">
+                Virtual Pilgrimages to Catholic Sacred Sites
+              </h1>
+              <p className="font-serif text-sm sm:text-base text-[#362417] leading-relaxed drop-shadow-[0_1px_2px_rgba(255,250,242,0.6)]">
+                Walk in spirit through the Church’s sacred sanctuaries—from Jerusalem, Bethlehem, and Rome to Lourdes, Fátima, Guadalupe, Medjugorje, Kraków, Chartres, Mont-Saint-Michel, Assisi, Santiago, the Seven Churches of Revelation, and Zeitoun—with guided reflections, audio narration, vigil candles, and your personal Pilgrim Passport.
+              </p>
+              <p className="pt-1 text-xs font-medium tracking-wide text-[#5E432E]">
+                {VIRTUAL_PILGRIMAGE_SITES.length} Sacred Shrines ·{' '}
+                {VIRTUAL_PILGRIMAGE_SITES.reduce((sum, s) => sum + s.stops.length, 0)} Guided Prayer Stops ·{' '}
+                {stampedCount} of {VIRTUAL_PILGRIMAGE_SITES.length} Stamped in Credencial
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
               <button
-                key={region}
                 type="button"
-                role="tab"
-                aria-selected={isSelected}
-                onClick={() => {
-                  setSelectedRegion(region);
-                  const matching =
-                    region === 'All Shrines'
-                      ? VIRTUAL_PILGRIMAGE_SITES
-                      : VIRTUAL_PILGRIMAGE_SITES.filter((s) => s.region === region);
-                  if (matching.length > 0 && !matching.some((s) => s.id === activeSiteId)) {
-                    handleSelectSite(matching[0].id);
-                  }
-                }}
-                className={`rounded-md border px-3.5 py-2 text-xs font-medium transition-colors cursor-pointer ${
-                  isSelected
-                    ? 'border-[#1C1917] bg-[#1C1917] text-[#FBF9F5]'
-                    : 'border-stone-200 bg-white text-stone-700 hover:border-stone-400 hover:text-stone-950'
+                onClick={() => setShowPassportPanel((prev) => !prev)}
+                className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer shadow-xs backdrop-blur-xs ${
+                  showPassportPanel
+                    ? 'border-[#7F1D1D] bg-[#7F1D1D] text-[#FBF9F5]'
+                    : 'border-[#C8B294] bg-[#F8F2E8]/92 text-[#24160D] hover:border-[#8B5A2B] hover:bg-[#FBF7F0]'
                 }`}
               >
-                {region} <span className="opacity-65">({count})</span>
+                <Stamp className="h-4 w-4" />
+                <span>
+                  Pilgrim Passport ({stampedCount}/{VIRTUAL_PILGRIMAGE_SITES.length})
+                </span>
               </button>
-            );
-          })}
+            </div>
+          </div>
         </div>
+
+        {/* Lower Strip: Region Filter Tabs & Collapsible Credencial */}
+        <div className="px-6 py-4 sm:px-8 sm:py-5 bg-[#F5EDE1]">
+          {/* Region Filter Tabs (Clean Segmented Controls, Zero Decorative Pills) */}
+          <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter shrines by region">
+            {PILGRIMAGE_REGIONS.map((region) => {
+              const isSelected = selectedRegion === region;
+              const count =
+                region === 'All Shrines'
+                  ? VIRTUAL_PILGRIMAGE_SITES.length
+                  : VIRTUAL_PILGRIMAGE_SITES.filter((s) => s.region === region).length;
+              return (
+                <button
+                  key={region}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  onClick={() => {
+                    setSelectedRegion(region);
+                    const matching =
+                      region === 'All Shrines'
+                        ? VIRTUAL_PILGRIMAGE_SITES
+                        : VIRTUAL_PILGRIMAGE_SITES.filter((s) => s.region === region);
+                    if (matching.length > 0 && !matching.some((s) => s.id === activeSiteId)) {
+                      handleSelectSite(matching[0].id);
+                    }
+                  }}
+                  className={`rounded-md border px-3.5 py-2 text-xs font-medium transition-colors cursor-pointer ${
+                    isSelected
+                      ? 'border-[#1C1917] bg-[#1C1917] text-[#FBF9F5]'
+                      : 'border-[#DDD0BE] bg-[#FBF8F2] text-stone-700 hover:border-[#8B5A2B] hover:text-stone-950'
+                  }`}
+                >
+                  {region} <span className="opacity-65">({count})</span>
+                </button>
+              );
+            })}
+          </div>
 
         {/* Collapsible Pilgrim Passport (Credencial) & Lit Vigil Candles Ledger */}
         {showPassportPanel && (
@@ -865,6 +900,7 @@ export const VirtualPilgrimageView: React.FC = () => {
             </div>
           </div>
         )}
+        </div>
       </section>
 
       {/* 2. Museum Shrine Catalog Grid */}

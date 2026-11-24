@@ -25,6 +25,7 @@ import {
   Settings,
   ChevronDown
 } from 'lucide-react';
+import bibleFlashcardsFamilyImg from '../assets/images/bible_flashcards_family_final.jpg';
 import { BIBLE_MEMORY_VERSES, BibleFlashcard } from '../data/bibleMemoryVerses';
 import { SacredReader, CURATED_SANCTUM_VOICES, getVoiceShortName } from '../utils/speech';
 
@@ -316,67 +317,50 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
       {/* Top Container: Banner + Collapsible Settings Dropdown */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         {/* Main Banner */}
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-amber-50 shadow-xl border border-amber-800/40 relative overflow-hidden flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-radial-gradient from-amber-500/10 to-transparent pointer-events-none rounded-full blur-2xl" />
+        <div
+          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[200px] sm:min-h-[224px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+            isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
+          }`}
+        >
+          {/* Right-Side Joyful Family Using Bible Flashcards Photography with Seamless Dark Brown Gradient Blend */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[74%] md:w-[70%] overflow-hidden"
+            aria-hidden="true"
+          >
+            <img
+              src={bibleFlashcardsFamilyImg}
+              alt=""
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[70%_40%] brightness-[1.03] contrast-[1.04]"
+            />
+          </div>
+          {/* Smooth multi-stop horizontal gradient transitioning from dark brown (#1C120C) into the family scene */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.50)_60%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.20)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_33%,rgba(28,18,12,0.92)_47%,rgba(28,18,12,0.44)_63%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.16)_100%)]"
+            aria-hidden="true"
+          />
+          {/* Subtle top/bottom warm dark brown feathering so text & Settings toggle stay crisp */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20"
+            aria-hidden="true"
+          />
 
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="space-y-2 max-w-xl">
-              <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                  <BookOpen className="w-4 h-4" />
-                </span>
-                <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-                  Catholic Scripture Memorization Treasury
-                </span>
-              </div>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-                Bible Flashcards and Memorization Tool
-              </h2>
-              <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-                Inscribe the living word of God upon your heart. Practice active recall, test your memory with cloze blanks, acrostic first-letter recall, and audio recitation.
-              </p>
+          <div className="relative z-10 space-y-1.5 my-auto max-w-[85%] sm:max-w-[56%]">
+            <div className="flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 shrink-0">
+                <BookOpen className="w-4 h-4" />
+              </span>
+              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                Scripture Memorization
+              </span>
             </div>
-
-            {/* Quick Mastery Progress */}
-            <div className="bg-black/50 backdrop-blur-md rounded-xl p-4 border border-amber-500/20 flex flex-col gap-2.5 min-w-[240px]">
-              <div className="flex items-center justify-between text-xs font-cinzel text-amber-200">
-                <span className="flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-amber-400" />
-                  <span>Memory Progress</span>
-                </span>
-                <span className="font-bold text-amber-400">
-                  {stats.mastered} / {stats.total} Mastered
-                </span>
-              </div>
-
-              <div className="w-full bg-stone-800 h-2.5 rounded-full overflow-hidden flex">
-                <div
-                  className="bg-emerald-500 h-full transition-all duration-500"
-                  style={{ width: `${(stats.mastered / stats.total) * 100}%` }}
-                  title={`${stats.mastered} Mastered`}
-                />
-                <div
-                  className="bg-amber-500 h-full transition-all duration-500"
-                  style={{ width: `${(stats.learning / stats.total) * 100}%` }}
-                  title={`${stats.learning} In Progress`}
-                />
-              </div>
-
-              <div className="flex items-center justify-between text-[11px] text-stone-400 font-sans">
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
-                  {stats.mastered} Mastered
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" />
-                  {stats.learning} Learning
-                </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-stone-600 inline-block" />
-                  {stats.unlearned} To Memorize
-                </span>
-              </div>
-            </div>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+              Bible Flashcards and Memorization Tool
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-200 font-serif font-medium max-w-xl leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              Inscribe the living word of God upon your heart. Practice active recall, test your memory with cloze blanks, acrostic first-letter recall, and audio recitation.
+            </p>
           </div>
 
           {/* Lower Row: Settings Drop-down Toggle */}
@@ -385,7 +369,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
               type="button"
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap ${
+              className={`h-9 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
@@ -406,7 +390,44 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
 
         {/* Settings Drop-down Menu */}
         {isTopSettingsOpen && (
-          <div className="px-4 py-4 sm:px-6 bg-white/85 backdrop-blur-md border-t border-stone-200/80 rounded-b-xl space-y-4 animate-fadeIn">
+          <div className="px-4 py-4 sm:px-6 bg-white/90 backdrop-blur-md border-t border-stone-200/80 rounded-b-xl space-y-4 animate-fadeIn">
+            {/* Memory Progress Summary inside Settings */}
+            <div className="bg-[#FAF8F3] rounded-xl p-3.5 border border-[#E5DEC9] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs font-cinzel text-amber-950 font-bold shrink-0">
+                <Award className="w-4 h-4 text-amber-700" />
+                <span>Memory Progress:</span>
+                <span className="text-amber-800">{stats.mastered} / {stats.total} Mastered</span>
+              </div>
+
+              <div className="flex-1 bg-stone-200 h-2.5 rounded-full overflow-hidden flex min-w-[140px]">
+                <div
+                  className="bg-emerald-500 h-full transition-all duration-500"
+                  style={{ width: `${(stats.mastered / stats.total) * 100}%` }}
+                  title={`${stats.mastered} Mastered`}
+                />
+                <div
+                  className="bg-amber-500 h-full transition-all duration-500"
+                  style={{ width: `${(stats.learning / stats.total) * 100}%` }}
+                  title={`${stats.learning} In Progress`}
+                />
+              </div>
+
+              <div className="flex items-center gap-3 text-[11px] text-stone-600 font-sans shrink-0">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+                  {stats.mastered} Mastered
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-amber-500 inline-block" />
+                  {stats.learning} Learning
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-stone-400 inline-block" />
+                  {stats.unlearned} To Memorize
+                </span>
+              </div>
+            </div>
+
             {/* Row 1: Study Mode Switcher, Font Size, Shuffle */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pb-3 border-b border-stone-200/80">
               <div className="flex flex-wrap sm:flex-nowrap items-center bg-stone-100 p-1 rounded-xl gap-1">

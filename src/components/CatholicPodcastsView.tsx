@@ -33,7 +33,6 @@ interface CatholicPodcastsViewProps {
   onPlayEpisode: (episode: PodcastEpisode) => void;
   onPauseEpisode: () => void;
   onOpenDetailsModal: (episode: PodcastEpisode) => void;
-  onOpenFio?: () => void;
 }
 
 // Direct original podcast artwork dictionary (Apple Podcasts official 600x600 covers)
@@ -95,8 +94,7 @@ export const CatholicPodcastsView: React.FC<CatholicPodcastsViewProps> = ({
   isPlaying,
   onPlayEpisode,
   onPauseEpisode,
-  onOpenDetailsModal,
-  onOpenFio
+  onOpenDetailsModal
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<CatholicPodcastCategory | 'saved'>('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -268,44 +266,6 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
           </div>
         )}
 
-        {/* Fio Catholic Audio and Music Integration Card */}
-        <div className="relative z-10 mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-950/60 via-stone-900/80 to-amber-950/60 border border-amber-500/40 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-3">
-            <span className="p-2 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-400/30 shrink-0">
-              <Headphones className="w-4 h-4 text-amber-300" />
-            </span>
-            <div>
-              <span className="font-cinzel text-xs font-bold text-amber-200 block">
-                Fio Catholic Podcasts and Music Platform
-              </span>
-              <p className="text-stone-300 font-serif text-[11px] leading-relaxed">
-                Explore 100,000+ hours of Catholic podcasts, sacred music, Gregorian chant, and audiobooks on Fio.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2 shrink-0">
-            {onOpenFio && (
-              <button
-                type="button"
-                onClick={onOpenFio}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-950 font-cinzel font-bold text-xs transition-all cursor-pointer shadow-sm"
-              >
-                <Play className="w-3.5 h-3.5 fill-current" />
-                <span>Launch Fio.fm Player</span>
-              </button>
-            )}
-            <a
-              href="https://play.fio.fm"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 hover:text-white font-cinzel font-bold text-xs transition-all cursor-pointer"
-            >
-              <span>play.fio.fm</span>
-              <ExternalLink className="w-3.5 h-3.5 text-amber-300" />
-            </a>
-          </div>
-        </div>
       </div>
 
       {/* Shows Catalog Horizontal Carousel / Grid */}

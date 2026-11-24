@@ -39,6 +39,7 @@ import {
   CatholicFacebookSection,
   CustomFacebookPostEmbed
 } from './CatholicFacebookSection';
+import catholicSocialSatellitesImg from '../assets/images/catholic_social_satellites_1795504619535.jpg';
 
 type SocialPlatformTab = 'all' | 'favorites' | 'ewtn' | 'facebook' | 'instagram' | 'christendom';
 
@@ -782,28 +783,54 @@ export const CatholicSocialView: React.FC = () => {
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 transition-all duration-300">
       {/* Top Banner Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-stone-850 to-stone-800 text-stone-100 flex flex-col justify-between rounded-xl">
-          <div className="space-y-1.5">
+        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:min-h-[216px] bg-[#1C120C] text-stone-100 flex flex-col justify-between rounded-xl">
+          {/* Right-Side Three Aligned Satellite Dishes Photography with Seamless Dark Brown Gradient Blend */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[74%] md:w-[70%] overflow-hidden"
+            aria-hidden="true"
+          >
+            <img
+              src={catholicSocialSatellitesImg}
+              alt="Three broadcast satellite dishes aligned toward the same skyward direction"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[72%_44%] brightness-[1.02] contrast-[1.04]"
+            />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120C]/65 to-transparent" />
+          </div>
+
+          {/* Smooth Multi-Stop Horizontal Gradient from Dark Brown (#1C120C) into the Three Satellite Dishes */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.52)_60%,rgba(28,18,12,0.14)_82%,rgba(28,18,12,0.22)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.92)_48%,rgba(28,18,12,0.44)_64%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.20)_100%)]"
+            aria-hidden="true"
+          />
+          {/* Subtle Top/Bottom Dark Brown Feathering so Text & Platform Controls Stay Crisp */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/75 via-transparent to-[#1C120C]/25"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 space-y-1.5 my-auto max-w-[88%] sm:max-w-[62%]">
             {/* Line 1: Badge & Subtitle */}
             <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
                 <CatholicSocialShareIcon className="w-3.5 h-3.5" />
                 <span>CATHOLIC SOCIAL &amp; MEDIA</span>
               </span>
-              <span className="text-sm sm:text-base text-stone-300 font-serif whitespace-nowrap truncate">
+              <span className="text-sm sm:text-base text-stone-200 font-serif whitespace-nowrap truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 Curated Posts from Faithful Catholic Apostolates &amp; Christendom
               </span>
             </div>
 
             {/* Line 2: Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words">
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               EWTN, Facebook, Instagram &amp; Christendom.com
             </h2>
           </div>
 
           {/* Line 3: Platform Filter Controls */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-3 border-t border-stone-700/60">
-            <span className="text-xs font-serif text-stone-300 hidden sm:inline">
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-3 border-t border-[#8B5A2B]/35">
+            <span className="text-xs font-serif text-stone-200 hidden sm:inline drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
               Filter Media Channels:
             </span>
             <div className="flex flex-wrap items-center gap-2">

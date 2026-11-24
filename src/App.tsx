@@ -998,7 +998,6 @@ export default function App() {
                 onPlayEpisode={handlePlayPodcast}
                 onPauseEpisode={handlePausePodcast}
                 onOpenDetailsModal={(ep) => setPodcastModalEpisode(ep)}
-                onOpenFio={() => handleSelectTab('fio-audio')}
               />
             )}
 
