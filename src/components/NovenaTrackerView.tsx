@@ -246,7 +246,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
       
       {/* Novena Tracker Banner */}
-      <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-3">
+      <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-2">
         {/* Right-Side Nine Lit Glass Votive Candles with Black Background & Smoke */}
         <div
           className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[53%] overflow-hidden z-0"
@@ -273,9 +273,9 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
         />
 
         <div className="relative z-10 space-y-1.5 sm:max-w-[46%]">
-          <div className="flex flex-wrap items-center gap-2">
-            <NovenaHands9Icon className="w-5 h-5 text-amber-300" />
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
+          <div className="flex items-start gap-2">
+            <NovenaHands9Icon className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
+            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] leading-snug">
               Sacred Nine-Day Devotions • Updated Daily ({effectiveDateStr})
             </span>
           </div>

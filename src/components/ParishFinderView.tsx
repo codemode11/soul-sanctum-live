@@ -1814,7 +1814,7 @@ export const ParishFinderView: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
       {/* Compact Soul Sanctum Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl overflow-hidden bg-gradient-to-r from-stone-900 via-[#22140C] to-stone-900 border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-center">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl overflow-hidden bg-gradient-to-r from-stone-900 via-[#22140C] to-stone-900 border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-center">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
             <div className="inline-flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.2em] text-amber-300">

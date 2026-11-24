@@ -296,12 +296,12 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12">
       
       {/* Top Banner — Context-aware for Treasury of Prayers vs. Community Prayer Wall */}
       {activeSection === 'treasury' ? (
         <div className="rounded-xl shadow-lg border border-[#A67B4E]/60 relative z-20 bg-[#24150B]">
-          <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#24150B] text-amber-50 relative overflow-hidden flex flex-col justify-between gap-2 ${isTreasurySettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#24150B] text-amber-50 relative overflow-hidden flex flex-col justify-between gap-2 ${isTreasurySettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
             {/* Right-Side Wooden Kneeler Facing Wall Crucifix Photography (16:9 preserved on sm+ so crucifix, armrest, prayer book, and cushion stay uncropped) */}
             <div
               className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-auto sm:aspect-[16/9] overflow-hidden"
@@ -478,7 +478,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           )}
         </div>
       ) : (
-        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 overflow-hidden">
+        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 overflow-hidden">
           <div className="space-y-1 min-w-0">
             <div className="flex items-center gap-2">
               <Flame className="w-4 h-4 text-amber-400 shrink-0" />
@@ -504,6 +504,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
         </div>
       )}
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
       {/* Switcher Buttons below the Prayer Requests Banner: Treasury of Prayers & Community Prayer Wall */}
       <div className="flex rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
         <button
@@ -957,6 +958,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
 
         </div>
       )}
+      </div>
 
       {/* Modal: Submit Prayer Request */}
       {newRequestModalOpen && (

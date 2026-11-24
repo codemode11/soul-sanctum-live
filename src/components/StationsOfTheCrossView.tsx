@@ -1104,9 +1104,9 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Passion & 3:00 PM Hour of Mercy Banner */}
-      <div className="sanctum-top-banner relative isolate h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between overflow-hidden">
+      <div className="sanctum-top-banner relative isolate min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between overflow-hidden">
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[124px] sm:w-[144px] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
@@ -1123,21 +1123,21 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
         </div>
 
-        <div className="relative z-10 space-y-1 pr-[112px] sm:pr-[140px]">
+        <div className="relative z-10 space-y-1.5 pr-[132px] sm:pr-[168px]">
           <div className="flex items-center gap-2 overflow-hidden">
             <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 truncate">
               THE WAY OF THE CROSS • ST. ALPHONSUS LIGUORI • 3:00 PM DEVOTION
             </span>
           </div>
-          <h3 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-amber-50 leading-tight line-clamp-1">
+          <h3 className="font-cinzel text-xl sm:text-2xl md:text-3xl font-bold text-amber-50 leading-tight line-clamp-1">
             Interactive Stations of the Cross
           </h3>
-          <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred italic leading-snug line-clamp-1">
+          <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred italic leading-snug line-clamp-2">
             Pray all 14 Stations with Jenny and follow each sacred site in Jerusalem, Israel.
           </p>
         </div>
 
-        <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[112px] sm:pr-[140px]">
+        <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
           <div className="flex items-center gap-2 min-w-0">
             {!isAutoPlaying ? (
               <button

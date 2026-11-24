@@ -453,10 +453,10 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
     new Date(ms).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12">
       {/* Top Banner & Source Selector */}
       <div className="rounded-xl overflow-hidden bg-[#1C120C] text-amber-50 shadow-md border border-amber-900/40">
-        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] flex flex-col justify-center">
+        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] flex flex-col justify-center">
           <div className="relative w-full flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             {/* Left Column: Unobstructed Title, Description & Feed Controls */}
             <div className="relative z-20 flex-1 min-w-0 space-y-2">
@@ -523,7 +523,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
             {/* Right Column (Desktop / Tablet): Orderly Horizontal Overlapping Magazine Covers */}
             <div
-              className="hidden sm:block relative z-10 shrink-0 pointer-events-none select-none w-[240px] md:w-[300px] lg:w-[360px] h-[124px] md:h-[132px]"
+              className="hidden sm:block relative z-10 shrink-0 pointer-events-none select-none w-[240px] md:w-[300px] lg:w-[360px] h-[152px] md:h-[168px]"
               aria-hidden="true"
             >
               {/* Layer 6 (Backmost / Leftmost): U.S. Catholic */}
@@ -681,6 +681,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         </div>
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
       {/* Live Feed Dispatches List (Click any article in the feed to read immediately) */}
       {sourceArticles.length > 1 && (
         <div className="bg-white/80 backdrop-blur-md rounded-xl border border-stone-200/90 p-4 sm:p-5 shadow-xs space-y-3">
@@ -964,6 +965,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
           )}
         </article>
       )}
+      </div>
     </div>
   );
 };

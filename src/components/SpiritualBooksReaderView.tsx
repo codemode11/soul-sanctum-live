@@ -770,7 +770,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
       
       {/* Sacred Masthead Banner & Collapsible Settings/Search Drawer */}
       <div className="rounded-xl border border-[#C89F72]/50 shadow-xl bg-[#1C120C] relative z-20">
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between gap-2 ${isCatalogSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between gap-2 ${isCatalogSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Antique Spiritual Classics Shelf & Angel Bookends Photography (16:9 aspect preserved on sm+ so both angel bookends are completely uncropped) */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-[92%] sm:w-auto sm:aspect-[16/9] overflow-hidden"

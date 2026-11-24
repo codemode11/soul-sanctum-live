@@ -763,7 +763,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
     <div className="space-y-6 pb-8 animate-fadeIn text-slate-900">
 
       {/* Marian Header Banner — Slate Gray & Bleached Sand */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md flex flex-col justify-between gap-2 relative overflow-hidden text-[#F9F6F0]">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md flex flex-col justify-between gap-2 relative overflow-hidden text-[#F9F6F0]">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-60 h-44 bg-[#EAE2D3]/15 rounded-full blur-3xl" />
 
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">

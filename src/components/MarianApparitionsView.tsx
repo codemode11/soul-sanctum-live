@@ -105,10 +105,10 @@ export const MarianApparitionsView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12 animate-fadeIn text-slate-900">
+    <div className="max-w-4xl mx-auto space-y-6 pb-12 animate-fadeIn text-slate-900">
       
       {/* Marian Header Banner — Slate Gray & Bleached Sand (matching Eucharistic Miracles) */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] border border-slate-700/80 shadow-md relative overflow-hidden flex flex-col justify-between gap-2">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] border border-slate-700/80 shadow-md relative overflow-hidden flex flex-col justify-between gap-2">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
         
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
@@ -156,6 +156,7 @@ export const MarianApparitionsView: React.FC = () => {
         </div>
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6">
       {/* Quick Stats Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-center text-[#F9F6F0] shadow-xs">
@@ -432,6 +433,7 @@ export const MarianApparitionsView: React.FC = () => {
         </>
       )}
 
+      </div>
     </div>
   );
 };

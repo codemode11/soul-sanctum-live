@@ -154,10 +154,10 @@ export const ChurchHistoryInfographicView: React.FC = () => {
   };
 
   return (
-    <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 animate-fadeIn text-slate-900">
+    <div className="space-y-6 animate-fadeIn text-slate-900">
       
       {/* 1. Header Banner (Slate Blue & Bleached Sand) */}
-      <div className="sanctum-top-banner rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] text-[#F9F6F0] shadow-xl relative overflow-hidden flex flex-col justify-between gap-2">
+      <div className="sanctum-top-banner rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] text-[#F9F6F0] shadow-xl relative overflow-hidden flex flex-col justify-between gap-2">
         {/* Decorative background glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
 
@@ -196,6 +196,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
         </div>
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6">
       {/* 4 Main View Tabs: 1. History of the Church, 2. The Councils, 3. Astonishing Facts, 4. Infographics */}
       <div className="flex flex-wrap gap-2">
         {[
@@ -861,6 +862,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
         </div>
       )}
 
+      </div>
     </div>
   );
 };

@@ -289,10 +289,10 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-5 mb-12">
+    <div className="max-w-5xl mx-auto space-y-5 pb-12">
       
       {/* Calendar Header Banner — Slate Gray & Bleached Sand */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl border border-slate-700/80 shadow-md bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl border border-slate-700/80 shadow-md bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
         <div className="relative z-10 min-w-0 space-y-1">
           <div className="flex items-center gap-2">
@@ -352,6 +352,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
         </div>
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-5">
       {/* Quick Jump Bar & Liturgical Colors Legend */}
       <div className="px-4 py-2.5 bg-[#F4EFE6]/90 backdrop-blur-md border border-[#D8CFC0] rounded-xl flex flex-wrap items-center justify-between gap-2.5 text-xs sm:text-sm shadow-2xs">
         <div className="flex items-center gap-2.5">
@@ -865,6 +866,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
         </div>
       )}
 
+      </div>
     </div>
   );
 };

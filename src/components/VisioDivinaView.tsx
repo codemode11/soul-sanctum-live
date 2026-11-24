@@ -161,13 +161,13 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 animate-fadeIn">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12 animate-fadeIn">
       
       {/* Visio Divina Banner (Patterned after Daily Mass Readings & Bible Commentary) */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
         {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           <div className="space-y-1 my-auto">
             {/* Line 1: Kicker Badge & Monastic Subtitle */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
@@ -307,6 +307,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
         )}
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
       {/* Artwork Selector Bar with Shuffle button & lighter styling */}
       <div className="flex items-center gap-2 min-w-0 max-w-full">
         <button
@@ -461,6 +462,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
 
       </div>
 
+      </div>
     </div>
   );
 };

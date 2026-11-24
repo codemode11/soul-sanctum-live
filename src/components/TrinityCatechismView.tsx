@@ -7,7 +7,7 @@ export const TrinityCatechismView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300">

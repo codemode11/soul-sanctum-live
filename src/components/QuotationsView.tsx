@@ -77,12 +77,12 @@ export const QuotationsView: React.FC = () => {
       : SACRED_QUOTATIONS_DATABASE.filter(q => q.sectionId === selectedSection).length;
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 animate-fadeIn">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12 animate-fadeIn">
       {/* Header & Collapsible Settings Container (Dark Brown with Doctors of the Church Gradient) */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-30">
         {/* Main Banner */}
         <div
-          className={`sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
@@ -270,6 +270,7 @@ export const QuotationsView: React.FC = () => {
         )}
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
       {/* Sections & Quotations */}
       <div className="space-y-8">
         {visibleSections.map(section => {
@@ -376,6 +377,7 @@ export const QuotationsView: React.FC = () => {
             </section>
           );
         })}
+      </div>
       </div>
     </div>
   );

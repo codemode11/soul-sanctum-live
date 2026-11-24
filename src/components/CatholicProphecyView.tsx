@@ -241,11 +241,11 @@ export const CatholicProphecyView: React.FC = () => {
     searchQuery.trim() !== '' || selectedStatus !== 'all';
 
   return (
-    <div className="max-w-4xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/88 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12 animate-fadeIn text-stone-900">
+    <div className="max-w-4xl mx-auto space-y-6 pb-12 animate-fadeIn text-stone-900">
       {/* Institutional Archival Banner & Attached Settings Drop-Down (Daily Mass Readings Pattern) */}
       <div className="bg-[#FBF9F5]/85 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-md border border-[#D8CFC0] relative z-20">
         <header
-          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col justify-between relative overflow-hidden ${
+          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col justify-between relative overflow-hidden ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
@@ -511,6 +511,7 @@ export const CatholicProphecyView: React.FC = () => {
         )}
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/88 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6">
       {/* Subtle Unboxed Active Filter / Section Notice When Settings Drawer Is Closed */}
       {!isTopSettingsOpen && (selectedTab !== 'all' || hasActiveSearchOrFilter) && !isViewingNorms && (
         <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs font-serif text-stone-600">
@@ -948,6 +949,7 @@ export const CatholicProphecyView: React.FC = () => {
           In complete obedience to the Magisterium of the Catholic Church, all private revelations cited in this archive are presented purely as historical and devotional witnesses subject to final ecclesiastical judgment under the Catechism (§67) and the May 17, 2024 Dicastery for the Doctrine of the Faith Norms.
         </p>
       </footer>
+      </div>
     </div>
   );
 };

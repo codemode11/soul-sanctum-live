@@ -936,8 +936,8 @@ export const CatholicAIAssistantView: React.FC = () => {
   return (
     <div className="space-y-5 w-full pb-12">
       {/* 1. Daylight Archival Header Banner */}
-      <div className="bg-[#FDFBF7] rounded-xl shadow-xs border border-[#E5DEC9] relative z-20 w-full">
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-[#FDFBF7] via-[#F7F2E7] to-[#FDFBF7] text-stone-900 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+      <div className="bg-[#FDFBF7] rounded-xl shadow-xs border border-[#E5DEC9] relative z-20 w-full max-w-4xl mx-auto">
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-[#FDFBF7] via-[#F7F2E7] to-[#FDFBF7] text-stone-900 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           <div className="space-y-1 text-left">
             {/* Line 1: Clean Unboxed Metadata */}
             <div className="flex items-center gap-2 text-xs text-stone-600 font-serif flex-wrap">

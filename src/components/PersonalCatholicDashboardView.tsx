@@ -1056,7 +1056,7 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
       {/* =====================================================================
           TOP DASHBOARD HEADER & KPI SUMMARY BAR
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.22)] text-[#24140B] flex flex-col justify-center overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.22)] text-[#24140B] flex flex-col justify-center overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-cinzel font-bold text-[#6B3E1E]">

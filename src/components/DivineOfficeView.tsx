@@ -329,13 +329,13 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
   const isWeekdayMonToFri = dateObj.getDay() >= 1 && dateObj.getDay() <= 5;
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12">
 
       {/* TOP CONTAINER: Banner + Settings */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
 
         {/* RECTANGLE 1: Main Title Banner */}
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Divine Office Prayer Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[72%] md:w-[68%] overflow-hidden"
@@ -501,6 +501,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
         )}
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
       {/* RECTANGLE 3: CLEAN HOURS GRID */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-3 sm:p-4 border border-white/70 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
@@ -1145,6 +1146,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
         </section>
       )}
 
+      </div>
     </div>
   );
 };

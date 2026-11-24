@@ -261,11 +261,11 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
   const dateFormatted = formatLongDate(selectedDate);
 
   return (
-    <div className="max-w-4xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-8">
+    <div className="max-w-4xl mx-auto space-y-6 pb-8">
 
       {/* 1. TOP BANNER: Vatican News and Church Dispatches */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Pope Leo XIV Waving from the Tall Apostolic Palace Angelus Window with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-[74%] sm:w-[40%] overflow-hidden"
@@ -397,6 +397,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         )}
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
       {/* 2. DAILY 5 HOLY SEE DISPATCHES (VERTICAL EDITORIAL STACK) */}
       <section className="space-y-3.5">
         <div className="flex items-center justify-between border-b border-stone-200/80 pb-2">
@@ -696,6 +697,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         </div>
       )}
 
+      </div>
     </div>
   );
 };

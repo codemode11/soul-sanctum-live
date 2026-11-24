@@ -1076,7 +1076,7 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
       {/* If embedded inside Church History, show compact header; otherwise show hero banner */}
       {showHeroBanner ? (
         <>
-          <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] relative overflow-hidden rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-xl text-[#F9F6F0] flex flex-col justify-between gap-2">
+          <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative overflow-hidden rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-xl text-[#F9F6F0] flex flex-col justify-between gap-2">
             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
             
             <div className="relative z-10 max-w-3xl space-y-1">

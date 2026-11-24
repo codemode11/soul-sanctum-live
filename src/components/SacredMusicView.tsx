@@ -61,7 +61,7 @@ ${hymn.theologicalContext}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Sacred Music Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
             <Music className="w-4 h-4 text-amber-400" />

@@ -637,12 +637,12 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
     : [activeSectionTab];
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12 animate-fadeIn text-slate-900">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12 animate-fadeIn text-slate-900">
       
       {/* =====================================================================
           1. MASTHEAD BANNER — Slate Gray & Bleached Sand
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md text-[#F9F6F0] relative overflow-hidden flex flex-col justify-between gap-2">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md text-[#F9F6F0] relative overflow-hidden flex flex-col justify-between gap-2">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
 
         <div className="relative z-10 flex items-center gap-3">
@@ -683,6 +683,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
         </div>
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6">
       {/* Attribution & Overall Progress Cards */}
       <div className="space-y-4">
         <div className="p-3.5 sm:p-4 rounded-xl bg-slate-900 border border-slate-700/80 flex items-start gap-3 text-[#EAE2D3] shadow-sm">
@@ -1378,6 +1379,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
         </div>
       </div>
 
+      </div>
     </div>
   );
 };

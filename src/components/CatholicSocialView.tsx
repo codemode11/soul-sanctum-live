@@ -780,10 +780,10 @@ export const CatholicSocialView: React.FC = () => {
   }, [selectedChannelId]);
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 transition-all duration-300">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12 transition-all duration-300">
       {/* Top Banner Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between rounded-xl">
+        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between rounded-xl">
           {/* Right-Side Three Aligned Satellite Dishes Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[74%] md:w-[70%] overflow-hidden"
@@ -903,6 +903,7 @@ export const CatholicSocialView: React.FC = () => {
         </div>
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
       {/* Quick-Jump Favorite Feeds Bar (Visible in All Feeds mode) */}
       {activePlatform === 'all' && favoriteIds.length > 0 && (
         <div className="rounded-xl bg-[#FAF5EE]/90 border border-amber-800/25 px-3.5 py-2.5 flex flex-wrap items-center justify-between gap-2 shadow-xs">
@@ -2427,6 +2428,7 @@ export const CatholicSocialView: React.FC = () => {
           </div>
         </section>
       )}
+      </div>
 
       {/* =====================================================================
           3. ACTIVE VIDEO THEATER MODAL (PORTALED TO DOCUMENT BODY)

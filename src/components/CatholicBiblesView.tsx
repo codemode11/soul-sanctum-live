@@ -470,14 +470,14 @@ export const CatholicBiblesView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-5 mb-12 text-stone-900">
+    <div className="max-w-5xl mx-auto space-y-5 pb-12 text-stone-900">
       
       {/* TOP CONTAINER: Compact First Block + Drop-Down Settings Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
-        {/* RECTANGLE 1: Standardized Main Title Banner (164px height) */}
+        {/* RECTANGLE 1: Standardized Main Title Banner (212px height on sm+) */}
         <div
-          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
@@ -899,6 +899,7 @@ export const CatholicBiblesView: React.FC = () => {
         )}
       </div>
 
+      <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-5">
       {/* MODE 1: MODERN CATHOLIC BIBLES HUB */}
       {activeViewMode === 'modern-editions' && (
         <div className="w-full rounded-xl bg-white border border-stone-200/90 p-5 sm:p-6 space-y-5 shadow-xs">
@@ -1379,6 +1380,7 @@ export const CatholicBiblesView: React.FC = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };

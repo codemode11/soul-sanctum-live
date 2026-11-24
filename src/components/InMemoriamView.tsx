@@ -325,7 +325,7 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
       {/* =====================================================================
           1. SOLEMN HEADER BANNER WITH HOLY WATER ICON
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] border border-[#8B5A2B]/70 shadow-[0_14px_38px_rgba(0,0,0,0.45)] text-amber-50 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] border border-[#8B5A2B]/70 shadow-[0_14px_38px_rgba(0,0,0,0.45)] text-amber-50 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
         <div className="flex items-start sm:items-center gap-3.5 min-w-0">
           <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/50 flex items-center justify-center text-amber-300 shadow-md shrink-0">
             <HolyWaterIcon className="w-5 h-5 text-amber-300" />

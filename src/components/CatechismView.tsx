@@ -265,11 +265,11 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto space-y-6 pb-12">
       
       {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Catechism of the Catholic Church Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden"
@@ -596,7 +596,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
 
       {/* DEFAULT PAGE: What the Catechism Says About Whatever is the Topic of the Gospel */}
       {activeSubView === 'daily' && (
-        <div className="space-y-5">
+        <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-5">
           {/* Main Article Display Card */}
           <article className="bg-white rounded-xl p-4 sm:p-8 shadow-sm border border-stone-200/90 space-y-8 overflow-hidden">
 
