@@ -765,7 +765,7 @@ SOUL SANCTUM`;
         className="sanctum-top-banner relative isolate px-4 py-3 sm:px-6 sm:py-4 h-[196px] sm:h-[212px] rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 overflow-hidden flex flex-col justify-center"
         style={{
           background:
-            'linear-gradient(100deg, #0D1729 0%, #152846 38%, #224474 66%, #3E6FAE 86%, #568ACE 100%)',
+            'linear-gradient(100deg, #0D1729 0%, #152846 36%, #224474 62%, #3E6FAE 82%, #5285C8 100%)',
         }}
       >
         {/* Soft continuous atmospheric glow bridging banner blue into the Lanciano sky */}
@@ -773,13 +773,13 @@ SOUL SANCTUM`;
           className="pointer-events-none absolute inset-0 z-0"
           style={{
             background:
-              'radial-gradient(ellipse 46% 95% at 88% 42%, rgba(126, 178, 240, 0.42) 0%, rgba(74, 126, 194, 0.16) 48%, transparent 78%)',
+              'radial-gradient(ellipse 44% 95% at 84% 42%, rgba(126, 178, 240, 0.42) 0%, rgba(74, 126, 194, 0.16) 48%, transparent 78%)',
           }}
         />
 
         {/* Right-aligned Eucharistic Miracle of Lanciano Reliquary */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 flex items-center justify-end z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-3 sm:right-7 flex items-center justify-end z-0"
           aria-hidden="true"
         >
           <img
@@ -790,9 +790,9 @@ SOUL SANCTUM`;
             className="h-full w-auto max-w-none block"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.12) 7%, rgba(0,0,0,0.42) 15%, rgba(0,0,0,0.78) 24%, rgba(0,0,0,0.95) 33%, black 42%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.16) 6%, rgba(0,0,0,0.58) 14%, rgba(0,0,0,0.94) 24%, black 32%, black 82%, rgba(0,0,0,0.78) 91%, rgba(0,0,0,0.22) 97%, transparent 100%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.12) 7%, rgba(0,0,0,0.42) 15%, rgba(0,0,0,0.78) 24%, rgba(0,0,0,0.95) 33%, black 42%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.16) 6%, rgba(0,0,0,0.58) 14%, rgba(0,0,0,0.94) 24%, black 32%, black 82%, rgba(0,0,0,0.78) 91%, rgba(0,0,0,0.22) 97%, transparent 100%)',
             }}
           />
         </div>
@@ -802,11 +802,11 @@ SOUL SANCTUM`;
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              'linear-gradient(to right, rgba(13,23,41,0.72) 0%, rgba(21,40,70,0.5) 48%, rgba(34,68,116,0.18) 76%, transparent 94%), linear-gradient(to top, rgba(13,23,41,0.42) 0%, transparent 24%)',
+              'linear-gradient(to right, rgba(13,23,41,0.72) 0%, rgba(21,40,70,0.48) 46%, rgba(34,68,116,0.16) 72%, transparent 90%), linear-gradient(to top, rgba(13,23,41,0.42) 0%, transparent 24%)',
           }}
         />
 
-        <div className="relative z-10 space-y-1 pr-[106px] sm:pr-[128px]">
+        <div className="relative z-10 space-y-1 pr-[118px] sm:pr-[156px]">
           <div className="flex items-center gap-1.5">
             <span className="leading-tight font-cinzel text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wider text-[#DFD5C3] flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-[#EAE2D3] shrink-0" />

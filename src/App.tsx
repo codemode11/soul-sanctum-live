@@ -462,6 +462,127 @@ export default function App() {
 
   const mainContentRef = React.useRef<HTMLDivElement>(null);
   const mainViewRef = React.useRef<HTMLElement>(null);
+  const lastSettledScrollYRef = React.useRef<number>(0);
+  const isProgrammaticSnapRef = React.useRef<boolean>(false);
+  const programmaticSnapResetTimerRef = React.useRef<number | null>(null);
+
+  // Shared top grid line matching Navigation's sticky offset (md:top-6 = 24px)
+  const getGridSnapTargetY = React.useCallback((): number | null => {
+    if (typeof window === 'undefined') return null;
+    const targetEl = mainContentRef.current || mainViewRef.current;
+    if (!targetEl) return null;
+    const topInset = window.innerWidth >= 768 ? 24 : 12;
+    const rect = targetEl.getBoundingClientRect();
+    return Math.max(0, Math.round(rect.top + window.scrollY - topInset));
+  }, []);
+
+  const snapWindowToGrid = React.useCallback(
+    (behavior: ScrollBehavior = 'smooth') => {
+      if (typeof window === 'undefined') return;
+      const targetY = getGridSnapTargetY();
+      if (targetY === null) return;
+
+      isProgrammaticSnapRef.current = true;
+      lastSettledScrollYRef.current = targetY;
+      window.scrollTo({ top: targetY, behavior });
+
+      if (programmaticSnapResetTimerRef.current !== null) {
+        window.clearTimeout(programmaticSnapResetTimerRef.current);
+      }
+      programmaticSnapResetTimerRef.current = window.setTimeout(() => {
+        isProgrammaticSnapRef.current = false;
+        lastSettledScrollYRef.current = window.scrollY;
+      }, 450);
+    },
+    [getGridSnapTargetY]
+  );
+
+  // Direction-aware proximity snap-to-grid: aligns Index and Banner tops at the exact same 24px line
+  // when arriving at the section, while yielding freely whenever the user intentionally scrolls the Index or panel.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    lastSettledScrollYRef.current = window.scrollY;
+
+    let snapTimer: number | null = null;
+    let isPointerDown = false;
+    let lastIndexInteractionTs = 0;
+
+    const handlePointerDown = (e: PointerEvent) => {
+      isPointerDown = true;
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('aside')) {
+        lastIndexInteractionTs = Date.now();
+      }
+    };
+
+    const handlePointerUp = () => {
+      isPointerDown = false;
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target?.closest('aside')) {
+        lastIndexInteractionTs = Date.now();
+      }
+    };
+
+    const handleWindowScroll = () => {
+      if (isProgrammaticSnapRef.current) return;
+
+      if (snapTimer !== null) {
+        window.clearTimeout(snapTimer);
+      }
+
+      snapTimer = window.setTimeout(() => {
+        if (isPointerDown || isProgrammaticSnapRef.current) return;
+        if (Date.now() - lastIndexInteractionTs < 400) {
+          lastSettledScrollYRef.current = window.scrollY;
+          return;
+        }
+
+        const snapY = getGridSnapTargetY();
+        if (snapY === null) {
+          lastSettledScrollYRef.current = window.scrollY;
+          return;
+        }
+
+        const currentY = window.scrollY;
+        const startY = lastSettledScrollYRef.current;
+        const deltaFromGrid = currentY - snapY;
+        const startedAtGrid = Math.abs(startY - snapY) <= 8;
+        const movedTowardOrAcrossGrid =
+          Math.abs(currentY - snapY) < Math.abs(startY - snapY) ||
+          (startY - snapY) * (currentY - snapY) <= 0;
+
+        // Only snap when arriving near the Index/Banner top line (±112px); never yank back if moving away
+        if (
+          !startedAtGrid &&
+          movedTowardOrAcrossGrid &&
+          Math.abs(deltaFromGrid) > 1 &&
+          Math.abs(deltaFromGrid) <= 112
+        ) {
+          snapWindowToGrid('smooth');
+        } else {
+          lastSettledScrollYRef.current = currentY;
+        }
+      }, 150);
+    };
+
+    window.addEventListener('pointerdown', handlePointerDown, { passive: true });
+    window.addEventListener('pointerup', handlePointerUp, { passive: true });
+    window.addEventListener('pointercancel', handlePointerUp, { passive: true });
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
+
+    return () => {
+      if (snapTimer !== null) window.clearTimeout(snapTimer);
+      window.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointerup', handlePointerUp);
+      window.removeEventListener('pointercancel', handlePointerUp);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleWindowScroll);
+    };
+  }, [getGridSnapTargetY, snapWindowToGrid]);
 
   const handleSelectTab = (tab: ActiveTab) => {
     setIsAdorationOpen(false);
@@ -477,21 +598,8 @@ export default function App() {
         }
       }
 
-      const scrollToSelectedBanner = () => {
-        const targetEl = mainViewRef.current || mainContentRef.current;
-        if (targetEl) {
-          const rect = targetEl.getBoundingClientRect();
-          const absoluteTop = rect.top + window.scrollY;
-          const topInset = window.innerWidth >= 768 ? 20 : 10;
-          const targetY = Math.max(0, Math.round(absoluteTop - topInset));
-          window.scrollTo({ top: targetY, behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      };
-
       window.requestAnimationFrame(() => {
-        scrollToSelectedBanner();
+        snapWindowToGrid('smooth');
       });
     }
   };
