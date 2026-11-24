@@ -108,23 +108,23 @@ export const MarianApparitionsView: React.FC = () => {
     <div className="max-w-4xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12 animate-fadeIn text-slate-900">
       
       {/* Marian Header Banner — Slate Gray & Bleached Sand (matching Eucharistic Miracles) */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] border border-slate-700/80 shadow-md space-y-4 relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] border border-slate-700/80 shadow-md relative overflow-hidden flex flex-col justify-between gap-2">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
         
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-xl bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70">
-              <Star className="w-4 h-4" />
+            <span className="p-1 rounded-lg bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70">
+              <Star className="w-3.5 h-3.5" />
             </span>
-            <span className="font-cinzel text-xs font-bold text-[#DFD5C3] tracking-wider uppercase">
+            <span className="font-cinzel text-[11px] font-bold text-[#DFD5C3] tracking-wider uppercase">
               Sancta Maria, Regina Caeli • Major Marian Apparitions
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1.5 bg-slate-950/50 p-1 rounded-xl border border-slate-600/60">
+          <div className="flex flex-wrap items-center gap-1 bg-slate-950/50 p-1 rounded-xl border border-slate-600/60">
             <button
               onClick={() => setActiveTab('apparitions')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer ${
+              className={`h-7 px-2.5 rounded-lg text-[11px] font-cinzel transition-all cursor-pointer ${
                 activeTab === 'apparitions'
                   ? 'bg-[#F4EFE6] text-slate-900 shadow-sm font-bold border border-[#DFD5C3]'
                   : 'text-[#EAE2D3] hover:text-white hover:bg-slate-700/70 font-semibold'
@@ -134,7 +134,7 @@ export const MarianApparitionsView: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('medjugorje')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel transition-all cursor-pointer ${
+              className={`h-7 px-2.5 rounded-lg text-[11px] font-cinzel transition-all cursor-pointer ${
                 activeTab === 'medjugorje'
                   ? 'bg-[#F4EFE6] text-slate-900 shadow-sm font-bold border border-[#DFD5C3]'
                   : 'text-[#EAE2D3] hover:text-white hover:bg-slate-700/70 font-semibold'
@@ -145,32 +145,34 @@ export const MarianApparitionsView: React.FC = () => {
           </div>
         </div>
 
-        <h2 className="relative z-10 font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5] tracking-wide">
-          Major Marian Apparitions and Messages
-        </h2>
-        
-        <p className="relative z-10 text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-2xl leading-relaxed">
-          &ldquo;A great sign appeared in heaven: a woman clothed with the sun, with the moon under her feet.&rdquo; Explore Church-approved Marian apparitions across centuries and continents—from Guadalupe to Lourdes, Fátima, Akita, Kibeho, and beyond. Discover Our Lady&apos;s messages of prayer, peace, penance, and maternal protection.
-        </p>
+        <div className="relative z-10 space-y-1">
+          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+            Major Marian Apparitions and Messages
+          </h2>
+          
+          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+            &ldquo;A great sign appeared in heaven: a woman clothed with the sun, with the moon under her feet.&rdquo; Explore Church-approved Marian apparitions across centuries—from Guadalupe to Lourdes, Fátima, Akita, and Kibeho.
+          </p>
+        </div>
+      </div>
 
-        {/* Quick Stats Bar */}
-        <div className="relative z-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 border-t border-slate-600/60">
-          <div className="p-2.5 rounded-xl bg-slate-950/35 border border-slate-600/50 text-center">
-            <span className="block font-cinzel text-lg font-bold text-[#FBF9F5]">15</span>
-            <span className="text-[10px] font-serif text-[#DFD5C3]">Major Apparitions</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-950/35 border border-slate-600/50 text-center">
-            <span className="block font-cinzel text-lg font-bold text-[#FBF9F5]">10</span>
-            <span className="text-[10px] font-serif text-[#DFD5C3]">Nations Represented</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-950/35 border border-slate-600/50 text-center">
-            <span className="block font-cinzel text-lg font-bold text-[#FBF9F5]">40 A.D. – Present</span>
-            <span className="text-[10px] font-serif text-[#DFD5C3]">Historical Span</span>
-          </div>
-          <div className="p-2.5 rounded-xl bg-slate-950/35 border border-slate-600/50 text-center">
-            <span className="block font-cinzel text-lg font-bold text-[#FBF9F5]">100% Approved</span>
-            <span className="text-[10px] font-serif text-[#DFD5C3]">Vatican and Diocesan</span>
-          </div>
+      {/* Quick Stats Bar */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-center text-[#F9F6F0] shadow-xs">
+          <span className="block font-cinzel text-base sm:text-lg font-bold text-[#FBF9F5]">15</span>
+          <span className="text-[11px] font-serif text-[#DFD5C3]">Major Apparitions</span>
+        </div>
+        <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-center text-[#F9F6F0] shadow-xs">
+          <span className="block font-cinzel text-base sm:text-lg font-bold text-[#FBF9F5]">10</span>
+          <span className="text-[11px] font-serif text-[#DFD5C3]">Nations Represented</span>
+        </div>
+        <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-center text-[#F9F6F0] shadow-xs">
+          <span className="block font-cinzel text-base sm:text-lg font-bold text-[#FBF9F5]">40 A.D. – Present</span>
+          <span className="text-[11px] font-serif text-[#DFD5C3]">Historical Span</span>
+        </div>
+        <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-center text-[#F9F6F0] shadow-xs">
+          <span className="block font-cinzel text-base sm:text-lg font-bold text-[#FBF9F5]">100% Approved</span>
+          <span className="text-[11px] font-serif text-[#DFD5C3]">Vatican and Diocesan</span>
         </div>
       </div>
 

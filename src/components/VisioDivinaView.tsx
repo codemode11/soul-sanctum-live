@@ -167,26 +167,26 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
         {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-1.5 my-auto">
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-1 my-auto">
             {/* Line 1: Kicker Badge & Monastic Subtitle */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950">
-                <Eye className="w-3.5 h-3.5" />
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950">
+                <Eye className="w-3 h-3" />
                 <span>Sacred Art Contemplation</span>
               </span>
-              <span className="text-xs sm:text-sm text-amber-300/80 font-cinzel uppercase tracking-wider">
+              <span className="text-[11px] sm:text-xs text-amber-300/80 font-cinzel uppercase tracking-wider">
                 The Ancient Monastic Way of Divine Seeing
               </span>
             </div>
 
             {/* Line 2: Main Title */}
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight">
               Visio Divina
             </h2>
 
             {/* Line 3: Contemplative Subtitle */}
-            <p className="text-xs sm:text-sm text-stone-300 font-serif">
+            <p className="text-xs sm:text-sm text-stone-300 font-serif line-clamp-1">
               Contemplating God through the luminous beauty of Catholic sacred art
             </p>
           </div>

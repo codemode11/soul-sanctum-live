@@ -475,9 +475,9 @@ export const CatholicBiblesView: React.FC = () => {
       {/* TOP CONTAINER: Compact First Block + Drop-Down Settings Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
-        {/* RECTANGLE 1: Standardized Main Title Banner (Daily Mass Readings Banner Dimensions) */}
+        {/* RECTANGLE 1: Standardized Main Title Banner (164px height) */}
         <div
-          className={`sanctum-top-banner relative overflow-hidden px-5 py-4 sm:px-6 sm:py-5 min-h-[204px] sm:min-h-[236px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
@@ -506,27 +506,27 @@ export const CatholicBiblesView: React.FC = () => {
             aria-hidden="true"
           />
 
-          <div className="relative z-20 flex flex-col justify-between gap-4 max-w-full sm:max-w-[48%] my-auto">
-            <div className="space-y-1.5">
+          <div className="relative z-20 flex flex-col justify-between gap-2 max-w-full sm:max-w-[52%] my-auto">
+            <div className="space-y-1">
               {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
-              <div className="flex items-center gap-2.5 flex-wrap overflow-hidden">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">
-                  <BookOpen className="w-3.5 h-3.5 text-amber-950" />
+              <div className="flex items-center gap-2 flex-nowrap overflow-hidden">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">
+                  <BookOpen className="w-3 h-3 text-amber-950" />
                   <span>Sacred Scripture</span>
                 </span>
-                <span className="text-sm sm:text-base text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
-                  {selectedBook.traditionalName} • Chapter {selectedChapter} • {activePrimaryTranslationMeta.shortName}
+                <span className="text-xs sm:text-sm text-stone-200 font-serif truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                  {selectedBook.traditionalName} • Ch. {selectedChapter} • {activePrimaryTranslationMeta.shortName}
                 </span>
               </div>
 
               {/* Line 2: Main Title */}
-              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+              <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 Holy Bible
               </h2>
             </div>
 
             {/* Line 3: View Switcher & Drop-Down Settings Button kept strictly on the left */}
-            <div className="flex flex-wrap items-center justify-start gap-2 sm:gap-2.5 shrink-0">
+            <div className="flex flex-wrap items-center justify-start gap-2 shrink-0 pt-1">
               <div className="inline-flex items-center h-8 rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 backdrop-blur-xs text-amber-100 p-0.5 shadow-xs">
                 <button
                   type="button"

@@ -265,7 +265,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
 
       {/* 1. TOP BANNER: Vatican News and Church Dispatches */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
-        <div className={`sanctum-top-banner relative overflow-hidden px-4 py-4 sm:px-6 sm:py-5 min-h-[180px] sm:min-h-[212px] bg-[#1C120C] text-amber-50 border-b border-amber-900/40 flex flex-col justify-center ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Pope Leo XIV Waving from the Tall Apostolic Palace Angelus Window with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-[74%] sm:w-[40%] overflow-hidden"
@@ -290,24 +290,24 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
             aria-hidden="true"
           />
 
-          <div className="relative z-10 max-w-full sm:max-w-[56%] space-y-3">
+          <div className="relative z-10 max-w-full sm:max-w-[58%] flex flex-col justify-between flex-1 gap-2">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
-                <Globe className="w-4 h-4 text-amber-400" />
-                <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                <Globe className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300 truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                   Acta Apostolicae Sedis &amp; Vatican News
                 </span>
               </div>
-              <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                 Vatican News and Church Dispatches
               </h2>
-              <p className="text-xs text-stone-200 font-serif-sacred max-w-2xl line-clamp-2 sm:line-clamp-none drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
-                Updated daily with real-time reports covering the Holy Father&apos;s homily, Dicastery directives, Saint of the Day, and universal Church missions.
+              <p className="text-xs text-stone-200 font-serif-sacred max-w-2xl line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                Updated daily with real-time reports covering the Holy Father&apos;s homily, Dicastery directives, and universal Church missions.
               </p>
             </div>
 
             {/* Refresh Feed & Historical Archive Horizontal Bar */}
-            <div className="flex flex-wrap items-center gap-2.5">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => handleRefreshVaticanFeed(true)}
@@ -336,7 +336,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
                   }`}
                 />
               </button>
-              <span className="text-[11px] font-serif text-amber-200/90 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
+              <span className="hidden md:inline text-[11px] font-serif text-amber-200/90 truncate max-w-[140px] drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
                 {lastLiveSync}
               </span>
             </div>

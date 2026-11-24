@@ -640,59 +640,61 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12 animate-fadeIn text-slate-900">
       
       {/* =====================================================================
-          1. MASTHEAD BANNER & OVERALL PROGRESS — Slate Gray & Bleached Sand
+          1. MASTHEAD BANNER — Slate Gray & Bleached Sand
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md space-y-5 text-[#F9F6F0] relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md text-[#F9F6F0] relative overflow-hidden flex flex-col justify-between gap-2">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
 
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-700/70 pb-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-xl bg-slate-800/90 border border-slate-600/70 flex items-center justify-center text-[#EAE2D3] shadow-xs shrink-0">
-              <NotebookWithBallpenIcon className="w-6 h-6 text-[#EAE2D3]" />
-            </div>
-            <div>
-              <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#DFD5C3] block">
-                Rule of Life • Daily Devotional Order
-              </span>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5]">
-                Spiritual Checklist &amp; Prayer Habit Tracker
-              </h2>
-            </div>
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-slate-800/90 border border-slate-600/70 flex items-center justify-center text-[#EAE2D3] shadow-xs shrink-0">
+            <NotebookWithBallpenIcon className="w-5 h-5 text-[#EAE2D3]" />
           </div>
-
-          <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-            {onOpenCebuParishes && (
-              <button
-                onClick={onOpenCebuParishes}
-                className="px-3.5 py-2 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-900 border border-[#DFD5C3] text-xs font-cinzel font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                <MapPin className="w-3.5 h-3.5 text-slate-700" />
-                <span>Holy Mass &amp; Confession Schedules</span>
-              </button>
-            )}
-            <button
-              onClick={resetAll}
-              className="px-3 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-600/70 text-[#EAE2D3] hover:text-white text-xs font-cinzel font-bold transition-colors cursor-pointer flex items-center gap-1.5"
-              title="Uncheck all items for today"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reset Today</span>
-            </button>
+          <div className="min-w-0">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-[#DFD5C3] block">
+              Rule of Life • Daily Devotional Order
+            </span>
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] truncate leading-tight">
+              Spiritual Checklist &amp; Prayer Habit Tracker
+            </h2>
+            <p className="text-xs text-[#EAE2D3] font-serif line-clamp-1">
+              Track your daily Catholic prayers, precepts, examen, and November suffrages for the Holy Souls.
+            </p>
           </div>
         </div>
 
-        {/* Attribution to The Indulgence Collective */}
-        <div className="relative z-10 p-3.5 rounded-xl bg-slate-950/35 border border-slate-600/60 flex items-start gap-3">
+        <div className="relative z-10 flex flex-wrap items-center gap-2 pt-1">
+          {onOpenCebuParishes && (
+            <button
+              onClick={onOpenCebuParishes}
+              className="h-8 px-3 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-900 border border-[#DFD5C3] text-xs font-cinzel font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <MapPin className="w-3.5 h-3.5 text-slate-700" />
+              <span>Holy Mass &amp; Confession Schedules</span>
+            </button>
+          )}
+          <button
+            onClick={resetAll}
+            className="h-8 px-3 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-600/70 text-[#EAE2D3] hover:text-white text-xs font-cinzel font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+            title="Uncheck all items for today"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset Today</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Attribution & Overall Progress Cards */}
+      <div className="space-y-4">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-slate-900 border border-slate-700/80 flex items-start gap-3 text-[#EAE2D3] shadow-sm">
           <Sparkles className="w-5 h-5 text-[#EAE2D3] shrink-0 mt-0.5" />
-          <div className="text-xs sm:text-sm text-[#EAE2D3] leading-relaxed font-serif">
+          <div className="text-xs sm:text-sm leading-relaxed font-serif">
             <strong className="text-[#FBF9F5] font-cinzel tracking-wide">Recommended Devotions &amp; Indulgences: </strong>
             Inspired by and attributed to <span className="font-bold text-[#FBF9F5]">The Indulgence Collective</span> and the <em>Enchiridion Indulgentiarum</em>, 
             providing verified prayers, November suffrages for the Holy Souls, and daily spiritual exercises.
           </div>
         </div>
 
-        {/* Progress Bar & Summary */}
-        <div className="relative z-10 bg-[#FBF9F5] p-4 sm:p-5 rounded-xl border border-[#D8CFC0] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-900 shadow-inner">
+        <div className="bg-[#FBF9F5] p-4 sm:p-5 rounded-xl border border-[#D8CFC0] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-slate-900 shadow-xs">
           <div className="space-y-1.5 flex-1">
             <div className="flex items-center justify-between sm:justify-start gap-3">
               <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-slate-700">

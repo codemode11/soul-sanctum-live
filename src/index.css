@@ -1408,25 +1408,27 @@ svg.sanctum-holy-bible-icon:hover .sanctum-holy-bible-glow-layer {
     drop-shadow(0 0 5px rgba(250, 204, 21, 0.8));
 }
 
-/* Standardized Default Top Banner Dimensions (matched to Daily Mass Readings top banner: 164px height, px-5 sm:px-6 pt-4 pb-4) */
-.sanctum-top-banner {
-  min-height: 152px;
-  padding-top: 0.875rem;
-  padding-bottom: 0.875rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-@media (min-width: 640px) {
+/* Standardized Default Top Banner Dimensions (matched to Novena Tracker / Sanctum standard: 164px height, px-5 sm:px-6 pt-4 pb-4) */
+@layer components {
   .sanctum-top-banner {
-    min-height: 164px;
+    min-height: 156px;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 640px) {
+    .sanctum-top-banner {
+      min-height: 164px;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
   }
 }
 

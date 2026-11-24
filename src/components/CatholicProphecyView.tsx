@@ -245,26 +245,26 @@ export const CatholicProphecyView: React.FC = () => {
       {/* Institutional Archival Banner & Attached Settings Drop-Down (Daily Mass Readings Pattern) */}
       <div className="bg-[#FBF9F5]/85 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-md border border-[#D8CFC0] relative z-20">
         <header
-          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-7 min-h-[164px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col justify-between relative overflow-hidden ${
+          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col justify-between relative overflow-hidden ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
           <div className="pointer-events-none absolute -right-14 -bottom-14 w-72 h-44 rounded-full bg-[#EAE2D3]/12 blur-3xl" />
 
-          <div className="relative z-10 space-y-2">
+          <div className="relative z-10 space-y-1">
             <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#DFD5C3]">
               Prophetia Catholica · Sacred Scripture, Marian Messages &amp; Saints
             </p>
-            <h1 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5] tracking-wide">
+            <h1 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
               Catholic Prophecy
             </h1>
-            <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-2xl leading-relaxed">
-              “Do not quench the Spirit. Do not despise prophetic utterances. Test everything; retain what is good.” (1 Thess 5:19–21). A curated archive of the prophecies of Jesus Christ, Catholic Biblical End Times Scriptures, messages of the Blessed Virgin Mary, and witnesses of canonized Saints, Doctors, Popes, and mystics bearing upon this day and age—discerned faithfully under the Catechism and the May 2024 Vatican Norms.
+            <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-1">
+              “Test everything; retain what is good.” (1 Thess 5:19–21) — Sacred Scripture, Marian messages, and Catholic witnesses discerned under the Catechism and May 2024 Vatican Norms.
             </p>
           </div>
 
           {/* Lower-Right Banner Controls: May 2024 Vatican Norms + Settings Drop-Down */}
-          <div className="relative z-10 flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
+          <div className="relative z-10 flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0">
             <button
               type="button"
               onClick={() =>

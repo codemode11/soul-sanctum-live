@@ -191,154 +191,154 @@ export const CatholicLinksView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-14 animate-fadeIn">
       {/* Header Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-[#1C120C] via-[#2B1B10] to-[#1C120C] rounded-xl text-[#F7EBE1] shadow-xl border border-[#8B5A2B]/50">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
-          <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#6B4423]/40 border border-[#C89F72]/40 text-[#F5D7B2] text-xs font-cinzel font-bold uppercase tracking-wider">
-              <Compass className="w-3.5 h-3.5 text-[#FFD700]" />
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-[#1C120C] via-[#2B1B10] to-[#1C120C] rounded-xl text-[#F7EBE1] shadow-xl border border-[#8B5A2B]/50 flex flex-col justify-center overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-1 max-w-2xl min-w-0">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#6B4423]/40 border border-[#C89F72]/40 text-[#F5D7B2] text-[11px] font-cinzel font-bold uppercase tracking-wider">
+              <Compass className="w-3 h-3 text-[#FFD700]" />
               <span>Curated Directory of Faithful Apostolates</span>
             </div>
 
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
               Catholic Links
             </h2>
 
-            <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-              A trusted guide to the finest Catholic websites across the internet — with clear explanations of why each site is spiritually and intellectually valuable, key features, and direct links.
+            <p className="text-xs sm:text-sm text-stone-300 font-serif leading-snug line-clamp-2">
+              A trusted guide to the finest Catholic websites across the internet — with clear explanations of why each site is spiritually and intellectually valuable.
             </p>
           </div>
 
           <div className="shrink-0">
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#C89F72]/50 text-white text-xs font-sans font-semibold shadow-md transition-all cursor-pointer"
+              className="h-8 inline-flex items-center gap-1.5 px-3.5 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#C89F72]/50 text-white text-xs font-sans font-semibold shadow-md transition-all cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-3.5 h-3.5" />
               <span>{showAddForm ? 'Close Form' : 'Add Catholic Website'}</span>
             </button>
           </div>
         </div>
-
-        {/* Interactive Add Website Drawer */}
-        {showAddForm && (
-          <form
-            onSubmit={handleAddWebsite}
-            className="mt-6 pt-5 border-t border-[#8B5A2B]/40 space-y-4 bg-black/30 p-4 sm:p-5 rounded-xl"
-          >
-            <div className="flex items-center justify-between">
-              <h3 className="font-cinzel text-sm sm:text-base font-bold text-[#FFD700]">
-                Add a Catholic Website to the Directory
-              </h3>
-              <span className="text-[11px] text-stone-400 font-serif italic">
-                Saved directly to your Catholic Links directory
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <div>
-                <label className="block text-xs font-semibold text-stone-300 mb-1">
-                  Website Name *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={newName}
-                  onChange={e => setNewName(e.target.value)}
-                  placeholder="e.g., Catholic Culture"
-                  className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-stone-300 mb-1">
-                  Website URL *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={newUrl}
-                  onChange={e => setNewUrl(e.target.value)}
-                  placeholder="e.g., https://www.catholicculture.org"
-                  className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-stone-300 mb-1">
-                  Category
-                </label>
-                <select
-                  value={newCategory}
-                  onChange={e => setNewCategory(e.target.value as CatholicWebsiteLink['category'])}
-                  className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
-                >
-                  <option value="Holy See and Magisterium">Holy See and Magisterium</option>
-                  <option value="Scripture and Liturgy">Scripture and Liturgy</option>
-                  <option value="Patristics and Theology">Patristics and Theology</option>
-                  <option value="Apologetics and Catechesis">Apologetics and Catechesis</option>
-                  <option value="News and Catholic Culture">News and Catholic Culture</option>
-                  <option value="Prayer and Devotion">Prayer and Devotion</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-stone-300 mb-1">
-                  Short Subtitle / Tagline
-                </label>
-                <input
-                  type="text"
-                  value={newTagline}
-                  onChange={e => setNewTagline(e.target.value)}
-                  placeholder="e.g., Liturgical Year, Library and Catholic Documents"
-                  className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-stone-300 mb-1">
-                Why It's Good (Spiritual and Theological Value)
-              </label>
-              <textarea
-                rows={3}
-                value={newWhyItsGood}
-                onChange={e => setNewWhyItsGood(e.target.value)}
-                placeholder="Explain what makes this Catholic website trustworthy, enriching, and worth visiting..."
-                className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-stone-300 mb-1">
-                Key Highlights (One per line, optional)
-              </label>
-              <textarea
-                rows={2}
-                value={newHighlightsText}
-                onChange={e => setNewHighlightsText(e.target.value)}
-                placeholder="Daily liturgical commentary&#10;Searchable library of Church documents"
-                className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
-              />
-            </div>
-
-            <div className="flex justify-end gap-2">
-              <button
-                type="button"
-                onClick={() => setShowAddForm(false)}
-                className="px-4 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-sans cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-5 py-2 rounded-lg bg-[#6B4423] hover:bg-[#7A4E2D] border border-[#C89F72]/50 text-white text-xs font-sans font-bold cursor-pointer shadow-sm"
-              >
-                Save Website Link
-              </button>
-            </div>
-          </form>
-        )}
       </div>
+
+      {/* Interactive Add Website Drawer */}
+      {showAddForm && (
+        <form
+          onSubmit={handleAddWebsite}
+          className="space-y-4 bg-[#1C120C] border border-[#8B5A2B]/50 p-4 sm:p-5 rounded-xl text-[#F7EBE1] shadow-lg"
+        >
+          <div className="flex items-center justify-between">
+            <h3 className="font-cinzel text-sm sm:text-base font-bold text-[#FFD700]">
+              Add a Catholic Website to the Directory
+            </h3>
+            <span className="text-[11px] text-stone-400 font-serif italic">
+              Saved directly to your Catholic Links directory
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <label className="block text-xs font-semibold text-stone-300 mb-1">
+                Website Name *
+              </label>
+              <input
+                type="text"
+                required
+                value={newName}
+                onChange={e => setNewName(e.target.value)}
+                placeholder="e.g., Catholic Culture"
+                className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-stone-300 mb-1">
+                Website URL *
+              </label>
+              <input
+                type="text"
+                required
+                value={newUrl}
+                onChange={e => setNewUrl(e.target.value)}
+                placeholder="e.g., https://www.catholicculture.org"
+                className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-stone-300 mb-1">
+                Category
+              </label>
+              <select
+                value={newCategory}
+                onChange={e => setNewCategory(e.target.value as CatholicWebsiteLink['category'])}
+                className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
+              >
+                <option value="Holy See and Magisterium">Holy See and Magisterium</option>
+                <option value="Scripture and Liturgy">Scripture and Liturgy</option>
+                <option value="Patristics and Theology">Patristics and Theology</option>
+                <option value="Apologetics and Catechesis">Apologetics and Catechesis</option>
+                <option value="News and Catholic Culture">News and Catholic Culture</option>
+                <option value="Prayer and Devotion">Prayer and Devotion</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-stone-300 mb-1">
+                Short Subtitle / Tagline
+              </label>
+              <input
+                type="text"
+                value={newTagline}
+                onChange={e => setNewTagline(e.target.value)}
+                placeholder="e.g., Liturgical Year, Library and Catholic Documents"
+                className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-stone-300 mb-1">
+              Why It's Good (Spiritual and Theological Value)
+            </label>
+            <textarea
+              rows={3}
+              value={newWhyItsGood}
+              onChange={e => setNewWhyItsGood(e.target.value)}
+              placeholder="Explain what makes this Catholic website trustworthy, enriching, and worth visiting..."
+              className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-stone-300 mb-1">
+              Key Highlights (One per line, optional)
+            </label>
+            <textarea
+              rows={2}
+              value={newHighlightsText}
+              onChange={e => setNewHighlightsText(e.target.value)}
+              placeholder="Daily liturgical commentary&#10;Searchable library of Church documents"
+              className="w-full px-3 py-2 rounded-lg bg-stone-900 border border-[#8B5A2B]/50 text-white text-xs focus:outline-none focus:border-[#FFD700]"
+            />
+          </div>
+
+          <div className="flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={() => setShowAddForm(false)}
+              className="px-4 py-2 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-sans cursor-pointer"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-5 py-2 rounded-lg bg-[#6B4423] hover:bg-[#7A4E2D] border border-[#C89F72]/50 text-white text-xs font-sans font-bold cursor-pointer shadow-sm"
+            >
+              Save Website Link
+            </button>
+          </div>
+        </form>
+      )}
 
       {/* Filter and Search Bar */}
       <div className="bg-white/45 backdrop-blur-xl backdrop-saturate-150 rounded-xl p-4 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] border border-white/60 ring-1 ring-inset ring-white/40 space-y-3">

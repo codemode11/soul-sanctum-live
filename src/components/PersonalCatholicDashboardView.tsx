@@ -1056,91 +1056,91 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
       {/* =====================================================================
           TOP DASHBOARD HEADER & KPI SUMMARY BAR
          ===================================================================== */}
-      <div className="rounded-xl p-5 sm:p-6 bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.22)] text-[#24140B] space-y-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#BFA287] pb-4">
-          <div className="space-y-1">
-            <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm font-cinzel font-bold text-[#6B3E1E]">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.22)] text-[#24140B] flex flex-col justify-center overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs font-cinzel font-bold text-[#6B3E1E]">
               <span>Horarium &amp; Rule of Life</span>
               <span aria-hidden="true">·</span>
-              <span>{currentReading.liturgicalDay}</span>
+              <span className="truncate">{currentReading.liturgicalDay}</span>
             </div>
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#24140B] leading-tight">
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#24140B] leading-tight truncate">
               Personal Catholic Daily Dashboard
             </h2>
-            <p className="text-sm sm:text-base font-serif text-[#4A2B17] leading-snug">
-              Integrated daily sanctuary with Liturgical Calendar, Mass Readings &amp; Homily, 30+ Min Scripture Stopwatch, Prayer Checklist, Prophecies, Indulgences, Prayer Alarms, Magisterium AI News, Catholic Articles, Weather, Notes, and Bible Flashcards.
+            <p className="text-xs sm:text-sm font-serif text-[#4A2B17] leading-snug line-clamp-2">
+              Integrated daily sanctuary with Liturgical Calendar, Mass Readings &amp; Homily, Scripture Stopwatch, Prayer Checklist, Prophecies, Indulgences, Alarms, News &amp; Flashcards.
             </p>
           </div>
 
           {/* Live Canonical Clock & Quick Stats */}
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            <div className="px-4 py-2.5 rounded-xl bg-[#24140B] text-[#FAF4ED] border border-[#8B5A2B] text-right">
-              <div className="text-[11px] font-cinzel text-amber-300 uppercase tracking-wider">
+          <div className="flex items-center gap-2.5 shrink-0">
+            <div className="px-3 py-2 rounded-xl bg-[#24140B] text-[#FAF4ED] border border-[#8B5A2B] text-right">
+              <div className="text-[10px] font-cinzel text-amber-300 uppercase tracking-wider">
                 Canonical Clock
               </div>
-              <div className="font-mono tabular-nums text-lg sm:text-xl font-bold text-white">
+              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-white leading-tight">
                 {currentClockStr || '12:00:00'}
               </div>
             </div>
-            <div className="px-4 py-2.5 rounded-xl bg-white border border-[#C8AD8D] text-right">
-              <div className="text-[11px] font-cinzel text-[#6B3E1E] uppercase tracking-wider">
-                Daily Rule Progress
+            <div className="px-3 py-2 rounded-xl bg-white border border-[#C8AD8D] text-right">
+              <div className="text-[10px] font-cinzel text-[#6B3E1E] uppercase tracking-wider">
+                Rule Progress
               </div>
-              <div className="font-mono tabular-nums text-lg sm:text-xl font-bold text-[#24140B]">
+              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-[#24140B] leading-tight">
                 {completedChecklistCount}/{quickChecklist.length} ({checklistPct}%)
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Active Prayer Alarm Notification Banner */}
-        {triggeredAlarmBanner && (
-          <div className="p-4 rounded-xl bg-[#341D10] text-amber-50 border border-amber-400/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="space-y-0.5">
-              <div className="text-xs font-cinzel font-bold text-amber-300">
-                Canonical Prayer Hour Reached • {triggeredAlarmBanner.time24}
-              </div>
-              <div className="text-base sm:text-lg font-cinzel font-bold text-white">
-                {triggeredAlarmBanner.prayerTitle}
-              </div>
-              <p className="text-sm font-serif italic text-amber-100">
-                {triggeredAlarmBanner.versicleOrNote}
-              </p>
+      {/* Active Prayer Alarm Notification Banner */}
+      {triggeredAlarmBanner && (
+        <div className="p-4 rounded-xl bg-[#341D10] text-amber-50 border border-amber-400/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+          <div className="space-y-0.5">
+            <div className="text-xs font-cinzel font-bold text-amber-300">
+              Canonical Prayer Hour Reached • {triggeredAlarmBanner.time24}
             </div>
-            <button
-              type="button"
-              onClick={() => setTriggeredAlarmBanner(null)}
-              className="px-4 py-2 rounded-lg bg-amber-400 text-stone-950 font-cinzel text-xs font-bold cursor-pointer self-start sm:self-center"
-            >
-              Amen • Dismiss
-            </button>
+            <div className="text-base sm:text-lg font-cinzel font-bold text-white">
+              {triggeredAlarmBanner.prayerTitle}
+            </div>
+            <p className="text-sm font-serif italic text-amber-100">
+              {triggeredAlarmBanner.versicleOrNote}
+            </p>
           </div>
-        )}
-
-        {/* Filter Bar */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          {[
-            { id: 'all', label: 'All 11 Dashboard Modules' },
-            { id: 'liturgy', label: 'Calendar, Mass & Homily' },
-            { id: 'scripture-prayer', label: '30m Scripture Stopwatch, Checklist & Alarms' },
-            { id: 'prophecy-indulgences', label: 'Prophecies & Indulgence Events' },
-            { id: 'news-articles', label: 'Magisterium AI & Catholic Articles' },
-            { id: 'utilities', label: 'Flashcards, Notes & Weather' }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setDashboardFilter(tab.id as any)}
-              className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-colors cursor-pointer border ${
-                dashboardFilter === tab.id
-                  ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B]'
-                  : 'bg-white hover:bg-[#FAF4ED] text-[#341D10] border-[#BFA287]'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          <button
+            type="button"
+            onClick={() => setTriggeredAlarmBanner(null)}
+            className="px-4 py-2 rounded-lg bg-amber-400 text-stone-950 font-cinzel text-xs font-bold cursor-pointer self-start sm:self-center"
+          >
+            Amen • Dismiss
+          </button>
         </div>
+      )}
+
+      {/* Filter Bar */}
+      <div className="rounded-xl p-3 sm:p-4 bg-[#EFE4D7]/90 border border-[#A78262] shadow-sm flex flex-wrap items-center gap-1.5">
+        {[
+          { id: 'all', label: 'All 11 Dashboard Modules' },
+          { id: 'liturgy', label: 'Calendar, Mass & Homily' },
+          { id: 'scripture-prayer', label: '30m Scripture Stopwatch, Checklist & Alarms' },
+          { id: 'prophecy-indulgences', label: 'Prophecies & Indulgence Events' },
+          { id: 'news-articles', label: 'Magisterium AI & Catholic Articles' },
+          { id: 'utilities', label: 'Flashcards, Notes & Weather' }
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setDashboardFilter(tab.id as any)}
+            className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-colors cursor-pointer border ${
+              dashboardFilter === tab.id
+                ? 'bg-[#341D10] text-[#FAF4ED] border-[#24140B]'
+                : 'bg-white hover:bg-[#FAF4ED] text-[#341D10] border-[#BFA287]'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {/* =====================================================================

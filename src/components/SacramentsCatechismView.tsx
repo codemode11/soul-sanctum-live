@@ -161,35 +161,37 @@ export const SacramentsCatechismView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Banner */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 text-amber-50 shadow-md border border-amber-900/40">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-            Septem Sacramenta • Channels of Divine Grace
-          </span>
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300">
+              Septem Sacramenta • Channels of Divine Grace
+            </span>
+          </div>
+          <h3 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-normal leading-tight">
+            Catechism on the Seven Sacraments
+          </h3>
+          <p className="text-xs sm:text-sm text-stone-300 font-serif max-w-3xl leading-snug line-clamp-2">
+            "The sacraments are efficacious signs of grace, instituted by Christ and entrusted to the Church, by which divine life is dispensed to us." (CCC 1131)
+          </p>
         </div>
-        <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-normal">
-          Catechism on the Seven Sacraments
-        </h3>
-        <p className="text-xs sm:text-sm text-stone-300 font-serif max-w-2xl mt-1">
-          "The sacraments are efficacious signs of grace, instituted by Christ and entrusted to the Church, by which divine life is dispensed to us." (CCC 1131)
-        </p>
+      </div>
 
-        {/* Group tabs */}
-        <div className="flex flex-wrap gap-2 mt-5">
-          {(['All', 'Initiation', 'Healing', 'Service'] as const).map(grp => (
-            <button
-              key={grp}
-              onClick={() => setActiveGroup(grp)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-serif transition-all cursor-pointer ${
-                activeGroup === grp
-                  ? 'bg-amber-400 text-amber-950 shadow-sm font-bold'
-                  : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
-              }`}
-            >
-              {grp === 'All' ? 'All Seven Sacraments' : `Sacraments of ${grp}`}
-            </button>
-          ))}
-        </div>
+      {/* Group tabs */}
+      <div className="flex flex-wrap gap-2">
+        {(['All', 'Initiation', 'Healing', 'Service'] as const).map(grp => (
+          <button
+            key={grp}
+            onClick={() => setActiveGroup(grp)}
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-serif transition-all cursor-pointer ${
+              activeGroup === grp
+                ? 'bg-amber-400 text-amber-950 shadow-sm font-bold'
+                : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
+            }`}
+          >
+            {grp === 'All' ? 'All Seven Sacraments' : `Sacraments of ${grp}`}
+          </button>
+        ))}
       </div>
 
       {/* Sacraments Selector Pills */}

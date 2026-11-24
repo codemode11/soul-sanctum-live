@@ -61,18 +61,18 @@ ${hymn.theologicalContext}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Sacred Music Banner */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 sm:p-8 text-amber-50 shadow-md border border-amber-900/40 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
-            <Music className="w-5 h-5 text-amber-400" />
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+            <Music className="w-4 h-4 text-amber-400" />
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300">
               Musica Sacra • Gregorian Chant and Sacred Polyphony
             </span>
           </div>
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             Catholic Sacred Music Treasury
           </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
+          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl leading-snug line-clamp-2">
             "He who sings prays twice" (St. Augustine). Immerse in the timeless modal chants of the Church, with Latin lyrics, English translations, and sacred spiritual reflection.
           </p>
         </div>

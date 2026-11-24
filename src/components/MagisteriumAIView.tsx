@@ -555,7 +555,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
       {/* 1. Archival Editorial Header (Divine Office / Daily Mass Readings / Holy Bible Style) */}
       <section className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         <div
-          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[192px] sm:min-h-[214px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isDomainMenuOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
@@ -588,29 +588,28 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1.5 my-auto max-w-[85%] sm:max-w-[58%]">
-            <div className="flex items-center gap-2 text-xs sm:text-sm font-serif flex-wrap">
-              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[85%] sm:max-w-[58%]">
+            <div className="flex items-center gap-2 text-[11px] sm:text-xs font-serif flex-nowrap overflow-hidden">
+              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 28,000+ Church Documents
               </span>
-              <span className="text-amber-200/70" aria-hidden="true">·</span>
-              <span className="text-stone-200 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <span className="text-amber-200/70 shrink-0" aria-hidden="true">·</span>
+              <span className="text-stone-200 truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Catechism, Canon Law &amp; Ecumenical Councils
               </span>
             </div>
 
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
               Magisterium AI
             </h2>
 
-            <p className="text-xs sm:text-sm text-stone-200 font-serif font-medium max-w-xl leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
-              Consult the authentic teaching authority of the Catholic Church with cited references
-              from the Catechism, Code of Canon Law, Councils, Papal Encyclicals, and Doctors of the Church.
+            <p className="text-xs text-stone-200 font-serif font-medium max-w-xl leading-snug line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              Consult the authentic teaching authority of the Catholic Church with cited references from the Catechism, Canon Law, Councils, and Doctors of the Church.
             </p>
           </div>
 
           {/* Bottom-Right Controls Row matching Divine Office & Daily Mass Readings */}
-          <div className="relative z-10 flex items-center justify-end gap-2 mt-auto pt-3">
+          <div className="relative z-10 flex items-center justify-end gap-2 mt-auto pt-1.5">
             <button
               ref={domainButtonRef}
               type="button"
@@ -619,7 +618,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
               aria-haspopup="true"
               aria-label={isDomainMenuOpen ? 'Hide Settings' : 'Show Settings'}
               title="Magisterium AI Settings"
-              className={`h-9 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
+              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
                 isDomainMenuOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'

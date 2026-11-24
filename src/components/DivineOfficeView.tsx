@@ -335,7 +335,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
 
         {/* RECTANGLE 1: Main Title Banner */}
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Divine Office Prayer Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[72%] md:w-[68%] overflow-hidden"
@@ -360,19 +360,19 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1.5 my-auto max-w-[78%] sm:max-w-[60%]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[78%] sm:max-w-[60%]">
             <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-400 shrink-0" />
-              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-200/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]">
+              <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-200/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]">
                 Liturgy of the Hours
               </span>
             </div>
 
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
               Divine Office
             </h2>
 
-            <p className="text-xs sm:text-sm text-stone-200 font-serif font-medium drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+            <p className="text-xs sm:text-sm text-stone-200 font-serif font-medium line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
               {toCurvedQuotes(hourData.liturgicalDay)} · {hourData.formattedDate}
             </p>
           </div>
@@ -382,7 +382,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               <button
                 type="button"
                 onClick={() => setViewMode('native')}
-                className={`h-8 px-3 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                className={`h-7 px-3 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   viewMode === 'native'
                     ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                     : 'text-stone-300 hover:text-white hover:bg-white/10'
@@ -394,7 +394,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               <button
                 type="button"
                 onClick={() => setViewMode('widget')}
-                className={`h-8 px-3 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                className={`h-7 px-3 rounded-xs text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   viewMode === 'widget'
                     ? 'bg-amber-900 text-amber-50 shadow-xs font-bold'
                     : 'text-stone-300 hover:text-white hover:bg-white/10'
@@ -409,7 +409,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               type="button"
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`h-9 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
+              className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'

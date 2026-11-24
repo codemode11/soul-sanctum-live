@@ -937,10 +937,10 @@ export const CatholicAIAssistantView: React.FC = () => {
     <div className="space-y-5 w-full pb-12">
       {/* 1. Daylight Archival Header Banner */}
       <div className="bg-[#FDFBF7] rounded-xl shadow-xs border border-[#E5DEC9] relative z-20 w-full">
-        <div className={`px-5 pt-4 pb-4 sm:px-6 min-h-[148px] bg-gradient-to-r from-[#FDFBF7] via-[#F7F2E7] to-[#FDFBF7] text-stone-900 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-1.5 text-left">
+        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-[#FDFBF7] via-[#F7F2E7] to-[#FDFBF7] text-stone-900 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          <div className="space-y-1 text-left">
             {/* Line 1: Clean Unboxed Metadata */}
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-stone-600 font-serif flex-wrap">
+            <div className="flex items-center gap-2 text-xs text-stone-600 font-serif flex-wrap">
               <strong className="text-amber-900 font-cinzel font-bold">
                 {(AI_ENGINE_SPECS[selectedEngine] || AI_ENGINE_SPECS.openai).name}
               </strong>
@@ -953,18 +953,18 @@ export const CatholicAIAssistantView: React.FC = () => {
             </div>
 
             {/* Line 2: Prominent Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-stone-900 leading-snug break-words">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-stone-900 leading-tight truncate">
               Catholic Theological &amp; Scriptural Research Assistant
             </h2>
           </div>
 
           {/* Line 3: Daylight Action Controls */}
-          <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 mt-auto pt-2 shrink-0">
+            <div className="flex flex-wrap items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => setIsSidebarOpen(prev => !prev)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
+                className={`h-8 px-3 rounded-lg text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
                   isSidebarOpen
                     ? 'bg-[#EFE8D8] text-amber-950 border-[#D5C7A9]'
                     : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-300'
@@ -982,7 +982,7 @@ export const CatholicAIAssistantView: React.FC = () => {
               <button
                 type="button"
                 onClick={handleStartNewChat}
-                className="px-3.5 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs whitespace-nowrap shrink-0"
+                className="h-8 px-3 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs whitespace-nowrap shrink-0"
                 title="Start a new theological inquiry thread"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -1003,7 +1003,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                     lastUpdated: Date.now(),
                   }));
                 }}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
+                className={`h-8 px-3 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
                   selectedPersona === 'essay' || memoryProfile.preferredDepth === 'Essay & Academic Paper (with Sources)'
                     ? 'bg-amber-900/15 text-amber-950 border-amber-700/70 shadow-2xs'
                     : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-300'
@@ -1022,7 +1022,7 @@ export const CatholicAIAssistantView: React.FC = () => {
                 onClick={() =>
                   setSelectedEngine(prev => (prev === 'magisterium' ? 'openai' : 'magisterium'))
                 }
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
+                className={`h-8 px-3 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
                   selectedEngine === 'magisterium'
                     ? 'bg-amber-900/15 text-amber-950 border-amber-700/70 shadow-2xs'
                     : 'bg-white hover:bg-stone-50 text-stone-700 border-stone-300'
@@ -1038,11 +1038,11 @@ export const CatholicAIAssistantView: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => setIsSettingsOpen(prev => !prev)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
+                className={`h-8 px-3 rounded-lg text-xs font-cinzel font-semibold transition-all cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
                   isSettingsOpen
                     ? 'bg-[#EFE8D8] text-amber-950 border-[#D5C7A9]'
                     : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-300'
@@ -1058,7 +1058,7 @@ export const CatholicAIAssistantView: React.FC = () => {
               <button
                 type="button"
                 onClick={handleClearCurrentChat}
-                className="px-3.5 py-1.5 rounded-lg bg-white hover:bg-stone-100 border border-stone-300 text-stone-700 hover:text-stone-900 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap shrink-0"
+                className="h-8 px-3 rounded-lg bg-white hover:bg-stone-100 border border-stone-300 text-stone-700 hover:text-stone-900 text-xs font-cinzel font-semibold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap shrink-0"
                 title="Clear current conversation thread"
               >
                 <Trash2 className="w-3.5 h-3.5 text-stone-600" />

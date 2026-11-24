@@ -292,31 +292,31 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-5 mb-12">
       
       {/* Calendar Header Banner — Slate Gray & Bleached Sand */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl border border-slate-700/80 shadow-md bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl border border-slate-700/80 shadow-md bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
-        <div className="relative z-10 min-w-0">
+        <div className="relative z-10 min-w-0 space-y-1">
           <div className="flex items-center gap-2">
-            <CalendarIcon className="w-5 h-5 text-[#EAE2D3] shrink-0" />
-            <span className="font-cinzel text-xs sm:text-sm font-bold uppercase tracking-wider text-[#DFD5C3] leading-none">
+            <CalendarIcon className="w-4 h-4 text-[#EAE2D3] shrink-0" />
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-[#DFD5C3] leading-none">
               Calendarium Romanum Generale
             </span>
           </div>
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5] mt-1 tracking-wide leading-tight">
+          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
             Liturgical Calendar and Feasts
           </h2>
-          <p className="text-sm sm:text-base text-[#EAE2D3] font-serif mt-1 leading-snug">
+          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif leading-snug line-clamp-1">
             Liturgical seasons, colors, Solemnities, Feasts, Memorials, and Holy Days of Obligation.
           </p>
         </div>
 
         {/* Month & Year (2026–2030) Selector Buttons */}
-        <div className="relative z-10 flex flex-wrap items-center justify-start lg:justify-end gap-2 max-w-full shrink-0">
-          <div className="flex flex-wrap items-center gap-1 bg-slate-800/90 p-1.5 rounded-xl border border-slate-600/70 shadow-2xs max-w-full">
+        <div className="relative z-10 flex flex-col items-start sm:items-end gap-1.5 max-w-full shrink-0">
+          <div className="flex flex-wrap items-center gap-1 bg-slate-800/90 p-1 rounded-xl border border-slate-600/70 shadow-2xs max-w-full">
             {[2026, 2027, 2028, 2029, 2030].map((yr) => (
               <button
                 key={yr}
                 onClick={() => setCurrentYear(yr)}
-                className={`px-2.5 py-1 rounded-lg font-cinzel text-xs font-bold transition-colors cursor-pointer ${
+                className={`h-7 px-2 rounded-lg font-cinzel text-[11px] font-bold transition-colors cursor-pointer ${
                   currentYear === yr
                     ? 'bg-[#F4EFE6] text-slate-900 shadow-sm border border-[#DFD5C3]'
                     : 'bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/60'
@@ -328,25 +328,25 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             ))}
           </div>
 
-          <div className="flex items-center gap-2 bg-slate-800/90 p-1.5 rounded-xl border border-slate-600/70 shadow-2xs max-w-full">
+          <div className="flex items-center gap-1.5 bg-slate-800/90 p-1 rounded-xl border border-slate-600/70 shadow-2xs max-w-full">
             <button
               onClick={handlePrevMonth}
-              className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs shrink-0"
+              className="p-1.5 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs shrink-0"
               title="Previous Month"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3.5 h-3.5" />
             </button>
 
-            <span className="font-cinzel text-base sm:text-lg font-bold text-[#FBF9F5] min-w-32 sm:min-w-36 text-center tracking-wide leading-tight">
+            <span className="font-cinzel text-sm sm:text-base font-bold text-[#FBF9F5] min-w-28 sm:min-w-32 text-center tracking-wide leading-tight">
               {monthName} {currentYear}
             </span>
 
             <button
               onClick={handleNextMonth}
-              className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs shrink-0"
+              className="p-1.5 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs shrink-0"
               title="Next Month"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

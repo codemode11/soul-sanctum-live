@@ -783,7 +783,7 @@ export const CatholicSocialView: React.FC = () => {
     <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6 mb-12 transition-all duration-300">
       {/* Top Banner Rectangle */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:min-h-[216px] bg-[#1C120C] text-stone-100 flex flex-col justify-between rounded-xl">
+        <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between rounded-xl">
           {/* Right-Side Three Aligned Satellite Dishes Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[74%] md:w-[70%] overflow-hidden"
@@ -810,33 +810,33 @@ export const CatholicSocialView: React.FC = () => {
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1.5 my-auto max-w-[88%] sm:max-w-[62%]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[90%] sm:max-w-[66%]">
             {/* Line 1: Badge & Subtitle */}
-            <div className="flex items-center gap-2.5 flex-nowrap overflow-hidden">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
-                <CatholicSocialShareIcon className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-2 flex-nowrap overflow-hidden">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
+                <CatholicSocialShareIcon className="w-3 h-3" />
                 <span>CATHOLIC SOCIAL &amp; MEDIA</span>
               </span>
-              <span className="text-sm sm:text-base text-stone-200 font-serif whitespace-nowrap truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+              <span className="text-xs sm:text-sm text-stone-200 font-serif whitespace-nowrap truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 Curated Posts from Faithful Catholic Apostolates &amp; Christendom
               </span>
             </div>
 
             {/* Line 2: Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight truncate drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               EWTN, Facebook, Instagram &amp; Christendom.com
             </h2>
           </div>
 
           {/* Line 3: Platform Filter Controls */}
-          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-3 border-t border-[#8B5A2B]/35">
-            <span className="text-xs font-serif text-stone-200 hidden sm:inline drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
-              Filter Media Channels:
+          <div className="relative z-10 flex items-center justify-between gap-2 mt-auto pt-2 border-t border-[#8B5A2B]/35 overflow-x-auto no-scrollbar">
+            <span className="text-xs font-serif text-stone-200 hidden md:inline shrink-0 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
+              Channels:
             </span>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1.5 flex-nowrap">
               <button
                 onClick={() => setActivePlatform('all')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
+                className={`h-7 px-2.5 rounded-md font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'all'
                     ? 'bg-amber-500 text-stone-950 border-amber-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
@@ -846,18 +846,18 @@ export const CatholicSocialView: React.FC = () => {
               </button>
               <button
                 onClick={() => setActivePlatform('favorites')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap inline-flex items-center gap-1.5 ${
+                className={`h-7 px-2.5 rounded-md font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap inline-flex items-center gap-1 ${
                   activePlatform === 'favorites'
                     ? 'bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 border-amber-200 shadow-sm'
                     : 'bg-[#1C120C]/90 text-amber-300 border-amber-500/50 hover:border-amber-300/80 hover:text-amber-100'
                 }`}
               >
-                <Star className={`w-3.5 h-3.5 ${activePlatform === 'favorites' ? 'fill-stone-950' : 'fill-amber-400/70'}`} />
+                <Star className={`w-3 h-3 ${activePlatform === 'favorites' ? 'fill-stone-950' : 'fill-amber-400/70'}`} />
                 <span>Favorites ({favoriteIds.length})</span>
               </button>
               <button
                 onClick={() => setActivePlatform('ewtn')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
+                className={`h-7 px-2.5 rounded-md font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'ewtn'
                     ? 'bg-amber-600 text-stone-950 border-amber-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
@@ -870,17 +870,17 @@ export const CatholicSocialView: React.FC = () => {
                   setFocusedFbSourceId(null);
                   setActivePlatform('facebook');
                 }}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
+                className={`h-7 px-2.5 rounded-md font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'facebook'
                     ? 'bg-[#1877F2] text-white border-blue-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
                 }`}
               >
-                Catholic Facebook
+                Facebook
               </button>
               <button
                 onClick={() => setActivePlatform('instagram')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
+                className={`h-7 px-2.5 rounded-md font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'instagram'
                     ? 'bg-gradient-to-r from-pink-600 to-amber-500 text-white border-pink-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'
@@ -890,7 +890,7 @@ export const CatholicSocialView: React.FC = () => {
               </button>
               <button
                 onClick={() => setActivePlatform('christendom')}
-                className={`h-8 px-3 rounded-md font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
+                className={`h-7 px-2.5 rounded-md font-cinzel text-[11px] font-bold tracking-wider uppercase transition-all cursor-pointer border whitespace-nowrap ${
                   activePlatform === 'christendom'
                     ? 'bg-gradient-to-r from-red-700 to-amber-600 text-white border-red-300 shadow-sm'
                     : 'bg-[#1C120C]/90 text-[#D4A373] border-[#8B5A2B]/50 hover:border-[#D4A373]/70 hover:text-[#F7EBE1]'

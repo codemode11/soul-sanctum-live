@@ -7,54 +7,56 @@ export const RessourcementView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Banner */}
-      <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl p-6 text-amber-50 shadow-md border border-amber-900/40">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-            Ad Fontes • Return to the Apostolic Sources
-          </span>
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300">
+              Ad Fontes • Return to the Apostolic Sources
+            </span>
+          </div>
+          <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+            The Church's Direction Towards Ressourcement
+          </h3>
+          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+            "True development consists not in cutting away the roots of Tradition, but in plunging ever more deeply into the pristine apostolic wellsprings of Sacred Scripture and the Church Fathers."
+          </p>
         </div>
-        <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-          The Church's Direction Towards Ressourcement
-        </h3>
-        <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl mt-1">
-          "True development consists not in cutting away the roots of Tradition, but in plunging ever more deeply into the pristine apostolic wellsprings of Sacred Scripture and the Church Fathers."
-        </p>
+      </div>
 
-        {/* Tab switcher */}
-        <div className="flex flex-wrap gap-2 mt-5">
-          <button
-            onClick={() => setActiveTab('movement')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              activeTab === 'movement'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
-            }`}
-          >
-            What is Ressourcement?
-          </button>
+      {/* Tab switcher */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setActiveTab('movement')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            activeTab === 'movement'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
+          }`}
+        >
+          What is Ressourcement?
+        </button>
 
-          <button
-            onClick={() => setActiveTab('theologians')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              activeTab === 'theologians'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
-            }`}
-          >
-            The Great Ressourcement Luminaries
-          </button>
+        <button
+          onClick={() => setActiveTab('theologians')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            activeTab === 'theologians'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
+          }`}
+        >
+          The Great Ressourcement Luminaries
+        </button>
 
-          <button
-            onClick={() => setActiveTab('impact')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              activeTab === 'impact'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
-            }`}
-          >
-            Vatican II and The Catechism
-          </button>
-        </div>
+        <button
+          onClick={() => setActiveTab('impact')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            activeTab === 'impact'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
+          }`}
+        >
+          Vatican II and The Catechism
+        </button>
       </div>
 
       {/* =========================================================================

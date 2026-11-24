@@ -156,78 +156,74 @@ export const ChurchHistoryInfographicView: React.FC = () => {
   return (
     <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 animate-fadeIn text-slate-900">
       
-      {/* 1. Header Banner and Section Navigation (Slate Blue & Bleached Sand) */}
-      <div className="rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 p-6 sm:p-8 text-[#F9F6F0] shadow-xl relative overflow-hidden">
+      {/* 1. Header Banner (Slate Blue & Bleached Sand) */}
+      <div className="sanctum-top-banner rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] text-[#F9F6F0] shadow-xl relative overflow-hidden flex flex-col justify-between gap-2">
         {/* Decorative background glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700/70 pb-4">
-            <div className="flex items-center gap-2">
-              <span className="font-cinzel text-xs uppercase tracking-widest text-[#DFD5C3] font-bold">
-                HISTORIA ET POPULUS ECCLESIAE
-              </span>
-              <span className="text-slate-500">·</span>
-              <span className="text-xs text-[#EAE2D3] font-serif">AD 33 – 2026</span>
-            </div>
-
-            {/* Recitation Voice Selector (All Curated Voices, Jenny Default) */}
-            <div className="flex items-center gap-2 bg-slate-950/70 border border-slate-700/80 rounded-xl px-2.5 py-1 text-xs">
-              <span className="text-[#DFD5C3] hidden sm:inline font-serif">Voice:</span>
-              <select
-                value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'persona-jenny'}
-                onChange={(e) => handleVoiceSelect(e.target.value)}
-                aria-label="Select Church History narrator voice"
-                className="bg-transparent text-[#FBF9F5] font-serif font-semibold text-xs focus:outline-none cursor-pointer pr-1"
-              >
-                {CURATED_SANCTUM_VOICES.map((v) => (
-                  <option key={v.id} value={v.id} className="bg-slate-900 text-[#FBF9F5]">
-                    {v.id === 'persona-jenny' ? 'Jenny (Default)' : v.shortName}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <div className="relative z-10 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="font-cinzel text-[11px] uppercase tracking-widest text-[#DFD5C3] font-bold truncate">
+              HISTORIA ET POPULUS ECCLESIAE · AD 33 – 2026
+            </span>
           </div>
 
-          <div className="space-y-1.5">
-            <h1 className="font-serif-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#FBF9F5] tracking-tight leading-tight">
-              History, Councils, and Infographics of the Church
-            </h1>
-            <p className="text-sm sm:text-base text-[#EAE2D3] font-serif italic max-w-3xl leading-relaxed">
-              Explore 2,000 years of unbroken apostolic history from Pentecost to the present, the 21 Ecumenical Councils, worldwide Catholic demographics, and extraordinary milestones.
-            </p>
-          </div>
-
-          {/* 4 Main View Tabs: 1. History of the Church, 2. The Councils, 3. Astonishing Facts, 4. Infographics */}
-          <div className="pt-2 flex flex-wrap gap-2">
-            {[
-              { id: 'timeline', label: 'History of the Church', icon: History, count: '6 Epochs' },
-              { id: 'councils', label: 'The Councils', icon: Scroll, count: '325–1965 AD' },
-              { id: 'facts', label: 'Astonishing Facts', icon: Sparkles, count: '10 Discoveries' },
-              { id: 'demographics', label: 'Infographics', icon: Globe2, count: '1.39 Billion' }
-            ].map(tab => {
-              const Icon = tab.icon;
-              const isActive = activeSection === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveSection(tab.id as MainSection)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border whitespace-nowrap ${
-                    isActive
-                      ? 'bg-[#F4EFE6] text-slate-900 border-[#DFD5C3] shadow-sm'
-                      : 'bg-slate-800/90 hover:bg-slate-700 text-[#EAE2D3] border-slate-600/70'
-                  }`}
-                >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-[#334E68]' : 'text-[#DFD5C3]'}`} />
-                  <span>{tab.label}</span>
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-sans ${isActive ? 'bg-slate-900/10 text-slate-800' : 'bg-slate-950/40 text-[#DFD5C3]'}`}>
-                    {tab.count}
-                  </span>
-                </button>
-              );
-            })}
+          {/* Recitation Voice Selector (All Curated Voices, Jenny Default) */}
+          <div className="flex items-center gap-2 bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-1 text-xs shrink-0">
+            <span className="text-[#DFD5C3] hidden sm:inline font-serif">Voice:</span>
+            <select
+              value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'persona-jenny'}
+              onChange={(e) => handleVoiceSelect(e.target.value)}
+              aria-label="Select Church History narrator voice"
+              className="bg-transparent text-[#FBF9F5] font-serif font-semibold text-xs focus:outline-none cursor-pointer pr-1"
+            >
+              {CURATED_SANCTUM_VOICES.map((v) => (
+                <option key={v.id} value={v.id} className="bg-slate-900 text-[#FBF9F5]">
+                  {v.id === 'persona-jenny' ? 'Jenny (Default)' : v.shortName}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
+
+        <div className="relative z-10 space-y-1 my-auto">
+          <h1 className="font-serif-heading text-xl sm:text-2xl font-extrabold text-[#FBF9F5] tracking-tight leading-tight">
+            History, Councils, and Infographics of the Church
+          </h1>
+          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif italic max-w-3xl leading-snug line-clamp-2">
+            Explore 2,000 years of unbroken apostolic history from Pentecost to the present, the 21 Ecumenical Councils, worldwide Catholic demographics, and extraordinary milestones.
+          </p>
+        </div>
+      </div>
+
+      {/* 4 Main View Tabs: 1. History of the Church, 2. The Councils, 3. Astonishing Facts, 4. Infographics */}
+      <div className="flex flex-wrap gap-2">
+        {[
+          { id: 'timeline', label: 'History of the Church', icon: History, count: '6 Epochs' },
+          { id: 'councils', label: 'The Councils', icon: Scroll, count: '325–1965 AD' },
+          { id: 'facts', label: 'Astonishing Facts', icon: Sparkles, count: '10 Discoveries' },
+          { id: 'demographics', label: 'Infographics', icon: Globe2, count: '1.39 Billion' }
+        ].map(tab => {
+          const Icon = tab.icon;
+          const isActive = activeSection === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveSection(tab.id as MainSection)}
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-cinzel font-bold transition-all cursor-pointer border whitespace-nowrap ${
+                isActive
+                  ? 'bg-slate-900 text-[#FBF9F5] border-slate-800 shadow-sm'
+                  : 'bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-800 border-[#D8CFC0]'
+              }`}
+            >
+              <Icon className={`w-4 h-4 ${isActive ? 'text-[#DFD5C3]' : 'text-[#334E68]'}`} />
+              <span>{tab.label}</span>
+              <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-sans ${isActive ? 'bg-white/15 text-[#FBF9F5]' : 'bg-[#EAE2D3] text-slate-700'}`}>
+                {tab.count}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* SECTION 1: 2,000-YEAR CHURCH HISTORY TIMELINE (Full Unified Panel) */}

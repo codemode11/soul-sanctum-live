@@ -269,7 +269,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
       
       {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Catechism of the Catholic Church Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden"
@@ -294,13 +294,13 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1.5 max-w-[82%] sm:max-w-[60%]">
+          <div className="relative z-10 space-y-1 max-w-[82%] sm:max-w-[60%]">
             {/* Line 1: Heading, Paragraphs Range & Subtitle */}
-            <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel shadow-xs">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel shadow-xs">
                 Catechism
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-amber-200/95 font-cinzel drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <span className="text-[11px] sm:text-xs font-semibold text-amber-200/95 font-cinzel truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
                   ? selectedTopic.paragraphsRange
                   : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
@@ -308,18 +308,18 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             </div>
 
             {/* Line 2: Topic Title */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-lg sm:text-2xl font-bold text-amber-100 leading-tight line-clamp-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               {toCurvedQuotes(selectedTopic.topicTitle)}
             </h2>
 
             {/* Subtitle / Theme description */}
-            <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred line-clamp-2 sm:line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+            <p className="text-xs sm:text-sm text-stone-200 font-serif-sacred line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               {toCurvedQuotes(selectedTopic.topicSubtitle)}
             </p>
           </div>
 
           {/* Line 3: Bottom Bar with Topic Navigation & Action Buttons */}
-          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-3 border-t border-white/10 w-full">
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-2 border-t border-white/10 w-full">
             {/* Left: Quick Date & Gospel Citation Navigation Bar */}
             <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs min-w-0 max-w-full">
               <button

@@ -758,62 +758,62 @@ SOUL SANCTUM`;
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-6 mb-12">
+    <div className="max-w-5xl mx-auto p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-5 mb-12">
       
       {/* Top Banner — Slate Gray & Bleached Sand */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 relative overflow-hidden">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 relative overflow-hidden flex flex-col justify-center">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-[#DFD5C3] flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-[#EAE2D3]" />
-              Sacramentum Caritatis • Source and Summit of Catholic Faith
+        <div className="relative z-10 space-y-1.5">
+          <div className="flex items-center gap-2">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-[#DFD5C3] flex items-center gap-1.5 truncate">
+              <Sparkles className="w-3.5 h-3.5 text-[#EAE2D3] shrink-0" />
+              <span>Sacramentum Caritatis • Source and Summit of Catholic Faith</span>
             </span>
           </div>
-          <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5] tracking-wide">
+          <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
             Catechism on the Eucharist and Miracles Approved by the Vatican
           </h3>
-          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl mt-1 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-2">
             &ldquo;The Eucharist is the heart and the summit of the Church&apos;s life, for in it Christ associates his Church and all her members with his sacrifice of praise and thanksgiving offered once for all on the cross to his Father.&rdquo; (CCC 1407)
           </p>
-
-          {/* Sub-navigation tabs */}
-          <div className="flex flex-wrap gap-2 mt-5">
-            <button
-              onClick={() => setActiveSection('miracles')}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold font-cinzel transition-all cursor-pointer flex items-center gap-2 ${
-                activeSection === 'miracles'
-                  ? 'bg-[#F4EFE6] text-slate-900 shadow-sm font-bold border border-[#DFD5C3]'
-                  : 'bg-slate-800/90 text-[#EAE2D3] hover:bg-slate-700 border border-slate-600/70'
-              }`}
-            >
-              <Sparkles className={`w-4 h-4 ${activeSection === 'miracles' ? 'text-slate-700' : 'text-[#DFD5C3]'}`} />
-              <span>St. Carlo Acutis Complete Catalog ({EUCHARISTIC_MIRACLES_DATA.length})</span>
-            </button>
-
-            <button
-              onClick={() => setActiveSection('transubstantiation')}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold font-cinzel transition-all cursor-pointer ${
-                activeSection === 'transubstantiation'
-                  ? 'bg-[#F4EFE6] text-slate-900 shadow-sm font-bold border border-[#DFD5C3]'
-                  : 'bg-slate-800/90 text-[#EAE2D3] hover:bg-slate-700 border border-slate-600/70'
-              }`}
-            >
-              The Dogma of Transubstantiation
-            </button>
-
-            <button
-              onClick={() => setActiveSection('john6')}
-              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold font-cinzel transition-all cursor-pointer ${
-                activeSection === 'john6'
-                  ? 'bg-[#F4EFE6] text-slate-900 shadow-sm font-bold border border-[#DFD5C3]'
-                  : 'bg-slate-800/90 text-[#EAE2D3] hover:bg-slate-700 border border-slate-600/70'
-              }`}
-            >
-              Bread of Life Discourse (John 6)
-            </button>
-          </div>
         </div>
+      </div>
+
+      {/* Sub-navigation tabs */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setActiveSection('miracles')}
+          className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold font-cinzel transition-all cursor-pointer flex items-center gap-2 border ${
+            activeSection === 'miracles'
+              ? 'bg-slate-900 text-[#FBF9F5] shadow-sm font-bold border-slate-800'
+              : 'bg-[#F4EFE6] text-slate-800 hover:bg-[#EAE2D3] border-[#D8CFC0]'
+          }`}
+        >
+          <Sparkles className={`w-4 h-4 ${activeSection === 'miracles' ? 'text-[#DFD5C3]' : 'text-slate-600'}`} />
+          <span>St. Carlo Acutis Complete Catalog ({EUCHARISTIC_MIRACLES_DATA.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveSection('transubstantiation')}
+          className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold font-cinzel transition-all cursor-pointer border ${
+            activeSection === 'transubstantiation'
+              ? 'bg-slate-900 text-[#FBF9F5] shadow-sm font-bold border-slate-800'
+              : 'bg-[#F4EFE6] text-slate-800 hover:bg-[#EAE2D3] border-[#D8CFC0]'
+          }`}
+        >
+          The Dogma of Transubstantiation
+        </button>
+
+        <button
+          onClick={() => setActiveSection('john6')}
+          className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold font-cinzel transition-all cursor-pointer border ${
+            activeSection === 'john6'
+              ? 'bg-slate-900 text-[#FBF9F5] shadow-sm font-bold border-slate-800'
+              : 'bg-[#F4EFE6] text-slate-800 hover:bg-[#EAE2D3] border-[#D8CFC0]'
+          }`}
+        >
+          Bread of Life Discourse (John 6)
+        </button>
       </div>
 
       {/* =========================================================================

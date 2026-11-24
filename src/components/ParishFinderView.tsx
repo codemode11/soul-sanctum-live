@@ -1814,17 +1814,17 @@ export const ParishFinderView: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
       {/* Compact Soul Sanctum Banner */}
-      <div className="rounded-xl overflow-hidden bg-gradient-to-r from-stone-900 via-[#22140C] to-stone-900 border border-amber-500/35 shadow-2xl px-4 py-4 sm:px-6 sm:py-5 text-stone-100">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl overflow-hidden bg-gradient-to-r from-stone-900 via-[#22140C] to-stone-900 border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-center">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1">
+          <div className="space-y-1 min-w-0">
             <div className="inline-flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.2em] text-amber-300">
               <MapPin className="w-3.5 h-3.5" />
               Global Catholic Parish Locator
             </div>
-            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide">
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
               Church Finder
             </h2>
-            <p className="text-xs sm:text-sm text-amber-100/80 font-serif max-w-2xl">
+            <p className="text-xs sm:text-sm text-amber-100/80 font-serif max-w-2xl leading-snug line-clamp-2">
               Locate Catholic parishes, Eucharistic Adoration chapels, and shrines nearby or anywhere you travel, with live directions and published sacramental schedules.
             </p>
           </div>
@@ -1833,7 +1833,7 @@ export const ParishFinderView: React.FC = () => {
             <button
               type="button"
               onClick={() => (quotaGuard.isStopped ? quotaGuard.resumeMaps() : quotaGuard.pauseMaps())}
-              className={`self-start sm:self-center shrink-0 px-3 py-1.5 rounded-lg text-[11px] font-cinzel font-bold uppercase tracking-wider border transition-colors cursor-pointer ${
+              className={`self-start sm:self-center shrink-0 h-8 px-3 rounded-lg text-[11px] font-cinzel font-bold uppercase tracking-wider border transition-colors cursor-pointer ${
                 quotaGuard.isStopped
                   ? 'bg-emerald-800/80 hover:bg-emerald-700 text-emerald-50 border-emerald-400/50'
                   : 'bg-white/10 hover:bg-white/20 text-amber-200 border-amber-400/40'

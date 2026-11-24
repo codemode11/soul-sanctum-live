@@ -197,76 +197,73 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
     <div className="max-w-5xl mx-auto space-y-8 pb-24">
       
       {/* Sanctum Podcasts Master Hero Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 shadow-2xl text-stone-100">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-center">
         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.18)_0%,transparent_70%)] pointer-events-none" />
         
-        <div className="relative z-10 max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-cinzel font-semibold tracking-wider">
+        <div className="relative z-10 max-w-3xl space-y-1.5">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider">
             <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
             <span>Catholic Podcasts</span>
           </div>
 
-          <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-wide leading-tight">
+          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             Nourish Your Soul with Faithful Catholic Audio
           </h2>
 
-          <p className="text-sm sm:text-base text-stone-300 font-serif leading-relaxed">
+          <p className="text-xs sm:text-sm text-stone-300 font-serif leading-snug line-clamp-2">
             Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Fr. Joseph Roesch MIC, Bishop Robert Barron, Dr. Scott Hahn, Jimmy Akin, Jeff Cavins, Matt Fradd, and the Holy See.
           </p>
-
-
         </div>
-
-        {/* Featured Spotlight Card */}
-        {featuredEpisode && (
-          <div className="relative z-10 mt-6 sm:mt-8 p-4 sm:p-5 rounded-xl bg-black/40 border border-amber-500/30 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-4 min-w-0">
-              <img 
-                src={featuredEpisode.podcastCoverUrl} 
-                alt={featuredEpisode.title} 
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border border-amber-500/50 shadow-md shrink-0"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-              />
-              <div className="min-w-0 space-y-1">
-                <span className="text-[10px] font-bold font-cinzel uppercase tracking-widest text-amber-400">
-                  FEATURED EPISODE OF THE DAY
-                </span>
-                <h3 className="text-sm sm:text-base font-serif font-bold text-white truncate max-w-lg">
-                  {featuredEpisode.title}
-                </h3>
-                <p className="text-xs text-stone-300 line-clamp-1 font-serif">
-                  {featuredEpisode.podcastTitle} with {featuredEpisode.podcastHost} • {featuredEpisode.durationFormatted}
-                </p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => {
-                if (currentPlayingEpisode?.id === featuredEpisode.id && isPlaying) {
-                  onPauseEpisode();
-                } else {
-                  onPlayEpisode(featuredEpisode);
-                }
-              }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 text-xs sm:text-sm font-cinzel font-bold shadow-lg hover:scale-102 transition-all cursor-pointer shrink-0"
-            >
-              {currentPlayingEpisode?.id === featuredEpisode.id && isPlaying ? (
-                <>
-                  <Pause className="w-4 h-4 fill-current" />
-                  <span>Pause Episode</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-4 h-4 fill-current ml-0.5" />
-                  <span>Listen Now</span>
-                </>
-              )}
-            </button>
-          </div>
-        )}
-
       </div>
+
+      {/* Featured Spotlight Card */}
+      {featuredEpisode && (
+        <div className="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-stone-900 via-[#1C120C] to-stone-900 border border-amber-500/30 shadow-lg text-stone-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-4 min-w-0">
+            <img 
+              src={featuredEpisode.podcastCoverUrl} 
+              alt={featuredEpisode.title} 
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover border border-amber-500/50 shadow-md shrink-0"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+            <div className="min-w-0 space-y-1">
+              <span className="text-[10px] font-bold font-cinzel uppercase tracking-widest text-amber-400">
+                FEATURED EPISODE OF THE DAY
+              </span>
+              <h3 className="text-sm sm:text-base font-serif font-bold text-white truncate max-w-lg">
+                {featuredEpisode.title}
+              </h3>
+              <p className="text-xs text-stone-300 line-clamp-1 font-serif">
+                {featuredEpisode.podcastTitle} with {featuredEpisode.podcastHost} • {featuredEpisode.durationFormatted}
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => {
+              if (currentPlayingEpisode?.id === featuredEpisode.id && isPlaying) {
+                onPauseEpisode();
+              } else {
+                onPlayEpisode(featuredEpisode);
+              }
+            }}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 text-xs sm:text-sm font-cinzel font-bold shadow-lg hover:scale-102 transition-all cursor-pointer shrink-0"
+          >
+            {currentPlayingEpisode?.id === featuredEpisode.id && isPlaying ? (
+              <>
+                <Pause className="w-4 h-4 fill-current" />
+                <span>Pause Episode</span>
+              </>
+            ) : (
+              <>
+                <Play className="w-4 h-4 fill-current ml-0.5" />
+                <span>Listen Now</span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* Shows Catalog Horizontal Carousel / Grid */}
       <div className="space-y-3">

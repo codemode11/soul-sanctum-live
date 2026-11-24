@@ -79,39 +79,37 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-20 animate-fadeIn">
       {/* Master Header Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-5 sm:px-6 relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 shadow-2xl text-stone-100 space-y-4">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-between gap-2">
         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.18)_0%,transparent_70%)] pointer-events-none" />
 
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-cinzel font-semibold tracking-wider">
-            <Music className="w-3.5 h-3.5 text-amber-400" />
-            <span>Fio.fm • Integrated Catholic Audio Streaming</span>
+        <div className="relative z-10 flex items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider truncate">
+            <Music className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span className="truncate">Fio.fm • Integrated Catholic Audio Streaming</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <a
-              href={activeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 hover:text-white font-cinzel font-bold text-xs transition-all cursor-pointer"
-            >
-              <span>Open play.fio.fm</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
-          </div>
+          <a
+            href={activeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 hover:text-white font-cinzel font-bold text-[11px] transition-all cursor-pointer shrink-0"
+          >
+            <span>Open play.fio.fm</span>
+            <ExternalLink className="w-3 h-3" />
+          </a>
         </div>
 
-        <div className="relative z-10 max-w-3xl space-y-1.5">
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide leading-tight">
+        <div className="relative z-10 max-w-3xl space-y-0.5">
+          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
             Fio Catholic Music, Podcasts and Audiobooks
           </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif leading-relaxed">
-            Stream faithful Catholic music, Gregorian chant, over 1,000 Catholic podcasts, and spiritual audiobooks directly inside Soul Sanctum through the official Fio web player.
+          <p className="text-xs text-stone-300 font-serif leading-snug line-clamp-1">
+            Stream faithful Catholic music, Gregorian chant, over 1,000 Catholic podcasts, and spiritual audiobooks through the official Fio web player.
           </p>
         </div>
 
         {/* Section Switcher Buttons */}
-        <div className="relative z-10 flex flex-wrap items-center gap-2 pt-1">
+        <div className="relative z-10 flex items-center gap-2 overflow-x-auto no-scrollbar pt-0.5">
           {FIO_SECTIONS.map((section) => {
             const Icon = section.icon;
             const isActive = activeUrl === section.url;
@@ -120,7 +118,7 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
                 key={section.id}
                 type="button"
                 onClick={() => navigatePlayer(section.url, section.label)}
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border ${
+                className={`h-8 inline-flex items-center gap-1.5 px-3 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border whitespace-nowrap shrink-0 ${
                   isActive
                     ? 'bg-amber-400 text-stone-950 border-amber-300 shadow-md'
                     : 'bg-stone-900/80 hover:bg-stone-800 text-amber-100 border-amber-500/30'

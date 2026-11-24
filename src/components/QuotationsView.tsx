@@ -82,7 +82,7 @@ export const QuotationsView: React.FC = () => {
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-30">
         {/* Main Banner */}
         <div
-          className={`sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[212px] sm:min-h-[248px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+          className={`sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
@@ -114,15 +114,15 @@ export const QuotationsView: React.FC = () => {
             <div className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_28%,rgba(28,18,12,0.88)_48%,rgba(28,18,12,0.36)_70%,rgba(28,18,12,0.12)_100%)]" />
           </div>
 
-          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[82%] sm:max-w-[48%] gap-4">
-            <div className="space-y-1.5 my-auto">
-              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-300 block drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[82%] sm:max-w-[54%] gap-2">
+            <div className="space-y-1 my-auto">
+              <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300 block truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 Doctors &amp; Saints of the Church
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+              <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                 Quotations
               </h2>
-              <p className="text-xs sm:text-sm text-stone-200 font-serif font-medium leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <p className="text-xs text-stone-200 font-serif font-medium leading-snug line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Enduring spiritual wisdom from the Doctors of the Church, Saints, and Supreme Pontiffs.
               </p>
             </div>
@@ -133,7 +133,7 @@ export const QuotationsView: React.FC = () => {
                 type="button"
                 onClick={() => setIsTopSettingsOpen(prev => !prev)}
                 aria-expanded={isTopSettingsOpen}
-                className={`h-9 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
+                className={`h-8 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
                   isTopSettingsOpen
                     ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                     : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'

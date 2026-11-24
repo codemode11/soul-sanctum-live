@@ -59,67 +59,75 @@ ${wisdom.sourceWork ? `Source: ${wisdom.sourceWork}` : ''}`;
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-12">
       
-      {/* Featured Spotlight Quote Card */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-br from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden">
+      {/* Wisdom Header Banner */}
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-br from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden flex flex-col justify-between gap-2">
         <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
         
-        <div className="space-y-4 relative z-10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-900/50 pb-4">
-            <div className="flex items-center">
-              <h2 className="font-cinzel text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide text-amber-100 drop-shadow-md">
-                Wisdom of the Saints
-              </h2>
-            </div>
-            <span className="self-start sm:self-auto px-3.5 py-1 rounded-full bg-amber-900/80 text-amber-200 text-xs sm:text-sm font-semibold border border-amber-700/60 uppercase tracking-wider font-cinzel">
-              {spotlightQuote.category}
+        <div className="relative z-10 flex items-center justify-between gap-3">
+          <div className="space-y-1 min-w-0">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300/90 block">
+              Doctors, Mystics &amp; Church Fathers
             </span>
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold tracking-wide text-amber-100 drop-shadow-md leading-tight">
+              Wisdom of the Saints
+            </h2>
+          </div>
+          <span className="shrink-0 px-3 py-1 rounded-full bg-amber-900/80 text-amber-200 text-xs font-semibold border border-amber-700/60 uppercase tracking-wider font-cinzel">
+            {spotlightQuote.category}
+          </span>
+        </div>
+
+        <p className="relative z-10 text-xs sm:text-sm text-amber-100/90 font-serif-sacred leading-snug line-clamp-2 max-w-3xl">
+          Luminous counsels from the saints, Church Fathers, and spiritual masters on prayer, humility, the Eucharist, and union with God.
+        </p>
+      </div>
+
+      {/* Featured Spotlight Quote Card */}
+      <div className="bg-gradient-to-br from-stone-900 via-amber-950 to-stone-900 rounded-xl p-5 sm:p-6 text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden space-y-4">
+        <blockquote className="font-serif-sacred text-xl sm:text-2xl text-white not-italic leading-relaxed">
+          "{spotlightQuote.quote}"
+        </blockquote>
+
+        {spotlightQuote.reflection && (
+          <p className="text-sm sm:text-base text-amber-100/90 font-serif-sacred italic border-l-2 border-amber-500/40 pl-3.5 leading-relaxed">
+            {spotlightQuote.reflection}
+          </p>
+        )}
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-amber-900/60">
+          <div>
+            <p className="font-serif font-bold text-amber-100 text-base sm:text-lg">
+              {spotlightQuote.author}
+            </p>
+            <p className="text-xs sm:text-sm text-stone-300 font-serif">
+              {spotlightQuote.authorTitle} • {spotlightQuote.authorLifespan}
+            </p>
+            {spotlightQuote.sourceWork && (
+              <p className="text-xs font-semibold text-amber-300 font-serif not-italic mt-1 leading-normal">
+                <span className="text-amber-400 uppercase font-cinzel text-[10px] tracking-wider mr-1">Source:</span>
+                <span>{spotlightQuote.sourceWork}</span>
+              </p>
+            )}
           </div>
 
-          <blockquote className="font-serif-sacred text-2xl sm:text-4xl text-white not-italic leading-relaxed">
-            "{spotlightQuote.quote}"
-          </blockquote>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleToggleSpeak(spotlightQuote)}
+              className={`p-2 rounded-md border transition-colors cursor-pointer ${
+                speakingId === spotlightQuote.id ? 'bg-[#6B4423] text-white border-[#8B5A2B]' : 'bg-stone-800 text-amber-200 border-stone-700'
+              }`}
+              title="Listen to quote"
+            >
+              {speakingId === spotlightQuote.id ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            </button>
 
-          {spotlightQuote.reflection && (
-            <p className="text-base sm:text-lg text-amber-100/90 font-serif-sacred italic border-l-2 border-amber-500/40 pl-3.5 leading-relaxed">
-              {spotlightQuote.reflection}
-            </p>
-          )}
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-amber-900/60">
-            <div>
-              <p className="font-serif font-bold text-amber-100 text-lg sm:text-xl">
-                {spotlightQuote.author}
-              </p>
-              <p className="text-xs sm:text-sm text-stone-300 font-serif">
-                {spotlightQuote.authorTitle} • {spotlightQuote.authorLifespan}
-              </p>
-              {spotlightQuote.sourceWork && (
-                <p className="text-xs font-semibold text-amber-300 font-serif not-italic mt-1 leading-normal">
-                  <span className="text-amber-400 uppercase font-cinzel text-[10px] tracking-wider mr-1">Source:</span>
-                  <span>{spotlightQuote.sourceWork}</span>
-                </p>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => handleToggleSpeak(spotlightQuote)}
-                className={`p-2 rounded-md border transition-colors cursor-pointer ${
-                  speakingId === spotlightQuote.id ? 'bg-[#6B4423] text-white border-[#8B5A2B]' : 'bg-stone-800 text-amber-200 border-stone-700'
-                }`}
-                title="Listen to quote"
-              >
-                {speakingId === spotlightQuote.id ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-
-              <button
-                onClick={() => handleCopy(spotlightQuote)}
-                className="p-2 rounded-md bg-stone-800 text-amber-200 border border-stone-700 hover:bg-stone-700 transition-colors cursor-pointer"
-                title="Copy quote"
-              >
-                {copiedId === spotlightQuote.id ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-              </button>
-            </div>
+            <button
+              onClick={() => handleCopy(spotlightQuote)}
+              className="p-2 rounded-md bg-stone-800 text-amber-200 border border-stone-700 hover:bg-stone-700 transition-colors cursor-pointer"
+              title="Copy quote"
+            >
+              {copiedId === spotlightQuote.id ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            </button>
           </div>
         </div>
       </div>

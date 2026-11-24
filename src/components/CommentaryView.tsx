@@ -352,7 +352,7 @@ ${selectedCommentary.practicalApplication}`;
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
         {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Bible Study & Commentaries Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden"
@@ -377,12 +377,12 @@ ${selectedCommentary.practicalApplication}`;
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-2 my-auto max-w-[82%] sm:max-w-[60%]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[82%] sm:max-w-[60%]">
             {/* Main Title: Commentary on Luke 15:1-10 */}
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight line-clamp-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Commentary on {selectedCommentary.scriptureReference}
             </h2>
-            <p className="text-xs sm:text-sm text-amber-200/90 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+            <p className="text-[11px] sm:text-xs text-amber-200/90 font-cinzel uppercase tracking-wider line-clamp-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Catena Aurea • Cornelius à Lapide, S.J. • Magisterium
             </p>
           </div>

@@ -763,32 +763,32 @@ export const MedjugorjeMessagesView: React.FC = () => {
     <div className="space-y-6 pb-8 animate-fadeIn text-slate-900">
 
       {/* Marian Header Banner — Slate Gray & Bleached Sand */}
-      <div className="rounded-xl p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md space-y-3 relative overflow-hidden text-[#F9F6F0]">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md flex flex-col justify-between gap-2 relative overflow-hidden text-[#F9F6F0]">
         <div className="pointer-events-none absolute -right-12 -bottom-12 w-60 h-44 bg-[#EAE2D3]/15 rounded-full blur-3xl" />
 
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-xl bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70">
-              <Star className="w-4 h-4" />
+            <span className="p-1 rounded-lg bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70">
+              <Star className="w-3.5 h-3.5" />
             </span>
-            <span className="font-cinzel text-xs font-bold text-[#DFD5C3] tracking-wider uppercase">
+            <span className="font-cinzel text-[11px] font-bold text-[#DFD5C3] tracking-wider uppercase">
               Queen of Peace • Kraljica Mira • Medjugorje ({oldestYear} – {newestYear})
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-1.5">
             <button
               onClick={syncLatestMessages}
               disabled={isSyncing}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-colors cursor-pointer border bg-slate-800/90 hover:bg-slate-700 border-slate-600/70 text-[#EAE2D3] disabled:opacity-60"
+              className="h-7 inline-flex items-center gap-1.5 px-2.5 rounded-lg text-[11px] font-cinzel font-bold transition-colors cursor-pointer border bg-slate-800/90 hover:bg-slate-700 border-slate-600/70 text-[#EAE2D3] disabled:opacity-60"
               title="Check for latest official messages from Medjugorje"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3 h-3 ${isSyncing ? 'animate-spin' : ''}`} />
               <span>Refresh</span>
             </button>
             <button
               onClick={() => setShowFiveStones(!showFiveStones)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-colors cursor-pointer border ${
+              className={`h-7 px-2.5 rounded-lg text-[11px] font-cinzel font-bold transition-colors cursor-pointer border ${
                 showFiveStones
                   ? 'bg-[#F4EFE6] text-slate-900 border-[#DFD5C3]'
                   : 'bg-slate-800/90 hover:bg-slate-700 border-slate-600/70 text-[#EAE2D3]'
@@ -798,7 +798,7 @@ export const MedjugorjeMessagesView: React.FC = () => {
             </button>
             <button
               onClick={() => setShowVaticanNote(!showVaticanNote)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-cinzel font-bold transition-colors cursor-pointer border ${
+              className={`h-7 px-2.5 rounded-lg text-[11px] font-cinzel font-bold transition-colors cursor-pointer border ${
                 showVaticanNote
                   ? 'bg-[#F4EFE6] text-slate-900 border-[#DFD5C3]'
                   : 'bg-slate-800/90 hover:bg-slate-700 border-slate-600/70 text-[#EAE2D3]'
@@ -809,13 +809,15 @@ export const MedjugorjeMessagesView: React.FC = () => {
           </div>
         </div>
 
-        <h2 className="relative z-10 font-cinzel text-2xl sm:text-3xl font-bold text-[#FBF9F5] tracking-wide">
-          Messages of Our Lady to the Seers of Medjugorje
-        </h2>
+        <div className="relative z-10 space-y-1">
+          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+            Messages of Our Lady to the Seers of Medjugorje
+          </h2>
 
-        <p className="relative z-10 text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-2xl leading-relaxed">
-          &ldquo;Peace, peace, peace and only peace! Peace must reign between God and man and between men!&rdquo; Complete archive of the messages of Our Lady, Queen of Peace, from the start of the apparitions on June 24, 1981 through the latest monthly and annual messages.
-        </p>
+          <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+            &ldquo;Peace, peace, peace and only peace! Peace must reign between God and man and between men!&rdquo; Complete archive from June 24, 1981 through the latest monthly and annual messages.
+          </p>
+        </div>
       </div>
 
       {/* VATICAN DECREE COLLAPSIBLE CARD */}

@@ -279,7 +279,7 @@ ${reading.gospel.text}`;
       
       {/* Liturgical Day Banner and Date Bar */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Overflow-clipped Backdrop so Calendar Dropdown Can Extend Outside Banner */}
           <div
             className={`pointer-events-none select-none absolute inset-0 overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}
@@ -300,7 +300,7 @@ ${reading.gospel.text}`;
             <div className="absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20" />
           </div>
 
-          <div className="relative z-10 space-y-1.5 max-w-[82%] sm:max-w-[62%]">
+          <div className="relative z-10 space-y-1 max-w-[82%] sm:max-w-[62%]">
             {/* Line 1: Liturgical Color/Rank & Season (raised) */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap sm:flex-nowrap overflow-hidden">
               <span 
@@ -311,13 +311,13 @@ ${reading.gospel.text}`;
                 <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
                 <span>{reading.liturgicalRank}</span>
               </span>
-              <span className="text-xs sm:text-base text-stone-200 font-serif sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <span className="text-xs sm:text-sm text-stone-200 font-serif sm:whitespace-nowrap drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {reading.liturgicalSeason}
               </span>
             </div>
             
             {/* Line 2: Complete Liturgical Day Title (wraps onto a second line when needed) */}
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold tracking-normal text-amber-100 leading-snug break-words drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-lg sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight break-words line-clamp-2 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               {/^solemnity of our lord jesus christ,\s*king of the universe$/i.test(reading.liturgicalDay.trim()) ? (
                 <>
                   <span className="block">Solemnity of Our Lord Jesus Christ</span>
@@ -330,7 +330,7 @@ ${reading.gospel.text}`;
           </div>
 
           {/* Line 3: Calendar and Settings lowered together at the right side */}
-          <div className="relative z-10 flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-4 shrink-0">
+          <div className="relative z-10 flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0">
             {/* Unified Single Element: [ < | Calendar Date | > ] with Thin Separators */}
             <div className="relative shrink-0">
               <div

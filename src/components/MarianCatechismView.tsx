@@ -7,54 +7,56 @@ export const MarianCatechismView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 rounded-xl p-6 text-blue-50 shadow-md border border-blue-900/40">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-blue-300">
-            Regina Caeli • Queen of Peace
-          </span>
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-blue-950 via-slate-900 to-indigo-950 rounded-xl text-blue-50 shadow-md border border-blue-900/40 flex flex-col justify-center overflow-hidden">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-blue-300">
+              Regina Caeli • Queen of Peace
+            </span>
+          </div>
+          <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+            Catechism on Mary and Her Sacred Apparitions
+          </h3>
+          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+            "What the Catholic faith believes about Mary is based on what it believes about Christ, and what it teaches about Mary illumines in turn its faith in Christ." (CCC 487)
+          </p>
         </div>
-        <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-          Catechism on Mary and Her Sacred Apparitions
-        </h3>
-        <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl mt-1">
-          "What the Catholic faith believes about Mary is based on what it believes about Christ, and what it teaches about Mary illumines in turn its faith in Christ." (CCC 487)
-        </p>
+      </div>
 
-        {/* Tab switcher */}
-        <div className="flex flex-wrap gap-2 mt-5">
-          <button
-            onClick={() => setSelectedTab('medjugorje')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              selectedTab === 'medjugorje'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-blue-200 hover:bg-stone-700'
-            }`}
-          >
-            Medjugorje: Queen of Peace (Kraljica Mira)
-          </button>
+      {/* Tab switcher */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setSelectedTab('medjugorje')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            selectedTab === 'medjugorje'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-blue-200 hover:bg-stone-700'
+          }`}
+        >
+          Medjugorje: Queen of Peace (Kraljica Mira)
+        </button>
 
-          <button
-            onClick={() => setSelectedTab('dogmas')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              selectedTab === 'dogmas'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-blue-200 hover:bg-stone-700'
-            }`}
-          >
-            The Four Marian Dogmas
-          </button>
+        <button
+          onClick={() => setSelectedTab('dogmas')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            selectedTab === 'dogmas'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-blue-200 hover:bg-stone-700'
+          }`}
+        >
+          The Four Marian Dogmas
+        </button>
 
-          <button
-            onClick={() => setSelectedTab('apparitions')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              selectedTab === 'apparitions'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-blue-200 hover:bg-stone-700'
-            }`}
-          >
-            Major Approved Marian Apparitions
-          </button>
-        </div>
+        <button
+          onClick={() => setSelectedTab('apparitions')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            selectedTab === 'apparitions'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-blue-200 hover:bg-stone-700'
+          }`}
+        >
+          Major Approved Marian Apparitions
+        </button>
       </div>
 
       {/* =========================================================================

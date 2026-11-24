@@ -323,54 +323,52 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
     <div className="max-w-5xl mx-auto space-y-6 pb-14 animate-fadeIn text-stone-900">
       
       {/* =====================================================================
-          1. SOLEMN HEADER BANNER WITH HOLY WATER ICON & REQUIEM PRAYER
+          1. SOLEMN HEADER BANNER WITH HOLY WATER ICON
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] rounded-xl bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] border border-[#8B5A2B]/70 shadow-[0_14px_38px_rgba(0,0,0,0.45)] space-y-5 text-amber-50">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-amber-500/25 pb-5">
-          <div className="flex items-start sm:items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-400/50 flex items-center justify-center text-amber-300 shadow-md shrink-0">
-              <HolyWaterIcon className="w-6 h-6 text-amber-300" />
-            </div>
-            <div>
-              <span className="font-cinzel text-xs font-bold uppercase tracking-[0.2em] text-amber-300 block">
-                Requiem Aeternam • Commemoration of the Faithful Departed
-              </span>
-              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white mt-0.5">
-                In Memoriam
-              </h2>
-              <p className="text-xs sm:text-sm font-serif text-stone-200 mt-1 max-w-2xl leading-relaxed">
-                Sacred remembrance and eulogies for our beloved <strong>priests</strong>, <strong>former seminarians</strong>, and <strong>members of the laity</strong> who have passed away recently—inviting the entire community to pray for the eternal repose of their souls.
-              </p>
-            </div>
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] rounded-xl bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] border border-[#8B5A2B]/70 shadow-[0_14px_38px_rgba(0,0,0,0.45)] text-amber-50 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
+        <div className="flex items-start sm:items-center gap-3.5 min-w-0">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/50 flex items-center justify-center text-amber-300 shadow-md shrink-0">
+            <HolyWaterIcon className="w-5 h-5 text-amber-300" />
           </div>
-
-          <button
-            type="button"
-            onClick={() => setIsAddingMemorial(!isAddingMemorial)}
-            className="px-4 py-2.5 rounded-xl bg-[#A67C52] hover:bg-[#8E6740] text-white border border-amber-300/50 font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-2 self-start md:self-auto shrink-0 shadow-md"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add Deceased to In Memoriam</span>
-          </button>
-        </div>
-
-        {/* Traditional Rite of Commendation & Requiem Prayer Banner */}
-        <div className="p-4 sm:p-5 rounded-xl bg-black/35 border border-amber-400/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1 font-serif">
-            <div className="text-xs font-cinzel font-bold uppercase tracking-wider text-amber-300 flex items-center gap-2">
-              <HolyWaterIcon className="w-4 h-4 text-amber-300" />
-              <span>Prayer of the Community for the Faithful Departed</span>
-            </div>
-            <p className="text-sm sm:text-base italic text-amber-50/95 leading-relaxed">
-              &ldquo;Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May their souls and the souls of all the faithful departed, through the mercy of God, rest in peace. Amen.&rdquo;
+          <div className="min-w-0">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300 block truncate">
+              Requiem Aeternam • Commemoration of the Faithful Departed
+            </span>
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white mt-0.5 leading-tight">
+              In Memoriam
+            </h2>
+            <p className="text-xs sm:text-sm font-serif text-stone-200 mt-1 max-w-2xl leading-snug line-clamp-2">
+              Sacred remembrance and eulogies for our beloved <strong>priests</strong>, <strong>former seminarians</strong>, and <strong>members of the laity</strong> who have passed away—inviting the community to pray for their souls.
             </p>
           </div>
-          <div className="text-xs font-cinzel text-amber-200/90 shrink-0 sm:text-right border-t sm:border-t-0 sm:border-l border-amber-500/25 pt-2 sm:pt-0 sm:pl-4">
-            <span className="block font-bold text-amber-300">2 Maccabees 12:46</span>
-            <span className="font-serif italic text-[11px] text-stone-300 block mt-0.5">
-              &ldquo;It is a holy and wholesome thought to pray for the dead, that they may be loosed from sins.&rdquo;
-            </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsAddingMemorial(!isAddingMemorial)}
+          className="px-3.5 py-2 rounded-xl bg-[#A67C52] hover:bg-[#8E6740] text-white border border-amber-300/50 font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-1.5 self-start md:self-center shrink-0 shadow-md"
+        >
+          <Plus className="w-4 h-4" />
+          <span>Add Deceased</span>
+        </button>
+      </div>
+
+      {/* Traditional Rite of Commendation & Requiem Prayer Card */}
+      <div className="p-4 sm:p-5 rounded-xl bg-gradient-to-r from-[#2E1C10] to-[#1F1209] border border-[#8B5A2B]/60 shadow-md text-amber-50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1 font-serif">
+          <div className="text-xs font-cinzel font-bold uppercase tracking-wider text-amber-300 flex items-center gap-2">
+            <HolyWaterIcon className="w-4 h-4 text-amber-300" />
+            <span>Prayer of the Community for the Faithful Departed</span>
           </div>
+          <p className="text-sm sm:text-base italic text-amber-50/95 leading-relaxed">
+            &ldquo;Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May their souls and the souls of all the faithful departed, through the mercy of God, rest in peace. Amen.&rdquo;
+          </p>
+        </div>
+        <div className="text-xs font-cinzel text-amber-200/90 shrink-0 sm:text-right border-t sm:border-t-0 sm:border-l border-amber-500/25 pt-2 sm:pt-0 sm:pl-4">
+          <span className="block font-bold text-amber-300">2 Maccabees 12:46</span>
+          <span className="font-serif italic text-[11px] text-stone-300 block mt-0.5">
+            &ldquo;It is a holy and wholesome thought to pray for the dead, that they may be loosed from sins.&rdquo;
+          </span>
         </div>
       </div>
 

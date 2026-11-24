@@ -1075,54 +1075,56 @@ export const ChurchCouncilsTimelineView: React.FC<ChurchCouncilsTimelineViewProp
       
       {/* If embedded inside Church History, show compact header; otherwise show hero banner */}
       {showHeroBanner ? (
-        <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 p-6 sm:p-7 md:p-8 shadow-xl text-[#F9F6F0]">
-          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
-          
-          <div className="relative z-10 max-w-3xl space-y-3">
-            <div className="text-xs font-cinzel font-bold tracking-wider uppercase text-[#DFD5C3] flex items-center gap-2">
-              <History className="w-3.5 h-3.5 text-[#EAE2D3]" />
-              <span>Sacred Magisterium of the Catholic Church</span>
+        <>
+          <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] relative overflow-hidden rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-xl text-[#F9F6F0] flex flex-col justify-between gap-2">
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
+            
+            <div className="relative z-10 max-w-3xl space-y-1">
+              <div className="text-[11px] font-cinzel font-bold tracking-wider uppercase text-[#DFD5C3] flex items-center gap-2">
+                <History className="w-3.5 h-3.5 text-[#EAE2D3]" />
+                <span>Sacred Magisterium of the Catholic Church</span>
+              </div>
+
+              <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+                Timeline of the 21 Ecumenical Councils
+              </h2>
+
+              <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif leading-snug line-clamp-2">
+                From the First Council of Nicaea (325 AD) to the Second Vatican Council (1962–1965), journey through seventeen centuries of Holy Spirit-guided discernment, popes, saints, and dogmas defined.
+              </p>
             </div>
 
-            <h2 className="font-cinzel text-lg sm:text-xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
-              Timeline of the 21 Ecumenical Councils
-            </h2>
-
-            <p className="text-sm sm:text-base text-[#EAE2D3] font-serif leading-relaxed">
-              From the First Council of Nicaea (325 AD) to the Second Vatican Council (1962–1965), journey through seventeen centuries of Holy Spirit-guided discernment, the reigning Popes, champion saints, dogmas defined, and heresies defeated.
-            </p>
-
-            <div className="pt-1 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-[#DFD5C3] font-serif">
+            <div className="relative z-10 flex flex-wrap items-center gap-2.5 text-[11px] sm:text-xs text-[#DFD5C3] font-serif">
               <span className="font-medium">21 Infallible Assemblies</span>
               <span className="text-slate-500">·</span>
               <span className="font-medium">325 AD to 1965 AD</span>
               <span className="text-slate-500">·</span>
               <span className="font-medium">Unbroken Petrine Guidance</span>
-              <span className="text-slate-500">·</span>
-              <span className="font-medium">Full Dogmas &amp; Decrees</span>
+              <span className="text-slate-500 hidden sm:inline">·</span>
+              <span className="font-medium hidden sm:inline">Full Dogmas &amp; Decrees</span>
             </div>
           </div>
 
           {/* Milestone Epoch Cards */}
-          <div className="relative z-10 mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div className="p-3.5 rounded-xl bg-slate-800/70 border border-slate-600/60 backdrop-blur-xs">
-              <span className="font-cinzel text-lg sm:text-xl font-bold text-[#DFD5C3] block tabular-nums">325 AD</span>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+            <div className="p-3 rounded-xl bg-slate-900 border border-slate-700/80 shadow-sm text-[#F9F6F0]">
+              <span className="font-cinzel text-base sm:text-lg font-bold text-[#DFD5C3] block tabular-nums">325 AD</span>
               <span className="text-xs text-[#EAE2D3] font-serif mt-0.5 block">Nicaea I (Homoousios)</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-800/70 border border-slate-600/60 backdrop-blur-xs">
-              <span className="font-cinzel text-lg sm:text-xl font-bold text-[#DFD5C3] block tabular-nums">1215 AD</span>
+            <div className="p-3 rounded-xl bg-slate-900 border border-slate-700/80 shadow-sm text-[#F9F6F0]">
+              <span className="font-cinzel text-base sm:text-lg font-bold text-[#DFD5C3] block tabular-nums">1215 AD</span>
               <span className="text-xs text-[#EAE2D3] font-serif mt-0.5 block">Lateran IV (Transubstantiation)</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-800/70 border border-slate-600/60 backdrop-blur-xs">
-              <span className="font-cinzel text-lg sm:text-xl font-bold text-[#DFD5C3] block tabular-nums">1545 AD</span>
+            <div className="p-3 rounded-xl bg-slate-900 border border-slate-700/80 shadow-sm text-[#F9F6F0]">
+              <span className="font-cinzel text-base sm:text-lg font-bold text-[#DFD5C3] block tabular-nums">1545 AD</span>
               <span className="text-xs text-[#EAE2D3] font-serif mt-0.5 block">Trent (Counter-Reformation)</span>
             </div>
-            <div className="p-3.5 rounded-xl bg-slate-800/70 border border-slate-600/60 backdrop-blur-xs">
-              <span className="font-cinzel text-lg sm:text-xl font-bold text-[#DFD5C3] block tabular-nums">1962 AD</span>
+            <div className="p-3 rounded-xl bg-slate-900 border border-slate-700/80 shadow-sm text-[#F9F6F0]">
+              <span className="font-cinzel text-base sm:text-lg font-bold text-[#DFD5C3] block tabular-nums">1962 AD</span>
               <span className="text-xs text-[#EAE2D3] font-serif mt-0.5 block">Vatican II (Universal Call)</span>
             </div>
           </div>
-        </div>
+        </>
       ) : null}
 
       <div className="w-full bg-[#FBF9F5] rounded-xl border border-[#DFD6C7] shadow-md overflow-hidden">

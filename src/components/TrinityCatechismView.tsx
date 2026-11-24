@@ -7,54 +7,56 @@ export const TrinityCatechismView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 rounded-xl p-6 text-amber-50 shadow-md border border-amber-900/40">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
-            Sanctissima Trinitas • Central Dogma of the Faith
-          </span>
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[156px] sm:h-[164px] bg-gradient-to-r from-amber-950 via-stone-900 to-amber-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-center overflow-hidden">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="font-cinzel text-[11px] font-bold uppercase tracking-widest text-amber-300">
+              Sanctissima Trinitas • Central Dogma of the Faith
+            </span>
+          </div>
+          <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+            Catechism on the Most Holy Trinity
+          </h3>
+          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-3xl leading-snug line-clamp-2">
+            "The mystery of the Most Holy Trinity is the central mystery of Christian faith and life. It is the mystery of God in himself. It is therefore the source of all the other mysteries of faith, the light that enlightens them." (CCC 234)
+          </p>
         </div>
-        <h3 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
-          Catechism on the Most Holy Trinity
-        </h3>
-        <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-2xl mt-1">
-          "The mystery of the Most Holy Trinity is the central mystery of Christian faith and life. It is the mystery of God in himself. It is therefore the source of all the other mysteries of faith, the light that enlightens them." (CCC 234)
-        </p>
+      </div>
 
-        {/* Tab switcher */}
-        <div className="flex flex-wrap gap-2 mt-5">
-          <button
-            onClick={() => setSelectedSubTab('mystery')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              selectedSubTab === 'mystery'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
-            }`}
-          >
-            One Substance, Three Persons
-          </button>
+      {/* Tab switcher */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setSelectedSubTab('mystery')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            selectedSubTab === 'mystery'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
+          }`}
+        >
+          One Substance, Three Persons
+        </button>
 
-          <button
-            onClick={() => setSelectedSubTab('athanasian')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              selectedSubTab === 'athanasian'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
-            }`}
-          >
-            The Athanasian Creed (Quicumque Vult)
-          </button>
+        <button
+          onClick={() => setSelectedSubTab('athanasian')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            selectedSubTab === 'athanasian'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
+          }`}
+        >
+          The Athanasian Creed (Quicumque Vult)
+        </button>
 
-          <button
-            onClick={() => setSelectedSubTab('heresies')}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
-              selectedSubTab === 'heresies'
-                ? 'bg-amber-400 text-amber-950 shadow-sm'
-                : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
-            }`}
-          >
-            Heresies Refuted and Shields of Faith
-          </button>
-        </div>
+        <button
+          onClick={() => setSelectedSubTab('heresies')}
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold font-cinzel transition-all cursor-pointer ${
+            selectedSubTab === 'heresies'
+              ? 'bg-amber-400 text-amber-950 shadow-sm'
+              : 'bg-stone-800 text-amber-200 hover:bg-stone-700'
+          }`}
+        >
+          Heresies Refuted and Shields of Faith
+        </button>
       </div>
 
       {/* =========================================================================
