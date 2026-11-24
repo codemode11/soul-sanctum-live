@@ -22,6 +22,7 @@ import {
 } from '../data/novenas';
 import { bellSynth } from '../utils/audioSynth';
 import { NovenaHands9Icon } from './SanctumIcons';
+import novenaNineCandlesImg from '../assets/images/novena_nine_candles_1795511445615.jpg';
 
 interface NovenaTrackerViewProps {
   currentDateStr?: string;
@@ -245,28 +246,53 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
       
       {/* Novena Tracker Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] group bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/30 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="space-y-2">
+      <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-3">
+        {/* Right-Side Nine Lit Glass Votive Candles with Black Background & Smoke */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[53%] overflow-hidden z-0"
+          aria-hidden="true"
+        >
+          <img
+            src={novenaNineCandlesImg}
+            alt="Nine lit short thick vigil candles in clear glass containers with gentle rising smoke"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-[50%_66%]"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 8%, black 16%, black 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 8%, black 16%, black 100%)',
+            }}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-[#520B0B]/20" />
+        </div>
+
+        {/* Smooth Multi-Stop Horizontal Gradient from Red Background (#520B0B) into the Nine Candles */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,#520B0B_0%,rgba(82,11,11,0.94)_28%,rgba(82,11,11,0.72)_54%,rgba(82,11,11,0.34)_78%,rgba(12,6,6,0.20)_100%)] sm:bg-[linear-gradient(90deg,#520B0B_0%,#520B0B_34%,rgba(82,11,11,0.92)_42%,rgba(42,8,8,0.48)_48%,rgba(12,6,6,0)_54%)]"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 space-y-1.5 sm:max-w-[46%]">
           <div className="flex flex-wrap items-center gap-2">
-            <NovenaHands9Icon className="w-5 h-5 text-amber-400" />
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300">
+            <NovenaHands9Icon className="w-5 h-5 text-amber-300" />
+            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
               Sacred Nine-Day Devotions • Updated Daily ({effectiveDateStr})
             </span>
           </div>
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
+          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">
             Catholic Novena Tracker
           </h2>
-          <p className="text-xs sm:text-sm text-stone-300 font-serif-sacred max-w-xl">
-            In imitation of the Apostles and the Blessed Virgin Mary who persevered for nine days in the Upper Room awaiting the Holy Spirit, track your ongoing nine-day devotions and prepare for upcoming feasts in October, November, and December.
+          <p className="text-xs sm:text-sm text-amber-50/90 font-serif-sacred leading-snug line-clamp-2 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+            In imitation of the Apostles and the Blessed Virgin Mary who persevered for nine days in the Upper Room awaiting the Holy Spirit, track your ongoing nine-day devotions and prepare for upcoming feasts.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="relative z-10 flex items-center gap-3 pt-1 shrink-0 sm:max-w-[46%]">
           <button
             onClick={() => setCustomModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-amber-800/80 hover:bg-amber-700 text-amber-100 font-semibold text-xs border border-amber-600 transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#7F1D1D]/90 hover:bg-[#991B1B] text-amber-50 font-cinzel font-bold text-xs border border-amber-300/60 shadow-xs transition-colors cursor-pointer"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 text-amber-300" />
             <span>Custom Novena</span>
           </button>
         </div>
