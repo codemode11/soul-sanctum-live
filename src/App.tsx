@@ -132,7 +132,22 @@ export default function App() {
   const [currentDateStr, setCurrentDateStr] = useState<string>(() => {
     return getTodayDateStr();
   });
-  const [activeTab, setActiveTab] = useState<ActiveTab>(() => getInitialTabFromLocation());
+  const [activeTab, setActiveTab] = useState<ActiveTab>(() => {
+    if (typeof window !== 'undefined') {
+      const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+      if (navEntry?.type === 'reload' || window.history.state?.inAppTab) {
+        if (window.location.pathname !== '/' && !window.location.pathname.startsWith('/dashboard')) {
+          try {
+            window.history.replaceState(null, '', '/');
+          } catch {
+            // Ignore restricted history mutations in sandboxed embeds
+          }
+        }
+        return 'divine-office';
+      }
+    }
+    return getInitialTabFromLocation();
+  });
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isAngelusOpen, setIsAngelusOpen] = useState(false);
   const [isAdorationOpen, setIsAdorationOpen] = useState(false);
@@ -589,10 +604,9 @@ export default function App() {
     setActiveTab(tab);
 
     if (typeof window !== 'undefined') {
-      const targetPath = `/${tab}`;
-      if (window.location.pathname !== targetPath) {
+      if (window.location.pathname !== '/' && !window.location.pathname.startsWith('/dashboard')) {
         try {
-          window.history.pushState({ tab }, '', targetPath);
+          window.history.replaceState({ inAppTab: tab }, '', '/');
         } catch {
           // Ignore restricted history mutations in sandboxed embeds
         }

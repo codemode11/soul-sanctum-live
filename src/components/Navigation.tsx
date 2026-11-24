@@ -565,9 +565,20 @@ export const Navigation: React.FC<NavigationProps> = ({
         }`}
         style={isMobileDrawer ? undefined : { paddingLeft: `max(0.5rem, calc(50% - ${massReadingsMidpointPx + 28}px))` }}
       >
-        <span className="font-cinzel text-base sm:text-lg font-bold text-[#FFD700] drop-shadow-[0_0_8px_rgba(212,175,55,0.45)] tracking-[0.2em] uppercase text-left">
+        <button
+          type="button"
+          onClick={() => {
+            onSelectTab('divine-office');
+            if (sidebarRef.current) {
+              sidebarRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            if (onCloseMobile) onCloseMobile();
+          }}
+          className="font-cinzel text-base sm:text-lg font-bold text-[#FFD700] hover:text-amber-200 drop-shadow-[0_0_8px_rgba(212,175,55,0.45)] tracking-[0.2em] uppercase text-left cursor-pointer transition-colors"
+          title="Return to Divine Office (Default Section)"
+        >
           INDEX
-        </span>
+        </button>
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             type="button"
