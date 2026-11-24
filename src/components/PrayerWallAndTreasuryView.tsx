@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { 
-  HeartHandshake, 
   Flame, 
   Plus, 
   Search, 
@@ -36,13 +35,7 @@ interface PrayerWallAndTreasuryViewProps {
 export const PrayerWallAndTreasuryView: React.FC<PrayerWallAndTreasuryViewProps> = ({
   initialSection = 'wall'
 }) => {
-  const [activeSection, setActiveSection] = useState<'wall' | 'treasury'>(initialSection);
-
-  React.useEffect(() => {
-    if (initialSection) {
-      setActiveSection(initialSection);
-    }
-  }, [initialSection]);
+  const activeSection = initialSection;
   
   // Prayer Requests Wall state
   const [requests, setRequests] = useState<PrayerRequest[]>(INITIAL_PRAYER_REQUESTS);
@@ -505,33 +498,6 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
       )}
 
       <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 shadow-[0_8px_32px_0_rgba(120,90,50,0.12)] space-y-6">
-      {/* Switcher Buttons below the Prayer Requests Banner: Treasury of Prayers & Community Prayer Wall */}
-      <div className="flex rounded-xl bg-white/45 backdrop-blur-xl backdrop-saturate-150 border border-white/60 ring-1 ring-inset ring-white/40 p-1.5 max-w-md mx-auto shadow-[0_8px_32px_0_rgba(120,90,50,0.12)]">
-        <button
-          onClick={() => setActiveSection('treasury')}
-          className={`flex-1 py-2.5 px-4 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 ${
-            activeSection === 'treasury'
-              ? 'bg-amber-900 text-amber-50 shadow-md'
-              : 'text-stone-700 hover:text-stone-900'
-          }`}
-        >
-          <BookOpen className="w-4 h-4 text-amber-400" />
-          <span>Catholic Prayers Treasury</span>
-        </button>
-
-        <button
-          onClick={() => setActiveSection('wall')}
-          className={`flex-1 py-2.5 px-4 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-2 ${
-            activeSection === 'wall'
-              ? 'bg-amber-900 text-amber-50 shadow-md'
-              : 'text-stone-700 hover:text-stone-900'
-          }`}
-        >
-          <HeartHandshake className="w-4 h-4 text-amber-400" />
-          <span>Community Prayer Wall</span>
-        </button>
-      </div>
-
       {/* =========================================================================
           SECTION 1: COMMUNITY PRAYER REQUESTS WALL
          ========================================================================= */}
