@@ -25,6 +25,7 @@ import { CATHOLIC_PRAYERS_DATABASE } from '../data/prayers';
 import { INITIAL_PRAYER_REQUESTS } from '../data/prayerRequests';
 import { bellSynth } from '../utils/audioSynth';
 import { SacredReader, CURATED_SANCTUM_VOICES } from '../utils/speech';
+import treasuryWoodenKneelerImg from '../assets/images/treasury_kneeler_rotated_to_crucifix_1795508842899.jpg';
 
 interface PrayerWallAndTreasuryViewProps {
   initialSection?: 'wall' | 'treasury';
@@ -296,136 +297,156 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
       
       {/* Top Banner — Context-aware for Treasury of Prayers vs. Community Prayer Wall */}
       {activeSection === 'treasury' ? (
-        <div className="sanctum-top-banner px-4 py-3.5 sm:px-6 sm:py-4 min-h-[148px] bg-gradient-to-br from-[#2B1A0F] via-[#3B2314] to-[#1C1008] rounded-xl text-amber-50 shadow-lg border border-[#A67B4E]/60 relative overflow-hidden flex flex-col justify-between gap-2.5">
-          <div className="pointer-events-none absolute -right-12 -bottom-12 w-64 h-36 rounded-full bg-amber-300/15 blur-3xl" />
+        <div className="sanctum-top-banner px-5 py-4 sm:px-6 sm:py-5 min-h-[236px] sm:min-h-[268px] bg-[#24150B] rounded-xl text-amber-50 shadow-lg border border-[#A67B4E]/60 relative overflow-hidden flex flex-col justify-between gap-3">
+          {/* Right-Side Wooden Kneeler Facing Wall Crucifix Photography (16:9 preserved on sm+ so crucifix, armrest, prayer book, and cushion stay uncropped) */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-auto sm:aspect-[16/9] overflow-hidden"
+            aria-hidden="true"
+          >
+            <img
+              src={treasuryWoodenKneelerImg}
+              alt="Wooden kneeler facing the crucifix on the chapel wall, with forearm rest and prayer book tucked under the wooden case"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[64%_50%] sm:object-right brightness-[1.03] contrast-[1.04]"
+            />
+            {/* Smooth Horizontal Gradient Transition from Dark Brown (#24150B) into the Kneeler & Crucifix */}
+            <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#24150B_0%,#24150B_14%,rgba(36,21,11,0.92)_26%,rgba(36,21,11,0.58)_38%,rgba(36,21,11,0.20)_50%,transparent_64%)]" />
+            {/* Subtle Right, Top, and Bottom Dark Brown Feathering */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#24150B]/55 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#24150B]/45 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#24150B]/60 to-transparent" />
+          </div>
 
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-            <div className="space-y-0.5 min-w-0">
-              <div className="flex items-center gap-1.5 text-[11px] font-cinzel font-bold uppercase tracking-[0.16em] text-[#DFB991]">
+          {/* Mobile Readability Gradient Behind Left Title & Controls */}
+          <div
+            className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#24150B_0%,#24150B_28%,rgba(36,21,11,0.88)_52%,rgba(36,21,11,0.45)_76%,rgba(36,21,11,0.22)_100%)]"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[60%] gap-3">
+            <div className="space-y-1 min-w-0">
+              <div className="flex items-center gap-1.5 text-[11px] font-cinzel font-bold uppercase tracking-[0.16em] text-[#DFB991] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 <BookOpen className="w-3.5 h-3.5 text-amber-300 shrink-0" />
                 <span>Thesaurus Precum Catholicarum</span>
                 <span aria-hidden="true">·</span>
                 <span>{CATHOLIC_PRAYERS_DATABASE.length} Bilingual Prayers</span>
               </div>
-              <h2 className="font-cinzel text-xl sm:text-2xl md:text-[26px] font-bold text-[#FDF8F0] tracking-wide leading-tight">
+              <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-[#FDF8F0] tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                 Treasury of Prayers
               </h2>
-              <p className="text-xs text-[#EAD7C0]/90 font-serif-sacred leading-snug truncate">
+              <p className="text-xs sm:text-sm text-[#EAD7C0]/95 font-serif-sacred leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 &ldquo;Ask, and it shall be given you; seek, and you shall find.&rdquo; (Mt 7:7) — Classic English &amp; Latin devotions.
               </p>
             </div>
 
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0">
-              <div className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md bg-[#1A0F08]/95 border border-[#8B5A2B]/65 text-xs">
-                <span className="font-cinzel font-semibold text-[#DFB991] whitespace-nowrap">
-                  Leader:
-                </span>
-                <select
-                  value={treasuryLeaderVoice}
-                  onChange={(e) => handleTreasuryLeaderChange(e.target.value)}
-                  aria-label="Select Treasury Prayer Leader voice"
-                  className="bg-transparent text-amber-100 font-cinzel font-semibold text-xs focus:outline-none cursor-pointer pr-0.5"
+            {/* Voice Leader, Audio, Filter & Search Controls Kept on Left so Kneeler & Crucifix Stay Unobstructed */}
+            <div className="pt-2.5 border-t border-[#8B5A2B]/40 space-y-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-1.5 h-8 px-2.5 rounded-md bg-[#1A0F08]/95 border border-[#8B5A2B]/65 text-xs backdrop-blur-xs">
+                  <span className="font-cinzel font-semibold text-[#DFB991] whitespace-nowrap">
+                    Leader:
+                  </span>
+                  <select
+                    value={treasuryLeaderVoice}
+                    onChange={(e) => handleTreasuryLeaderChange(e.target.value)}
+                    aria-label="Select Treasury Prayer Leader voice"
+                    className="bg-transparent text-amber-100 font-cinzel font-semibold text-xs focus:outline-none cursor-pointer pr-0.5"
+                  >
+                    {TREASURY_LEADER_OPTIONS.map(opt => (
+                      <option key={opt.id} value={opt.id} className="bg-[#1C1008] text-amber-50">
+                        {opt.id === 'persona-jenny' ? 'Jenny (Default)' : opt.shortName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
+                  className={`h-8 px-3 rounded-md text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-1.5 shrink-0 whitespace-nowrap backdrop-blur-xs ${
+                    speakingPrayerId === selectedPrayer.id
+                      ? 'bg-amber-600 hover:bg-amber-500 text-white border border-amber-300/60'
+                      : 'bg-[#1D1109]/92 hover:bg-[#4E2F1B] text-amber-100 border border-[#C89F72]/60'
+                  }`}
                 >
-                  {TREASURY_LEADER_OPTIONS.map(opt => (
-                    <option key={opt.id} value={opt.id} className="bg-[#1C1008] text-amber-50">
-                      {opt.id === 'persona-jenny' ? 'Jenny (Default)' : opt.shortName}
+                  {speakingPrayerId === selectedPrayer.id ? (
+                    <>
+                      <VolumeX className="w-3.5 h-3.5 text-white" />
+                      <span>Stop {activeLeader.shortName}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Listen ({activeLeader.shortName})</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowIndulgenceGuide(prev => !prev)}
+                  className={`h-8 px-2.5 rounded-md text-xs font-cinzel font-semibold transition-colors cursor-pointer border flex items-center gap-1.5 whitespace-nowrap shrink-0 backdrop-blur-xs ${
+                    showIndulgenceGuide
+                      ? 'bg-amber-400 text-stone-950 border-amber-200'
+                      : 'bg-[#1A0F08]/92 hover:bg-[#3A2213] text-amber-200 border-[#8B5A2B]/65'
+                  }`}
+                >
+                  <Award className="w-3.5 h-3.5" />
+                  <span>Indulgences Guide</span>
+                </button>
+              </div>
+
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
+                <select
+                  value={selectedPrayerCategory}
+                  onChange={(e) => {
+                    const nextCat = e.target.value;
+                    setSelectedPrayerCategory(nextCat);
+                    const q = prayerSearch.toLowerCase().trim();
+                    const firstMatch = CATHOLIC_PRAYERS_DATABASE.find(
+                      p => matchesPrayerCategory(p, nextCat) &&
+                        (!q ||
+                          p.title.toLowerCase().includes(q) ||
+                          (p.latinTitle && p.latinTitle.toLowerCase().includes(q)) ||
+                          (p.author && p.author.toLowerCase().includes(q)) ||
+                          p.englishText.toLowerCase().includes(q))
+                    );
+                    if (firstMatch) setSelectedPrayer(firstMatch);
+                  }}
+                  aria-label="Filter prayers by category"
+                  className="h-8 px-2.5 rounded-md bg-[#1A0F08]/95 border border-[#8B5A2B]/65 text-xs font-cinzel font-semibold text-amber-100 focus:outline-none focus:border-amber-400 cursor-pointer shrink-0 backdrop-blur-xs"
+                >
+                  {prayerCategories.map(cat => (
+                    <option key={cat} value={cat}>
+                      {cat === 'All'
+                        ? `All Categories (${CATHOLIC_PRAYERS_DATABASE.length})`
+                        : `${cat} (${CATHOLIC_PRAYERS_DATABASE.filter(p => matchesPrayerCategory(p, cat)).length})`}
                     </option>
                   ))}
                 </select>
+
+                <div className="relative flex-1 min-w-[160px]">
+                  <Search className="w-3.5 h-3.5 text-[#C89F72] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={prayerSearch}
+                    onChange={(e) => setPrayerSearch(e.target.value)}
+                    placeholder="Search saint, title, Latin, indulgence..."
+                    className="w-full h-8 pl-8 pr-7 rounded-md bg-[#1A0F08]/92 border border-[#8B5A2B]/65 text-xs text-amber-50 placeholder-[#C89F72]/70 focus:outline-none focus:border-amber-400 backdrop-blur-xs"
+                  />
+                  {prayerSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setPrayerSearch('')}
+                      aria-label="Clear prayer search"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[#C89F72] hover:text-white cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
               </div>
-
-              <button
-                type="button"
-                onClick={() => handleToggleSpeakPrayer(selectedPrayer)}
-                className={`h-8 px-3 rounded-md text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
-                  speakingPrayerId === selectedPrayer.id
-                    ? 'bg-amber-600 hover:bg-amber-500 text-white border border-amber-300/60'
-                    : 'bg-[#1D1109]/90 hover:bg-[#4E2F1B] text-amber-100 border border-[#C89F72]/60'
-                }`}
-              >
-                {speakingPrayerId === selectedPrayer.id ? (
-                  <>
-                    <VolumeX className="w-3.5 h-3.5 text-white" />
-                    <span>Stop {activeLeader.shortName}</span>
-                  </>
-                ) : (
-                  <>
-                    <Volume2 className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Listen ({activeLeader.shortName})</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {/* Compact Filter & Search Utility Strip (h-8 controls matching Daily Mass Readings) */}
-          <div className="relative z-10 pt-2.5 border-t border-[#8B5A2B]/40 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2">
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 flex-1 min-w-0">
-              <select
-                value={selectedPrayerCategory}
-                onChange={(e) => {
-                  const nextCat = e.target.value;
-                  setSelectedPrayerCategory(nextCat);
-                  const q = prayerSearch.toLowerCase().trim();
-                  const firstMatch = CATHOLIC_PRAYERS_DATABASE.find(
-                    p => matchesPrayerCategory(p, nextCat) &&
-                      (!q ||
-                        p.title.toLowerCase().includes(q) ||
-                        (p.latinTitle && p.latinTitle.toLowerCase().includes(q)) ||
-                        (p.author && p.author.toLowerCase().includes(q)) ||
-                        p.englishText.toLowerCase().includes(q))
-                  );
-                  if (firstMatch) setSelectedPrayer(firstMatch);
-                }}
-                aria-label="Filter prayers by category"
-                className="h-8 px-2.5 rounded-md bg-[#1A0F08]/95 border border-[#8B5A2B]/65 text-xs font-cinzel font-semibold text-amber-100 focus:outline-none focus:border-amber-400 cursor-pointer shrink-0"
-              >
-                {prayerCategories.map(cat => (
-                  <option key={cat} value={cat}>
-                    {cat === 'All'
-                      ? `All Categories (${CATHOLIC_PRAYERS_DATABASE.length})`
-                      : `${cat} (${CATHOLIC_PRAYERS_DATABASE.filter(p => matchesPrayerCategory(p, cat)).length})`}
-                  </option>
-                ))}
-              </select>
-
-              <div className="relative flex-1 min-w-[170px] max-w-xs">
-                <Search className="w-3.5 h-3.5 text-[#C89F72] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <input
-                  type="text"
-                  value={prayerSearch}
-                  onChange={(e) => setPrayerSearch(e.target.value)}
-                  placeholder="Search saint, title, Latin, indulgence..."
-                  className="w-full h-8 pl-8 pr-7 rounded-md bg-[#1A0F08]/90 border border-[#8B5A2B]/65 text-xs text-amber-50 placeholder-[#C89F72]/70 focus:outline-none focus:border-amber-400"
-                />
-                {prayerSearch && (
-                  <button
-                    type="button"
-                    onClick={() => setPrayerSearch('')}
-                    aria-label="Clear prayer search"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-[#C89F72] hover:text-white cursor-pointer"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setShowIndulgenceGuide(prev => !prev)}
-                className={`h-8 px-2.5 rounded-md text-xs font-cinzel font-semibold transition-colors cursor-pointer border flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-                  showIndulgenceGuide
-                    ? 'bg-amber-400 text-stone-950 border-amber-200'
-                    : 'bg-[#1A0F08]/90 hover:bg-[#3A2213] text-amber-200 border-[#8B5A2B]/65'
-                }`}
-              >
-                <Award className="w-3.5 h-3.5" />
-                <span>Indulgences Guide</span>
-              </button>
-            </div>
-
-            <div className="text-[11px] font-cinzel font-semibold text-[#DFB991] shrink-0 tabular-nums whitespace-nowrap">
-              {filteredTreasuryPrayers.length} {filteredTreasuryPrayers.length === 1 ? 'prayer' : 'prayers'} shown
             </div>
           </div>
         </div>

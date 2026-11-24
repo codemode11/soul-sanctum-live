@@ -48,6 +48,7 @@ import station11Img from '../assets/images/caravaggio_v2_station_11_179543668851
 import station12Img from '../assets/images/caravaggio_v2_station_12_1795436687671.jpg';
 import station13Img from '../assets/images/caravaggio_station_13_taken_down_1795424462234.jpg';
 import station14Img from '../assets/images/caravaggio_station_14_sepulchre_1795424461047.jpg';
+import divineMercyImg from '../assets/images/divine_mercy_vilnius_1795509656341.jpg';
 import {
   STATIONS_AUTHOR_META,
   STATIONS_PREPARATORY_PRAYER,
@@ -1103,8 +1104,26 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Passion & 3:00 PM Hour of Mercy Banner */}
-      <div className="sanctum-top-banner h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#3D0A0A] via-[#23100C] to-[#591111] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between overflow-hidden">
-        <div className="space-y-1">
+      <div className="sanctum-top-banner relative isolate h-[156px] sm:h-[164px] w-full px-5 py-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between overflow-hidden">
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[124px] sm:w-[144px] overflow-hidden z-0"
+          aria-hidden="true"
+        >
+          <img
+            src={divineMercyImg}
+            alt="The Divine Mercy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-contain object-right"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
+            }}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+        </div>
+
+        <div className="relative z-10 space-y-1 pr-[112px] sm:pr-[140px]">
           <div className="flex items-center gap-2 overflow-hidden">
             <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 truncate">
               THE WAY OF THE CROSS • ST. ALPHONSUS LIGUORI • 3:00 PM DEVOTION
@@ -1118,7 +1137,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
           </p>
         </div>
 
-        <div className="h-8 flex items-center justify-between gap-2 mt-auto shrink-0">
+        <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[112px] sm:pr-[140px]">
           <div className="flex items-center gap-2 min-w-0">
             {!isAutoPlaying ? (
               <button

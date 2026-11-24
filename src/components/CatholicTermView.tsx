@@ -14,6 +14,7 @@ import {
 import { CatholicTerm } from '../types';
 import { CATHOLIC_TERMS_DATABASE, getTermOfTheDay } from '../data/terms';
 import { SacredReader } from '../utils/speech';
+import catholicGlossaryBookshelfImg from '../assets/images/catholic_glossary_bookshelf_1795505259667.jpg';
 
 export const CatholicTermView: React.FC = () => {
   const [selectedTerm, setSelectedTerm] = useState<CatholicTerm>(getTermOfTheDay);
@@ -59,54 +60,80 @@ Catechism: ${term.catechismRef || 'N/A'}`;
     <div className="max-w-4xl mx-auto space-y-6 pb-12">
       
       {/* Featured: Catholic Term of the Day */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[164px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 relative overflow-hidden">
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 flex items-center gap-1.5">
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] bg-[#1C120C] rounded-xl text-amber-50 shadow-md border border-[#8B5A2B]/40 relative overflow-hidden">
+        {/* Right-Side Shelf of Catholic Dictionaries and Encyclopedia with Seamless Brown Gradient Blend */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[70%] md:w-[66%] overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={catholicGlossaryBookshelfImg}
+            alt="Shelf of Catholic dictionaries and encyclopedias"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-[74%_44%] brightness-[0.98] contrast-[1.04]"
+          />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120C]/60 to-transparent" />
+        </div>
+
+        {/* Smooth Multi-Stop Horizontal Gradient from Brown Background (#1C120C) into the Bookshelf */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_28%,rgba(28,18,12,0.92)_46%,rgba(28,18,12,0.58)_64%,rgba(28,18,12,0.22)_84%,rgba(28,18,12,0.24)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_38%,rgba(28,18,12,0.92)_52%,rgba(28,18,12,0.52)_68%,rgba(28,18,12,0.14)_86%,rgba(28,18,12,0.20)_100%)]"
+          aria-hidden="true"
+        />
+        {/* Subtle Top/Bottom Dark Brown Feathering so Text & Controls Stay Crisp */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/70 via-transparent to-[#1C120C]/30"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 space-y-4">
+          <div className="flex items-center justify-between gap-2">
+            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-300 flex items-center gap-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               Catholic Term of the Day
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-800/80 text-amber-200 text-xs font-medium border border-amber-700/50">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#1C120C]/85 text-amber-200 text-xs font-medium border border-[#8B5A2B]/55 backdrop-blur-xs">
               {selectedTerm.category}
             </span>
           </div>
 
-          <div className="space-y-1">
+          <div className="space-y-1 max-w-full sm:max-w-[66%]">
             <div className="flex items-center gap-3">
-              <h2 className="font-cinzel text-2xl sm:text-4xl font-bold text-white tracking-wide">
+              <h2 className="font-cinzel text-2xl sm:text-4xl font-bold text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
                 {selectedTerm.term}
               </h2>
               <button
                 onClick={() => handlePronounce(selectedTerm)}
-                className="p-2 rounded-lg bg-stone-800 hover:bg-amber-800 text-amber-300 transition-colors cursor-pointer"
+                className="p-2 rounded-lg bg-[#2A1B12]/90 hover:bg-amber-800 text-amber-300 border border-[#8B5A2B]/40 transition-colors cursor-pointer"
                 title="Hear pronunciation"
               >
                 <Volume2 className="w-4 h-4" />
               </button>
             </div>
-            <p className="text-sm text-stone-300 font-serif-sacred italic">
+            <p className="text-sm text-stone-200 font-serif-sacred italic drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               {selectedTerm.phonetic} • {selectedTerm.languageOrigin}
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-stone-900/80 border border-stone-800 text-amber-200 text-xs font-serif-sacred">
+          <div className="p-4 rounded-xl bg-[#1C120C]/82 border border-[#8B5A2B]/35 text-amber-200 text-xs font-serif-sacred backdrop-blur-xs max-w-full sm:max-w-[66%]">
             <span className="font-bold font-cinzel mr-1 text-amber-300">Literal Root:</span>
             <span>"{selectedTerm.literalMeaning}"</span>
           </div>
 
-          <p className="font-serif-sacred text-stone-100 text-base sm:text-lg leading-relaxed">
+          <p className="font-serif-sacred text-stone-100 text-base sm:text-lg leading-relaxed max-w-full sm:max-w-[66%] drop-shadow-[0_1px_4px_rgba(0,0,0,0.88)]">
             {selectedTerm.shortDefinition}
           </p>
 
-          <div className="flex items-center justify-between pt-2 border-t border-stone-800">
+          <div className="flex items-center justify-between pt-2 border-t border-[#8B5A2B]/35">
             {selectedTerm.catechismRef && (
-              <span className="text-xs text-amber-300 font-cinzel font-semibold">
+              <span className="text-xs text-amber-300 font-cinzel font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 Cross-Reference: {selectedTerm.catechismRef}
               </span>
             )}
             <button
               onClick={() => handleCopy(selectedTerm)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-amber-200 text-xs font-medium transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1C120C]/90 hover:bg-[#2A1B12] text-amber-200 text-xs font-medium border border-[#8B5A2B]/50 transition-colors cursor-pointer backdrop-blur-xs"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Copy Definition'}</span>
