@@ -19,10 +19,8 @@ import {
   Settings,
   ChevronDown,
   X,
-  Download,
-  Maximize2,
 } from 'lucide-react';
-import aiForCatholicsImg from '../assets/images/ai_for_catholics_1795442802534.jpg';
+import magisteriumBannerImg from '../assets/images/magisterium_michelangelo_graph_1795492644307.jpg';
 import {
   searchCatholicInternet,
   synthesizeResearchResponse,
@@ -188,7 +186,6 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [isDomainMenuOpen, setIsDomainMenuOpen] = useState(false);
-  const [isBannerLightboxOpen, setIsBannerLightboxOpen] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -257,17 +254,6 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isDomainMenuOpen]);
-
-  useEffect(() => {
-    if (!isBannerLightboxOpen) return;
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsBannerLightboxOpen(false);
-      }
-    };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [isBannerLightboxOpen]);
 
   const filteredSessions = useMemo(() => {
     const q = historySearch.trim().toLowerCase();
@@ -566,162 +552,185 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
 
   return (
     <div className="space-y-5 w-full pb-12 text-left">
-      {/* 1. Archival Editorial Header */}
-      <section className="bg-[#1B0F08] rounded-xl border border-[#3D2313] shadow-md relative overflow-hidden">
-        {/* Dark brown background gradient container with central image and gradient transition */}
-        <div className="pt-5 pb-3 px-4 sm:px-6 bg-gradient-to-r from-[#1B0F08] via-[#2A170D] to-[#1B0F08] flex flex-col items-center">
+      {/* 1. Archival Editorial Header (Divine Office / Daily Mass Readings / Holy Bible Style) */}
+      <section className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
+        <div
+          className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[192px] sm:min-h-[214px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${
+            isDomainMenuOpen ? 'rounded-t-xl' : 'rounded-xl'
+          }`}
+        >
+          {/* Right-Side Futuristic Michelangelo & Obsidian Graph Artwork with Seamless Dark Brown Gradient Blend */}
           <div
-            role="button"
-            tabIndex={0}
-            onClick={() => setIsBannerLightboxOpen(true)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                setIsBannerLightboxOpen(true);
-              }
-            }}
-            aria-label="View AI for Catholics futuristic artwork full screen"
-            className="relative w-full max-w-4xl aspect-video rounded-xl overflow-hidden border border-amber-500/35 bg-[#0B101B] group cursor-zoom-in shadow-xl"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[70%] md:w-[66%] overflow-hidden"
+            aria-hidden="true"
           >
             <img
-              src={aiForCatholicsImg}
-              alt="AI for Catholics — Futuristic luminous cathedral sacred artwork"
+              src={magisteriumBannerImg}
+              alt=""
+              decoding="async"
               referrerPolicy="no-referrer"
-              className="w-full h-full object-cover block transition-transform duration-500 group-hover:scale-[1.015]"
+              className="h-full w-full object-contain object-right brightness-[1.04] contrast-[1.04]"
             />
-            {/* Gradient overlay transitioning from dark brown to central image & bottom right text */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1B0F08]/85 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute inset-x-0 bottom-0 p-4 flex items-end justify-between pointer-events-none">
-              <div />
-              <span className="font-cinzel text-xs sm:text-sm font-semibold text-amber-200 tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.98)]">
-                Ai for Catholics.
+            {/* Seamless feathering along top, bottom, and right edges into #1C120C */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#1C120C] via-[#1C120C]/55 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120C]/75 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120C]/80 to-transparent" />
+          </div>
+
+          {/* Smooth multi-stop horizontal gradient transitioning from dark brown (#1C120C) into the right-side futuristic artwork */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_28%,rgba(28,18,12,0.92)_44%,rgba(28,18,12,0.52)_62%,rgba(28,18,12,0.14)_82%,rgba(28,18,12,0.20)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.92)_48%,rgba(28,18,12,0.44)_64%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.16)_100%)]"
+            aria-hidden="true"
+          />
+          {/* Subtle top/bottom warm dark brown feathering so text & controls stay crisp */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 space-y-1.5 my-auto max-w-[85%] sm:max-w-[58%]">
+            <div className="flex items-center gap-2 text-xs sm:text-sm font-serif flex-wrap">
+              <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                28,000+ Church Documents
+              </span>
+              <span className="text-amber-200/70" aria-hidden="true">·</span>
+              <span className="text-stone-200 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                Catechism, Canon Law &amp; Ecumenical Councils
               </span>
             </div>
-            <span className="absolute bottom-3 left-3 p-2 rounded-lg bg-black/55 backdrop-blur-xs border border-amber-300/35 text-amber-100 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-              <Maximize2 className="w-4 h-4" />
-            </span>
-          </div>
-        </div>
 
-        <div className="px-5 py-5 sm:px-7 sm:py-6 bg-[#1B0F08] space-y-4 border-t border-[#3D2313]">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2 text-xs sm:text-sm text-amber-200/80 font-serif flex-wrap">
-              <span className="text-amber-400 font-cinzel font-bold">28,000+ Church Documents</span>
-              <span aria-hidden="true">·</span>
-              <span className="text-amber-100/90">Catechism, Canon Law &amp; Ecumenical Councils</span>
-            </div>
-
-            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight text-balance">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]">
               Magisterium AI
             </h2>
 
-            <p className="font-serif text-sm sm:text-base text-amber-100/85 max-w-2xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-stone-200 font-serif font-medium max-w-xl leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Consult the authentic teaching authority of the Catholic Church with cited references
               from the Catechism, Code of Canon Law, Councils, Papal Encyclicals, and Doctors of the Church.
             </p>
           </div>
 
-          {/* Primary & Utility Action Row */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 border-t border-[#3D2313]">
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={handleNewInquiry}
-                className="px-4 py-2 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span>New Inquiry</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setIsHistoryOpen((prev) => !prev)}
-                className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-semibold border transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
-                  isHistoryOpen
-                    ? 'bg-[#EFE8D8] text-amber-950 border-[#D5C7A9]'
-                    : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-300'
+          {/* Bottom-Right Controls Row matching Divine Office & Daily Mass Readings */}
+          <div className="relative z-10 flex items-center justify-end gap-2 mt-auto pt-3">
+            <button
+              ref={domainButtonRef}
+              type="button"
+              onClick={() => setIsDomainMenuOpen((prev) => !prev)}
+              aria-expanded={isDomainMenuOpen}
+              aria-haspopup="true"
+              aria-label={isDomainMenuOpen ? 'Hide Settings' : 'Show Settings'}
+              title="Magisterium AI Settings"
+              className={`h-9 flex items-center gap-1.5 px-3 rounded-md transition-all cursor-pointer shrink-0 border whitespace-nowrap backdrop-blur-xs ${
+                isDomainMenuOpen
+                  ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
+                  : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'
+              }`}
+            >
+              <Settings className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
+              <span className="text-xs font-cinzel font-semibold">Settings</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 text-[#D4A373] shrink-0 transition-transform duration-200 ${
+                  isDomainMenuOpen ? 'rotate-180' : ''
                 }`}
-              >
-                {isHistoryOpen ? (
-                  <PanelLeftClose className="w-3.5 h-3.5 text-amber-800" />
-                ) : (
-                  <PanelLeftOpen className="w-3.5 h-3.5 text-amber-800" />
-                )}
-                <span>Past Inquiries ({sessions.length})</span>
-              </button>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              {onOpenCatholicAI && (
-                <button
-                  type="button"
-                  onClick={onOpenCatholicAI}
-                  className="px-3.5 py-2 rounded-lg bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 text-xs font-cinzel font-semibold transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0"
-                >
-                  <BookOpen className="w-3.5 h-3.5 text-amber-800" />
-                  <span>Catholic AI Assistant</span>
-                </button>
-              )}
-
-              <a
-                href="https://www.magisterium.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3.5 py-2 rounded-lg bg-white hover:bg-[#F7F2E7] border border-stone-300 text-amber-950 text-xs font-cinzel font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0"
-              >
-                <span>Open Magisterium.com</span>
-                <ExternalLink className="w-3.5 h-3.5 text-amber-800" />
-              </a>
-
-              {/* Settings Icon + Dropdown Arrow for Consult by Magisterial Domain */}
-              <button
-                ref={domainButtonRef}
-                type="button"
-                onClick={() => setIsDomainMenuOpen((prev) => !prev)}
-                aria-expanded={isDomainMenuOpen}
-                aria-haspopup="true"
-                aria-label="Consult by Magisterial Domain"
-                title="Consult by Magisterial Domain"
-                className={`px-2.5 py-2 rounded-lg border transition-colors cursor-pointer flex items-center gap-1 shrink-0 ${
-                  isDomainMenuOpen
-                    ? 'bg-[#EFE8D8] text-amber-950 border-amber-700/60 shadow-2xs'
-                    : 'bg-white hover:bg-[#F7F2E7] text-stone-800 border-stone-300'
-                }`}
-              >
-                <Settings className="w-4 h-4 text-amber-800" />
-                <ChevronDown
-                  className={`w-3.5 h-3.5 text-stone-600 transition-transform duration-200 ${
-                    isDomainMenuOpen ? 'rotate-180 text-amber-900' : ''
-                  }`}
-                />
-              </button>
-            </div>
+              />
+            </button>
           </div>
         </div>
 
-        {/* Full-Width Dropdown Panel: Same Width as All Magisterium AI Containers */}
+        {/* Full-Width Settings Dropdown Panel: Attached Beneath Banner Like Divine Office & Daily Mass Readings */}
         {isDomainMenuOpen && (
           <div
             ref={domainPanelRef}
-            className="absolute left-0 right-0 top-full mt-2 z-40 w-full rounded-xl bg-[#FAF8F3] border border-[#D8CEB8] shadow-xl p-4 sm:p-5 space-y-4"
+            className="w-full rounded-b-xl bg-[#FAF8F3] border-t border-[#D8CEB8] p-4 sm:p-5 space-y-4"
           >
             <div className="flex flex-wrap items-center justify-between gap-3 pb-2.5 border-b border-[#E5DEC9]">
               <div className="space-y-0.5">
                 <h3 className="font-cinzel text-xs sm:text-sm font-bold text-amber-950">
-                  Consult by Magisterial Domain
+                  Magisterium AI Settings
                 </h3>
                 <p className="font-serif text-xs text-stone-600">
-                  Select a domain to explore curated Catholic inquiries
+                  Manage inquiries, switch assistants, or explore curated Magisterial domains
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsDomainMenuOpen(false)}
                 className="p-1 rounded-md text-stone-500 hover:text-stone-900 hover:bg-[#ECE5D5] transition-colors cursor-pointer"
-                aria-label="Close Magisterial Domains menu"
+                aria-label="Close Magisterium AI Settings menu"
               >
                 <X className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Settings Action Buttons */}
+            <div className="flex flex-wrap items-center justify-between gap-2.5 pb-3.5 border-b border-[#E5DEC9]">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsDomainMenuOpen(false);
+                    handleNewInquiry();
+                  }}
+                  className="px-4 py-2 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                >
+                  <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>New Inquiry</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsHistoryOpen((prev) => !prev);
+                    setIsDomainMenuOpen(false);
+                  }}
+                  className={`px-3.5 py-2 rounded-lg text-xs font-cinzel font-semibold border transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
+                    isHistoryOpen
+                      ? 'bg-[#EFE8D8] text-amber-950 border-[#D5C7A9]'
+                      : 'bg-white hover:bg-stone-50 text-stone-800 border-stone-300'
+                  }`}
+                >
+                  {isHistoryOpen ? (
+                    <PanelLeftClose className="w-3.5 h-3.5 text-amber-800" />
+                  ) : (
+                    <PanelLeftOpen className="w-3.5 h-3.5 text-amber-800" />
+                  )}
+                  <span>Past Inquiries ({sessions.length})</span>
+                </button>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {onOpenCatholicAI && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsDomainMenuOpen(false);
+                      onOpenCatholicAI();
+                    }}
+                    className="px-3.5 py-2 rounded-lg bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 text-xs font-cinzel font-semibold transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0"
+                  >
+                    <BookOpen className="w-3.5 h-3.5 text-amber-800" />
+                    <span>Catholic AI Assistant</span>
+                  </button>
+                )}
+
+                <a
+                  href="https://www.magisterium.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-2 rounded-lg bg-white hover:bg-[#F7F2E7] border border-stone-300 text-amber-950 text-xs font-cinzel font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0"
+                >
+                  <span>Open Magisterium.com</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-amber-800" />
+                </a>
+              </div>
+            </div>
+
+            <div className="space-y-0.5">
+              <h4 className="font-cinzel text-xs font-bold text-amber-950">
+                Consult by Magisterial Domain
+              </h4>
+              <p className="font-serif text-xs text-stone-600">
+                Select a domain to explore curated Catholic inquiries
+              </p>
             </div>
 
             {/* Domain Tabs */}
@@ -1094,49 +1103,6 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
           </form>
         </div>
       </div>
-
-      {/* Full-Screen Lightbox for "AI for Catholics" Artwork */}
-      {isBannerLightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/88 backdrop-blur-xs flex items-center justify-center p-4 sm:p-8"
-          onClick={() => setIsBannerLightboxOpen(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="AI for Catholics artwork preview"
-        >
-          <div
-            className="relative max-w-6xl w-full space-y-3"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-end gap-2">
-              <a
-                href={aiForCatholicsImg}
-                download="ai-for-catholics.jpg"
-                className="px-3.5 py-2 rounded-lg bg-amber-800 hover:bg-amber-700 text-white font-cinzel text-xs font-bold flex items-center gap-1.5 transition-colors"
-              >
-                <Download className="w-3.5 h-3.5" />
-                <span>Download Image</span>
-              </a>
-              <button
-                type="button"
-                onClick={() => setIsBannerLightboxOpen(false)}
-                className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                aria-label="Close full-screen preview"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="rounded-xl overflow-hidden border border-amber-300/30 shadow-2xl bg-[#0B101B]">
-              <img
-                src={aiForCatholicsImg}
-                alt="AI for Catholics — Futuristic luminous cathedral sacred artwork"
-                referrerPolicy="no-referrer"
-                className="w-full h-auto max-h-[82vh] object-contain mx-auto block"
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
