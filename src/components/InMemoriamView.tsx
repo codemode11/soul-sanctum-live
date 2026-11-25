@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { HolyWaterIcon } from './SanctumIcons';
 import { SacredReader } from '../utils/speech';
+import graveAtSunsetImg from '../assets/images/grave_marble_sunset_1795595762172.jpg';
 
 export type DeceasedCategory = 'priest' | 'seminarian' | 'laity';
 
@@ -325,32 +326,59 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
       {/* =====================================================================
           1. SOLEMN HEADER BANNER WITH HOLY WATER ICON
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-br from-[#3B2618] via-[#2E1C10] to-[#1F1209] border border-[#8B5A2B]/70 shadow-[0_14px_38px_rgba(0,0,0,0.45)] text-amber-50 flex flex-col md:flex-row md:items-center justify-between gap-4 overflow-hidden">
-        <div className="flex items-start sm:items-center gap-3.5 min-w-0">
-          <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/50 flex items-center justify-center text-amber-300 shadow-md shrink-0">
-            <HolyWaterIcon className="w-5 h-5 text-amber-300" />
-          </div>
-          <div className="min-w-0">
- <span className="leading-snug font-cinzel text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300 block">
-              Requiem Aeternam • Commemoration of the Faithful Departed
-            </span>
-            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white mt-0.5 leading-tight">
-              In Memoriam
-            </h2>
- <p className="text-[11px] sm:text-[12.5px] font-serif text-stone-200 mt-1 max-w-2xl leading-snug">
-              Sacred remembrance and eulogies for our beloved <strong>priests</strong>, <strong>former seminarians</strong>, and <strong>members of the laity</strong> who have passed away—inviting the community to pray for their souls.
-            </p>
-          </div>
+      <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-[#2E1C10] via-[#26160C] to-[#1F1209] border border-[#8B5A2B]/70 shadow-[0_14px_38px_rgba(0,0,0,0.45)] text-amber-50 flex flex-col justify-between gap-2 overflow-hidden">
+        {/* Right-Side Well-Maintained Grave at Sunset Photography (16:9 preserved so cross, flowers, and lantern stay uncropped) */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-[#26160C] via-[#3B2618]/80 to-[#1F1209]"
+          aria-hidden="true"
+        >
+          <img
+            src={graveAtSunsetImg}
+            alt="Clean white-cream marble grave with a polished marble curb enclosure, trimmed emerald grass, white lilies, and a glowing vigil lantern at sunset"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-right brightness-[1.03] contrast-[1.03]"
+          />
+          {/* Smooth Horizontal Gradient Transition from Warm Dark Sepia (#26160C) into the Sunset & Marble Enclosure */}
+          <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#26160C_0%,#26160C_10%,rgba(38,22,12,0.88)_22%,rgba(38,22,12,0.42)_36%,rgba(38,22,12,0.12)_48%,transparent_60%)]" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-7 bg-gradient-to-l from-[#1F1209]/55 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-[#26160C]/45 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1F1209]/55 to-transparent" />
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsAddingMemorial(!isAddingMemorial)}
-          className="px-3.5 py-2 rounded-xl bg-[#A67C52] hover:bg-[#8E6740] text-white border border-amber-300/50 font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-1.5 self-start md:self-center shrink-0 shadow-md"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Deceased</span>
-        </button>
+        {/* Mobile Readability Gradient Behind Left Title & Button */}
+        <div
+          className="sm:hidden pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,#26160C_0%,#26160C_34%,rgba(38,22,12,0.88)_60%,rgba(38,22,12,0.48)_84%,rgba(38,22,12,0.28)_100%)]"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[60%] gap-2">
+          <div className="flex items-start sm:items-center gap-3.5 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/50 flex items-center justify-center text-amber-300 shadow-md shrink-0 backdrop-blur-xs">
+              <HolyWaterIcon className="w-5 h-5 text-amber-300" />
+            </div>
+            <div className="min-w-0">
+              <span className="leading-snug font-cinzel text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300 block drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                Requiem Aeternam • Commemoration of the Faithful Departed
+              </span>
+              <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white mt-0.5 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                In Memoriam
+              </h2>
+              <p className="text-[11px] sm:text-[12.5px] font-serif text-stone-200 mt-1 max-w-xl leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                Sacred remembrance and eulogies for our beloved <strong>priests</strong>, <strong>former seminarians</strong>, and <strong>members of the laity</strong> who have passed away—inviting the community to pray for their souls.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsAddingMemorial(!isAddingMemorial)}
+            className="px-3.5 py-2 rounded-xl bg-[#A67C52] hover:bg-[#8E6740] text-white border border-amber-300/50 font-cinzel text-xs font-bold tracking-wider uppercase transition-all cursor-pointer flex items-center gap-1.5 self-start shrink-0 shadow-md whitespace-nowrap"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Deceased</span>
+          </button>
+        </div>
       </div>
 
       {/* Traditional Rite of Commendation & Requiem Prayer Card */}

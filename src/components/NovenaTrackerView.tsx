@@ -22,7 +22,7 @@ import {
 } from '../data/novenas';
 import { bellSynth } from '../utils/audioSynth';
 import { NovenaHands9Icon } from './SanctumIcons';
-import novenaNineCandlesImg from '../assets/images/novena_nine_candles_1795511445615.jpg';
+import novenaCandlesImg from '../assets/images/novena_seven_votive_candles_1795590701402.jpg';
 
 interface NovenaTrackerViewProps {
   currentDateStr?: string;
@@ -247,32 +247,32 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
       
       {/* Novena Tracker Banner */}
       <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-2">
-        {/* Right-Side Nine Lit Glass Votive Candles with Black Background & Smoke */}
+        {/* Right-Side Seven Original-Size Lit Vigil Candles with Rising Smoke on Dark Slate */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[53%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[54%] overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
-            src={novenaNineCandlesImg}
-            alt="Nine lit short thick vigil candles in clear glass containers with gentle rising smoke"
+            src={novenaCandlesImg}
+            alt="Seven lit short thick beeswax vigil candles in clear glass holders with rising wisps of smoke on dark slate"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-[50%_66%]"
+            className="h-full w-full object-cover object-[100%_50%]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 8%, black 16%, black 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 8%, black 16%, black 100%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 10%, black 20%, black 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 10%, black 20%, black 100%)',
             }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-[#520B0B]/20" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-[#520B0B]/15" />
         </div>
 
-        {/* Smooth Multi-Stop Horizontal Gradient from Red Background (#520B0B) into the Nine Candles */}
+        {/* Smooth Horizontal Gradient from Red (#520B0B) starting at the 50% halfway point */}
         <div
-          className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,#520B0B_0%,rgba(82,11,11,0.94)_28%,rgba(82,11,11,0.72)_54%,rgba(82,11,11,0.34)_78%,rgba(12,6,6,0.20)_100%)] sm:bg-[linear-gradient(90deg,#520B0B_0%,#520B0B_34%,rgba(82,11,11,0.92)_42%,rgba(42,8,8,0.48)_48%,rgba(12,6,6,0)_54%)]"
+          className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,#520B0B_0%,#520B0B_44%,rgba(82,11,11,0.82)_62%,rgba(42,8,8,0.42)_78%,rgba(12,6,6,0.16)_100%)] sm:bg-[linear-gradient(90deg,#520B0B_0%,#520B0B_50%,rgba(82,11,11,0.85)_54%,rgba(42,8,8,0.35)_58%,rgba(12,6,6,0)_62%)]"
           aria-hidden="true"
         />
 
-        <div className="relative z-10 space-y-1.5 sm:max-w-[46%]">
+        <div className="relative z-10 space-y-1.5 sm:max-w-[50%]">
           <div className="flex items-start gap-2">
             <NovenaHands9Icon className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
             <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] leading-snug">
@@ -282,7 +282,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">
             Catholic Novena Tracker
           </h2>
- <p className="text-[11px] sm:text-[12.5px] text-amber-50/90 font-serif-sacred leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+          <p className="text-[11px] sm:text-xs text-amber-50/90 font-serif leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             In imitation of the Apostles and the Blessed Virgin Mary who persevered for nine days in the Upper Room awaiting the Holy Spirit, track your ongoing nine-day devotions and prepare for upcoming feasts.
           </p>
         </div>

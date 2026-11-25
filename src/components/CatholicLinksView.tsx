@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { CatholicWebsiteLink, INITIAL_CATHOLIC_LINKS } from '../data/catholicLinks';
 import { SacredReader } from '../utils/speech';
+import catholicComDeskMonitorImg from '../assets/images/catholic_com_desk_monitor_1795596377085.jpg';
 
 const STORAGE_KEY = 'sanctum_custom_catholic_links_v1';
 const BOOKMARKS_KEY = 'sanctum_bookmarked_catholic_links_v1';
@@ -191,19 +192,44 @@ export const CatholicLinksView: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-14 animate-fadeIn">
       {/* Header Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-[#1C120C] via-[#2B1B10] to-[#1C120C] rounded-xl text-[#F7EBE1] shadow-xl border border-[#8B5A2B]/50 flex flex-col justify-center overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1 max-w-2xl min-w-0">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#6B4423]/40 border border-[#C89F72]/40 text-[#F5D7B2] text-[11px] font-cinzel font-bold uppercase tracking-wider">
-              <Compass className="w-3 h-3 text-[#FFD700]" />
+      <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-[#F7EBE1] shadow-xl border border-[#8B5A2B]/50 flex flex-col justify-between gap-2 overflow-hidden">
+        {/* Right-Side Study Desk, Catholic.com Monitor & Empty Wheeled Chair Photography */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-[#1C120C] via-[#2B1B10] to-[#1C120C]"
+          aria-hidden="true"
+        >
+          <img
+            src={catholicComDeskMonitorImg}
+            alt="Computer monitor displaying Catholic Answers on a walnut wooden table with an empty rolling chair on wheels"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-right brightness-[1.03] contrast-[1.03]"
+          />
+          {/* Smooth Horizontal Gradient Transition from Warm Dark Espresso (#1C120C) Without Covering the Chair or Monitor */}
+          <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,rgba(28,18,12,0.88)_7%,rgba(28,18,12,0.36)_14%,transparent_24%)]" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#1C120C]/50 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-[#1C120C]/45 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/55 to-transparent" />
+        </div>
+
+        {/* Mobile Readability Gradient Behind Left Title & Button */}
+        <div
+          className="sm:hidden pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.88)_60%,rgba(28,18,12,0.48)_84%,rgba(28,18,12,0.28)_100%)]"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[55%] gap-2">
+          <div className="space-y-1 min-w-0">
+            <div className="inline-flex items-center gap-1.5 text-[#F5D7B2] text-[10.5px] sm:text-[11px] font-cinzel font-bold uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+              <Compass className="w-3.5 h-3.5 text-[#FFD700] shrink-0" />
               <span>Curated Directory of Faithful Apostolates</span>
             </div>
 
-            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               Catholic Links
             </h2>
 
- <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif leading-snug">
+            <p className="text-[11px] sm:text-[12.5px] text-stone-200 font-serif leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               A trusted guide to the finest Catholic websites across the internet — with clear explanations of why each site is spiritually and intellectually valuable.
             </p>
           </div>
@@ -211,7 +237,7 @@ export const CatholicLinksView: React.FC = () => {
           <div className="shrink-0">
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="h-8 inline-flex items-center gap-1.5 px-3.5 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#C89F72]/50 text-white text-xs font-sans font-semibold shadow-md transition-all cursor-pointer"
+              className="h-8 inline-flex items-center gap-1.5 px-3.5 rounded-lg bg-gradient-to-r from-[#6B4423] to-[#4A2E1B] hover:from-[#7A4E2D] hover:to-[#5A381C] border border-[#C89F72]/50 text-white text-xs font-sans font-semibold shadow-md transition-all cursor-pointer whitespace-nowrap"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>{showAddForm ? 'Close Form' : 'Add Catholic Website'}</span>

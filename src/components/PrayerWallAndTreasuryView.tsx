@@ -27,6 +27,7 @@ import { INITIAL_PRAYER_REQUESTS } from '../data/prayerRequests';
 import { bellSynth } from '../utils/audioSynth';
 import { SacredReader, CURATED_SANCTUM_VOICES } from '../utils/speech';
 import treasuryWoodenKneelerImg from '../assets/images/treasury_kneeler_rotated_to_crucifix_1795508842899.jpg';
+import prayerRequestsCenserImg from '../assets/images/prayer_requests_censer_clean_1795594770779.jpg';
 
 interface PrayerWallAndTreasuryViewProps {
   initialSection?: 'wall' | 'treasury';
@@ -471,29 +472,238 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           )}
         </div>
       ) : (
-        <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4 overflow-hidden">
-          <div className="space-y-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <Flame className="w-4 h-4 text-amber-400 shrink-0" />
-              <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-300 leading-snug">
-                Communion of Saints • Fraternal Intercession
-              </span>
+        <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120D] rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-between gap-2 overflow-hidden">
+          {/* Right-Side Golden Incense Rising from Brass Censer Photography */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-[#1C120D] via-amber-950/80 to-[#1C120D]"
+            aria-hidden="true"
+          >
+            <img
+              src={prayerRequestsCenserImg}
+              alt="Antique hammered brass censer on an oak sanctuary stand with golden incense smoke rising in candlelight"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-right brightness-[1.04] contrast-[1.03]"
+            />
+
+            {/* Animated Rising Frankincense Smoke Emanating Directly from the Censer Dome */}
+            <div className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen">
+              {/* Warm glowing embers breathing inside the perforated censer dome vents (21.2% from right, 45.5% from top) */}
+              <div
+                className="sanctum-censer-ember absolute right-[18.4%] top-[41.5%] w-8 h-8 rounded-full blur-[5px]"
+                style={{
+                  background:
+                    'radial-gradient(circle, rgba(255,222,152,0.72) 0%, rgba(235,146,52,0.3) 55%, transparent 100%)',
+                }}
+              />
+
+              {/* Continuous fine smoke threads pouring directly out of the censer dome holes */}
+              <svg
+                viewBox="0 0 60 60"
+                fill="none"
+                className="sanctum-censer-vent-stream absolute right-[17.6%] bottom-[49.5%] w-[8.5%] h-[20%] blur-[1.4px]"
+              >
+                <defs>
+                  <linearGradient id="incenseVentNeckGrad" x1="0.5" y1="1" x2="0.4" y2="0">
+                    <stop offset="0%" stopColor="#FFF7E6" stopOpacity="0.88" />
+                    <stop offset="45%" stopColor="#F5CE93" stopOpacity="0.62" />
+                    <stop offset="100%" stopColor="#D99B4E" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {/* Left vent stream */}
+                <path
+                  d="M23 58 C20 48, 25 38, 21 26 C18 16, 21 8, 17 0 C22 8, 24 18, 26 28 C29 38, 25 48, 27 58 Z"
+                  fill="url(#incenseVentNeckGrad)"
+                />
+                {/* Center vent stream */}
+                <path
+                  d="M31 59 C28 46, 35 34, 30 20 C27 11, 29 5, 25 0 C31 7, 34 15, 36 24 C38 35, 32 46, 34 59 Z"
+                  fill="url(#incenseVentNeckGrad)"
+                />
+                {/* Right vent stream */}
+                <path
+                  d="M39 58 C38 47, 42 38, 36 26 C33 17, 34 9, 31 2 C36 10, 41 19, 43 29 C45 39, 41 48, 42 58 Z"
+                  fill="url(#incenseVentNeckGrad)"
+                />
+              </svg>
+
+              {/* Multi-layered rising incense plumes whose origin (82%, 96%) sits directly at the censer vents (right 21.2%, bottom 51%) */}
+              <div className="absolute right-[14.5%] bottom-[49%] w-[37%] h-[58%]">
+                {/* Primary dense rising ribbons */}
+                <svg
+                  viewBox="0 0 180 150"
+                  fill="none"
+                  className="sanctum-incense-wisp-a absolute inset-0 w-full h-full blur-[2px]"
+                  style={{ animationDelay: '-0.4s' }}
+                >
+                  <defs>
+                    <linearGradient id="incenseSmokeGradA" x1="0.82" y1="1" x2="0.28" y2="0">
+                      <stop offset="0%" stopColor="#FFF8EB" stopOpacity="0.9" />
+                      <stop offset="44%" stopColor="#F5D098" stopOpacity="0.58" />
+                      <stop offset="100%" stopColor="#D99B4E" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M148 148 C139 128, 152 108, 134 86 C116 64, 136 42, 108 20 C95 10, 80 4, 64 0 C76 16, 98 28, 102 48 C106 70, 92 88, 114 110 C128 125, 134 136, 144 148 Z"
+                    fill="url(#incenseSmokeGradA)"
+                  />
+                </svg>
+
+                <svg
+                  viewBox="0 0 180 150"
+                  fill="none"
+                  className="sanctum-incense-wisp-b absolute inset-0 w-full h-full blur-[3px]"
+                  style={{ animationDelay: '-2.1s' }}
+                >
+                  <defs>
+                    <linearGradient id="incenseSmokeGradB" x1="0.82" y1="1" x2="0.3" y2="0">
+                      <stop offset="0%" stopColor="#FFF4DE" stopOpacity="0.84" />
+                      <stop offset="50%" stopColor="#EEC180" stopOpacity="0.52" />
+                      <stop offset="100%" stopColor="#C98A3E" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M147 148 C156 124, 128 102, 142 78 C154 56, 118 36, 94 18 C80 8, 66 3, 52 0 C68 18, 88 32, 84 52 C80 74, 114 92, 116 116 C118 130, 128 140, 141 148 Z"
+                    fill="url(#incenseSmokeGradB)"
+                  />
+                </svg>
+
+                {/* Crisp fine inner tendrils */}
+                <svg
+                  viewBox="0 0 180 150"
+                  fill="none"
+                  className="sanctum-incense-wisp-c absolute inset-0 w-full h-full blur-[1.4px]"
+                  style={{ animationDelay: '-1.3s' }}
+                >
+                  <defs>
+                    <linearGradient id="incenseSmokeGradC" x1="0.82" y1="1" x2="0.35" y2="0">
+                      <stop offset="0%" stopColor="#FFFAF0" stopOpacity="0.94" />
+                      <stop offset="44%" stopColor="#F7D59C" stopOpacity="0.58" />
+                      <stop offset="100%" stopColor="#E0A558" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M149 148 C140 126, 148 106, 132 88 C116 70, 132 48, 110 26 C100 16, 90 8, 82 2 C90 18, 104 28, 100 46 C96 64, 118 84, 122 106 C126 122, 134 136, 145 148 Z"
+                    fill="url(#incenseSmokeGradC)"
+                  />
+                </svg>
+
+                <svg
+                  viewBox="0 0 180 150"
+                  fill="none"
+                  className="sanctum-incense-wisp-c absolute inset-0 w-full h-full blur-[1.4px]"
+                  style={{ animationDelay: '-3.5s', animationDuration: '5.1s' }}
+                >
+                  <defs>
+                    <linearGradient id="incenseSmokeGradD" x1="0.82" y1="1" x2="0.32" y2="0">
+                      <stop offset="0%" stopColor="#FFF7E8" stopOpacity="0.88" />
+                      <stop offset="48%" stopColor="#F0C686" stopOpacity="0.5" />
+                      <stop offset="100%" stopColor="#D49548" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M146 148 C154 128, 136 108, 146 88 C156 70, 126 48, 104 28 C94 18, 82 8, 70 2 C84 18, 100 34, 96 54 C92 74, 124 94, 124 116 C124 130, 134 140, 143 148 Z"
+                    fill="url(#incenseSmokeGradD)"
+                  />
+                </svg>
+
+                {/* Broad soft billowing sanctuary veils */}
+                <svg
+                  viewBox="0 0 180 150"
+                  fill="none"
+                  className="sanctum-incense-wisp-a absolute inset-0 w-full h-full blur-[4px]"
+                  style={{ animationDelay: '-3.0s', animationDuration: '6.0s' }}
+                >
+                  <defs>
+                    <linearGradient id="incenseSmokeGradE" x1="0.82" y1="1" x2="0.24" y2="0">
+                      <stop offset="0%" stopColor="#FCE7C2" stopOpacity="0.72" />
+                      <stop offset="55%" stopColor="#E5B672" stopOpacity="0.42" />
+                      <stop offset="100%" stopColor="#B87A35" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M145 148 C128 124, 146 96, 126 72 C106 48, 126 28, 92 8 C78 2, 62 0, 44 0 C64 18, 80 34, 78 56 C76 78, 106 98, 112 120 C116 134, 128 142, 142 148 Z"
+                    fill="url(#incenseSmokeGradE)"
+                  />
+                </svg>
+
+                <svg
+                  viewBox="0 0 180 150"
+                  fill="none"
+                  className="sanctum-incense-wisp-b absolute inset-0 w-full h-full blur-[4.5px]"
+                  style={{ animationDelay: '-4.9s', animationDuration: '7.1s' }}
+                >
+                  <defs>
+                    <linearGradient id="incenseSmokeGradF" x1="0.82" y1="1" x2="0.24" y2="0">
+                      <stop offset="0%" stopColor="#FBE5BE" stopOpacity="0.68" />
+                      <stop offset="52%" stopColor="#DFAD68" stopOpacity="0.38" />
+                      <stop offset="100%" stopColor="#B87A35" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M148 148 C134 128, 150 104, 130 80 C110 56, 132 34, 100 14 C84 4, 68 0, 52 0 C70 16, 86 34, 84 56 C82 78, 114 98, 116 120 C118 134, 130 142, 144 148 Z"
+                    fill="url(#incenseSmokeGradF)"
+                  />
+                </svg>
+
+                <svg
+                  viewBox="0 0 180 150"
+                  fill="none"
+                  className="sanctum-incense-wisp-c absolute inset-0 w-full h-full blur-[2px]"
+                  style={{ animationDelay: '-2.4s', animationDuration: '4.6s' }}
+                >
+                  <defs>
+                    <linearGradient id="incenseSmokeGradG" x1="0.82" y1="1" x2="0.32" y2="0">
+                      <stop offset="0%" stopColor="#FFF8EA" stopOpacity="0.84" />
+                      <stop offset="46%" stopColor="#F4CB8E" stopOpacity="0.48" />
+                      <stop offset="100%" stopColor="#D6974B" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M149 148 C142 128, 152 108, 136 88 C120 68, 138 48, 116 28 C106 18, 94 10, 84 2 C92 18, 106 32, 104 50 C102 70, 126 90, 128 112 C130 128, 138 138, 146 148 Z"
+                    fill="url(#incenseSmokeGradG)"
+                  />
+                </svg>
+              </div>
             </div>
-            <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide leading-snug">
-              Community Prayer Requests Wall
-            </h2>
-            <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif-sacred max-w-xl leading-snug">
-              &ldquo;Bear one another&apos;s burdens, and so fulfill the law of Christ&rdquo; (Galatians 6:2). Post your intentions, pray a decade for a brother or sister in Christ, and light a vigil candle.
-            </p>
+
+            {/* Smooth Horizontal Gradient Transition from Warm Dark Stone (#1C120D) into the Censer & Incense */}
+            <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120D_0%,#1C120D_14%,rgba(28,18,13,0.92)_28%,rgba(28,18,13,0.56)_44%,rgba(28,18,13,0.18)_58%,transparent_72%)]" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120D]/55 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120D]/45 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120D]/60 to-transparent" />
           </div>
 
-          <button
-            onClick={() => setNewRequestModalOpen(true)}
-            className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md flex items-center gap-2 shrink-0 self-start sm:self-center"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Submit Intention</span>
-          </button>
+          {/* Mobile Readability Gradient Behind Left Title & Button */}
+          <div
+            className="sm:hidden pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,#1C120D_0%,#1C120D_32%,rgba(28,18,13,0.88)_58%,rgba(28,18,13,0.48)_82%,rgba(28,18,13,0.28)_100%)]"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[58%] gap-2">
+            <div className="space-y-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <Flame className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-300 leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                  Communion of Saints • Fraternal Intercession
+                </span>
+              </div>
+              <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-white tracking-wide leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                Prayer Requests Wall
+              </h2>
+              <p className="text-[11px] sm:text-[12.5px] text-stone-200 font-serif-sacred max-w-xl leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                &ldquo;Bear one another&apos;s burdens, and so fulfill the law of Christ&rdquo; (Galatians 6:2). Post your intentions, pray a decade for a brother or sister in Christ, and light a vigil candle.
+              </p>
+            </div>
+
+            <button
+              onClick={() => setNewRequestModalOpen(true)}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-amber-50 text-xs font-semibold font-cinzel tracking-wider transition-all cursor-pointer shadow-md border border-amber-500/30 flex items-center gap-2 shrink-0 self-start whitespace-nowrap"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Submit Intention</span>
+            </button>
+          </div>
         </div>
       )}
 

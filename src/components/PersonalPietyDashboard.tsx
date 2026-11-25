@@ -17,6 +17,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { NotebookWithBallpenIcon } from './SanctumIcons';
+import spiritualChecklistBannerImg from '../assets/images/spiritual_checklist_book_facing_right_1795598743265.jpg';
 
 export type ChecklistCategory =
   | 'daily-essential'
@@ -642,44 +643,69 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
       {/* =====================================================================
           1. MASTHEAD BANNER — Slate Gray & Bleached Sand
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 shadow-md text-[#F9F6F0] relative overflow-hidden flex flex-col justify-between gap-2">
-        <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
-
-        <div className="relative z-10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-800/90 border border-slate-600/70 flex items-center justify-center text-[#EAE2D3] shadow-xs shrink-0">
-            <NotebookWithBallpenIcon className="w-5 h-5 text-[#EAE2D3]" />
-          </div>
-          <div className="min-w-0 space-y-0.5">
-            <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-[#DFD5C3] block leading-snug">
-              Rule of Life • Daily Devotional Order
-            </span>
-            <h2 className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-[#FBF9F5] leading-snug">
-              Spiritual Checklist &amp; Prayer Habit Tracker
-            </h2>
-            <p className="text-[11.5px] sm:text-xs text-[#EAE2D3] font-serif leading-snug">
-              Track your daily Catholic prayers, precepts, examen, and November suffrages for the Holy Souls.
-            </p>
-          </div>
+      <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-slate-900 border border-slate-700/80 shadow-md text-[#F9F6F0] overflow-hidden flex flex-col justify-between gap-2">
+        {/* Right-Side Dawn Prayer Desk: Modern Matte-Black Analog Alarm Clock, Olive-Wood Rosary & Linen Examen Booklet (16:9 preserved) */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900"
+          aria-hidden="true"
+        >
+          <img
+            src={spiritualChecklistBannerImg}
+            alt="Sleek matte-black modern analog alarm clock set to 6:00, coiled wooden rosary with crucifix, and bleached-sand clothbound prayer booklet resting on dark slate in morning light"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-right brightness-[1.03] contrast-[1.03]"
+          />
+          {/* Smooth Horizontal Gradient Transition from Deep Slate (#0F172A) into the Slate Prayer Desk */}
+          <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#0F172A_0%,#0F172A_10%,rgba(15,23,42,0.88)_22%,rgba(15,23,42,0.42)_34%,transparent_48%)]" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-slate-900/50 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-slate-900/45 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-slate-900/55 to-transparent" />
         </div>
 
-        <div className="relative z-10 flex flex-wrap items-center gap-2 pt-1">
-          {onOpenCebuParishes && (
+        {/* Mobile Readability Gradient Behind Left Title & Controls */}
+        <div
+          className="sm:hidden pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,#0F172A_0%,#0F172A_34%,rgba(15,23,42,0.88)_60%,rgba(15,23,42,0.48)_84%,rgba(15,23,42,0.28)_100%)]"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[58%] gap-2">
+          <div className="flex items-start sm:items-center gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-slate-800/90 border border-slate-600/70 flex items-center justify-center text-[#EAE2D3] shadow-xs shrink-0 backdrop-blur-xs">
+              <NotebookWithBallpenIcon className="w-5 h-5 text-[#EAE2D3]" />
+            </div>
+            <div className="min-w-0 space-y-0.5">
+              <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-[#DFD5C3] block leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]">
+                Rule of Life • Daily Devotional Order
+              </span>
+              <h2 className="font-cinzel text-lg sm:text-xl md:text-2xl font-bold text-[#FBF9F5] leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                Spiritual Checklist &amp; Prayer Habit Tracker
+              </h2>
+              <p className="text-[11.5px] sm:text-xs text-[#EAE2D3] font-serif leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
+                Track your daily Catholic prayers, precepts, examen, and November suffrages for the Holy Souls.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            {onOpenCebuParishes && (
+              <button
+                onClick={onOpenCebuParishes}
+                className="h-8 px-3 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-900 border border-[#DFD5C3] text-xs font-cinzel font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+              >
+                <MapPin className="w-3.5 h-3.5 text-slate-700" />
+                <span>Holy Mass &amp; Confession Schedules</span>
+              </button>
+            )}
             <button
-              onClick={onOpenCebuParishes}
-              className="h-8 px-3 rounded-lg bg-[#F4EFE6] hover:bg-[#EAE2D3] text-slate-900 border border-[#DFD5C3] text-xs font-cinzel font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+              onClick={resetAll}
+              className="h-8 px-3 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-600/70 text-[#EAE2D3] hover:text-white text-xs font-cinzel font-bold transition-colors cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+              title="Uncheck all items for today"
             >
-              <MapPin className="w-3.5 h-3.5 text-slate-700" />
-              <span>Holy Mass &amp; Confession Schedules</span>
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset Today</span>
             </button>
-          )}
-          <button
-            onClick={resetAll}
-            className="h-8 px-3 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-600/70 text-[#EAE2D3] hover:text-white text-xs font-cinzel font-bold transition-colors cursor-pointer flex items-center gap-1.5"
-            title="Uncheck all items for today"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset Today</span>
-          </button>
+          </div>
         </div>
       </div>
 

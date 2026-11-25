@@ -342,9 +342,9 @@ export const CHURCH_TIMELINE_EVENTS: TimelineEvent[] = [
     era: 'contemporary',
     title: 'The Contemporary Global Church, Jubilee of Hope and Pope Leo XIV',
     subtitle: 'Pope Francis, Pope Leo XIV, Global South Expansion and Synodality',
-    location: 'Universal Catholic Church (1.4 Billion Catholics Worldwide)',
+    location: 'Universal Catholic Church (1.42+ Billion Catholics Worldwide)',
     keyFigures: ['Pope Leo XIV', 'Pope Francis', 'Pope Emeritus Benedict XVI'],
-    description: 'The Catholic Church encompasses nearly 1.4 billion baptized faithful across 195 nations. Pope Francis became the first Pope from the Americas, emphasizing pastoral closeness to the peripheries, stewardship of God\'s creation (*Laudato Si\'*), fraternity (*Fratelli Tutti*), and inaugurating the 2025 Jubilee of Hope. Following the passing of Pope Francis in 2025, the College of Cardinals elected Pope Leo XIV (Robert Francis Prevost, O.S.A.), the first Augustinian and first North American-born Roman Pontiff, who continues to shepherd the universal Church in apostolic unity, peace, and missionary renewal.',
+    description: 'The Catholic Church encompasses over 1.42 billion baptized faithful across 195 nations. Pope Francis became the first Pope from the Americas, emphasizing pastoral closeness to the peripheries, stewardship of God\'s creation (*Laudato Si\'*), fraternity (*Fratelli Tutti*), and inaugurating the 2025 Jubilee of Hope. Following the passing of Pope Francis in 2025, the College of Cardinals elected Pope Leo XIV (Robert Francis Prevost, O.S.A.), the first Augustinian and first North American-born Roman Pontiff, who continues to shepherd the universal Church in apostolic unity, peace, and missionary renewal.',
     theologicalSignificance: 'Demonstrates the unbroken Petrine succession through Pope Leo XIV and the dynamic universality of the Church, with vibrant vitality expanding especially across Sub-Saharan Africa, Asia, and Latin America.',
     scriptureOrDocumentRef: 'Evangelii Gaudium; Laudato Si\'; In Illo Uno Unum'
   }

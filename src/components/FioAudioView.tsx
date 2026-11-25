@@ -12,6 +12,7 @@ import {
   Minimize2,
   Home
 } from 'lucide-react';
+import fioBannerImg from '../assets/images/fio_listening_chair_inward_1795582194268.jpg';
 
 interface FioAudioViewProps {
   onStopSanctumAudio?: () => void;
@@ -79,31 +80,50 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-20 animate-fadeIn">
       {/* Master Header Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-between gap-2">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.18)_0%,transparent_70%)] pointer-events-none" />
-
-        <div className="relative z-10 flex items-center justify-between gap-3">
- <div className="leading-snug inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider">
-            <Music className="w-3.5 h-3.5 text-amber-400 shrink-0" />
- <span className="leading-snug ">Fio.fm • Integrated Catholic Audio Streaming</span>
-          </div>
-
-          <a
-            href={activeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/40 text-amber-200 hover:text-white font-cinzel font-bold text-[11px] transition-all cursor-pointer shrink-0"
-          >
-            <span>Open play.fio.fm</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative isolate overflow-hidden rounded-xl bg-[#1C120C] border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-between gap-2">
+        {/* Right-Side Cozy Catholic Listening Corner Artwork with Thin Tower Speakers */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[410px] md:w-[435px] overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={fioBannerImg}
+            alt="Cozy Catholic listening corner with an inward-facing cognac leather armchair, glowing floor lamp, wall crucifix, thin tower speakers on both sides, and walnut side table with studio headphones and audio player"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-[100%_30%] brightness-[0.99] contrast-[1.03]"
+            style={{
+              maskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 14%, black 28%)',
+              WebkitMaskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 14%, black 28%)',
+            }}
+          />
         </div>
 
-        <div className="relative z-10 max-w-3xl space-y-0.5">
-          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight">
+        {/* Mobile left-side readability veil */}
+        <div
+          className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.88)_56%,rgba(28,18,12,0.42)_78%,rgba(28,18,12,0.16)_100%)]"
+          aria-hidden="true"
+        />
+        {/* Subtle top/bottom warm espresso feathering */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/20"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="leading-snug inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider backdrop-blur-xs">
+            <Music className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span className="leading-snug">Fio.fm • Integrated Catholic Audio Streaming</span>
+          </div>
+        </div>
+
+        <div className="relative z-10 max-w-[92%] sm:max-w-[56%] md:max-w-[55%] space-y-0.5">
+          <h2 className="font-cinzel text-lg sm:text-[22px] font-bold text-white tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
             Fio Catholic Music, Podcasts and Audiobooks
           </h2>
- <p className="text-[11px] sm:text-xs text-stone-300 font-serif leading-snug">
+          <p className="text-[11px] sm:text-xs text-stone-200 font-serif leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             Stream faithful Catholic music, Gregorian chant, over 1,000 Catholic podcasts, and spiritual audiobooks through the official Fio web player.
           </p>
         </div>
@@ -118,10 +138,10 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
                 key={section.id}
                 type="button"
                 onClick={() => navigatePlayer(section.url, section.label)}
-                className={`h-8 inline-flex items-center gap-1.5 px-3 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border whitespace-nowrap shrink-0 ${
+                className={`h-8 inline-flex items-center gap-1.5 px-3 rounded-lg text-xs font-cinzel font-bold transition-all cursor-pointer border whitespace-nowrap shrink-0 backdrop-blur-xs ${
                   isActive
                     ? 'bg-amber-400 text-stone-950 border-amber-300 shadow-md'
-                    : 'bg-stone-900/80 hover:bg-stone-800 text-amber-100 border-amber-500/30'
+                    : 'bg-[#1C120C]/85 hover:bg-[#2E1D12] text-amber-100 border-amber-500/40'
                 }`}
                 title={section.description}
               >
@@ -178,10 +198,10 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
               href={activeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/35 text-amber-200 hover:text-white border border-amber-400/40 text-[11px] font-cinzel font-semibold transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/20 hover:bg-amber-500/35 text-amber-200 hover:text-white border border-amber-400/40 text-[11px] font-cinzel font-bold transition-colors cursor-pointer"
               title="Open current page directly on play.fio.fm"
             >
-              <span>Pop Out</span>
+              <span>Open play.fio.fm</span>
               <ExternalLink className="w-3 h-3" />
             </a>
           </div>

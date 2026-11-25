@@ -166,38 +166,77 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
       {/* Visio Divina Banner (Patterned after Daily Mass Readings & Bible Commentary) */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
-        {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
-        <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-stone-900 to-stone-800 text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="space-y-1 my-auto">
+        {/* RECTANGLE 1: Main Title Banner with Caravaggio's The Incredulity of Saint Thomas on the Right */}
+        <div className={`sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#16100B] text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          {/* Right-Side Painting: Caravaggio — The Incredulity of Saint Thomas */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[340px] md:w-[400px] overflow-hidden"
+            aria-hidden="true"
+          >
+            <img
+              src="/images/sacred-art/incredulity_of_thomas.jpg"
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (!img.dataset.fallbackApplied) {
+                  img.dataset.fallbackApplied = '1';
+                  img.src =
+                    'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Der_ungl%C3%A4ubige_Thomas_-_Michelangelo_Merisi%2C_named_Caravaggio.jpg/1280px-Der_ungl%C3%A4ubige_Thomas_-_Michelangelo_Merisi%2C_named_Caravaggio.jpg';
+                }
+              }}
+              alt="Caravaggio — The Incredulity of Saint Thomas"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[50%_6%] brightness-[1.03] contrast-[1.04]"
+              style={{
+                maskImage:
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.42) 14%, rgba(0,0,0,0.92) 28%, black 42%)',
+                WebkitMaskImage:
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.42) 14%, rgba(0,0,0,0.92) 28%, black 42%)',
+              }}
+            />
+          </div>
+
+          {/* Mobile left-side readability veil */}
+          <div
+            className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#16100B_0%,#16100B_32%,rgba(22,16,11,0.86)_56%,rgba(22,16,11,0.34)_78%,rgba(22,16,11,0.12)_100%)]"
+            aria-hidden="true"
+          />
+          {/* Subtle top/bottom warm tenebrism feathering */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#16100B]/50 via-transparent to-[#16100B]/20"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 space-y-1 my-auto max-w-[92%] sm:max-w-[54%] md:max-w-[56%]">
             {/* Line 1: Kicker Badge & Monastic Subtitle */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">
                 <Eye className="w-3 h-3" />
                 <span>Sacred Art Contemplation</span>
               </span>
-              <span className="text-[11px] sm:text-xs text-amber-300/80 font-cinzel uppercase tracking-wider">
+              <span className="text-[11px] sm:text-xs text-amber-300/90 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 The Ancient Monastic Way of Divine Seeing
               </span>
             </div>
 
             {/* Line 2: Main Title */}
-            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               Visio Divina
             </h2>
 
             {/* Line 3: Contemplative Subtitle */}
- <p className="leading-snug text-[11px] sm:text-[12.5px] text-stone-300 font-serif">
+            <p className="leading-snug text-[11px] sm:text-[12.5px] text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Contemplating God through the luminous beauty of Catholic sacred art
             </p>
           </div>
 
           {/* Lower Row: Settings Toggle Button */}
-          <div className="flex items-center justify-end mt-auto pt-2 shrink-0">
+          <div className="relative z-10 flex items-center justify-end mt-auto pt-2 shrink-0">
             <button
               type="button"
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}
-              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border ${
+              className={`h-8 flex items-center gap-1 px-2.5 rounded-md transition-all cursor-pointer shrink-0 border backdrop-blur-xs ${
                 isTopSettingsOpen
                   ? 'bg-[#25170F] text-[#F7EBE1] border-[#D4A373] ring-2 ring-[#8B5A2B]/40'
                   : 'bg-[#1C120C]/90 hover:bg-[#25170F] text-[#D4A373] hover:text-[#F7EBE1] border-[#8B5A2B]/50 hover:border-[#D4A373]/70'

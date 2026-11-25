@@ -165,6 +165,28 @@ function summarizeTitle(prompt: string): string {
   return `${cleaned.slice(0, 55).trim()}…`;
 }
 
+function formatInquiryDate(timestamp: number): string {
+  return new Date(timestamp).toLocaleDateString([], {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
+function formatInquiryDateTime(timestamp: number): string {
+  const d = new Date(timestamp);
+  const datePart = d.toLocaleDateString([], {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+  const timePart = d.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  return `${datePart} · ${timePart}`;
+}
+
 interface MagisteriumAIViewProps {
   onOpenCatholicAI?: () => void;
 }
@@ -261,6 +283,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
     return sessions.filter(
       (s) =>
         s.title.toLowerCase().includes(q) ||
+        formatInquiryDate(s.updatedAt).toLowerCase().includes(q) ||
         s.messages.some((m) => m.content.toLowerCase().includes(q))
     );
   }, [sessions, historySearch]);
@@ -385,6 +408,12 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
             prompt: promptToSend,
             history: historyPayload,
             returnRelatedQuestions: true,
+            inquiryDate: new Date().toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
           }),
         });
 
@@ -836,10 +865,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
                     <div className="flex items-center justify-between text-[11px] text-stone-500 font-mono tabular-nums pt-1 border-t border-stone-200/70">
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3 text-amber-800" />
-                        {new Date(session.updatedAt).toLocaleDateString([], {
-                          month: 'short',
-                          day: 'numeric',
-                        })}
+                        {formatInquiryDate(session.updatedAt)}
                       </span>
                       <span>
                         {questionCount} {questionCount === 1 ? 'question' : 'questions'}
@@ -876,13 +902,10 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
                 >
                   {isUser ? (
                     <>
-                      <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-[#E2D8C3] text-xs font-cinzel text-amber-950">
+                      <div className="flex items-center justify-between gap-2 flex-wrap pb-2 mb-2.5 border-b border-[#E2D8C3] text-xs font-cinzel text-amber-950">
                         <span className="font-bold">Your Magisterial Inquiry</span>
-                        <span className="font-mono text-[11px] text-stone-500 tabular-nums">
-                          {new Date(msg.timestamp).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
+                        <span className="font-mono text-[11px] text-stone-600 tabular-nums">
+                          {formatInquiryDateTime(msg.timestamp)}
                         </span>
                       </div>
                       <p className="font-serif text-base sm:text-lg leading-relaxed whitespace-pre-wrap text-stone-900">
@@ -1022,10 +1045,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
                           Grounded in the Catechism, Code of Canon Law, Councils &amp; Papal Documents
                         </span>
                         <span className="font-mono text-[11px] tabular-nums">
-                          {new Date(msg.timestamp).toLocaleTimeString([], {
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
+                          {formatInquiryDateTime(msg.timestamp)}
                         </span>
                       </div>
                     </>

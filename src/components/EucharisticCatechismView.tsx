@@ -22,6 +22,7 @@ import {
   Copy,
   Check
 } from 'lucide-react';
+import lancianoMonstranceImg from '../assets/images/lanciano_monstrance_navy_glass_clean_1795586418113.jpg';
 
 interface EucharisticCatechismViewProps {
   initialSection?: 'john6' | 'miracles' | 'transubstantiation';
@@ -765,44 +766,35 @@ SOUL SANCTUM`;
         className="sanctum-top-banner relative isolate px-4 py-3 sm:px-6 sm:py-4 h-[196px] sm:h-[212px] rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 overflow-hidden flex flex-col justify-center"
         style={{
           background:
-            'linear-gradient(100deg, #0D1729 0%, #152846 36%, #224474 62%, #3E6FAE 82%, #5285C8 100%)',
+            'linear-gradient(100deg, #0B1526 0%, #101F38 30%, #142847 54%, #162C4B 74%, #172C4B 100%)',
         }}
       >
-        {/* Soft continuous atmospheric glow bridging banner blue into the Lanciano sky */}
-        <div
-          className="pointer-events-none absolute inset-0 z-0"
-          style={{
-            background:
-              'radial-gradient(ellipse 44% 95% at 84% 42%, rgba(126, 178, 240, 0.42) 0%, rgba(74, 126, 194, 0.16) 48%, transparent 78%)',
-          }}
-        />
-
         {/* Right-aligned Eucharistic Miracle of Lanciano Reliquary */}
         <div
           className="pointer-events-none select-none absolute inset-y-0 right-3 sm:right-7 flex items-center justify-end z-0"
           aria-hidden="true"
         >
           <img
-            src="/assets/aistudio/EUCHARISTIC_MIRACLE_OF_LANCIANO_b56e5fa6.jpg"
+            src={lancianoMonstranceImg}
             alt="Reliquary of the Eucharistic Miracle of Lanciano"
             decoding="async"
             referrerPolicy="no-referrer"
             className="h-full w-auto max-w-none block"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.16) 6%, rgba(0,0,0,0.58) 14%, rgba(0,0,0,0.94) 24%, black 32%, black 82%, rgba(0,0,0,0.78) 91%, rgba(0,0,0,0.22) 97%, transparent 100%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 10%, black 22%, black 88%, rgba(0,0,0,0.5) 96%, transparent 100%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.16) 6%, rgba(0,0,0,0.58) 14%, rgba(0,0,0,0.94) 24%, black 32%, black 82%, rgba(0,0,0,0.78) 91%, rgba(0,0,0,0.22) 97%, transparent 100%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 10%, black 22%, black 88%, rgba(0,0,0,0.5) 96%, transparent 100%)',
             }}
           />
         </div>
 
-        {/* Continuous full-width translucent sweep smoothing left-to-right transition and bottom edge */}
+        {/* Subtle bottom-edge depth feathering matching the dark navy banner */}
         <div
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              'linear-gradient(to right, rgba(13,23,41,0.72) 0%, rgba(21,40,70,0.48) 46%, rgba(34,68,116,0.16) 72%, transparent 90%), linear-gradient(to top, rgba(13,23,41,0.42) 0%, transparent 24%)',
+              'linear-gradient(to right, rgba(11,21,38,0.55) 0%, rgba(16,31,56,0.22) 48%, transparent 72%)',
           }}
         />
 

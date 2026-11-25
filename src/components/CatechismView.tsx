@@ -269,7 +269,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
       
       {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 py-3.5 sm:px-6 sm:py-3.5 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between gap-2 ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Catechism of the Catholic Church Photography with Seamless Dark Brown Gradient Blend */}
           <div
             className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden"
@@ -294,13 +294,13 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-2 max-w-[86%] sm:max-w-[65%]">
-            {/* Line 1: Heading, Paragraphs Range & Subtitle */}
+          <div className="relative z-10 space-y-1 max-w-[92%] sm:max-w-[68%] min-w-0">
+            {/* Line 1: Heading & Paragraphs Range */}
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel shadow-xs">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[10.5px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel shadow-xs">
                 Catechism
               </span>
-              <span className="text-[10.5px] sm:text-xs font-semibold text-amber-200/95 font-cinzel leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+              <span className="text-[10.5px] sm:text-[11px] font-semibold text-amber-200/95 font-cinzel leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {selectedTopic.paragraphsRange.startsWith('Catechism of the Catholic Church')
                   ? selectedTopic.paragraphsRange
                   : selectedTopic.paragraphsRange.replace(/^CCC\s*/i, 'Catechism of the Catholic Church ')}
@@ -308,20 +308,20 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             </div>
 
             {/* Line 2: Topic Title */}
-            <h2 className="font-serif text-[15px] sm:text-[17px] md:text-[18.5px] font-bold text-amber-100 leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-lg sm:text-xl md:text-[23px] font-bold text-amber-100 leading-[1.18] drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               {toCurvedQuotes(selectedTopic.topicTitle)}
             </h2>
 
-            {/* Subtitle / Theme description */}
+            {/* Subtitle / Theme description with compact line spacing (uses font-serif so unlayered .font-serif-sacred line-height: 1.7 does not override) */}
             {selectedTopic.topicSubtitle && (
-              <p className="text-[11px] sm:text-xs text-stone-200 font-serif-sacred leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)] pt-0.5">
+              <p className="text-xs sm:text-[13px] text-stone-200 font-serif leading-[1.25] line-clamp-2 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
                 {toCurvedQuotes(selectedTopic.topicSubtitle)}
               </p>
             )}
           </div>
 
           {/* Line 3: Bottom Bar with Topic Navigation & Action Buttons */}
-          <div className="relative z-10 flex flex-wrap items-center justify-between gap-2.5 mt-auto pt-2 border-t border-white/10 w-full">
+          <div className="relative z-10 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 pt-2 border-t border-white/10 w-full shrink-0">
             {/* Left: Quick Date & Gospel Citation Navigation Bar */}
             <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs min-w-0 max-w-full">
               <button
@@ -341,7 +341,7 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
                 title="Open Settings to view Topics and Daily Gospel Topics"
               >
                 <BookOpen className="w-3.5 h-3.5 text-[#D4A373] shrink-0" />
-                <span className="leading-none font-cinzel text-amber-200 text-[10.5px] sm:text-xs whitespace-nowrap">
+                <span className="leading-none font-cinzel text-amber-200 text-[10.5px] sm:text-xs whitespace-nowrap truncate">
                   {selectedTopic.dateLabel} • {selectedTopic.gospelCitation}
                 </span>
               </button>

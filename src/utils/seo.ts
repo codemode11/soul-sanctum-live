@@ -166,9 +166,9 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
       'Contemplate timeless Catholic sacred art by Raphael, Caravaggio, Fra Angelico, Murillo, and Rembrandt with spiritual commentary.',
   },
   'prayer-requests': {
-    title: 'Catholic Community Prayer Requests Wall | Soul Sanctum',
+    title: 'Prayer Requests Wall | Soul Sanctum',
     description:
-      'Share prayer intentions, light a virtual vigil candle, and intercede for brothers and sisters in Christ on Soul Sanctum’s Prayer Wall.',
+      'Share prayer intentions, light a virtual vigil candle, and intercede for brothers and sisters in Christ on Soul Sanctum’s Prayer Requests Wall.',
   },
   'in-memoriam': {
     title: 'In Memoriam – Pray for the Faithful Departed | Soul Sanctum',

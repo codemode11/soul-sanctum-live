@@ -51,11 +51,26 @@ import { SacredReader, CURATED_SANCTUM_VOICES, getVoiceShortName } from '../util
 
 type MainSection = 'timeline' | 'councils' | 'demographics' | 'facts';
 
+// Official Vatican baseline: 1,422,144,000 baptized Catholics as of Dec 31, 2024
+// Net annual increase: +16,690,000/yr (Annuarium Statisticum Ecclesiae & Agenzia Fides)
+const VATICAN_BASELINE_COUNT = 1_422_144_000;
+const VATICAN_BASELINE_MS = Date.UTC(2024, 11, 31, 23, 59, 59);
+const NET_CATHOLICS_PER_SECOND = 16_690_000 / 31_557_600;
+
+const getLiveBaptizedCatholicsCount = (nowMs: number = Date.now()): number => {
+  const elapsedSeconds = Math.max(0, (nowMs - VATICAN_BASELINE_MS) / 1000);
+  return Math.floor(VATICAN_BASELINE_COUNT + elapsedSeconds * NET_CATHOLICS_PER_SECOND);
+};
+
 export const ChurchHistoryInfographicView: React.FC = () => {
   const [activeSection, setActiveSection] = useState<MainSection>('timeline');
   const [activeVoiceKey, setActiveVoiceKey] = useState<string>(() => SacredReader.getActiveLectorVoiceKey() || 'persona-jenny');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [speakingItemId, setSpeakingItemId] = useState<string | null>(null);
+  const [liveBaptizedCatholics, setLiveBaptizedCatholics] = useState<number>(() =>
+    getLiveBaptizedCatholicsCount()
+  );
+  const liveFormattedBillions = `${(liveBaptizedCatholics / 1_000_000_000).toFixed(2)} Billion`;
 
   // Timeline States
   const [selectedEra, setSelectedEra] = useState<ChurchEra | 'all'>('all');
@@ -77,6 +92,13 @@ export const ChurchHistoryInfographicView: React.FC = () => {
     return SacredReader.addVoiceChangeListener((voiceKey) => {
       setActiveVoiceKey(voiceKey);
     });
+  }, []);
+
+  React.useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setLiveBaptizedCatholics(getLiveBaptizedCatholicsCount());
+    }, 500);
+    return () => window.clearInterval(intervalId);
   }, []);
 
   const handleVoiceSelect = (voiceKey: string) => {
@@ -157,20 +179,27 @@ export const ChurchHistoryInfographicView: React.FC = () => {
     <div className="space-y-6 animate-fadeIn text-slate-900">
       
       {/* 1. Header Banner (Slate Blue & Bleached Sand) */}
-      <div className="sanctum-top-banner rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] text-[#F9F6F0] shadow-xl relative overflow-hidden flex flex-col justify-between gap-2">
+      <div className="sanctum-top-banner rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] text-[#F9F6F0] shadow-xl relative overflow-hidden flex flex-col sm:flex-row sm:items-stretch justify-between gap-4">
         {/* Decorative background glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 min-w-0">
- <span className="leading-snug font-cinzel text-[11px] uppercase tracking-widest text-[#DFD5C3] font-bold">
+        {/* Left Side: Era Eyebrow, Title, Description, and Voice Selector */}
+        <div className="relative z-10 min-w-0 flex-1 flex flex-col justify-between gap-2">
+          <div className="space-y-1">
+            <span className="block leading-snug font-cinzel text-[11px] uppercase tracking-widest text-[#DFD5C3] font-bold">
               HISTORIA ET POPULUS ECCLESIAE · AD 33 – 2026
             </span>
+            <h1 className="font-serif-heading text-xl sm:text-2xl font-extrabold text-[#FBF9F5] tracking-tight leading-tight">
+              History, Councils, and Infographics of the Church
+            </h1>
+            <p className="text-[11px] sm:text-[12.5px] text-[#EAE2D3] font-serif italic max-w-2xl leading-snug">
+              Explore 2,000 years of unbroken apostolic history from Pentecost to the present, the 21 Ecumenical Councils, worldwide Catholic demographics, and extraordinary milestones.
+            </p>
           </div>
 
           {/* Recitation Voice Selector (All Curated Voices, Jenny Default) */}
-          <div className="flex items-center gap-2 bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-1 text-xs shrink-0">
-            <span className="text-[#DFD5C3] hidden sm:inline font-serif">Voice:</span>
+          <div className="flex items-center gap-2 bg-slate-950/70 border border-slate-700/80 rounded-lg px-2.5 py-1 text-xs self-start shrink-0">
+            <span className="text-[#DFD5C3] font-serif">Voice:</span>
             <select
               value={CURATED_SANCTUM_VOICES.some(v => v.id === activeVoiceKey) ? activeVoiceKey : 'persona-jenny'}
               onChange={(e) => handleVoiceSelect(e.target.value)}
@@ -186,12 +215,27 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative z-10 space-y-1 my-auto">
-          <h1 className="font-serif-heading text-xl sm:text-2xl font-extrabold text-[#FBF9F5] tracking-tight leading-tight">
-            History, Councils, and Infographics of the Church
-          </h1>
- <p className="text-[11px] sm:text-[12.5px] text-[#EAE2D3] font-serif italic max-w-3xl leading-snug">
-            Explore 2,000 years of unbroken apostolic history from Pentecost to the present, the 21 Ecumenical Councils, worldwide Catholic demographics, and extraordinary milestones.
+        {/* Right Side: Real-Time Counter of Total Baptized Catholics + Main Source Below */}
+        <div className="relative z-10 shrink-0 self-center w-full sm:w-[292px] flex flex-col items-stretch sm:items-end gap-1.5">
+          <div className="rounded-xl bg-slate-950/70 backdrop-blur-md border border-[#EAE2D3]/25 px-4 py-3 shadow-lg w-full text-left sm:text-right">
+            <div className="flex items-center sm:justify-end gap-1.5">
+              <Globe2 className="w-3.5 h-3.5 text-[#DFD5C3] shrink-0" />
+              <span className="font-cinzel text-[10px] font-bold uppercase tracking-[0.14em] text-[#DFD5C3] leading-none">
+                Total Baptized Catholics Worldwide
+              </span>
+            </div>
+            <div
+              className="mt-1.5 font-cinzel text-2xl sm:text-[26px] font-bold text-[#FBF9F5] tracking-tight tabular-nums leading-none"
+              aria-live="polite"
+            >
+              {liveBaptizedCatholics.toLocaleString('en-US')}
+            </div>
+            <p className="mt-1 font-serif text-[11px] text-[#EAE2D3]/90 leading-none">
+              Real-time projection (+16.69M net/yr · ~17.8% of world)
+            </p>
+          </div>
+          <p className="font-serif text-[10.5px] text-[#DFD5C3]/90 leading-snug text-left sm:text-right px-0.5">
+            Main source: <span className="italic text-[#FBF9F5]">Annuarium Statisticum Ecclesiae</span> (Holy See) &amp; Agenzia Fides
           </p>
         </div>
       </div>
@@ -203,7 +247,7 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           { id: 'timeline', label: 'History of the Church', icon: History, count: '6 Epochs' },
           { id: 'councils', label: 'The Councils', icon: Scroll, count: '325–1965 AD' },
           { id: 'facts', label: 'Astonishing Facts', icon: Sparkles, count: '10 Discoveries' },
-          { id: 'demographics', label: 'Infographics', icon: Globe2, count: '1.39 Billion' }
+          { id: 'demographics', label: 'Infographics', icon: Globe2, count: liveFormattedBillions }
         ].map(tab => {
           const Icon = tab.icon;
           const isActive = activeSection === tab.id;
@@ -481,10 +525,10 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                 Total Baptized Catholics
               </span>
               <div className="text-2xl sm:text-3xl font-extrabold text-[#334E68] font-cinzel tabular-nums">
-                {GLOBAL_CATHOLIC_STATISTICS.formattedTotal}
+                {liveFormattedBillions}
               </div>
-              <span className="text-[11px] text-slate-600 font-serif block">
-                {GLOBAL_CATHOLIC_STATISTICS.percentageOfWorld}% of Earth's population
+              <span className="text-[11px] text-slate-600 font-serif block tabular-nums">
+                {liveBaptizedCatholics.toLocaleString('en-US')} · {GLOBAL_CATHOLIC_STATISTICS.percentageOfWorld}% of Earth's population
               </span>
             </div>
 
@@ -534,45 +578,51 @@ export const ChurchHistoryInfographicView: React.FC = () => {
                   Global Catholic Distribution by Continent
                 </h3>
                 <p className="text-xs text-slate-600 font-serif">
-                  Regional breakdown of the 1.39 billion faithful worldwide
+                  Regional breakdown of the {liveFormattedBillions.toLowerCase()} faithful worldwide
                 </p>
               </div>
               <span className="text-xs text-[#334E68] font-serif italic">
-                Source: Vatican Central Office of Church Statistics
+                Source: Annuarium Statisticum Ecclesiae (Holy See) &amp; Agenzia Fides
               </span>
             </div>
 
-            {/* Visual Multi-Segment Bar (Slate Blue Ramp: 48% Slate Blue to Lighter Shades) */}
+            {/* Visual Multi-Segment Bar (Slate Blue Ramp: 47.8% Slate Blue to Lighter Shades) */}
             <div className="h-6 w-full rounded-xl overflow-hidden flex bg-[#E5DEC9] shadow-inner">
-              {GLOBAL_CATHOLIC_STATISTICS.continentalDistribution.map(item => (
-                <div
-                  key={item.continent}
-                  style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
-                  className="h-full relative group transition-all border-r border-[#FBF9F5]/40 last:border-r-0"
-                  title={`${item.continent}: ${item.percentage}% (${(item.catholics / 1000000).toFixed(0)}M Catholics)`}
-                />
-              ))}
+              {GLOBAL_CATHOLIC_STATISTICS.continentalDistribution.map(item => {
+                const liveRegionMillions = Math.round((liveBaptizedCatholics * (item.percentage / 100)) / 1_000_000);
+                return (
+                  <div
+                    key={item.continent}
+                    style={{ width: `${item.percentage}%`, backgroundColor: item.color }}
+                    className="h-full relative group transition-all border-r border-[#FBF9F5]/40 last:border-r-0"
+                    title={`${item.continent}: ${item.percentage}% (~${liveRegionMillions}M Catholics)`}
+                  />
+                );
+              })}
             </div>
 
             {/* Continental Breakdown Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pt-2">
-              {GLOBAL_CATHOLIC_STATISTICS.continentalDistribution.map(c => (
-                <div key={c.continent} className="p-3 rounded-xl bg-[#F4EFE6]/85 border border-[#D8CFC0] text-center space-y-1">
-                  <div className="flex items-center justify-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full ring-1 ring-slate-900/10" style={{ backgroundColor: c.color }} />
-                    <span className="font-cinzel text-xs font-bold text-slate-800">{c.continent}</span>
+              {GLOBAL_CATHOLIC_STATISTICS.continentalDistribution.map(c => {
+                const liveRegionMillions = Math.round((liveBaptizedCatholics * (c.percentage / 100)) / 1_000_000);
+                return (
+                  <div key={c.continent} className="p-3 rounded-xl bg-[#F4EFE6]/85 border border-[#D8CFC0] text-center space-y-1">
+                    <div className="flex items-center justify-center gap-1.5">
+                      <div className="w-2.5 h-2.5 rounded-full ring-1 ring-slate-900/10" style={{ backgroundColor: c.color }} />
+                      <span className="font-cinzel text-xs font-bold text-slate-800">{c.continent}</span>
+                    </div>
+                    <div className="text-xl font-extrabold text-slate-900 font-cinzel tabular-nums">
+                      {c.percentage}%
+                    </div>
+                    <div className="text-[11px] text-slate-600 font-serif tabular-nums">
+                      ~{liveRegionMillions} Million
+                    </div>
+                    <span className="text-[10px] text-[#334E68] font-semibold block">
+                      {c.growthRate}
+                    </span>
                   </div>
-                  <div className="text-xl font-extrabold text-slate-900 font-cinzel tabular-nums">
-                    {c.percentage}%
-                  </div>
-                  <div className="text-[11px] text-slate-600 font-serif">
-                    {(c.catholics / 1000000).toFixed(0)} Million
-                  </div>
-                  <span className="text-[10px] text-[#334E68] font-semibold block">
-                    {c.growthRate}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

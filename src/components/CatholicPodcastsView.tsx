@@ -26,6 +26,7 @@ import {
   getAllPodcastEpisodes, 
   getFeaturedPodcastEpisode 
 } from '../data/catholicPodcasts';
+import catholicPodcastsBannerImg from '../assets/images/catholic_podcasts_exact_aligned_1795581400000.jpg';
 
 interface CatholicPodcastsViewProps {
   currentPlayingEpisode: PodcastEpisode | null;
@@ -197,20 +198,49 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
     <div className="max-w-5xl mx-auto space-y-8 pb-24">
       
       {/* Sanctum Podcasts Master Hero Banner */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative overflow-hidden rounded-xl bg-gradient-to-br from-stone-900 via-[#1C120C] to-stone-950 border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-center">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(251,191,36,0.18)_0%,transparent_70%)] pointer-events-none" />
+      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative isolate overflow-hidden rounded-xl bg-[#1C120C] border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-center">
+        {/* Right-Side Modern Spacious Catholic Podcast Studio Artwork with Wall Crucifix */}
+        <div
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[390px] md:w-[400px] overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={catholicPodcastsBannerImg}
+            alt="Spacious modern Catholic podcast studio desk with a real walnut-and-bronze wall crucifix, broadcast microphone, open Bible, and wireless studio headphones"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-[100%_24%] brightness-[1.03] contrast-[1.03]"
+            style={{
+              maskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 14%, black 28%)',
+              WebkitMaskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 14%, black 28%)',
+            }}
+          />
+        </div>
+
+        {/* Mobile left-side readability veil */}
+        <div
+          className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.88)_56%,rgba(28,18,12,0.42)_78%,rgba(28,18,12,0.14)_100%)]"
+          aria-hidden="true"
+        />
+        {/* Subtle top/bottom warm espresso feathering */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/45 via-transparent to-[#1C120C]/20"
+          aria-hidden="true"
+        />
         
-        <div className="relative z-10 max-w-3xl space-y-1.5">
-          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider">
+        <div className="relative z-10 max-w-[92%] sm:max-w-[54%] md:max-w-[56%] space-y-1.5">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider backdrop-blur-xs">
             <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
             <span>Catholic Podcasts</span>
           </div>
 
-          <h2 className="font-cinzel text-lg sm:text-[22px] font-bold text-white tracking-wide leading-snug">
+          <h2 className="font-cinzel text-lg sm:text-[21px] font-bold text-white tracking-wide leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
             Nourish Your Soul with Faithful Catholic Audio
           </h2>
 
-          <p className="text-[11px] sm:text-[12.5px] text-stone-300 font-serif leading-snug">
+          <p className="text-[11px] sm:text-[12px] text-stone-200 font-serif leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             Listen to premier Catholic podcasts, Scripture expositions, theological discourses, and spiritual masterclasses from Fr. Mike Schmitz, Fr. Joseph Roesch MIC, Bishop Robert Barron, Dr. Scott Hahn, Jimmy Akin, Jeff Cavins, Matt Fradd, and the Holy See.
           </p>
         </div>

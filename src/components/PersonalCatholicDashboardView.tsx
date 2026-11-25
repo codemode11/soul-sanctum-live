@@ -1621,7 +1621,7 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
                     <div className="font-cinzel text-sm sm:text-base font-bold text-[#24140B]">
                       Responsorial Psalm • {currentReading.responsorialPsalm.citation}
                     </div>
-                    <p className="text-sm sm:text-base font-serif font-bold italic text-[#6B3E1E]">
+                    <p className="text-sm sm:text-base font-serif font-bold italic text-[#6B3E1E] text-center">
                       R. {currentReading.responsorialPsalm.antiphon}
                     </p>
                     <p className="text-sm sm:text-base font-serif text-[#2B180D] leading-relaxed whitespace-pre-line">

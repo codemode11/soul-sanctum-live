@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Calendar as CalendarIcon, 
   ChevronLeft, 
   ChevronRight, 
+  ChevronDown,
   BookOpen, 
   Sparkles, 
   Clock,
   Church,
   Award,
   Globe,
-  MapPin
+  MapPin,
+  Settings
 } from 'lucide-react';
 import { LiturgicalDayInfo, LiturgicalColor } from '../types';
 import { getLiturgicalMonth, LITURGICAL_COLORS_INFO } from '../data/liturgicalCalendar';
@@ -218,10 +220,27 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   onOpenCebuParishes
 }) => {
   const now = new Date();
-  const [currentYear, setCurrentYear] = useState(now.getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(now.getMonth()); // 0-indexed
+  const todayYear = now.getFullYear();
+  const todayMonth = now.getMonth();
+  const todayDateStr = `${todayYear}-${String(todayMonth + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const todayLabel = `Today: ${now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
+
+  const [currentYear, setCurrentYear] = useState(todayYear);
+  const [currentMonth, setCurrentMonth] = useState(todayMonth); // 0-indexed
   const [inspectedDay, setInspectedDay] = useState<LiturgicalDayInfo | null>(null);
   const [eventsFilter, setEventsFilter] = useState<'all' | 'vatican' | 'cebu' | 'indulgences'>('all');
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  // Featured Day Card state (defaults to live current date, updates when stepped or date selected)
+  const [featuredDateStr, setFeaturedDateStr] = useState<string>(() => selectedDateStr || todayDateStr);
+  const [cardAnimKey, setCardAnimKey] = useState(0);
+
+  useEffect(() => {
+    if (selectedDateStr && selectedDateStr !== featuredDateStr) {
+      setFeaturedDateStr(selectedDateStr);
+      setCardAnimKey(prev => prev + 1);
+    }
+  }, [selectedDateStr]);
 
   const days = getLiturgicalMonth(currentYear, currentMonth);
   const monthName = new Date(currentYear, currentMonth).toLocaleDateString('en-US', { month: 'long' });
@@ -236,15 +255,6 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   const remainingSlots = Math.max(0, 32 - days.length);
   const completionDays = nextMonthDays.slice(0, remainingSlots);
 
-  // First day of week padding
-  const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
-
-  // Dynamic Today and upcoming Sunday calculation (matching dropdown calendar)
-  const todayYear = now.getFullYear();
-  const todayMonth = now.getMonth();
-  const todayDateStr = `${todayYear}-${String(todayMonth + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  const todayLabel = `Today: ${now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
-
   const dayOfWeek = now.getDay(); // 0 is Sunday
   const daysUntilSunday = dayOfWeek === 0 ? 0 : 7 - dayOfWeek;
   const nextSunday = new Date(now);
@@ -253,6 +263,45 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   const sundayMonth = nextSunday.getMonth();
   const nextSundayDateStr = `${sundayYear}-${String(sundayMonth + 1).padStart(2, '0')}-${String(nextSunday.getDate()).padStart(2, '0')}`;
   const nextSundayLabel = `Sunday Mass: ${nextSunday.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`;
+
+  // Computed data for the compact Liturgical Day Card
+  const [fyStr, fmStr, fdStr] = featuredDateStr.split('-');
+  const featuredYear = parseInt(fyStr, 10) || todayYear;
+  const featuredMonth = (parseInt(fmStr, 10) || (todayMonth + 1)) - 1;
+  const featuredDayNum = parseInt(fdStr, 10) || now.getDate();
+  const featuredDateObj = new Date(featuredYear, featuredMonth, featuredDayNum);
+  const featuredMonthDays = getLiturgicalMonth(featuredYear, featuredMonth);
+  const featuredDayInfo =
+    featuredMonthDays.find(d => d.date === featuredDateStr) ||
+    featuredMonthDays[Math.max(0, Math.min(featuredMonthDays.length - 1, featuredDayNum - 1))] ||
+    featuredMonthDays[0];
+  const featuredWeekday = featuredDateObj.toLocaleDateString('en-US', { weekday: 'long' });
+  const featuredMonthLong = featuredDateObj.toLocaleDateString('en-US', { month: 'long' });
+  const featuredFeastTitle = featuredDayInfo?.saintName
+    ? featuredDayInfo.saintName
+    : featuredDayInfo?.rank === 'Sunday'
+      ? (featuredDayInfo.title.includes('(') ? featuredDayInfo.title.split('(')[0].trim() : featuredDayInfo.title)
+      : (featuredDayInfo?.title || 'Ordinary Weekday').replace('in Ordinary Time', '').trim();
+
+  const selectLiturgicalDate = (targetDateStr: string) => {
+    const [tyStr, tmStr] = targetDateStr.split('-');
+    const ty = parseInt(tyStr, 10);
+    const tm = parseInt(tmStr, 10) - 1;
+    setFeaturedDateStr(targetDateStr);
+    setCardAnimKey(prev => prev + 1);
+    setCurrentYear(ty);
+    setCurrentMonth(tm);
+    const targetDays = getLiturgicalMonth(ty, tm);
+    const match = targetDays.find(d => d.date === targetDateStr);
+    if (match) setInspectedDay(match);
+    onSelectDate(targetDateStr);
+  };
+
+  const handleStepDay = (deltaDays: number) => {
+    const nextDate = new Date(featuredYear, featuredMonth, featuredDayNum + deltaDays);
+    const nextIso = `${nextDate.getFullYear()}-${String(nextDate.getMonth() + 1).padStart(2, '0')}-${String(nextDate.getDate()).padStart(2, '0')}`;
+    selectLiturgicalDate(nextIso);
+  };
 
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
@@ -273,105 +322,210 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
   };
 
   const handleJumpToToday = () => {
-    onSelectDate(todayDateStr);
-    setCurrentYear(todayYear);
-    setCurrentMonth(todayMonth);
-    const day = days.find(d => d.date === todayDateStr);
-    if (day) setInspectedDay(day);
+    selectLiturgicalDate(todayDateStr);
   };
 
   const handleJumpToSunday = () => {
-    onSelectDate(nextSundayDateStr);
-    setCurrentYear(sundayYear);
-    setCurrentMonth(sundayMonth);
-    const day = days.find(d => d.date === nextSundayDateStr);
-    if (day) setInspectedDay(day);
+    selectLiturgicalDate(nextSundayDateStr);
   };
 
   return (
     <div className="max-w-5xl mx-auto space-y-5 pb-12">
       
-      {/* Calendar Header Banner — Slate Gray & Bleached Sand */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl border border-slate-700/80 shadow-md bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden">
-        <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
-        <div className="relative z-10 min-w-0 space-y-1">
-          <div className="flex items-center gap-2">
-            <CalendarIcon className="w-4 h-4 text-[#EAE2D3] shrink-0" />
-            <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-[#DFD5C3] leading-none">
-              Calendarium Romanum Generale
-            </span>
-          </div>
-          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
-            Liturgical Calendar and Feasts
-          </h2>
- <p className="text-[11px] sm:text-[12.5px] text-[#EAE2D3] font-serif leading-snug">
-            Liturgical seasons, colors, Solemnities, Feasts, Memorials, and Holy Days of Obligation.
-          </p>
-        </div>
+      {/* Calendar Header Banner + Attached Settings Drop-Down Menu — Original Slate Gray & Bleached Sand */}
+      <div className="bg-[#FBF9F5]/85 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-md border border-[#D8CFC0] relative z-20">
+        <div
+          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] border-b border-slate-700/80 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col sm:flex-row sm:items-stretch justify-between gap-4 relative overflow-hidden ${
+            isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
+          }`}
+        >
+          <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
 
-        {/* Month & Year (2026–2030) Selector Buttons */}
-        <div className="relative z-10 flex flex-col items-start sm:items-end gap-1.5 max-w-full shrink-0">
-          <div className="flex flex-wrap items-center gap-1 bg-slate-800/90 p-1 rounded-xl border border-slate-600/70 shadow-2xs max-w-full">
-            {[2026, 2027, 2028, 2029, 2030].map((yr) => (
+          {/* Left Column: Title + Settings Drop-Down Toggle */}
+          <div className="relative z-10 min-w-0 flex flex-col justify-between gap-2 sm:max-w-[58%]">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <CalendarIcon className="w-4 h-4 text-[#EAE2D3] shrink-0" />
+                <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-[#DFD5C3] leading-none">
+                  Calendarium Romanum Generale
+                </span>
+              </div>
+              <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+                Liturgical Calendar and Feasts
+              </h2>
+              <p className="text-[11px] sm:text-[12.5px] text-[#EAE2D3] font-serif leading-snug">
+                Liturgical seasons, colors, Solemnities, Feasts, Memorials, and Holy Days of Obligation.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2 pt-1 shrink-0">
               <button
-                key={yr}
-                onClick={() => setCurrentYear(yr)}
-                className={`h-7 px-2 rounded-lg font-cinzel text-[11px] font-bold transition-colors cursor-pointer ${
-                  currentYear === yr
-                    ? 'bg-[#F4EFE6] text-slate-900 shadow-sm border border-[#DFD5C3]'
-                    : 'bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/60'
+                type="button"
+                onClick={() => setIsSettingsOpen(prev => !prev)}
+                aria-expanded={isSettingsOpen}
+                className={`h-8 inline-flex items-center gap-1.5 px-3 rounded-lg transition-all cursor-pointer border font-cinzel text-xs font-bold tracking-wide ${
+                  isSettingsOpen
+                    ? 'bg-[#F4EFE6] text-slate-900 border-[#DFD5C3] shadow-sm'
+                    : 'bg-slate-950/75 hover:bg-slate-950 text-[#EAE2D3] hover:text-white border-slate-600/80 hover:border-[#DFD5C3]/80'
                 }`}
-                title={`View ${yr} Liturgical Calendar`}
+                title={isSettingsOpen ? 'Hide Calendar Settings' : 'Show Year, Month & Navigation Settings'}
               >
-                {yr}
+                <Settings className={`w-3.5 h-3.5 shrink-0 ${isSettingsOpen ? 'text-slate-800' : 'text-[#DFD5C3]'}`} />
+                <span>Settings</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${
+                    isSettingsOpen ? 'rotate-180 text-slate-800' : 'text-[#DFD5C3]'
+                  }`}
+                />
               </button>
-            ))}
+            </div>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-slate-800/90 p-1 rounded-xl border border-slate-600/70 shadow-2xs max-w-full">
-            <button
-              onClick={handlePrevMonth}
-              className="p-1.5 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs shrink-0"
-              title="Previous Month"
+          {/* Right Column: Square Lighter Slate-Blue Calendar (Same rounded-xl as Banner) */}
+          <div className="relative z-10 shrink-0 self-center">
+            <div
+              key={cardAnimKey}
+              className="w-[172px] h-[172px] sm:w-[176px] sm:h-[176px] aspect-square rounded-xl bg-gradient-to-b from-[#7E97B4] via-[#6A85A5] to-[#567192] border border-[#B7CAE0]/65 ring-1 ring-white/15 shadow-[0_10px_26px_rgba(0,0,0,0.42)] flex flex-col overflow-hidden animate-fadeIn"
             >
-              <ChevronLeft className="w-3.5 h-3.5" />
-            </button>
+              {/* Compact Top Month & Year Bar */}
+              <div className="px-2 py-1.5 bg-white/10 border-b border-white/20 flex items-center justify-between gap-1 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => handleStepDay(-1)}
+                  className="p-0.5 rounded text-[#E6EFF8] hover:text-white hover:bg-white/15 transition-colors cursor-pointer shrink-0"
+                  title="Previous Day"
+                  aria-label="Previous day"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
 
-            <span className="font-cinzel text-sm sm:text-base font-bold text-[#FBF9F5] min-w-28 sm:min-w-32 text-center tracking-wide leading-tight">
-              {monthName} {currentYear}
-            </span>
+                <span className="font-cinzel text-[9.5px] font-bold uppercase tracking-[0.12em] text-[#EEF4FB] truncate">
+                  {featuredMonthLong} {featuredYear}
+                </span>
 
-            <button
-              onClick={handleNextMonth}
-              className="p-1.5 rounded-lg bg-slate-900/70 hover:bg-slate-700 text-[#EAE2D3] border border-slate-600/70 transition-colors cursor-pointer shadow-2xs shrink-0"
-              title="Next Month"
-            >
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
+                <button
+                  type="button"
+                  onClick={() => handleStepDay(1)}
+                  className="p-0.5 rounded text-[#E6EFF8] hover:text-white hover:bg-white/15 transition-colors cursor-pointer shrink-0"
+                  title="Next Day"
+                  aria-label="Next day"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Centered Day (Above) → Date (Center) → Feast (Below) */}
+              <div className="flex-1 px-2.5 py-2 flex flex-col items-center justify-center text-center min-h-0">
+                <span className="font-cinzel text-[10px] font-bold uppercase tracking-[0.18em] text-[#EAF1F9] leading-none">
+                  {featuredWeekday}
+                </span>
+
+                <span className="font-cinzel text-[40px] font-bold text-white leading-none my-1.5 tracking-tight drop-shadow-[0_2px_4px_rgba(15,23,42,0.28)]">
+                  {featuredDayNum}
+                </span>
+
+                <p className="font-serif text-[11px] font-medium text-[#F5F8FC] leading-[1.2] line-clamp-2">
+                  {featuredFeastTitle}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Settings Drop-Down Menu (Hidden by Default) */}
+        {isSettingsOpen && (
+          <div className="px-5 py-4 sm:px-6 bg-[#F4EFE6]/95 backdrop-blur-md border-t border-[#D8CFC0] rounded-b-xl space-y-4">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              {/* Year Selector Buttons (2026–2030) */}
+              <div className="space-y-1.5">
+                <span className="block font-sans uppercase tracking-[0.14em] text-[11px] font-semibold text-stone-600">
+                  Liturgical Year
+                </span>
+                <div className="flex flex-wrap items-center gap-1 bg-[#EAE2D3] p-1 rounded-xl border border-[#D4C9B6]">
+                  {[2026, 2027, 2028, 2029, 2030].map((yr) => (
+                    <button
+                      key={yr}
+                      type="button"
+                      onClick={() => setCurrentYear(yr)}
+                      className={`h-8 px-3 rounded-lg font-cinzel text-xs font-bold transition-colors cursor-pointer ${
+                        currentYear === yr
+                          ? 'bg-slate-900 text-[#FBF9F5] shadow-xs'
+                          : 'text-stone-700 hover:text-stone-950 hover:bg-[#FBF9F5]/80'
+                      }`}
+                      title={`View ${yr} Liturgical Calendar`}
+                    >
+                      {yr}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Month Selector Controls */}
+              <div className="space-y-1.5">
+                <span className="block font-sans uppercase tracking-[0.14em] text-[11px] font-semibold text-stone-600">
+                  Browse Month
+                </span>
+                <div className="inline-flex items-center gap-1.5 bg-[#EAE2D3] p-1 rounded-xl border border-[#D4C9B6]">
+                  <button
+                    type="button"
+                    onClick={handlePrevMonth}
+                    className="p-1.5 rounded-lg bg-[#FBF9F5] hover:bg-white text-slate-800 border border-[#C8BBA6] transition-colors cursor-pointer shrink-0"
+                    title="Previous Month"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  <span className="font-cinzel text-sm font-bold text-slate-900 min-w-32 text-center tracking-wide leading-tight px-2">
+                    {monthName} {currentYear}
+                  </span>
+
+                  <button
+                    type="button"
+                    onClick={handleNextMonth}
+                    className="p-1.5 rounded-lg bg-[#FBF9F5] hover:bg-white text-slate-800 border border-[#C8BBA6] transition-colors cursor-pointer shrink-0"
+                    title="Next Month"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Quick Jump Buttons */}
+              <div className="space-y-1.5">
+                <span className="block font-sans uppercase tracking-[0.14em] text-[11px] font-semibold text-stone-600">
+                  Quick Jump
+                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleJumpToToday}
+                    className="h-9 flex items-center gap-1.5 px-3 rounded-lg text-xs font-cinzel font-bold bg-slate-900 text-[#FBF9F5] hover:bg-slate-800 transition-colors cursor-pointer shadow-2xs"
+                    title={`Select ${todayLabel}`}
+                  >
+                    <Clock className="w-3.5 h-3.5 text-[#DFD5C3]" />
+                    <span>{todayLabel}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleJumpToSunday}
+                    className="h-9 px-3 rounded-lg text-xs font-cinzel font-bold bg-[#FBF9F5] hover:bg-white text-slate-800 border border-[#C8BBA6] transition-colors cursor-pointer shadow-2xs"
+                    title={`Select ${nextSundayLabel}`}
+                  >
+                    {nextSundayLabel}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="p-3 sm:p-6 md:p-8 rounded-xl bg-[#F6F2EA]/85 backdrop-blur-xl backdrop-saturate-150 border border-[#DFD6C7] ring-1 ring-inset ring-white/60 shadow-[0_8px_32px_0_rgba(51,65,85,0.12)] space-y-5">
-      {/* Quick Jump Bar & Liturgical Colors Legend */}
+      {/* Month Status & Liturgical Colors Legend Strip */}
       <div className="px-4 py-2.5 bg-[#F4EFE6]/90 backdrop-blur-md border border-[#D8CFC0] rounded-xl flex flex-wrap items-center justify-between gap-2.5 text-xs sm:text-sm shadow-2xs">
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={handleJumpToToday}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs sm:text-sm font-serif font-bold bg-[#FBF9F5] text-slate-900 hover:bg-[#EAE2D3] border border-[#C8BBA6] transition-all cursor-pointer shadow-2xs leading-none"
-            title={`Select ${todayLabel}`}
-          >
-            <Clock className="w-3.5 h-3.5 text-slate-600" />
-            <span>{todayLabel}</span>
-          </button>
-
-          <button
-            onClick={handleJumpToSunday}
-            className="px-2.5 py-1 text-xs sm:text-sm font-serif text-slate-700 hover:text-slate-950 font-bold underline cursor-pointer leading-none"
-            title={`Select ${nextSundayLabel}`}
-          >
-            {nextSundayLabel}
-          </button>
+        <div className="font-cinzel text-sm sm:text-base font-bold text-slate-900 tracking-wide">
+          {monthName} {currentYear}
         </div>
 
         {/* Liturgical Colors Legend */}
@@ -423,7 +577,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 key={dayInfo.date}
                 onClick={() => {
                   setInspectedDay(dayInfo);
-                  onSelectDate(dayInfo.date);
+                  selectLiturgicalDate(dayInfo.date);
                 }}
                 className={`min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-gradient-to-br from-[#FBF9F5] via-[#F6F2EA] to-[#ECE5D5] hover:from-white hover:to-[#F4EFE6] text-slate-900 ${
                   isSelected
@@ -520,10 +674,8 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
               <div
                 key={`next-${nextDayInfo.date}`}
                 onClick={() => {
-                  setCurrentMonth(nextMonth);
-                  setCurrentYear(nextYear);
                   setInspectedDay(nextDayInfo);
-                  onSelectDate(nextDayInfo.date);
+                  selectLiturgicalDate(nextDayInfo.date);
                 }}
                 className="min-h-[105px] sm:min-h-[118px] p-2 sm:p-2.5 rounded-xl transition-all duration-150 cursor-pointer flex flex-col justify-between relative group bg-[#F4EFE6]/70 hover:bg-[#FBF9F5] text-slate-700 border border-dashed border-[#C8BBA6] shadow-2xs hover:border-slate-500"
                 title={`Next Month: Click to view ${nextMonthShortName} ${nextDayNum}`}
@@ -778,12 +930,7 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    const [yStr, mStr] = ev.targetDateStr.split('-');
-                    const y = parseInt(yStr, 10);
-                    const m = parseInt(mStr, 10) - 1;
-                    setCurrentYear(y);
-                    setCurrentMonth(m);
-                    onSelectDate(ev.targetDateStr);
+                    selectLiturgicalDate(ev.targetDateStr);
                   }}
                   className="px-3.5 py-1.5 rounded-lg bg-[#FBF9F5] hover:bg-[#EAE2D3] text-slate-800 border border-[#C8BBA6] font-cinzel text-xs sm:text-sm font-bold transition-all cursor-pointer self-start md:self-center shrink-0 shadow-2xs"
                   title={`Open Mass Readings for ${ev.targetDateStr}`}

@@ -25,9 +25,9 @@ export interface InterestingChurchFact {
 }
 
 export const GLOBAL_CATHOLIC_STATISTICS = {
-  totalCatholics: 1389573000,
-  formattedTotal: '1.39 Billion',
-  percentageOfWorld: 17.7,
+  totalCatholics: 1422144000,
+  formattedTotal: '1.42 Billion',
+  percentageOfWorld: 17.8,
   dailyMassesOffered: 415000,
   parishesWorldwide: 221740,
   diocesesAndPrelatures: 3030,
@@ -47,11 +47,11 @@ export const GLOBAL_CATHOLIC_STATISTICS = {
     orphanagesAndNurseries: 9374
   },
   continentalDistribution: [
-    { continent: 'Americas', percentage: 48.0, catholics: 667000000, color: '#334E68', growthRate: '+0.4% / yr' },
-    { continent: 'Europe', percentage: 20.3, catholics: 282000000, color: '#486581', growthRate: '-0.2% / yr' },
-    { continent: 'Africa', percentage: 19.3, catholics: 268000000, color: '#627D98', growthRate: '+3.1% / yr (Fastest)' },
-    { continent: 'Asia', percentage: 11.0, catholics: 153000000, color: '#829AB1', growthRate: '+1.5% / yr' },
-    { continent: 'Oceania', percentage: 0.8, catholics: 11000000, color: '#BCCCDC', growthRate: '+0.8% / yr' }
+    { continent: 'Americas', percentage: 47.8, catholics: 679000000, color: '#334E68', growthRate: '+0.4% / yr' },
+    { continent: 'Africa', percentage: 20.3, catholics: 289000000, color: '#486581', growthRate: '+3.1% / yr (Fastest)' },
+    { continent: 'Europe', percentage: 20.1, catholics: 286000000, color: '#627D98', growthRate: '-0.2% / yr' },
+    { continent: 'Asia', percentage: 11.0, catholics: 156000000, color: '#829AB1', growthRate: '+1.5% / yr' },
+    { continent: 'Oceania', percentage: 0.8, catholics: 12000000, color: '#BCCCDC', growthRate: '+0.8% / yr' }
   ]
 };
 

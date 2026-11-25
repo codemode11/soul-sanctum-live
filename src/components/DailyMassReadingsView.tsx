@@ -291,7 +291,7 @@ ${reading.gospel.text}`;
                 alt=""
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[76%_36%] brightness-[0.96] contrast-[1.04]"
+                className="h-full w-full object-cover object-[76%_6%] brightness-[0.96] contrast-[1.04]"
               />
             </div>
             {/* Seamless multi-stop horizontal gradient from dark brown background into the Liturgy of the Word scene */}
@@ -583,9 +583,9 @@ ${reading.gospel.text}`;
           </p>
         </div>
 
-        {/* Antiphon response: Justified alignment and dynamically scalable */}
+        {/* Antiphon response: Center-aligned and dynamically scalable */}
         <div className="p-4 sm:p-5 rounded-md bg-amber-50/90 border border-amber-200/90 font-serif text-amber-950 font-bold italic shadow-2xs" style={antiphonStyle}>
-          <p className="w-full text-justify leading-snug">
+          <p className="w-full text-center text-balance leading-snug">
             <span className="text-amber-900 font-serif font-black text-2xl sm:text-3xl leading-none not-italic mr-2.5">R.</span>
             <span>{toCurvedQuotes(reading.responsorialPsalm.antiphon)}</span>
           </p>
@@ -598,7 +598,7 @@ ${reading.gospel.text}`;
               <p className="whitespace-pre-line pl-3 border-l-2 border-amber-500/60">
                 {toCurvedQuotes(verse)}
               </p>
-              <p className="font-serif font-semibold text-amber-900 italic text-justify" style={{ fontSize: '1.05em' }}>
+              <p className="font-serif font-semibold text-amber-900 italic text-center text-balance" style={{ fontSize: '1.05em' }}>
                 R. {toCurvedQuotes(reading.responsorialPsalm.antiphon)}
               </p>
             </div>

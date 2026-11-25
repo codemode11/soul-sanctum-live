@@ -17,8 +17,7 @@ import {
   ShieldCheck,
   Star,
   Settings,
-  ChevronDown,
-  X
+  ChevronDown
 } from 'lucide-react';
 import { RosaryMysteryGroup } from '@/types';
 import { 
@@ -57,7 +56,7 @@ export const RosaryAndChapletView: React.FC = () => {
     | 'memorare'
     | 'angelus'
   >('divine-mercy');
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(true);
   const [copiedPromiseNum, setCopiedPromiseNum] = useState<number | null>(null);
   const [copiedMarianNum, setCopiedMarianNum] = useState<number | null>(null);
   const [copiedExcerptId, setCopiedExcerptId] = useState<string | null>(null);
@@ -347,25 +346,7 @@ export const RosaryAndChapletView: React.FC = () => {
   const renderSettingsDropdown = () => {
     if (!isSettingsOpen) return null;
     return (
-      <div className="p-3.5 sm:p-4 rounded-xl bg-white/80 backdrop-blur-xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/80 shadow-lg space-y-2.5 animate-fadeIn">
-        <div className="flex items-center justify-between px-1">
-          <div className="flex items-center gap-1.5 text-stone-800">
-            <Settings className="w-3.5 h-3.5 text-[#8B5A2B]" />
-            <span className="font-cinzel text-xs font-bold uppercase tracking-wider text-[#4A2B17]">
-              Select Devotion or Prayer
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={() => setIsSettingsOpen(false)}
-            className="px-2 py-0.5 rounded-md text-stone-500 hover:text-stone-900 hover:bg-stone-200/60 transition-colors cursor-pointer text-[11px] flex items-center gap-1 font-cinzel"
-            title="Close Settings"
-          >
-            <X className="w-3.5 h-3.5" />
-            <span>Close</span>
-          </button>
-        </div>
-
+      <div className="p-2 sm:p-2.5 rounded-xl bg-white/80 backdrop-blur-xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#D5C3AE]/80 shadow-lg animate-fadeIn">
         {/* Eight-Button Balanced Devotion Picker: 4 Divine Mercy (Dark Red) + 4 Mother of Mercy (Dark Blue) */}
         <div className="grid grid-cols-2 sm:grid-cols-4 items-stretch rounded-xl bg-[#F4ECE1]/95 p-1 w-full shadow-inner border border-[#D5C3AE] gap-1">
           {/* 1. Chaplet (Dark Red — 1st Divine Mercy Button) */}
@@ -377,7 +358,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setIsReadingAngelus(false);
               setActiveDevotion('divine-mercy');
               handleReset();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
               activeDevotion === 'divine-mercy'
@@ -397,7 +377,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setIsReadingAngelus(false);
               setActiveDevotion('faustina');
               SacredReader.stop();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
               activeDevotion === 'faustina'
@@ -418,7 +397,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setActiveDevotion('stations-of-the-cross');
               setIsAutoAdvancing(false);
               SacredReader.stop();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
               activeDevotion === 'stations-of-the-cross'
@@ -439,7 +417,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setIsReadingAngelus(false);
               setActiveDevotion('three-oclock');
               SacredReader.stop();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#6E1414] bg-gradient-to-b from-[#7F1D1D] via-[#651313] to-[#4A0B0B] text-amber-50 border ${
               activeDevotion === 'three-oclock'
@@ -459,7 +436,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setIsReadingAngelus(false);
               setActiveDevotion('rosary');
               handleReset();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
               activeDevotion === 'rosary'
@@ -479,7 +455,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setIsReadingAngelus(false);
               setActiveDevotion('marian-promises');
               SacredReader.stop();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
               activeDevotion === 'marian-promises'
@@ -499,7 +474,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setIsReadingAngelus(false);
               setActiveDevotion('memorare');
               SacredReader.stop();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
               activeDevotion === 'memorare'
@@ -520,7 +494,6 @@ export const RosaryAndChapletView: React.FC = () => {
               setIsReadingAngelus(false);
               setActiveDevotion('angelus');
               SacredReader.stop();
-              setIsSettingsOpen(false);
             }}
             className={`w-full min-w-0 py-2 sm:py-2.5 px-2 rounded-lg text-[10px] sm:text-[11px] font-semibold tracking-tight whitespace-nowrap transition-all cursor-pointer flex items-center justify-center bg-[#172B69] bg-gradient-to-b from-[#1E3A8A] via-[#172B69] to-[#0F1E4D] text-amber-100 border ${
               activeDevotion === 'angelus'
@@ -1032,7 +1005,7 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* 3:00 PM Hour of Great Mercy Banner */}
           <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
               aria-hidden="true"
             >
               <img
@@ -1040,16 +1013,16 @@ export const RosaryAndChapletView: React.FC = () => {
                 alt="The Divine Mercy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-contain object-right"
+                className="h-full w-full object-cover object-[50%_12%]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
                 }}
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
-            <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
+            <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
                 <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-300 leading-tight">
@@ -1063,7 +1036,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 &ldquo;{DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyIntro}&rdquo;
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
+            <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[156px] sm:pr-[196px]">
               <div className="flex items-center gap-1.5 min-w-0 overflow-x-auto no-scrollbar">
                 <button
                   onClick={() => {
@@ -1462,7 +1435,7 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* Header Banner — Patterned after the Chaplet of the Divine Mercy Banner */}
           <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
               aria-hidden="true"
             >
               <img
@@ -1470,16 +1443,16 @@ export const RosaryAndChapletView: React.FC = () => {
                 alt="The Divine Mercy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-contain object-right"
+                className="h-full w-full object-cover object-[50%_12%]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
                 }}
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
-            <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
+            <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
                 <span className="font-cinzel text-[10px] sm:text-[11px] font-bold text-red-300 tracking-wider uppercase leading-tight">
@@ -1493,7 +1466,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 &ldquo;My Heart overflows with great mercy for souls. The graces of My mercy are drawn by means of one vessel only, and that is—trust&rdquo; (Diary 1731).
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
+            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[156px] sm:pr-[196px]">
               {renderSettingsToggleButton('dark')}
             </div>
           </div>
@@ -1818,7 +1791,7 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
           <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[176px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
               aria-hidden="true"
             >
               <img
@@ -1826,16 +1799,16 @@ export const RosaryAndChapletView: React.FC = () => {
                 alt="The Divine Mercy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-contain object-right"
+                className="h-full w-full object-cover object-[50%_12%]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 16%, black 32%, black 100%)',
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
                 }}
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
-            <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
+            <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
                 <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-300 leading-tight">
@@ -1849,7 +1822,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 &ldquo;At three o&apos;clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion&rdquo; (Diary 1320).
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[132px] sm:pr-[168px]">
+            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[156px] sm:pr-[196px]">
               {renderSettingsToggleButton('dark')}
             </div>
           </div>

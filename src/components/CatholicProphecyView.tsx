@@ -25,6 +25,7 @@ import {
   VaticanNormDetermination,
 } from '../data/catholicProphecies';
 import { SacredReader } from '../utils/speech';
+import catholicProphecyBannerImg from '../assets/images/catholic_prophecy_medjugorje_banner_1795589540875.jpg';
 
 type ActiveSectionTab = 'all' | ProphecyCategory | 'vatican-2024-norms';
 
@@ -245,26 +246,55 @@ export const CatholicProphecyView: React.FC = () => {
       {/* Institutional Archival Banner & Attached Settings Drop-Down (Daily Mass Readings Pattern) */}
       <div className="bg-[#FBF9F5]/85 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-md border border-[#D8CFC0] relative z-20">
         <header
-          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col justify-between relative overflow-hidden ${
+          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#0F172A] text-[#F9F6F0] flex flex-col justify-between relative overflow-hidden ${
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          <div className="pointer-events-none absolute -right-14 -bottom-14 w-72 h-44 rounded-full bg-[#EAE2D3]/12 blur-3xl" />
+          {/* Right-Side Colorized Medjugorje Visionaries with Superimposed Our Lady of Medjugorje */}
+          <div
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[410px] md:w-[445px] overflow-hidden z-0"
+            aria-hidden="true"
+          >
+            <img
+              src={catholicProphecyBannerImg}
+              alt="Colorized photograph of the Medjugorje visionaries praying with Our Lady of Medjugorje superimposed above in heavenly mist"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-full object-cover object-[100%_0%] brightness-[1.02] contrast-[1.03]"
+              style={{
+                maskImage:
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 14%, black 28%)',
+                WebkitMaskImage:
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 14%, black 28%)',
+              }}
+            />
+          </div>
 
-          <div className="relative z-10 space-y-1">
-            <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#DFD5C3]">
+          {/* Mobile left-side readability veil */}
+          <div
+            className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#0F172A_0%,#0F172A_36%,rgba(15,23,42,0.88)_58%,rgba(15,23,42,0.42)_80%,rgba(15,23,42,0.18)_100%)] z-0"
+            aria-hidden="true"
+          />
+          {/* Subtle top/bottom dark slate depth feathering */}
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F172A]/45 via-transparent to-[#0F172A]/15 z-0"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 space-y-1 max-w-[92%] sm:max-w-[54%] md:max-w-[56%]">
+            <p className="font-sans text-[10.5px] sm:text-[11px] uppercase tracking-[0.18em] text-[#DFD5C3] drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Prophetia Catholica · Sacred Scripture, Marian Messages &amp; Saints
             </p>
-            <h1 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+            <h1 className="font-cinzel text-xl sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               Catholic Prophecy
             </h1>
-            <p className="text-xs sm:text-sm text-[#EAE2D3] font-serif-sacred max-w-3xl leading-snug line-clamp-1">
+            <p className="text-[11px] sm:text-xs text-[#EAE2D3] font-serif leading-[1.34] drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               “Test everything; retain what is good.” (1 Thess 5:19–21) — Sacred Scripture, Marian messages, and Catholic witnesses discerned under the Catechism and May 2024 Vatican Norms.
             </p>
           </div>
 
-          {/* Lower-Right Banner Controls: May 2024 Vatican Norms + Settings Drop-Down */}
-          <div className="relative z-10 flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0">
+          {/* Lower-Left Banner Controls: May 2024 Vatican Norms + Settings Drop-Down (clear of artwork) */}
+          <div className="relative z-10 flex items-center justify-start gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0 sm:max-w-[56%]">
             <button
               type="button"
               onClick={() =>

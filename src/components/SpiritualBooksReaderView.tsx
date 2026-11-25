@@ -32,7 +32,7 @@ import {
   BookCategory 
 } from '../data/spiritualBooks';
 import { SacredReader } from '../utils/speech';
-import spiritualClassicsBannerImg from '../assets/images/spiritual_classics_shelf_1795407880839.jpg';
+import spiritualClassicsBannerImg from '../assets/images/spiritual_classics_shelf_modern_1795579323307.jpg';
 
 type ReadingTheme = 'parchment' | 'sepia' | 'dark' | 'white';
 type FontSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -771,27 +771,33 @@ export const SpiritualBooksReaderView: React.FC = () => {
       {/* Sacred Masthead Banner & Collapsible Settings/Search Drawer */}
       <div className="rounded-xl border border-[#C89F72]/50 shadow-xl bg-[#1C120C] relative z-20">
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between gap-2 ${isCatalogSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Antique Spiritual Classics Shelf & Angel Bookends Photography (16:9 aspect preserved on sm+ so both angel bookends are completely uncropped) */}
+          {/* Right-Side Modern Spiritual Classics Shelf & Two Angel Bookends (16:9 preserved on sm+ so both angels & all modern spines are uncropped) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[92%] sm:w-auto sm:aspect-[16/9] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-auto sm:aspect-[16/9] overflow-hidden"
             aria-hidden="true"
           >
             <img
               src={spiritualClassicsBannerImg}
-              alt=""
+              alt="Modern editions of Catholic spiritual classics on a dark walnut shelf flanked by two sculpted angel bookends"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-right brightness-[0.98] contrast-[1.04]"
+              className="h-full w-full object-cover object-right brightness-[1.01] contrast-[1.03]"
+              style={{
+                maskImage:
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 9%, black 19%)',
+                WebkitMaskImage:
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 9%, black 19%)',
+              }}
             />
           </div>
-          {/* Seamless multi-stop horizontal gradient from dark brown background into the bookshelf & both angel bookends */}
+          {/* Mobile readability gradient behind left title & controls */}
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.92)_48%,rgba(28,18,12,0.52)_64%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.06)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_52%,rgba(28,18,12,0.94)_62%,rgba(28,18,12,0.55)_73%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.02)_100%)]"
+            className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.88)_54%,rgba(28,18,12,0.38)_76%,rgba(28,18,12,0.12)_100%)]"
             aria-hidden="true"
           />
           {/* Subtle top/bottom warm dark brown feathering for edge polish */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/45 via-transparent to-[#1C120C]/15"
             aria-hidden="true"
           />
 

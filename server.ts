@@ -954,6 +954,15 @@ app.all('/api/magisterium', async (req, res) => {
     const rawHistory = Array.isArray(body.history) ? body.history : [];
     const rawMessages = Array.isArray(body.messages) ? body.messages : [];
     const returnRelatedQuestions = body.returnRelatedQuestions !== false;
+    const inquiryDate =
+      typeof body.inquiryDate === 'string' && body.inquiryDate.trim()
+        ? body.inquiryDate.trim().slice(0, 80)
+        : new Date().toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
 
     const conversationMessages: Array<{ role: 'user' | 'assistant'; content: string }> = [];
     if (rawMessages.length > 0) {
@@ -1038,7 +1047,7 @@ app.all('/api/magisterium', async (req, res) => {
           model: modelName,
           contents,
           config: {
-            systemInstruction: MAGISTERIAL_FALLBACK_INSTRUCTION,
+            systemInstruction: `${MAGISTERIAL_FALLBACK_INSTRUCTION}\n\nCurrent date of inquiry: ${inquiryDate}.`,
             responseMimeType: 'application/json',
             ...(modelName === 'gemini-3.8-flash'
               ? { thinkingConfig: { thinkingLevel: ThinkingLevel.LOW } }
