@@ -31,7 +31,15 @@ import { MedjugorjeMessagesView } from './components/MedjugorjeMessagesView';
 import { MarianApparitionsView } from './components/MarianApparitionsView';
 import { CatholicProphecyView } from './components/CatholicProphecyView';
 import { SpiritualBooksReaderView } from './components/SpiritualBooksReaderView';
+import Hls from 'hls.js';
 import { CatholicPodcastsView } from './components/CatholicPodcastsView';
+import { CatholicRadioView } from './components/CatholicRadioView';
+import {
+  CatholicRadioPlayerBar,
+  RadioPlaybackStatus
+} from './components/CatholicRadioPlayerBar';
+import { CatholicRadioStation } from './data/catholicRadio';
+import { CatholicCinemaView } from './components/CatholicCinemaView';
 import { FioAudioView } from './components/FioAudioView';
 import { PodcastPlayerBar } from './components/PodcastPlayerBar';
 import { PodcastEpisodeModal } from './components/PodcastEpisodeModal';
@@ -380,9 +388,252 @@ export default function App() {
   const [podcastPlaybackRate, setPodcastPlaybackRate] = useState(1.0);
   const [podcastAudioMode, setPodcastAudioMode] = useState<'stream' | 'narration'>('stream');
 
+  // Audio state for Global Catholic Radio (direct HTTPS Icecast/MP3/AAC + HLS .m3u8)
+  const radioAudioRef = React.useRef<HTMLAudioElement | null>(null);
+  const radioHlsRef = React.useRef<Hls | null>(null);
+  const [currentRadioStation, setCurrentRadioStation] = useState<CatholicRadioStation | null>(null);
+  const [radioStatus, setRadioStatus] = useState<RadioPlaybackStatus>('idle');
+  const [radioError, setRadioError] = useState<string | null>(null);
+  const [radioVolume, setRadioVolume] = useState<number>(0.85);
+  const [radioMuted, setRadioMuted] = useState<boolean>(false);
+  const [favoriteRadioIds, setFavoriteRadioIds] = useState<string[]>(() => {
+    try {
+      const raw = localStorage.getItem('sanctum_catholic_radio_fav_ids_v1');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed.filter((id): id is string => typeof id === 'string');
+      }
+    } catch {
+      // ignore
+    }
+    return ['ewtn-radio-english', 'relevant-radio', 'radio-esperance-gregorien'];
+  });
+  const [favoriteRadioMap, setFavoriteRadioMap] = useState<Record<string, CatholicRadioStation>>(() => {
+    try {
+      const raw = localStorage.getItem('sanctum_catholic_radio_fav_map_v1');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === 'object') return parsed as Record<string, CatholicRadioStation>;
+      }
+    } catch {
+      // ignore
+    }
+    return {};
+  });
+
+  const teardownRadioAudio = React.useCallback(() => {
+    if (radioHlsRef.current) {
+      try {
+        radioHlsRef.current.destroy();
+      } catch {
+        // ignore
+      }
+      radioHlsRef.current = null;
+    }
+    if (radioAudioRef.current) {
+      try {
+        radioAudioRef.current.pause();
+        radioAudioRef.current.removeAttribute('src');
+        radioAudioRef.current.load();
+      } catch {
+        // ignore
+      }
+      radioAudioRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      teardownRadioAudio();
+    };
+  }, [teardownRadioAudio]);
+
+  const startRadioStream = React.useCallback(
+    (
+      station: CatholicRadioStation,
+      useFallback: boolean = false,
+      isReconnect: boolean = false
+    ) => {
+      SacredReader.stop();
+      // Pause podcast playback if active so streams never overlap
+      if (audioRef.current) {
+        try {
+          audioRef.current.pause();
+        } catch {
+          // ignore
+        }
+      }
+      setIsPlayingPodcast(false);
+      setCurrentPlayingEpisode(null);
+
+      teardownRadioAudio();
+      setCurrentRadioStation(station);
+      setRadioStatus('connecting');
+      setRadioError(null);
+
+      const targetUrl =
+        useFallback && station.fallbackStreamUrl ? station.fallbackStreamUrl : station.streamUrl;
+
+      const audioEl = new Audio();
+      audioEl.preload = 'none';
+      audioEl.volume = radioMuted ? 0 : radioVolume;
+      radioAudioRef.current = audioEl;
+
+      let playingStartedAt: number | null = null;
+
+      const handleStreamFailure = (customMessage?: string) => {
+        if (radioAudioRef.current !== audioEl) return;
+        if (!useFallback && station.fallbackStreamUrl) {
+          startRadioStream(station, true, false);
+          return;
+        }
+        setRadioStatus('error');
+        setRadioError(
+          customMessage ||
+            'Unable to connect to this live stream right now. Try Retry or open the station site.'
+        );
+      };
+
+      audioEl.onplaying = () => {
+        if (radioAudioRef.current !== audioEl) return;
+        if (playingStartedAt === null) {
+          playingStartedAt = Date.now();
+        }
+        setRadioStatus('playing');
+        setRadioError(null);
+      };
+      audioEl.onwaiting = () => {
+        if (radioAudioRef.current !== audioEl) return;
+        setRadioStatus('connecting');
+      };
+      audioEl.onended = () => {
+        if (radioAudioRef.current !== audioEl) return;
+        const playedMs = playingStartedAt ? Date.now() - playingStartedAt : 0;
+        // If a live stream played steadily and then dropped (e.g. CDN handoff), try one clean reconnect
+        if (playedMs >= 15000 && !isReconnect) {
+          startRadioStream(station, useFallback, true);
+          return;
+        }
+        handleStreamFailure(
+          'This broadcast feed closed from the station server (it may be between live segments or temporarily off-air). Try Retry or choose another station.'
+        );
+      };
+      audioEl.onerror = () => {
+        handleStreamFailure();
+      };
+
+      const isHlsStream = Boolean(station.isHls) || /\.m3u8(\?|$)/i.test(targetUrl);
+
+      if (isHlsStream && Hls.isSupported()) {
+        const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
+        radioHlsRef.current = hls;
+        hls.on(Hls.Events.ERROR, (_event, data) => {
+          if (data.fatal) {
+            handleStreamFailure();
+          }
+        });
+        hls.loadSource(targetUrl);
+        hls.attachMedia(audioEl);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          audioEl.play().catch(() => handleStreamFailure());
+        });
+      } else {
+        audioEl.src = targetUrl;
+        audioEl.play().catch(() => handleStreamFailure());
+      }
+    },
+    [radioMuted, radioVolume, teardownRadioAudio]
+  );
+
+  const handlePauseRadio = React.useCallback(() => {
+    teardownRadioAudio();
+    setRadioStatus('paused');
+  }, [teardownRadioAudio]);
+
+  const handleSelectRadioStation = React.useCallback(
+    (station: CatholicRadioStation) => {
+      if (
+        currentRadioStation?.id === station.id &&
+        (radioStatus === 'playing' || radioStatus === 'connecting')
+      ) {
+        handlePauseRadio();
+        return;
+      }
+      startRadioStream(station, false);
+    },
+    [currentRadioStation, radioStatus, handlePauseRadio, startRadioStream]
+  );
+
+  const handleToggleRadioPlay = React.useCallback(() => {
+    if (!currentRadioStation) return;
+    if (radioStatus === 'playing' || radioStatus === 'connecting') {
+      handlePauseRadio();
+    } else {
+      startRadioStream(currentRadioStation, false);
+    }
+  }, [currentRadioStation, radioStatus, handlePauseRadio, startRadioStream]);
+
+  const handleRetryRadio = React.useCallback(() => {
+    if (!currentRadioStation) return;
+    startRadioStream(currentRadioStation, false);
+  }, [currentRadioStation, startRadioStream]);
+
+  const handleRadioVolumeChange = React.useCallback((nextVol: number) => {
+    const clamped = Math.max(0, Math.min(1, nextVol));
+    setRadioVolume(clamped);
+    setRadioMuted(clamped === 0);
+    if (radioAudioRef.current) {
+      radioAudioRef.current.volume = clamped;
+    }
+  }, []);
+
+  const handleToggleRadioMute = React.useCallback(() => {
+    setRadioMuted(prev => {
+      const next = !prev;
+      if (radioAudioRef.current) {
+        radioAudioRef.current.volume = next ? 0 : radioVolume;
+      }
+      return next;
+    });
+  }, [radioVolume]);
+
+  const handleCloseRadioPlayer = React.useCallback(() => {
+    teardownRadioAudio();
+    setCurrentRadioStation(null);
+    setRadioStatus('idle');
+    setRadioError(null);
+  }, [teardownRadioAudio]);
+
+  const handleToggleRadioFavorite = React.useCallback((station: CatholicRadioStation) => {
+    setFavoriteRadioIds(prev => {
+      const exists = prev.includes(station.id);
+      const next = exists ? prev.filter(id => id !== station.id) : [station.id, ...prev];
+      try {
+        localStorage.setItem('sanctum_catholic_radio_fav_ids_v1', JSON.stringify(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+    setFavoriteRadioMap(prev => {
+      const next = { ...prev, [station.id]: station };
+      try {
+        localStorage.setItem('sanctum_catholic_radio_fav_map_v1', JSON.stringify(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  }, []);
+
   const handlePlayPodcast = (episode: PodcastEpisode) => {
-    // 1. Always stop any active speech synthesis
+    // 1. Always stop any active speech synthesis and live radio
     SacredReader.stop();
+    if (currentRadioStation) {
+      teardownRadioAudio();
+      setCurrentRadioStation(null);
+      setRadioStatus('idle');
+    }
 
     // 2. Completely pause and tear down previous audio stream
     if (audioRef.current) {
@@ -1124,12 +1375,49 @@ export default function App() {
               />
             )}
 
+            {/* Global Catholic Radio Live Broadcasts */}
+            {activeTab === 'catholic-radio' && (
+              <CatholicRadioView
+                currentStation={currentRadioStation}
+                playbackStatus={radioStatus}
+                playbackError={radioError}
+                volume={radioVolume}
+                isMuted={radioMuted}
+                favoriteStationIds={favoriteRadioIds}
+                favoriteStationsMap={favoriteRadioMap}
+                onSelectStation={handleSelectRadioStation}
+                onTogglePlay={handleToggleRadioPlay}
+                onRetryStation={handleRetryRadio}
+                onVolumeChange={handleRadioVolumeChange}
+                onToggleMute={handleToggleRadioMute}
+                onToggleFavorite={handleToggleRadioFavorite}
+              />
+            )}
+
+            {/* Catholic Cinema: Documentaries & Classic Movies Player */}
+            {activeTab === 'catholic-cinema' && (
+              <CatholicCinemaView
+                onPlaybackStart={() => {
+                  if (isPlayingPodcast) {
+                    handlePausePodcast();
+                  }
+                  if (radioStatus === 'playing' || radioStatus === 'connecting') {
+                    handlePauseRadio();
+                  }
+                  SacredReader.stop();
+                }}
+              />
+            )}
+
             {/* Fio.fm Integrated Catholic Audio Player */}
             {activeTab === 'fio-audio' && (
               <FioAudioView
                 onStopSanctumAudio={() => {
                   if (isPlayingPodcast) {
                     handlePausePodcast();
+                  }
+                  if (radioStatus === 'playing' || radioStatus === 'connecting') {
+                    handlePauseRadio();
                   }
                   SacredReader.stop();
                 }}
@@ -1349,6 +1637,24 @@ export default function App() {
               </button>
               <span>•</span>
 
+              {/* 5a. Catholic Radio */}
+              <button 
+                onClick={() => handleSelectTab('catholic-radio')} 
+                className="hover:text-amber-300 cursor-pointer transition-colors"
+              >
+                Catholic Radio
+              </button>
+              <span>•</span>
+
+              {/* 5aa. Catholic Cinema */}
+              <button 
+                onClick={() => handleSelectTab('catholic-cinema')} 
+                className="hover:text-amber-300 cursor-pointer transition-colors"
+              >
+                Catholic Cinema
+              </button>
+              <span>•</span>
+
               {/* 5b. Fio.fm Audio */}
               <button 
                 onClick={() => handleSelectTab('fio-audio')} 
@@ -1444,6 +1750,25 @@ export default function App() {
 
       {/* PWA Offline Connectivity Indicator */}
       <OfflineIndicator />
+
+      {/* Global Catholic Radio Floating Bottom Player Bar */}
+      {currentRadioStation && !currentPlayingEpisode && (
+        <CatholicRadioPlayerBar
+          station={currentRadioStation}
+          status={radioStatus}
+          errorMessage={radioError}
+          volume={radioVolume}
+          isMuted={radioMuted}
+          isFavorite={favoriteRadioIds.includes(currentRadioStation.id)}
+          onTogglePlay={handleToggleRadioPlay}
+          onRetry={handleRetryRadio}
+          onVolumeChange={handleRadioVolumeChange}
+          onToggleMute={handleToggleRadioMute}
+          onToggleFavorite={handleToggleRadioFavorite}
+          onOpenRadioView={() => handleSelectTab('catholic-radio')}
+          onClose={handleCloseRadioPlayer}
+        />
+      )}
 
       {/* Catholic Podcast Floating Bottom Player Bar */}
       {currentPlayingEpisode && (

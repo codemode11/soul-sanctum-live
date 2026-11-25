@@ -65,6 +65,16 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
     description:
       'Listen to trusted Catholic podcasts on Scripture, theology, apologetics, Church history, and daily spiritual growth on Soul Sanctum.',
   },
+  'catholic-radio': {
+    title: 'Global Catholic Radio – Vatican, EWTN & Live Streams | Soul Sanctum',
+    description:
+      'Listen live 24/7 to Vatican Radio, EWTN Global Catholic Radio, Relevant Radio, Radio Maria World Family, Gregorian chant, and Catholic stations worldwide on Soul Sanctum.',
+  },
+  'catholic-cinema': {
+    title: 'Catholic Cinema – Documentaries & Classic Movies | Soul Sanctum',
+    description:
+      'Watch curated Catholic documentaries, lives of the Saints, Vatican architecture films, and classic Catholic movies in Soul Sanctum’s custom theater player.',
+  },
   'fio-audio': {
     title: 'Fio.fm Catholic Music, Chant & Audiobooks | Soul Sanctum',
     description:

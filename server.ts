@@ -65,6 +65,15 @@ import {
   handleParishSearch,
   handleParishSuggest,
 } from './src/utils/parishSearchServer.js';
+import { handleCatholicRadioDirectory } from './src/utils/catholicRadioServer.js';
+import {
+  handleCatholicCinemaArchiveSearch,
+  handleCatholicCinemaResolve,
+} from './src/utils/catholicCinemaServer.js';
+
+app.get('/api/catholic-radio/directory', handleCatholicRadioDirectory);
+app.get('/api/catholic-cinema/archive', handleCatholicCinemaArchiveSearch);
+app.get('/api/catholic-cinema/resolve/:identifier', handleCatholicCinemaResolve);
 
 app.get('/api/catholic-ai/health', (_req, res) => {
   res.json({

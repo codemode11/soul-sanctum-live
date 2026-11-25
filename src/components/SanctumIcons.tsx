@@ -2339,6 +2339,68 @@ export const VirtualPilgrimageShellIcon: React.FC<IconProps> = ({ className = 'w
   </svg>
 );
 
+/**
+ * Global Catholic Radio Icon: Broadcast Signal Waves with Golden Cross Crest
+ */
+export const CatholicRadioNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Catholic Radio — Global Live Broadcast Waves & Cross"
+  >
+    {/* Outer & Inner Broadcast Waves */}
+    <path d="M4.9 16.8a9 9 0 0 1 0-11.6" opacity="0.7" />
+    <path d="M19.1 5.2a9 9 0 0 1 0 11.6" opacity="0.7" />
+    <path d="M7.6 14.3a5.3 5.3 0 0 1 0-6.6" />
+    <path d="M16.4 7.7a5.3 5.3 0 0 1 0 6.6" />
+    {/* Broadcast Mast Base */}
+    <path d="M12 14.8v6.2" strokeWidth="1.8" />
+    <path d="M8.8 21h6.4" strokeWidth="1.7" />
+    {/* Golden Sacred Cross Transmitter Crest */}
+    <path d="M12 5.6v7.4" stroke="#FDE047" strokeWidth="1.95" />
+    <path d="M9.3 8.4h5.4" stroke="#FDE047" strokeWidth="1.95" />
+  </svg>
+);
+
+/**
+ * Catholic Cinema Icon: Archival Film Frame with Golden Sacred Play Triangle
+ */
+export const CatholicCinemaNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+    aria-label="Catholic Cinema — Documentaries and Movies"
+  >
+    <rect x="2.5" y="4.5" width="19" height="15" rx="2.2" fill="currentColor" fillOpacity="0.1" />
+    <line x1="6.2" y1="4.5" x2="6.2" y2="19.5" strokeWidth="1.35" opacity="0.72" />
+    <line x1="17.8" y1="4.5" x2="17.8" y2="19.5" strokeWidth="1.35" opacity="0.72" />
+    <line x1="2.5" y1="8.3" x2="6.2" y2="8.3" strokeWidth="1.2" opacity="0.65" />
+    <line x1="2.5" y1="12" x2="6.2" y2="12" strokeWidth="1.2" opacity="0.65" />
+    <line x1="2.5" y1="15.7" x2="6.2" y2="15.7" strokeWidth="1.2" opacity="0.65" />
+    <line x1="17.8" y1="8.3" x2="21.5" y2="8.3" strokeWidth="1.2" opacity="0.65" />
+    <line x1="17.8" y1="12" x2="21.5" y2="12" strokeWidth="1.2" opacity="0.65" />
+    <line x1="17.8" y1="15.7" x2="21.5" y2="15.7" strokeWidth="1.2" opacity="0.65" />
+    <path
+      d="M10.4 9.2l5 2.8-5 2.8V9.2Z"
+      fill="#FDE047"
+      fillOpacity="0.28"
+      stroke="#FDE047"
+      strokeWidth="1.65"
+    />
+  </svg>
+);
+
+
 
 
 

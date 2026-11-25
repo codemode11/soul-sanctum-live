@@ -60,7 +60,9 @@ import {
   MagisteriumKeysIcon,
   CatholicProphecyScrollIcon,
   ParishFinderPinIcon,
-  VirtualPilgrimageShellIcon
+  VirtualPilgrimageShellIcon,
+  CatholicRadioNavIcon,
+  CatholicCinemaNavIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -75,6 +77,8 @@ export type ActiveTab =
   | 'quotations'
   | 'spiritual-books'
   | 'catholic-podcasts'
+  | 'catholic-radio'
+  | 'catholic-cinema'
   | 'fio-audio'
   | 'live-mass'
   | 'parish-finder'
@@ -388,6 +392,20 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: CatholicPodcastNavIcon, 
       tag: 'Audio', 
       subtext: 'Ascension, Word on Fire and Live Audio' 
+    },
+    {
+      id: 'catholic-radio',
+      label: 'Catholic Radio',
+      icon: CatholicRadioNavIcon,
+      tag: 'Live',
+      subtext: 'Vatican Radio, EWTN, Radio Maria & Global Live'
+    },
+    {
+      id: 'catholic-cinema',
+      label: 'Catholic Cinema',
+      icon: CatholicCinemaNavIcon,
+      tag: 'Films',
+      subtext: 'Catholic Documentaries, Saints Biographies & Classic Movies'
     },
     {
       id: 'fio-audio',

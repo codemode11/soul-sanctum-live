@@ -246,7 +246,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
       
       {/* Novena Tracker Banner */}
-      <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-2">
+      <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-3.5 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-1.5">
         {/* Right-Side Seven Original-Size Lit Vigil Candles with Rising Smoke on Dark Slate */}
         <div
           className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[54%] overflow-hidden z-0"
@@ -272,14 +272,14 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           aria-hidden="true"
         />
 
-        <div className="relative z-10 space-y-1.5 sm:max-w-[50%]">
-          <div className="flex items-start gap-2">
-            <NovenaHands9Icon className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
-            <span className="font-cinzel text-xs font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] leading-snug">
+        <div className="relative z-10 space-y-1 sm:max-w-[52%]">
+          <div className="flex items-center gap-2">
+            <NovenaHands9Icon className="w-4 h-4 text-amber-300 shrink-0" />
+            <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] leading-snug">
               Sacred Nine-Day Devotions • Updated Daily ({effectiveDateStr})
             </span>
           </div>
-          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">
+          <h2 className="font-cinzel text-xl sm:text-2xl font-bold text-white tracking-wide leading-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">
             Catholic Novena Tracker
           </h2>
           <p className="text-[11px] sm:text-xs text-amber-50/90 font-serif leading-snug drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
@@ -287,12 +287,13 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-3 pt-1 shrink-0 sm:max-w-[46%]">
+        <div className="relative z-10 flex items-center gap-3 shrink-0 sm:max-w-[52%]">
           <button
+            type="button"
             onClick={() => setCustomModalOpen(true)}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#7F1D1D]/90 hover:bg-[#991B1B] text-amber-50 font-cinzel font-bold text-xs border border-amber-300/60 shadow-xs transition-colors cursor-pointer"
+            className="h-8 inline-flex items-center gap-2 px-3.5 rounded-lg bg-[#7F1D1D]/90 hover:bg-[#991B1B] text-amber-50 font-cinzel font-bold text-xs border border-amber-300/60 shadow-xs transition-colors cursor-pointer whitespace-nowrap"
           >
-            <Plus className="w-4 h-4 text-amber-300" />
+            <Plus className="w-3.5 h-3.5 text-amber-300 shrink-0" />
             <span>Custom Novena</span>
           </button>
         </div>
