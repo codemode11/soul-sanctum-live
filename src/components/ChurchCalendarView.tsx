@@ -381,32 +381,32 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Square Lighter Slate-Blue Calendar (Same rounded-xl as Banner) */}
+          {/* Right Column: Inverted Square Light Calendar with Slate-Blue Ink (Same rounded-xl as Banner) */}
           <div className="relative z-10 shrink-0 self-center">
             <div
               key={cardAnimKey}
-              className="w-[172px] h-[172px] sm:w-[176px] sm:h-[176px] aspect-square rounded-xl bg-gradient-to-b from-[#7E97B4] via-[#6A85A5] to-[#567192] border border-[#B7CAE0]/65 ring-1 ring-white/15 shadow-[0_10px_26px_rgba(0,0,0,0.42)] flex flex-col overflow-hidden animate-fadeIn"
+              className="w-[172px] h-[172px] sm:w-[176px] sm:h-[176px] aspect-square rounded-xl bg-gradient-to-b from-[#FFFFFF] via-[#F7FAFD] to-[#E9F0F7] border border-[#CBD8E6] ring-1 ring-slate-900/10 shadow-[0_10px_26px_rgba(0,0,0,0.42)] flex flex-col overflow-hidden animate-fadeIn"
             >
               {/* Compact Top Month & Year Bar */}
-              <div className="px-2 py-1.5 bg-white/10 border-b border-white/20 flex items-center justify-between gap-1 shrink-0">
+              <div className="px-2 py-1.5 bg-[#567192]/12 border-b border-[#567192]/20 flex items-center justify-between gap-1 shrink-0">
                 <button
                   type="button"
                   onClick={() => handleStepDay(-1)}
-                  className="p-0.5 rounded text-[#E6EFF8] hover:text-white hover:bg-white/15 transition-colors cursor-pointer shrink-0"
+                  className="p-0.5 rounded text-[#3B5574] hover:text-[#1E293B] hover:bg-[#567192]/15 transition-colors cursor-pointer shrink-0"
                   title="Previous Day"
                   aria-label="Previous day"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
 
-                <span className="font-cinzel text-[9.5px] font-bold uppercase tracking-[0.12em] text-[#EEF4FB] truncate">
+                <span className="font-cinzel text-[9.5px] font-bold uppercase tracking-[0.12em] text-[#2F4866] truncate">
                   {featuredMonthLong} {featuredYear}
                 </span>
 
                 <button
                   type="button"
                   onClick={() => handleStepDay(1)}
-                  className="p-0.5 rounded text-[#E6EFF8] hover:text-white hover:bg-white/15 transition-colors cursor-pointer shrink-0"
+                  className="p-0.5 rounded text-[#3B5574] hover:text-[#1E293B] hover:bg-[#567192]/15 transition-colors cursor-pointer shrink-0"
                   title="Next Day"
                   aria-label="Next day"
                 >
@@ -416,15 +416,15 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
 
               {/* Centered Day (Above) → Date (Center) → Feast (Below) */}
               <div className="flex-1 px-2.5 py-2 flex flex-col items-center justify-center text-center min-h-0">
-                <span className="font-cinzel text-[10px] font-bold uppercase tracking-[0.18em] text-[#EAF1F9] leading-none">
+                <span className="font-cinzel text-[10px] font-bold uppercase tracking-[0.18em] text-[#4E6988] leading-none">
                   {featuredWeekday}
                 </span>
 
-                <span className="font-cinzel text-[40px] font-bold text-white leading-none my-1.5 tracking-tight drop-shadow-[0_2px_4px_rgba(15,23,42,0.28)]">
+                <span className="font-cinzel text-[40px] font-bold text-[#243B55] leading-none my-1.5 tracking-tight">
                   {featuredDayNum}
                 </span>
 
-                <p className="font-serif text-[11px] font-medium text-[#F5F8FC] leading-[1.2] line-clamp-2">
+                <p className="font-serif text-[11px] font-medium text-[#334155] leading-[1.2] line-clamp-2">
                   {featuredFeastTitle}
                 </p>
               </div>

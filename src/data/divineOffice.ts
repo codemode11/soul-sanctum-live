@@ -54,6 +54,8 @@ export interface DivineOfficeHourData {
   englishTitle: string;
   latinTitle?: string;
   liturgicalDay: string;
+  liturgicalPrimaryLine: string;
+  liturgicalSecondaryLine?: string;
   liturgicalSeason: string;
   formattedDate: string;
   timeHint: string;
@@ -786,13 +788,15 @@ export function getDivineOfficeHour(
   hourKey: OfficeHourKey = getIdealDivineOfficeHour(),
   options: DivineOfficeOptions = {}
 ): DivineOfficeHourData {
-  const effectiveDate = dateStr || '2026-11-13';
+  const now = new Date();
+  const defaultDateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  const effectiveDate = dateStr || defaultDateStr;
   const reading: MassReading = getMassReadingsForDate(effectiveDate);
 
   const dateParts = effectiveDate.split('-');
-  const yearNum = parseInt(dateParts[0], 10) || 2026;
-  const monthNum = parseInt(dateParts[1], 10) || 11;
-  const dayNum = parseInt(dateParts[2], 10) || 13;
+  const yearNum = parseInt(dateParts[0], 10) || now.getFullYear();
+  const monthNum = parseInt(dateParts[1], 10) || now.getMonth() + 1;
+  const dayNum = parseInt(dateParts[2], 10) || now.getDate();
   const parsedDate = new Date(yearNum, monthNum - 1, dayNum);
   const dayOfWeek = parsedDate.getDay(); // 0 = Sun, 6 = Sat
 
@@ -800,6 +804,32 @@ export function getDivineOfficeHour(
   const gospelCitation = reading.gospel.citation || 'Holy Gospel';
   const liturgicalDay = reading.liturgicalDay || 'Weekday in Ordinary Time';
   const liturgicalRank = reading.liturgicalRank || 'Weekday';
+  const { primaryLine: liturgicalPrimaryLine, secondaryLine: liturgicalSecondaryLine } = (() => {
+    const trimmed = liturgicalDay.trim();
+    if (trimmed.includes(' / ')) {
+      const [first, ...rest] = trimmed.split(' / ');
+      const secondary = rest.join(' / ').trim();
+      return {
+        primaryLine: first.trim(),
+        secondaryLine: secondary || undefined
+      };
+    }
+    const commMatch = trimmed.match(/^(.*?)\s*\((Commemoration:\s*[^)]+)\)$/i);
+    if (commMatch) {
+      return {
+        primaryLine: commMatch[1].trim(),
+        secondaryLine: commMatch[2].replace(/^Commemoration:\s*/i, 'Commemoration of ').trim()
+      };
+    }
+    const transMatch = trimmed.match(/^(.*?)\s*\((Transferred:\s*[^)]+)\)$/i);
+    if (transMatch) {
+      return {
+        primaryLine: transMatch[1].trim(),
+        secondaryLine: transMatch[2].trim()
+      };
+    }
+    return { primaryLine: trimmed, secondaryLine: undefined };
+  })();
   const seasonLower = reading.liturgicalSeason.toLowerCase();
   const liturgicalDayLower = liturgicalDay.toLowerCase();
   const isLent = seasonLower.includes('lent');
@@ -855,6 +885,8 @@ export function getDivineOfficeHour(
         hourKey: 'invitatory',
         englishTitle: 'Invitatory',
         liturgicalDay,
+        liturgicalPrimaryLine,
+        liturgicalSecondaryLine,
         liturgicalSeason: reading.liturgicalSeason,
         formattedDate,
         timeHint: liturgicalDay,
@@ -923,6 +955,8 @@ export function getDivineOfficeHour(
         hourKey: 'readings',
         englishTitle: 'Office of Readings',
         liturgicalDay,
+        liturgicalPrimaryLine,
+        liturgicalSecondaryLine,
         liturgicalSeason: reading.liturgicalSeason,
         formattedDate,
         timeHint: liturgicalDay,
@@ -1049,6 +1083,8 @@ export function getDivineOfficeHour(
         hourKey: 'lauds',
         englishTitle: 'Morning Prayer',
         liturgicalDay,
+        liturgicalPrimaryLine,
+        liturgicalSecondaryLine,
         liturgicalSeason: reading.liturgicalSeason,
         formattedDate,
         timeHint: liturgicalDay,
@@ -1224,6 +1260,8 @@ export function getDivineOfficeHour(
         hourKey,
         englishTitle: activeMeta.title,
         liturgicalDay,
+        liturgicalPrimaryLine,
+        liturgicalSecondaryLine,
         liturgicalSeason: reading.liturgicalSeason,
         formattedDate,
         timeHint: liturgicalDay,
@@ -1281,6 +1319,8 @@ export function getDivineOfficeHour(
         hourKey: 'vespers',
         englishTitle: 'Evening Prayer',
         liturgicalDay,
+        liturgicalPrimaryLine,
+        liturgicalSecondaryLine,
         liturgicalSeason: reading.liturgicalSeason,
         formattedDate,
         timeHint: liturgicalDay,
@@ -1404,6 +1444,8 @@ export function getDivineOfficeHour(
         hourKey: 'compline',
         englishTitle: 'Night Prayer',
         liturgicalDay,
+        liturgicalPrimaryLine,
+        liturgicalSecondaryLine,
         liturgicalSeason: reading.liturgicalSeason,
         formattedDate,
         timeHint: liturgicalDay,

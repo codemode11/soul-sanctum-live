@@ -17,7 +17,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { NotebookWithBallpenIcon } from './SanctumIcons';
-import spiritualChecklistBannerImg from '../assets/images/spiritual_checklist_book_facing_right_1795598743265.jpg';
+import spiritualChecklistBannerImg from '../assets/images/spiritual_checklist_fineliner_exact_parallel_1795611147383.jpg';
 
 export type ChecklistCategory =
   | 'daily-essential'
@@ -651,7 +651,7 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
         >
           <img
             src={spiritualChecklistBannerImg}
-            alt="Sleek matte-black modern analog alarm clock set to 6:00, coiled wooden rosary with crucifix, and bleached-sand clothbound prayer booklet resting on dark slate in morning light"
+            alt="Sleek matte-black modern analog alarm clock set to 6:00, coiled wooden rosary with crucifix, and bleached-sand clothbound prayer booklet with a black fineliner pen resting parallel to its spine and edge on dark slate in morning light"
             decoding="async"
             referrerPolicy="no-referrer"
             className="h-full w-full object-cover object-right brightness-[1.03] contrast-[1.03]"

@@ -14,7 +14,7 @@ import {
 import { CatholicTerm } from '../types';
 import { CATHOLIC_TERMS_DATABASE, getTermOfTheDay } from '../data/terms';
 import { SacredReader } from '../utils/speech';
-import catholicGlossaryBookshelfImg from '../assets/images/catholic_glossary_real_spines_final_1795585292872.jpg';
+import catholicGlossaryBookshelfImg from '../assets/images/catholic_glossary_single_angle_filled_1795611036551.jpg';
 
 export const CatholicTermView: React.FC = () => {
   const [selectedTerm, setSelectedTerm] = useState<CatholicTerm>(getTermOfTheDay);
@@ -64,22 +64,22 @@ Catechism: ${term.catechismRef || 'N/A'}`;
       
       {/* Standardized Catholic Glossary Top Banner */}
       <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-amber-50 shadow-md border border-[#8B5A2B]/40 flex flex-col justify-between">
-        {/* Right-Side Bookcase in 3/4 Perspective with Modern Catholic Dictionaries, Lexicons & Encyclopedias */}
+        {/* Right-Side Single-Angle Walnut Library Bookcase with Modern Catholic Dictionaries & Encyclopedias */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[400px] md:w-[425px] overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-video overflow-hidden"
           aria-hidden="true"
         >
           <img
             src={catholicGlossaryBookshelfImg}
-            alt="Dark walnut bookcase in three-quarter perspective holding modern Catholic dictionaries, theological lexicons, and Catholic encyclopedias on two shelves"
+            alt="Single continuous dark walnut library bookcase wall in straight three-quarter perspective holding modern Catholic dictionaries, theological lexicons, and encyclopedias"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-[100%_48%] brightness-[1.03] contrast-[1.04]"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 14%, black 28%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 16%, black 32%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 14%, black 28%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 16%, black 32%)',
             }}
           />
         </div>
@@ -112,7 +112,7 @@ Catechism: ${term.catechismRef || 'N/A'}`;
           </p>
         </div>
 
-        {/* Bottom Controls Row (left-aligned to keep the two diagonal shelves unobstructed) */}
+        {/* Bottom Controls Row (left-aligned to keep the right-side shelves unobstructed) */}
         <div className="relative z-10 flex flex-wrap items-center justify-start gap-2.5 mt-auto pt-1.5 sm:max-w-[60%]">
           <div className="inline-flex items-center gap-1.5 text-[11px] font-cinzel font-semibold text-amber-200 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
