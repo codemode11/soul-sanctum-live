@@ -731,6 +731,19 @@ export default function App() {
   const lastSettledScrollYRef = React.useRef<number>(0);
   const isProgrammaticSnapRef = React.useRef<boolean>(false);
   const programmaticSnapResetTimerRef = React.useRef<number | null>(null);
+  const snapGlideRafRef = React.useRef<number | null>(null);
+
+  const cancelGridGlide = React.useCallback(() => {
+    if (snapGlideRafRef.current !== null) {
+      window.cancelAnimationFrame(snapGlideRafRef.current);
+      snapGlideRafRef.current = null;
+    }
+    if (programmaticSnapResetTimerRef.current !== null) {
+      window.clearTimeout(programmaticSnapResetTimerRef.current);
+      programmaticSnapResetTimerRef.current = null;
+    }
+    isProgrammaticSnapRef.current = false;
+  }, []);
 
   // Shared top grid line matching Navigation's sticky offset (md:top-6 = 24px)
   const getGridSnapTargetY = React.useCallback((): number | null => {
@@ -743,28 +756,82 @@ export default function App() {
   }, []);
 
   const snapWindowToGrid = React.useCallback(
-    (behavior: ScrollBehavior = 'smooth') => {
+    (mode: 'glide' | 'tab' | 'auto' = 'glide') => {
       if (typeof window === 'undefined') return;
       const targetY = getGridSnapTargetY();
       if (targetY === null) return;
 
-      isProgrammaticSnapRef.current = true;
-      lastSettledScrollYRef.current = targetY;
-      window.scrollTo({ top: targetY, behavior });
+      cancelGridGlide();
 
-      if (programmaticSnapResetTimerRef.current !== null) {
-        window.clearTimeout(programmaticSnapResetTimerRef.current);
+      const startY = window.scrollY;
+      const deltaY = targetY - startY;
+
+      if (Math.abs(deltaY) < 1) {
+        lastSettledScrollYRef.current = targetY;
+        return;
       }
-      programmaticSnapResetTimerRef.current = window.setTimeout(() => {
-        isProgrammaticSnapRef.current = false;
-        lastSettledScrollYRef.current = window.scrollY;
-      }, 450);
+
+      const prefersReducedMotion =
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (mode === 'auto' || prefersReducedMotion) {
+        isProgrammaticSnapRef.current = true;
+        lastSettledScrollYRef.current = targetY;
+        window.scrollTo({ top: targetY, behavior: 'auto' });
+        programmaticSnapResetTimerRef.current = window.setTimeout(() => {
+          isProgrammaticSnapRef.current = false;
+          lastSettledScrollYRef.current = window.scrollY;
+          programmaticSnapResetTimerRef.current = null;
+        }, 60);
+        return;
+      }
+
+      // Gradual, parallax-grade C2-continuous glide (smootherstep):
+      // zero abrupt kick on start, unhurried drift, and feather-soft landing onto the exact margin.
+      const durationMs =
+        mode === 'tab'
+          ? Math.min(720, Math.max(420, 380 + Math.abs(deltaY) * 0.45))
+          : Math.min(1320, Math.max(780, 640 + Math.abs(deltaY) * 5.0));
+
+      const startTime = performance.now();
+      isProgrammaticSnapRef.current = true;
+
+      const step = (now: number) => {
+        if (!isProgrammaticSnapRef.current) {
+          snapGlideRafRef.current = null;
+          return;
+        }
+
+        const elapsed = now - startTime;
+        const t = Math.min(1, Math.max(0, elapsed / durationMs));
+        // C2-continuous Ken Perlin smootherstep: zero velocity & zero acceleration discontinuity at both ends
+        const eased = t * t * t * (t * (6 * t - 15) + 10);
+        const nextY = startY + deltaY * eased;
+
+        window.scrollTo({ top: nextY, behavior: 'auto' });
+
+        if (t < 1) {
+          snapGlideRafRef.current = window.requestAnimationFrame(step);
+        } else {
+          window.scrollTo({ top: targetY, behavior: 'auto' });
+          snapGlideRafRef.current = null;
+          lastSettledScrollYRef.current = targetY;
+          programmaticSnapResetTimerRef.current = window.setTimeout(() => {
+            isProgrammaticSnapRef.current = false;
+            lastSettledScrollYRef.current = window.scrollY;
+            programmaticSnapResetTimerRef.current = null;
+          }, 60);
+        }
+      };
+
+      snapGlideRafRef.current = window.requestAnimationFrame(step);
     },
-    [getGridSnapTargetY]
+    [cancelGridGlide, getGridSnapTargetY]
   );
 
-  // Direction-aware proximity snap-to-grid: aligns Index and Banner tops at the exact same 24px line
-  // when arriving at the section, while yielding freely whenever the user intentionally scrolls the Index or panel.
+  // Direction-aware proximity glide-to-grid: gradually drifts Index and Banner tops into alignment
+  // at the exact 24px margin with parallax-like motion, yielding immediately to any user scroll input.
   useEffect(() => {
     if (typeof window === 'undefined') return;
     lastSettledScrollYRef.current = window.scrollY;
@@ -773,8 +840,20 @@ export default function App() {
     let isPointerDown = false;
     let lastIndexInteractionTs = 0;
 
+    const interruptGlideOnUserInput = () => {
+      if (snapTimer !== null) {
+        window.clearTimeout(snapTimer);
+        snapTimer = null;
+      }
+      if (snapGlideRafRef.current !== null || isProgrammaticSnapRef.current) {
+        cancelGridGlide();
+        lastSettledScrollYRef.current = window.scrollY;
+      }
+    };
+
     const handlePointerDown = (e: PointerEvent) => {
       isPointerDown = true;
+      interruptGlideOnUserInput();
       const target = e.target as HTMLElement | null;
       if (target?.closest('aside')) {
         lastIndexInteractionTs = Date.now();
@@ -785,10 +864,29 @@ export default function App() {
       isPointerDown = false;
     };
 
+    const handleTouchStart = () => {
+      interruptGlideOnUserInput();
+    };
+
     const handleWheel = (e: WheelEvent) => {
+      interruptGlideOnUserInput();
       const target = e.target as HTMLElement | null;
       if (target?.closest('aside')) {
         lastIndexInteractionTs = Date.now();
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === 'ArrowDown' ||
+        e.key === 'ArrowUp' ||
+        e.key === 'PageDown' ||
+        e.key === 'PageUp' ||
+        e.key === 'Home' ||
+        e.key === 'End' ||
+        e.key === ' '
+      ) {
+        interruptGlideOnUserInput();
       }
     };
 
@@ -820,35 +918,40 @@ export default function App() {
           Math.abs(currentY - snapY) < Math.abs(startY - snapY) ||
           (startY - snapY) * (currentY - snapY) <= 0;
 
-        // Only snap when arriving near the Index/Banner top line (±112px); never yank back if moving away
+        // Gradually glide into the Index/Banner top margin when arriving near it (±140px); never yank back if moving away
         if (
           !startedAtGrid &&
           movedTowardOrAcrossGrid &&
           Math.abs(deltaFromGrid) > 1 &&
-          Math.abs(deltaFromGrid) <= 112
+          Math.abs(deltaFromGrid) <= 140
         ) {
-          snapWindowToGrid('smooth');
+          snapWindowToGrid('glide');
         } else {
           lastSettledScrollYRef.current = currentY;
         }
-      }, 150);
+      }, 130);
     };
 
     window.addEventListener('pointerdown', handlePointerDown, { passive: true });
     window.addEventListener('pointerup', handlePointerUp, { passive: true });
     window.addEventListener('pointercancel', handlePointerUp, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('keydown', handleKeyDown, { passive: true });
     window.addEventListener('scroll', handleWindowScroll, { passive: true });
 
     return () => {
       if (snapTimer !== null) window.clearTimeout(snapTimer);
+      cancelGridGlide();
       window.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointerup', handlePointerUp);
       window.removeEventListener('pointercancel', handlePointerUp);
+      window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('scroll', handleWindowScroll);
     };
-  }, [getGridSnapTargetY, snapWindowToGrid]);
+  }, [cancelGridGlide, getGridSnapTargetY, snapWindowToGrid]);
 
   const handleSelectTab = (tab: ActiveTab) => {
     setIsAdorationOpen(false);
@@ -864,7 +967,7 @@ export default function App() {
       }
 
       window.requestAnimationFrame(() => {
-        snapWindowToGrid('smooth');
+        snapWindowToGrid('tab');
       });
     }
   };
