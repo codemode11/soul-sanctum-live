@@ -2166,56 +2166,229 @@ export const CatholicBiblesBookIcon: React.FC<IconProps> = ({ className = 'w-5 h
 );
 
 /**
- * Fio.fm Catholic Audio Icon: Sacred musical note & audio waves
+ * Fio.fm Catholic Audio Icon: Slowly moving 5-bar sacred sound equalizer
  */
 export const FioAudioNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-label="Fio.fm Catholic Audio"
+    className={`${className} sanctum-fio-eq-icon overflow-visible`}
+    aria-label="Fio.fm Catholic Audio — Sound Equalizer"
   >
-    <path d="M9 17.5V6.5l10-2v11" />
-    <circle cx="6.5" cy="17.5" r="2.5" fill="currentColor" fillOpacity="0.16" />
-    <circle cx="16.5" cy="15.5" r="2.5" fill="currentColor" fillOpacity="0.16" />
-    <path d="M9 9.8l10-2" stroke="#FDE047" strokeWidth="1.4" />
+    <rect
+      x="3.4"
+      y="8.5"
+      width="2"
+      height="7"
+      rx="1"
+      fill="currentColor"
+      className="sanctum-fio-eq-bar sanctum-fio-eq-bar-1"
+    />
+    <rect
+      x="7.2"
+      y="6"
+      width="2"
+      height="12"
+      rx="1"
+      fill="currentColor"
+      className="sanctum-fio-eq-bar sanctum-fio-eq-bar-2"
+    />
+    <rect
+      x="11"
+      y="4.2"
+      width="2"
+      height="15.6"
+      rx="1"
+      fill="#FDE047"
+      className="sanctum-fio-eq-bar sanctum-fio-eq-bar-3"
+    />
+    <rect
+      x="14.8"
+      y="6"
+      width="2"
+      height="12"
+      rx="1"
+      fill="currentColor"
+      className="sanctum-fio-eq-bar sanctum-fio-eq-bar-4"
+    />
+    <rect
+      x="18.6"
+      y="8.5"
+      width="2"
+      height="7"
+      rx="1"
+      fill="currentColor"
+      className="sanctum-fio-eq-bar sanctum-fio-eq-bar-5"
+    />
+    {/* Horizontal line that the equalizer settles into after 3 seconds */}
+    <rect
+      x="3.4"
+      y="11"
+      width="17.2"
+      height="2"
+      rx="1"
+      fill="#FDE047"
+      className="sanctum-fio-eq-line"
+    />
   </svg>
 );
 
 /**
- * Magisterium AI Icon: Crossed Keys of St. Peter & Living Magisterium
+ * Magisterium AI Icon: Moving Obsidian-Style Knowledge Graph with Central IHS Christogram
+ * connected to every surrounding node.
  */
-export const MagisteriumKeysIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.7"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-label="Magisterium AI — Crossed Keys of the Magisterium"
-  >
-    {/* Key 1 (bottom-left bow to top-right ward) */}
-    <circle cx="6.5" cy="17.5" r="2.6" fill="currentColor" fillOpacity="0.14" />
-    <path d="M8.4 15.6L18.2 5.8" />
-    <path d="M15.4 5.8h2.8v2.8" />
-    <path d="M13.8 7.4l1.6 1.6" />
+interface ObsidianNodeSpec {
+  id: string;
+  cx: number;
+  cy: number;
+  r: number;
+  vx: string;
+  vy: string;
+  dur: string;
+  accent?: boolean;
+}
 
-    {/* Key 2 (bottom-right bow to top-left ward, golden highlight) */}
-    <circle cx="17.5" cy="17.5" r="2.6" stroke="#FDE047" fill="#FDE047" fillOpacity="0.12" />
-    <path d="M15.6 15.6L5.8 5.8" stroke="#FDE047" />
-    <path d="M8.6 5.8H5.8v2.8" stroke="#FDE047" />
-    <path d="M10.2 7.4L8.6 9.0" stroke="#FDE047" />
+const OBSIDIAN_GRAPH_NODES: ObsidianNodeSpec[] = [
+  { id: 'a', cx: 4.2, cy: 4.6, r: 1.45, vx: '4.2;5.1;3.5;4.2', vy: '4.6;3.8;5.5;4.6', dur: '5.4s', accent: true },
+  { id: 'g', cx: 12.0, cy: 2.1, r: 1.15, vx: '12.0;13.0;11.1;12.0', vy: '2.1;2.6;1.8;2.1', dur: '6.3s' },
+  { id: 'b', cx: 19.4, cy: 4.4, r: 1.55, vx: '19.4;20.2;18.6;19.4', vy: '4.4;5.4;3.8;4.4', dur: '5.8s', accent: true },
+  { id: 'c', cx: 21.4, cy: 12.2, r: 1.3, vx: '21.4;20.6;21.8;21.4', vy: '12.2;13.3;11.2;12.2', dur: '4.9s' },
+  { id: 'd', cx: 18.8, cy: 19.6, r: 1.55, vx: '18.8;17.8;19.6;18.8', vy: '19.6;20.3;18.8;19.6', dur: '6.6s', accent: true },
+  { id: 'e', cx: 5.2, cy: 19.6, r: 1.45, vx: '5.2;6.3;4.4;5.2', vy: '19.6;18.9;20.2;19.6', dur: '5.1s' },
+  { id: 'f', cx: 2.6, cy: 12.0, r: 1.3, vx: '2.6;3.3;2.1;2.6', vy: '12.0;10.9;13.1;12.0', dur: '6.0s' },
+];
 
-    {/* Center binding knot */}
-    <circle cx="12" cy="12" r="1.1" fill="#FDE047" stroke="none" />
-  </svg>
-);
+const OBSIDIAN_WEB_PAIRS: Array<[number, number]> = [
+  [0, 1],
+  [1, 2],
+  [2, 3],
+  [3, 4],
+  [4, 5],
+  [5, 6],
+  [6, 0],
+];
+
+const OBSIDIAN_SPLINES = '0.45 0.05 0.55 0.95;0.45 0.05 0.55 0.95;0.45 0.05 0.55 0.95';
+
+export const MagisteriumKeysIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => {
+  const animateGraph =
+    typeof window === 'undefined' ||
+    !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${className} sanctum-magisterium-graph overflow-visible`}
+      aria-label="Magisterium AI — Moving Obsidian Knowledge Graph centered on IHS"
+    >
+      {/* Outer Obsidian Graph Web Edges connecting surrounding nodes to one another */}
+      <g className="sanctum-magisterium-web-edges" opacity="0.45">
+        {OBSIDIAN_WEB_PAIRS.map(([i, j]) => {
+          const n1 = OBSIDIAN_GRAPH_NODES[i];
+          const n2 = OBSIDIAN_GRAPH_NODES[j];
+          return (
+            <line
+              key={`web-${n1.id}-${n2.id}`}
+              x1={n1.cx}
+              y1={n1.cy}
+              x2={n2.cx}
+              y2={n2.cy}
+              stroke="currentColor"
+              strokeWidth="0.65"
+            >
+              {animateGraph && (
+                <>
+                  <animate attributeName="x1" values={n1.vx} dur={n1.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+                  <animate attributeName="y1" values={n1.vy} dur={n1.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+                  <animate attributeName="x2" values={n2.vx} dur={n2.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+                  <animate attributeName="y2" values={n2.vy} dur={n2.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+                </>
+              )}
+            </line>
+          );
+        })}
+      </g>
+
+      {/* Primary Spokes: Central IHS connected directly to every node in the graph */}
+      <g className="sanctum-magisterium-spokes" opacity="0.82">
+        {OBSIDIAN_GRAPH_NODES.map(node => (
+          <line
+            key={`spoke-${node.id}`}
+            x1="12"
+            y1="12"
+            x2={node.cx}
+            y2={node.cy}
+            stroke={node.accent ? '#FDE047' : 'currentColor'}
+            strokeWidth={node.accent ? '0.85' : '0.75'}
+          >
+            {animateGraph && (
+              <>
+                <animate attributeName="x2" values={node.vx} dur={node.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+                <animate attributeName="y2" values={node.vy} dur={node.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+              </>
+            )}
+          </line>
+        ))}
+      </g>
+
+      {/* Floating Obsidian Knowledge Graph Nodes */}
+      <g className="sanctum-magisterium-nodes">
+        {OBSIDIAN_GRAPH_NODES.map(node => (
+          <circle
+            key={`node-${node.id}`}
+            cx={node.cx}
+            cy={node.cy}
+            r={node.r}
+            fill={node.accent ? '#FDE047' : 'currentColor'}
+            stroke="#1C120C"
+            strokeWidth="0.45"
+          >
+            {animateGraph && (
+              <>
+                <animate attributeName="cx" values={node.vx} dur={node.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+                <animate attributeName="cy" values={node.vy} dur={node.dur} repeatCount="indefinite" calcMode="spline" keySplines={OBSIDIAN_SPLINES} />
+              </>
+            )}
+          </circle>
+        ))}
+      </g>
+
+      {/* Central IHS Hub Medallion (Christ at the center of all Church knowledge) */}
+      <g className="sanctum-magisterium-ihs-hub">
+        <circle
+          cx="12"
+          cy="12"
+          r="5.35"
+          fill="#1C120C"
+          stroke="#FDE047"
+          strokeWidth="1.05"
+        />
+        {/* Crisp Vector IHS Christogram with Cross rising from H */}
+        {/* Letter I */}
+        <path d="M8.75 10.85v3.15M8.25 10.85h1.0M8.25 14.0h1.0" stroke="#FDE047" strokeWidth="0.9" />
+        {/* Letter H + Central Sacred Cross above the H crossbar */}
+        <path
+          d="M10.85 10.85v3.15M13.15 10.85v3.15M10.85 12.4h2.3M12.0 12.4V8.55M11.1 9.55h1.8"
+          stroke="#FDE047"
+          strokeWidth="0.9"
+        />
+        {/* Letter S */}
+        <path
+          d="M15.8 11.25c-.18-.3-.55-.42-.92-.42-.42 0-.74.22-.74.58 0 .42.36.58.85.72.48.14.86.34.86.82 0 .46-.4.88-.96.88-.44 0-.8-.16-.96-.46"
+          stroke="#FDE047"
+          strokeWidth="0.9"
+        />
+      </g>
+    </svg>
+  );
+};
+
+export const MagisteriumGraphIcon = MagisteriumKeysIcon;
 
 /**
  * Papal Miter Icon: Traditional Roman Pontiff's liturgical miter with front cross,
@@ -2250,153 +2423,614 @@ export const PapalMiterIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) =
 );
 
 /**
- * Catholic Prophecy Icon: Unsealed Sacred Prophetic Scroll with Radiant Star & Cross Crest
+ * Catholic Prophecy Icon: The New Jerusalem descending out of heaven (Revelation 21:2)
+ * — ornate tiered Holy City with central golden dome & cross, twin spires, battlements,
+ * three arched pearly gates, and radiant heavenly light descending toward earth on hover.
  */
-export const CatholicProphecyScrollIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.7"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-label="Catholic Prophecy — Sacred Prophetic Scroll"
-  >
-    {/* Radiant prophetic star / flame crest above the scroll */}
-    <path d="M12 1.8v3.0" stroke="#FDE047" strokeWidth="1.5" />
-    <path d="M10.5 3.3h3.0" stroke="#FDE047" strokeWidth="1.5" />
-    {/* Top scroll roller */}
-    <rect x="4.5" y="6.2" width="15" height="2.4" rx="1.1" fill="currentColor" fillOpacity="0.16" />
-    {/* Parchment body */}
-    <path d="M6.2 8.6v8.8h11.6V8.6" fill="currentColor" fillOpacity="0.08" />
-    {/* Sacred inscription lines inside scroll */}
-    <path d="M9 11.4h6" strokeWidth="1.35" opacity="0.85" />
-    <path d="M9 14.2h4.4" strokeWidth="1.35" opacity="0.7" />
-    {/* Wax seal emblem on lower right corner of scroll */}
-    <circle cx="15.8" cy="14.6" r="1.45" stroke="#FDE047" fill="#FDE047" fillOpacity="0.22" strokeWidth="1.3" />
-    {/* Bottom scroll roller */}
-    <rect x="4.5" y="17.4" width="15" height="2.4" rx="1.1" fill="currentColor" fillOpacity="0.16" />
-  </svg>
-);
+export const CatholicProphecyScrollIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => {
+  const rawId = React.useId();
+  const glowId = `sanctum-new-jerusalem-glow-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${className} sanctum-new-jerusalem-icon overflow-visible`}
+      aria-label="Catholic Prophecy — The New Jerusalem Descending"
+    >
+      <defs>
+        <radialGradient id={glowId} cx="50%" cy="46%" r="50%">
+          <stop offset="0%" stopColor="#FDE047" stopOpacity="0.45" />
+          <stop offset="55%" stopColor="#FDE047" stopOpacity="0.16" />
+          <stop offset="100%" stopColor="#FDE047" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* Five Heavenly Light Rays Fanning Down from Above */}
+      <g className="sanctum-new-jerusalem-rays" stroke="#FDE047" strokeWidth="0.95">
+        <line x1="12" y1="0.8" x2="12" y2="3.1" />
+        <line x1="8.2" y1="1.3" x2="9.3" y2="3.7" />
+        <line x1="15.8" y1="1.3" x2="14.7" y2="3.7" />
+        <line x1="4.9" y1="2.6" x2="6.4" y2="4.7" opacity="0.7" />
+        <line x1="19.1" y1="2.6" x2="17.6" y2="4.7" opacity="0.7" />
+      </g>
+
+      {/* Descending Holy City: The New Jerusalem */}
+      <g className="sanctum-new-jerusalem-city">
+        {/* Radiant Divine Glory Mandorla Behind the Holy City (Rev 21:23) */}
+        <circle
+          cx="12"
+          cy="11.6"
+          r="7.6"
+          fill={`url(#${glowId})`}
+          stroke="none"
+          className="sanctum-new-jerusalem-aura"
+        />
+
+        {/* Luminous Golden Cross Crowning the Central Dome */}
+        <g className="sanctum-new-jerusalem-cross" stroke="#FDE047" strokeWidth="1.4">
+          <line x1="12" y1="3.8" x2="12" y2="6.9" />
+          <line x1="10.7" y1="5.0" x2="13.3" y2="5.0" />
+        </g>
+
+        {/* Central Temple Dome & Golden Drum */}
+        <path
+          d="M8.8 11.4 C8.8 8.3 10.2 6.9 12 6.9 C13.8 6.9 15.2 8.3 15.2 11.4 Z"
+          fill="#FDE047"
+          fillOpacity="0.18"
+          stroke="#FDE047"
+          strokeWidth="1.2"
+          className="sanctum-new-jerusalem-dome"
+        />
+        {/* Subtle Sacred Dome Ribs */}
+        <path
+          d="M12 6.9 V11.4 M10.3 7.5 Q10.6 9.4 10.5 11.4 M13.7 7.5 Q13.4 9.4 13.5 11.4"
+          stroke="#FDE047"
+          strokeWidth="0.75"
+          opacity="0.58"
+        />
+
+        {/* Twin Flanking Towers with Pointed Spires */}
+        <path
+          d="M5.1 13.6 V10.5 L6.35 8.5 L7.6 10.5 V13.6"
+          fill="currentColor"
+          fillOpacity="0.14"
+          strokeWidth="1.15"
+        />
+        <path
+          d="M16.4 13.6 V10.5 L17.65 8.5 L18.9 10.5 V13.6"
+          fill="currentColor"
+          fillOpacity="0.14"
+          strokeWidth="1.15"
+        />
+        {/* Tiny Glowing Spire Finials & Lancet Windows */}
+        <circle cx="6.35" cy="8.1" r="0.45" fill="#FDE047" stroke="none" />
+        <circle cx="17.65" cy="8.1" r="0.45" fill="#FDE047" stroke="none" />
+        <line x1="6.35" y1="11.2" x2="6.35" y2="12.4" stroke="#FDE047" strokeWidth="0.85" opacity="0.85" />
+        <line x1="17.65" y1="11.2" x2="17.65" y2="12.4" stroke="#FDE047" strokeWidth="0.85" opacity="0.85" />
+
+        {/* Inner Clerestory Gallery Joining Towers & Central Dome */}
+        <path
+          d="M7.6 13.6 V11.4 H16.4 V13.6"
+          fill="currentColor"
+          fillOpacity="0.12"
+          strokeWidth="1.1"
+        />
+
+        {/* Great High Rampart Wall with Battlements (Rev 21:12) */}
+        <path
+          d="M4.2 17.8 V13.5 H5.5 V14.2 H7.1 V13.5 H8.7 V14.2 H10.2 V13.5 H13.8 V14.2 H15.3 V13.5 H16.9 V14.2 H18.5 V13.5 H19.8 V17.8 Z"
+          fill="currentColor"
+          fillOpacity="0.18"
+          strokeWidth="1.2"
+          className="sanctum-new-jerusalem-walls"
+        />
+
+        {/* Jewel Foundation Trim Line (Rev 21:19) */}
+        <line
+          x1="4.4"
+          y1="17.8"
+          x2="19.6"
+          y2="17.8"
+          stroke="#FDE047"
+          strokeWidth="1.15"
+          opacity="0.8"
+        />
+
+        {/* Three Arched Pearly Gates (Rev 21:13) */}
+        <path
+          d="M10.75 17.8 V15.35 A1.25 1.25 0 0 1 13.25 15.35 V17.8"
+          stroke="#FDE047"
+          strokeWidth="1.2"
+          fill="#FDE047"
+          fillOpacity="0.28"
+          className="sanctum-new-jerusalem-gate"
+        />
+        <path
+          d="M6.35 17.8 V15.95 A0.65 0.65 0 0 1 7.65 15.95 V17.8"
+          stroke="#FDE047"
+          strokeWidth="0.95"
+          fill="#FDE047"
+          fillOpacity="0.18"
+          opacity="0.85"
+        />
+        <path
+          d="M16.35 17.8 V15.95 A0.65 0.65 0 0 1 17.65 15.95 V17.8"
+          stroke="#FDE047"
+          strokeWidth="0.95"
+          fill="#FDE047"
+          fillOpacity="0.18"
+          opacity="0.85"
+        />
+
+        {/* Celestial Cloud Wisps & Golden Glory Cradling the Descending City */}
+        <ellipse
+          cx="12"
+          cy="18.35"
+          rx="6.6"
+          ry="1.05"
+          fill="#FDE047"
+          fillOpacity="0.22"
+          stroke="none"
+          className="sanctum-new-jerusalem-glory"
+        />
+        <path
+          d="M3.1 18.2 Q4.6 17.1 6.4 18.1 M17.6 18.1 Q19.4 17.1 20.9 18.2"
+          stroke="currentColor"
+          strokeWidth="0.95"
+          opacity="0.55"
+        />
+      </g>
+
+      {/* Waiting Earth Horizon Arc Below */}
+      <path
+        d="M2.0 21.8 Q12 19.1 22.0 21.8"
+        strokeWidth="1.35"
+        opacity="0.62"
+        className="sanctum-new-jerusalem-horizon"
+      />
+    </svg>
+  );
+};
 
 /**
- * Church Finder Icon: Map Pin with Sacred Cross Crest
+ * Church Finder Icon: Map pin drops onto the golden location spot,
+ * and the gold rises upward inside the pin to form a luminous cross.
  */
-export const ParishFinderPinIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-label="Church Finder — Sacred Parish Map Pin"
-  >
-    {/* Teardrop Map Pin */}
-    <path
-      d="M12 21.5c-4.5-4.3-7.5-7.7-7.5-11.3a7.5 7.5 0 1 1 15 0c0 3.6-3 7-7.5 11.3Z"
-      fill="currentColor"
-      fillOpacity="0.13"
-    />
-    {/* Sacred Cross inside the pin */}
-    <path d="M12 6.2v7.2" stroke="#FDE047" strokeWidth="1.9" />
-    <path d="M9.3 8.9h5.4" stroke="#FDE047" strokeWidth="1.9" />
-  </svg>
-);
+export const ParishFinderPinIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => {
+  const rawId = React.useId();
+  const clipId = `sanctum-parish-pin-clip-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${className} sanctum-parish-finder-icon overflow-visible`}
+      aria-label="Church Finder — Map Pin Dropping onto Golden Location Forming a Cross"
+    >
+      <defs>
+        <clipPath id={clipId}>
+          <path d="M12 20.1c-3.9-3.7-6.5-6.8-6.5-10.1a6.5 6.5 0 1 1 13 0c0 3.3-2.6 6.4-6.5 10.1Z" />
+        </clipPath>
+      </defs>
+
+      {/* Map Ground Location Ring */}
+      <ellipse
+        cx="12"
+        cy="20.4"
+        rx="5.4"
+        ry="1.6"
+        strokeWidth="1.05"
+        opacity="0.45"
+      />
+
+      {/* Outward Golden Touchdown Ripple */}
+      <ellipse
+        cx="12"
+        cy="20.4"
+        rx="5.4"
+        ry="1.6"
+        stroke="#FDE047"
+        strokeWidth="1.2"
+        className="sanctum-parish-gold-ripple"
+      />
+
+      {/* Glowing Gold of the Location Spot (drawn upward into the pin) */}
+      <ellipse
+        cx="12"
+        cy="20.4"
+        rx="2.35"
+        ry="0.95"
+        fill="#FDE047"
+        stroke="none"
+        className="sanctum-parish-gold-spot"
+      />
+
+      {/* Dropping Teardrop Map Pin */}
+      <g className="sanctum-parish-pin-drop">
+        <path
+          d="M12 20.1c-3.9-3.7-6.5-6.8-6.5-10.1a6.5 6.5 0 1 1 13 0c0 3.3-2.6 6.4-6.5 10.1Z"
+          fill="currentColor"
+          fillOpacity="0.12"
+          strokeWidth="1.65"
+        />
+
+        {/* Gold Rising from the Location Tip to Form the Cross Inside the Pin */}
+        <g clipPath={`url(#${clipId})`}>
+          <circle
+            cx="12"
+            cy="9.2"
+            r="3.2"
+            fill="#FDE047"
+            fillOpacity="0.22"
+            stroke="none"
+            className="sanctum-parish-cross-halo"
+          />
+          <line
+            x1="12"
+            y1="6.4"
+            x2="12"
+            y2="13.4"
+            stroke="#FDE047"
+            strokeWidth="1.9"
+            className="sanctum-parish-gold-stem"
+          />
+          <line
+            x1="9.2"
+            y1="9.1"
+            x2="14.8"
+            y2="9.1"
+            stroke="#FDE047"
+            strokeWidth="1.9"
+            className="sanctum-parish-gold-crossbar"
+          />
+        </g>
+      </g>
+    </svg>
+  );
+};
 
 /**
- * Virtual Pilgrimages Icon: Traditional Catholic Pilgrim Scallop Shell with Sacred Cross Crest
+ * Virtual Pilgrimages Icon: Tri-fold map where a golden line threads its way across,
+ * making short pauses at pilgrimage waypoints before proceeding to the destination.
  */
 export const VirtualPilgrimageShellIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.7"
+    strokeWidth="1.55"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
-    aria-label="Virtual Pilgrimages — Pilgrim Scallop Shell & Cross"
+    className={`${className} sanctum-pilgrimage-map-icon overflow-visible`}
+    aria-label="Virtual Pilgrimages — Golden Pilgrimage Route Across Map"
   >
-    {/* Scallop shell fan dome */}
+    {/* Tri-Fold Map Outer Silhouette */}
     <path
-      d="M12 18.8C6.2 18.8 3 15.2 3 10.6C3 6.2 7 3 12 3s9 3.2 9 7.6c0 4.6-3.2 8.2-9 8.2Z"
+      d="M2.4 5.6 L8.8 3.6 L15.2 5.6 L21.6 3.6 V18.4 L15.2 20.4 L8.8 18.4 L2.4 20.4 Z"
       fill="currentColor"
-      fillOpacity="0.12"
+      fillOpacity="0.1"
+      strokeWidth="1.5"
     />
-    {/* Radiating pilgrim shell grooves converging at hinge */}
-    <path d="M12 18.8L6.2 6.6" strokeWidth="1.25" opacity="0.78" />
-    <path d="M12 18.8L17.8 6.6" strokeWidth="1.25" opacity="0.78" />
-    <path d="M12 18.8L4.2 11.4" strokeWidth="1.2" opacity="0.65" />
-    <path d="M12 18.8L19.8 11.4" strokeWidth="1.2" opacity="0.65" />
-    {/* Shell hinge base */}
-    <path d="M8.6 18.8l1.2 2.2h4.4l1.2-2.2" strokeWidth="1.6" />
-    {/* Golden Sacred Cross at the center of the pilgrim shell */}
-    <path d="M12 6.2v7.8" stroke="#FDE047" strokeWidth="1.9" />
-    <path d="M9.4 9.0h5.2" stroke="#FDE047" strokeWidth="1.9" />
+
+    {/* Subtle Center Panel Fold Shade */}
+    <path
+      d="M8.8 3.6 L15.2 5.6 V20.4 L8.8 18.4 Z"
+      fill="currentColor"
+      fillOpacity="0.06"
+      stroke="none"
+    />
+
+    {/* Tri-Fold Vertical Map Creases */}
+    <line x1="8.8" y1="3.6" x2="8.8" y2="18.4" strokeWidth="1.05" opacity="0.48" />
+    <line x1="15.2" y1="5.6" x2="15.2" y2="20.4" strokeWidth="1.05" opacity="0.48" />
+
+    {/* Subtle Dashed Guide Trail Visible at Rest */}
+    <path
+      d="M5.0 16.4 Q6.2 11.4 9.6 9.6 Q12.2 10.0 14.4 15.2 Q17.6 14.4 19.0 7.8"
+      strokeWidth="0.95"
+      strokeDasharray="1.4 1.7"
+      opacity="0.34"
+    />
+
+    {/* Muted Resting Waypoint Markers */}
+    <circle cx="9.6" cy="9.6" r="0.8" fill="currentColor" stroke="none" opacity="0.38" />
+    <circle cx="14.4" cy="15.2" r="0.8" fill="currentColor" stroke="none" opacity="0.38" />
+    <circle cx="19.0" cy="7.8" r="0.85" fill="currentColor" stroke="none" opacity="0.42" />
+
+    {/* Threading Golden Route — Segment 1 (Start to Stop 1) */}
+    <path
+      d="M5.0 16.4 Q6.2 11.4 9.6 9.6"
+      pathLength={100}
+      stroke="#FDE047"
+      strokeWidth="1.75"
+      className="sanctum-pilgrimage-seg sanctum-pilgrimage-seg-1"
+    />
+
+    {/* Threading Golden Route — Segment 2 (Stop 1 to Stop 2) */}
+    <path
+      d="M9.6 9.6 Q12.2 10.0 14.4 15.2"
+      pathLength={100}
+      stroke="#FDE047"
+      strokeWidth="1.75"
+      className="sanctum-pilgrimage-seg sanctum-pilgrimage-seg-2"
+    />
+
+    {/* Threading Golden Route — Segment 3 (Stop 2 to Final Shrine) */}
+    <path
+      d="M14.4 15.2 Q17.6 14.4 19.0 7.8"
+      pathLength={100}
+      stroke="#FDE047"
+      strokeWidth="1.75"
+      className="sanctum-pilgrimage-seg sanctum-pilgrimage-seg-3"
+    />
+
+    {/* Origin Dot (Glowing Gold at Start) */}
+    <circle
+      cx="5.0"
+      cy="16.4"
+      r="1.15"
+      fill="#FDE047"
+      stroke="none"
+      className="sanctum-pilgrimage-start"
+    />
+
+    {/* Short Stop 1 Pulse & Waypoint */}
+    <circle
+      cx="9.6"
+      cy="9.6"
+      r="2.2"
+      stroke="#FDE047"
+      strokeWidth="0.95"
+      className="sanctum-pilgrimage-pulse sanctum-pilgrimage-pulse-1"
+    />
+    <circle
+      cx="9.6"
+      cy="9.6"
+      r="1.2"
+      fill="#FDE047"
+      stroke="none"
+      className="sanctum-pilgrimage-stop sanctum-pilgrimage-stop-1"
+    />
+
+    {/* Short Stop 2 Pulse & Waypoint */}
+    <circle
+      cx="14.4"
+      cy="15.2"
+      r="2.2"
+      stroke="#FDE047"
+      strokeWidth="0.95"
+      className="sanctum-pilgrimage-pulse sanctum-pilgrimage-pulse-2"
+    />
+    <circle
+      cx="14.4"
+      cy="15.2"
+      r="1.2"
+      fill="#FDE047"
+      stroke="none"
+      className="sanctum-pilgrimage-stop sanctum-pilgrimage-stop-2"
+    />
+
+    {/* Destination Shrine Arrival Pulse & Beacon */}
+    <circle
+      cx="19.0"
+      cy="7.8"
+      r="2.5"
+      stroke="#FDE047"
+      strokeWidth="1"
+      className="sanctum-pilgrimage-pulse sanctum-pilgrimage-pulse-3"
+    />
+    <circle
+      cx="19.0"
+      cy="7.8"
+      r="1.35"
+      fill="#FDE047"
+      stroke="none"
+      className="sanctum-pilgrimage-stop sanctum-pilgrimage-stop-3"
+    />
   </svg>
 );
 
 /**
- * Global Catholic Radio Icon: Broadcast Signal Waves with Golden Cross Crest
+ * Global Catholic Radio Icon: Modern radio whose telescopic antenna slowly rises upwards,
+ * then bends small articulated arms horizontally to form a luminous golden cross.
  */
-export const CatholicRadioNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-label="Catholic Radio — Global Live Broadcast Waves & Cross"
-  >
-    {/* Outer & Inner Broadcast Waves */}
-    <path d="M4.9 16.8a9 9 0 0 1 0-11.6" opacity="0.7" />
-    <path d="M19.1 5.2a9 9 0 0 1 0 11.6" opacity="0.7" />
-    <path d="M7.6 14.3a5.3 5.3 0 0 1 0-6.6" />
-    <path d="M16.4 7.7a5.3 5.3 0 0 1 0 6.6" />
-    {/* Broadcast Mast Base */}
-    <path d="M12 14.8v6.2" strokeWidth="1.8" />
-    <path d="M8.8 21h6.4" strokeWidth="1.7" />
-    {/* Golden Sacred Cross Transmitter Crest */}
-    <path d="M12 5.6v7.4" stroke="#FDE047" strokeWidth="1.95" />
-    <path d="M9.3 8.4h5.4" stroke="#FDE047" strokeWidth="1.95" />
-  </svg>
-);
+export const CatholicRadioNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => {
+  const rawId = React.useId();
+  const clipId = `sanctum-radio-antenna-clip-${rawId.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={`${className} sanctum-catholic-radio-icon overflow-visible`}
+      aria-label="Catholic Radio — Radio with rising antenna forming a cross"
+    >
+      <defs>
+        {/* Clips the telescopic antenna neatly at the top edge of the radio body (y = 11.5) */}
+        <clipPath id={clipId}>
+          <rect x="0" y="0" width="24" height="11.6" />
+        </clipPath>
+      </defs>
+
+      {/* Rising Telescopic Antenna & Articulated Bending Crossbar */}
+      <g clipPath={`url(#${clipId})`}>
+        <g className="sanctum-radio-antenna-rise">
+          {/* Main vertical telescopic antenna mast */}
+          <line
+            x1="12"
+            y1="2.1"
+            x2="12"
+            y2="11.6"
+            strokeWidth="1.65"
+            className="sanctum-radio-antenna-mast"
+          />
+
+          {/* Small upper antenna segment bending left (-90deg) to form left cross arm */}
+          <line
+            x1="12"
+            y1="5.2"
+            x2="12"
+            y2="2.1"
+            strokeWidth="1.6"
+            className="sanctum-radio-antenna-arm-left"
+          />
+
+          {/* Small upper antenna segment bending right (+90deg) to form right cross arm */}
+          <line
+            x1="12"
+            y1="5.2"
+            x2="12"
+            y2="2.1"
+            strokeWidth="1.6"
+            className="sanctum-radio-antenna-arm-right"
+          />
+
+          {/* Tiny antenna tip finial */}
+          <circle
+            cx="12"
+            cy="2.1"
+            r="0.7"
+            fill="currentColor"
+            stroke="none"
+            className="sanctum-radio-antenna-tip"
+          />
+        </g>
+      </g>
+
+      {/* Antenna mount collar on top of radio */}
+      <path d="M10.8 11.5h2.4" strokeWidth="1.8" />
+
+      {/* Modern Tabletop Radio Body */}
+      <rect
+        x="3"
+        y="11.5"
+        width="18"
+        height="10"
+        rx="2.2"
+        fill="currentColor"
+        fillOpacity="0.1"
+        strokeWidth="1.7"
+      />
+
+      {/* Left Acoustic Speaker Grille Lines */}
+      <line x1="5.8" y1="14.5" x2="10.4" y2="14.5" strokeWidth="1.35" opacity="0.82" />
+      <line x1="5.8" y1="16.5" x2="10.4" y2="16.5" strokeWidth="1.35" opacity="0.82" />
+      <line x1="5.8" y1="18.5" x2="10.4" y2="18.5" strokeWidth="1.35" opacity="0.82" />
+
+      {/* Right Digital Display Screen */}
+      <rect
+        x="12.9"
+        y="13.7"
+        width="5.4"
+        height="2.3"
+        rx="0.55"
+        strokeWidth="1.25"
+        fill="currentColor"
+        fillOpacity="0.12"
+      />
+
+      {/* Rotary Tuning Dial */}
+      <circle cx="15.6" cy="18.6" r="1.3" strokeWidth="1.35" />
+    </svg>
+  );
+};
 
 /**
- * Catholic Cinema Icon: Archival Film Frame with Golden Sacred Play Triangle
+ * Catholic Cinema Icon: Classic Cinema Countdown Leader (3, 2, 1)
+ * where the final "1" illuminates in the form of a luminous golden Cross.
  */
 export const CatholicCinemaNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
-    strokeWidth="1.75"
+    strokeWidth="1.65"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className={className}
-    aria-label="Catholic Cinema — Documentaries and Movies"
+    className={`${className} sanctum-catholic-cinema-icon overflow-visible`}
+    aria-label="Catholic Cinema — 3, 2, 1 Countdown with Cross"
   >
-    <rect x="2.5" y="4.5" width="19" height="15" rx="2.2" fill="currentColor" fillOpacity="0.1" />
-    <line x1="6.2" y1="4.5" x2="6.2" y2="19.5" strokeWidth="1.35" opacity="0.72" />
-    <line x1="17.8" y1="4.5" x2="17.8" y2="19.5" strokeWidth="1.35" opacity="0.72" />
-    <line x1="2.5" y1="8.3" x2="6.2" y2="8.3" strokeWidth="1.2" opacity="0.65" />
-    <line x1="2.5" y1="12" x2="6.2" y2="12" strokeWidth="1.2" opacity="0.65" />
-    <line x1="2.5" y1="15.7" x2="6.2" y2="15.7" strokeWidth="1.2" opacity="0.65" />
-    <line x1="17.8" y1="8.3" x2="21.5" y2="8.3" strokeWidth="1.2" opacity="0.65" />
-    <line x1="17.8" y1="12" x2="21.5" y2="12" strokeWidth="1.2" opacity="0.65" />
-    <line x1="17.8" y1="15.7" x2="21.5" y2="15.7" strokeWidth="1.2" opacity="0.65" />
-    <path
-      d="M10.4 9.2l5 2.8-5 2.8V9.2Z"
-      fill="#FDE047"
-      fillOpacity="0.28"
-      stroke="#FDE047"
-      strokeWidth="1.65"
+    {/* Outer Film Leader Frame Circle */}
+    <circle
+      cx="12"
+      cy="12"
+      r="9.7"
+      fill="currentColor"
+      fillOpacity="0.08"
+      strokeWidth="1.55"
     />
+
+    {/* Inner Countdown Target Ring */}
+    <circle
+      cx="12"
+      cy="12"
+      r="7.1"
+      strokeWidth="0.9"
+      opacity="0.45"
+      className="sanctum-cinema-inner-ring"
+    />
+
+    {/* Classic Film-Leader Crosshair Ticks (12, 3, 6, 9 o'clock) */}
+    <g strokeWidth="1" opacity="0.48">
+      <line x1="12" y1="2.3" x2="12" y2="4.7" />
+      <line x1="12" y1="19.3" x2="12" y2="21.7" />
+      <line x1="2.3" y1="12" x2="4.7" y2="12" />
+      <line x1="19.3" y1="12" x2="21.7" y2="12" />
+    </g>
+
+    {/* Rotating Cinema Countdown Sweep Arm */}
+    <g className="sanctum-cinema-sweep">
+      <path
+        d="M12 12 L12 2.6 A9.4 9.4 0 0 0 6.2 4.6 Z"
+        fill="currentColor"
+        fillOpacity="0.16"
+        stroke="none"
+      />
+      <line x1="12" y1="12" x2="12" y2="2.6" strokeWidth="1.15" />
+    </g>
+
+    {/* Countdown Digit: 3 (visible at rest and during Beat 1) */}
+    <g className="sanctum-cinema-digit-3">
+      <path
+        d="M9.6 8.6 C10.4 7.7 14.0 7.6 14.4 9.6 C14.7 11.0 13.3 11.9 11.4 12.0 C13.6 12.1 14.9 13.1 14.5 14.7 C14.0 16.4 10.4 16.4 9.5 15.5"
+        strokeWidth="1.9"
+      />
+    </g>
+
+    {/* Countdown Digit: 2 (visible during Beat 2) */}
+    <g className="sanctum-cinema-digit-2">
+      <path
+        d="M9.7 9.7 C9.8 7.45 14.3 7.45 14.4 9.8 C14.5 11.3 12.5 12.7 9.5 16.0 L14.7 16.0"
+        strokeWidth="1.9"
+      />
+    </g>
+
+    {/* Countdown Finale: "1" in the form of a Golden Cross (same height as 3 and 2) */}
+    <g className="sanctum-cinema-cross-1">
+      <circle
+        cx="12"
+        cy="10.6"
+        r="2.9"
+        fill="#FDE047"
+        fillOpacity="0.2"
+        stroke="none"
+      />
+      <line x1="12" y1="8.0" x2="12" y2="16.0" stroke="#FDE047" strokeWidth="1.9" />
+      <line x1="9.2" y1="10.6" x2="14.8" y2="10.6" stroke="#FDE047" strokeWidth="1.9" />
+    </g>
   </svg>
 );
 

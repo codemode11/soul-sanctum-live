@@ -1644,4 +1644,1222 @@ svg.sanctum-holy-bible-icon:hover .sanctum-holy-bible-glow-layer {
   }
 }
 
+/* Magisterium AI: Moving Obsidian Knowledge Graph with Central IHS Radiance */
+.sanctum-magisterium-graph .sanctum-magisterium-ihs-hub {
+  transition: filter 0.35s ease;
+}
+
+.sanctum-magisterium-graph .sanctum-magisterium-web-edges,
+.sanctum-magisterium-graph .sanctum-magisterium-spokes {
+  transition: opacity 0.35s ease;
+}
+
+.group:hover .sanctum-magisterium-graph .sanctum-magisterium-ihs-hub,
+svg.sanctum-magisterium-graph:hover .sanctum-magisterium-ihs-hub {
+  filter: drop-shadow(0 0 3px rgba(253, 224, 71, 0.72));
+}
+
+.group:hover .sanctum-magisterium-graph .sanctum-magisterium-web-edges,
+svg.sanctum-magisterium-graph:hover .sanctum-magisterium-web-edges {
+  opacity: 0.78;
+}
+
+.group:hover .sanctum-magisterium-graph .sanctum-magisterium-spokes,
+svg.sanctum-magisterium-graph:hover .sanctum-magisterium-spokes {
+  opacity: 1;
+}
+
+/* Catholic Radio Icon: On hover, antenna slowly rises upwards, bends small upper arms horizontally to form a golden cross, and stops */
+@keyframes sanctumRadioAntennaRise {
+  0% {
+    transform: translateY(7.8px);
+  }
+  62%, 100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes sanctumRadioArmBendLeft {
+  0%, 62% {
+    transform: rotate(0deg);
+    stroke: currentColor;
+  }
+  100% {
+    transform: rotate(-90deg);
+    stroke: #FDE047;
+  }
+}
+
+@keyframes sanctumRadioArmBendRight {
+  0%, 62% {
+    transform: rotate(0deg);
+    stroke: currentColor;
+  }
+  100% {
+    transform: rotate(90deg);
+    stroke: #FDE047;
+  }
+}
+
+@keyframes sanctumRadioCrossGlow {
+  0%, 64% {
+    stroke: currentColor;
+  }
+  100% {
+    stroke: #FDE047;
+  }
+}
+
+@keyframes sanctumRadioTipGlow {
+  0%, 64% {
+    fill: currentColor;
+  }
+  100% {
+    fill: #FDE047;
+  }
+}
+
+.sanctum-radio-antenna-rise {
+  transform-box: view-box;
+  transform-origin: 12px 11.5px;
+  transform: translateY(7.8px);
+  transition: transform 0.45s ease-out, filter 0.35s ease-out;
+  will-change: transform;
+}
+
+.sanctum-radio-antenna-arm-left {
+  transform-box: view-box;
+  transform-origin: 12px 5.2px;
+  transform: rotate(0deg);
+  transition: transform 0.35s ease-out, stroke 0.35s ease-out;
+  will-change: transform;
+}
+
+.sanctum-radio-antenna-arm-right {
+  transform-box: view-box;
+  transform-origin: 12px 5.2px;
+  transform: rotate(0deg);
+  transition: transform 0.35s ease-out, stroke 0.35s ease-out;
+  will-change: transform;
+}
+
+.sanctum-radio-antenna-mast {
+  transition: stroke 0.35s ease-out;
+}
+
+.sanctum-radio-antenna-tip {
+  transition: fill 0.35s ease-out;
+}
+
+.group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-rise,
+svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-rise {
+  animation: sanctumRadioAntennaRise 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+  filter: drop-shadow(0 0 2.5px rgba(253, 224, 71, 0.65));
+}
+
+.group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-arm-left,
+svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-arm-left {
+  animation: sanctumRadioArmBendLeft 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+}
+
+.group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-arm-right,
+svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-arm-right {
+  animation: sanctumRadioArmBendRight 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+}
+
+.group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-mast,
+svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-mast {
+  animation: sanctumRadioCrossGlow 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+}
+
+.group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-tip,
+svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-tip {
+  animation: sanctumRadioTipGlow 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanctum-radio-antenna-rise,
+  .sanctum-radio-antenna-arm-left,
+  .sanctum-radio-antenna-arm-right,
+  .sanctum-radio-antenna-mast,
+  .sanctum-radio-antenna-tip,
+  .group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-rise,
+  svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-rise,
+  .group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-arm-left,
+  svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-arm-left,
+  .group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-arm-right,
+  svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-arm-right,
+  .group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-mast,
+  svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-mast,
+  .group:hover .sanctum-catholic-radio-icon .sanctum-radio-antenna-tip,
+  svg.sanctum-catholic-radio-icon:hover .sanctum-radio-antenna-tip {
+    animation: none;
+  }
+  .sanctum-radio-antenna-rise {
+    transform: translateY(0px);
+  }
+  .sanctum-radio-antenna-arm-left {
+    transform: rotate(-90deg);
+    stroke: #FDE047;
+  }
+  .sanctum-radio-antenna-arm-right {
+    transform: rotate(90deg);
+    stroke: #FDE047;
+  }
+  .sanctum-radio-antenna-mast {
+    stroke: #FDE047;
+  }
+  .sanctum-radio-antenna-tip {
+    fill: #FDE047;
+  }
+}
+
+/* Catholic Cinema Icon: 3, 2, 1 Film-Leader Countdown ending in a Golden Cross (stops on Cross) */
+@keyframes sanctumCinemaRadarSweep {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0.72;
+  }
+  33.3% {
+    transform: rotate(360deg);
+    opacity: 0.72;
+  }
+  66.6% {
+    transform: rotate(720deg);
+    opacity: 0.72;
+  }
+  75% {
+    transform: rotate(750deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(750deg);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumCinemaDigitThree {
+  0%, 31% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  33.3%, 100% {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+}
+
+@keyframes sanctumCinemaDigitTwo {
+  0%, 32% {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  34.5%, 64.5% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  66.6%, 100% {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+}
+
+@keyframes sanctumCinemaCrossOne {
+  0%, 66% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  84%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sanctumCinemaInnerRingGlow {
+  0%, 66% {
+    stroke: currentColor;
+    opacity: 0.45;
+  }
+  78%, 100% {
+    stroke: #FDE047;
+    opacity: 0.78;
+  }
+}
+
+.sanctum-cinema-sweep {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: rotate(0deg);
+  opacity: 0.45;
+  transition: opacity 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-cinema-digit-3 {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.2s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-cinema-digit-2 {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  opacity: 0;
+  transform: scale(0.86);
+  will-change: transform, opacity;
+}
+
+.sanctum-cinema-cross-1 {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  opacity: 0;
+  transform: scale(0.72);
+  filter: drop-shadow(0 0 2.5px rgba(253, 224, 71, 0.72));
+  will-change: transform, opacity;
+}
+
+.sanctum-cinema-inner-ring {
+  transition: stroke 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-sweep,
+svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-sweep {
+  animation: sanctumCinemaRadarSweep 2.8s linear 1 forwards;
+}
+
+.group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-digit-3,
+svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-digit-3 {
+  animation: sanctumCinemaDigitThree 2.8s linear 1 forwards;
+}
+
+.group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-digit-2,
+svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-digit-2 {
+  animation: sanctumCinemaDigitTwo 2.8s linear 1 forwards;
+}
+
+.group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-cross-1,
+svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-cross-1 {
+  animation: sanctumCinemaCrossOne 2.8s linear 1 forwards;
+}
+
+.group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-inner-ring,
+svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-inner-ring {
+  animation: sanctumCinemaInnerRingGlow 2.8s linear 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanctum-cinema-sweep,
+  .sanctum-cinema-digit-3,
+  .sanctum-cinema-digit-2,
+  .sanctum-cinema-cross-1,
+  .sanctum-cinema-inner-ring,
+  .group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-sweep,
+  svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-sweep,
+  .group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-digit-3,
+  svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-digit-3,
+  .group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-digit-2,
+  svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-digit-2,
+  .group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-cross-1,
+  svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-cross-1,
+  .group:hover .sanctum-catholic-cinema-icon .sanctum-cinema-inner-ring,
+  svg.sanctum-catholic-cinema-icon:hover .sanctum-cinema-inner-ring {
+    animation: none;
+  }
+  .sanctum-cinema-sweep,
+  .sanctum-cinema-digit-3,
+  .sanctum-cinema-digit-2 {
+    opacity: 0;
+  }
+  .sanctum-cinema-cross-1 {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .sanctum-cinema-inner-ring {
+    stroke: #FDE047;
+    opacity: 0.78;
+  }
+}
+
+/* Fio.fm Audio Icon: 5-bar sound equalizer that moves slowly for 3 seconds on hover, then settles into a calm horizontal line */
+@keyframes sanctumFioEqBar1 {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  24% {
+    transform: scaleY(0.54);
+    opacity: 1;
+  }
+  52% {
+    transform: scaleY(1.34);
+    opacity: 1;
+  }
+  74% {
+    transform: scaleY(0.72);
+    opacity: 1;
+  }
+  90% {
+    transform: scaleY(0.286);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.286);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumFioEqBar2 {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  22% {
+    transform: scaleY(1.16);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleY(0.46);
+    opacity: 1;
+  }
+  74% {
+    transform: scaleY(0.84);
+    opacity: 1;
+  }
+  90% {
+    transform: scaleY(0.167);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.167);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumFioEqBar3 {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  28% {
+    transform: scaleY(0.56);
+    opacity: 1;
+  }
+  56% {
+    transform: scaleY(1.08);
+    opacity: 1;
+  }
+  76% {
+    transform: scaleY(0.64);
+    opacity: 1;
+  }
+  90% {
+    transform: scaleY(0.128);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.128);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumFioEqBar4 {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  26% {
+    transform: scaleY(0.5);
+    opacity: 1;
+  }
+  54% {
+    transform: scaleY(1.16);
+    opacity: 1;
+  }
+  75% {
+    transform: scaleY(0.62);
+    opacity: 1;
+  }
+  90% {
+    transform: scaleY(0.167);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.167);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumFioEqBar5 {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  20% {
+    transform: scaleY(1.32);
+    opacity: 1;
+  }
+  48% {
+    transform: scaleY(0.54);
+    opacity: 1;
+  }
+  72% {
+    transform: scaleY(1.12);
+    opacity: 1;
+  }
+  90% {
+    transform: scaleY(0.286);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.286);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumFioEqSettleLine {
+  0%, 82% {
+    opacity: 0;
+    transform: scaleX(0.18);
+  }
+  94%, 100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.sanctum-fio-eq-bar {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: scaleY(1);
+  opacity: 1;
+  will-change: transform, opacity;
+  transition: transform 0.35s ease-out, opacity 0.25s ease-out, fill 0.35s ease, filter 0.35s ease;
+}
+
+.sanctum-fio-eq-line {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: scaleX(0.18);
+  opacity: 0;
+  filter: drop-shadow(0 0 2.5px rgba(253, 224, 71, 0.65));
+  will-change: transform, opacity;
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-1,
+svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-1 {
+  animation: sanctumFioEqBar1 3s ease-in-out 1 forwards;
+}
+
+.group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-2,
+svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-2 {
+  animation: sanctumFioEqBar2 3s ease-in-out 1 forwards;
+  fill: #FDE047;
+  opacity: 0.85;
+}
+
+.group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-3,
+svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-3 {
+  animation: sanctumFioEqBar3 3s ease-in-out 1 forwards;
+  filter: drop-shadow(0 0 2.5px rgba(253, 224, 71, 0.72));
+}
+
+.group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-4,
+svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-4 {
+  animation: sanctumFioEqBar4 3s ease-in-out 1 forwards;
+  fill: #FDE047;
+  opacity: 0.85;
+}
+
+.group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-5,
+svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-5 {
+  animation: sanctumFioEqBar5 3s ease-in-out 1 forwards;
+}
+
+.group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-line,
+svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-line {
+  animation: sanctumFioEqSettleLine 3s ease-in-out 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanctum-fio-eq-bar-1,
+  .sanctum-fio-eq-bar-2,
+  .sanctum-fio-eq-bar-3,
+  .sanctum-fio-eq-bar-4,
+  .sanctum-fio-eq-bar-5,
+  .sanctum-fio-eq-line,
+  .group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-1,
+  svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-1,
+  .group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-2,
+  svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-2,
+  .group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-3,
+  svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-3,
+  .group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-4,
+  svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-4,
+  .group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-bar-5,
+  svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-bar-5,
+  .group:hover .sanctum-fio-eq-icon .sanctum-fio-eq-line,
+  svg.sanctum-fio-eq-icon:hover .sanctum-fio-eq-line {
+    animation: none;
+  }
+  .sanctum-fio-eq-bar {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  .sanctum-fio-eq-line {
+    opacity: 0;
+  }
+}
+
+/* Church Finder Icon: Map pin drops onto golden location spot, gold rises inside to form a cross and stops */
+@keyframes sanctumParishPinDrop {
+  0% {
+    transform: translateY(-4.2px);
+  }
+  26% {
+    transform: translateY(0.25px);
+  }
+  33% {
+    transform: translateY(-0.55px);
+  }
+  40%, 100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes sanctumParishGoldRipple {
+  0%, 24% {
+    transform: scale(0.55);
+    opacity: 0;
+  }
+  32% {
+    transform: scale(0.92);
+    opacity: 0.8;
+  }
+  56%, 100% {
+    transform: scale(1.48);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumParishGoldSpotDrain {
+  0%, 34% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  72%, 100% {
+    transform: scale(0.45);
+    opacity: 0.35;
+  }
+}
+
+@keyframes sanctumParishGoldStemRise {
+  0%, 34% {
+    transform: translateY(9.8px);
+    opacity: 0;
+  }
+  42% {
+    opacity: 1;
+  }
+  74%, 100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumParishGoldCrossbar {
+  0%, 70% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  76% {
+    opacity: 1;
+  }
+  96%, 100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumParishCrossHalo {
+  0%, 72% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  96%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.sanctum-parish-pin-drop {
+  transform-box: view-box;
+  transform-origin: 12px 20.1px;
+  transform: translateY(-2.3px);
+  transition: transform 0.35s ease-out;
+  will-change: transform;
+}
+
+.sanctum-parish-gold-ripple {
+  transform-box: view-box;
+  transform-origin: 12px 20.4px;
+  transform: scale(0.55);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.sanctum-parish-gold-spot {
+  transform-box: view-box;
+  transform-origin: 12px 20.4px;
+  transform: scale(1);
+  opacity: 1;
+  filter: drop-shadow(0 0 2px rgba(253, 224, 71, 0.7));
+  transition: transform 0.35s ease-out, opacity 0.35s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-parish-gold-stem {
+  transform-box: view-box;
+  transform-origin: 12px 13.4px;
+  transform: translateY(9.8px);
+  opacity: 0;
+  filter: drop-shadow(0 0 2.2px rgba(253, 224, 71, 0.65));
+  transition: transform 0.35s ease-out, opacity 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-parish-gold-crossbar {
+  transform-box: view-box;
+  transform-origin: 12px 9.1px;
+  transform: scaleX(0);
+  opacity: 0;
+  filter: drop-shadow(0 0 2.2px rgba(253, 224, 71, 0.65));
+  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-parish-cross-halo {
+  transform-box: view-box;
+  transform-origin: 12px 9.2px;
+  transform: scale(0.4);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.group:hover .sanctum-parish-finder-icon .sanctum-parish-pin-drop,
+svg.sanctum-parish-finder-icon:hover .sanctum-parish-pin-drop {
+  animation: sanctumParishPinDrop 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+}
+
+.group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-ripple,
+svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-ripple {
+  animation: sanctumParishGoldRipple 2.8s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-spot,
+svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-spot {
+  animation: sanctumParishGoldSpotDrain 2.8s ease-in-out 1 forwards;
+}
+
+.group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-stem,
+svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-stem {
+  animation: sanctumParishGoldStemRise 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+}
+
+.group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-crossbar,
+svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-crossbar {
+  animation: sanctumParishGoldCrossbar 2.8s cubic-bezier(0.37, 0, 0.63, 1) 1 forwards;
+}
+
+.group:hover .sanctum-parish-finder-icon .sanctum-parish-cross-halo,
+svg.sanctum-parish-finder-icon:hover .sanctum-parish-cross-halo {
+  animation: sanctumParishCrossHalo 2.8s ease-out 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanctum-parish-pin-drop,
+  .sanctum-parish-gold-ripple,
+  .sanctum-parish-gold-spot,
+  .sanctum-parish-gold-stem,
+  .sanctum-parish-gold-crossbar,
+  .sanctum-parish-cross-halo,
+  .group:hover .sanctum-parish-finder-icon .sanctum-parish-pin-drop,
+  svg.sanctum-parish-finder-icon:hover .sanctum-parish-pin-drop,
+  .group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-ripple,
+  svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-ripple,
+  .group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-spot,
+  svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-spot,
+  .group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-stem,
+  svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-stem,
+  .group:hover .sanctum-parish-finder-icon .sanctum-parish-gold-crossbar,
+  svg.sanctum-parish-finder-icon:hover .sanctum-parish-gold-crossbar,
+  .group:hover .sanctum-parish-finder-icon .sanctum-parish-cross-halo,
+  svg.sanctum-parish-finder-icon:hover .sanctum-parish-cross-halo {
+    animation: none;
+  }
+  .sanctum-parish-pin-drop {
+    transform: translateY(0px);
+  }
+  .sanctum-parish-gold-spot {
+    transform: scale(0.5);
+    opacity: 0.4;
+  }
+  .sanctum-parish-gold-stem {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  .sanctum-parish-gold-crossbar {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  .sanctum-parish-cross-halo {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Virtual Pilgrimages Icon: Golden line threads across the tri-fold map, making short stops and proceeding */
+@keyframes sanctumPilgrimageSeg1 {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  1% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  22%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumPilgrimageSeg2 {
+  0%, 34% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  35% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  56%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumPilgrimageSeg3 {
+  0%, 68% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  69% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  90%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumPilgrimageStop1 {
+  0%, 20% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  25% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  33%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumPilgrimagePulse1 {
+  0%, 21% {
+    transform: scale(0.45);
+    opacity: 0;
+  }
+  25% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+  36%, 100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumPilgrimageStop2 {
+  0%, 54% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  59% {
+    transform: scale(1.25);
+    opacity: 1;
+  }
+  67%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumPilgrimagePulse2 {
+  0%, 55% {
+    transform: scale(0.45);
+    opacity: 0;
+  }
+  59% {
+    transform: scale(0.85);
+    opacity: 0.85;
+  }
+  70%, 100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@keyframes sanctumPilgrimageStop3 {
+  0%, 88% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  93% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sanctumPilgrimagePulse3 {
+  0%, 89% {
+    transform: scale(0.45);
+    opacity: 0;
+  }
+  94% {
+    transform: scale(0.95);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+.sanctum-pilgrimage-seg {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  opacity: 0;
+  filter: drop-shadow(0 0 2px rgba(253, 224, 71, 0.65));
+  transition: opacity 0.25s ease-out;
+  will-change: stroke-dashoffset, opacity;
+}
+
+.sanctum-pilgrimage-start {
+  filter: drop-shadow(0 0 2px rgba(253, 224, 71, 0.7));
+}
+
+.sanctum-pilgrimage-stop {
+  transform-box: view-box;
+  opacity: 0;
+  transform: scale(0.4);
+  filter: drop-shadow(0 0 2px rgba(253, 224, 71, 0.72));
+  transition: opacity 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-pilgrimage-stop-1,
+.sanctum-pilgrimage-pulse-1 {
+  transform-origin: 9.6px 9.6px;
+}
+
+.sanctum-pilgrimage-stop-2,
+.sanctum-pilgrimage-pulse-2 {
+  transform-origin: 14.4px 15.2px;
+}
+
+.sanctum-pilgrimage-stop-3,
+.sanctum-pilgrimage-pulse-3 {
+  transform-origin: 19px 7.8px;
+}
+
+.sanctum-pilgrimage-pulse {
+  transform-box: view-box;
+  opacity: 0;
+  transform: scale(0.45);
+  will-change: transform, opacity;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-seg-1,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-seg-1 {
+  animation: sanctumPilgrimageSeg1 3.6s ease-in-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-seg-2,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-seg-2 {
+  animation: sanctumPilgrimageSeg2 3.6s ease-in-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-seg-3,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-seg-3 {
+  animation: sanctumPilgrimageSeg3 3.6s ease-in-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-stop-1,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-stop-1 {
+  animation: sanctumPilgrimageStop1 3.6s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-pulse-1,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-pulse-1 {
+  animation: sanctumPilgrimagePulse1 3.6s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-stop-2,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-stop-2 {
+  animation: sanctumPilgrimageStop2 3.6s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-pulse-2,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-pulse-2 {
+  animation: sanctumPilgrimagePulse2 3.6s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-stop-3,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-stop-3 {
+  animation: sanctumPilgrimageStop3 3.6s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-pulse-3,
+svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-pulse-3 {
+  animation: sanctumPilgrimagePulse3 3.6s ease-out 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanctum-pilgrimage-seg,
+  .sanctum-pilgrimage-stop,
+  .sanctum-pilgrimage-pulse,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-seg-1,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-seg-1,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-seg-2,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-seg-2,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-seg-3,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-seg-3,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-stop-1,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-stop-1,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-pulse-1,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-pulse-1,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-stop-2,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-stop-2,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-pulse-2,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-pulse-2,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-stop-3,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-stop-3,
+  .group:hover .sanctum-pilgrimage-map-icon .sanctum-pilgrimage-pulse-3,
+  svg.sanctum-pilgrimage-map-icon:hover .sanctum-pilgrimage-pulse-3 {
+    animation: none;
+  }
+  .sanctum-pilgrimage-seg {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  .sanctum-pilgrimage-stop {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .sanctum-pilgrimage-pulse {
+    opacity: 0;
+  }
+}
+
+/* Catholic Prophecy Icon: The New Jerusalem slowly descending out of heaven in golden light, then resting */
+@keyframes sanctumNewJerusalemDescend {
+  0% {
+    transform: translateY(-2.9px);
+  }
+  100% {
+    transform: translateY(1.8px);
+  }
+}
+
+@keyframes sanctumNewJerusalemRays {
+  0% {
+    opacity: 0.3;
+    transform: translateY(-0.9px) scaleY(0.75);
+  }
+  55% {
+    opacity: 0.96;
+    transform: translateY(0.5px) scaleY(1.25);
+  }
+  100% {
+    opacity: 0.88;
+    transform: translateY(1.1px) scaleY(1.35);
+  }
+}
+
+@keyframes sanctumNewJerusalemAura {
+  0% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+  70% {
+    opacity: 0.95;
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes sanctumNewJerusalemGlory {
+  0% {
+    opacity: 0.25;
+    transform: scaleX(0.76);
+  }
+  70% {
+    opacity: 0.88;
+    transform: scaleX(1.06);
+  }
+  100% {
+    opacity: 0.96;
+    transform: scaleX(1.12);
+  }
+}
+
+@keyframes sanctumNewJerusalemHorizonGlow {
+  0%, 58% {
+    stroke: currentColor;
+    opacity: 0.62;
+  }
+  100% {
+    stroke: #FDE047;
+    opacity: 0.92;
+  }
+}
+
+.sanctum-new-jerusalem-city {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transform: translateY(-2.3px);
+  transition: transform 0.55s ease-out, filter 0.45s ease-out;
+  will-change: transform;
+}
+
+.sanctum-new-jerusalem-rays {
+  transform-box: view-box;
+  transform-origin: 12px 0.8px;
+  opacity: 0.4;
+  transform: translateY(-0.5px) scaleY(0.85);
+  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-new-jerusalem-aura {
+  transform-box: view-box;
+  transform-origin: 12px 11.6px;
+  opacity: 0.42;
+  transform: scale(0.86);
+  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-new-jerusalem-glory {
+  transform-box: view-box;
+  transform-origin: 12px 18.35px;
+  opacity: 0.3;
+  transform: scaleX(0.8);
+  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+  will-change: transform, opacity;
+}
+
+.sanctum-new-jerusalem-cross,
+.sanctum-new-jerusalem-dome,
+.sanctum-new-jerusalem-gate {
+  filter: drop-shadow(0 0 1.8px rgba(253, 224, 71, 0.62));
+}
+
+.sanctum-new-jerusalem-horizon {
+  transition: stroke 0.45s ease-out, opacity 0.45s ease-out;
+}
+
+.group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-city,
+svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-city {
+  animation: sanctumNewJerusalemDescend 3.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1 forwards;
+  filter: drop-shadow(0 0 2.6px rgba(253, 224, 71, 0.56));
+}
+
+.group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-rays,
+svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-rays {
+  animation: sanctumNewJerusalemRays 3.2s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-aura,
+svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-aura {
+  animation: sanctumNewJerusalemAura 3.2s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-glory,
+svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-glory {
+  animation: sanctumNewJerusalemGlory 3.2s ease-out 1 forwards;
+}
+
+.group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-horizon,
+svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-horizon {
+  animation: sanctumNewJerusalemHorizonGlow 3.2s ease-out 1 forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sanctum-new-jerusalem-city,
+  .sanctum-new-jerusalem-rays,
+  .sanctum-new-jerusalem-aura,
+  .sanctum-new-jerusalem-glory,
+  .sanctum-new-jerusalem-horizon,
+  .group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-city,
+  svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-city,
+  .group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-rays,
+  svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-rays,
+  .group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-aura,
+  svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-aura,
+  .group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-glory,
+  svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-glory,
+  .group:hover .sanctum-new-jerusalem-icon .sanctum-new-jerusalem-horizon,
+  svg.sanctum-new-jerusalem-icon:hover .sanctum-new-jerusalem-horizon {
+    animation: none;
+  }
+  .sanctum-new-jerusalem-city {
+    transform: translateY(1.4px);
+  }
+  .sanctum-new-jerusalem-rays {
+    opacity: 0.85;
+    transform: translateY(0.8px) scaleY(1.2);
+  }
+  .sanctum-new-jerusalem-aura {
+    opacity: 0.95;
+    transform: scale(1.04);
+  }
+  .sanctum-new-jerusalem-glory {
+    opacity: 0.9;
+    transform: scaleX(1.08);
+  }
+  .sanctum-new-jerusalem-horizon {
+    stroke: #FDE047;
+    opacity: 0.88;
+  }
+}
 
