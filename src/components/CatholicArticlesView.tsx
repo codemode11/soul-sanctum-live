@@ -19,10 +19,13 @@ import { CatholicArticlesRssIcon } from './SanctumIcons';
 import {
   CATHOLIC_RSS_SOURCES,
   CURATED_CATHOLIC_ARTICLES,
+  HERO_RIGHT_ARTICLES,
   CatholicArticleItem,
+  createHeroRightArticleStub,
   fetchCatholicRssFeedWithStatus,
   fetchFullCatholicArticleContent,
-  isLiveCatholicArticle
+  isLiveCatholicArticle,
+  matchesRequestedCatholicArticle
 } from '../data/catholicRssArticles';
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
@@ -62,6 +65,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
 
   const perSourceSeqRef = useRef<Record<string, number>>({});
   const requestedArticleIdRef = useRef<string | null>(initialArticleId || null);
+  const requestedSourceIdRef = useRef<string | null>(initialSourceId || null);
 
   const [articlesBySource, setArticlesBySource] = useState<Record<string, CatholicArticleItem[]>>(() => {
     const initial: Record<string, CatholicArticleItem[]> = {};
@@ -96,21 +100,34 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       const list = articlesBySource[initialSourceId] || [];
       if (initialArticleId) {
         requestedArticleIdRef.current = initialArticleId;
-        const idx = list.findIndex(
-          a =>
-            a.id === initialArticleId ||
-            (initialArticleId === 'catholic-exchange-christ-the-king' &&
-              (a.link?.includes('how-is-christ-the-king-in-your-life') ||
-                a.title.toLowerCase().includes('how is christ the king in your life'))) ||
-            (initialArticleId === 'aleteia-peru-homecoming' &&
-              (a.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
-                a.title.toLowerCase().includes('what a homecoming')))
-        );
-        const targetIdx = idx >= 0 ? idx : 0;
-        setSelectedArticleIndex(targetIdx);
-        selectedIndexRef.current = targetIdx;
+        requestedSourceIdRef.current = initialSourceId;
+        const idx = list.findIndex(a => matchesRequestedCatholicArticle(a, initialArticleId));
+        if (idx >= 0) {
+          setSelectedArticleIndex(idx);
+          selectedIndexRef.current = idx;
+        } else {
+          const heroConfig = HERO_RIGHT_ARTICLES.find(
+            h => h.id === initialArticleId && h.sourceId === initialSourceId
+          );
+          if (heroConfig) {
+            const stub = createHeroRightArticleStub(heroConfig);
+            setArticlesBySource(prev => {
+              const existing = prev[initialSourceId] || [];
+              if (existing.some(a => matchesRequestedCatholicArticle(a, initialArticleId))) {
+                return prev;
+              }
+              return {
+                ...prev,
+                [initialSourceId]: [stub, ...existing]
+              };
+            });
+          }
+          setSelectedArticleIndex(0);
+          selectedIndexRef.current = 0;
+        }
       } else {
         requestedArticleIdRef.current = null;
+        requestedSourceIdRef.current = null;
         setSelectedArticleIndex(0);
         selectedIndexRef.current = 0;
       }
@@ -143,28 +160,39 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       setLastRefreshedAt(now);
 
       if (result.articles && result.articles.length > 0) {
+        const targetArticleId =
+          requestedSourceIdRef.current === sourceId ? requestedArticleIdRef.current : null;
+
+        let nextArticles = result.articles;
+        let idxToUse: number | null = null;
+
+        if (targetArticleId) {
+          const matchedIdx = nextArticles.findIndex(a =>
+            matchesRequestedCatholicArticle(a, targetArticleId)
+          );
+          if (matchedIdx >= 0) {
+            idxToUse = matchedIdx;
+          } else {
+            const heroConfig = HERO_RIGHT_ARTICLES.find(
+              h => h.id === targetArticleId && h.sourceId === sourceId
+            );
+            if (heroConfig) {
+              nextArticles = [createHeroRightArticleStub(heroConfig), ...nextArticles];
+              idxToUse = 0;
+            } else {
+              idxToUse = 0;
+            }
+          }
+          requestedArticleIdRef.current = null;
+          requestedSourceIdRef.current = null;
+        }
+
         setArticlesBySource(prev => ({
           ...prev,
-          [sourceId]: result.articles
+          [sourceId]: nextArticles
         }));
 
-        const targetArticleId = requestedArticleIdRef.current;
-        if (targetArticleId) {
-          const matchedIdx = result.articles.findIndex(
-            a =>
-              a.id === targetArticleId ||
-              (targetArticleId === 'catholic-exchange-christ-the-king' ||
-              targetArticleId.includes('how-is-christ-the-king-in-your-life')
-                ? a.link?.includes('how-is-christ-the-king-in-your-life') ||
-                  a.title.toLowerCase().includes('how is christ the king in your life')
-                : false) ||
-              (targetArticleId.includes('what-a-homecoming') || targetArticleId === 'aleteia-peru-homecoming'
-                ? a.link?.includes('what-a-homecoming-popes-arrival-in-peru') ||
-                  a.title.toLowerCase().includes('what a homecoming')
-                : false)
-          );
-          requestedArticleIdRef.current = null;
-          const idxToUse = matchedIdx >= 0 ? matchedIdx : 0;
+        if (idxToUse !== null) {
           selectedIndexRef.current = idxToUse;
           setSelectedArticleIndex(idxToUse);
         } else if (isManualRefresh) {

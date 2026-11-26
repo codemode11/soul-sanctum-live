@@ -60,7 +60,8 @@ import { applySeoMetadata, getInitialTabFromLocation } from './utils/seo';
 import { SacredReader } from './utils/speech';
 import {
   CatholicArticleItem,
-  CURATED_CATHOLIC_ARTICLES
+  CURATED_CATHOLIC_ARTICLES,
+  HERO_RIGHT_ARTICLES
 } from './data/catholicRssArticles';
 
 import { getMassReadingsForDate } from './data/massReadings';
@@ -1306,9 +1307,12 @@ export default function App() {
             </div>
           )}
 
-          {/* Lower Masthead: Transferred Motto & Liturgical Day + Main Story Card */}
+          {/* Lower Masthead: Transferred Motto & Liturgical Day + Right-Side Article Links + Main Story Card */}
           <div className={effectiveEstablishingImageId === 'christ-the-king-main-story' ? 'w-full mt-2.5 sm:mt-auto flex flex-col' : 'w-full flex flex-col'}>
-            {effectiveEstablishingImageId === 'christ-the-king-main-story' && (!activeScheduledMasthead || activeScheduledMasthead.layoutVariant === 'classic-split') && (() => {
+            {(() => {
+              const showClassicLeftMotto =
+                effectiveEstablishingImageId === 'christ-the-king-main-story' &&
+                (!activeScheduledMasthead || activeScheduledMasthead.layoutVariant === 'classic-split');
               const cleanLiturgicalTitle = currentMassReading.liturgicalDay.replace(/\s*\(Blessed Virgin Mary on Saturday\)/gi, '').trim();
               const hasMemorialSplit = cleanLiturgicalTitle.includes(' / ');
               const isChristTheKingTitle = /^solemnity of our lord jesus christ,\s*king of the universe$/i.test(cleanLiturgicalTitle);
@@ -1324,28 +1328,79 @@ export default function App() {
                   : null;
               const mottoText = activeScheduledMasthead?.mottoText || 'Pray without ceasing.';
               const mottoCitation = activeScheduledMasthead?.mottoCitation || '1 Thessalonians 5:17';
+
               return (
                 <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 mb-3 sm:mb-3 md:mb-4 lg:mb-6 xl:mb-8 pointer-events-auto">
-                  <div className="pl-0 sm:pl-[64px] xl:pl-[74px] 2xl:pl-[84px] max-w-md sm:max-w-[380px] mx-auto sm:mx-0 text-center sm:text-left">
-                    <div className="flex flex-row sm:flex-col items-baseline justify-center sm:items-start gap-x-2 flex-wrap">
-                      <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
-                        {mottoText}
-                      </span>
-                      <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#E8C55A] tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_6px_rgba(0,0,0,0.95))] sm:mt-0.5">
-                        {mottoCitation}
-                      </span>
-                    </div>
+                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3.5 sm:gap-6">
+                    {showClassicLeftMotto ? (
+                      <div className="pl-0 sm:pl-[64px] xl:pl-[74px] 2xl:pl-[84px] max-w-md sm:max-w-[380px] mx-auto sm:mx-0 text-center sm:text-left">
+                        <div className="flex flex-row sm:flex-col items-baseline justify-center sm:items-start gap-x-2 flex-wrap">
+                          <span className="text-sm sm:text-lg md:text-xl font-serif not-italic text-white font-semibold tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                            {mottoText}
+                          </span>
+                          <span className="text-xs sm:text-base md:text-[17px] font-serif not-italic font-semibold text-[#E8C55A] tracking-wide [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_6px_rgba(0,0,0,0.95))] sm:mt-0.5">
+                            {mottoCitation}
+                          </span>
+                        </div>
 
-                    <div className="flex flex-col items-center sm:items-start gap-0.5 text-center sm:text-left pt-1 sm:pt-2">
-                      <span className="font-serif font-bold text-xs sm:text-sm text-amber-100/95 sm:text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
-                        {mainTitlePart}
-                      </span>
-                      {memorialPart && (
-                        <span className="font-serif font-bold not-italic text-xs sm:text-sm text-amber-100/95 sm:text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
-                          {memorialPart}
-                        </span>
-                      )}
-                    </div>
+                        <div className="flex flex-col items-center sm:items-start gap-0.5 text-center sm:text-left pt-1 sm:pt-2">
+                          <span className="font-serif font-bold text-xs sm:text-sm text-amber-100/95 sm:text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                            {mainTitlePart}
+                          </span>
+                          {memorialPart && (
+                            <span className="font-serif font-bold not-italic text-xs sm:text-sm text-amber-100/95 sm:text-white leading-snug [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.98))_drop-shadow(0_2px_8px_rgba(0,0,0,0.92))]">
+                              {memorialPart}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="hidden sm:block" aria-hidden="true" />
+                    )}
+
+                    {/* Right-Side Featured Catholic Articles Column */}
+                    <nav
+                      aria-label="Featured Catholic Articles"
+                      className="w-full max-w-md sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[420px] mx-auto sm:mx-0 sm:ml-auto sm:mr-2 lg:mr-6 xl:mr-10 rounded-xl bg-[#2B1A0F]/46 sm:bg-[#2B1A0F]/38 border border-amber-300/40 backdrop-blur-[4px] shadow-[0_8px_28px_rgba(0,0,0,0.38)] px-4 py-3 sm:px-5 sm:py-3.5"
+                    >
+                      <div className="divide-y divide-amber-200/20">
+                        {HERO_RIGHT_ARTICLES.map((item, idx) => (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveCatholicArticleSourceId(item.sourceId);
+                              setActiveCatholicArticleId(item.id);
+                              handleSelectTab('catholic-articles');
+                            }}
+                            title={`Read "${item.title}" in Catholic Articles (${item.sourceName})`}
+                            className={`group w-full text-left block cursor-pointer transition-colors ${
+                              idx === 0 ? 'pb-2.5 sm:pb-3' : idx === HERO_RIGHT_ARTICLES.length - 1 ? 'pt-2.5' : 'py-2.5'
+                            }`}
+                          >
+                            <span
+                              className={`block font-serif text-white group-hover:text-amber-200 transition-colors [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.95))] ${
+                                item.isLead
+                                  ? 'text-[18px] sm:text-[19px] md:text-[20px] lg:text-[22px] font-bold leading-[1.24] tracking-tight'
+                                  : 'text-[13px] sm:text-[13.5px] md:text-[14px] lg:text-[14.5px] font-semibold leading-snug text-amber-50/95'
+                              }`}
+                            >
+                              {item.title}
+                            </span>
+                            <span
+                              className={`block font-serif italic text-amber-200/95 group-hover:text-amber-100 transition-colors [filter:drop-shadow(0_1px_2px_rgba(0,0,0,0.92))] ${
+                                item.isLead
+                                  ? 'text-[12px] sm:text-[13px] mt-1'
+                                  : 'text-[11px] sm:text-[11.5px] mt-0.5 text-amber-200/85'
+                              }`}
+                            >
+                              {item.byline}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </nav>
                   </div>
                 </div>
               );

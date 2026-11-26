@@ -204,6 +204,138 @@ export function isLiveCatholicArticle(article: CatholicArticleItem): boolean {
   return article.id.includes('-live-');
 }
 
+export interface HeroRightArticleConfig {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  title: string;
+  author: string;
+  byline: string;
+  link: string;
+  publishedDate: string;
+  readTime: string;
+  summary: string;
+  isLead?: boolean;
+}
+
+export const HERO_RIGHT_ARTICLES: HeroRightArticleConfig[] = [
+  {
+    id: 'hero-spc-when-the-end-comes',
+    sourceId: 'st-paul-center',
+    sourceName: 'St. Paul Center',
+    title: 'When the End Comes: Scott Hahn Reflects on the Solemnity of Christ the King',
+    author: 'Dr. Scott Hahn',
+    byline: 'By Dr. Scott Hahn',
+    link: 'https://stpaulcenter.com/posts/when-the-end-comes-scott-hahn-reflects-on-the-solemnity-of-christ-the-king',
+    publishedDate: 'November 26, 2026',
+    readTime: '4 min read',
+    summary: 'Dr. Scott Hahn reflects on the readings for the Solemnity of Christ the King and the coming of the Lord in glory.',
+    isLead: true
+  },
+  {
+    id: 'hero-ewtn-pope-leo-doctrinal-development',
+    sourceId: 'ewtn-news',
+    sourceName: 'EWTN News',
+    title: 'Pope Leo XIV: Doctrinal development is not a rupture with the Church’s tradition',
+    author: 'Ishmael Adibuah',
+    byline: 'by Ishmael Adibuah',
+    link: 'https://www.ewtnnews.com/vatican/pope-leo-xiv-doctrinal-development-is-not-a-rupture-with-the-church-s-tradition',
+    publishedDate: 'November 25, 2026',
+    readTime: '5 min read',
+    summary: 'Pope Leo XIV reflects on authentic doctrinal development in continuity with the Church’s living Tradition.'
+  },
+  {
+    id: 'hero-ncr-transform-your-advent-mental-prayer',
+    sourceId: 'ncregister',
+    sourceName: 'National Catholic Register',
+    title: 'Transform Your Advent Through Mental Prayer',
+    author: 'Andrea M. Picciotti-Bayer',
+    byline: 'by Andrea M. Picciotti-Bayer',
+    link: 'https://www.ncregister.com/commentaries/advent-and-mental-prayer',
+    publishedDate: 'November 24, 2026',
+    readTime: '5 min read',
+    summary: 'Practical guidance for transforming the Advent season through daily mental prayer.'
+  }
+];
+
+function normalizeMatchText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[’‘`]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[^a-z0-9']+/g, ' ')
+    .trim();
+}
+
+function normalizeMatchUrl(url: string): string {
+  return url
+    .toLowerCase()
+    .replace(/^https?:\/\/(www\.)?/, '')
+    .replace(/[?#].*$/, '')
+    .replace(/\/+$/, '')
+    .trim();
+}
+
+export function createHeroRightArticleStub(config: HeroRightArticleConfig): CatholicArticleItem {
+  return {
+    id: config.id,
+    sourceId: config.sourceId,
+    sourceName: config.sourceName,
+    title: config.title,
+    author: config.author,
+    publishedDate: config.publishedDate,
+    readTime: config.readTime,
+    summary: config.summary,
+    content: config.summary,
+    link: config.link,
+    categories: ['Featured', config.sourceName],
+    isFullContentLoaded: false
+  };
+}
+
+export function matchesRequestedCatholicArticle(
+  article: CatholicArticleItem,
+  requestedId: string
+): boolean {
+  if (!requestedId) return false;
+  if (article.id === requestedId) return true;
+
+  const lowerTitle = normalizeMatchText(article.title || '');
+  const normLink = normalizeMatchUrl(article.link || '');
+
+  if (
+    requestedId === 'catholic-exchange-christ-the-king' ||
+    requestedId.includes('how-is-christ-the-king-in-your-life')
+  ) {
+    return (
+      normLink.includes('how-is-christ-the-king-in-your-life') ||
+      lowerTitle.includes('how is christ the king in your life')
+    );
+  }
+
+  if (
+    requestedId === 'aleteia-peru-homecoming' ||
+    requestedId.includes('what-a-homecoming')
+  ) {
+    return (
+      normLink.includes('what-a-homecoming-popes-arrival-in-peru') ||
+      lowerTitle.includes('what a homecoming')
+    );
+  }
+
+  const heroEntry = HERO_RIGHT_ARTICLES.find(h => h.id === requestedId);
+  if (heroEntry) {
+    const heroUrl = normalizeMatchUrl(heroEntry.link);
+    const heroTitle = normalizeMatchText(heroEntry.title);
+    if (heroUrl && normLink && normLink === heroUrl) return true;
+    if (heroTitle && lowerTitle && (lowerTitle === heroTitle || lowerTitle.includes(heroTitle) || heroTitle.includes(lowerTitle))) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export function parseRssXmlToArticles(
   xmlText: string,
   source: CatholicRssSource
