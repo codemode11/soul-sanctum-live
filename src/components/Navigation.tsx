@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   ChevronRight,
   Layers,
+  Settings,
   Star,
   Tv,
   X,
@@ -105,10 +106,86 @@ export type ActiveTab =
   | 'catholic-links'
   | 'piety-dashboard';
 
+export type FrostedBackgroundColorId =
+  | 'white'
+  | 'transparent-white'
+  | 'parchment'
+  | 'beige'
+  | 'limestone'
+  | 'plum'
+  | 'espresso';
+
+export interface FrostedBackgroundColorOption {
+  id: FrostedBackgroundColorId;
+  label: string;
+  swatchHex: string;
+  swatchStyle?: React.CSSProperties;
+  containerClass: string;
+}
+
+// Arranged strictly from light to dark; Transparent White is the default (original color)
+export const FROSTED_BG_COLORS: FrostedBackgroundColorOption[] = [
+  {
+    id: 'white',
+    label: 'White',
+    swatchHex: '#FFFFFF',
+    containerClass:
+      'backdrop-brightness-115 backdrop-saturate-105 bg-white/80 sm:bg-white/82 border-t border-white/85 shadow-[0_-12px_40px_rgba(255,255,255,0.32)]',
+  },
+  {
+    id: 'transparent-white',
+    label: 'Transparent White',
+    swatchHex: '#ECEAE6',
+    swatchStyle: {
+      background:
+        'linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.52) 52%, rgba(212,193,168,0.55) 100%)',
+    },
+    containerClass:
+      'backdrop-brightness-125 backdrop-saturate-125 bg-white/46 sm:bg-white/48 border-t border-white/60 shadow-[0_-12px_40px_rgba(255,255,255,0.2)]',
+  },
+  {
+    id: 'parchment',
+    label: 'Parchment',
+    swatchHex: '#F3E5C8',
+    containerClass:
+      'backdrop-brightness-110 backdrop-saturate-115 bg-[#F3E5C8]/74 sm:bg-[#F3E5C8]/76 border-t border-[#F7EEDB]/80 shadow-[0_-12px_40px_rgba(243,229,200,0.28)]',
+  },
+  {
+    id: 'beige',
+    label: 'Beige',
+    swatchHex: '#E1DDC8',
+    containerClass:
+      'backdrop-brightness-105 backdrop-saturate-105 bg-[#E1DDC8]/78 sm:bg-[#E1DDC8]/80 border-t border-[#EFECE0]/80 shadow-[0_-12px_40px_rgba(225,221,200,0.3)]',
+  },
+  {
+    id: 'limestone',
+    label: 'Limestone',
+    swatchHex: '#D6CFC4',
+    containerClass:
+      'backdrop-brightness-105 backdrop-saturate-75 bg-[#D6CFC4]/78 sm:bg-[#D6CFC4]/80 border-t border-[#E6E0D6]/80 shadow-[0_-12px_40px_rgba(214,207,196,0.28)]',
+  },
+  {
+    id: 'plum',
+    label: 'Plum',
+    swatchHex: '#5D5266',
+    containerClass:
+      'backdrop-brightness-90 backdrop-saturate-65 bg-[#5D5266]/74 sm:bg-[#5D5266]/76 border-t border-[#A99DB3]/45 shadow-[0_-12px_40px_rgba(45,35,55,0.34)]',
+  },
+  {
+    id: 'espresso',
+    label: 'Espresso',
+    swatchHex: '#382D26',
+    containerClass:
+      'backdrop-brightness-75 backdrop-saturate-85 bg-[#382D26]/78 sm:bg-[#382D26]/80 border-t border-amber-200/25 shadow-[0_-12px_40px_rgba(20,12,8,0.45)]',
+  },
+];
+
 interface NavigationProps {
   activeTab: ActiveTab;
   onSelectTab: (tab: ActiveTab) => void;
   onOpenNotifications: () => void;
+  bgColor?: FrostedBackgroundColorId;
+  onSelectBgColor?: (colorId: FrostedBackgroundColorId) => void;
   activeNovenasCount?: number;
   isMobileOpen?: boolean;
   onOpenMobile?: () => void;
@@ -131,6 +208,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   activeTab,
   onSelectTab,
   onOpenNotifications,
+  bgColor = 'transparent-white',
+  onSelectBgColor,
   activeNovenasCount = 2,
   isMobileOpen = false,
   onOpenMobile,
@@ -147,6 +226,10 @@ export const Navigation: React.FC<NavigationProps> = ({
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [isDraggingSlider, setIsDraggingSlider] = useState<boolean>(false);
   const [desktopMaxHeightPx, setDesktopMaxHeightPx] = useState<number | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+
+  const activeBgColorOption =
+    FROSTED_BG_COLORS.find((c) => c.id === bgColor) || FROSTED_BG_COLORS[1];
 
   const updateProgressFromElement = useCallback((el: HTMLDivElement | null) => {
     if (!el) return;
@@ -214,7 +297,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   useLayoutEffect(() => {
     updateProgressFromElement(sidebarRef.current);
-  }, [desktopMaxHeightPx, updateProgressFromElement]);
+  }, [desktopMaxHeightPx, isSettingsOpen, updateProgressFromElement]);
 
   const dragOffsetRef = useRef<number>(22);
 
@@ -601,12 +684,17 @@ export const Navigation: React.FC<NavigationProps> = ({
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             type="button"
-            onClick={onOpenNotifications}
-            className="p-1.5 rounded-lg text-stone-300 hover:text-[#FFD700] hover:bg-white/10 transition-colors cursor-pointer"
-            title="Daily Reminders and Liturgical Bells"
-            aria-label="Open Notifications"
+            onClick={() => setIsSettingsOpen((prev) => !prev)}
+            className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+              isSettingsOpen
+                ? 'bg-[#FFD700]/20 text-[#FFD700] ring-1 ring-[#FFD700]/50'
+                : 'text-stone-300 hover:text-[#FFD700] hover:bg-white/10'
+            }`}
+            title="Index Settings (Background & Notifications)"
+            aria-label="Toggle Settings"
+            aria-expanded={isSettingsOpen}
           >
-            <BellRing className="w-4 h-4 text-[#FFD700]" />
+            <Settings className={`w-4 h-4 text-[#FFD700] transition-transform duration-200 ${isSettingsOpen ? 'rotate-45' : ''}`} />
           </button>
           <button
             type="button"
@@ -626,6 +714,90 @@ export const Navigation: React.FC<NavigationProps> = ({
           </button>
         </div>
       </div>
+
+      {/* Collapsible Settings Panel: Background Colors (Light to Dark) & Notifications */}
+      {isSettingsOpen && (
+        <div className="rounded-xl bg-white/[0.06] border border-[#D4AF37]/30 p-3 space-y-3 text-stone-100">
+          <div className="flex items-center justify-between">
+            <span className="font-cinzel text-[11px] font-bold tracking-[0.14em] uppercase text-[#FFD700]">
+              Settings
+            </span>
+            <button
+              type="button"
+              onClick={() => setIsSettingsOpen(false)}
+              className="p-1 rounded-md text-stone-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              aria-label="Close Settings"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Background Color Selector (Light to Dark) */}
+          {onSelectBgColor && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[11px] font-medium text-stone-300">Background</span>
+                <span className="text-[11px] font-serif text-amber-200/95 truncate">
+                  {activeBgColorOption.label}
+                </span>
+              </div>
+              <div
+                role="radiogroup"
+                aria-label="Background color"
+                className="flex items-center justify-between gap-1.5 pt-0.5"
+              >
+                {FROSTED_BG_COLORS.map((color) => {
+                  const isSelected = bgColor === color.id;
+                  return (
+                    <button
+                      key={color.id}
+                      type="button"
+                      role="radio"
+                      aria-checked={isSelected}
+                      aria-label={color.label}
+                      title={color.label}
+                      onClick={() => onSelectBgColor(color.id)}
+                      className={`w-6 h-6 rounded-full transition-transform duration-150 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD700] ${
+                        isSelected
+                          ? 'scale-110 ring-2 ring-[#FFD700] ring-offset-2 ring-offset-stone-950'
+                          : 'hover:scale-110 ring-1 ring-white/35 hover:ring-amber-300/80'
+                      }`}
+                      style={color.swatchStyle ?? { backgroundColor: color.swatchHex }}
+                    >
+                      <span className="sr-only">{color.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Notifications Trigger */}
+          <div className="pt-2 border-t border-white/10">
+            <button
+              type="button"
+              onClick={() => {
+                onOpenNotifications();
+                if (onCloseMobile) onCloseMobile();
+              }}
+              className="w-full flex items-center justify-between gap-2.5 px-2.5 py-2 rounded-lg bg-white/[0.05] hover:bg-white/10 border border-white/10 hover:border-[#FFD700]/40 text-left transition-colors cursor-pointer group"
+            >
+              <div className="flex items-center gap-2.5 min-w-0">
+                <BellRing className="w-4 h-4 text-[#FFD700] shrink-0" />
+                <div className="min-w-0">
+                  <span className="block text-xs font-serif font-medium text-stone-100 group-hover:text-[#FFD700] transition-colors">
+                    Notifications
+                  </span>
+                  <span className="block text-[10px] text-stone-400 truncate">
+                    Daily reminders &amp; bells
+                  </span>
+                </div>
+              </div>
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#FFD700] shrink-0 transition-colors" />
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Unnumbered List: Mass Readings icon + text centered on desktop; full-width clean touch rows on mobile drawer */}
       <div className="space-y-1 sm:space-y-1.5 pt-1">
@@ -809,10 +981,16 @@ export const Navigation: React.FC<NavigationProps> = ({
                   );
                 })}
 
-                {/* 5th Thumb Slot: Open Full Sacred Index Drawer (Center-Aligned) */}
+                {/* 5th Thumb Slot: Open Full Sacred Index Drawer (Center-Aligned Stacked-Layers Icon) */}
                 <button
                   type="button"
-                  onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
+                  onClick={() =>
+                    isMobileOpen
+                      ? onCloseMobile && onCloseMobile()
+                      : onOpenMobile && onOpenMobile()
+                  }
+                  aria-label="Index Menu"
+                  aria-expanded={isMobileOpen}
                   className={`min-h-[54px] w-full flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 text-center transition-colors cursor-pointer select-none ${
                     isMobileOpen ? 'text-[#FFD700]' : 'text-stone-400 hover:text-stone-200'
                   }`}

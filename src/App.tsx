@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Analytics, type BeforeSendEvent } from '@vercel/analytics/react';
 import { Header } from './components/Header';
-import { Navigation, ActiveTab } from './components/Navigation';
+import {
+  Navigation,
+  ActiveTab,
+  FROSTED_BG_COLORS,
+  FrostedBackgroundColorId,
+} from './components/Navigation';
 import { DailyMassReadingsView } from './components/DailyMassReadingsView';
 import { CatechismView } from './components/CatechismView';
 import { CatholicAIAssistantView } from './components/CatholicAIAssistantView';
@@ -137,10 +142,47 @@ const getTodayDateStr = () => {
   return `${year}-${month}-${day}`;
 };
 
+const FROSTED_BG_COLOR_STORAGE_KEY = 'sanctum_frosted_bg_color_v1';
+
+const LEGACY_BG_COLOR_MAP: Record<string, FrostedBackgroundColorId> = {
+  current: 'transparent-white',
+  'warm-limestone': 'limestone',
+  'lenten-plum': 'plum',
+  'smoked-espresso': 'espresso',
+};
+
 export default function App() {
   const [currentDateStr, setCurrentDateStr] = useState<string>(() => {
     return getTodayDateStr();
   });
+  const [bgColor, setBgColor] = useState<FrostedBackgroundColorId>(() => {
+    try {
+      const saved =
+        localStorage.getItem(FROSTED_BG_COLOR_STORAGE_KEY) ||
+        localStorage.getItem('sanctum_frosted_bg_mood_v1');
+      if (saved) {
+        const mapped = LEGACY_BG_COLOR_MAP[saved] || saved;
+        if (FROSTED_BG_COLORS.some((c) => c.id === mapped)) {
+          return mapped as FrostedBackgroundColorId;
+        }
+      }
+    } catch {
+      // Ignore storage access errors in restricted embeds
+    }
+    return 'transparent-white';
+  });
+
+  const activeBgColor =
+    FROSTED_BG_COLORS.find((c) => c.id === bgColor) || FROSTED_BG_COLORS[1];
+
+  const handleSelectBgColor = (colorId: FrostedBackgroundColorId) => {
+    setBgColor(colorId);
+    try {
+      localStorage.setItem(FROSTED_BG_COLOR_STORAGE_KEY, colorId);
+    } catch {
+      // Ignore storage access errors
+    }
+  };
   const [activeTab, setActiveTab] = useState<ActiveTab>(() => {
     if (typeof window !== 'undefined') {
       const navEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
@@ -1605,8 +1647,8 @@ export default function App() {
           onClick={handleMainBodyMarginClick}
           className="flex-1 w-full mx-auto pt-3 sm:pt-8 flex flex-col items-center transition-all duration-300"
         >
-          {/* Edge-to-Edge Semi-Transparent Light Frosted Glass Background Container */}
-          <div className="w-full flex-1 backdrop-blur-md md:backdrop-blur-2xl backdrop-brightness-125 backdrop-saturate-125 bg-white/46 sm:bg-white/48 border-t border-white/60 shadow-[0_-12px_40px_rgba(255,255,255,0.2)] pt-6 sm:pt-10 pb-20 sm:pb-28 px-3 sm:px-6 lg:px-12 text-[#1C120A]">
+          {/* Edge-to-Edge Semi-Transparent Frosted Glass Background Container */}
+          <div className={`w-full flex-1 backdrop-blur-md md:backdrop-blur-2xl ${activeBgColor.containerClass} pt-6 sm:pt-10 pb-20 sm:pb-28 px-3 sm:px-6 lg:px-12 text-[#1C120A] transition-[background-color,border-color,box-shadow] duration-300`}>
             <div className={`w-full mx-auto transition-all duration-300 ${
               activeTab === 'catholic-ai' ? 'max-w-none px-2 sm:px-4 lg:px-6' : 'max-w-7xl'
             }`}>
@@ -1625,6 +1667,8 @@ export default function App() {
                   handleSelectTab(tab);
                 }}
                 onOpenNotifications={() => setIsNotificationsOpen(true)}
+                bgColor={bgColor}
+                onSelectBgColor={handleSelectBgColor}
                 activeNovenasCount={2}
                 isMobileOpen={isMobileMenuOpen}
                 onOpenMobile={() => setIsMobileMenuOpen(true)}
