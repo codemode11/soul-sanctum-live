@@ -769,9 +769,9 @@ SOUL SANCTUM`;
             'linear-gradient(100deg, #0B1526 0%, #101F38 30%, #142847 54%, #162C4B 74%, #172C4B 100%)',
         }}
       >
-        {/* Right-aligned Eucharistic Miracle of Lanciano Reliquary */}
+        {/* Right-aligned Eucharistic Miracle of Lanciano Reliquary (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-3 sm:right-7 flex items-center justify-end z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
@@ -779,26 +779,17 @@ SOUL SANCTUM`;
             alt="Reliquary of the Eucharistic Miracle of Lanciano"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-full object-contain object-right block"
+            className="h-full w-full object-cover object-center block"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 10%, black 22%, black 88%, rgba(0,0,0,0.5) 96%, transparent 100%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 10%, black 22%, black 88%, rgba(0,0,0,0.5) 96%, transparent 100%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
             }}
           />
         </div>
 
-        {/* Subtle bottom-edge depth feathering matching the dark navy banner */}
-        <div
-          className="pointer-events-none absolute inset-0 z-[1]"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(11,21,38,0.55) 0%, rgba(16,31,56,0.22) 48%, transparent 72%)',
-          }}
-        />
-
-        <div className="relative z-10 space-y-1 pr-[118px] sm:pr-[156px]">
+        <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4">
           <div className="flex items-center gap-1.5">
             <span className="leading-tight font-cinzel text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wider text-[#DFD5C3] flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-[#EAE2D3] shrink-0" />

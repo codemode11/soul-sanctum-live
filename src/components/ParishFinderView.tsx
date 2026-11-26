@@ -1816,9 +1816,9 @@ export const ParishFinderView: React.FC = () => {
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
       {/* Compact Soul Sanctum Banner with Dark Brown to Cebu City Churches Map Gradient */}
       <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl overflow-hidden bg-[#1C120C] border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-center">
-        {/* Right-Side Illustrated Map of Cebu City with Historic Churches */}
+        {/* Right-Side Illustrated Map of Cebu City with Historic Churches (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
           aria-hidden="true"
         >
           <img
@@ -1826,28 +1826,22 @@ export const ParishFinderView: React.FC = () => {
             alt="Illustrated map of Cebu City with historic Catholic churches along Mactan Channel"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-full object-contain object-right brightness-[0.98] contrast-[1.05]"
+            className="h-full w-full object-cover object-center brightness-[0.98] contrast-[1.05]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
             }}
           />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120C]/55 to-transparent" />
         </div>
 
-        {/* Seamless Multi-Stop Horizontal Gradient from Dark Brown (#1C120C) into the Cebu City Churches Map */}
-        <div
-          className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.52)_60%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.18)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_30%,rgba(28,18,12,0.90)_44%,rgba(28,18,12,0.42)_60%,rgba(28,18,12,0.06)_80%,rgba(28,18,12,0.14)_100%)]"
-          aria-hidden="true"
-        />
         {/* Subtle Top/Bottom Dark Brown Feathering for Crisp Text Legibility */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/25"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/20"
           aria-hidden="true"
         />
 
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1.5 min-w-0 max-w-[88%] sm:max-w-[54%]">
+          <div className="space-y-1.5 min-w-0 max-w-[60%] pr-3 sm:pr-4">
             <div className="inline-flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.2em] text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
               <MapPin className="w-3.5 h-3.5 shrink-0" />
               <span>Global Catholic Parish Locator</span>

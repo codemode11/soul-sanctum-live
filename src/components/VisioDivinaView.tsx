@@ -168,9 +168,9 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
         
         {/* RECTANGLE 1: Main Title Banner with Caravaggio's The Incredulity of Saint Thomas on the Right */}
         <div className={`sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#16100B] text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Painting: Caravaggio — The Incredulity of Saint Thomas */}
+          {/* Right-Side Painting: Caravaggio — The Incredulity of Saint Thomas (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -186,28 +186,23 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
               alt="Caravaggio — The Incredulity of Saint Thomas"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
+              className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
               style={{
                 maskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.42) 14%, rgba(0,0,0,0.92) 28%, black 42%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
                 WebkitMaskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.42) 14%, rgba(0,0,0,0.92) 28%, black 42%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               }}
             />
           </div>
 
-          {/* Mobile left-side readability veil */}
-          <div
-            className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#16100B_0%,#16100B_32%,rgba(22,16,11,0.86)_56%,rgba(22,16,11,0.34)_78%,rgba(22,16,11,0.12)_100%)]"
-            aria-hidden="true"
-          />
           {/* Subtle top/bottom warm tenebrism feathering */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#16100B]/50 via-transparent to-[#16100B]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#16100B]/50 via-transparent to-[#16100B]/15"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[92%] sm:max-w-[54%] md:max-w-[56%]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
             {/* Line 1: Kicker Badge & Monastic Subtitle */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">

@@ -64,9 +64,9 @@ Catechism: ${term.catechismRef || 'N/A'}`;
       
       {/* Standardized Catholic Glossary Top Banner */}
       <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-amber-50 shadow-md border border-[#8B5A2B]/40 flex flex-col justify-between">
-        {/* Right-Side Single-Angle Walnut Library Bookcase with Modern Catholic Dictionaries & Encyclopedias */}
+        {/* Right-Side Single-Angle Walnut Library Bookcase with Modern Catholic Dictionaries & Encyclopedias (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
           aria-hidden="true"
         >
           <img
@@ -74,28 +74,23 @@ Catechism: ${term.catechismRef || 'N/A'}`;
             alt="Single continuous dark walnut library bookcase wall in straight three-quarter perspective holding modern Catholic dictionaries, theological lexicons, and encyclopedias"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 16%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 16%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
             }}
           />
         </div>
 
-        {/* Mobile left-side readability veil */}
-        <div
-          className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_36%,rgba(28,18,12,0.88)_58%,rgba(28,18,12,0.42)_80%,rgba(28,18,12,0.18)_100%)]"
-          aria-hidden="true"
-        />
         {/* Subtle Top/Bottom Dark Espresso Feathering so Text & Controls Stay Crisp */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/20"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
           aria-hidden="true"
         />
 
-        <div className="relative z-10 space-y-1 my-auto max-w-[90%] sm:max-w-[56%]">
+        <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] sm:text-xs font-serif">
             <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-300 inline-flex items-center gap-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               <BookMarked className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -113,7 +108,7 @@ Catechism: ${term.catechismRef || 'N/A'}`;
         </div>
 
         {/* Bottom Controls Row (left-aligned to keep the right-side shelves unobstructed) */}
-        <div className="relative z-10 flex flex-wrap items-center justify-start gap-2.5 mt-auto pt-1.5 sm:max-w-[60%]">
+        <div className="relative z-10 flex flex-wrap items-center justify-start gap-2.5 mt-auto pt-1.5 max-w-[60%] pr-3 sm:pr-4">
           <div className="inline-flex items-center gap-1.5 text-[11px] font-cinzel font-semibold text-amber-200 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span>

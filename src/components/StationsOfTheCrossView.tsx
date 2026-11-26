@@ -1143,7 +1143,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
       {/* Top Passion & 3:00 PM Hour of Mercy Banner */}
       <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between gap-2 overflow-hidden">
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
@@ -1151,16 +1151,16 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             alt="The Divine Mercy"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-full object-contain object-right"
+            className="h-full w-full object-cover object-[50%_12%]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
             }}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
         </div>
 
-        <div className="relative z-10 space-y-1 pr-[156px] sm:pr-[196px]">
+        <div className="relative z-10 space-y-1 pr-[40%]">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-300 leading-tight">
               THE WAY OF THE CROSS • ST. ALPHONSUS LIGUORI • 3:00 PM DEVOTION
@@ -1174,7 +1174,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
           </p>
         </div>
 
-        <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[156px] sm:pr-[196px]">
+        <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[40%]">
           <div className="flex items-center gap-2 min-w-0 overflow-x-auto no-scrollbar">
             {!isAutoPlaying ? (
               <button

@@ -481,9 +481,9 @@ export const CatholicBiblesView: React.FC = () => {
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Center Consecrated Holy Bible, Statues & Candles Photography (shifted slightly left & forward) */}
+          {/* Right-Side Consecrated Holy Bible, Statues & Candles Photography (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-[15]"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-[15]"
             aria-hidden="true"
           >
             <img
@@ -491,22 +491,17 @@ export const CatholicBiblesView: React.FC = () => {
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.05]"
+              className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.05]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.62) 14%, black 28%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.62) 14%, black 28%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               }}
             />
             {/* Subtle Bottom Edge Polish */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/50 to-transparent" />
           </div>
-          {/* Mobile Readability Gradient Behind Left Controls */}
-          <div
-            className="sm:hidden pointer-events-none absolute inset-0 z-[16] bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_28%,rgba(28,18,12,0.88)_42%,rgba(28,18,12,0.38)_56%,rgba(28,18,12,0)_68%)]"
-            aria-hidden="true"
-          />
 
-          <div className="relative z-20 flex flex-col justify-between gap-2 max-w-full sm:max-w-[52%] my-auto">
+          <div className="relative z-20 flex flex-col justify-between gap-2 max-w-[60%] pr-3 sm:pr-4 my-auto">
             <div className="space-y-1">
               {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
               <div className="flex items-center gap-2 flex-nowrap overflow-hidden">

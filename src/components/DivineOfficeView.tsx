@@ -336,9 +336,9 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
 
         {/* RECTANGLE 1: Main Title Banner */}
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-3.5 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Divine Office Prayer Photography with Seamless Dark Brown Gradient Blend */}
+          {/* Right-Side Divine Office Prayer Photography (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -346,25 +346,20 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[0.95] contrast-[1.04]"
+              className="h-full w-full object-cover object-center brightness-[0.95] contrast-[1.04]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               }}
             />
           </div>
-          {/* Smooth multi-stop gradient transitioning from dark brown background into the right-side image */}
-          <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_28%,rgba(28,18,12,0.92)_44%,rgba(28,18,12,0.52)_62%,rgba(28,18,12,0.14)_82%,rgba(28,18,12,0.22)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.92)_48%,rgba(28,18,12,0.58)_65%,rgba(28,18,12,0.12)_84%,rgba(28,18,12,0.18)_100%)]"
-            aria-hidden="true"
-          />
           {/* Subtle top/bottom warm dark brown feathering so controls stay legible */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[90%] sm:max-w-[66%]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
             <div>
               <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-200/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]">
                 Liturgy of the Hours

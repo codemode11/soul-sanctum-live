@@ -126,9 +126,9 @@ export const MarianApparitionsView: React.FC = () => {
           }}
         />
 
-        {/* Right-aligned Colorized 1917 Miracle of the Sun Photograph (4:3 full-height so both Sun and crowd remain visible) */}
+        {/* Right-aligned Colorized 1917 Miracle of the Sun Photograph (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 flex items-center justify-end z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
@@ -136,27 +136,27 @@ export const MarianApparitionsView: React.FC = () => {
             alt="Colorized 1917 photograph of the Miracle of the Sun at Cova da Iria, Fátima, Portugal"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-full object-contain object-right block"
+            className="h-full w-full object-cover object-[50%_35%] block"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.16) 10%, rgba(0,0,0,0.58) 22%, rgba(0,0,0,0.9) 34%, black 46%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.16) 10%, rgba(0,0,0,0.58) 22%, rgba(0,0,0,0.9) 34%, black 46%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
             }}
           />
         </div>
 
-        {/* Continuous full-width translucent gradient smoothing the left-to-right transition */}
+        {/* Subtle bottom edge feathering */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              'linear-gradient(to right, rgba(15,23,42,0.72) 0%, rgba(23,34,53,0.48) 50%, rgba(37,52,71,0.18) 74%, transparent 92%), linear-gradient(to top, rgba(15,23,42,0.34) 0%, transparent 24%)',
+              'linear-gradient(to top, rgba(15,23,42,0.34) 0%, transparent 24%)',
           }}
         />
 
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 pr-[156px] sm:pr-[204px]">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 max-w-[60%] pr-3 sm:pr-4">
           <div className="flex items-center gap-2">
             <span className="p-1 rounded-lg bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70 shrink-0">
               <Star className="w-3.5 h-3.5" />
@@ -190,7 +190,7 @@ export const MarianApparitionsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative z-10 space-y-1 pr-[156px] sm:pr-[204px]">
+        <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4">
           <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
             Major Marian Apparitions and Messages
           </h2>

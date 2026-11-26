@@ -247,9 +247,9 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
       
       {/* Novena Tracker Banner */}
       <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-3.5 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-1.5">
-        {/* Right-Side Seven Original-Size Lit Vigil Candles with Rising Smoke on Dark Slate */}
+        {/* Right-Side Seven Original-Size Lit Vigil Candles with Rising Smoke on Dark Slate (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
@@ -257,22 +257,16 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
             alt="Seven lit short thick beeswax vigil candles in clear glass holders with rising wisps of smoke on dark slate"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-full object-contain object-right"
+            className="h-full w-full object-cover object-center"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 10%, black 20%, black 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 10%, black 20%, black 100%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
             }}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-[#520B0B]/15" />
         </div>
 
-        {/* Smooth Horizontal Gradient from Red (#520B0B) starting at the 50% halfway point */}
-        <div
-          className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,#520B0B_0%,#520B0B_44%,rgba(82,11,11,0.82)_62%,rgba(42,8,8,0.42)_78%,rgba(12,6,6,0.16)_100%)] sm:bg-[linear-gradient(90deg,#520B0B_0%,#520B0B_50%,rgba(82,11,11,0.85)_54%,rgba(42,8,8,0.35)_58%,rgba(12,6,6,0)_62%)]"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 space-y-1 sm:max-w-[52%]">
+        <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4">
           <div className="flex items-center gap-2">
             <NovenaHands9Icon className="w-4 h-4 text-amber-300 shrink-0" />
             <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] leading-snug">
@@ -287,7 +281,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-3 shrink-0 sm:max-w-[52%]">
+        <div className="relative z-10 flex items-center gap-3 shrink-0 max-w-[60%] pr-3 sm:pr-4">
           <button
             type="button"
             onClick={() => setCustomModalOpen(true)}

@@ -322,9 +322,9 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Side Joyful Family Using Bible Flashcards Photography with Seamless Dark Brown Gradient Blend */}
+          {/* Right-Side Joyful Family Using Bible Flashcards Photography (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -332,25 +332,20 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
+              className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               }}
             />
           </div>
-          {/* Smooth multi-stop horizontal gradient transitioning from dark brown (#1C120C) into the family scene */}
-          <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.50)_60%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.20)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_33%,rgba(28,18,12,0.92)_47%,rgba(28,18,12,0.44)_63%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.16)_100%)]"
-            aria-hidden="true"
-          />
           {/* Subtle top/bottom warm dark brown feathering so text & Settings toggle stay crisp */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[85%] sm:max-w-[56%]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
             <div className="flex items-center gap-2">
               <span className="p-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 shrink-0">
                 <BookOpen className="w-3.5 h-3.5" />

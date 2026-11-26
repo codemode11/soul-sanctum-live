@@ -167,9 +167,9 @@ export const CatholicRadioView: React.FC<CatholicRadioViewProps> = ({
     <div className="max-w-5xl mx-auto space-y-6 pb-24">
       {/* Top Hero Banner */}
       <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-stone-100 shadow-md border border-[#8B5A2B]/40 flex flex-col justify-between">
-        {/* Right-Side Editorial Tabletop Radio & Antique Globe Artwork */}
+        {/* Right-Side Editorial Tabletop Radio & Antique Globe Artwork (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
           aria-hidden="true"
         >
           <img
@@ -177,26 +177,21 @@ export const CatholicRadioView: React.FC<CatholicRadioViewProps> = ({
             alt="Modern matte-charcoal digital tabletop radio receiver beside an antique globe on a dark wood desk"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.03]"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 22%, black 42%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 22%, black 42%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
             }}
           />
         </div>
 
-        {/* Mobile Left-Side Readability Scrim */}
         <div
-          className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_38%,rgba(28,18,12,0.88)_60%,rgba(28,18,12,0.42)_82%,rgba(28,18,12,0.20)_100%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/20"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
           aria-hidden="true"
         />
 
-        <div className="relative z-10 space-y-1 my-auto max-w-[92%] sm:max-w-[56%]">
+        <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
           <p className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-300/95 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             Universal Church Broadcasts · Live 24/7
           </p>
@@ -208,7 +203,7 @@ export const CatholicRadioView: React.FC<CatholicRadioViewProps> = ({
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-3 mt-auto pt-1.5 sm:max-w-[56%]">
+        <div className="relative z-10 flex items-center gap-3 mt-auto pt-1.5 max-w-[60%] pr-3 sm:pr-4">
           <button
             type="button"
             onClick={handlePrimaryBannerAction}

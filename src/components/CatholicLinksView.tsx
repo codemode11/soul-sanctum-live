@@ -193,34 +193,27 @@ export const CatholicLinksView: React.FC = () => {
     <div className="max-w-4xl mx-auto space-y-6 pb-14 animate-fadeIn">
       {/* Header Banner */}
       <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-[#F7EBE1] shadow-xl border border-[#8B5A2B]/50 flex flex-col justify-between gap-2 overflow-hidden">
-        {/* Right-Side Study Desk, Catholic.com Monitor & Empty Wheeled Chair Photography */}
+        {/* Right-Side Study Desk, Catholic.com Monitor & Empty Wheeled Chair Photography (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
           aria-hidden="true"
         >
-          <div className="relative h-full max-w-full flex items-center justify-end">
-            <img
-              src={catholicComDeskMonitorImg}
-              alt="Computer monitor displaying Catholic Answers on a walnut wooden table with an empty rolling chair on wheels"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.03]"
-            />
-            {/* Smooth Horizontal Gradient Transition from Warm Dark Espresso (#1C120C) Without Covering the Chair or Monitor */}
-            <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,rgba(28,18,12,0.88)_7%,rgba(28,18,12,0.36)_14%,transparent_24%)]" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-[#1C120C]/50 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-[#1C120C]/45 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/55 to-transparent" />
-          </div>
+          <img
+            src={catholicComDeskMonitorImg}
+            alt="Computer monitor displaying Catholic Answers on a walnut wooden table with an empty rolling chair on wheels"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+            }}
+          />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-[#1C120C]/45 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/55 to-transparent" />
         </div>
 
-        {/* Mobile Readability Gradient Behind Left Title & Button */}
-        <div
-          className="sm:hidden pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_34%,rgba(28,18,12,0.88)_60%,rgba(28,18,12,0.48)_84%,rgba(28,18,12,0.28)_100%)]"
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[55%] gap-2">
+        <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
           <div className="space-y-1 min-w-0">
             <div className="inline-flex items-center gap-1.5 text-[#F5D7B2] text-[10.5px] sm:text-[11px] font-cinzel font-bold uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
               <Compass className="w-3.5 h-3.5 text-[#FFD700] shrink-0" />

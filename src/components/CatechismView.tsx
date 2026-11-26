@@ -270,9 +270,9 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
       {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         <div className={`sanctum-top-banner relative overflow-hidden px-5 py-3.5 sm:px-6 sm:py-3.5 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between gap-2 ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Catechism of the Catholic Church Photography with Seamless Dark Brown Gradient Blend */}
+          {/* Right-Side Catechism of the Catholic Church Photography (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -280,25 +280,20 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[0.95] contrast-[1.04]"
+              className="h-full w-full object-cover object-center brightness-[0.95] contrast-[1.04]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               }}
             />
           </div>
-          {/* Smooth multi-stop horizontal gradient from dark brown background into the Catechism image */}
-          <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_26%,rgba(28,18,12,0.92)_42%,rgba(28,18,12,0.50)_60%,rgba(28,18,12,0.12)_82%,rgba(28,18,12,0.20)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_32%,rgba(28,18,12,0.90)_46%,rgba(28,18,12,0.42)_63%,rgba(28,18,12,0.08)_84%,rgba(28,18,12,0.16)_100%)]"
-            aria-hidden="true"
-          />
           {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/70 via-transparent to-[#1C120C]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 max-w-[92%] sm:max-w-[68%] min-w-0">
+          <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4 min-w-0">
             {/* Line 1: Heading & Paragraphs Range */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[10.5px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel shadow-xs">

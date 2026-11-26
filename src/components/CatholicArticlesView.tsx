@@ -483,9 +483,9 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       {/* Standardized Top Banner with Collapsible Settings Drop-Down for Publications */}
       <div className="rounded-xl overflow-hidden bg-[#1C120C] text-amber-50 shadow-md border border-amber-900/40">
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="relative w-full my-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-            {/* Left Column: Unobstructed Title, Description & Feed Controls */}
-            <div className="relative z-20 flex-1 min-w-0 space-y-2">
+          <div className="relative w-full my-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+            {/* Left Column: Unobstructed Title, Description & Feed Controls (60% width on sm+) */}
+            <div className="relative z-20 w-full sm:w-[60%] sm:pr-4 min-w-0 space-y-2">
               <div className="space-y-0.5">
                 <div className="flex items-center gap-1.5 flex-wrap group">
                   <CatholicArticlesRssIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -567,9 +567,9 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
               </div>
             </div>
 
-            {/* Right Column (Desktop / Tablet): Orderly Horizontal Overlapping Magazine Covers */}
+            {/* Right Column (Desktop / Tablet): Orderly Horizontal Overlapping Magazine Covers (40% width) */}
             <div
-              className="hidden sm:block relative z-10 shrink-0 pointer-events-none select-none w-[240px] md:w-[300px] lg:w-[360px] h-[152px] md:h-[168px]"
+              className="hidden sm:block relative z-10 shrink-0 pointer-events-none select-none w-[40%] h-[152px] md:h-[168px]"
               aria-hidden="true"
             >
               {/* Layer 6 (Backmost / Leftmost): U.S. Catholic */}

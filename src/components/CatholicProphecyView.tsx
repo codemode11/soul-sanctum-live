@@ -250,9 +250,9 @@ export const CatholicProphecyView: React.FC = () => {
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Side Colorized Medjugorje Visionaries with Superimposed Our Lady of Medjugorje */}
+          {/* Right-Side Colorized Medjugorje Visionaries with Superimposed Our Lady of Medjugorje (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
             aria-hidden="true"
           >
             <img
@@ -260,28 +260,23 @@ export const CatholicProphecyView: React.FC = () => {
               alt="Colorized photograph of the Medjugorje visionaries praying with Our Lady of Medjugorje superimposed above in heavenly mist"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[1.02] contrast-[1.03]"
+              className="h-full w-full object-cover object-[50%_25%] brightness-[1.02] contrast-[1.03]"
               style={{
                 maskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 14%, black 28%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
                 WebkitMaskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 14%, black 28%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               }}
             />
           </div>
 
-          {/* Mobile left-side readability veil */}
-          <div
-            className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#0F172A_0%,#0F172A_36%,rgba(15,23,42,0.88)_58%,rgba(15,23,42,0.42)_80%,rgba(15,23,42,0.18)_100%)] z-0"
-            aria-hidden="true"
-          />
           {/* Subtle top/bottom dark slate depth feathering */}
           <div
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F172A]/45 via-transparent to-[#0F172A]/15 z-0"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 max-w-[92%] sm:max-w-[54%] md:max-w-[56%]">
+          <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4">
             <p className="font-sans text-[10.5px] sm:text-[11px] uppercase tracking-[0.18em] text-[#DFD5C3] drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Prophetia Catholica · Sacred Scripture, Marian Messages &amp; Saints
             </p>
@@ -294,7 +289,7 @@ export const CatholicProphecyView: React.FC = () => {
           </div>
 
           {/* Lower-Left Banner Controls: May 2024 Vatican Norms + Settings Drop-Down (clear of artwork) */}
-          <div className="relative z-10 flex items-center justify-start gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0 sm:max-w-[56%]">
+          <div className="relative z-10 flex items-center justify-start gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0 max-w-[60%] pr-3 sm:pr-4">
             <button
               type="button"
               onClick={() =>

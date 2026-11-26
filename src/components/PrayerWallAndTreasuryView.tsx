@@ -296,35 +296,28 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
       {activeSection === 'treasury' ? (
         <div className="rounded-xl shadow-lg border border-[#A67B4E]/60 relative z-20 bg-[#24150B]">
           <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#24150B] text-amber-50 relative overflow-hidden flex flex-col justify-between gap-2 ${isTreasurySettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-            {/* Right-Side Wooden Kneeler Facing Wall Crucifix Photography (16:9 preserved on sm+ so crucifix, armrest, prayer book, and cushion stay uncropped) */}
+            {/* Right-Side Wooden Kneeler Facing Wall Crucifix Photography (40% width) */}
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
               aria-hidden="true"
             >
-              <div className="relative h-full max-w-full flex items-center justify-end">
-                <img
-                  src={treasuryWoodenKneelerImg}
-                  alt="Wooden kneeler facing the crucifix on the chapel wall, with forearm rest and prayer book tucked under the wooden case"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
-                />
-                {/* Smooth Horizontal Gradient Transition from Dark Brown (#24150B) into the Kneeler & Crucifix */}
-                <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#24150B_0%,#24150B_14%,rgba(36,21,11,0.92)_26%,rgba(36,21,11,0.58)_38%,rgba(36,21,11,0.20)_50%,transparent_64%)]" />
-                {/* Subtle Right, Top, and Bottom Dark Brown Feathering */}
-                <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#24150B]/55 to-transparent" />
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#24150B]/45 to-transparent" />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#24150B]/60 to-transparent" />
-              </div>
+              <img
+                src={treasuryWoodenKneelerImg}
+                alt="Wooden kneeler facing the crucifix on the chapel wall, with forearm rest and prayer book tucked under the wooden case"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
+                style={{
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                }}
+              />
+              {/* Subtle Top and Bottom Dark Brown Feathering */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#24150B]/45 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#24150B]/60 to-transparent" />
             </div>
 
-            {/* Mobile Readability Gradient Behind Left Title & Controls */}
-            <div
-              className="sm:hidden pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#24150B_0%,#24150B_28%,rgba(36,21,11,0.88)_52%,rgba(36,21,11,0.45)_76%,rgba(36,21,11,0.22)_100%)]"
-              aria-hidden="true"
-            />
-
-            <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[58%] gap-2">
+            <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-1.5 text-[10px] sm:text-[10.5px] font-cinzel font-bold uppercase tracking-[0.12em] text-[#DFB991] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] leading-snug">
                   <BookOpen className="w-3.5 h-3.5 text-amber-300 shrink-0" />
@@ -475,9 +468,9 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
         </div>
       ) : (
         <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120D] rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-between gap-2 overflow-hidden">
-          {/* Right-Side Golden Incense Rising from Brass Censer Photography */}
+          {/* Right-Side Golden Incense Rising from Brass Censer Photography (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 h-full max-w-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-[#1C120D] via-amber-950/80 to-[#1C120D]"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 bg-gradient-to-r from-[#1C120D] via-amber-950/80 to-[#1C120D]"
             aria-hidden="true"
           >
             <img
@@ -485,7 +478,11 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               alt="Antique hammered brass censer on an oak sanctuary stand with golden incense smoke rising in candlelight"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-contain object-right brightness-[1.04] contrast-[1.03]"
+              className="h-full w-full object-cover object-right brightness-[1.04] contrast-[1.03]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              }}
             />
 
             {/* Animated Rising Frankincense Smoke Emanating Directly from the Censer Dome */}
@@ -669,20 +666,11 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               </div>
             </div>
 
-            {/* Smooth Horizontal Gradient Transition from Warm Dark Stone (#1C120D) into the Censer & Incense */}
-            <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120D_0%,#1C120D_14%,rgba(28,18,13,0.92)_28%,rgba(28,18,13,0.56)_44%,rgba(28,18,13,0.18)_58%,transparent_72%)]" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120D]/55 to-transparent" />
             <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120D]/45 to-transparent" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120D]/60 to-transparent" />
           </div>
 
-          {/* Mobile Readability Gradient Behind Left Title & Button */}
-          <div
-            className="sm:hidden pointer-events-none absolute inset-0 z-0 bg-[linear-gradient(90deg,#1C120D_0%,#1C120D_32%,rgba(28,18,13,0.88)_58%,rgba(28,18,13,0.48)_82%,rgba(28,18,13,0.28)_100%)]"
-            aria-hidden="true"
-          />
-
-          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-full sm:max-w-[58%] gap-2">
+          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
             <div className="space-y-1 min-w-0">
               <div className="flex items-center gap-2">
                 <Flame className="w-4 h-4 text-amber-400 shrink-0" />

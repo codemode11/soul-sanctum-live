@@ -595,9 +595,9 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
             isDomainMenuOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Side Obsidian Knowledge Graph Artwork with Seamless Dark Brown Blend */}
+          {/* Right-Side Obsidian Knowledge Graph Artwork (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[72%] md:w-[68%] overflow-hidden pr-1 sm:pr-3 py-1 mix-blend-lighten"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden mix-blend-lighten"
             aria-hidden="true"
           >
             <img
@@ -605,22 +605,21 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-contain object-right brightness-[1.08] contrast-[1.06]"
+              className="h-full w-full object-cover object-center brightness-[1.08] contrast-[1.06]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              }}
             />
           </div>
 
-          {/* Smooth multi-stop horizontal gradient transitioning from dark brown (#1C120C) into the right-side Obsidian graph */}
-          <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_32%,rgba(28,18,12,0.86)_48%,rgba(28,18,12,0.34)_64%,rgba(28,18,12,0.04)_82%,rgba(28,18,12,0.08)_100%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_38%,rgba(28,18,12,0.82)_52%,rgba(28,18,12,0.22)_66%,rgba(28,18,12,0)_80%,rgba(28,18,12,0.06)_100%)]"
-            aria-hidden="true"
-          />
           {/* Subtle top/bottom warm dark brown feathering so text & controls stay crisp */}
           <div
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[88%] sm:max-w-[60%]">
+          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] sm:text-xs font-serif">
               <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-300 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 28,000+ Church Documents

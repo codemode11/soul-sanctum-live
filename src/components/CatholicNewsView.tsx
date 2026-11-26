@@ -266,9 +266,9 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
       {/* 1. TOP BANNER: Vatican News and Church Dispatches */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20 overflow-hidden">
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Pope Leo XIV Waving from the Tall Apostolic Palace Angelus Window with Seamless Dark Brown Gradient Blend */}
+          {/* Right-Side Pope Leo XIV Waving from the Tall Apostolic Palace Angelus Window (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -276,25 +276,20 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-auto max-w-full object-contain object-right brightness-[0.98] contrast-[1.03]"
+              className="h-full w-full object-cover object-[50%_20%] brightness-[0.98] contrast-[1.03]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
               }}
             />
           </div>
-          {/* Multi-stop horizontal gradient from solid dark brown (#1C120C) fading cleanly to 0 before the Pope's waving arm */}
-          <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_25%,rgba(28,18,12,0.9)_32%,rgba(28,18,12,0.45)_39%,rgba(28,18,12,0)_46%)] sm:bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_58%,rgba(28,18,12,0.92)_62.5%,rgba(28,18,12,0.45)_66.5%,rgba(28,18,12,0)_70%)]"
-            aria-hidden="true"
-          />
           {/* Subtle bottom warm dark brown feathering */}
           <div
             className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 max-w-full sm:max-w-[58%] flex flex-col justify-between flex-1 gap-2">
+          <div className="relative z-10 max-w-[60%] pr-3 sm:pr-4 flex flex-col justify-between flex-1 gap-2">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
                 <Globe className="w-3.5 h-3.5 text-amber-400 shrink-0" />
