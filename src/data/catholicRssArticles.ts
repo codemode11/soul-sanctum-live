@@ -27,15 +27,6 @@ export interface CatholicArticleItem {
 
 export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
   {
-    id: 'catholic-exchange',
-    name: 'Catholic Exchange',
-    shortName: 'Catholic Exchange',
-    rssUrl: 'https://catholicexchange.com/feed/',
-    websiteUrl: 'https://catholicexchange.com',
-    tagline: 'Catholic spirituality, Scripture reflections, and daily Christian living',
-    location: 'United States'
-  },
-  {
     id: 'st-paul-center',
     name: 'St. Paul Center',
     shortName: 'St. Paul Center',
@@ -63,6 +54,15 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     location: 'Winona-Rochester, USA'
   },
   {
+    id: 'ewtn-news',
+    name: 'EWTN News',
+    shortName: 'EWTN News',
+    rssUrl: 'https://www.ewtnnews.com/rss',
+    websiteUrl: 'https://www.ewtnnews.com',
+    tagline: 'Global Catholic news, Vatican coverage, and faithful reporting from EWTN',
+    location: 'Vatican / Global'
+  },
+  {
     id: 'catholic-insight',
     name: 'Catholic Insight',
     shortName: 'Catholic Insight',
@@ -81,6 +81,15 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     location: 'Rome / International'
   },
   {
+    id: 'spirit-daily',
+    name: 'Spirit Daily',
+    shortName: 'Spirit Daily',
+    rssUrl: 'https://spiritdailyblog.com/feed',
+    websiteUrl: 'https://spiritdaily.org',
+    tagline: 'Catholic spirituality, mystical insight, Marian devotion, and signs of the times',
+    location: 'United States'
+  },
+  {
     id: 'sign-org',
     name: 'Signs & Wonders for Our Times (sign.org)',
     shortName: 'sign.org',
@@ -97,6 +106,24 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     websiteUrl: 'https://www.ncregister.com',
     tagline: 'Fidelity to the Magisterium — EWTN Catholic News & Analysis',
     location: 'United States'
+  },
+  {
+    id: 'us-catholic',
+    name: 'U.S. Catholic',
+    shortName: 'U.S. Catholic',
+    rssUrl: 'https://uscatholic.org/topics/religion/feed/',
+    websiteUrl: 'https://uscatholic.org/topics/religion/',
+    tagline: 'Faith in real life — Catholic theology, liturgy, and religion features',
+    location: 'Chicago, USA'
+  },
+  {
+    id: 'catholic-register',
+    name: 'Catholic Register',
+    shortName: 'Catholic Register',
+    rssUrl: 'https://www.catholicregister.org/rss',
+    websiteUrl: 'https://www.catholicregister.org/features',
+    tagline: 'Canada’s national Catholic newspaper — features, faith, and global Church reporting',
+    location: 'Toronto, Canada'
   },
   {
     id: 'catholic-digest',
@@ -124,6 +151,15 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     websiteUrl: 'https://churchlifejournal.nd.edu',
     tagline: 'Theology, liturgy, and culture from the McGrath Institute for Church Life at the University of Notre Dame',
     location: 'Notre Dame, Indiana, USA'
+  },
+  {
+    id: 'catholic-exchange',
+    name: 'Catholic Exchange',
+    shortName: 'Catholic Exchange',
+    rssUrl: 'https://catholicexchange.com/feed/',
+    websiteUrl: 'https://catholicexchange.com',
+    tagline: 'Catholic spirituality, Scripture reflections, and daily Christian living',
+    location: 'United States'
   }
 ];
 
@@ -696,6 +732,74 @@ Possible response: Lord Jesus, help me never to doubt the victory of goodness, t
     link: 'https://catholicexchange.com/how-is-christ-the-king-in-your-life/',
     imageUrl: '/assets/aistudio/CHRIST_THE_KING_2_04718613.jpg',
     categories: ['Christ the King', 'Gospel of Matthew', 'Good Shepherd', 'Liturgical Year', 'Prayer & Spirituality'],
+    isFullContentLoaded: true
+  },
+  // EWTN News — Curated Fallback
+  {
+    id: 'ewtn-news-curated-1',
+    sourceId: 'ewtn-news',
+    sourceName: 'EWTN News',
+    title: 'Global Catholic News & Vatican Reporting from EWTN News',
+    author: 'EWTN News Editorial',
+    publishedDate: 'Updated Daily',
+    readTime: '3 min read',
+    summary: 'Faithful reporting on the Holy See, the universal Church, saints, and Catholic life worldwide from EWTN News.',
+    content: `EWTN News brings together live reporting from Rome, the Americas, Europe, Asia, and Africa to keep the faithful connected to the life of the universal Catholic Church.
+
+Refresh the feed above to read the latest daily dispatches directly from EWTN News.`,
+    link: 'https://www.ewtnnews.com',
+    categories: ['Vatican', 'World News', 'EWTN News'],
+    isFullContentLoaded: true
+  },
+  // Spirit Daily — Curated Fallback
+  {
+    id: 'spirit-daily-curated-1',
+    sourceId: 'spirit-daily',
+    sourceName: 'Spirit Daily',
+    title: 'Daily Spiritual Reflections & Signs of the Times from Spirit Daily',
+    author: 'Spirit Daily',
+    publishedDate: 'Updated Daily',
+    readTime: '3 min read',
+    summary: 'Catholic spirituality, prayer reflections, Marian devotion, and spiritual discernment from Spirit Daily.',
+    content: `Spirit Daily gathers daily meditations on prayer, the communion of saints, Marian devotion, and the spiritual life of the Church.
+
+Refresh the feed above to load the latest articles directly from Spirit Daily.`,
+    link: 'https://spiritdaily.org',
+    categories: ['Spirituality', 'Marian Devotion', 'Spirit Daily'],
+    isFullContentLoaded: true
+  },
+  // U.S. Catholic — Curated Fallback
+  {
+    id: 'us-catholic-curated-1',
+    sourceId: 'us-catholic',
+    sourceName: 'U.S. Catholic',
+    title: 'Faith in Real Life: Religion & Catholic Living from U.S. Catholic',
+    author: 'U.S. Catholic Editors',
+    publishedDate: 'Updated Daily',
+    readTime: '3 min read',
+    summary: 'Essays and reporting on Catholic spirituality, theology, liturgy, and everyday parish life from U.S. Catholic.',
+    content: `Published by the Claretian Missionaries in Chicago, U.S. Catholic explores Scripture, liturgy, prayer, and how the Gospel meets daily life in the modern world.
+
+Refresh the feed above to read the latest religion stories directly from U.S. Catholic.`,
+    link: 'https://uscatholic.org/topics/religion/',
+    categories: ['Religion', 'Catholic Living', 'U.S. Catholic'],
+    isFullContentLoaded: true
+  },
+  // Catholic Register — Curated Fallback
+  {
+    id: 'catholic-register-curated-1',
+    sourceId: 'catholic-register',
+    sourceName: 'Catholic Register',
+    title: 'Features & Faith Reporting from The Catholic Register',
+    author: 'The Catholic Register',
+    publishedDate: 'Updated Daily',
+    readTime: '3 min read',
+    summary: 'In-depth Catholic features, Church history, culture, and faithful journalism from Canada’s national Catholic newspaper.',
+    content: `The Catholic Register serves readers across Canada and around the world with thoughtful feature stories on Catholic culture, saints, theology, and the life of the Church.
+
+Refresh the feed above to read the latest features and reports directly from The Catholic Register.`,
+    link: 'https://www.catholicregister.org/features',
+    categories: ['Features', 'Catholic Culture', 'Catholic Register'],
     isFullContentLoaded: true
   }
 ];

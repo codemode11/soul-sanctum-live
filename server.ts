@@ -1291,9 +1291,6 @@ app.all('/api/catholic-ai', async (req, res) => {
 });
 
 const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
-  'catholic-exchange': [
-    'https://catholicexchange.com/feed/'
-  ],
   'st-paul-center': [
     'https://catholicexchange.com/feed/',
     'https://www.catholicworldreport.com/feed/'
@@ -1305,12 +1302,20 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   'word-on-fire': [
     'https://www.wordonfire.org/articles/feed/'
   ],
+  'ewtn-news': [
+    'https://www.ewtnnews.com/rss',
+    'https://www.catholicnewsagency.com/rss/news.xml'
+  ],
   'catholic-insight': [
     'https://www.catholicworldreport.com/feed/',
     'https://crisismagazine.com/feed/'
   ],
   'aleteia': [
     'https://aleteia.org/feed/'
+  ],
+  'spirit-daily': [
+    'https://spiritdailyblog.com/feed',
+    'https://spiritdaily.org/blog/feed'
   ],
   'sign-org': [
     'https://sign.org/feed/',
@@ -1319,6 +1324,13 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   'ncregister': [
     'https://www.ncregister.com/feeds/general-news.xml',
     'https://www.catholicnewsagency.com/rss/news.xml'
+  ],
+  'us-catholic': [
+    'https://uscatholic.org/topics/religion/feed/',
+    'https://uscatholic.org/feed/'
+  ],
+  'catholic-register': [
+    'https://www.catholicregister.org/rss'
   ],
   'catholic-digest': [
     'https://www.catholicdigest.com/wp-json/wp/v2/posts?per_page=12',
@@ -1330,6 +1342,9 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   ],
   'church-life-journal': [
     'https://churchlifejournal.nd.edu/articles.atom'
+  ],
+  'catholic-exchange': [
+    'https://catholicexchange.com/feed/'
   ],
   'cbcp': [
     'https://cbcpnews.net/cbcpnews/feed/',
