@@ -29,12 +29,20 @@ const CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   'word-on-fire': [
     'https://www.wordonfire.org/articles/feed/'
   ],
+  'ewtn-news': [
+    'https://www.ewtnnews.com/rss',
+    'https://www.catholicnewsagency.com/rss/news.xml'
+  ],
   'catholic-insight': [
     'https://www.catholicworldreport.com/feed/',
     'https://crisismagazine.com/feed/'
   ],
   'aleteia': [
     'https://aleteia.org/feed/'
+  ],
+  'spirit-daily': [
+    'https://spiritdailyblog.com/feed',
+    'https://spiritdaily.org/blog/feed'
   ],
   'sign-org': [
     'https://sign.org/feed/',
@@ -43,6 +51,13 @@ const CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   'ncregister': [
     'https://www.ncregister.com/feeds/general-news.xml',
     'https://www.catholicnewsagency.com/rss/news.xml'
+  ],
+  'us-catholic': [
+    'https://uscatholic.org/topics/religion/feed/',
+    'https://uscatholic.org/feed/'
+  ],
+  'catholic-register': [
+    'https://www.catholicregister.org/rss'
   ],
   'catholic-digest': [
     'https://www.catholicdigest.com/wp-json/wp/v2/posts?per_page=12',
@@ -54,6 +69,9 @@ const CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   ],
   'church-life-journal': [
     'https://churchlifejournal.nd.edu/articles.atom'
+  ],
+  'catholic-exchange': [
+    'https://catholicexchange.com/feed/'
   ],
   'cbcp': [
     'https://cbcpnews.net/cbcpnews/feed/',
@@ -106,7 +124,7 @@ ${featuredMedia ? `<media:content url="${featuredMedia.replace(/"/g, '&quot;')}"
   }
 }
 
-async function fetchViteUpstreamRssXml(url: string): Promise<string> {
+async function fetchViteUpstreamRssXml(url: string, sourceTitle: string = 'Catholic Press'): Promise<string> {
   const isWpJson = url.includes('/wp-json/');
   const headers: Record<string, string> = {
     'Accept': isWpJson
@@ -119,7 +137,7 @@ async function fetchViteUpstreamRssXml(url: string): Promise<string> {
   const parseResp = (raw: string): string | null => {
     if (!raw) return null;
     if (isWpJson && raw.trim().startsWith('[')) {
-      return wpPostsJsonToViteRssXml(raw, 'Catholic Digest');
+      return wpPostsJsonToViteRssXml(raw, sourceTitle);
     }
     if (/<item[\s>]/i.test(raw) || /<entry[\s>]/i.test(raw)) {
       return raw;
@@ -131,7 +149,7 @@ async function fetchViteUpstreamRssXml(url: string): Promise<string> {
     const res1 = await fetch(url, {
       cache: 'no-store',
       headers,
-      signal: AbortSignal.timeout(5500)
+      signal: AbortSignal.timeout(10000)
     });
     if (res1.ok) {
       const txt1 = await res1.text();
@@ -148,7 +166,7 @@ async function fetchViteUpstreamRssXml(url: string): Promise<string> {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
       ...headers
     },
-    signal: AbortSignal.timeout(5500)
+    signal: AbortSignal.timeout(10000)
   });
   if (!res2.ok) {
     throw new Error(`HTTP ${res2.status}`);
@@ -789,8 +807,14 @@ Include 3 to 5 accurate Magisterial citations and 3 related follow-up questions.
       server.middlewares.use('/api/catholic-rss', async (req: any, res: any) => {
         try {
           const urlObj = new URL(req.url || '', 'http://localhost');
-          const sourceKey = urlObj.searchParams.get('source') || 'st-paul-center';
-          const candidateUrls = CATHOLIC_RSS_FEEDS[sourceKey] || CATHOLIC_RSS_FEEDS['st-paul-center'];
+          const sourceKey = (urlObj.searchParams.get('source') || 'st-paul-center').trim();
+          const candidateUrls = CATHOLIC_RSS_FEEDS[sourceKey];
+          if (!candidateUrls || candidateUrls.length === 0) {
+            res.statusCode = 404;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: `Unknown RSS publication source: ${sourceKey}` }));
+            return;
+          }
 
           const collected: { xml: string; ts: number; index: number; titleKey: string }[] = [];
           const seenTitles = new Set<string>();
@@ -798,7 +822,7 @@ Include 3 to 5 accurate Magisterial citations and 3 related follow-up questions.
 
           for (const targetUrl of candidateUrls) {
             try {
-              const xml = await fetchViteUpstreamRssXml(targetUrl);
+              const xml = await fetchViteUpstreamRssXml(targetUrl, sourceKey);
               const channelBuildMatch =
                 xml.match(/<lastBuildDate[^>]*>([\s\S]*?)<\/lastBuildDate>/i) ||
                 xml.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i);
@@ -933,54 +957,95 @@ Include 3 to 5 accurate Magisterial citations and 3 related follow-up questions.
             }
           }
 
-          // 3. Extract paragraphs & headings from <article> or main content container
+          // 3. Extract paragraphs & headings using balanced containers + HTML5 optional </p> handling
           const cleanHtml = html
             .replace(/<script[\s\S]*?<\/script>/gi, '')
             .replace(/<style[\s\S]*?<\/style>/gi, '')
             .replace(/<noscript[\s\S]*?<\/noscript>/gi, '')
             .replace(/<svg[\s\S]*?<\/svg>/gi, '')
+            .replace(/<header[\s\S]*?<\/header>/gi, '')
             .replace(/<nav[\s\S]*?<\/nav>/gi, '')
             .replace(/<footer[\s\S]*?<\/footer>/gi, '')
             .replace(/<aside[\s\S]*?<\/aside>/gi, '')
             .replace(/<form[\s\S]*?<\/form>/gi, '');
 
-          const articleMatch =
-            cleanHtml.match(/<div[^>]+class=["'][^"']*(?:entry-content|post-content|article-content|article-body|td-post-content|single-content|c-article-content)[^"']*["'][^>]*>([\s\S]*?)<\/div>\s*(?:<footer|<div[^>]+class=["'][^"']*(?:post-footer|sharedaddy|related|tags|author-box))/i) ||
-            cleanHtml.match(/<article[^>]*>([\s\S]*?)<\/article>/i) ||
-            cleanHtml.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
-
-          const scopeHtml = articleMatch ? articleMatch[1] : cleanHtml;
-
-          const blocks: string[] = [];
-          const blockRegex = /<(p|h2|h3|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
-          let m: RegExpExecArray | null;
-          const boilerplatePatterns = /^(?:read more|related:|also read:|subscribe to|sign up for|follow us on|share this|click here|advertisement|copyright ©|all rights reserved|support .* journalism|donate today|already a subscriber)/i;
-
-          while ((m = blockRegex.exec(scopeHtml)) !== null) {
-            const tag = m[1].toLowerCase();
-            const text = decodeEntities(
-              m[2]
-                .replace(/<br\s*\/?>/gi, '\n')
-                .replace(/<[^>]+>/g, '')
-                .replace(/\s+/g, ' ')
-                .trim()
-            );
-            if (!text) continue;
-            if (boilerplatePatterns.test(text)) continue;
-            // Filter out tiny nav/caption fragments unless it's a subheading
-            if (tag === 'p' && text.length < 35 && !/[.!?"]$/.test(text)) continue;
-            if (blocks.includes(text)) continue;
-
-            if (tag === 'h2' || tag === 'h3') {
-              blocks.push(`\n${text}`);
-            } else if (tag === 'blockquote') {
-              blocks.push(`“${text.replace(/^["“]|["”]$/g, '')}”`);
-            } else {
-              blocks.push(text);
+          const extractBalanced = (src: string, tagName: string, openRe: RegExp): string[] => {
+            const out: string[] = [];
+            const openTok = new RegExp(`<${tagName}\\b[^>]*>`, 'gi');
+            const closeTok = new RegExp(`<\\/${tagName}>`, 'gi');
+            let mOpen: RegExpExecArray | null;
+            while ((mOpen = openRe.exec(src)) !== null) {
+              const startInner = mOpen.index + mOpen[0].length;
+              let depth = 1;
+              let pos = startInner;
+              while (depth > 0 && pos < src.length) {
+                openTok.lastIndex = pos;
+                closeTok.lastIndex = pos;
+                const no = openTok.exec(src);
+                const nc = closeTok.exec(src);
+                if (!nc) break;
+                if (no && no.index < nc.index) {
+                  depth++;
+                  pos = no.index + no[0].length;
+                } else {
+                  depth--;
+                  if (depth === 0) {
+                    out.push(src.slice(startInner, nc.index));
+                    break;
+                  }
+                  pos = nc.index + nc[0].length;
+                }
+              }
             }
-          }
+            return out;
+          };
 
-          const htmlParagraphsText = blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+          const parseScope = (scope: string): string => {
+            const normalized = scope.replace(
+              /<p\b[^>]*>([\s\S]*?)(?=<\/p>|<p\b|<h[1-6]\b|<div\b|<blockquote\b|<ul\b|<ol\b|<figure\b|<section\b|<article\b|<footer\b|$)/gi,
+              '<p>$1</p>'
+            );
+            const blocks: string[] = [];
+            const blockRegex = /<(p|h2|h3|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+            let m: RegExpExecArray | null;
+            const boilerplatePatterns = /^(?:read more|related:|also read:|subscribe to|sign up for|follow us on|share this|click here|advertisement|copyright ©|all rights reserved|support .* journalism|donate today|already a subscriber|about the author|the post .* (?:first appeared|appeared first) on)/i;
+            while ((m = blockRegex.exec(normalized)) !== null) {
+              const tag = m[1].toLowerCase();
+              const text = decodeEntities(
+                m[2].replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+              );
+              if (!text || boilerplatePatterns.test(text)) continue;
+              if (tag === 'p' && text.length < 30 && !/[.!?"]$/.test(text)) continue;
+              if (blocks.includes(text)) continue;
+              if (tag === 'h2' || tag === 'h3') blocks.push(`\n${text}`);
+              else if (tag === 'blockquote') blocks.push(`“${text.replace(/^["“]|["”]$/g, '')}”`);
+              else blocks.push(text);
+            }
+            return blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+          };
+
+          const divCands = extractBalanced(
+            cleanHtml,
+            'div',
+            /<div\b[^>]*class=["'][^"']*(?:entry-content|herald-entry-content|post-content|article-content|article-body|td-post-content|single-content|c-article-content|\bprose\b)[^"']*["'][^>]*>/gi
+          );
+          const artCands = extractBalanced(cleanHtml, 'article', /<article\b[^>]*>/gi);
+          const mainCands = extractBalanced(cleanHtml, 'main', /<main\b[^>]*>/gi);
+
+          let htmlParagraphsText = '';
+          for (const group of [divCands, artCands, mainCands]) {
+            let groupBest = '';
+            for (const c of group) {
+              const t = parseScope(c);
+              if (t.length > groupBest.length) groupBest = t;
+            }
+            if (groupBest.length > htmlParagraphsText.length) htmlParagraphsText = groupBest;
+            if (group === divCands && groupBest.length >= 450) break;
+          }
+          if (htmlParagraphsText.length < 250) {
+            const fb = parseScope(cleanHtml);
+            if (fb.length > htmlParagraphsText.length) htmlParagraphsText = fb;
+          }
 
           // Choose whichever extraction has richer paragraph structure and length
           const finalContent =
@@ -1981,11 +2046,15 @@ export default defineConfig(() => {
               },
             },
             {
-              urlPattern: /\/api\/(?:vatican-news|catholic-rss|medjugorje-messages|ewtn-epg).*/i,
+              urlPattern: /\/api\/(?:catholic-rss|catholic-article-full).*/i,
+              handler: 'NetworkOnly',
+            },
+            {
+              urlPattern: /\/api\/(?:vatican-news|medjugorje-messages|ewtn-epg).*/i,
               handler: 'NetworkFirst',
               options: {
-                cacheName: 'sanctum-daily-feeds-cache',
-                networkTimeoutSeconds: 5,
+                cacheName: 'sanctum-daily-feeds-v2',
+                networkTimeoutSeconds: 10,
                 expiration: {
                   maxEntries: 40,
                   maxAgeSeconds: 60 * 60 * 24,

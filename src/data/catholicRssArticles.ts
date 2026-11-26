@@ -194,7 +194,7 @@ function stripHtmlAndFormatParagraphs(html: string): string {
     .replace(/<[^>]+>/g, '')
     .replace(/\bundefined\b/g, '')
     .replace(/\s*\[(?:…|\.\.\.)\]\s*$/g, '…')
-    .replace(/The post [\s\S]*? appeared first on [\s\S]*?\./gi, '')
+    .replace(/The post [\s\S]*? (?:appeared first|first appeared) on [\s\S]*?\./gi, '')
     .replace(/Continue reading[\s\S]*$/gi, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
@@ -292,8 +292,12 @@ export function parseRssXmlToArticles(
     let rawAuthor = creatorMatch
       ? stripHtmlAndFormatParagraphs(creatorMatch[1])
       : `${source.shortName} Editorial`;
-    if (!rawAuthor || /grok|bot|admin|undefined/i.test(rawAuthor)) {
-      rawAuthor = `${source.shortName} Editorial`;
+    if (
+      !rawAuthor ||
+      /^(?:sd|admin|staff|editor|webmaster)$/i.test(rawAuthor) ||
+      /grok|bot|admin|undefined/i.test(rawAuthor)
+    ) {
+      rawAuthor = source.id === 'spirit-daily' ? 'Spirit Daily' : `${source.shortName} Editorial`;
     }
 
     let publishedDate = todayFormatted;
@@ -865,12 +869,7 @@ export async function fetchCatholicRssFeedWithStatus(
   }
 
   const primaryCurated = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === sourceId);
-  const otherCurated = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId !== sourceId).map(a => ({
-    ...a,
-    id: `${sourceId}-archive-${a.id}`
-  }));
-
-  const fullFallbackList = [...primaryCurated, ...otherCurated];
+  const fullFallbackList = primaryCurated;
 
   try {
     const cacheBuster = forceRefresh
@@ -920,6 +919,7 @@ export async function fetchCatholicRssFeedWithStatus(
         return item;
       });
       for (const cur of primaryCurated) {
+        if (cur.publishedDate === 'Updated Daily') continue;
         if (!combined.some(p => p.title.toLowerCase() === cur.title.toLowerCase())) {
           combined.push(cur);
         }

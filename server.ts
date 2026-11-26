@@ -1352,6 +1352,27 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   ]
 };
 
+const SERVER_RSS_SOURCE_NAMES: Record<string, string> = {
+  'st-paul-center': 'St. Paul Center',
+  'catholic-answers': 'Catholic Answers Magazine',
+  'word-on-fire': 'Word on Fire',
+  'ewtn-news': 'EWTN News',
+  'catholic-insight': 'Catholic Insight',
+  'aleteia': 'Aleteia',
+  'spirit-daily': 'Spirit Daily',
+  'sign-org': 'Signs & Wonders for Our Times',
+  'ncregister': 'National Catholic Register',
+  'us-catholic': 'U.S. Catholic',
+  'catholic-register': 'Catholic Register',
+  'catholic-digest': 'Catholic Digest',
+  'cerc': 'Catholic Education Resource Center',
+  'church-life-journal': 'Church Life Journal',
+  'catholic-exchange': 'Catholic Exchange',
+  'cbcp': 'CBCP News'
+};
+
+const rssLastGoodCache = new Map<string, { xml: string; fetchedAt: number }>();
+
 function escapeXmlCdata(str: string): string {
   return String(str || '').replace(/\]\]>/g, ']]]]><![CDATA[>');
 }
@@ -1400,7 +1421,11 @@ ${featuredMedia ? `<media:content url="${featuredMedia.replace(/"/g, '&quot;')}"
   }
 }
 
-async function fetchUpstreamRssXml(url: string, bypassCache: boolean = true): Promise<string> {
+async function fetchUpstreamRssXml(
+  url: string,
+  bypassCache: boolean = true,
+  sourceTitle: string = 'Catholic Press'
+): Promise<string> {
   const isWpJson = url.includes('/wp-json/');
   const noCacheHeaders: Record<string, string> = {
     'Accept': isWpJson
@@ -1417,7 +1442,7 @@ async function fetchUpstreamRssXml(url: string, bypassCache: boolean = true): Pr
   const parseFeedResponse = (rawText: string): string | null => {
     if (!rawText) return null;
     if (isWpJson && rawText.trim().startsWith('[')) {
-      return wpPostsJsonToRssXml(rawText, 'Catholic Digest');
+      return wpPostsJsonToRssXml(rawText, sourceTitle);
     }
     if (/<item[\s>]/i.test(rawText) || /<entry[\s>]/i.test(rawText)) {
       return rawText;
@@ -1431,7 +1456,7 @@ async function fetchUpstreamRssXml(url: string, bypassCache: boolean = true): Pr
     const res1 = await fetch(url, {
       cache: 'no-store',
       headers: noCacheHeaders,
-      signal: AbortSignal.timeout(5500),
+      signal: AbortSignal.timeout(10000),
     });
     if (res1.ok) {
       const txt1 = await res1.text();
@@ -1459,7 +1484,7 @@ async function fetchUpstreamRssXml(url: string, bypassCache: boolean = true): Pr
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
       ...noCacheHeaders,
     },
-    signal: AbortSignal.timeout(5500),
+    signal: AbortSignal.timeout(10000),
   });
   if (!res2.ok) {
     throw new Error(`HTTP ${res2.status}`);
@@ -1493,11 +1518,134 @@ function extractFeedItemTitleKey(itemXml: string): string {
   return m ? m[1].trim().toLowerCase() : '';
 }
 
+function extractBalancedTagBlocks(html: string, tagName: string, openTagRegex: RegExp): string[] {
+  const results: string[] = [];
+  const lowerTag = tagName.toLowerCase();
+  const openToken = new RegExp(`<${lowerTag}\\b[^>]*>`, 'gi');
+  const closeToken = new RegExp(`<\\/${lowerTag}>`, 'gi');
+
+  let match: RegExpExecArray | null;
+  while ((match = openTagRegex.exec(html)) !== null) {
+    const startInner = match.index + match[0].length;
+    let depth = 1;
+    let pos = startInner;
+
+    while (depth > 0 && pos < html.length) {
+      openToken.lastIndex = pos;
+      closeToken.lastIndex = pos;
+      const nextOpen = openToken.exec(html);
+      const nextClose = closeToken.exec(html);
+      if (!nextClose) break;
+      if (nextOpen && nextOpen.index < nextClose.index) {
+        depth++;
+        pos = nextOpen.index + nextOpen[0].length;
+      } else {
+        depth--;
+        if (depth === 0) {
+          results.push(html.slice(startInner, nextClose.index));
+          break;
+        }
+        pos = nextClose.index + nextClose[0].length;
+      }
+    }
+  }
+  return results;
+}
+
+function stripBalancedDivsByClass(html: string, classPattern: RegExp): string {
+  let out = html;
+  const openDivRegex = /<div\b[^>]*class=["']([^"']*)["'][^>]*>/gi;
+  const spans: [number, number][] = [];
+  let match: RegExpExecArray | null;
+  while ((match = openDivRegex.exec(out)) !== null) {
+    if (!classPattern.test(match[1])) continue;
+    const startOuter = match.index;
+    let depth = 1;
+    let pos = match.index + match[0].length;
+    const nextOpenRe = /<div\b[^>]*>/gi;
+    const nextCloseRe = /<\/div>/gi;
+    while (depth > 0 && pos < out.length) {
+      nextOpenRe.lastIndex = pos;
+      nextCloseRe.lastIndex = pos;
+      const no = nextOpenRe.exec(out);
+      const nc = nextCloseRe.exec(out);
+      if (!nc) break;
+      if (no && no.index < nc.index) {
+        depth++;
+        pos = no.index + no[0].length;
+      } else {
+        depth--;
+        if (depth === 0) {
+          spans.push([startOuter, nc.index + nc[0].length]);
+          openDivRegex.lastIndex = nc.index + nc[0].length;
+          break;
+        }
+        pos = nc.index + nc[0].length;
+      }
+    }
+  }
+  for (let i = spans.length - 1; i >= 0; i--) {
+    const [s, e] = spans[i];
+    out = out.slice(0, s) + out.slice(e);
+  }
+  return out;
+}
+
+function extractReadableBlocksFromHtml(scopeHtml: string, decodeEntities: (s: string) => string): string {
+  const cleanedScope = stripBalancedDivsByClass(
+    scopeHtml,
+    /(?:^|\s)(?:not-prose|bg-adspacebg|sharedaddy|sd-sharing|related-posts|herald-related|herald-author|author-box|post-author|jp-relatedposts|wp-block-embed|ad-container|newsletter-signup|comments-area)(?:\s|$)/i
+  );
+
+  // Normalize HTML5 optional closing </p> tags so every <p> block terminates cleanly before the next block tag
+  const normalizedScope = cleanedScope.replace(
+    /<p\b[^>]*>([\s\S]*?)(?=<\/p>|<p\b|<h[1-6]\b|<div\b|<blockquote\b|<ul\b|<ol\b|<figure\b|<section\b|<article\b|<footer\b|$)/gi,
+    '<p>$1</p>'
+  );
+
+  const blocks: string[] = [];
+  const blockRegex = /<(p|h2|h3|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+  let m: RegExpExecArray | null;
+  const boilerplatePatterns = /^(?:read more|related:|also read:|subscribe to|sign up for|follow us on|share this|click here|advertisement|copyright ©|all rights reserved|support .* journalism|donate today|already a subscriber|about the author|the post .* (?:first appeared|appeared first) on|image:|photo:|courtesy of|credit:)/i;
+
+  while ((m = blockRegex.exec(normalizedScope)) !== null) {
+    const tag = m[1].toLowerCase();
+    const text = decodeEntities(
+      m[2]
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+    );
+    if (!text) continue;
+    if (boilerplatePatterns.test(text)) continue;
+    if (tag === 'p' && text.length < 30 && !/[.!?"]$/.test(text)) continue;
+    if (blocks.includes(text)) continue;
+
+    if (tag === 'h2' || tag === 'h3') {
+      if (text.length < 160) {
+        blocks.push(`\n${text}`);
+      }
+    } else if (tag === 'blockquote') {
+      blocks.push(`“${text.replace(/^["“]|["”]$/g, '')}”`);
+    } else {
+      blocks.push(text);
+    }
+  }
+
+  return blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 app.get('/api/catholic-rss', async (req, res) => {
   try {
-    const sourceKey = typeof req.query.source === 'string' ? req.query.source : 'st-paul-center';
+    const sourceKey = typeof req.query.source === 'string' ? req.query.source.trim() : 'st-paul-center';
     const forceRefresh = req.query.refresh === '1' || req.query.refresh === 'true';
-    const candidateUrls = SERVER_CATHOLIC_RSS_FEEDS[sourceKey] || SERVER_CATHOLIC_RSS_FEEDS['st-paul-center'];
+    const candidateUrls = SERVER_CATHOLIC_RSS_FEEDS[sourceKey];
+    if (!candidateUrls || candidateUrls.length === 0) {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+      return res.status(404).json({ error: `Unknown RSS publication source: ${sourceKey}` });
+    }
+    const sourceTitle = SERVER_RSS_SOURCE_NAMES[sourceKey] || sourceKey;
 
     const collected: { xml: string; ts: number; index: number; titleKey: string }[] = [];
     const seenTitles = new Set<string>();
@@ -1506,7 +1654,7 @@ app.get('/api/catholic-rss', async (req, res) => {
     // Fetch candidate URLs in strict priority order so fallback feeds only activate if the primary feed fails or returns 0 items
     for (const targetUrl of candidateUrls) {
       try {
-        const xml = await fetchUpstreamRssXml(targetUrl, forceRefresh || true);
+        const xml = await fetchUpstreamRssXml(targetUrl, forceRefresh || true, sourceTitle);
         const channelBuildMatch =
           xml.match(/<lastBuildDate[^>]*>([\s\S]*?)<\/lastBuildDate>/i) ||
           xml.match(/<pubDate[^>]*>([\s\S]*?)<\/pubDate>/i);
@@ -1549,6 +1697,13 @@ app.get('/api/catholic-rss', async (req, res) => {
     }
 
     if (collected.length === 0) {
+      const cached = rssLastGoodCache.get(sourceKey);
+      if (cached && Date.now() - cached.fetchedAt < 1000 * 60 * 60 * 6) {
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+        return res.send(cached.xml);
+      }
       throw lastErr || new Error('No RSS items returned from upstream feed');
     }
 
@@ -1562,6 +1717,8 @@ app.get('/api/catholic-rss', async (req, res) => {
       .slice(0, 30)
       .map(c => c.xml)
       .join('\n')}</channel></rss>`;
+
+    rssLastGoodCache.set(sourceKey, { xml: combinedXml, fetchedAt: Date.now() });
 
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -1577,7 +1734,7 @@ app.get('/api/catholic-rss', async (req, res) => {
 
 app.get('/api/vatican-news', async (_req, res) => {
   try {
-    const xml = await fetchUpstreamRssXml('https://www.vaticannews.va/en.rss.xml');
+    const xml = await fetchUpstreamRssXml('https://www.vaticannews.va/en.rss.xml', true, 'Vatican News');
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
@@ -1593,6 +1750,19 @@ app.get('/api/catholic-article-full', async (req, res) => {
     if (!articleUrl || !/^https?:\/\//i.test(articleUrl)) {
       return res.status(400).json({ error: 'Invalid article URL' });
     }
+    const parsedUrl = new URL(articleUrl);
+    const host = parsedUrl.hostname.toLowerCase();
+    if (
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host === '::1' ||
+      host.startsWith('10.') ||
+      host.startsWith('192.168.') ||
+      /^172\.(1[6-9]|2\d|3[0-1])\./.test(host) ||
+      host === '169.254.169.254'
+    ) {
+      return res.status(400).json({ error: 'Blocked article host' });
+    }
 
     let html = '';
     try {
@@ -1601,7 +1771,7 @@ app.get('/api/catholic-article-full', async (req, res) => {
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.9'
         },
-        signal: AbortSignal.timeout(7000)
+        signal: AbortSignal.timeout(9000)
       });
       if (r1.ok) {
         html = await r1.text();
@@ -1617,7 +1787,7 @@ app.get('/api/catholic-article-full', async (req, res) => {
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.9'
         },
-        signal: AbortSignal.timeout(7000)
+        signal: AbortSignal.timeout(9000)
       });
       if (!r2.ok) {
         throw new Error(`HTTP ${r2.status}`);
@@ -1678,51 +1848,51 @@ app.get('/api/catholic-article-full', async (req, res) => {
       .replace(/<style[\s\S]*?<\/style>/gi, '')
       .replace(/<noscript[\s\S]*?<\/noscript>/gi, '')
       .replace(/<svg[\s\S]*?<\/svg>/gi, '')
+      .replace(/<header[\s\S]*?<\/header>/gi, '')
       .replace(/<nav[\s\S]*?<\/nav>/gi, '')
       .replace(/<footer[\s\S]*?<\/footer>/gi, '')
       .replace(/<aside[\s\S]*?<\/aside>/gi, '')
       .replace(/<form[\s\S]*?<\/form>/gi, '');
 
-    const articleMatch =
-      cleanHtml.match(/<div[^>]+class=["'][^"']*(?:entry-content|post-content|article-content|article-body|td-post-content|single-content|c-article-content)[^"']*["'][^>]*>([\s\S]*?)<\/div>\s*(?:<footer|<div[^>]+class=["'][^"']*(?:post-footer|sharedaddy|related|tags|author-box))/i) ||
-      cleanHtml.match(/<article[^>]*>([\s\S]*?)<\/article>/i) ||
-      cleanHtml.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
+    // Collect balanced candidate content containers (specific article body divs first, then <article>, then <main>)
+    const contentDivCandidates = extractBalancedTagBlocks(
+      cleanHtml,
+      'div',
+      /<div\b[^>]*class=["'][^"']*(?:entry-content|herald-entry-content|post-content|article-content|article-body|td-post-content|single-content|c-article-content|\bprose\b)[^"']*["'][^>]*>/gi
+    );
+    const articleTagCandidates = extractBalancedTagBlocks(cleanHtml, 'article', /<article\b[^>]*>/gi);
+    const mainTagCandidates = extractBalancedTagBlocks(cleanHtml, 'main', /<main\b[^>]*>/gi);
 
-    const scopeHtml = articleMatch ? articleMatch[1] : cleanHtml;
-
-    const blocks: string[] = [];
-    const blockRegex = /<(p|h2|h3|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
-    let m: RegExpExecArray | null;
-    const boilerplatePatterns = /^(?:read more|related:|also read:|subscribe to|sign up for|follow us on|share this|click here|advertisement|copyright ©|all rights reserved|support .* journalism|donate today|already a subscriber)/i;
-
-    while ((m = blockRegex.exec(scopeHtml)) !== null) {
-      const tag = m[1].toLowerCase();
-      const text = decodeEntities(
-        m[2]
-          .replace(/<br\s*\/?>/gi, '\n')
-          .replace(/<[^>]+>/g, '')
-          .replace(/\s+/g, ' ')
-          .trim()
-      );
-      if (!text) continue;
-      if (boilerplatePatterns.test(text)) continue;
-      if (tag === 'p' && text.length < 35 && !/[.!?"]$/.test(text)) continue;
-      if (blocks.includes(text)) continue;
-
-      if (tag === 'h2' || tag === 'h3') {
-        blocks.push(`\n${text}`);
-      } else if (tag === 'blockquote') {
-        blocks.push(`“${text.replace(/^["“]|["”]$/g, '')}”`);
-      } else {
-        blocks.push(text);
+    let bestHtmlText = '';
+    const prioritizedGroups = [contentDivCandidates, articleTagCandidates, mainTagCandidates];
+    for (const group of prioritizedGroups) {
+      let groupBest = '';
+      for (const candidateHtml of group) {
+        const text = extractReadableBlocksFromHtml(candidateHtml, decodeEntities);
+        if (text.length > groupBest.length) {
+          groupBest = text;
+        }
+      }
+      if (groupBest.length > bestHtmlText.length) {
+        bestHtmlText = groupBest;
+      }
+      // If a dedicated content container already yielded a substantial article body, prefer it over wider wrappers
+      if (group === contentDivCandidates && groupBest.length >= 450) {
+        break;
       }
     }
 
-    const htmlParagraphsText = blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+    if (bestHtmlText.length < 250) {
+      const fallbackText = extractReadableBlocksFromHtml(cleanHtml, decodeEntities);
+      if (fallbackText.length > bestHtmlText.length) {
+        bestHtmlText = fallbackText;
+      }
+    }
+
     const finalContent =
-      htmlParagraphsText.length > extractedText.length * 0.75 && htmlParagraphsText.length > 350
-        ? htmlParagraphsText
-        : extractedText || htmlParagraphsText;
+      bestHtmlText.length > extractedText.length * 0.75 && bestHtmlText.length > 350
+        ? bestHtmlText
+        : extractedText || bestHtmlText;
 
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.setHeader('Access-Control-Allow-Origin', '*');

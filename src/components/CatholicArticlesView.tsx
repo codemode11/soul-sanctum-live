@@ -66,12 +66,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
   const [articlesBySource, setArticlesBySource] = useState<Record<string, CatholicArticleItem[]>>(() => {
     const initial: Record<string, CatholicArticleItem[]> = {};
     for (const src of CATHOLIC_RSS_SOURCES) {
-      const primary = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === src.id);
-      const secondary = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId !== src.id).map(a => ({
-        ...a,
-        id: `${src.id}-init-${a.id}`
-      }));
-      initial[src.id] = [...primary, ...secondary];
+      initial[src.id] = CURATED_CATHOLIC_ARTICLES.filter(a => a.sourceId === src.id);
     }
     return initial;
   });
