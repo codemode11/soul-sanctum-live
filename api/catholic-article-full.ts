@@ -1,3 +1,122 @@
+function extractBalancedTagBlocks(html: string, tagName: string, openTagRegex: RegExp): string[] {
+  const results: string[] = [];
+  const lowerTag = tagName.toLowerCase();
+  const openToken = new RegExp(`<${lowerTag}\\b[^>]*>`, 'gi');
+  const closeToken = new RegExp(`<\\/${lowerTag}>`, 'gi');
+
+  let match: RegExpExecArray | null;
+  while ((match = openTagRegex.exec(html)) !== null) {
+    const startInner = match.index + match[0].length;
+    let depth = 1;
+    let pos = startInner;
+
+    while (depth > 0 && pos < html.length) {
+      openToken.lastIndex = pos;
+      closeToken.lastIndex = pos;
+      const nextOpen = openToken.exec(html);
+      const nextClose = closeToken.exec(html);
+      if (!nextClose) break;
+      if (nextOpen && nextOpen.index < nextClose.index) {
+        depth++;
+        pos = nextOpen.index + nextOpen[0].length;
+      } else {
+        depth--;
+        if (depth === 0) {
+          results.push(html.slice(startInner, nextClose.index));
+          break;
+        }
+        pos = nextClose.index + nextClose[0].length;
+      }
+    }
+  }
+  return results;
+}
+
+function stripBalancedDivsByClass(html: string, classPattern: RegExp): string {
+  let out = html;
+  const openDivRegex = /<div\b[^>]*class=["']([^"']*)["'][^>]*>/gi;
+  const spans: [number, number][] = [];
+  let match: RegExpExecArray | null;
+  while ((match = openDivRegex.exec(out)) !== null) {
+    if (!classPattern.test(match[1])) continue;
+    const startOuter = match.index;
+    let depth = 1;
+    let pos = match.index + match[0].length;
+    const nextOpenRe = /<div\b[^>]*>/gi;
+    const nextCloseRe = /<\/div>/gi;
+    while (depth > 0 && pos < out.length) {
+      nextOpenRe.lastIndex = pos;
+      nextCloseRe.lastIndex = pos;
+      const no = nextOpenRe.exec(out);
+      const nc = nextCloseRe.exec(out);
+      if (!nc) break;
+      if (no && no.index < nc.index) {
+        depth++;
+        pos = no.index + no[0].length;
+      } else {
+        depth--;
+        if (depth === 0) {
+          spans.push([startOuter, nc.index + nc[0].length]);
+          openDivRegex.lastIndex = nc.index + nc[0].length;
+          break;
+        }
+        pos = nc.index + nc[0].length;
+      }
+    }
+  }
+  for (let i = spans.length - 1; i >= 0; i--) {
+    const [s, e] = spans[i];
+    out = out.slice(0, s) + out.slice(e);
+  }
+  return out;
+}
+
+function extractReadableBlocksFromHtml(scopeHtml: string, decodeEntities: (s: string) => string): string {
+  const cleanedScope = stripBalancedDivsByClass(
+    scopeHtml,
+    /(?:^|\s)(?:not-prose|bg-adspacebg|sharedaddy|sd-sharing|related-posts|herald-related|herald-author|author-box|post-author|jp-relatedposts|wp-block-embed|ad-container|newsletter-signup|comments-area)(?:\s|$)/i
+  );
+
+  // Normalize HTML5 optional closing </p> tags so every <p> block terminates cleanly before the next block tag
+  const normalizedScope = cleanedScope.replace(
+    /<p\b[^>]*>([\s\S]*?)(?=<\/p>|<p\b|<h[1-6]\b|<div\b|<blockquote\b|<ul\b|<ol\b|<figure\b|<section\b|<article\b|<footer\b|$)/gi,
+    '<p>$1</p>'
+  );
+
+  const blocks: string[] = [];
+  const blockRegex = /<(p|h2|h3|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+  let m: RegExpExecArray | null;
+  const boilerplatePatterns =
+    /^(?:read more|related:|also read:|subscribe to|sign up for|follow us on|share this|click here|advertisement|copyright ©|all rights reserved|support .* journalism|donate today|already a subscriber|about the author|the post .* (?:first appeared|appeared first) on|image:|photo:|courtesy of|credit:)/i;
+
+  while ((m = blockRegex.exec(normalizedScope)) !== null) {
+    const tag = m[1].toLowerCase();
+    const text = decodeEntities(
+      m[2]
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+    );
+    if (!text) continue;
+    if (boilerplatePatterns.test(text)) continue;
+    if (tag === 'p' && text.length < 30 && !/[.!?"]$/.test(text)) continue;
+    if (blocks.includes(text)) continue;
+
+    if (tag === 'h2' || tag === 'h3') {
+      if (text.length < 160) {
+        blocks.push(`\n${text}`);
+      }
+    } else if (tag === 'blockquote') {
+      blocks.push(`“${text.replace(/^["“]|["”]$/g, '')}”`);
+    } else {
+      blocks.push(text);
+    }
+  }
+
+  return blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
 export default async function handler(req: any, res: any) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -13,6 +132,19 @@ export default async function handler(req: any, res: any) {
     if (!articleUrl || !/^https?:\/\//i.test(articleUrl)) {
       return res.status(400).json({ error: 'Invalid article URL' });
     }
+    const parsedUrl = new URL(articleUrl);
+    const host = parsedUrl.hostname.toLowerCase();
+    if (
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host === '::1' ||
+      host.startsWith('10.') ||
+      host.startsWith('192.168.') ||
+      /^172\.(1[6-9]|2\d|3[0-1])\./.test(host) ||
+      host === '169.254.169.254'
+    ) {
+      return res.status(400).json({ error: 'Blocked article host' });
+    }
 
     let html = '';
     try {
@@ -21,7 +153,7 @@ export default async function handler(req: any, res: any) {
           Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.9',
         },
-        signal: AbortSignal.timeout(7000),
+        signal: AbortSignal.timeout(9000),
       });
       if (r1.ok) {
         html = await r1.text();
@@ -38,7 +170,7 @@ export default async function handler(req: any, res: any) {
           Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.9',
         },
-        signal: AbortSignal.timeout(7000),
+        signal: AbortSignal.timeout(9000),
       });
       if (!r2.ok) {
         throw new Error(`HTTP ${r2.status}`);
@@ -99,54 +231,48 @@ export default async function handler(req: any, res: any) {
       .replace(/<style[\s\S]*?<\/style>/gi, '')
       .replace(/<noscript[\s\S]*?<\/noscript>/gi, '')
       .replace(/<svg[\s\S]*?<\/svg>/gi, '')
+      .replace(/<header[\s\S]*?<\/header>/gi, '')
       .replace(/<nav[\s\S]*?<\/nav>/gi, '')
       .replace(/<footer[\s\S]*?<\/footer>/gi, '')
       .replace(/<aside[\s\S]*?<\/aside>/gi, '')
       .replace(/<form[\s\S]*?<\/form>/gi, '');
 
-    const articleMatch =
-      cleanHtml.match(
-        /<div[^>]+class=["'][^"']*(?:entry-content|post-content|article-content|article-body|td-post-content|single-content|c-article-content)[^"']*["'][^>]*>([\s\S]*?)<\/div>\s*(?:<footer|<div[^>]+class=["'][^"']*(?:post-footer|sharedaddy|related|tags|author-box))/i
-      ) ||
-      cleanHtml.match(/<article[^>]*>([\s\S]*?)<\/article>/i) ||
-      cleanHtml.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
+    const contentDivCandidates = extractBalancedTagBlocks(
+      cleanHtml,
+      'div',
+      /<div\b[^>]*class=["'][^"']*(?:entry-content|herald-entry-content|post-content|article-content|article-body|td-post-content|single-content|c-article-content|\bprose\b)[^"']*["'][^>]*>/gi
+    );
+    const articleTagCandidates = extractBalancedTagBlocks(cleanHtml, 'article', /<article\b[^>]*>/gi);
+    const mainTagCandidates = extractBalancedTagBlocks(cleanHtml, 'main', /<main\b[^>]*>/gi);
 
-    const scopeHtml = articleMatch ? articleMatch[1] : cleanHtml;
-
-    const blocks: string[] = [];
-    const blockRegex = /<(p|h2|h3|blockquote)\b[^>]*>([\s\S]*?)<\/\1>/gi;
-    let m: RegExpExecArray | null;
-    const boilerplatePatterns =
-      /^(?:read more|related:|also read:|subscribe to|sign up for|follow us on|share this|click here|advertisement|copyright ©|all rights reserved|support .* journalism|donate today|already a subscriber)/i;
-
-    while ((m = blockRegex.exec(scopeHtml)) !== null) {
-      const tag = m[1].toLowerCase();
-      const text = decodeEntities(
-        m[2]
-          .replace(/<br\s*\/?>/gi, '\n')
-          .replace(/<[^>]+>/g, '')
-          .replace(/\s+/g, ' ')
-          .trim()
-      );
-      if (!text) continue;
-      if (boilerplatePatterns.test(text)) continue;
-      if (tag === 'p' && text.length < 35 && !/[.!?"]$/.test(text)) continue;
-      if (blocks.includes(text)) continue;
-
-      if (tag === 'h2' || tag === 'h3') {
-        blocks.push(`\n${text}`);
-      } else if (tag === 'blockquote') {
-        blocks.push(`“${text.replace(/^["“]|["”]$/g, '')}”`);
-      } else {
-        blocks.push(text);
+    let bestHtmlText = '';
+    for (const group of [contentDivCandidates, articleTagCandidates, mainTagCandidates]) {
+      let groupBest = '';
+      for (const candidateHtml of group) {
+        const text = extractReadableBlocksFromHtml(candidateHtml, decodeEntities);
+        if (text.length > groupBest.length) {
+          groupBest = text;
+        }
+      }
+      if (groupBest.length > bestHtmlText.length) {
+        bestHtmlText = groupBest;
+      }
+      if (group === contentDivCandidates && groupBest.length >= 450) {
+        break;
       }
     }
 
-    const htmlParagraphsText = blocks.join('\n\n').replace(/\n{3,}/g, '\n\n').trim();
+    if (bestHtmlText.length < 250) {
+      const fallbackText = extractReadableBlocksFromHtml(cleanHtml, decodeEntities);
+      if (fallbackText.length > bestHtmlText.length) {
+        bestHtmlText = fallbackText;
+      }
+    }
+
     const finalContent =
-      htmlParagraphsText.length > extractedText.length * 0.75 && htmlParagraphsText.length > 350
-        ? htmlParagraphsText
-        : extractedText || htmlParagraphsText;
+      bestHtmlText.length > extractedText.length * 0.75 && bestHtmlText.length > 350
+        ? bestHtmlText
+        : extractedText || bestHtmlText;
 
     return res.status(200).json({
       content: finalContent,

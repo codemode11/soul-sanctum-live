@@ -19,8 +19,8 @@ const __dirname = path.dirname(__filename);
 
 const CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
   'st-paul-center': [
-    'https://catholicexchange.com/feed/',
-    'https://www.catholicworldreport.com/feed/'
+    'https://www.catholicworldreport.com/feed/',
+    'https://crisismagazine.com/feed/'
   ],
   'catholic-answers': [
     'https://www.catholic.com/feeds/magazine/rss',
