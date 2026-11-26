@@ -209,7 +209,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [isDomainMenuOpen, setIsDomainMenuOpen] = useState(false);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const askFormRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const domainButtonRef = useRef<HTMLButtonElement>(null);
   const domainPanelRef = useRef<HTMLDivElement>(null);
@@ -222,7 +222,20 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
     () => (activeSession?.messages || []).filter((m) => !m.id.startsWith('mag-welcome')),
     [activeSession]
   );
-  const hasUserMessages = messages.some((m) => m.role === 'user');
+
+  // Order conversation turns newest-first directly beneath the top Ask container,
+  // while keeping each inquiry immediately above its Magisterium AI response.
+  const displayedMessages = useMemo(() => {
+    const turns: MagisteriumMessage[][] = [];
+    for (const msg of messages) {
+      if (msg.role === 'user' || turns.length === 0) {
+        turns.push([msg]);
+      } else {
+        turns[turns.length - 1].push(msg);
+      }
+    }
+    return turns.reverse().flat();
+  }, [messages]);
 
   useEffect(() => {
     if (activeSession && activeSession.id !== activeSessionId) {
@@ -241,12 +254,6 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
       // storage quota exceeded
     }
   }, [sessions, activeSession?.id]);
-
-  useEffect(() => {
-    if (hasUserMessages) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-  }, [messages.length, isLoading, hasUserMessages]);
 
   useEffect(() => {
     return () => {
@@ -886,10 +893,70 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
 
         {/* Active Conversation Thread */}
         <div className="space-y-5 min-w-0 w-full">
+          {/* Inquiry Composer Directly Below the Banner */}
+          <form
+            ref={askFormRef}
+            onSubmit={handleSubmit}
+            className="rounded-xl bg-[#FAF8F3]/95 backdrop-blur-md border border-[#D8CEB8] p-3 shadow-xs"
+          >
+            <div className="flex items-end gap-2.5">
+              <textarea
+                ref={inputRef}
+                value={inputPrompt}
+                onChange={(e) => setInputPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+                placeholder="Ask Magisterium AI about Church doctrine, the Catechism, Canon Law, Councils, or Encyclicals..."
+                rows={2}
+                className="flex-1 bg-white text-stone-900 placeholder-stone-400 text-sm sm:text-base font-serif rounded-lg p-3 border border-stone-300 focus:border-amber-700 focus:outline-none resize-none leading-relaxed"
+              />
+
+              <button
+                type="submit"
+                disabled={!inputPrompt.trim() || isLoading}
+                className="h-12 px-5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0 whitespace-nowrap"
+              >
+                {isLoading ? (
+                  <RefreshCw className="w-4 h-4 animate-spin text-white" />
+                ) : (
+                  <>
+                    <span>Ask</span>
+                    <Send className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+
           {/* Message Stream */}
-          {(messages.length > 0 || isLoading || errorMessage) && (
+          {(displayedMessages.length > 0 || isLoading || errorMessage) && (
             <div className="space-y-4">
-              {messages.map((msg) => {
+              {isLoading && (
+                <div className="w-full bg-white border border-stone-200/90 rounded-xl p-4 shadow-2xs flex items-center gap-3">
+                  <RefreshCw className="w-4 h-4 text-amber-800 animate-spin shrink-0" />
+                  <div className="space-y-0.5">
+                    <span className="text-sm font-serif font-semibold text-stone-900 block">
+                      Consulting Magisterium AI &amp; Church documents…
+                    </span>
+                    <span className="text-xs font-serif text-stone-600 block">
+                      Cross-referencing the Catechism, Code of Canon Law, Councils, and Papal teachings.
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {errorMessage && (
+                <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 text-stone-900 text-xs sm:text-sm font-serif flex items-start gap-2.5">
+                  <HelpCircle className="w-4 h-4 text-amber-800 shrink-0 mt-0.5" />
+                  <p>{errorMessage}</p>
+                </div>
+              )}
+
+              {displayedMessages.map((msg) => {
               const isUser = msg.role === 'user';
               return (
                 <article
@@ -1028,7 +1095,10 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
                                 key={qIdx}
                                 type="button"
                                 disabled={isLoading}
-                                onClick={() => handleSubmit(undefined, question)}
+                                onClick={() => {
+                                  handleSubmit(undefined, question);
+                                  askFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                }}
                                 className="w-full text-left px-3.5 py-2.5 rounded-lg bg-[#FAF8F3] hover:bg-[#F2EBD9] border border-[#E5DEC9] text-sm font-serif text-stone-900 transition-colors cursor-pointer flex items-center justify-between gap-3 disabled:opacity-50"
                               >
                                 <span>{question}</span>
@@ -1053,69 +1123,8 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
                 </article>
               );
             })}
-
-            {isLoading && (
-              <div className="w-full bg-white border border-stone-200/90 rounded-xl p-4 shadow-2xs flex items-center gap-3">
-                <RefreshCw className="w-4 h-4 text-amber-800 animate-spin shrink-0" />
-                <div className="space-y-0.5">
-                  <span className="text-sm font-serif font-semibold text-stone-900 block">
-                    Consulting Magisterium AI &amp; Church documents…
-                  </span>
-                  <span className="text-xs font-serif text-stone-600 block">
-                    Cross-referencing the Catechism, Code of Canon Law, Councils, and Papal teachings.
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {errorMessage && (
-              <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 text-stone-900 text-xs sm:text-sm font-serif flex items-start gap-2.5">
-                <HelpCircle className="w-4 h-4 text-amber-800 shrink-0 mt-0.5" />
-                <p>{errorMessage}</p>
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
           </div>
           )}
-
-          {/* Sticky Inquiry Composer */}
-          <form
-            onSubmit={handleSubmit}
-            className="sticky bottom-4 z-20 rounded-xl bg-[#FAF8F3]/95 backdrop-blur-md border border-[#D8CEB8] p-3 shadow-md"
-          >
-            <div className="flex items-end gap-2.5">
-              <textarea
-                ref={inputRef}
-                value={inputPrompt}
-                onChange={(e) => setInputPrompt(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSubmit();
-                  }
-                }}
-                placeholder="Ask Magisterium AI about Church doctrine, the Catechism, Canon Law, Councils, or Encyclicals..."
-                rows={2}
-                className="flex-1 bg-white text-stone-900 placeholder-stone-400 text-sm sm:text-base font-serif rounded-lg p-3 border border-stone-300 focus:border-amber-700 focus:outline-none resize-none leading-relaxed"
-              />
-
-              <button
-                type="submit"
-                disabled={!inputPrompt.trim() || isLoading}
-                className="h-12 px-5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-cinzel font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed shrink-0 whitespace-nowrap"
-              >
-                {isLoading ? (
-                  <RefreshCw className="w-4 h-4 animate-spin text-white" />
-                ) : (
-                  <>
-                    <span>Ask</span>
-                    <Send className="w-3.5 h-3.5" />
-                  </>
-                )}
-              </button>
-            </div>
-          </form>
         </div>
       </div>
     </div>
