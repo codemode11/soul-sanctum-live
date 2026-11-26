@@ -170,7 +170,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
         <div className={`sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#16100B] text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Painting: Caravaggio — The Incredulity of Saint Thomas */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[340px] md:w-[400px] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -186,7 +186,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
               alt="Caravaggio — The Incredulity of Saint Thomas"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[50%_6%] brightness-[1.03] contrast-[1.04]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
               style={{
                 maskImage:
                   'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.42) 14%, rgba(0,0,0,0.92) 28%, black 42%)',

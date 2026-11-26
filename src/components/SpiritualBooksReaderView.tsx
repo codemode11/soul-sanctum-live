@@ -773,7 +773,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between gap-2 ${isCatalogSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Modern Spiritual Classics Shelf & Two Angel Bookends (16:9 preserved on sm+ so both angels & all modern spines are uncropped) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-auto sm:aspect-[16/9] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -781,7 +781,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
               alt="Modern editions of Catholic spiritual classics on a dark walnut shelf flanked by two sculpted angel bookends"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-right brightness-[1.01] contrast-[1.03]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[1.01] contrast-[1.03]"
               style={{
                 maskImage:
                   'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 9%, black 19%)',

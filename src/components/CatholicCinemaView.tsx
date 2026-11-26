@@ -388,7 +388,7 @@ export const CatholicCinemaView: React.FC<CatholicCinemaViewProps> = ({ onPlayba
       <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-stone-100 shadow-md border border-[#8B5A2B]/40 flex flex-col justify-between">
         {/* Right-Side Cinema Projector & Reels Artwork */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-video overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
           aria-hidden="true"
         >
           <img
@@ -396,7 +396,7 @@ export const CatholicCinemaView: React.FC<CatholicCinemaViewProps> = ({ onPlayba
             alt="Archival matte-black and bronze 35mm film projector with metallic reels on a walnut library desk"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
+            className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.03]"
             style={{
               maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 22%, black 42%)',
               WebkitMaskImage:

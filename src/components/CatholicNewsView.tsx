@@ -268,7 +268,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Pope Leo XIV Waving from the Tall Apostolic Palace Angelus Window with Seamless Dark Brown Gradient Blend */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[74%] sm:w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -276,7 +276,11 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[50%_16%] brightness-[0.98] contrast-[1.03]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[0.98] contrast-[1.03]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+              }}
             />
           </div>
           {/* Multi-stop horizontal gradient from solid dark brown (#1C120C) fading cleanly to 0 before the Pope's waving arm */}

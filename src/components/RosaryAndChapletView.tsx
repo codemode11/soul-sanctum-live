@@ -615,23 +615,25 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[172px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
               aria-hidden="true"
             >
-              <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
-                alt="Our Lady of Medjugorje, Queen of Peace"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_0%]"
-                style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                  alt="Our Lady of Medjugorje, Queen of Peace"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              </div>
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[132px] sm:pr-[168px]">
@@ -1005,21 +1007,23 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* 3:00 PM Hour of Great Mercy Banner */}
           <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
               aria-hidden="true"
             >
-              <img
-                src={divineMercyImg}
-                alt="The Divine Mercy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[50%_12%]"
-                style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src={divineMercyImg}
+                  alt="The Divine Mercy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              </div>
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
@@ -1435,21 +1439,23 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* Header Banner — Patterned after the Chaplet of the Divine Mercy Banner */}
           <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
               aria-hidden="true"
             >
-              <img
-                src={divineMercyImg}
-                alt="The Divine Mercy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[50%_12%]"
-                style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src={divineMercyImg}
+                  alt="The Divine Mercy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              </div>
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
@@ -1791,21 +1797,23 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
           <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
               aria-hidden="true"
             >
-              <img
-                src={divineMercyImg}
-                alt="The Divine Mercy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[50%_12%]"
-                style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src={divineMercyImg}
+                  alt="The Divine Mercy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              </div>
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
@@ -1844,23 +1852,25 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[172px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
               aria-hidden="true"
             >
-              <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
-                alt="Our Lady of Medjugorje, Queen of Peace"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_0%]"
-                style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                  alt="Our Lady of Medjugorje, Queen of Peace"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              </div>
             </div>
 
             <div className="relative z-10 space-y-1 pr-[132px] sm:pr-[168px]">
@@ -2047,23 +2057,25 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[172px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
               aria-hidden="true"
             >
-              <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
-                alt="Our Lady of Medjugorje, Queen of Peace"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_0%]"
-                style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                  alt="Our Lady of Medjugorje, Queen of Peace"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              </div>
             </div>
 
             <div className="relative z-10 space-y-1 pr-[132px] sm:pr-[168px]">
@@ -2243,23 +2255,25 @@ export const RosaryAndChapletView: React.FC = () => {
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[144px] sm:w-[172px] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
               aria-hidden="true"
             >
-              <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
-                alt="Our Lady of Medjugorje, Queen of Peace"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_0%]"
-                style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                  alt="Our Lady of Medjugorje, Queen of Peace"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right"
+                  style={{
+                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 18%, black 34%, black 100%)',
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              </div>
             </div>
 
             <div className="relative z-10 space-y-1 pr-[132px] sm:pr-[168px]">

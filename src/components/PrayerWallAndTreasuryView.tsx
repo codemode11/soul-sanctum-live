@@ -298,22 +298,24 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#24150B] text-amber-50 relative overflow-hidden flex flex-col justify-between gap-2 ${isTreasurySettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
             {/* Right-Side Wooden Kneeler Facing Wall Crucifix Photography (16:9 preserved on sm+ so crucifix, armrest, prayer book, and cushion stay uncropped) */}
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-auto sm:aspect-[16/9] overflow-hidden"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
               aria-hidden="true"
             >
-              <img
-                src={treasuryWoodenKneelerImg}
-                alt="Wooden kneeler facing the crucifix on the chapel wall, with forearm rest and prayer book tucked under the wooden case"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[64%_50%] sm:object-right brightness-[1.03] contrast-[1.04]"
-              />
-              {/* Smooth Horizontal Gradient Transition from Dark Brown (#24150B) into the Kneeler & Crucifix */}
-              <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#24150B_0%,#24150B_14%,rgba(36,21,11,0.92)_26%,rgba(36,21,11,0.58)_38%,rgba(36,21,11,0.20)_50%,transparent_64%)]" />
-              {/* Subtle Right, Top, and Bottom Dark Brown Feathering */}
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#24150B]/55 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#24150B]/45 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#24150B]/60 to-transparent" />
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src={treasuryWoodenKneelerImg}
+                  alt="Wooden kneeler facing the crucifix on the chapel wall, with forearm rest and prayer book tucked under the wooden case"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
+                />
+                {/* Smooth Horizontal Gradient Transition from Dark Brown (#24150B) into the Kneeler & Crucifix */}
+                <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#24150B_0%,#24150B_14%,rgba(36,21,11,0.92)_26%,rgba(36,21,11,0.58)_38%,rgba(36,21,11,0.20)_50%,transparent_64%)]" />
+                {/* Subtle Right, Top, and Bottom Dark Brown Feathering */}
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#24150B]/55 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#24150B]/45 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#24150B]/60 to-transparent" />
+              </div>
             </div>
 
             {/* Mobile Readability Gradient Behind Left Title & Controls */}
@@ -475,7 +477,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
         <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120D] rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-between gap-2 overflow-hidden">
           {/* Right-Side Golden Incense Rising from Brass Censer Photography */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-[#1C120D] via-amber-950/80 to-[#1C120D]"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 h-full max-w-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-[#1C120D] via-amber-950/80 to-[#1C120D]"
             aria-hidden="true"
           >
             <img
@@ -483,7 +485,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
               alt="Antique hammered brass censer on an oak sanctuary stand with golden incense smoke rising in candlelight"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-right brightness-[1.04] contrast-[1.03]"
+              className="h-full w-full object-contain object-right brightness-[1.04] contrast-[1.03]"
             />
 
             {/* Animated Rising Frankincense Smoke Emanating Directly from the Censer Dome */}

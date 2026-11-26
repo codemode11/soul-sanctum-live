@@ -201,7 +201,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
       <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative isolate overflow-hidden rounded-xl bg-[#1C120C] border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-center">
         {/* Right-Side Modern Spacious Catholic Podcast Studio Artwork with Wall Crucifix */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[390px] md:w-[400px] overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
           aria-hidden="true"
         >
           <img
@@ -209,7 +209,7 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
             alt="Spacious modern Catholic podcast studio desk with a real walnut-and-bronze wall crucifix, broadcast microphone, open Bible, and wireless studio headphones"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-[100%_24%] brightness-[1.03] contrast-[1.03]"
+            className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.03]"
             style={{
               maskImage:
                 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 14%, black 28%)',

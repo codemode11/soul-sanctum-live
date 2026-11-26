@@ -324,7 +324,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
         >
           {/* Right-Side Joyful Family Using Bible Flashcards Photography with Seamless Dark Brown Gradient Blend */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[74%] md:w-[70%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -332,7 +332,11 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[70%_40%] brightness-[1.03] contrast-[1.04]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+              }}
             />
           </div>
           {/* Smooth multi-stop horizontal gradient transitioning from dark brown (#1C120C) into the family scene */}

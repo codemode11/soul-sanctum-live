@@ -252,7 +252,7 @@ export const CatholicProphecyView: React.FC = () => {
         >
           {/* Right-Side Colorized Medjugorje Visionaries with Superimposed Our Lady of Medjugorje */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[410px] md:w-[445px] overflow-hidden z-0"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
             aria-hidden="true"
           >
             <img
@@ -260,7 +260,7 @@ export const CatholicProphecyView: React.FC = () => {
               alt="Colorized photograph of the Medjugorje visionaries praying with Our Lady of Medjugorje superimposed above in heavenly mist"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[100%_0%] brightness-[1.02] contrast-[1.03]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[1.02] contrast-[1.03]"
               style={{
                 maskImage:
                   'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 14%, black 28%)',

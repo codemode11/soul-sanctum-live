@@ -646,21 +646,23 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
       <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-slate-900 border border-slate-700/80 shadow-md text-[#F9F6F0] overflow-hidden flex flex-col justify-between gap-2">
         {/* Right-Side Dawn Prayer Desk: Modern Matte-Black Analog Alarm Clock, Olive-Wood Rosary & Linen Examen Booklet (16:9 preserved) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-[16/9] overflow-hidden z-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
           aria-hidden="true"
         >
-          <img
-            src={spiritualChecklistBannerImg}
-            alt="Sleek matte-black modern analog alarm clock set to 6:00, coiled wooden rosary with crucifix, and bleached-sand clothbound prayer booklet with a black fineliner pen resting parallel to its spine and edge on dark slate in morning light"
-            decoding="async"
-            referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-right brightness-[1.03] contrast-[1.03]"
-          />
-          {/* Smooth Horizontal Gradient Transition from Deep Slate (#0F172A) into the Slate Prayer Desk */}
-          <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#0F172A_0%,#0F172A_10%,rgba(15,23,42,0.88)_22%,rgba(15,23,42,0.42)_34%,transparent_48%)]" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-slate-900/50 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-slate-900/45 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-slate-900/55 to-transparent" />
+          <div className="relative h-full max-w-full flex items-center justify-end">
+            <img
+              src={spiritualChecklistBannerImg}
+              alt="Sleek matte-black modern analog alarm clock set to 6:00, coiled wooden rosary with crucifix, and bleached-sand clothbound prayer booklet with a black fineliner pen resting parallel to its spine and edge on dark slate in morning light"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.03]"
+            />
+            {/* Smooth Horizontal Gradient Transition from Deep Slate (#0F172A) into the Slate Prayer Desk */}
+            <div className="hidden sm:block pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#0F172A_0%,#0F172A_10%,rgba(15,23,42,0.88)_22%,rgba(15,23,42,0.42)_34%,transparent_48%)]" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-slate-900/50 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-slate-900/45 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-slate-900/55 to-transparent" />
+          </div>
         </div>
 
         {/* Mobile Readability Gradient Behind Left Title & Controls */}

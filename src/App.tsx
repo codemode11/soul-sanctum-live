@@ -247,6 +247,11 @@ export default function App() {
   const candleGlowRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const isMobileParallaxDisabled = () =>
+      typeof window !== 'undefined' &&
+      (window.innerWidth < 768 ||
+        (typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches));
+
     const initialScroll = window.scrollY || 0;
     const state = {
       targetScrollY: initialScroll,
@@ -260,7 +265,27 @@ export default function App() {
       lastTime: performance.now(),
     };
 
+    const applyStaticMobileTransforms = () => {
+      if (imageParallaxRef.current) {
+        imageParallaxRef.current.style.transform = 'translate3d(0px, 0px, 0px)';
+      }
+      if (haloParallaxRef.current) {
+        haloParallaxRef.current.style.transform = 'translate3d(0px, 0px, 0px)';
+      }
+      if (gradientOverlayRef.current) {
+        gradientOverlayRef.current.style.opacity = '0.45';
+      }
+      if (candleGlowRef.current) {
+        candleGlowRef.current.style.transform = 'translate3d(0px, 0px, 0px)';
+      }
+    };
+
     const applyParallaxTransforms = () => {
+      if (isMobileParallaxDisabled()) {
+        applyStaticMobileTransforms();
+        return;
+      }
+
       // Smooth asymptotic curve so vertical scroll parallax glides continuously without hitting a hard stop
       const maxScrollOffset = 95;
       const rawScrollOffset = -state.currentScrollY * 0.11;
@@ -290,6 +315,13 @@ export default function App() {
     };
 
     const tick = (now: number) => {
+      if (isMobileParallaxDisabled()) {
+        applyStaticMobileTransforms();
+        state.isRunning = false;
+        state.rafId = 0;
+        return;
+      }
+
       // Clamp dt to handle tab switches and high-refresh-rate monitors (60Hz / 120Hz / 144Hz)
       const dt = Math.min(Math.max((now - state.lastTime) / 1000, 0.001), 0.05);
       state.lastTime = now;
@@ -328,6 +360,7 @@ export default function App() {
     };
 
     const startLoop = () => {
+      if (isMobileParallaxDisabled()) return;
       if (!state.isRunning) {
         state.isRunning = true;
         state.lastTime = performance.now();
@@ -336,15 +369,33 @@ export default function App() {
     };
 
     const handleScroll = () => {
+      if (isMobileParallaxDisabled()) return;
       state.targetScrollY = window.scrollY || 0;
       startLoop();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (isMobileParallaxDisabled()) return;
       const { innerHeight } = window;
       if (innerHeight > 0) {
         state.targetMouseY = (e.clientY / innerHeight - 0.5) * 2;
         startLoop();
+      }
+    };
+
+    const handleResize = () => {
+      if (isMobileParallaxDisabled()) {
+        if (state.rafId) {
+          window.cancelAnimationFrame(state.rafId);
+          state.rafId = 0;
+        }
+        state.isRunning = false;
+        applyStaticMobileTransforms();
+      } else {
+        state.targetScrollY = window.scrollY || 0;
+        state.midScrollY = state.targetScrollY;
+        state.currentScrollY = state.targetScrollY;
+        applyParallaxTransforms();
       }
     };
 
@@ -353,10 +404,12 @@ export default function App() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
       if (state.rafId) {
         window.cancelAnimationFrame(state.rafId);
       }
@@ -733,6 +786,7 @@ export default function App() {
   const isProgrammaticSnapRef = React.useRef<boolean>(false);
   const programmaticSnapResetTimerRef = React.useRef<number | null>(null);
   const snapGlideRafRef = React.useRef<number | null>(null);
+  const nativeSmoothScrollCleanupRef = React.useRef<(() => void) | null>(null);
 
   const cancelGridGlide = React.useCallback(() => {
     if (snapGlideRafRef.current !== null) {
@@ -742,6 +796,11 @@ export default function App() {
     if (programmaticSnapResetTimerRef.current !== null) {
       window.clearTimeout(programmaticSnapResetTimerRef.current);
       programmaticSnapResetTimerRef.current = null;
+    }
+    if (nativeSmoothScrollCleanupRef.current) {
+      const cleanup = nativeSmoothScrollCleanupRef.current;
+      nativeSmoothScrollCleanupRef.current = null;
+      cleanup();
     }
     isProgrammaticSnapRef.current = false;
   }, []);
@@ -761,11 +820,12 @@ export default function App() {
       if (typeof window === 'undefined') return;
       cancelGridGlide();
 
+      const roundedTargetY = Math.max(0, Math.round(targetY));
       const startY = window.scrollY;
-      const deltaY = targetY - startY;
+      const deltaY = roundedTargetY - startY;
 
       if (Math.abs(deltaY) < 1) {
-        lastSettledScrollYRef.current = targetY;
+        lastSettledScrollYRef.current = roundedTargetY;
         return;
       }
 
@@ -775,8 +835,8 @@ export default function App() {
 
       if (immediate || prefersReducedMotion) {
         isProgrammaticSnapRef.current = true;
-        lastSettledScrollYRef.current = targetY;
-        window.scrollTo({ top: targetY, behavior: 'auto' });
+        lastSettledScrollYRef.current = roundedTargetY;
+        window.scrollTo({ top: roundedTargetY, behavior: 'auto' });
         programmaticSnapResetTimerRef.current = window.setTimeout(() => {
           isProgrammaticSnapRef.current = false;
           lastSettledScrollYRef.current = window.scrollY;
@@ -785,7 +845,54 @@ export default function App() {
         return;
       }
 
-      // Gradual, parallax-grade C2-continuous glide (smootherstep):
+      const isMobileTouch =
+        window.innerWidth < 768 ||
+        (typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches);
+
+      if (isMobileTouch) {
+        // Use hardware-composited native smooth scroll on mobile so iOS Safari / Android Chrome
+        // stay synchronized with dynamic address bars with zero JS frame jitter.
+        isProgrammaticSnapRef.current = true;
+        let idleTimer: number | null = null;
+        let hardTimeout: number | null = null;
+
+        const finishNativeScroll = () => {
+          if (idleTimer !== null) {
+            window.clearTimeout(idleTimer);
+            idleTimer = null;
+          }
+          if (hardTimeout !== null) {
+            window.clearTimeout(hardTimeout);
+            hardTimeout = null;
+          }
+          window.removeEventListener('scroll', onNativeScrollProgress);
+          window.removeEventListener('scrollend', finishNativeScroll as EventListener);
+          nativeSmoothScrollCleanupRef.current = null;
+          isProgrammaticSnapRef.current = false;
+          lastSettledScrollYRef.current = window.scrollY;
+        };
+
+        const onNativeScrollProgress = () => {
+          if (idleTimer !== null) window.clearTimeout(idleTimer);
+          idleTimer = window.setTimeout(finishNativeScroll, 140);
+        };
+
+        nativeSmoothScrollCleanupRef.current = () => {
+          if (idleTimer !== null) window.clearTimeout(idleTimer);
+          if (hardTimeout !== null) window.clearTimeout(hardTimeout);
+          window.removeEventListener('scroll', onNativeScrollProgress);
+          window.removeEventListener('scrollend', finishNativeScroll as EventListener);
+        };
+
+        window.addEventListener('scroll', onNativeScrollProgress, { passive: true });
+        window.addEventListener('scrollend', finishNativeScroll as EventListener, { once: true });
+        hardTimeout = window.setTimeout(finishNativeScroll, 1600);
+
+        window.scrollTo({ top: roundedTargetY, behavior: 'smooth' });
+        return;
+      }
+
+      // Gradual, parallax-grade C2-continuous glide (smootherstep) on desktop:
       // zero abrupt kick on start, unhurried drift, and feather-soft landing onto the target position.
       const startTime = performance.now();
       isProgrammaticSnapRef.current = true;
@@ -800,16 +907,16 @@ export default function App() {
         const t = Math.min(1, Math.max(0, elapsed / durationMs));
         // C2-continuous Ken Perlin smootherstep: zero velocity & zero acceleration discontinuity at both ends
         const eased = t * t * t * (t * (6 * t - 15) + 10);
-        const nextY = startY + deltaY * eased;
+        const nextY = Math.round(startY + deltaY * eased);
 
         window.scrollTo({ top: nextY, behavior: 'auto' });
 
         if (t < 1) {
           snapGlideRafRef.current = window.requestAnimationFrame(step);
         } else {
-          window.scrollTo({ top: targetY, behavior: 'auto' });
+          window.scrollTo({ top: roundedTargetY, behavior: 'auto' });
           snapGlideRafRef.current = null;
-          lastSettledScrollYRef.current = targetY;
+          lastSettledScrollYRef.current = roundedTargetY;
           programmaticSnapResetTimerRef.current = window.setTimeout(() => {
             isProgrammaticSnapRef.current = false;
             lastSettledScrollYRef.current = window.scrollY;
@@ -956,13 +1063,17 @@ export default function App() {
 
     const handleWindowScroll = () => {
       if (isProgrammaticSnapRef.current) return;
+      if (window.innerWidth < 768) {
+        lastSettledScrollYRef.current = window.scrollY;
+        return;
+      }
 
       if (snapTimer !== null) {
         window.clearTimeout(snapTimer);
       }
 
       snapTimer = window.setTimeout(() => {
-        if (isPointerDown || isProgrammaticSnapRef.current) return;
+        if (isPointerDown || isProgrammaticSnapRef.current || window.innerWidth < 768) return;
         if (Date.now() - lastIndexInteractionTs < 400) {
           lastSettledScrollYRef.current = window.scrollY;
           return;
@@ -1495,7 +1606,7 @@ export default function App() {
           className="flex-1 w-full mx-auto pt-3 sm:pt-8 flex flex-col items-center transition-all duration-300"
         >
           {/* Edge-to-Edge Semi-Transparent Light Frosted Glass Background Container */}
-          <div className="w-full flex-1 backdrop-blur-2xl backdrop-brightness-125 backdrop-saturate-125 bg-white/42 sm:bg-white/48 border-t border-white/60 shadow-[0_-12px_40px_rgba(255,255,255,0.2)] pt-6 sm:pt-10 pb-20 sm:pb-28 px-3 sm:px-6 lg:px-12 text-[#1C120A]">
+          <div className="w-full flex-1 backdrop-blur-md md:backdrop-blur-2xl backdrop-brightness-125 backdrop-saturate-125 bg-white/46 sm:bg-white/48 border-t border-white/60 shadow-[0_-12px_40px_rgba(255,255,255,0.2)] pt-6 sm:pt-10 pb-20 sm:pb-28 px-3 sm:px-6 lg:px-12 text-[#1C120A]">
             <div className={`w-full mx-auto transition-all duration-300 ${
               activeTab === 'catholic-ai' ? 'max-w-none px-2 sm:px-4 lg:px-6' : 'max-w-7xl'
             }`}>

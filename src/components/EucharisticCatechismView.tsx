@@ -779,7 +779,7 @@ SOUL SANCTUM`;
             alt="Reliquary of the Eucharistic Miracle of Lanciano"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-none block"
+            className="h-full w-auto max-w-full object-contain object-right block"
             style={{
               maskImage:
                 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 10%, black 22%, black 88%, rgba(0,0,0,0.5) 96%, transparent 100%)',

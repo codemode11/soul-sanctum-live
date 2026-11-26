@@ -685,7 +685,7 @@ export const VirtualPilgrimageView: React.FC = () => {
         <div className="relative overflow-hidden bg-[#EFE2D0] px-6 py-6 sm:px-8 sm:py-7 border-b border-[#D8C7B2] min-h-[212px] sm:min-h-[236px] flex flex-col justify-between">
           {/* Right-Side St. Peter's Basilica Photography */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[70%] md:w-[66%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -693,7 +693,11 @@ export const VirtualPilgrimageView: React.FC = () => {
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[56%_38%] brightness-[1.01] contrast-[1.03]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[1.01] contrast-[1.03]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+              }}
             />
           </div>
 

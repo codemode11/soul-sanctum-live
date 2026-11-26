@@ -249,7 +249,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
       <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-3.5 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-1.5">
         {/* Right-Side Seven Original-Size Lit Vigil Candles with Rising Smoke on Dark Slate */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[54%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
@@ -257,7 +257,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
             alt="Seven lit short thick beeswax vigil candles in clear glass holders with rising wisps of smoke on dark slate"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-[100%_50%]"
+            className="h-full w-auto max-w-full object-contain object-right"
             style={{
               maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 10%, black 20%, black 100%)',
               WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 10%, black 20%, black 100%)',

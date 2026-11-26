@@ -1143,7 +1143,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
       {/* Top Passion & 3:00 PM Hour of Mercy Banner */}
       <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between gap-2 overflow-hidden">
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
           aria-hidden="true"
         >
           <img
@@ -1151,7 +1151,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             alt="The Divine Mercy"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-[50%_12%]"
+            className="h-full w-auto max-w-full object-contain object-right"
             style={{
               maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
               WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',

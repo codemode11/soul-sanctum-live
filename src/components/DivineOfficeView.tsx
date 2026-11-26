@@ -338,7 +338,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-3.5 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Divine Office Prayer Photography with Seamless Dark Brown Gradient Blend */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full sm:w-[72%] md:w-[68%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
             aria-hidden="true"
           >
             <img
@@ -346,7 +346,11 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[76%_30%] brightness-[0.95] contrast-[1.04]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[0.95] contrast-[1.04]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+              }}
             />
           </div>
           {/* Smooth multi-stop gradient transitioning from dark brown background into the right-side image */}

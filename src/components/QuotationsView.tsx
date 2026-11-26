@@ -94,20 +94,22 @@ export const QuotationsView: React.FC = () => {
             aria-hidden="true"
           >
             {/* Right-Side Doctors of the Church Painting */}
-            <div className="absolute inset-y-0 right-0 w-full sm:w-auto sm:aspect-[3/2] overflow-hidden">
-              <img
-                src="/assets/aistudio/image_20261124_141957_051994f8.jpg"
-                alt="Doctors of the Church"
-                decoding="async"
-                referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[62%_22%] sm:object-center brightness-[1.03] contrast-[1.04]"
-              />
-              {/* Seamless Left-Edge Gradient Transition from Dark Brown (#1C120C) into Doctors of the Church */}
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-[30%] bg-gradient-to-r from-[#1C120C] via-[#1C120C]/75 to-transparent" />
-              {/* Subtle Right, Top, and Bottom Dark Brown Feathering */}
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-[8%] bg-gradient-to-l from-[#1C120C]/65 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120C]/60 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120C]/70 to-transparent" />
+            <div className="absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden">
+              <div className="relative h-full max-w-full flex items-center justify-end">
+                <img
+                  src="/assets/aistudio/image_20261124_141957_051994f8.jpg"
+                  alt="Doctors of the Church"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
+                />
+                {/* Seamless Left-Edge Gradient Transition from Dark Brown (#1C120C) into Doctors of the Church */}
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-[30%] bg-gradient-to-r from-[#1C120C] via-[#1C120C]/75 to-transparent" />
+                {/* Subtle Right, Top, and Bottom Dark Brown Feathering */}
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-[8%] bg-gradient-to-l from-[#1C120C]/65 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120C]/60 to-transparent" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120C]/70 to-transparent" />
+              </div>
             </div>
 
             {/* Mobile Readability Gradient Behind Left Title & Controls */}

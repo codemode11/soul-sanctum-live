@@ -66,7 +66,7 @@ Catechism: ${term.catechismRef || 'N/A'}`;
       <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-amber-50 shadow-md border border-[#8B5A2B]/40 flex flex-col justify-between">
         {/* Right-Side Single-Angle Walnut Library Bookcase with Modern Catholic Dictionaries & Encyclopedias */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-video overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
           aria-hidden="true"
         >
           <img
@@ -74,7 +74,7 @@ Catechism: ${term.catechismRef || 'N/A'}`;
             alt="Single continuous dark walnut library bookcase wall in straight three-quarter perspective holding modern Catholic dictionaries, theological lexicons, and encyclopedias"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
+            className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.04]"
             style={{
               maskImage:
                 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.48) 16%, black 32%)',

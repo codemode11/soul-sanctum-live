@@ -786,18 +786,20 @@ export const CatholicSocialView: React.FC = () => {
         <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between rounded-xl">
           {/* Right-Side Three Aligned Satellite Dishes Photography with Seamless Dark Brown Gradient Blend */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 h-full aspect-video overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden"
             aria-hidden="true"
           >
-            <img
-              src={catholicSocialSatellitesImg}
-              alt="Three broadcast satellite dishes aligned toward the same skyward direction"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[1.02] contrast-[1.04]"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_10%,rgba(28,18,12,0.82)_24%,rgba(28,18,12,0.32)_36%,rgba(28,18,12,0)_46%)]" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120C]/65 to-transparent" />
+            <div className="relative h-full max-w-full flex items-center justify-end">
+              <img
+                src={catholicSocialSatellitesImg}
+                alt="Three broadcast satellite dishes aligned toward the same skyward direction"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="h-full w-auto max-w-full object-contain object-right brightness-[1.02] contrast-[1.04]"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,#1C120C_0%,#1C120C_10%,rgba(28,18,12,0.82)_24%,rgba(28,18,12,0.32)_36%,rgba(28,18,12,0)_46%)]" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#1C120C]/65 to-transparent" />
+            </div>
           </div>
 
           {/* Smooth Multi-Stop Horizontal Gradient from Dark Brown (#1C120C) into the Three Satellite Dishes */}

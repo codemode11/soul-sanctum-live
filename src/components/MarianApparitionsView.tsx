@@ -136,7 +136,7 @@ export const MarianApparitionsView: React.FC = () => {
             alt="Colorized 1917 photograph of the Miracle of the Sun at Cova da Iria, Fátima, Portugal"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-auto max-w-none block"
+            className="h-full w-auto max-w-full object-contain object-right block"
             style={{
               maskImage:
                 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.16) 10%, rgba(0,0,0,0.58) 22%, rgba(0,0,0,0.9) 34%, black 46%)',

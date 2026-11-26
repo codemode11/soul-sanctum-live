@@ -483,7 +483,7 @@ export const CatholicBiblesView: React.FC = () => {
         >
           {/* Right-Center Consecrated Holy Bible, Statues & Candles Photography (shifted slightly left & forward) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-[3%] sm:right-[7%] w-[78%] sm:w-auto sm:aspect-[16/9] overflow-hidden z-[15]"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-[15]"
             aria-hidden="true"
           >
             <img
@@ -491,12 +491,12 @@ export const CatholicBiblesView: React.FC = () => {
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[64%_42%] scale-[1.11] origin-[64%_42%] brightness-[1.03] contrast-[1.05]"
+              className="h-full w-auto max-w-full object-contain object-right brightness-[1.03] contrast-[1.05]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.62) 14%, black 28%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.62) 14%, black 28%)',
+              }}
             />
-            {/* Seamless Left-Edge Feathering into Banner Background (Stops Before Candle & Bible) */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-[34%] bg-gradient-to-r from-[#1C120C] via-[#1C120C]/75 to-transparent" />
-            {/* Subtle Right-Edge Feathering so Leftward Shift Has No Hard Edge */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-[10%] bg-gradient-to-l from-[#1C120C] via-[#1C120C]/40 to-transparent" />
             {/* Subtle Bottom Edge Polish */}
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/50 to-transparent" />
           </div>

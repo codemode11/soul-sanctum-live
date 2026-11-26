@@ -285,13 +285,17 @@ ${reading.gospel.text}`;
             className={`pointer-events-none select-none absolute inset-0 overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}
             aria-hidden="true"
           >
-            <div className="absolute inset-y-0 right-0 w-full sm:w-[76%] md:w-[72%] overflow-hidden">
+            <div className="absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden">
               <img
                 src={massLectorBannerImg}
                 alt=""
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[76%_6%] brightness-[0.96] contrast-[1.04]"
+                className="h-full w-auto max-w-full object-contain object-right brightness-[0.96] contrast-[1.04]"
+                style={{
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 12%, black 24%)',
+                }}
               />
             </div>
             {/* Seamless multi-stop horizontal gradient from dark brown background into the Liturgy of the Word scene */}
