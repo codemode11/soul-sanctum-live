@@ -1007,23 +1007,21 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* 3:00 PM Hour of Great Mercy Banner */}
           <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
               aria-hidden="true"
             >
-              <div className="relative h-full max-w-full flex items-center justify-end">
-                <img
-                  src={divineMercyImg}
-                  alt="The Divine Mercy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="h-full w-auto max-w-full object-contain object-right"
-                  style={{
-                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                  }}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
-              </div>
+              <img
+                src={divineMercyImg}
+                alt="The Divine Mercy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-[50%_12%]"
+                style={{
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                }}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
@@ -1439,23 +1437,21 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* Header Banner — Patterned after the Chaplet of the Divine Mercy Banner */}
           <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
               aria-hidden="true"
             >
-              <div className="relative h-full max-w-full flex items-center justify-end">
-                <img
-                  src={divineMercyImg}
-                  alt="The Divine Mercy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="h-full w-auto max-w-full object-contain object-right"
-                  style={{
-                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                  }}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
-              </div>
+              <img
+                src={divineMercyImg}
+                alt="The Divine Mercy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-[50%_12%]"
+                style={{
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                }}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
@@ -1797,23 +1793,21 @@ export const RosaryAndChapletView: React.FC = () => {
           {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
           <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-full flex items-center justify-end overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[168px] sm:w-[204px] overflow-hidden z-0"
               aria-hidden="true"
             >
-              <div className="relative h-full max-w-full flex items-center justify-end">
-                <img
-                  src={divineMercyImg}
-                  alt="The Divine Mercy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="h-full w-auto max-w-full object-contain object-right"
-                  style={{
-                    maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
-                  }}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
-              </div>
+              <img
+                src={divineMercyImg}
+                alt="The Divine Mercy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-[50%_12%]"
+                style={{
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 14%, black 28%, black 100%)',
+                }}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[156px] sm:pr-[196px]">
