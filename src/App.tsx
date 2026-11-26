@@ -755,12 +755,9 @@ export default function App() {
     return Math.max(0, Math.round(rect.top + window.scrollY - topInset));
   }, []);
 
-  const snapWindowToGrid = React.useCallback(
-    (mode: 'glide' | 'tab' | 'auto' = 'glide') => {
+  const glideWindowToY = React.useCallback(
+    (targetY: number, durationMs: number, immediate = false) => {
       if (typeof window === 'undefined') return;
-      const targetY = getGridSnapTargetY();
-      if (targetY === null) return;
-
       cancelGridGlide();
 
       const startY = window.scrollY;
@@ -775,7 +772,7 @@ export default function App() {
         typeof window.matchMedia === 'function' &&
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      if (mode === 'auto' || prefersReducedMotion) {
+      if (immediate || prefersReducedMotion) {
         isProgrammaticSnapRef.current = true;
         lastSettledScrollYRef.current = targetY;
         window.scrollTo({ top: targetY, behavior: 'auto' });
@@ -788,12 +785,7 @@ export default function App() {
       }
 
       // Gradual, parallax-grade C2-continuous glide (smootherstep):
-      // zero abrupt kick on start, unhurried drift, and feather-soft landing onto the exact margin.
-      const durationMs =
-        mode === 'tab'
-          ? Math.min(720, Math.max(420, 380 + Math.abs(deltaY) * 0.45))
-          : Math.min(1320, Math.max(780, 640 + Math.abs(deltaY) * 5.0));
-
+      // zero abrupt kick on start, unhurried drift, and feather-soft landing onto the target position.
       const startTime = performance.now();
       isProgrammaticSnapRef.current = true;
 
@@ -827,7 +819,78 @@ export default function App() {
 
       snapGlideRafRef.current = window.requestAnimationFrame(step);
     },
-    [cancelGridGlide, getGridSnapTargetY]
+    [cancelGridGlide]
+  );
+
+  const snapWindowToGrid = React.useCallback(
+    (mode: 'glide' | 'tab' | 'auto' = 'glide') => {
+      if (typeof window === 'undefined') return;
+      const targetY = getGridSnapTargetY();
+      if (targetY === null) return;
+
+      const distance = Math.abs(targetY - window.scrollY);
+      const durationMs =
+        mode === 'tab'
+          ? Math.min(720, Math.max(420, 380 + distance * 0.45))
+          : Math.min(1320, Math.max(780, 640 + distance * 5.0));
+
+      glideWindowToY(targetY, durationMs, mode === 'auto');
+    },
+    [getGridSnapTargetY, glideWindowToY]
+  );
+
+  // Clicking anywhere on the outer/side/top/bottom margins while reading or praying
+  // gradually glides the masthead and main story back into view with parallax motion.
+  const glideToMasthead = React.useCallback(() => {
+    if (typeof window === 'undefined') return;
+    const currentY = window.scrollY;
+    if (currentY <= 40) return;
+
+    const durationMs = Math.min(1850, Math.max(1100, 960 + currentY * 0.48));
+    glideWindowToY(0, durationMs);
+  }, [glideWindowToY]);
+
+  const handleMainBodyMarginClick = React.useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.button !== 0 || e.defaultPrevented) return;
+      if (typeof window === 'undefined' || window.scrollY <= 40) return;
+      if (
+        isAdorationOpen ||
+        isAngelusOpen ||
+        isNotificationsOpen ||
+        isMobileMenuOpen ||
+        isCebuParishesOpen ||
+        Boolean(podcastModalEpisode)
+      ) {
+        return;
+      }
+
+      const selection = window.getSelection?.();
+      if (selection && selection.toString().trim().length > 0) return;
+
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      // Trigger only on margins outside the reading/praying column, navigation sidebar, and interactive controls
+      if (
+        target.closest(
+          'main, aside, footer, header, button, a, input, textarea, select, label, audio, video, iframe, [role="button"], [role="dialog"], [aria-modal="true"]'
+        )
+      ) {
+        return;
+      }
+
+      glideToMasthead();
+    },
+    [
+      glideToMasthead,
+      isAdorationOpen,
+      isAngelusOpen,
+      isCebuParishesOpen,
+      isMobileMenuOpen,
+      isNotificationsOpen,
+      podcastModalEpisode,
+    ]
   );
 
   // Direction-aware proximity glide-to-grid: gradually drifts Index and Banner tops into alignment
@@ -1371,8 +1434,11 @@ export default function App() {
           </div>
         </div>
 
-        {/* Main Body Layout */}
-        <div className="flex-1 w-full mx-auto pt-3 sm:pt-8 flex flex-col items-center transition-all duration-300">
+        {/* Main Body Layout (clicking empty margins while reading/praying gradually reveals the Masthead & Main Story) */}
+        <div
+          onClick={handleMainBodyMarginClick}
+          className="flex-1 w-full mx-auto pt-3 sm:pt-8 flex flex-col items-center transition-all duration-300"
+        >
           {/* Edge-to-Edge Semi-Transparent Light Frosted Glass Background Container */}
           <div className="w-full flex-1 backdrop-blur-2xl backdrop-brightness-125 backdrop-saturate-125 bg-white/42 sm:bg-white/48 border-t border-white/60 shadow-[0_-12px_40px_rgba(255,255,255,0.2)] pt-6 sm:pt-10 pb-20 sm:pb-28 px-3 sm:px-6 lg:px-12 text-[#1C120A]">
             <div className={`w-full mx-auto transition-all duration-300 ${
