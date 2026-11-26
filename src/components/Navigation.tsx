@@ -1,4 +1,5 @@
 import React, { useRef, useLayoutEffect, useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   BookOpen, 
   Library,
@@ -772,87 +773,97 @@ export const Navigation: React.FC<NavigationProps> = ({
         </div>
       </aside>
 
-      {/* 2. Mobile Fixed Bottom Thumb-Zone Navigation Dock */}
-      <nav
-        aria-label="Mobile Primary Navigation"
-        className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-stone-950/95 backdrop-blur-2xl border-t border-amber-500/30 shadow-[0_-8px_30px_rgba(0,0,0,0.85)] px-1.5 pt-1 pb-[calc(0.35rem+env(safe-area-inset-bottom))]"
-      >
-        <div className="grid grid-cols-5 items-stretch max-w-md mx-auto">
-          {[
-            { id: 'saints' as ActiveTab, line1: 'Saint of', line2: 'the Day', icon: SaintWithHaloIcon },
-            { id: 'catholic-bibles' as ActiveTab, line1: 'Holy', line2: 'Bible', icon: CatholicBiblesBookIcon },
-            { id: 'readings' as ActiveTab, line1: 'Mass', line2: 'Readings', icon: MassReadingsBookFlipIcon },
-            { id: 'divine-office' as ActiveTab, line1: 'Divine', line2: 'Office', icon: DivineOfficeBreviaryIcon },
-          ].map((tab) => {
-            const TabIcon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => onSelectTab(tab.id)}
-                className={`min-h-[54px] flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 transition-colors cursor-pointer select-none ${
-                  isActive ? 'text-[#FFD700]' : 'text-stone-400 hover:text-stone-200'
-                }`}
-              >
-                <TabIcon className={`w-5 h-5 shrink-0 ${isActive ? 'text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]' : 'text-stone-400'}`} />
-                <span className={`text-[10px] font-serif leading-[1.12] text-center flex flex-col items-center ${isActive ? 'font-bold text-[#FFD700]' : 'font-medium'}`}>
-                  <span className="block whitespace-nowrap">{tab.line1}</span>
-                  <span className="block whitespace-nowrap">{tab.line2}</span>
-                </span>
-              </button>
-            );
-          })}
+      {/* 2. Mobile Fixed Bottom Thumb-Zone Navigation Dock & 3. Mobile Centered Index Drawer (portaled to document.body so ancestor backdrop-filter cannot break position:fixed) */}
+      {typeof document !== 'undefined' &&
+        createPortal(
+          <>
+            <nav
+              aria-label="Mobile Primary Navigation"
+              onClick={(e) => e.stopPropagation()}
+              className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-stone-950/95 backdrop-blur-2xl border-t border-amber-500/30 shadow-[0_-8px_30px_rgba(0,0,0,0.85)] px-1.5 pt-1 pb-[calc(0.35rem+env(safe-area-inset-bottom))]"
+            >
+              <div className="grid grid-cols-5 items-stretch max-w-md mx-auto">
+                {[
+                  { id: 'saints' as ActiveTab, line1: 'Saint of', line2: 'the Day', icon: SaintWithHaloIcon },
+                  { id: 'catholic-bibles' as ActiveTab, line1: 'Holy', line2: 'Bible', icon: CatholicBiblesBookIcon },
+                  { id: 'readings' as ActiveTab, line1: 'Mass', line2: 'Readings', icon: MassReadingsBookFlipIcon },
+                  { id: 'divine-office' as ActiveTab, line1: 'Divine', line2: 'Office', icon: DivineOfficeBreviaryIcon },
+                ].map((tab) => {
+                  const TabIcon = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => onSelectTab(tab.id)}
+                      className={`min-h-[54px] flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 transition-colors cursor-pointer select-none ${
+                        isActive ? 'text-[#FFD700]' : 'text-stone-400 hover:text-stone-200'
+                      }`}
+                    >
+                      <TabIcon className={`w-5 h-5 shrink-0 ${isActive ? 'text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]' : 'text-stone-400'}`} />
+                      <span className={`text-[10px] font-serif leading-[1.12] text-center flex flex-col items-center ${isActive ? 'font-bold text-[#FFD700]' : 'font-medium'}`}>
+                        <span className="block whitespace-nowrap">{tab.line1}</span>
+                        <span className="block whitespace-nowrap">{tab.line2}</span>
+                      </span>
+                    </button>
+                  );
+                })}
 
-          {/* 5th Thumb Slot: Open Full Sacred Index Drawer (Center-Aligned) */}
-          <button
-            type="button"
-            onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
-            className={`min-h-[54px] w-full flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 text-center transition-colors cursor-pointer select-none ${
-              isMobileOpen ? 'text-[#FFD700]' : 'text-stone-400 hover:text-stone-200'
-            }`}
-          >
-            <Layers className={`w-5 h-5 shrink-0 mx-auto ${isMobileOpen ? 'text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]' : 'text-stone-400'}`} />
-            <span className={`w-full text-[10px] font-serif leading-[1.12] text-center flex flex-col items-center justify-center min-h-[22.4px] ${isMobileOpen ? 'font-bold text-[#FFD700]' : 'font-medium'}`}>
-              <span className="block whitespace-nowrap text-center">Index</span>
-            </span>
-          </button>
-        </div>
-      </nav>
-
-      {/* 3. Mobile Centered Index Drawer */}
-      {isMobileOpen && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center p-3">
-          {/* Backdrop */}
-          <div 
-            onClick={onCloseMobile}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity" 
-          />
-
-          {/* Centered Index Panel */}
-          <div className="relative w-full max-w-sm max-h-[85dvh] rounded-2xl bg-gradient-to-b from-stone-950 via-[#14110f] to-stone-950 border border-amber-500/35 p-4 sm:p-5 shadow-2xl flex flex-col z-10 overflow-y-auto no-scrollbar">
-            <div className="relative flex items-center justify-center pb-3.5 border-b border-amber-500/20 mb-3">
-              <div className="flex items-center justify-center gap-2 text-center">
-                <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" />
-                <span className="font-cinzel text-sm font-bold text-white tracking-widest">
-                  SOUL SANCTUM
-                </span>
+                {/* 5th Thumb Slot: Open Full Sacred Index Drawer (Center-Aligned) */}
+                <button
+                  type="button"
+                  onClick={() => (onOpenMobile ? onOpenMobile() : onCloseMobile && onCloseMobile())}
+                  className={`min-h-[54px] w-full flex flex-col items-center justify-center gap-0.5 rounded-lg py-1 px-0.5 text-center transition-colors cursor-pointer select-none ${
+                    isMobileOpen ? 'text-[#FFD700]' : 'text-stone-400 hover:text-stone-200'
+                  }`}
+                >
+                  <Layers className={`w-5 h-5 shrink-0 mx-auto ${isMobileOpen ? 'text-[#FFD700] drop-shadow-[0_0_6px_rgba(255,215,0,0.5)]' : 'text-stone-400'}`} />
+                  <span className={`w-full text-[10px] font-serif leading-[1.12] text-center flex flex-col items-center justify-center min-h-[22.4px] ${isMobileOpen ? 'font-bold text-[#FFD700]' : 'font-medium'}`}>
+                    <span className="block whitespace-nowrap text-center">Index</span>
+                  </span>
+                </button>
               </div>
-              <button
-                onClick={onCloseMobile}
-                className="absolute right-0 min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-stone-300 hover:text-white bg-white/10 cursor-pointer"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            </nav>
 
-            <div className="flex-1 overflow-y-auto no-scrollbar">
-              {renderNavList(true)}
-            </div>
-          </div>
-        </div>
-      )}
+            {/* 3. Mobile Centered Index Drawer */}
+            {isMobileOpen && (
+              <div
+                onClick={(e) => e.stopPropagation()}
+                className="fixed inset-0 z-[70] flex items-center justify-center p-3"
+              >
+                {/* Backdrop */}
+                <div 
+                  onClick={onCloseMobile}
+                  className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity" 
+                />
+
+                {/* Centered Index Panel */}
+                <div className="relative w-full max-w-sm max-h-[85dvh] rounded-2xl bg-gradient-to-b from-stone-950 via-[#14110f] to-stone-950 border border-amber-500/35 p-4 sm:p-5 shadow-2xl flex flex-col z-10 overflow-y-auto no-scrollbar">
+                  <div className="relative flex items-center justify-center pb-3.5 border-b border-amber-500/20 mb-3">
+                    <div className="flex items-center justify-center gap-2 text-center">
+                      <ShieldCheck className="w-5 h-5 text-amber-400 shrink-0" />
+                      <span className="font-cinzel text-sm font-bold text-white tracking-widest">
+                        SOUL SANCTUM
+                      </span>
+                    </div>
+                    <button
+                      onClick={onCloseMobile}
+                      className="absolute right-0 min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-stone-300 hover:text-white bg-white/10 cursor-pointer"
+                      aria-label="Close"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto no-scrollbar">
+                    {renderNavList(true)}
+                  </div>
+                </div>
+              </div>
+            )}
+          </>,
+          document.body
+        )}
     </>
   );
 };
