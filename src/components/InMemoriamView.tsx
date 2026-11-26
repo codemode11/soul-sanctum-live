@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { HolyWaterIcon } from './SanctumIcons';
 import { SacredReader } from '../utils/speech';
-import graveAtSunsetImg from '../assets/images/grave_marble_sunset_1795595762172.jpg';
+import graveAtSunsetImg from '../assets/images/in_memoriam_banner_40.jpg';
 
 export type DeceasedCategory = 'priest' | 'seminarian' | 'laity';
 
@@ -329,7 +329,7 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
       <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-r from-[#2E1C10] via-[#26160C] to-[#1F1209] border border-[#8B5A2B]/70 shadow-[0_14px_38px_rgba(0,0,0,0.45)] text-amber-50 flex flex-col justify-between gap-2 overflow-hidden">
         {/* Right-Side Well-Maintained Grave at Sunset Photography (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
           aria-hidden="true"
         >
           <img
@@ -337,17 +337,16 @@ Requiem aeternam dona eis, Domine, et lux perpetua luceat eis. Requiescant in pa
             alt="Clean white-cream marble grave with a polished marble curb enclosure, trimmed emerald grass, white lilies, and a glowing vigil lantern at sunset"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
+            className="h-full w-full object-cover object-[62%_50%] brightness-[1.03] contrast-[1.03]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-[#26160C]/45 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1F1209]/55 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1F1209]/25 via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
+        <div className="relative z-10 flex flex-col justify-between flex-1 w-[60%] pr-3 sm:pr-5 gap-2">
           <div className="flex items-start sm:items-center gap-3.5 min-w-0">
             <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-400/50 flex items-center justify-center text-amber-300 shadow-md shrink-0 backdrop-blur-xs">
               <HolyWaterIcon className="w-5 h-5 text-amber-300" />

@@ -111,6 +111,7 @@ export type FrostedBackgroundColorId =
   | 'transparent-white'
   | 'parchment'
   | 'beige'
+  | 'light-limestone'
   | 'limestone'
   | 'plum'
   | 'espresso';
@@ -156,6 +157,13 @@ export const FROSTED_BG_COLORS: FrostedBackgroundColorOption[] = [
     swatchHex: '#E1DDC8',
     containerClass:
       'backdrop-brightness-105 backdrop-saturate-105 bg-[#E1DDC8]/78 sm:bg-[#E1DDC8]/80 border-t border-[#EFECE0]/80 shadow-[0_-12px_40px_rgba(225,221,200,0.3)]',
+  },
+  {
+    id: 'light-limestone',
+    label: 'Light Limestone',
+    swatchHex: '#EAE5DD',
+    containerClass:
+      'backdrop-brightness-110 backdrop-saturate-85 bg-[#EAE5DD]/78 sm:bg-[#EAE5DD]/80 border-t border-[#F4F0EA]/85 shadow-[0_-12px_40px_rgba(234,229,221,0.3)]',
   },
   {
     id: 'limestone',
@@ -757,7 +765,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                       aria-label={color.label}
                       title={color.label}
                       onClick={() => onSelectBgColor(color.id)}
-                      className={`w-6 h-6 rounded-full transition-transform duration-150 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD700] ${
+                      className={`w-5 h-5 lg:w-[22px] lg:h-[22px] rounded-full transition-transform duration-150 cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD700] ${
                         isSelected
                           ? 'scale-110 ring-2 ring-[#FFD700] ring-offset-2 ring-offset-stone-950'
                           : 'hover:scale-110 ring-1 ring-white/35 hover:ring-amber-300/80'

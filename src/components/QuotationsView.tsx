@@ -7,6 +7,7 @@ import {
   SacredQuotation
 } from '../data/quotations';
 import { SacredReader } from '../utils/speech';
+import quotationsBannerImg from '../assets/images/quotations_banner_40.jpg';
 
 export const QuotationsView: React.FC = () => {
   const [selectedSection, setSelectedSection] = useState<QuotationSectionId | 'all'>('all');
@@ -94,25 +95,24 @@ export const QuotationsView: React.FC = () => {
             aria-hidden="true"
           >
             {/* Right-Side Doctors of the Church Painting (40% width) */}
-            <div className="absolute inset-y-0 right-0 w-[40%] overflow-hidden">
+            <div className="absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100">
               <img
-                src="/assets/aistudio/image_20261124_141957_051994f8.jpg"
+                src={quotationsBannerImg}
                 alt="Doctors of the Church"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[50%_20%] brightness-[1.03] contrast-[1.04]"
+                className="h-full w-full object-cover object-[50%_40%] brightness-[1.05] contrast-[1.04]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
                 }}
               />
-              {/* Subtle Top and Bottom Dark Brown Feathering */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120C]/60 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120C]/70 to-transparent" />
+              {/* Subtle Bottom Dark Brown Feathering */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent" />
             </div>
           </div>
 
-          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
+          <div className="relative z-10 flex flex-col justify-between flex-1 w-[60%] pr-3 sm:pr-5 gap-2">
             <div className="space-y-1 my-auto">
               <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-300 block truncate drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 Doctors &amp; Saints of the Church

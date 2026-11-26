@@ -29,6 +29,7 @@ import {
 } from '../data/catholicRssArticles';
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
+import catholicAnswersCoverImg from '../assets/images/catholic_answers_cover_clean.jpg';
 
 interface CatholicArticlesViewProps {
   initialSourceId?: string | null;
@@ -482,10 +483,9 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
     <div className="max-w-5xl mx-auto space-y-6 pb-12">
       {/* Standardized Top Banner with Collapsible Settings Drop-Down for Publications */}
       <div className="rounded-xl overflow-hidden bg-[#1C120C] text-amber-50 shadow-md border border-amber-900/40">
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] flex flex-col justify-between ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          <div className="relative w-full my-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
-            {/* Left Column: Unobstructed Title, Description & Feed Controls (60% width on sm+) */}
-            <div className="relative z-20 w-full sm:w-[60%] sm:pr-4 min-w-0 space-y-2">
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] flex flex-col justify-center ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          {/* Left Column: Unobstructed Title, Description & Feed Controls (60% width) */}
+          <div className="relative z-20 w-[60%] pr-3 sm:pr-5 min-w-0 space-y-2">
               <div className="space-y-0.5">
                 <div className="flex items-center gap-1.5 flex-wrap group">
                   <CatholicArticlesRssIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
@@ -567,108 +567,81 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
               </div>
             </div>
 
-            {/* Right Column (Desktop / Tablet): Orderly Horizontal Overlapping Magazine Covers (40% width) */}
+            {/* Right Column: Orderly Horizontal Overlapping Magazine Covers (40% of whole banner) */}
             <div
-              className="hidden sm:block relative z-10 shrink-0 pointer-events-none select-none w-[40%] h-[152px] md:h-[168px]"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-10 flex items-center"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 4%, black 10%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 4%, black 10%)',
+              }}
               aria-hidden="true"
             >
-              {/* Layer 6 (Backmost / Leftmost): U.S. Catholic */}
-              <div className="absolute right-[160px] md:right-[210px] lg:right-[290px] top-1/2 -translate-y-1/2 w-[90px] md:w-[110px] lg:w-[138px] aspect-[3/4] overflow-hidden border border-amber-200/25 shadow-[-8px_6px_16px_rgba(0,0,0,0.68)] z-10 brightness-[0.86]">
-                <img
-                  src="/assets/aistudio/image_b7c5319b.png"
-                  alt=""
-                  decoding="async"
-                  className="h-full w-full object-cover object-top"
-                />
-              </div>
-
-              {/* Layer 5: Catholic Digest */}
-              <div className="absolute right-[128px] md:right-[168px] lg:right-[232px] top-1/2 -translate-y-1/2 w-[90px] md:w-[110px] lg:w-[138px] aspect-[3/4] overflow-hidden border border-amber-200/30 shadow-[-10px_6px_18px_rgba(0,0,0,0.74)] z-20 brightness-[0.90]">
-                <img
-                  src="/assets/aistudio/image_a4bdeb02.png"
-                  alt=""
-                  decoding="async"
-                  className="h-full w-full object-cover object-top"
-                />
-              </div>
-
-              {/* Layer 4: Catholic Answers Magazine */}
-              <div className="absolute right-[96px] md:right-[126px] lg:right-[174px] top-1/2 -translate-y-1/2 w-[90px] md:w-[110px] lg:w-[138px] aspect-[3/4] overflow-hidden border border-amber-200/35 shadow-[-10px_6px_20px_rgba(0,0,0,0.78)] z-30 brightness-[0.94]">
-                <img
-                  src="/assets/aistudio/image_9aad468b.png"
-                  alt=""
-                  decoding="async"
-                  className="h-full w-full object-cover object-top"
-                />
-              </div>
-
-              {/* Layer 3: Signs & Wonders for Our Times */}
-              <div className="absolute right-[64px] md:right-[84px] lg:right-[116px] top-1/2 -translate-y-1/2 w-[90px] md:w-[110px] lg:w-[138px] aspect-[3/4] overflow-hidden border border-amber-200/45 shadow-[-12px_6px_22px_rgba(0,0,0,0.82)] z-40">
-                <img
-                  src="/assets/aistudio/image_6b7ae47f.png"
-                  alt=""
-                  decoding="async"
-                  className="h-full w-full object-cover object-top"
-                />
-              </div>
-
-              {/* Layer 2: National Catholic Register */}
-              <div className="absolute right-[32px] md:right-[42px] lg:right-[58px] top-1/2 -translate-y-1/2 w-[90px] md:w-[110px] lg:w-[138px] aspect-[3/4] overflow-hidden border border-amber-200/55 shadow-[-12px_6px_24px_rgba(0,0,0,0.86)] z-50">
-                <img
-                  src="/assets/aistudio/image_332d1a4e.png"
-                  alt=""
-                  decoding="async"
-                  className="h-full w-full object-cover object-top"
-                />
-              </div>
-
-              {/* Layer 1 (Top / Frontmost): Catholic Answers */}
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[90px] md:w-[110px] lg:w-[138px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-[-14px_6px_26px_rgba(0,0,0,0.92)] z-[60] bg-[#06090E] pt-2.5 px-2 pb-2.5 md:pt-3 md:px-2.5 md:pb-3 lg:pt-3.5 lg:px-3 lg:pb-3.5">
-                <div className="relative w-full h-full overflow-hidden bg-[#06090E]">
+              <div className="relative w-full h-[156px] sm:h-[172px] md:h-[184px]">
+                {/* Layer 6 (Backmost / Leftmost): U.S. Catholic */}
+                <div className="absolute left-[0%] top-1/2 -translate-y-1/2 w-[33.6%] aspect-[3/4] overflow-hidden border border-amber-200/25 shadow-[-8px_6px_16px_rgba(0,0,0,0.68)] z-10 brightness-[0.86]">
                   <img
-                    src="/assets/aistudio/image_12421551.png"
+                    src="/assets/aistudio/image_b7c5319b.png"
                     alt=""
                     decoding="async"
-                    className="w-full h-auto -mt-[10%] block"
+                    className="h-full w-full object-cover object-top"
                   />
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-gradient-to-b from-[#06090E] to-transparent" />
-                  <div className="pointer-events-none absolute inset-y-0 left-0 w-2 bg-gradient-to-r from-[#06090E] to-transparent" />
-                  <div className="pointer-events-none absolute inset-y-0 right-0 w-2 bg-gradient-to-l from-[#06090E] to-transparent" />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-gradient-to-t from-[#06090E] to-transparent" />
                 </div>
-              </div>
-            </div>
 
-            {/* Mobile Orderly Horizontal Overlapping Covers Row */}
-            <div className="sm:hidden relative h-[112px] flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
-              <div className="relative w-[298px] h-[104px]">
-                <div className="absolute right-[220px] top-1/2 -translate-y-1/2 w-[78px] aspect-[3/4] overflow-hidden border border-amber-200/25 shadow-[-6px_4px_12px_rgba(0,0,0,0.7)] z-10 brightness-[0.86]">
-                  <img src="/assets/aistudio/image_b7c5319b.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+                {/* Layer 5: Catholic Digest */}
+                <div className="absolute left-[13.28%] top-1/2 -translate-y-1/2 w-[33.6%] aspect-[3/4] overflow-hidden border border-amber-200/30 shadow-[-10px_6px_18px_rgba(0,0,0,0.74)] z-20 brightness-[0.90]">
+                  <img
+                    src="/assets/aistudio/image_a4bdeb02.png"
+                    alt=""
+                    decoding="async"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
-                <div className="absolute right-[176px] top-1/2 -translate-y-1/2 w-[78px] aspect-[3/4] overflow-hidden border border-amber-200/30 shadow-[-6px_4px_12px_rgba(0,0,0,0.75)] z-20 brightness-[0.90]">
-                  <img src="/assets/aistudio/image_a4bdeb02.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+
+                {/* Layer 4: Catholic Answers Magazine */}
+                <div className="absolute left-[26.56%] top-1/2 -translate-y-1/2 w-[33.6%] aspect-[3/4] overflow-hidden border border-amber-200/35 shadow-[-10px_6px_20px_rgba(0,0,0,0.78)] z-30 brightness-[0.94]">
+                  <img
+                    src="/assets/aistudio/image_9aad468b.png"
+                    alt=""
+                    decoding="async"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
-                <div className="absolute right-[132px] top-1/2 -translate-y-1/2 w-[78px] aspect-[3/4] overflow-hidden border border-amber-200/35 shadow-[-8px_4px_14px_rgba(0,0,0,0.8)] z-30 brightness-[0.94]">
-                  <img src="/assets/aistudio/image_9aad468b.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+
+                {/* Layer 3: Signs & Wonders for Our Times */}
+                <div className="absolute left-[39.84%] top-1/2 -translate-y-1/2 w-[33.6%] aspect-[3/4] overflow-hidden border border-amber-200/45 shadow-[-12px_6px_22px_rgba(0,0,0,0.82)] z-40">
+                  <img
+                    src="/assets/aistudio/image_6b7ae47f.png"
+                    alt=""
+                    decoding="async"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
-                <div className="absolute right-[88px] top-1/2 -translate-y-1/2 w-[78px] aspect-[3/4] overflow-hidden border border-amber-200/45 shadow-[-8px_4px_16px_rgba(0,0,0,0.85)] z-40">
-                  <img src="/assets/aistudio/image_6b7ae47f.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
+
+                {/* Layer 2: National Catholic Register */}
+                <div className="absolute left-[53.12%] top-1/2 -translate-y-1/2 w-[33.6%] aspect-[3/4] overflow-hidden border border-amber-200/55 shadow-[-12px_6px_24px_rgba(0,0,0,0.86)] z-50">
+                  <img
+                    src="/assets/aistudio/image_332d1a4e.png"
+                    alt=""
+                    decoding="async"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
-                <div className="absolute right-[44px] top-1/2 -translate-y-1/2 w-[78px] aspect-[3/4] overflow-hidden border border-amber-200/55 shadow-[-10px_4px_18px_rgba(0,0,0,0.88)] z-50">
-                  <img src="/assets/aistudio/image_332d1a4e.png" alt="" decoding="async" className="h-full w-full object-cover object-top" />
-                </div>
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[78px] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-[-10px_4px_20px_rgba(0,0,0,0.92)] z-[60] bg-[#06090E] pt-2 px-1.5 pb-2">
-                  <div className="relative w-full h-full overflow-hidden bg-[#06090E]">
-                    <img src="/assets/aistudio/image_12421551.png" alt="" decoding="async" className="w-full h-auto -mt-[10%] block" />
-                    <div className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-gradient-to-b from-[#06090E] to-transparent" />
-                    <div className="pointer-events-none absolute inset-y-0 left-0 w-1.5 bg-gradient-to-r from-[#06090E] to-transparent" />
-                    <div className="pointer-events-none absolute inset-y-0 right-0 w-1.5 bg-gradient-to-l from-[#06090E] to-transparent" />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5 bg-gradient-to-t from-[#06090E] to-transparent" />
-                  </div>
+
+                {/* Layer 1 (Top / Frontmost): Catholic Answers */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[33.6%] aspect-[3/4] overflow-hidden border border-amber-300/75 shadow-[-14px_6px_26px_rgba(0,0,0,0.92)] z-[60]">
+                  <img
+                    src={catholicAnswersCoverImg}
+                    alt=""
+                    decoding="async"
+                    className="h-full w-full object-cover object-top"
+                  />
                 </div>
               </div>
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent z-[70]"
+                aria-hidden="true"
+              />
             </div>
-          </div>
         </div>
 
         {/* Collapsible Settings Drop-Down: Catholic Publications Selector & Active Publication Info */}

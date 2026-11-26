@@ -22,7 +22,7 @@ import {
 } from '../data/novenas';
 import { bellSynth } from '../utils/audioSynth';
 import { NovenaHands9Icon } from './SanctumIcons';
-import novenaCandlesImg from '../assets/images/novena_seven_votive_candles_1795590701402.jpg';
+import novenaCandlesImg from '../assets/images/novena_banner_40.jpg';
 
 interface NovenaTrackerViewProps {
   currentDateStr?: string;
@@ -247,26 +247,26 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
       
       {/* Novena Tracker Banner */}
       <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-3.5 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#520B0B] rounded-xl text-amber-50 shadow-md border border-red-900/50 flex flex-col justify-between gap-1.5">
-        {/* Right-Side Seven Original-Size Lit Vigil Candles with Rising Smoke on Dark Slate (40% width) */}
+        {/* Right-Side Nine Lit Vigil Candles with Rising Smoke on Dark Slate (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
           aria-hidden="true"
         >
           <img
             src={novenaCandlesImg}
-            alt="Seven lit short thick beeswax vigil candles in clear glass holders with rising wisps of smoke on dark slate"
+            alt="Nine lit short thick beeswax vigil candles in clear glass holders with rising wisps of smoke on dark slate"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 3.5%, black 7.5%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.85) 3.5%, black 7.5%)',
             }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-[#520B0B]/15" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 space-y-1 w-[60%] pr-3 sm:pr-5">
           <div className="flex items-center gap-2">
             <NovenaHands9Icon className="w-4 h-4 text-amber-300 shrink-0" />
             <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-200 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)] leading-snug">
@@ -281,7 +281,7 @@ export const NovenaTrackerView: React.FC<NovenaTrackerViewProps> = ({
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-3 shrink-0 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 flex items-center gap-3 shrink-0 w-[60%] pr-3 sm:pr-5">
           <button
             type="button"
             onClick={() => setCustomModalOpen(true)}

@@ -2,6 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        try {
+          var h = location.hostname;
+          if (h !== 'localhost' && h !== '127.0.0.1' && h.indexOf('ais-dev-') !== 0) return;
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', function (e) {
+              if (e.data && e.data.type === 'SANCTUM_SW_EVICTED') location.reload();
+            });
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              if (!regs || !regs.length) return;
+              Promise.all(regs.map(function (r) { return r.unregister(); })).then(function () {
+                var clearCaches = 'caches' in window
+                  ? caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })
+                  : Promise.resolve();
+                clearCaches.finally(function () {
+                  if (!sessionStorage.getItem('ss_sw_killed_v3')) {
+                    sessionStorage.setItem('ss_sw_killed_v3', '1');
+                    location.reload();
+                  }
+                });
+              });
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1A110B" />
     <meta name="mobile-web-app-capable" content="yes" />

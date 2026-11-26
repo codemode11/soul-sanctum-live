@@ -20,7 +20,7 @@ import {
   ChevronDown,
   X,
 } from 'lucide-react';
-import magisteriumBannerImg from '../assets/images/magisterium_stylized_ihs_graph_1795533899890.jpg';
+import magisteriumBannerImg from '../assets/images/magisterium_banner_40.jpg';
 import {
   searchCatholicInternet,
   synthesizeResearchResponse,
@@ -597,7 +597,7 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
         >
           {/* Right-Side Obsidian Knowledge Graph Artwork (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden mix-blend-lighten"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100 mix-blend-lighten"
             aria-hidden="true"
           >
             <img
@@ -605,21 +605,21 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[1.08] contrast-[1.06]"
+              className="h-full w-full object-cover object-center brightness-[1.06] contrast-[1.05]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
 
-          {/* Subtle top/bottom warm dark brown feathering so text & controls stay crisp */}
+          {/* Subtle bottom warm dark brown feathering so text & controls stay crisp */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
+          <div className="relative z-10 space-y-1 my-auto w-[60%] pr-3 sm:pr-5">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] sm:text-xs font-serif">
               <span className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-300 shrink-0 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                 28,000+ Church Documents
@@ -639,8 +639,8 @@ export const MagisteriumAIView: React.FC<MagisteriumAIViewProps> = ({
             </p>
           </div>
 
-          {/* Bottom-Right Controls Row matching Divine Office & Daily Mass Readings */}
-          <div className="relative z-10 flex items-center justify-end gap-2 mt-auto pt-1.5">
+          {/* Bottom Controls Row kept strictly in left 60% */}
+          <div className="relative z-10 flex items-center justify-start gap-2 mt-auto pt-1.5 w-[60%] pr-3 sm:pr-5">
             <button
               ref={domainButtonRef}
               type="button"

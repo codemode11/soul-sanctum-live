@@ -17,7 +17,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { NotebookWithBallpenIcon } from './SanctumIcons';
-import spiritualChecklistBannerImg from '../assets/images/spiritual_checklist_fineliner_exact_parallel_1795611147383.jpg';
+import spiritualChecklistBannerImg from '../assets/images/spiritual_checklist_banner_40.jpg';
 
 export type ChecklistCategory =
   | 'daily-essential'
@@ -646,25 +646,26 @@ export const PersonalPietyDashboard: React.FC<PersonalPietyDashboardProps> = ({
       <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-slate-900 border border-slate-700/80 shadow-md text-[#F9F6F0] overflow-hidden flex flex-col justify-between gap-2">
         {/* Right-Side Dawn Prayer Desk: Modern Matte-Black Analog Alarm Clock, Olive-Wood Rosary & Linen Examen Booklet (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
           aria-hidden="true"
         >
           <img
             src={spiritualChecklistBannerImg}
-            alt="Sleek matte-black modern analog alarm clock set to 6:00, coiled wooden rosary with crucifix, and bleached-sand clothbound prayer booklet with a black fineliner pen resting parallel to its spine and edge on dark slate in morning light"
+            alt="Sleek matte-black modern analog alarm clock set to 6:00, coiled wooden rosary with crucifix, and bleached-sand clothbound prayer booklet with a black fineliner pen resting parallel on a very light brown wooden table in morning light"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
+            className="h-full w-full object-cover object-center brightness-[1.02] contrast-[1.02]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-slate-900/45 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-slate-900/55 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-slate-900/25 via-transparent to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-slate-900/30 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-slate-900/35 to-transparent" />
         </div>
 
-        <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
+        <div className="relative z-10 flex flex-col justify-between flex-1 w-[60%] pr-3 sm:pr-5 gap-2">
           <div className="flex items-start sm:items-center gap-3 min-w-0">
             <div className="w-10 h-10 rounded-xl bg-slate-800/90 border border-slate-600/70 flex items-center justify-center text-[#EAE2D3] shadow-xs shrink-0 backdrop-blur-xs">
               <NotebookWithBallpenIcon className="w-5 h-5 text-[#EAE2D3]" />

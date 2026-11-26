@@ -28,7 +28,7 @@ import {
 } from '../data/divineOffice';
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
-import divineOfficeBannerImg from '../assets/images/divine_office_prayer_1795404123492.jpg';
+import divineOfficeBannerImg from '../assets/images/divine_office_banner_40.jpg';
 
 const getLocalDateStr = (date: Date = new Date()): string => {
   const yyyy = date.getFullYear();
@@ -335,10 +335,10 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
 
         {/* RECTANGLE 1: Main Title Banner */}
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-3.5 pb-3.5 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Divine Office Prayer Photography (40% width) */}
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          {/* Right-Side Divine Office Prayer Photography (exact 40% of whole banner width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
@@ -346,20 +346,20 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[0.95] contrast-[1.04]"
+              className="h-full w-full object-cover object-center brightness-[1.04] contrast-[1.04]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
-          {/* Subtle top/bottom warm dark brown feathering so controls stay legible */}
+          {/* Subtle bottom warm dark feathering for control legibility without darkening the artwork */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
+          <div className="relative z-10 space-y-1 my-auto w-[60%] pr-3 sm:pr-5">
             <div>
               <span className="font-cinzel text-[11px] font-bold uppercase tracking-wider text-amber-200/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]">
                 Liturgy of the Hours
@@ -385,7 +385,7 @@ export const DivineOfficeView: React.FC<DivineOfficeViewProps> = ({ currentDateS
             </div>
           </div>
 
-          <div className="relative z-10 flex flex-wrap items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-1.5 min-w-0 max-w-full">
+          <div className="relative z-10 flex flex-wrap items-center justify-start gap-2 sm:gap-2.5 mt-auto pt-1.5 min-w-0 w-[60%] pr-3 sm:pr-5">
             <div className="inline-flex items-center rounded-md border border-[#8B5A2B]/60 bg-[#1C120C]/90 backdrop-blur-xs text-amber-100 p-0.5 shadow-xs">
               <button
                 type="button"

@@ -41,7 +41,7 @@ import { SacredReader } from '@/utils/speech';
 import { bellSynth } from '@/utils/audioSynth';
 import { StationsOfTheCrossView } from './StationsOfTheCrossView';
 import { CATHOLIC_PRAYERS_DATABASE } from '@/data/prayers';
-import divineMercyImg from '../assets/images/divine_mercy_user_exact.jpg';
+import divineMercyImg from '../assets/images/divine_mercy_banner_40.jpg';
 
 const MEMORARE_PRAYER = CATHOLIC_PRAYERS_DATABASE.find((p) => p.id === 'prayer-memorare');
 
@@ -611,27 +611,27 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
           {/* Holy Rosary Top Banner — Marian Blue with Our Lady of Medjugorje */}
-          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between gap-2 text-stone-900">
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between gap-2 text-stone-900">
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
               aria-hidden="true"
             >
               <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                src="/assets/aistudio/our_lady_medjugorje_banner_wide.jpg"
                 alt="Our Lady of Medjugorje, Queen of Peace"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_12%]"
+                className="h-full w-full object-cover object-center"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
                 }}
               />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/55 to-transparent" />
             </div>
 
             <div className="relative z-10 space-y-0.5 pr-[40%]">
@@ -1003,9 +1003,9 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="space-y-6">
           
           {/* 3:00 PM Hour of Great Mercy Banner */}
-          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
+          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
               aria-hidden="true"
             >
               <img
@@ -1013,16 +1013,19 @@ export const RosaryAndChapletView: React.FC = () => {
                 alt="The Divine Mercy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[50%_12%]"
+                className="h-full w-full object-cover object-center brightness-[1.05] contrast-[1.04]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
                 }}
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#240B0C]/35 via-transparent to-[#121619]/45" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/10" />
             </div>
 
-            <div className="relative z-10 space-y-0.5 pr-[40%]">
+            <div className="relative z-10 space-y-0.5 w-[60%] pr-3 sm:pr-5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
                 <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-300 leading-tight">
@@ -1036,7 +1039,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 &ldquo;{DIVINE_MERCY_OPENING_PRAYERS.hourOfMercyIntro}&rdquo;
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[40%]">
+            <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 w-[60%] pr-3 sm:pr-5">
               <div className="flex items-center gap-1.5 min-w-0 overflow-x-auto no-scrollbar">
                 <button
                   onClick={() => {
@@ -1433,9 +1436,9 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'faustina' && (
         <div className="relative isolate space-y-6 animate-fadeIn">
           {/* Header Banner — Patterned after the Chaplet of the Divine Mercy Banner */}
-          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
+          <div className="sanctum-top-banner relative isolate min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2 overflow-hidden">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
               aria-hidden="true"
             >
               <img
@@ -1443,16 +1446,19 @@ export const RosaryAndChapletView: React.FC = () => {
                 alt="The Divine Mercy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[50%_12%]"
+                className="h-full w-full object-cover object-center brightness-[1.05] contrast-[1.04]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
                 }}
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#240B0C]/35 via-transparent to-[#121619]/45" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/10" />
             </div>
 
-            <div className="relative z-10 space-y-0.5 pr-[40%]">
+            <div className="relative z-10 space-y-0.5 w-[60%] pr-3 sm:pr-5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
                 <span className="font-cinzel text-[10px] sm:text-[11px] font-bold text-red-300 tracking-wider uppercase leading-tight">
@@ -1466,7 +1472,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 &ldquo;My Heart overflows with great mercy for souls. The graces of My mercy are drawn by means of one vessel only, and that is—trust&rdquo; (Diary 1731).
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[40%]">
+            <div className="relative z-10 h-8 flex items-center justify-start mt-auto shrink-0 w-[60%] pr-3 sm:pr-5">
               {renderSettingsToggleButton('dark')}
             </div>
           </div>
@@ -1789,9 +1795,9 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'three-oclock' && (
         <div className="space-y-6 animate-in fade-in duration-300">
           {/* Header Banner with Standardized Size & Bottom-Right Settings Toggle */}
-          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2">
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] text-white shadow-md border border-red-900/40 flex flex-col justify-between gap-2">
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
               aria-hidden="true"
             >
               <img
@@ -1799,16 +1805,19 @@ export const RosaryAndChapletView: React.FC = () => {
                 alt="The Divine Mercy"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[50%_12%]"
+                className="h-full w-full object-cover object-center brightness-[1.05] contrast-[1.04]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
                 }}
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#240B0C]/35 via-transparent to-[#121619]/45" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/10" />
             </div>
 
-            <div className="relative z-10 space-y-0.5 pr-[40%]">
+            <div className="relative z-10 space-y-0.5 w-[60%] pr-3 sm:pr-5">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping shrink-0" />
                 <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-red-300 leading-tight">
@@ -1822,7 +1831,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 &ldquo;At three o&apos;clock, implore My mercy, especially for sinners; and, if only for a brief moment, immerse yourself in My Passion&rdquo; (Diary 1320).
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[40%]">
+            <div className="relative z-10 h-8 flex items-center justify-start mt-auto shrink-0 w-[60%] pr-3 sm:pr-5">
               {renderSettingsToggleButton('dark')}
             </div>
           </div>
@@ -1840,27 +1849,27 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
           {/* Header Banner - Frosted Glass with Standardized Size & Our Lady of Medjugorje */}
-          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
               aria-hidden="true"
             >
               <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                src="/assets/aistudio/our_lady_medjugorje_banner_wide.jpg"
                 alt="Our Lady of Medjugorje, Queen of Peace"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_12%]"
+                className="h-full w-full object-cover object-center"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
                 }}
               />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/55 to-transparent" />
             </div>
 
             <div className="relative z-10 space-y-1 pr-[40%]">
@@ -1874,7 +1883,7 @@ export const RosaryAndChapletView: React.FC = () => {
                 As revealed to Saint Dominic and Blessed Alan de la Roche, and compiled by Saint Louis-Marie Grignion de Montfort in <span className="italic text-blue-900 font-semibold">The Secret of the Rosary</span>.
               </p>
             </div>
-            <div className="relative z-10 h-8 flex items-center justify-end mt-auto shrink-0 pr-[40%]">
+            <div className="relative z-10 h-8 flex items-center justify-start mt-auto shrink-0 pr-[40%]">
               {renderSettingsToggleButton('light')}
             </div>
           </div>
@@ -2043,27 +2052,27 @@ export const RosaryAndChapletView: React.FC = () => {
       {activeDevotion === 'memorare' && MEMORARE_PRAYER && (
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           {/* Header Banner with Standardized Size & Our Lady of Medjugorje */}
-          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
               aria-hidden="true"
             >
               <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                src="/assets/aistudio/our_lady_medjugorje_banner_wide.jpg"
                 alt="Our Lady of Medjugorje, Queen of Peace"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_12%]"
+                className="h-full w-full object-cover object-center"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
                 }}
               />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/55 to-transparent" />
             </div>
 
             <div className="relative z-10 space-y-1 pr-[40%]">
@@ -2239,27 +2248,27 @@ export const RosaryAndChapletView: React.FC = () => {
         <div className="relative isolate space-y-6 animate-in fade-in duration-300">
           
           {/* Header Banner with Standardized Size & Our Lady of Medjugorje */}
-          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 py-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
+          <div className="sanctum-top-banner relative isolate overflow-hidden rounded-xl min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-br from-[#EAF3FC]/90 via-[#DCEBF8]/85 to-[#D5E6F7]/90 backdrop-blur-2xl backdrop-saturate-150 border border-white/85 ring-1 ring-[#BFD4EA]/85 shadow-[0_12px_36px_rgba(30,64,120,0.12),inset_0_1px_2px_rgba(255,255,255,0.95)] flex flex-col justify-between text-stone-900">
             <div className="pointer-events-none absolute -top-14 -left-14 w-72 h-72 rounded-full bg-sky-300/45 blur-3xl z-0" />
             <div className="pointer-events-none absolute -bottom-16 -right-12 w-60 h-48 rounded-full bg-amber-200/35 blur-3xl z-0" />
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
               aria-hidden="true"
             >
               <img
-                src="/assets/aistudio/OUR_LADY_OF_MEDJUGORJE_5ea2bb49.jpg"
+                src="/assets/aistudio/our_lady_medjugorje_banner_wide.jpg"
                 alt="Our Lady of Medjugorje, Queen of Peace"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-[48%_12%]"
+                className="h-full w-full object-cover object-center"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.72) 8%, black 18%)',
                 }}
               />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_93%_7%,#D5E6F7_0%,#D5E6F7_13%,transparent_28%)]" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-5 bg-gradient-to-l from-[#D5E6F7]/80 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/75 to-transparent" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#DCEBF8]/55 to-transparent" />
             </div>
 
             <div className="relative z-10 space-y-1 pr-[40%]">

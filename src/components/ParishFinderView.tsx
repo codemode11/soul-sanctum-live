@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import cebuChurchesMapImg from '../assets/images/cebu_city_churches_banner_1795532547609.jpg';
+import cebuChurchesMapImg from '../assets/images/church_finder_banner_40.jpg';
 import {
   APIProvider,
   APILoadingStatus,
@@ -1815,10 +1815,10 @@ export const ParishFinderView: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto pt-0 pb-20 space-y-5">
       {/* Compact Soul Sanctum Banner with Dark Brown to Cebu City Churches Map Gradient */}
-      <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl overflow-hidden bg-[#1C120C] border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-center">
+      <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl overflow-hidden bg-[#1C120C] border border-amber-500/35 shadow-2xl text-stone-100 flex flex-col justify-between gap-2">
         {/* Right-Side Illustrated Map of Cebu City with Historic Churches (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
           aria-hidden="true"
         >
           <img
@@ -1826,22 +1826,22 @@ export const ParishFinderView: React.FC = () => {
             alt="Illustrated map of Cebu City with historic Catholic churches along Mactan Channel"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[0.98] contrast-[1.05]"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
         </div>
 
-        {/* Subtle Top/Bottom Dark Brown Feathering for Crisp Text Legibility */}
+        {/* Subtle Bottom Dark Brown Feathering for Crisp Text Legibility */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/20"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
           aria-hidden="true"
         />
 
-        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1.5 min-w-0 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 flex flex-col justify-between flex-1 gap-2.5 w-[60%] pr-3 sm:pr-5">
+          <div className="space-y-1.5 min-w-0 my-auto">
             <div className="inline-flex items-center gap-1.5 text-[10.5px] font-cinzel font-bold uppercase tracking-[0.2em] text-amber-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
               <MapPin className="w-3.5 h-3.5 shrink-0" />
               <span>Global Catholic Parish Locator</span>
@@ -1858,7 +1858,7 @@ export const ParishFinderView: React.FC = () => {
             <button
               type="button"
               onClick={() => (quotaGuard.isStopped ? quotaGuard.resumeMaps() : quotaGuard.pauseMaps())}
-              className={`self-start sm:self-end shrink-0 h-8 px-3 rounded-lg text-[11px] font-cinzel font-bold uppercase tracking-wider border backdrop-blur-xs transition-colors cursor-pointer ${
+              className={`self-start shrink-0 h-8 px-3 rounded-lg text-[11px] font-cinzel font-bold uppercase tracking-wider border backdrop-blur-xs transition-colors cursor-pointer ${
                 quotaGuard.isStopped
                   ? 'bg-emerald-900/90 hover:bg-emerald-800 text-emerald-50 border-emerald-400/60'
                   : 'bg-[#1C120C]/85 hover:bg-[#2E1E14] text-amber-200 border-amber-400/50'

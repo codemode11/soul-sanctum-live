@@ -26,7 +26,7 @@ import {
   getAllPodcastEpisodes, 
   getFeaturedPodcastEpisode 
 } from '../data/catholicPodcasts';
-import catholicPodcastsBannerImg from '../assets/images/catholic_podcasts_exact_aligned_1795581400000.jpg';
+import catholicPodcastsBannerImg from '../assets/images/catholic_podcasts_banner_40.jpg';
 
 interface CatholicPodcastsViewProps {
   currentPlayingEpisode: PodcastEpisode | null;
@@ -199,33 +199,33 @@ Listen and reflect on Soul Sanctum Catholic Podcasts.`;
       
       {/* Sanctum Podcasts Master Hero Banner */}
       <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative isolate overflow-hidden rounded-xl bg-[#1C120C] border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-center">
-        {/* Right-Side Modern Spacious Catholic Podcast Studio Artwork with Wall Crucifix (40% width) */}
+        {/* Right-Side Catholic Podcast Desk with Turned-Off Smartphone and Headphones on Table (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
           aria-hidden="true"
         >
           <img
             src={catholicPodcastsBannerImg}
-            alt="Spacious modern Catholic podcast studio desk with a real walnut-and-bronze wall crucifix, broadcast microphone, open Bible, and wireless studio headphones"
+            alt="Warm fluted walnut desk with a turned-off smartphone lying near studio headphones on the table"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
+            className="h-full w-full object-cover object-center brightness-[1.04] contrast-[1.04]"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
         </div>
 
-        {/* Subtle top/bottom warm espresso feathering */}
+        {/* Subtle bottom warm espresso feathering */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/45 via-transparent to-[#1C120C]/15"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
           aria-hidden="true"
         />
         
-        <div className="relative z-10 max-w-[60%] pr-3 sm:pr-4 space-y-1.5">
+        <div className="relative z-10 w-[60%] pr-3 sm:pr-5 space-y-1.5">
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider backdrop-blur-xs">
             <Radio className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
             <span>Catholic Podcasts</span>

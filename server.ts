@@ -2795,10 +2795,75 @@ export function injectQuery(url, queryToInject) {
 export class ErrorOverlay extends HTMLElement {}
 `.trim();
 
+    app.set('etag', false);
+
+    // Prevent browser HTTP caching & 304 Not Modified responses for ALL dev requests (including SW kill-switches)
+    app.use((req, res, next) => {
+      delete req.headers['if-none-match'];
+      delete req.headers['if-modified-since'];
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      if (
+        req.method === 'GET' &&
+        !req.path.startsWith('/api/') &&
+        !/\.[a-z0-9]+$/i.test(req.path) &&
+        req.headers.accept?.includes('text/html')
+      ) {
+        res.setHeader('Clear-Site-Data', '"cache"');
+      }
+      next();
+    });
+
     app.get('/@vite/client', (_req, res) => {
       res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
-      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
       res.send(noWsViteClientJs);
+    });
+
+    // Self-destructing dev Service Worker kill-switch: evicts any previously installed
+    // Workbox dev-sw.js / sw.js, clears its caches, unregisters itself, and reloads Preview.
+    const killSwitchSwJs = `
+self.addEventListener('install', () => {
+  self.skipWaiting();
+});
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    try {
+      await self.clients.claim();
+    } catch {}
+    try {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((k) => caches.delete(k)));
+    } catch {}
+    try {
+      const clients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      await self.registration.unregister();
+      for (const client of clients) {
+        try { client.postMessage({ type: 'SANCTUM_SW_EVICTED' }); } catch {}
+        try { if ('navigate' in client) client.navigate(client.url); } catch {}
+      }
+    } catch {}
+  })());
+});
+`.trim();
+
+    const unregisterSwClientJs = `
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then((regs) => {
+    for (const r of regs) r.unregister().catch(() => {});
+  }).catch(() => {});
+}
+`.trim();
+
+    app.get(['/dev-sw.js', '/sw.js'], (_req, res) => {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+      res.setHeader('Service-Worker-Allowed', '/');
+      res.send(killSwitchSwJs);
+    });
+
+    app.get('/registerSW.js', (_req, res) => {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+      res.send(unregisterSwClientJs);
     });
 
     // In dev, mount Vite middlewares so SPA and all existing Vite plugins (Vatican News, RSS, etc.) run smoothly

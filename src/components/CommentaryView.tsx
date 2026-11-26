@@ -26,7 +26,7 @@ import {
 } from '../utils/speech';
 import { StructuredCommentaryDisplay } from './StructuredCommentary';
 import { toCurvedQuotes } from '../utils/typography';
-import bibleCommentaryBannerImg from '../assets/images/bible_commentary_study_1795405319292.jpg';
+import bibleCommentaryBannerImg from '../assets/images/bible_commentary_banner_40.jpg';
 
 export interface CommentaryViewProps {
   currentGospelCitation?: string;
@@ -353,9 +353,9 @@ ${selectedCommentary.practicalApplication}`;
         
         {/* RECTANGLE 1: Main Title Banner with Settings Toggle */}
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Bible Study & Commentaries Photography (40% width) */}
+          {/* Right-Side Bible Study & Commentaries Photography (exact 40% of whole banner width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
@@ -363,31 +363,31 @@ ${selectedCommentary.practicalApplication}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[0.96] contrast-[1.04]"
+              className="h-full w-full object-cover object-[50%_45%] brightness-[1.03] contrast-[1.04]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
-          {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
+          {/* Subtle bottom warm dark feathering for control legibility without darkening the artwork */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
+          <div className="relative z-10 space-y-1 my-auto w-[60%] pr-3 sm:pr-5">
             {/* Main Title: Commentary on Luke 15:1-10 */}
- <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Commentary on {selectedCommentary.scriptureReference}
             </h2>
- <p className="leading-snug text-[11px] sm:text-xs text-amber-200/90 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+            <p className="leading-snug text-[11px] sm:text-xs text-amber-200/90 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
               Catena Aurea • Cornelius à Lapide, S.J. • Magisterium
             </p>
           </div>
 
           {/* Lower Row: Settings Toggle Button */}
-          <div className="relative z-10 flex items-center justify-end mt-auto pt-2 shrink-0">
+          <div className="relative z-10 flex items-center justify-start mt-auto pt-2 shrink-0 w-[60%] pr-3 sm:pr-5">
             <button
               onClick={() => setIsTopSettingsOpen(prev => !prev)}
               aria-expanded={isTopSettingsOpen}

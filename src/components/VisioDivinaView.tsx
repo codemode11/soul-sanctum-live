@@ -14,6 +14,7 @@ import {
 import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { SacredMasterpiece } from '../types';
 import { SacredReader } from '../utils/speech';
+import visioDivinaBannerImg from '../assets/images/visio_divina_banner_40.jpg';
 
 const LAST_VISIO_ART_KEY = 'sanctum_visio_last_art_id';
 
@@ -167,42 +168,34 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
         
         {/* RECTANGLE 1: Main Title Banner with Caravaggio's The Incredulity of Saint Thomas on the Right */}
-        <div className={`sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#16100B] text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+        <div className={`sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Painting: Caravaggio — The Incredulity of Saint Thomas (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
-              src="/images/sacred-art/incredulity_of_thomas.jpg"
-              onError={(e) => {
-                const img = e.currentTarget;
-                if (!img.dataset.fallbackApplied) {
-                  img.dataset.fallbackApplied = '1';
-                  img.src =
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Der_ungl%C3%A4ubige_Thomas_-_Michelangelo_Merisi%2C_named_Caravaggio.jpg/1280px-Der_ungl%C3%A4ubige_Thomas_-_Michelangelo_Merisi%2C_named_Caravaggio.jpg';
-                }
-              }}
+              src={visioDivinaBannerImg}
               alt="Caravaggio — The Incredulity of Saint Thomas"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
+              className="h-full w-full object-cover object-[50%_38%] brightness-[1.05] contrast-[1.05]"
               style={{
                 maskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
                 WebkitMaskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
 
-          {/* Subtle top/bottom warm tenebrism feathering */}
+          {/* Subtle bottom warm dark brown feathering */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#16100B]/50 via-transparent to-[#16100B]/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
+          <div className="relative z-10 space-y-1 my-auto w-[60%] pr-3 sm:pr-5">
             {/* Line 1: Kicker Badge & Monastic Subtitle */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-[11px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 shadow-xs">
@@ -226,7 +219,7 @@ export const VisioDivinaView: React.FC<VisioDivinaViewProps> = ({
           </div>
 
           {/* Lower Row: Settings Toggle Button */}
-          <div className="relative z-10 flex items-center justify-end mt-auto pt-2 shrink-0">
+          <div className="relative z-10 flex items-center justify-start mt-auto pt-2 shrink-0 w-[60%] pr-3 sm:pr-5">
             <button
               type="button"
               onClick={() => setIsTopSettingsOpen(prev => !prev)}

@@ -26,7 +26,7 @@ import {
   parseCustomCatholicVideoUrl,
 } from '../data/catholicCinema';
 import { CatholicCinemaPlayer } from './CatholicCinemaPlayer';
-import cinemaHeroBannerImg from '../assets/images/catholic_cinema_hero_banner_1795615928734.jpg';
+import cinemaHeroBannerImg from '../assets/images/catholic_cinema_banner_40.jpg';
 import saintsFallbackStill from '../assets/images/cinema_saints_feature_still_1795615930394.jpg';
 import vaticanFallbackStill from '../assets/images/cinema_vatican_doc_still_1795615930744.jpg';
 import historyFallbackStill from '../assets/images/cinema_sacred_history_still_1795615932071.jpg';
@@ -388,29 +388,29 @@ export const CatholicCinemaView: React.FC<CatholicCinemaViewProps> = ({ onPlayba
       <div className="sanctum-top-banner relative isolate overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] rounded-xl text-stone-100 shadow-md border border-[#8B5A2B]/40 flex flex-col justify-between">
         {/* Right-Side Cinema Projector & Reels Artwork (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
           aria-hidden="true"
         >
           <img
             src={cinemaHeroBannerImg}
-            alt="Archival matte-black and bronze 35mm film projector with metallic reels on a walnut library desk"
+            alt="Matte-black and brushed-bronze 35mm film projector casting a warm golden beam beside stacked archival film canisters and reels on a walnut library desk"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
+            className="h-full w-full object-cover object-center brightness-[1.04] contrast-[1.04]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
         </div>
 
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
           aria-hidden="true"
         />
 
-        <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 space-y-1 my-auto w-[60%] pr-3 sm:pr-5">
           <p className="font-cinzel text-[10.5px] sm:text-[11px] font-bold uppercase tracking-widest text-amber-300/95 drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
             Sacred Screening Room · Documentaries &amp; Classic Film
           </p>
@@ -422,7 +422,7 @@ export const CatholicCinemaView: React.FC<CatholicCinemaViewProps> = ({ onPlayba
           </p>
         </div>
 
-        <div className="relative z-10 flex items-center gap-3 mt-auto pt-1.5 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 flex items-center gap-3 mt-auto pt-1.5 w-[60%] pr-3 sm:pr-5">
           <button
             type="button"
             onClick={() => handleSelectFilm(selectedFilm, true)}

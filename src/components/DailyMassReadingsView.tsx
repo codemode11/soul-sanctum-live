@@ -29,7 +29,7 @@ import { SACRED_MASTERPIECES } from '../data/sacredArt';
 import { LiturgicalCalendarPicker } from './LiturgicalCalendarPicker';
 import { LectorControlsBar } from './LectorControlsBar';
 import { getDailySaintHomily } from '../data/dailyHomilies';
-import massLectorBannerImg from '../assets/images/mass_young_lector_banner_1795404989633.jpg';
+import massLectorBannerImg from '../assets/images/mass_readings_banner_40.jpg';
 
 interface DailyMassReadingsViewProps {
   reading: MassReading;
@@ -285,24 +285,24 @@ ${reading.gospel.text}`;
             className={`pointer-events-none select-none absolute inset-0 overflow-hidden ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}
             aria-hidden="true"
           >
-            <div className="absolute inset-y-0 right-0 w-[40%] overflow-hidden">
+            <div className="absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100">
               <img
                 src={massLectorBannerImg}
                 alt=""
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-center brightness-[0.96] contrast-[1.04]"
+                className="h-full w-full object-cover object-[50%_38%] brightness-[1.03] contrast-[1.04]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
                 }}
               />
             </div>
-            {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15" />
+            {/* Subtle bottom warm dark feathering for control legibility without darkening the artwork */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent" />
           </div>
 
-          <div className="relative z-10 space-y-2 sm:space-y-2.5 max-w-[60%] pr-3 sm:pr-4">
+          <div className="relative z-10 space-y-2 sm:space-y-2.5 w-[60%] pr-3 sm:pr-5">
             {/* Line 1: Liturgical Color/Rank & Season (raised) */}
             <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
               <span 
@@ -350,8 +350,8 @@ ${reading.gospel.text}`;
             </div>
           </div>
 
-          {/* Line 3: Calendar and Settings lowered together at the right side */}
-          <div className="relative z-10 flex items-center justify-end gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0">
+          {/* Line 3: Calendar and Settings anchored in left 60% so right artwork stays clear */}
+          <div className="relative z-10 flex flex-wrap items-center justify-start gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0 w-[60%] pr-3 sm:pr-5">
             {/* Unified Single Element: [ < | Calendar Date | > ] with Thin Separators */}
             <div className="relative shrink-0">
               <div
@@ -412,7 +412,7 @@ ${reading.gospel.text}`;
                 onSelectDate={onSelectDate}
                 isOpen={isCalendarPickerOpen}
                 onClose={() => setIsCalendarPickerOpen(false)}
-                align="right"
+                align="left"
               />
             </div>
 

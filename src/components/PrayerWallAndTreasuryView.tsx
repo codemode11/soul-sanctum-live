@@ -26,8 +26,8 @@ import { CATHOLIC_PRAYERS_DATABASE } from '../data/prayers';
 import { INITIAL_PRAYER_REQUESTS } from '../data/prayerRequests';
 import { bellSynth } from '../utils/audioSynth';
 import { SacredReader, CURATED_SANCTUM_VOICES } from '../utils/speech';
-import treasuryWoodenKneelerImg from '../assets/images/treasury_kneeler_rotated_to_crucifix_1795508842899.jpg';
-import prayerRequestsCenserImg from '../assets/images/prayer_requests_censer_clean_1795594770779.jpg';
+import treasuryWoodenKneelerImg from '../assets/images/treasury_banner_40.jpg';
+import prayerRequestsCenserImg from '../assets/images/prayer_requests_banner_40.jpg';
 
 interface PrayerWallAndTreasuryViewProps {
   initialSection?: 'wall' | 'treasury';
@@ -298,7 +298,7 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
           <div className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#24150B] text-amber-50 relative overflow-hidden flex flex-col justify-between gap-2 ${isTreasurySettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
             {/* Right-Side Wooden Kneeler Facing Wall Crucifix Photography (40% width) */}
             <div
-              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+              className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
               aria-hidden="true"
             >
               <img
@@ -306,18 +306,21 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 alt="Wooden kneeler facing the crucifix on the chapel wall, with forearm rest and prayer book tucked under the wooden case"
                 decoding="async"
                 referrerPolicy="no-referrer"
-                className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
+                className="h-full w-full object-cover object-[65%_50%] brightness-[1.03] contrast-[1.04]"
                 style={{
-                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
                 }}
               />
-              {/* Subtle Top and Bottom Dark Brown Feathering */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#24150B]/45 to-transparent" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#24150B]/60 to-transparent" />
             </div>
 
-            <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
+            {/* Subtle Bottom Dark Espresso Feathering so Text & Controls Stay Crisp */}
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#24150B]/25 via-transparent to-transparent"
+              aria-hidden="true"
+            />
+
+            <div className="relative z-10 flex flex-col justify-between flex-1 w-[60%] pr-3 sm:pr-5 gap-2">
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-1.5 text-[10px] sm:text-[10.5px] font-cinzel font-bold uppercase tracking-[0.12em] text-[#DFB991] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] leading-snug">
                   <BookOpen className="w-3.5 h-3.5 text-amber-300 shrink-0" />
@@ -470,23 +473,25 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
         <div className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120D] rounded-xl text-amber-50 shadow-md border border-amber-900/40 flex flex-col justify-between gap-2 overflow-hidden">
           {/* Right-Side Golden Incense Rising from Brass Censer Photography (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 bg-gradient-to-r from-[#1C120D] via-amber-950/80 to-[#1C120D]"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100 bg-gradient-to-r from-[#1C120D] via-amber-950/80 to-[#1C120D]"
             aria-hidden="true"
+            style={{
+              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+            }}
           >
-            <img
-              src={prayerRequestsCenserImg}
-              alt="Antique hammered brass censer on an oak sanctuary stand with golden incense smoke rising in candlelight"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-right brightness-[1.04] contrast-[1.03]"
-              style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-              }}
-            />
+            {/* Shared right-aligned 16:9 stage so animated embers & smoke stay locked to the brass censer dome */}
+            <div className="relative h-full aspect-[16/9] min-w-full ml-auto">
+              <img
+                src={prayerRequestsCenserImg}
+                alt="Antique hammered brass censer on an oak sanctuary stand with golden incense smoke rising in candlelight"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="h-full w-full object-cover object-right brightness-[1.04] contrast-[1.03]"
+              />
 
-            {/* Animated Rising Frankincense Smoke Emanating Directly from the Censer Dome */}
-            <div className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen">
+              {/* Animated Rising Frankincense Smoke Emanating Directly from the Censer Dome */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-screen">
               {/* Warm glowing embers breathing inside the perforated censer dome vents (21.2% from right, 45.5% from top) */}
               <div
                 className="sanctum-censer-ember absolute right-[18.4%] top-[41.5%] w-8 h-8 rounded-full blur-[5px]"
@@ -665,12 +670,12 @@ ${prayer.latinText ? `LATIN:\n${prayer.latinText}` : ''}`;
                 </svg>
               </div>
             </div>
+            </div>
 
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-5 bg-gradient-to-b from-[#1C120D]/45 to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#1C120D]/60 to-transparent" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120D]/25 via-transparent to-transparent" />
           </div>
 
-          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
+          <div className="relative z-10 flex flex-col justify-between flex-1 w-[60%] pr-3 sm:pr-5 gap-2">
             <div className="space-y-1 min-w-0">
               <div className="flex items-center gap-2">
                 <Flame className="w-4 h-4 text-amber-400 shrink-0" />

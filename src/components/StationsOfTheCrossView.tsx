@@ -43,7 +43,7 @@ import station08Img from '../assets/images/watercolor_station_08_women_jerusalem
 import station09Img from '../assets/images/watercolor_station_09_third_fall_1795536383077.jpg';
 import station10Img from '../assets/images/watercolor_station_10_stripped_1795536386102.jpg';
 import station13Img from '../assets/images/watercolor_station_13_pieta_deposition_1795536386065.jpg';
-import divineMercyImg from '../assets/images/divine_mercy_user_exact.jpg';
+import divineMercyImg from '../assets/images/divine_mercy_banner_40.jpg';
 import {
   STATIONS_AUTHOR_META,
   STATIONS_PREPARATORY_PRAYER,
@@ -1141,9 +1141,9 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* Top Passion & 3:00 PM Hour of Mercy Banner */}
-      <div className="sanctum-top-banner relative isolate min-h-[196px] sm:min-h-[212px] w-full px-5 py-3.5 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between gap-2 overflow-hidden">
+      <div className="sanctum-top-banner relative isolate min-h-[196px] sm:h-[212px] w-full px-5 pt-4 pb-4 sm:px-6 bg-gradient-to-r from-[#450A0A] via-[#240B0C] to-[#121619] rounded-xl text-white shadow-md border border-amber-400/35 flex flex-col justify-between gap-2 overflow-hidden">
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
           aria-hidden="true"
         >
           <img
@@ -1151,16 +1151,19 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
             alt="The Divine Mercy"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-[50%_12%]"
+            className="h-full w-full object-cover object-center brightness-[1.05] contrast-[1.04]"
             style={{
-              maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+              maskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
+              WebkitMaskImage:
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.45) 8%, rgba(0,0,0,0.88) 18%, black 26%, black 76%, rgba(0,0,0,0.85) 86%, rgba(0,0,0,0.35) 95%, transparent 100%)',
             }}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/20" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#240B0C]/35 via-transparent to-[#121619]/45" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121619]/35 via-transparent to-[#121619]/10" />
         </div>
 
-        <div className="relative z-10 space-y-1 pr-[40%]">
+        <div className="relative z-10 space-y-1 w-[60%] pr-3 sm:pr-5">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-cinzel text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-300 leading-tight">
               THE WAY OF THE CROSS • ST. ALPHONSUS LIGUORI • 3:00 PM DEVOTION
@@ -1174,7 +1177,7 @@ export const StationsOfTheCrossView: React.FC<StationsOfTheCrossViewProps> = ({
           </p>
         </div>
 
-        <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 pr-[40%]">
+        <div className="relative z-10 h-8 flex items-center justify-between gap-2 mt-auto shrink-0 w-[60%] pr-3 sm:pr-5">
           <div className="flex items-center gap-2 min-w-0 overflow-x-auto no-scrollbar">
             {!isAutoPlaying ? (
               <button

@@ -25,7 +25,7 @@ import {
   Settings,
   ChevronDown
 } from 'lucide-react';
-import bibleFlashcardsFamilyImg from '../assets/images/bible_flashcards_family_final.jpg';
+import bibleFlashcardsFamilyImg from '../assets/images/bible_flashcards_banner_40.jpg';
 import { BIBLE_MEMORY_VERSES, BibleFlashcard } from '../data/bibleMemoryVerses';
 import { SacredReader, CURATED_SANCTUM_VOICES, getVoiceShortName } from '../utils/speech';
 
@@ -322,9 +322,9 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Side Joyful Family Using Bible Flashcards Photography (40% width) */}
+          {/* Right-Side Joyful Family Using Bible Flashcards Photography (exact 40% of whole banner width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
@@ -332,20 +332,20 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04]"
+              className="h-full w-full object-cover object-[50%_42%] brightness-[1.03] contrast-[1.04]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
-          {/* Subtle top/bottom warm dark brown feathering so text & Settings toggle stay crisp */}
+          {/* Subtle bottom warm dark feathering for control legibility without darkening the artwork */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto max-w-[60%] pr-3 sm:pr-4">
+          <div className="relative z-10 space-y-1 my-auto w-[60%] pr-3 sm:pr-5">
             <div className="flex items-center gap-2">
               <span className="p-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 shrink-0">
                 <BookOpen className="w-3.5 h-3.5" />
@@ -363,7 +363,7 @@ ${currentVerse.notes ? `\nNote: ${currentVerse.notes}` : ''}`;
           </div>
 
           {/* Lower Row: Settings Drop-down Toggle */}
-          <div className="relative z-10 flex items-center justify-end mt-auto pt-1.5 shrink-0">
+          <div className="relative z-10 flex items-center justify-start mt-auto pt-1.5 shrink-0 w-[60%] pr-3 sm:pr-5">
             <button
               type="button"
               onClick={() => setIsTopSettingsOpen(prev => !prev)}

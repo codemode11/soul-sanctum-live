@@ -32,7 +32,7 @@ import {
   BibleVerse
 } from '../data/catholicBibles';
 import { SacredReader } from '../utils/speech';
-import holyBibleBannerImg from '../assets/images/holy_bible_facing_left_1795406851246.jpg';
+import holyBibleBannerImg from '../assets/images/holy_bible_banner_40.jpg';
 
 interface SavedBibleBookmark {
   id: string;
@@ -481,9 +481,9 @@ export const CatholicBiblesView: React.FC = () => {
             isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
-          {/* Right-Side Consecrated Holy Bible, Statues & Candles Photography (40% width) */}
+          {/* Right-Side Consecrated Holy Bible, Statues & Candles Photography (exact 40% of whole banner width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-[15]"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-[15] opacity-100"
             aria-hidden="true"
           >
             <img
@@ -493,15 +493,15 @@ export const CatholicBiblesView: React.FC = () => {
               referrerPolicy="no-referrer"
               className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.05]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
             {/* Subtle Bottom Edge Polish */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/50 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-5 bg-gradient-to-t from-[#1C120C]/25 to-transparent" />
           </div>
 
-          <div className="relative z-20 flex flex-col justify-between gap-2 max-w-[60%] pr-3 sm:pr-4 my-auto">
+          <div className="relative z-20 flex flex-col justify-between gap-2 w-[60%] pr-3 sm:pr-5 my-auto">
             <div className="space-y-1">
               {/* Line 1: Scripture Kicker & Active Book/Chapter/Translation */}
               <div className="flex items-center gap-2 flex-nowrap overflow-hidden">

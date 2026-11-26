@@ -11,7 +11,7 @@ import {
 import { MARIAN_APPARITIONS, MarianApparition } from '../data/marianApparitions';
 import { SacredReader } from '../utils/speech';
 import { MedjugorjeMessagesView } from './MedjugorjeMessagesView';
-import miracleOfSunColorizedImg from '../assets/images/miracle_of_sun_wide_crowd_1795586937256.jpg';
+import miracleOfSunColorizedImg from '../assets/images/marian_apparitions_banner_40.jpg';
 
 export const MarianApparitionsView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'apparitions' | 'medjugorje'>('apparitions');
@@ -110,10 +110,10 @@ export const MarianApparitionsView: React.FC = () => {
       
       {/* Marian Header Banner — Slate Gray & Bleached Sand with Colorized Miracle of the Sun */}
       <div
-        className="sanctum-top-banner relative isolate px-5 py-3.5 sm:px-6 min-h-[196px] sm:min-h-[212px] rounded-xl text-[#F9F6F0] border border-slate-700/80 shadow-md overflow-hidden flex flex-col justify-between gap-2"
+        className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl text-[#F9F6F0] border border-slate-700/80 shadow-md overflow-hidden flex flex-col justify-between gap-2"
         style={{
           background:
-            'linear-gradient(100deg, #0F172A 0%, #172235 42%, #253447 72%, #3D4E61 88%, #526478 100%)',
+            'linear-gradient(100deg, #0F172A 0%, #162133 42%, #1E2C3E 75%, #233245 100%)',
         }}
       >
         {/* Subtle atmospheric sky glow bridging the slate gradient into the Fátima horizon */}
@@ -122,13 +122,13 @@ export const MarianApparitionsView: React.FC = () => {
           className="pointer-events-none absolute inset-0 z-0"
           style={{
             background:
-              'radial-gradient(ellipse 42% 85% at 88% 30%, rgba(234, 226, 211, 0.22) 0%, rgba(100, 118, 138, 0.14) 48%, transparent 78%)',
+              'radial-gradient(ellipse 36% 74% at 80% 28%, rgba(234, 226, 211, 0.16) 0%, rgba(100, 118, 138, 0.1) 48%, transparent 76%)',
           }}
         />
 
         {/* Right-aligned Colorized 1917 Miracle of the Sun Photograph (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
           aria-hidden="true"
         >
           <img
@@ -136,12 +136,12 @@ export const MarianApparitionsView: React.FC = () => {
             alt="Colorized 1917 photograph of the Miracle of the Sun at Cova da Iria, Fátima, Portugal"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-[50%_35%] block"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.04] block"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
         </div>
@@ -152,11 +152,11 @@ export const MarianApparitionsView: React.FC = () => {
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              'linear-gradient(to top, rgba(15,23,42,0.34) 0%, transparent 24%)',
+              'linear-gradient(to top, rgba(15,23,42,0.28) 0%, transparent 24%)',
           }}
         />
 
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 w-[60%] pr-3 sm:pr-5">
           <div className="flex items-center gap-2">
             <span className="p-1 rounded-lg bg-slate-800/90 text-[#EAE2D3] border border-slate-600/70 shrink-0">
               <Star className="w-3.5 h-3.5" />
@@ -190,12 +190,12 @@ export const MarianApparitionsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4">
-          <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight">
+        <div className="relative z-10 space-y-1 w-[60%] pr-3 sm:pr-5">
+          <h2 className="font-cinzel text-lg sm:text-2xl font-bold text-[#FBF9F5] tracking-wide leading-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.65)]">
             Major Marian Apparitions and Messages
           </h2>
 
-          <p className="text-[11px] sm:text-xs text-[#EAE2D3] font-serif max-w-2xl leading-[1.3]">
+          <p className="text-[11px] sm:text-xs text-[#EAE2D3] font-serif max-w-2xl leading-[1.3] drop-shadow-[0_1px_4px_rgba(0,0,0,0.65)]">
             &ldquo;A great sign appeared in heaven: a woman clothed with the sun, with the moon under her feet.&rdquo; Explore Church-approved Marian apparitions across centuries—from Guadalupe to Lourdes, Fátima, Akita, and Kibeho.
           </p>
         </div>

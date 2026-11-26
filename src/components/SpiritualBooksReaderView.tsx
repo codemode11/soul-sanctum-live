@@ -32,7 +32,7 @@ import {
   BookCategory 
 } from '../data/spiritualBooks';
 import { SacredReader } from '../utils/speech';
-import spiritualClassicsBannerImg from '../assets/images/spiritual_classics_shelf_modern_1795579323307.jpg';
+import spiritualClassicsBannerImg from '../assets/images/spiritual_classics_banner_40.jpg';
 
 type ReadingTheme = 'parchment' | 'sepia' | 'dark' | 'white';
 type FontSize = 'sm' | 'md' | 'lg' | 'xl';
@@ -773,7 +773,7 @@ export const SpiritualBooksReaderView: React.FC = () => {
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between gap-2 ${isCatalogSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Modern Spiritual Classics Shelf & Two Angel Bookends (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
@@ -781,22 +781,22 @@ export const SpiritualBooksReaderView: React.FC = () => {
               alt="Modern editions of Catholic spiritual classics on a dark walnut shelf flanked by two sculpted angel bookends"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[1.01] contrast-[1.03]"
+              className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
               style={{
                 maskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 3.5%, black 7.5%)',
                 WebkitMaskImage:
-                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.88) 3.5%, black 7.5%)',
               }}
             />
           </div>
-          {/* Subtle top/bottom warm dark brown feathering for edge polish */}
+          {/* Subtle bottom warm dark brown feathering for edge polish */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/45 via-transparent to-[#1C120C]/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 flex flex-col justify-between flex-1 max-w-[60%] pr-3 sm:pr-4 gap-2">
+          <div className="relative z-10 flex flex-col justify-between flex-1 w-[60%] pr-3 sm:pr-5 gap-2">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
  <span className="leading-snug text-[10.5px] uppercase font-cinzel tracking-[0.18em] text-[#D4A373] font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">

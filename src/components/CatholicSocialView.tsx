@@ -39,7 +39,7 @@ import {
   CatholicFacebookSection,
   CustomFacebookPostEmbed
 } from './CatholicFacebookSection';
-import catholicSocialSatellitesImg from '../assets/images/catholic_social_satellites_1795504619535.jpg';
+import catholicSocialSatellitesImg from '../assets/images/catholic_social_banner_40.jpg';
 
 type SocialPlatformTab = 'all' | 'favorites' | 'ewtn' | 'facebook' | 'instagram' | 'christendom';
 
@@ -786,29 +786,29 @@ export const CatholicSocialView: React.FC = () => {
         <div className="sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-stone-100 flex flex-col justify-between rounded-xl">
           {/* Right-Side Three Aligned Satellite Dishes Photography (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
               src={catholicSocialSatellitesImg}
-              alt="Three broadcast satellite dishes aligned toward the same skyward direction"
+              alt="Three broadcast satellite dishes facing left against a clear golden sunset sky"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[1.02] contrast-[1.04]"
+              className="h-full w-full object-cover object-center brightness-[1.02] contrast-[1.03]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
 
-          {/* Subtle Top/Bottom Dark Brown Feathering so Text & Platform Controls Stay Crisp */}
+          {/* Subtle Bottom Dark Brown Feathering so Text & Platform Controls Stay Crisp */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/65 via-transparent to-[#1C120C]/20"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1.5 my-auto max-w-[60%] pr-3 sm:pr-4">
+          <div className="relative z-10 space-y-1.5 my-auto w-[60%] pr-3 sm:pr-5">
             {/* Line 1: Badge & Subtitle */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-xs text-[10.5px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-500 text-amber-950">
@@ -826,8 +826,8 @@ export const CatholicSocialView: React.FC = () => {
             </h2>
           </div>
 
-          {/* Line 3: Platform Filter Controls */}
-          <div className="relative z-10 flex items-center justify-between gap-2 mt-auto pt-2 border-t border-[#8B5A2B]/35 overflow-x-auto no-scrollbar">
+          {/* Line 3: Platform Filter Controls (kept strictly within left 60%) */}
+          <div className="relative z-10 flex items-center justify-start gap-2 mt-auto pt-2 border-t border-[#8B5A2B]/35 overflow-x-auto no-scrollbar w-[60%] pr-3 sm:pr-5">
             <span className="text-xs font-serif text-stone-200 hidden md:inline shrink-0 drop-shadow-[0_1px_3px_rgba(0,0,0,0.85)]">
               Channels:
             </span>

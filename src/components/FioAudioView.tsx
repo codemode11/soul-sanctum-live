@@ -12,7 +12,7 @@ import {
   Minimize2,
   Home
 } from 'lucide-react';
-import fioBannerImg from '../assets/images/fio_listening_chair_inward_1795582194268.jpg';
+import fioBannerImg from '../assets/images/fio_banner_40.jpg';
 
 interface FioAudioViewProps {
   onStopSanctumAudio?: () => void;
@@ -81,40 +81,40 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
     <div className="max-w-5xl mx-auto space-y-6 pb-20 animate-fadeIn">
       {/* Master Header Banner */}
       <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] relative isolate overflow-hidden rounded-xl bg-[#1C120C] border border-amber-500/30 shadow-2xl text-stone-100 flex flex-col justify-between gap-2">
-        {/* Right-Side Cozy Catholic Listening Corner Artwork with Thin Tower Speakers (40% width) */}
+        {/* Right-Side Cozy Catholic Listening Room Artwork with Tower Speakers & Armchair (40% width) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
           aria-hidden="true"
         >
           <img
             src={fioBannerImg}
-            alt="Cozy Catholic listening corner with an inward-facing cognac leather armchair, glowing floor lamp, wall crucifix, thin tower speakers on both sides, and walnut side table with studio headphones and audio player"
+            alt="Warm Catholic listening room with walnut bookshelves, glowing tripod floor lamp, wall crucifix, cognac leather armchair, flanking matte-black tower speakers, and round walnut table with studio headphones and digital audio player"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center brightness-[0.99] contrast-[1.03]"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
         </div>
 
-        {/* Subtle top/bottom warm espresso feathering */}
+        {/* Subtle bottom warm espresso feathering */}
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
           aria-hidden="true"
         />
 
-        <div className="relative z-10 flex items-center gap-3 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 flex items-center gap-3 w-[60%] pr-3 sm:pr-5">
           <div className="leading-snug inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-[11px] font-cinzel font-semibold tracking-wider backdrop-blur-xs">
             <Music className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span className="leading-snug">Fio.fm • Integrated Catholic Audio Streaming</span>
           </div>
         </div>
 
-        <div className="relative z-10 max-w-[60%] pr-3 sm:pr-4 space-y-0.5">
+        <div className="relative z-10 w-[60%] pr-3 sm:pr-5 space-y-0.5">
           <h2 className="font-cinzel text-lg sm:text-[22px] font-bold text-white tracking-wide leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
             Fio Catholic Music, Podcasts and Audiobooks
           </h2>
@@ -124,7 +124,7 @@ export const FioAudioView: React.FC<FioAudioViewProps> = ({ onStopSanctumAudio }
         </div>
 
         {/* Section Switcher Buttons */}
-        <div className="relative z-10 flex items-center gap-2 overflow-x-auto no-scrollbar pt-0.5 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 flex items-center gap-2 overflow-x-auto no-scrollbar pt-0.5 w-[60%] pr-3 sm:pr-5">
           {FIO_SECTIONS.map((section) => {
             const Icon = section.icon;
             const isActive = activeUrl === section.url;

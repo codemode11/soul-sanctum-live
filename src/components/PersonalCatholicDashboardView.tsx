@@ -1056,37 +1056,37 @@ export const PersonalCatholicDashboardView: React.FC<PersonalCatholicDashboardVi
       {/* =====================================================================
           TOP DASHBOARD HEADER & KPI SUMMARY BAR
          ===================================================================== */}
-      <div className="sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.22)] text-[#24140B] flex flex-col justify-center overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="space-y-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] sm:text-xs font-cinzel font-bold text-[#6B3E1E] leading-snug">
-              <span>Horarium &amp; Rule of Life</span>
-              <span aria-hidden="true">·</span>
-              <span>{currentReading.liturgicalDay}</span>
-            </div>
-            <h2 className="font-cinzel text-lg sm:text-xl md:text-[22px] font-bold text-[#24140B] leading-snug">
-              Personal Catholic Daily Dashboard
-            </h2>
-            <p className="text-[11px] sm:text-[12.5px] font-serif text-[#4A2B17] leading-snug">
-              Integrated daily sanctuary with Liturgical Calendar, Mass Readings &amp; Homily, Scripture Stopwatch, Prayer Checklist, Prophecies, Indulgences, Alarms, News &amp; Flashcards.
-            </p>
+      <div className="sanctum-top-banner relative px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl bg-gradient-to-b from-[#EFE4D7] via-[#E8D9C8] to-[#EFE4D7] border border-[#A78262] shadow-[0_14px_35px_rgba(40,22,12,0.22)] text-[#24140B] flex flex-col justify-center overflow-hidden">
+        <div className="relative z-10 space-y-1 min-w-0 max-w-[60%] pr-3 sm:pr-4">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] sm:text-xs font-cinzel font-bold text-[#6B3E1E] leading-snug">
+            <span>Horarium &amp; Rule of Life</span>
+            <span aria-hidden="true">·</span>
+            <span>{currentReading.liturgicalDay}</span>
           </div>
+          <h2 className="font-cinzel text-lg sm:text-xl md:text-[22px] font-bold text-[#24140B] leading-snug">
+            Personal Catholic Daily Dashboard
+          </h2>
+          <p className="text-[11px] sm:text-[12.5px] font-serif text-[#4A2B17] leading-snug">
+            Integrated daily sanctuary with Liturgical Calendar, Mass Readings &amp; Homily, Scripture Stopwatch, Prayer Checklist, Prophecies, Indulgences, Alarms, News &amp; Flashcards.
+          </p>
+        </div>
 
-          {/* Live Canonical Clock & Quick Stats */}
-          <div className="flex items-center gap-2.5 shrink-0">
-            <div className="px-3 py-2 rounded-xl bg-[#24140B] text-[#FAF4ED] border border-[#8B5A2B] text-right">
-              <div className="text-[10px] font-cinzel text-amber-300 uppercase tracking-wider">
+        {/* Live Canonical Clock & Quick Stats (40% right side) */}
+        <div className="absolute inset-y-0 right-0 w-[40%] z-10 flex items-center justify-end pr-4 sm:pr-6 pl-2">
+          <div className="flex flex-wrap sm:flex-nowrap items-center justify-end gap-2">
+            <div className="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-[#24140B] text-[#FAF4ED] border border-[#8B5A2B] text-right">
+              <div className="text-[9.5px] sm:text-[10px] font-cinzel text-amber-300 uppercase tracking-wider">
                 Canonical Clock
               </div>
-              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-white leading-tight">
+              <div className="font-mono tabular-nums text-sm sm:text-lg font-bold text-white leading-tight">
                 {currentClockStr || '12:00:00'}
               </div>
             </div>
-            <div className="px-3 py-2 rounded-xl bg-white border border-[#C8AD8D] text-right">
-              <div className="text-[10px] font-cinzel text-[#6B3E1E] uppercase tracking-wider">
+            <div className="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-white border border-[#C8AD8D] text-right">
+              <div className="text-[9.5px] sm:text-[10px] font-cinzel text-[#6B3E1E] uppercase tracking-wider">
                 Rule Progress
               </div>
-              <div className="font-mono tabular-nums text-base sm:text-lg font-bold text-[#24140B] leading-tight">
+              <div className="font-mono tabular-nums text-sm sm:text-lg font-bold text-[#24140B] leading-tight">
                 {completedChecklistCount}/{quickChecklist.length} ({checklistPct}%)
               </div>
             </div>

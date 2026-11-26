@@ -179,12 +179,12 @@ export const ChurchHistoryInfographicView: React.FC = () => {
     <div className="space-y-6 animate-fadeIn text-slate-900">
       
       {/* 1. Header Banner (Slate Blue & Bleached Sand) */}
-      <div className="sanctum-top-banner rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] text-[#F9F6F0] shadow-xl relative overflow-hidden flex flex-col sm:flex-row sm:items-stretch justify-between gap-4">
+      <div className="sanctum-top-banner rounded-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border border-slate-700/80 px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] text-[#F9F6F0] shadow-xl relative overflow-hidden flex flex-col justify-center">
         {/* Decorative background glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-[#EAE2D3]/15 blur-3xl pointer-events-none" />
 
-        {/* Left Side: Era Eyebrow, Title, Description, and Voice Selector */}
-        <div className="relative z-10 min-w-0 flex-1 flex flex-col justify-between gap-2">
+        {/* Left Side: Era Eyebrow, Title, Description, and Voice Selector (60% width) */}
+        <div className="relative z-10 min-w-0 max-w-[60%] pr-3 sm:pr-4 flex flex-col justify-between gap-2">
           <div className="space-y-1">
             <span className="block leading-snug font-cinzel text-[11px] uppercase tracking-widest text-[#DFD5C3] font-bold">
               HISTORIA ET POPULUS ECCLESIAE · AD 33 – 2026
@@ -215,26 +215,26 @@ export const ChurchHistoryInfographicView: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Side: Real-Time Counter of Total Baptized Catholics + Main Source Below */}
-        <div className="relative z-10 shrink-0 self-center w-full sm:w-[292px] flex flex-col items-stretch sm:items-end gap-1.5">
-          <div className="rounded-xl bg-slate-950/70 backdrop-blur-md border border-[#EAE2D3]/25 px-4 py-3 shadow-lg w-full text-left sm:text-right">
-            <div className="flex items-center sm:justify-end gap-1.5">
+        {/* Right Side: Real-Time Counter of Total Baptized Catholics + Main Source Below (40% width) */}
+        <div className="absolute inset-y-0 right-0 w-[40%] z-10 flex flex-col items-end justify-center pr-4 sm:pr-6 pl-2 gap-1.5">
+          <div className="rounded-xl bg-slate-950/70 backdrop-blur-md border border-[#EAE2D3]/25 px-3 py-2.5 sm:px-4 sm:py-3 shadow-lg w-full max-w-[320px] text-right">
+            <div className="flex items-center justify-end gap-1.5">
               <Globe2 className="w-3.5 h-3.5 text-[#DFD5C3] shrink-0" />
-              <span className="font-cinzel text-[10px] font-bold uppercase tracking-[0.14em] text-[#DFD5C3] leading-none">
+              <span className="font-cinzel text-[9.5px] sm:text-[10px] font-bold uppercase tracking-[0.12em] text-[#DFD5C3] leading-none">
                 Total Baptized Catholics Worldwide
               </span>
             </div>
             <div
-              className="mt-1.5 font-cinzel text-2xl sm:text-[26px] font-bold text-[#FBF9F5] tracking-tight tabular-nums leading-none"
+              className="mt-1.5 font-cinzel text-lg sm:text-[26px] font-bold text-[#FBF9F5] tracking-tight tabular-nums leading-none"
               aria-live="polite"
             >
               {liveBaptizedCatholics.toLocaleString('en-US')}
             </div>
-            <p className="mt-1 font-serif text-[11px] text-[#EAE2D3]/90 leading-none">
+            <p className="mt-1 font-serif text-[10px] sm:text-[11px] text-[#EAE2D3]/90 leading-snug">
               Real-time projection (+16.69M net/yr · ~17.8% of world)
             </p>
           </div>
-          <p className="font-serif text-[10.5px] text-[#DFD5C3]/90 leading-snug text-left sm:text-right px-0.5">
+          <p className="font-serif text-[9.5px] sm:text-[10.5px] text-[#DFD5C3]/90 leading-snug text-right px-0.5 max-w-[320px]">
             Main source: <span className="italic text-[#FBF9F5]">Annuarium Statisticum Ecclesiae</span> (Holy See) &amp; Agenzia Fides
           </p>
         </div>

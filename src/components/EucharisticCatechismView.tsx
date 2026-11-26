@@ -22,7 +22,7 @@ import {
   Copy,
   Check
 } from 'lucide-react';
-import lancianoMonstranceImg from '../assets/images/lanciano_monstrance_navy_glass_clean_1795586418113.jpg';
+import lancianoMonstranceImg from '../assets/images/lanciano_banner_40.jpg';
 
 interface EucharisticCatechismViewProps {
   initialSection?: 'john6' | 'miracles' | 'transubstantiation';
@@ -763,15 +763,15 @@ SOUL SANCTUM`;
       
       {/* Top Banner — Eucharistic Miracles with Lanciano Reliquary */}
       <div
-        className="sanctum-top-banner relative isolate px-4 py-3 sm:px-6 sm:py-4 h-[196px] sm:h-[212px] rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 overflow-hidden flex flex-col justify-center"
+        className="sanctum-top-banner relative isolate px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] rounded-xl text-[#F9F6F0] shadow-md border border-slate-700/80 overflow-hidden flex flex-col justify-center"
         style={{
           background:
-            'linear-gradient(100deg, #0B1526 0%, #101F38 30%, #142847 54%, #162C4B 74%, #172C4B 100%)',
+            'linear-gradient(100deg, #0B1526 0%, #101F38 30%, #142847 54%, #152C4B 74%, #152C4B 100%)',
         }}
       >
-        {/* Right-aligned Eucharistic Miracle of Lanciano Reliquary (40% width) */}
+        {/* Right-aligned Eucharistic Miracle of Lanciano Reliquary (40% width, full untruncated reliquary) */}
         <div
-          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0"
+          className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden z-0 opacity-100"
           aria-hidden="true"
         >
           <img
@@ -779,17 +779,18 @@ SOUL SANCTUM`;
             alt="Reliquary of the Eucharistic Miracle of Lanciano"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="h-full w-full object-cover object-center block"
+            className="h-full w-full object-cover object-center brightness-[1.03] contrast-[1.03]"
             style={{
               maskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               WebkitMaskImage:
-                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
             }}
           />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#142847]/25 via-transparent to-transparent" />
         </div>
 
-        <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4">
+        <div className="relative z-10 space-y-1 w-[60%] pr-3 sm:pr-5">
           <div className="flex items-center gap-1.5">
             <span className="leading-tight font-cinzel text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wider text-[#DFD5C3] flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-[#EAE2D3] shrink-0" />

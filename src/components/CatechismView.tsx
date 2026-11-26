@@ -31,7 +31,7 @@ import { TrinityCatechismView } from './TrinityCatechismView';
 import { SacramentsCatechismView } from './SacramentsCatechismView';
 import { RessourcementView } from './RessourcementView';
 import { toCurvedQuotes } from '../utils/typography';
-import catechismHandsBannerImg from '../assets/images/catechism_hands_banner_1795405604520.jpg';
+import catechismHandsBannerImg from '../assets/images/catechism_banner_40.jpg';
 
 type CatechismSubView = 'daily' | 'eucharist' | 'marian' | 'trinity' | 'sacraments' | 'ressourcement';
 
@@ -269,10 +269,10 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
       
       {/* Main Top Banner: Gospel Topic & Authentic Catechism Declaration */}
       <div className="bg-white/55 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-xs border border-white/70 ring-1 ring-inset ring-white/40 relative z-20">
-        <div className={`sanctum-top-banner relative overflow-hidden px-5 py-3.5 sm:px-6 sm:py-3.5 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between gap-2 ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
-          {/* Right-Side Catechism of the Catholic Church Photography (40% width) */}
+        <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 shadow-md border border-stone-800 flex flex-col justify-between gap-2 ${isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
+          {/* Right-Side Catechism of the Catholic Church Photography (exact 40% of whole banner width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
@@ -280,20 +280,20 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
               alt=""
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-center brightness-[0.95] contrast-[1.04]"
+              className="h-full w-full object-cover object-[50%_54%] brightness-[1.04] contrast-[1.04]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
-          {/* Subtle top/bottom warm dark brown feathering for text & control legibility */}
+          {/* Subtle bottom warm dark feathering for control legibility without darkening the artwork */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/55 via-transparent to-[#1C120C]/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 max-w-[60%] pr-3 sm:pr-4 min-w-0">
+          <div className="relative z-10 space-y-1 w-[60%] pr-3 sm:pr-5 min-w-0">
             {/* Line 1: Heading & Paragraphs Range */}
             <div className="flex items-center gap-2 flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-xs text-[10.5px] font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 bg-amber-400 text-amber-950 font-cinzel shadow-xs">
@@ -319,8 +319,8 @@ Cross-references: ${selectedTopic.crossReferences.join(' • ')}`;
             )}
           </div>
 
-          {/* Line 3: Bottom Bar with Topic Navigation & Action Buttons */}
-          <div className="relative z-10 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 pt-2 border-t border-white/10 w-full shrink-0">
+          {/* Line 3: Bottom Bar with Topic Navigation & Action Buttons (kept inside left 60%) */}
+          <div className="relative z-10 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 pt-2 border-t border-white/10 w-[60%] pr-3 sm:pr-5 shrink-0">
             {/* Left: Quick Date & Gospel Citation Navigation Bar */}
             <div className="inline-flex items-center h-8 rounded-md transition-all border border-[#8B5A2B]/60 bg-[#1C120C]/90 text-[#D4A373] hover:border-[#D4A373]/80 overflow-hidden shadow-xs min-w-0 max-w-full">
               <button

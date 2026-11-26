@@ -335,14 +335,14 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
       {/* Calendar Header Banner + Attached Settings Drop-Down Menu — Original Slate Gray & Bleached Sand */}
       <div className="bg-[#FBF9F5]/85 backdrop-blur-xl backdrop-saturate-150 rounded-xl shadow-md border border-[#D8CFC0] relative z-20">
         <div
-          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] border-b border-slate-700/80 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col sm:flex-row sm:items-stretch justify-between gap-4 relative overflow-hidden ${
+          className={`sanctum-top-banner px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] border-b border-slate-700/80 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-[#F9F6F0] flex flex-col justify-center relative overflow-hidden ${
             isSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'
           }`}
         >
           <div className="pointer-events-none absolute -right-12 -bottom-12 w-72 h-44 rounded-full bg-[#EAE2D3]/15 blur-3xl" />
 
-          {/* Left Column: Title + Settings Drop-Down Toggle */}
-          <div className="relative z-10 min-w-0 flex flex-col justify-between gap-2 sm:max-w-[58%]">
+          {/* Left Column: Title + Settings Drop-Down Toggle (60% width) */}
+          <div className="relative z-10 min-w-0 flex flex-col justify-between gap-2 max-w-[60%] pr-3 sm:pr-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-4 h-4 text-[#EAE2D3] shrink-0" />
@@ -381,11 +381,11 @@ export const ChurchCalendarView: React.FC<ChurchCalendarViewProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Inverted Square Light Calendar with Layered Shades of Brown Ink */}
-          <div className="relative z-10 shrink-0 self-center">
+          {/* Right Column: Inverted Square Light Calendar centered in 40% zone */}
+          <div className="absolute inset-y-0 right-0 w-[40%] z-10 flex items-center justify-center p-2 sm:p-3">
             <div
               key={cardAnimKey}
-              className="w-[172px] h-[172px] sm:w-[176px] sm:h-[176px] aspect-square rounded-xl bg-gradient-to-b from-[#FFFFFF] via-[#FBF9F5] to-[#F1EAE0] border border-[#D8CFC0] ring-1 ring-stone-900/10 shadow-[0_10px_26px_rgba(0,0,0,0.42)] flex flex-col overflow-hidden animate-fadeIn"
+              className="w-[144px] h-[144px] sm:w-[176px] sm:h-[176px] aspect-square rounded-xl bg-gradient-to-b from-[#FFFFFF] via-[#FBF9F5] to-[#F1EAE0] border border-[#D8CFC0] ring-1 ring-stone-900/10 shadow-[0_10px_26px_rgba(0,0,0,0.42)] flex flex-col overflow-hidden animate-fadeIn"
             >
               {/* Compact Top Month & Year Bar */}
               <div className="px-2 py-1.5 bg-[#6B4423]/10 border-b border-[#6B4423]/20 flex items-center justify-between gap-1 shrink-0">

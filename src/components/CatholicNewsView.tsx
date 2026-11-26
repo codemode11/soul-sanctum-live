@@ -23,6 +23,7 @@ import {
 } from '../data/news';
 import { SacredReader } from '../utils/speech';
 import { toCurvedQuotes } from '../utils/typography';
+import vaticanNewsBannerImg from '../assets/images/vatican_news_banner_40.jpg';
 
 interface CatholicNewsViewProps {
   currentDateStr?: string;
@@ -268,18 +269,18 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
         <div className={`sanctum-top-banner relative overflow-hidden px-5 pt-4 pb-4 sm:px-6 min-h-[196px] sm:h-[212px] bg-[#1C120C] text-amber-50 border-b border-amber-900/40 flex flex-col justify-between ${isTopSettingsOpen ? 'rounded-t-xl' : 'rounded-xl'}`}>
           {/* Right-Side Pope Leo XIV Waving from the Tall Apostolic Palace Angelus Window (40% width) */}
           <div
-            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden"
+            className="pointer-events-none select-none absolute inset-y-0 right-0 w-[40%] overflow-hidden opacity-100"
             aria-hidden="true"
           >
             <img
-              src="/assets/aistudio/image_f0a8d746.png"
-              alt=""
+              src={vaticanNewsBannerImg}
+              alt="Pope Leo XIV waving from the Apostolic Palace Angelus window"
               decoding="async"
               referrerPolicy="no-referrer"
-              className="h-full w-full object-cover object-[50%_20%] brightness-[0.98] contrast-[1.03]"
+              className="h-full w-full object-cover object-[50%_14%] brightness-[1.03] contrast-[1.03]"
               style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.58) 14%, black 32%)',
+                maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.82) 5%, black 12%)',
               }}
             />
           </div>
@@ -289,7 +290,7 @@ Tags: ${article.tags.map(t => `#${t}`).join(' ')}`;
             aria-hidden="true"
           />
 
-          <div className="relative z-10 max-w-[60%] pr-3 sm:pr-4 flex flex-col justify-between flex-1 gap-2">
+          <div className="relative z-10 w-[60%] pr-3 sm:pr-5 flex flex-col justify-between flex-1 gap-2">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
                 <Globe className="w-3.5 h-3.5 text-amber-400 shrink-0" />
