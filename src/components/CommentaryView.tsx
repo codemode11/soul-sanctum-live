@@ -376,12 +376,16 @@ ${selectedCommentary.practicalApplication}`;
             aria-hidden="true"
           />
 
-          <div className="relative z-10 space-y-1 my-auto w-[60%] pr-3 sm:pr-5">
-            {/* Main Title: Commentary on Luke 15:1-10 */}
-            <h2 className="font-serif text-xl sm:text-2xl font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-              Commentary on {selectedCommentary.scriptureReference}
+          <div className="relative z-10 space-y-1.5 w-[60%] pr-3 sm:pr-5">
+            {/* Main Banner Title */}
+            <h2 className="font-serif text-[22px] sm:text-[26px] md:text-[28px] font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              Bible Commentary
             </h2>
-            <p className="leading-snug text-[11px] sm:text-xs text-amber-200/90 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+            {/* Gospel Reference Subtitle (smaller than main title) */}
+            <p className="font-serif text-[17px] sm:text-[19px] md:text-[20px] font-semibold tracking-normal text-amber-200/95 leading-snug drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)]">
+              Commentary on {selectedCommentary.scriptureReference}
+            </p>
+            <p className="leading-snug text-[10.5px] sm:text-[11.5px] text-amber-200/85 font-cinzel uppercase tracking-wider drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)] pt-0.5">
               Catena Aurea • Cornelius à Lapide, S.J. • Magisterium
             </p>
           </div>

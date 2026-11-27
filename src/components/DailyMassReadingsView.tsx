@@ -302,28 +302,33 @@ ${reading.gospel.text}`;
             <div className="absolute inset-0 bg-gradient-to-t from-[#1C120C]/25 via-transparent to-transparent" />
           </div>
 
-          <div className="relative z-10 space-y-2 sm:space-y-2.5 w-[60%] pr-3 sm:pr-5">
-            {/* Line 1: Liturgical Color/Rank & Season (raised) */}
-            <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
-              <span 
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 shadow-xs"
-                style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
-              >
-                <span>{colorMeta.name}</span>
-                <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
-                <span>{reading.liturgicalRank}</span>
-              </span>
-              <span className="text-xs sm:text-sm text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
-                {reading.liturgicalSeason}
-              </span>
-            </div>
-            
-            {/* Line 2: Complete Liturgical Day Title split into Line 1 and Line 2 without ellipses */}
-            <div className="font-serif tracking-normal text-amber-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] space-y-0.5">
+          <div className="relative z-10 w-[60%] pr-3 sm:pr-5">
+            <h2 className="font-serif text-[21px] sm:text-[26px] md:text-[27px] font-bold tracking-normal text-amber-100 leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)] mb-3 sm:mb-3.5">
+              Daily Readings for the Holy Mass
+            </h2>
+
+            <div className="space-y-1.5">
+              {/* Line 1: Liturgical Color/Rank & Season */}
+              <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
+                <span 
+                  className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-xs text-xs font-semibold uppercase tracking-wider whitespace-nowrap shrink-0 shadow-xs"
+                  style={{ backgroundColor: colorMeta.hex, color: reading.liturgicalColor === 'white' ? '#451a03' : '#ffffff' }}
+                >
+                  <span>{colorMeta.name}</span>
+                  <span className="inline-block w-px h-3 bg-current opacity-40 mx-0.5" aria-hidden="true" />
+                  <span>{reading.liturgicalRank}</span>
+                </span>
+                <span className="text-xs sm:text-sm text-stone-200 font-serif drop-shadow-[0_1px_4px_rgba(0,0,0,0.85)]">
+                  {reading.liturgicalSeason}
+                </span>
+              </div>
+              
+              {/* Line 2: Complete Liturgical Day Title in thin all-caps font */}
+              <div className="font-sans font-light uppercase tracking-[0.07em] text-amber-100/95 drop-shadow-[0_1px_6px_rgba(0,0,0,0.85)] space-y-0.5">
               {/^solemnity of our lord jesus christ,\s*king of the universe$/i.test(reading.liturgicalDay.trim()) ? (
                 <>
-                  <div className="text-[15px] sm:text-lg font-bold leading-snug">Solemnity of Our Lord Jesus Christ</div>
-                  <div className="text-xs sm:text-sm font-semibold text-amber-200 leading-snug">King of the Universe</div>
+                  <div className="text-[10px] sm:text-[11px] font-light leading-snug">Solemnity of Our Lord Jesus Christ</div>
+                  <div className="text-[9.5px] sm:text-[10.5px] font-light text-amber-200/90 leading-snug">King of the Universe</div>
                 </>
               ) : (() => {
                 const cleanTitle = reading.liturgicalDay.replace(/,\s*Bishop.*$/, '').trim();
@@ -331,27 +336,28 @@ ${reading.gospel.text}`;
                 if (parts.length >= 2) {
                   return (
                     <>
-                      <div className="text-[15px] sm:text-[18.5px] font-bold leading-snug">
+                      <div className="text-[10px] sm:text-[11px] font-light leading-snug">
                         {parts[0]}
                       </div>
-                      <div className="text-[11px] sm:text-[13px] font-medium text-amber-200/95 leading-snug">
+                      <div className="text-[9.5px] sm:text-[10.5px] font-light text-amber-200/90 leading-snug">
                         {parts.slice(1).join(' / ')}
                       </div>
                     </>
                   );
                 } else {
                   return (
-                    <div className="text-[15px] sm:text-[19px] font-bold leading-snug">
+                    <div className="text-[10px] sm:text-[11px] font-light leading-snug">
                       {cleanTitle}
                     </div>
                   );
                 }
               })()}
+              </div>
             </div>
           </div>
 
           {/* Line 3: Calendar and Settings anchored in left 60% so right artwork stays clear */}
-          <div className="relative z-10 flex flex-wrap items-center justify-start gap-2 sm:gap-2.5 mt-auto pt-2 shrink-0 w-[60%] pr-3 sm:pr-5">
+          <div className="relative z-10 flex flex-wrap items-center justify-start gap-2 sm:gap-2.5 mt-auto pt-1.5 shrink-0 w-[60%] pr-3 sm:pr-5">
             {/* Unified Single Element: [ < | Calendar Date | > ] with Thin Separators */}
             <div className="relative shrink-0">
               <div

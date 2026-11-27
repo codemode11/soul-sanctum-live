@@ -2114,6 +2114,7 @@ On November 26 the Church also remembers St. John Berchmans (1599–1621), Flemi
     liturgicalColor: 'white',
     wikiSlug: 'Miraculous_Medal',
     butlerReference: "Butler's Lives of the Saints, Vol. XI — November 27",
+    imageUrl: '/assets/aistudio/OUR_LADY_OF_THE_MIRACULOUS_MEDAL_73f693a8.jpg',
     biography: `From Butler's Lives of the Saints (November 27): On the evening of November 27, 1830, in the chapel of the Daughters of Charity on Rue du Bac in Paris, the Blessed Virgin Mary appeared to a twenty-four-year-old novice, St. Catherine Labouré, standing upon a globe crushing a serpent beneath her feet while streams of dazzling light poured from rings upon her fingers—signifying graces given to all who ask for them. Framed by an oval halo appeared the golden prayer: "O Mary, conceived without sin, pray for us who have recourse to thee!"
 
 Turning the vision, Mary revealed the reverse design: the letter M surmounted by a Cross, twelve stars, and the Sacred Heart of Jesus crowned with thorns beside the Immaculate Heart of Mary pierced by a sword. Struck in 1832 with Archbishop de Quélen's approval, the medal spread across every nation with countless conversions and healings—including that of Alphonse Ratisbonne—earning the universal title "the Miraculous Medal."`,
