@@ -1203,30 +1203,66 @@ export const VirtualPilgrimageView: React.FC = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {activeSite.stops.map((stop, idx) => {
                   const isCurrent = idx === activeStopIndex;
                   const isVisited = visitedForCurrentSite.includes(stop.id);
+                  const stopImgKey = `stop-${stop.id}`;
                   return (
                     <button
                       key={stop.id}
                       type="button"
                       onClick={() => handleSelectStop(idx)}
-                      className={`rounded-lg border p-2.5 text-left transition-colors cursor-pointer ${
+                      className={`group overflow-hidden rounded-lg border text-left transition-all cursor-pointer ${
                         isCurrent
-                          ? 'border-[#7F1D1D] bg-[#7F1D1D] text-white'
+                          ? 'border-[#7F1D1D] bg-[#7F1D1D] text-white ring-1 ring-[#7F1D1D]/40'
                           : 'border-stone-200 bg-[#F4EFE6]/70 text-stone-800 hover:border-[#8B5A2B] hover:bg-[#F4EFE6]'
                       }`}
                     >
-                      <div className="flex items-center justify-between text-[11px]">
-                        <span className="font-mono font-semibold">{stop.stepNumber}</span>
-                        {isVisited && !isCurrent && (
-                          <Check className="h-3 w-3 text-[#8B5A2B]" />
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-900">
+                        {!failedImages[stopImgKey] ? (
+                          <img
+                            src={stop.imageSrc}
+                            alt={stop.title}
+                            loading="lazy"
+                            onError={() =>
+                              setFailedImages((prev) => ({ ...prev, [stopImgKey]: true }))
+                            }
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#2C1810] to-[#1C1917] text-[10px] font-cinzel uppercase tracking-[0.18em] text-amber-200/80">
+                            Stop {stop.stepNumber}
+                          </div>
+                        )}
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                        <span
+                          className={`absolute left-1.5 top-1.5 rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold tracking-wider ${
+                            isCurrent
+                              ? 'bg-[#7F1D1D] text-white'
+                              : 'bg-[#1C1917]/80 text-[#FBF9F5]'
+                          }`}
+                        >
+                          {stop.stepNumber}
+                        </span>
+                        {isVisited && (
+                          <span
+                            className={`absolute right-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full ${
+                              isCurrent
+                                ? 'bg-white text-[#7F1D1D]'
+                                : 'bg-[#FBF9F5]/95 text-[#8B5A2B]'
+                            }`}
+                            title="Visited stop"
+                          >
+                            <Check className="h-2.5 w-2.5" />
+                          </span>
                         )}
                       </div>
-                      <p className="mt-1 line-clamp-2 font-serif text-xs font-semibold leading-snug">
-                        {stop.title}
-                      </p>
+                      <div className="p-2.5">
+                        <p className="line-clamp-2 font-serif text-xs font-semibold leading-snug">
+                          {stop.title}
+                        </p>
+                      </div>
                     </button>
                   );
                 })}
@@ -1256,6 +1292,38 @@ export const VirtualPilgrimageView: React.FC = () => {
                   {activeStop.subtitle}
                 </p>
               </header>
+
+              {/* Archival Stop Photograph */}
+              <figure className="overflow-hidden rounded-lg border border-stone-200 bg-[#F4EFE6]/60">
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-900">
+                  {!failedImages[`stop-${activeStop.id}`] ? (
+                    <img
+                      key={activeStop.id}
+                      src={activeStop.imageSrc}
+                      alt={`${activeStop.title} — ${activeSite.shortName}`}
+                      onError={() =>
+                        setFailedImages((prev) => ({
+                          ...prev,
+                          [`stop-${activeStop.id}`]: true,
+                        }))
+                      }
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#2C1810] to-[#1C1917] p-6 text-center">
+                      <p className="font-cinzel text-sm uppercase tracking-[0.2em] text-amber-200/80">
+                        {activeStop.title}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <figcaption className="border-t border-stone-200 bg-[#F4EFE6]/80 px-3.5 py-2.5 font-serif text-xs sm:text-[13px] italic text-stone-600 leading-snug">
+                  <span className="not-italic font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8B5A2B] mr-1.5">
+                    Fig. {activeSite.indexLabel}.{activeStop.stepNumber}
+                  </span>
+                  — {activeStop.imageCaption}
+                </figcaption>
+              </figure>
 
               {/* Sacred Scripture Passage (Hairline Framed Archival Callout — No border-l-4) */}
               <blockquote className="rounded-lg border border-stone-200 bg-[#F4EFE6] p-4 sm:p-5 space-y-2">

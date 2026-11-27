@@ -13,6 +13,63 @@ import montSaintMichelImg from '../assets/images/pilgrimage_mont_saint_michel_17
 import sevenChurchesImg from '../assets/images/pilgrimage_seven_churches_1795409713805.jpg';
 import zeitounImg from '../assets/images/pilgrimage_zeitoun_egypt_1795409713708.jpg';
 
+import stopStp01Img from '../assets/images/stop_stp_01_1795798726082.jpg';
+import stopStp02Img from '../assets/images/stop_stp_02_1795798726511.jpg';
+import stopStp03Img from '../assets/images/stop_stp_03_1795798727532.jpg';
+import stopStp04Img from '../assets/images/stop_stp_04_1795798729448.jpg';
+import stopHs01Img from '../assets/images/stop_hs_01_1795798729005.jpg';
+import stopHs02Img from '../assets/images/stop_hs_02_1795798732276.jpg';
+import stopHs03Img from '../assets/images/stop_hs_03_1795798733870.jpg';
+import stopHs04Img from '../assets/images/stop_hs_04_1795798733993.jpg';
+import stopNat01Img from '../assets/images/stop_nat_01_1795798796937.jpg';
+import stopNat02Img from '../assets/images/stop_nat_02_1795798798978.jpg';
+import stopNat03Img from '../assets/images/stop_nat_03_1795798800054.jpg';
+import stopNat04Img from '../assets/images/stop_nat_04_1795798801666.jpg';
+import stopLrd01Img from '../assets/images/stop_lrd_01_1795798803256.jpg';
+import stopLrd02Img from '../assets/images/stop_lrd_02_1795798805022.jpg';
+import stopLrd03Img from '../assets/images/stop_lrd_03_1795798803829.jpg';
+import stopLrd04Img from '../assets/images/stop_lrd_04_1795798806847.jpg';
+import stopFat01Img from '../assets/images/stop_fat_01_1795798828207.jpg';
+import stopFat02Img from '../assets/images/stop_fat_02_1795798829754.jpg';
+import stopFat03Img from '../assets/images/stop_fat_03_1795798830373.jpg';
+import stopFat04Img from '../assets/images/stop_fat_04_1795798833102.jpg';
+import stopGua01Img from '../assets/images/stop_gua_01_1795798833911.jpg';
+import stopGua02Img from '../assets/images/stop_gua_02_1795798835571.jpg';
+import stopGua03Img from '../assets/images/stop_gua_03_1795798836498.jpg';
+import stopGua04Img from '../assets/images/stop_gua_04_1795798869650.jpg';
+import stopAss01Img from '../assets/images/stop_ass_01_1795798890430.jpg';
+import stopAss02Img from '../assets/images/stop_ass_02_1795798893479.jpg';
+import stopAss03Img from '../assets/images/stop_ass_03_1795798895403.jpg';
+import stopAss04Img from '../assets/images/stop_ass_04_1795798896565.jpg';
+import stopStg01Img from '../assets/images/stop_stg_01_1795798897850.jpg';
+import stopStg02Img from '../assets/images/stop_stg_02_1795798899499.jpg';
+import stopStg03Img from '../assets/images/stop_stg_03_1795798900321.jpg';
+import stopStg04Img from '../assets/images/stop_stg_04_1795798900929.jpg';
+import stopMed01Img from '../assets/images/stop_med_01_1795798936240.jpg';
+import stopMed02Img from '../assets/images/stop_med_02_1795798936585.jpg';
+import stopMed03Img from '../assets/images/stop_med_03_1795798936520.jpg';
+import stopMed04Img from '../assets/images/stop_med_04_1795798938305.jpg';
+import stopKrk01Img from '../assets/images/stop_krk_01_1795798939835.jpg';
+import stopKrk02Img from '../assets/images/stop_krk_02_1795798939266.jpg';
+import stopKrk03Img from '../assets/images/stop_krk_03_1795798942195.jpg';
+import stopKrk04Img from '../assets/images/stop_krk_04_1795798943281.jpg';
+import stopChr01Img from '../assets/images/stop_chr_01_1795798964209.jpg';
+import stopChr02Img from '../assets/images/stop_chr_02_1795798965763.jpg';
+import stopChr03Img from '../assets/images/stop_chr_03_1795798967539.jpg';
+import stopChr04Img from '../assets/images/stop_chr_04_1795798970172.jpg';
+import stopMsm01Img from '../assets/images/stop_msm_01_1795798972527.jpg';
+import stopMsm02Img from '../assets/images/stop_msm_02_clean.jpg';
+import stopMsm03Img from '../assets/images/stop_msm_03_wiki.jpg';
+import stopMsm04Img from '../assets/images/stop_msm_04_wiki.jpg';
+import stopRev01Img from '../assets/images/stop_rev_01_wiki.jpg';
+import stopRev02Img from '../assets/images/stop_rev_02_wiki.jpg';
+import stopRev03Img from '../assets/images/stop_rev_03_wiki.jpg';
+import stopRev04Img from '../assets/images/stop_rev_04_v2.jpg';
+import stopZei01Img from '../assets/images/stop_zei_02_wiki.jpg';
+import stopZei02Img from '../assets/images/stop_zei_01_v2.jpg';
+import stopZei03Img from '../assets/images/stop_zei_03_v2.jpg';
+import stopZei04Img from '../assets/images/stop_zei_04_wiki.jpg';
+
 export type PilgrimageRegion =
   | 'All Shrines'
   | 'Holy Land'
@@ -26,6 +83,8 @@ export interface PilgrimageStop {
   stepNumber: string;
   title: string;
   subtitle: string;
+  imageSrc: string;
+  imageCaption: string;
   scriptureRef: string;
   scriptureText: string;
   narrative: string;
@@ -108,6 +167,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: "Piazza San Pietro & Bernini's Colonnade",
         subtitle: 'The Maternal Arms of the Universal Church',
+        imageSrc: stopStp01Img,
+        imageCaption: "Piazza San Pietro framed by Bernini’s embracing travertine colonnade and the Vatican obelisk at morning light.",
         scriptureRef: 'Isaiah 2:2–3',
         scriptureText:
           'In days to come, the mountain of the Lord’s house shall be established as the highest mountain; all nations shall stream toward it.',
@@ -123,6 +184,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: "Michelangelo's Pietà & the Holy Door",
         subtitle: 'Contemplating the Sorrowful Mother at the Entrance',
+        imageSrc: stopStp02Img,
+        imageCaption: "Michelangelo’s Carrara marble Pietà enshrined inside the first chapel of the right aisle of St. Peter’s Basilica.",
         scriptureRef: 'Luke 2:35',
         scriptureText: 'And you yourself a sword will pierce so that the thoughts of many hearts may be revealed.',
         narrative:
@@ -137,6 +200,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Papal Altar, Baldacchino & Confession of St. Peter',
         subtitle: 'Above the First-Century Fisherman’s Tomb',
+        imageSrc: stopStp03Img,
+        imageCaption: "Bernini’s bronze Baldacchino soaring above the Papal Altar and the illuminated Confession of St. Peter.",
         scriptureRef: 'Matthew 16:18–19',
         scriptureText:
           'And so I say to you, you are Peter, and upon this rock I will build my church, and the gates of the netherworld shall not prevail against it.',
@@ -152,6 +217,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'The Altar of the Chair & Chapel of the Blessed Sacrament',
         subtitle: 'Light of the Holy Spirit and Eucharistic Adoration',
+        imageSrc: stopStp04Img,
+        imageCaption: "The Altar of the Chair of St. Peter crowned by the alabaster Holy Spirit window in the apse of the basilica.",
         scriptureRef: 'John 21:17',
         scriptureText: 'Jesus said to him, “Feed my sheep.”',
         narrative:
@@ -200,6 +267,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Parvis Courtyard & Stone of Anointing',
         subtitle: 'Threshold of Myrrh, Aloes, and Silent Reverence',
+        imageSrc: stopHs01Img,
+        imageCaption: "The Stone of Anointing at the threshold of the Church of the Holy Sepulchre beneath suspended sanctuary lamps.",
         scriptureRef: 'John 19:39–40',
         scriptureText:
           'Nicodemus brought a mixture of myrrh and aloes weighing about one hundred pounds. They took the body of Jesus and bound it with burial cloths along with the spices.',
@@ -215,6 +284,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'Calvary — The Rock of Golgotha',
         subtitle: 'Where the Cross Was Raised Between Heaven and Earth',
+        imageSrc: stopHs02Img,
+        imageCaption: "The Chapel of Calvary above the fissured rock of Golgotha where Christ was lifted upon the Cross.",
         scriptureRef: 'John 19:17–18, 30',
         scriptureText:
           'Going out to what is called the Place of the Skull, in Hebrew, Golgotha, there they crucified him. When Jesus had taken the wine, he said, “It is finished.”',
@@ -230,6 +301,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Anastasis Rotunda & the Holy Aedicule',
         subtitle: '“He Is Not Here, for He Has Been Raised”',
+        imageSrc: stopHs03Img,
+        imageCaption: "The Holy Aedicule enclosing the Tomb of the Resurrection beneath the sunlit oculus of the Anastasis Rotunda.",
         scriptureRef: 'Matthew 28:5–6',
         scriptureText:
           'Do not be afraid! I know that you are seeking Jesus the crucified. He is not here, for he has been raised just as he said. Come and see the place where he lay.',
@@ -245,6 +318,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'Chapel of St. Helena & Cave of the Finding of the True Cross',
         subtitle: 'Descending into the Roots of Christian Memory',
+        imageSrc: stopHs04Img,
+        imageCaption: "The subterranean rock-hewn Chapel of St. Helena and descent to the Cave of the Finding of the True Cross.",
         scriptureRef: 'Galatians 6:14',
         scriptureText:
           'May I never boast except in the cross of our Lord Jesus Christ, through which the world has been crucified to me, and I to the world.',
@@ -292,6 +367,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Door of Humility',
         subtitle: 'Bowing Low to Enter the Mystery of God-With-Us',
+        imageSrc: stopNat01Img,
+        imageCaption: "The low stone Door of Humility set within the ancient walled Crusader arch on Manger Square in Bethlehem.",
         scriptureRef: 'Philippians 2:6–7',
         scriptureText:
           'Though he was in the form of God, he did not regard equality with God something to be grasped. Rather, he emptied himself, taking the form of a slave.',
@@ -307,6 +384,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Nave of Justinian & Restored Golden Mosaics',
         subtitle: 'Fifteen Centuries of Unbroken Christmas Praise',
+        imageSrc: stopNat02Img,
+        imageCaption: "Rosy Bethlehem limestone columns and restored golden Byzantine mosaics lining the Nave of Justinian.",
         scriptureRef: 'John 1:14',
         scriptureText:
           'And the Word became flesh and made his dwelling among us, and we saw his glory, the glory as of the Father’s only Son, full of grace and truth.',
@@ -322,6 +401,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Grotto of the Nativity & the Fourteen-Pointed Silver Star',
         subtitle: '“Here Jesus Christ Was Born of the Virgin Mary”',
+        imageSrc: stopNat03Img,
+        imageCaption: "The fourteen-pointed silver star beneath the Altar of the Nativity inside the candlelit Grotto of Bethlehem.",
         scriptureRef: 'Luke 2:6–7',
         scriptureText:
           'While they were there, the time came for her to have her child, and she gave birth to her firstborn son. She wrapped him in swaddling clothes and laid him in a manger.',
@@ -337,6 +418,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'Church of St. Catherine & the Cave of St. Jerome',
         subtitle: 'Translating the Living Word Beside the Manger',
+        imageSrc: stopNat04Img,
+        imageCaption: "The ancient rock-cut subterranean Cave of St. Jerome beneath the Church of St. Catherine in Bethlehem.",
         scriptureRef: 'Psalm 119:105',
         scriptureText: 'Your word is a lamp for my feet, a light for my path.',
         narrative:
@@ -385,6 +468,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Grotto of Massabielle',
         subtitle: 'Where Heaven Touched Humble Pyrenean Stone',
+        imageSrc: stopLrd01Img,
+        imageCaption: "The limestone Grotto of Massabielle beside the Gave de Pau, where Our Lady appeared to St. Bernadette.",
         scriptureRef: 'Luke 1:28',
         scriptureText: 'Hail, full of grace! The Lord is with you.',
         narrative:
@@ -399,6 +484,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Miraculous Spring & Baths of Lourdes',
         subtitle: '“Go, Drink at the Spring and Wash Yourself There”',
+        imageSrc: stopLrd02Img,
+        imageCaption: "Pilgrims drawing from the miraculous spring water fountains along the stone arcade leading to the Baths of Lourdes.",
         scriptureRef: 'John 9:7',
         scriptureText: 'Jesus said to him, “Go wash in the Pool of Siloam.” So he went and washed, and came back able to see.',
         narrative:
@@ -413,6 +500,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Rosary Basilica & Crypt of the Immaculate Conception',
         subtitle: 'Fifteen Venetian Mosaic Chapels of the Gospel',
+        imageSrc: stopLrd03Img,
+        imageCaption: "The sweeping twin ramps of the Rosary Basilica beneath the soaring spire of the Basilica of the Immaculate Conception.",
         scriptureRef: 'Luke 1:46–49',
         scriptureText:
           'My soul proclaims the greatness of the Lord; my spirit rejoices in God my savior, for he has looked upon his lowly servant.',
@@ -428,6 +517,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'The Esplanade & Candlelight Marian Procession',
         subtitle: 'Thousands of Flames Lifting One Song into the Night',
+        imageSrc: stopLrd04Img,
+        imageCaption: "Thousands of pilgrims bearing glowing tapers across the Lourdes Esplanade during the nightly Marian candlelight procession.",
         scriptureRef: 'Psalm 141:2',
         scriptureText: 'Let my prayer be incense before you; my uplifted hands an evening offering.',
         narrative:
@@ -476,6 +567,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Chapel of the Apparitions (Capelinha)',
         subtitle: 'Exact Site of the Holm Oak Tree in the Cova da Iria',
+        imageSrc: stopFat01Img,
+        imageCaption: "The open-air Chapel of the Apparitions (Capelinha) marking the holm oak where Our Lady appeared at Cova da Iria.",
         scriptureRef: 'Revelation 12:1',
         scriptureText:
           'A great sign appeared in the sky, a woman clothed with the sun, with the moon under her feet, and on her head a crown of twelve stars.',
@@ -491,6 +584,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Great Prayer Area & Penitential Path',
         subtitle: 'Walking in Sacrifice for the Conversion of Sinners',
+        imageSrc: stopFat02Img,
+        imageCaption: "The smooth marble penitential path crossing the Great Prayer Area toward the Basilica of Our Lady of the Rosary.",
         scriptureRef: 'Colossians 1:24',
         scriptureText:
           'Now I rejoice in my sufferings for your sake, and in my flesh I am filling up what is lacking in the afflictions of Christ on behalf of his body, which is the church.',
@@ -506,6 +601,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'Basilica of Our Lady of the Rosary & Tombs of the Seers',
         subtitle: 'Resting Place of Sts. Francisco, Jacinta, and Sister Lúcia',
+        imageSrc: stopFat03Img,
+        imageCaption: "Inside the luminous Basilica of Our Lady of the Rosary in Fátima, home to the tombs of Sts. Francisco, Jacinta, and Sister Lúcia.",
         scriptureRef: 'Matthew 11:25',
         scriptureText:
           'I give praise to you, Father, Lord of heaven and earth, for although you have hidden these things from the wise and the learned you have revealed them to the childlike.',
@@ -521,6 +618,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'Valinhos & the Chapel of the Angel of Peace',
         subtitle: 'Eucharistic Adoration in the Olive Groves of Aljustrel',
+        imageSrc: stopFat04Img,
+        imageCaption: "The olive-lined hillside trail of Valinhos and Loca do Cabeço where the Angel of Peace taught the shepherd children to pray.",
         scriptureRef: 'John 6:51',
         scriptureText:
           'I am the living bread that came down from heaven; whoever eats this bread will live forever.',
@@ -568,6 +667,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Plaza of the Americas & Historic Old Basilica',
         subtitle: 'Meeting Place of Twenty Million Pilgrims Each Year',
+        imageSrc: stopGua01Img,
+        imageCaption: "The Plaza of the Americas framed by the historic Baroque Old Basilica and the circular modern Basilica of Guadalupe.",
         scriptureRef: 'Song of Songs 2:11–12',
         scriptureText:
           'For see, the winter is past, the rains are over and gone. The flowers appear on the earth, the time of pruning the vines has come.',
@@ -583,6 +684,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Miraculous Tilma of St. Juan Diego',
         subtitle: 'The Living Image Painted by No Human Hand',
+        imageSrc: stopGua02Img,
+        imageCaption: "The miraculous Tilma of St. Juan Diego enshrined above the high altar against the curved cedar sanctuary wall.",
         scriptureRef: 'Judith 15:9',
         scriptureText:
           'You are the glory of Jerusalem, the surpassing joy of Israel; you are the splendid boast of our people.',
@@ -598,6 +701,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'Capilla del Cerrito — The Summit of Tepeyac Hill',
         subtitle: 'Where Castilian Roses Bloomed in December Frost',
+        imageSrc: stopGua03Img,
+        imageCaption: "Capilla del Cerrito crowning the rocky summit of Tepeyac Hill where St. Juan Diego gathered Castilian roses in winter.",
         scriptureRef: 'Isaiah 35:1–2',
         scriptureText:
           'The desert and the parched land will exult; the steppe will rejoice and bloom. They will see the glory of the Lord, the splendor of our God.',
@@ -613,6 +718,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'Chapel of the Well (El Pocito) & Words of Maternal Comfort',
         subtitle: '“Let Nothing Frighten or Grieve Your Heart”',
+        imageSrc: stopGua04Img,
+        imageCaption: "The octagonal Baroque Chapel of the Well (Templo del Pocito) crowned with blue-and-white Talavera domes at Tepeyac.",
         scriptureRef: 'John 19:26–27',
         scriptureText:
           'Jesus said to his mother, “Woman, behold, your son.” Then he said to the disciple, “Behold, your mother.”',
@@ -662,6 +769,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Hill of Paradise & Piazza Inferiore',
         subtitle: 'Pace e Bene — Peace and All Good',
+        imageSrc: stopAss01Img,
+        imageCaption: "Piazza Inferiore and its medieval stone arcades framing the double-tiered Basilica of St. Francis on the Hill of Paradise.",
         scriptureRef: 'Matthew 5:3, 9',
         scriptureText: 'Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are the peacemakers, for they will be called children of God.',
         narrative:
@@ -676,6 +785,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Crypt Tomb of St. Francis',
         subtitle: 'Silent Reverence Beside the Poverello of Assisi',
+        imageSrc: stopAss02Img,
+        imageCaption: "The hushed subterranean stone Crypt of St. Francis, encircled by wrought iron and flickering oil lamps.",
         scriptureRef: 'Galatians 2:19–20',
         scriptureText:
           'I have been crucified with Christ; yet I live, no longer I, but Christ lives in me.',
@@ -691,6 +802,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Upper Basilica & Giotto’s Fresco Cycle',
         subtitle: 'The Gospel Painted in Light and Ultramarine',
+        imageSrc: stopAss03Img,
+        imageCaption: "The starry blue Gothic vaults and sunlit nave frescoes of the Upper Basilica celebrating the life of St. Francis.",
         scriptureRef: '2 Corinthians 8:9',
         scriptureText:
           'For your sake he became poor although he was rich, so that by his poverty you might become rich.',
@@ -706,6 +819,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'The Portiuncula & Valley of St. Mary of the Angels',
         subtitle: 'Cradle of the Franciscan Order and Gate of Mercy',
+        imageSrc: stopAss04Img,
+        imageCaption: "The humble stone Portiuncula chapel preserved directly beneath the great Renaissance dome of St. Mary of the Angels.",
         scriptureRef: 'Luke 15:7',
         scriptureText:
           'I tell you, in just the same way there will be more joy in heaven over one sinner who repents than over ninety-nine righteous people who have no need of repentance.',
@@ -753,6 +868,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'Praza do Obradoiro & the Pilgrim’s Arrival',
         subtitle: 'Laying Down Staff and Burden Before the Granite Spires',
+        imageSrc: stopStg01Img,
+        imageCaption: "Pilgrims arriving in Praza do Obradoiro before the golden Baroque granite facade of the Cathedral of Santiago de Compostela.",
         scriptureRef: 'Psalm 84:6–8',
         scriptureText:
           'Blessed the man who finds refuge in you, in their own hearts are pilgrim roads. They go from strength to strength and see the God of gods in Zion.',
@@ -768,6 +885,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Portico of Glory (Pórtico da Gloria)',
         subtitle: 'Master Mateo’s Stone Symphony of Salvation',
+        imageSrc: stopStg02Img,
+        imageCaption: "Master Mateo’s twelfth-century Romanesque Portico of Glory carved in granite with Christ in Majesty and St. James.",
         scriptureRef: 'Revelation 21:3',
         scriptureText: 'Behold, God’s dwelling is with the human race. He will dwell with them and they will be his people.',
         narrative:
@@ -782,6 +901,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Silver Crypt of St. James & the Pilgrim’s Embrace',
         subtitle: 'Brotherhood with the First Martyred Apostle',
+        imageSrc: stopStg03Img,
+        imageCaption: "The embossed silver reliquary urn of St. James the Apostle resting inside the stone crypt beneath the high altar.",
         scriptureRef: 'Mark 10:38–39',
         scriptureText:
           'Jesus said to them, “The cup that I drink, you will drink, and with the baptism with which I am baptized, you will be baptized.”',
@@ -797,6 +918,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'The Pilgrim’s Mass & Swinging of the Botafumeiro',
         subtitle: 'Rising Incense and the Sending Forth (“Ultreia!”)',
+        imageSrc: stopStg04Img,
+        imageCaption: "The giant silver Botafumeiro thurible soaring through shafts of light and incense across the cathedral transept at Pilgrim Mass.",
         scriptureRef: 'Malachi 1:11',
         scriptureText:
           'From the rising of the sun, even to its setting, my name is great among the nations; and everywhere they bring sacrifice to my name, and a pure offering.',
@@ -844,6 +967,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'Apparition Hill (Podbrdo)',
         subtitle: 'Climbing Bare Limestone Through the Mysteries of the Rosary',
+        imageSrc: stopMed01Img,
+        imageCaption: "Pilgrims kneeling in prayer along the rugged limestone slope of Apparition Hill (Podbrdo) before Our Lady Queen of Peace.",
         scriptureRef: 'Luke 1:39–45',
         scriptureText:
           'Mary set out and traveled to the hill country in haste... “Blessed are you who believed that what was spoken to you by the Lord would be fulfilled.”',
@@ -859,6 +984,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'St. James Parish Church & the Evening Rosary',
         subtitle: '“Confessional of the World” and Living Parish Liturgy',
+        imageSrc: stopMed02Img,
+        imageCaption: "Twin bell towers of St. James Parish Church overlooking the evening outdoor Rosary gathering at dusk in Medjugorje.",
         scriptureRef: 'Acts 1:14',
         scriptureText:
           'All these devoted themselves with one accord to prayer, together with some women, and Mary the mother of Jesus.',
@@ -874,6 +1001,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'Cross Mountain (Križevac)',
         subtitle: 'The Twenty-Eight-Foot Concrete Cross Raised in 1934',
+        imageSrc: stopMed03Img,
+        imageCaption: "The monumental concrete cross crowning rocky Cross Mountain (Križevac) against golden dawn mist over the valley.",
         scriptureRef: 'John 19:25–27',
         scriptureText:
           'Standing by the cross of Jesus were his mother... “Behold, your mother.” And from that hour the disciple took her into his home.',
@@ -889,6 +1018,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'The Blue Cross & Chapel of Perpetual Adoration',
         subtitle: 'Silence Before Jesus Truly Present in the Monstrance',
+        imageSrc: stopMed04Img,
+        imageCaption: "Quiet Eucharistic stillness inside the timber-and-stone Chapel of Perpetual Adoration at Medjugorje.",
         scriptureRef: 'John 14:27',
         scriptureText:
           'Peace I leave with you; my peace I give to you. Not as the world gives do I give it to you.',
@@ -938,6 +1069,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Convent Chapel & Image of Merciful Jesus',
         subtitle: '“Jesus, I Trust in You” — Rays of Blood and Water',
+        imageSrc: stopKrk01Img,
+        imageCaption: "The historic neo-Gothic brick Convent Chapel of Kraków-Łagiewniki housing the venerated Image of Merciful Jesus.",
         scriptureRef: 'John 20:19–22',
         scriptureText:
           'Jesus came and stood in their midst and said to them, “Peace be with you.” When he had said this, he showed them his hands and his side.',
@@ -953,6 +1086,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Reliquary Tomb of St. Faustina Kowalska',
         subtitle: 'Secretary of Divine Mercy (1905–1938)',
+        imageSrc: stopKrk02Img,
+        imageCaption: "The marble reliquary tomb of St. Faustina Kowalska adorned with white lilies inside the Convent Chapel.",
         scriptureRef: 'Psalm 136:1',
         scriptureText:
           'Praise the Lord, for he is good, for his mercy endures forever.',
@@ -968,6 +1103,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Basilica of Divine Mercy & Papal Altar',
         subtitle: '“The World Will Find Peace Only in Turning to Mercy”',
+        imageSrc: stopKrk03Img,
+        imageCaption: "The modern boat-shaped Basilica of Divine Mercy and slender bell tower rising over Kraków-Łagiewniki.",
         scriptureRef: '1 John 4:16',
         scriptureText:
           'We have come to know and to believe in the love God has for us. God is love, and whoever remains in love remains in God and God in him.',
@@ -983,6 +1120,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'The Hour of Great Mercy (3:00 PM)',
         subtitle: 'Standing Beneath the Cross in Intercession for Sinners',
+        imageSrc: stopKrk04Img,
+        imageCaption: "Afternoon light streaming onto the globe-and-bush bronze tabernacle during the 3:00 PM Hour of Great Mercy.",
         scriptureRef: 'Luke 23:44–46',
         scriptureText:
           'It was now about noon and darkness came over the whole land until three in the afternoon... Jesus cried out in a loud voice, “Father, into your hands I commend my spirit.”',
@@ -1030,6 +1169,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The Royal Portal & Asymmetrical Twin Spires',
         subtitle: 'A Catechism Carved in Living Beauce Limestone',
+        imageSrc: stopChr01Img,
+        imageCaption: "The twelfth-century Royal Portal, rose window, and asymmetrical twin spires of Chartres Cathedral in morning sunlight.",
         scriptureRef: 'Psalm 122:1–2',
         scriptureText:
           'I rejoiced when they said to me, “Let us go to the house of the Lord.” And now our feet are standing within your gates, Jerusalem.',
@@ -1045,6 +1186,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'Notre-Dame de la Belle Verrière & Chartres Blue Glass',
         subtitle: 'Light of Christ Illuminating the Sanctuary',
+        imageSrc: stopChr02Img,
+        imageCaption: "The radiant twelfth-century stained glass of Notre-Dame de la Belle Verrière glowing with legendary Chartres blue.",
         scriptureRef: 'John 1:4–5',
         scriptureText:
           'What came to be through him was life, and this life was the light of the human race; the light shines in the darkness, and the darkness has not overcome it.',
@@ -1060,6 +1203,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'The Medieval Nave Labyrinth',
         subtitle: 'Eleven Concentric Rings of the Pilgrim’s Journey',
+        imageSrc: stopChr03Img,
+        imageCaption: "The inlaid thirteenth-century circular limestone labyrinth spanning the soaring Gothic nave floor of Chartres.",
         scriptureRef: 'Psalm 25:4–5',
         scriptureText:
           'Make known to me your ways, Lord; teach me your paths. Guide me by your truth and teach me, for you are God my savior.',
@@ -1075,6 +1220,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'The Sancta Camisa & Crypt of Our Lady Under the Earth',
         subtitle: 'Venerating the Sacred Relic in Silent Memory',
+        imageSrc: stopChr04Img,
+        imageCaption: "Candlelit eleventh-century Romanesque arches inside the subterranean Crypt of Our Lady Under the Earth.",
         scriptureRef: 'Luke 1:38',
         scriptureText:
           'Mary said, “Behold, I am the handmaid of the Lord. May it be done to me according to your word.”',
@@ -1122,6 +1269,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'Crossing the Tidal Bay at Dawn',
         subtitle: 'Approaching the Granite Fortress Between Sea and Sky',
+        imageSrc: stopMsm01Img,
+        imageCaption: "Pilgrims crossing the shimmering low-tide sands of Mont-Saint-Michel Bay at dawn toward the fortified abbey island.",
         scriptureRef: 'Psalm 91:11–12',
         scriptureText:
           'For he commands his angels with regard to you, to guard you wherever you go. With their hands they shall support you.',
@@ -1137,6 +1286,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'The Grand Stairway & Abbey Church',
         subtitle: 'Prayer Raised on the Summit of Mount Tumba',
+        imageSrc: stopMsm02Img,
+        imageCaption: "Ascending the steep granite Grand Degré stairway alongside towering fortress walls to the Norman Abbey Church.",
         scriptureRef: 'Revelation 12:7–10',
         scriptureText:
           'Then war broke out in heaven; Michael and his angels battled against the dragon... Now have salvation and power come, and the kingdom of our God.',
@@ -1152,6 +1303,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'La Merveille — The Cloister Suspended Over the Sea',
         subtitle: 'Open-Air Monastic Solitude Beneath Double Stone Arcades',
+        imageSrc: stopMsm03Img,
+        imageCaption: "The thirteenth-century Gothic Cloister of La Merveille suspended high above the Normandy tides.",
         scriptureRef: 'Psalm 46:2–5',
         scriptureText:
           'God is our refuge and our strength, an ever-present help in distress... A river’s streams gladden the city of God, the holy dwelling of the Most High.',
@@ -1167,6 +1320,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'Crypt of Our Lady of Thirty Candles & Carolingian Chapel',
         subtitle: 'Ancient Stone Roots of French Christian Devotion',
+        imageSrc: stopMsm04Img,
+        imageCaption: "Vaulted medieval stone masonry and the gilded statue of Our Lady inside the quiet lower abbey chapel of Mont-Saint-Michel.",
         scriptureRef: 'Jude 1:20–21',
         scriptureText:
           'Build yourselves up in your most holy faith; pray in the Holy Spirit. Keep yourselves in the love of God and wait for the mercy of our Lord Jesus Christ.',
@@ -1214,6 +1369,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'Ephesus & Basilica of St. John — Returning to First Love',
         subtitle: 'Church 1 of 7 · Apostle John, St. Paul & Marian Tradition',
+        imageSrc: stopRev01Img,
+        imageCaption: "Monumental marble portals and brick piers of the sixth-century Basilica of St. John overlooking ancient Ephesus.",
         scriptureRef: 'Revelation 2:2, 4–5',
         scriptureText:
           '“I know your works, your labor, and your endurance... Yet I hold this against you: you have lost the love you had at first. Realize how far you have fallen. Repent, and do the works you did at first.”',
@@ -1229,6 +1386,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'Smyrna & Pergamum — Faithful Unto the Crown of Life',
         subtitle: 'Churches 2 & 3 of 7 · Courage in Persecution & Pagan Culture',
+        imageSrc: stopRev02Img,
+        imageCaption: "Soaring marble colonnades crowning the steep ancient acropolis of Pergamum above the Caicus Valley in Asia Minor.",
         scriptureRef: 'Revelation 2:10, 17',
         scriptureText:
           '“Remain faithful until death, and I will give you the crown of life... To the victor I shall give some of the hidden manna; I shall also give a white amulet upon which is inscribed a new name.”',
@@ -1244,6 +1403,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'Thyatira & Sardis — Watchful Hearts & White Garments',
         subtitle: 'Churches 4 & 5 of 7 · Discernment and Spiritual Awakening',
+        imageSrc: stopRev03Img,
+        imageCaption: "Triple-arched brick-and-stone apse of the early Byzantine church standing beside the ancient ruins of Sardis.",
         scriptureRef: 'Revelation 3:1–3',
         scriptureText:
           '“I know your works, that you have the reputation of being alive, but you are dead. Be watchful and strengthen what is left, which is going to die.”',
@@ -1259,6 +1420,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'Philadelphia & Laodicea — The Open Door & He Who Knocks',
         subtitle: 'Churches 6 & 7 of 7 · Fidelity and Warmth of Heart',
+        imageSrc: stopRev04Img,
+        imageCaption: "The ancient colonnaded thoroughfare of Laodicea stretching toward the mountain rim of the Lycus Valley.",
         scriptureRef: 'Revelation 3:8, 20',
         scriptureText:
           '“Look, I have left an open door before you, which no one can close... Behold, I stand at the door and knock. If anyone hears my voice and opens the door, then I will enter his house and dine with him.”',
@@ -1306,6 +1469,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '01',
         title: 'The White Domes at Dusk — April 2, 1968',
         subtitle: '“Arise, Shine, for Your Light Has Come”',
+        imageSrc: stopZei01Img,
+        imageCaption: "Coptic church domes crowned with illuminated crosses rising against the twilight sky of Cairo.",
         scriptureRef: 'Isaiah 60:1–3',
         scriptureText:
           'Rise up in splendor! Your light has come, the glory of the Lord shines upon you... Nations shall walk by your light, and kings by your shining radiance.',
@@ -1321,6 +1486,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '02',
         title: 'Luminous Doves & the Silent Woman Clothed with Light',
         subtitle: 'Heavenly Peace Above the Rooftop Cross',
+        imageSrc: stopZei02Img,
+        imageCaption: "A luminous Egyptian Coptic sanctuary dome and cross ascending above carved stonework in Christian Cairo.",
         scriptureRef: 'Song of Songs 6:10',
         scriptureText:
           'Who is this that comes forth like the dawn, as beautiful as the moon, as resplendent as the sun?',
@@ -1336,6 +1503,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '03',
         title: 'Along the Holy Family’s Egyptian Route',
         subtitle: 'Matariyah, Zeitoun & Ancient Bridges of East and West',
+        imageSrc: stopZei03Img,
+        imageCaption: "Coptic mosaic in Old Cairo portraying the Holy Family’s journey into Egypt accompanied by white doves.",
         scriptureRef: 'Matthew 2:13–15',
         scriptureText:
           '“Rise, take the child and his mother, flee to Egypt, and stay there until I tell you.” ... Out of Egypt I called my son.',
@@ -1351,6 +1520,8 @@ export const VIRTUAL_PILGRIMAGE_SITES: PilgrimageSite[] = [
         stepNumber: '04',
         title: 'Courtyard Hymns, Healings & Witness Before the Nations',
         subtitle: 'Blessed Among Women Across Generations',
+        imageSrc: stopZei04Img,
+        imageCaption: "Sunlit Coptic church courtyard lined with lanterns, palms, and sacred mosaics welcoming pilgrims in Cairo.",
         scriptureRef: 'Luke 1:48–50',
         scriptureText:
           'From now on will all ages call me blessed. The Mighty One has done great things for me, and holy is his name.',
