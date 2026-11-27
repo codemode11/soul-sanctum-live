@@ -35,6 +35,7 @@ import { CebuParishesModal } from './components/CebuParishesModal';
 import { MedjugorjeMessagesView } from './components/MedjugorjeMessagesView';
 import { MarianApparitionsView } from './components/MarianApparitionsView';
 import { CatholicProphecyView } from './components/CatholicProphecyView';
+import { CatholicWarfareView } from './components/CatholicWarfareView';
 import { SpiritualBooksReaderView } from './components/SpiritualBooksReaderView';
 import Hls from 'hls.js';
 import { CatholicPodcastsView } from './components/CatholicPodcastsView';
@@ -1866,6 +1867,9 @@ export default function App() {
 
             {/* Catholic Prophecy & End Times Archive */}
             {activeTab === 'catholic-prophecy' && <CatholicProphecyView />}
+
+            {/* Catholic Warfare — Spiritual Combat & Armor of God */}
+            {activeTab === 'catholic-warfare' && <CatholicWarfareView />}
 
             {/* 11. Novena Tracker */}
             {activeTab === 'novenas' && (

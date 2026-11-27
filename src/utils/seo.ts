@@ -140,6 +140,11 @@ export const SEO_METADATA_BY_TAB: Record<ActiveTab, TabSeoMetadata> = {
     description:
       'Explore Catholic Bible End Times prophecies, prophecies of Jesus Christ, messages of the Blessed Virgin Mary, and witnesses of Saints, Popes, and mystics discerned under the Catechism and May 2024 Vatican Norms.',
   },
+  'catholic-warfare': {
+    title: 'Spiritual Warfare – Armor of God, Deliverance & Exorcist Diary | Soul Sanctum',
+    description:
+      'Equip yourself for Catholic spiritual warfare with Bible passages, the Armor of God (Ephesians 6), 25 Secrets to St. Faustina, Saints & Padre Pio quotes, approved deliverance prayers, the Medal of St. Benedict, principles, essays, and Exorcist Diary.',
+  },
   novenas: {
     title: 'Catholic Novena Tracker – 9-Day Prayers | Soul Sanctum',
     description:

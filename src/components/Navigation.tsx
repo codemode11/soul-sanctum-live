@@ -64,7 +64,8 @@ import {
   ParishFinderPinIcon,
   VirtualPilgrimageShellIcon,
   CatholicRadioNavIcon,
-  CatholicCinemaNavIcon
+  CatholicCinemaNavIcon,
+  CatholicWarfareSwordShieldIcon
 } from './SanctumIcons';
 
 export type ActiveTab = 
@@ -94,6 +95,7 @@ export type ActiveTab =
   | 'eucharistic-miracles'
   | 'medjugorje'
   | 'catholic-prophecy'
+  | 'catholic-warfare'
   | 'novenas'
   | 'calendar'
   | 'church-history'
@@ -589,6 +591,13 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: CatholicProphecyScrollIcon, 
       tag: 'End Times', 
       subtext: 'Scripture, Marian Warnings, Saints and Mystics for Our Age' 
+    },
+    { 
+      id: 'catholic-warfare', 
+      label: 'Spiritual Warfare', 
+      icon: CatholicWarfareSwordShieldIcon, 
+      tag: 'Combat', 
+      subtext: 'Armor of God, St. Michael, Deliverance Prayers & Exorcist Diary' 
     },
     { 
       id: 'novenas', 

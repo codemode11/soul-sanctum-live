@@ -399,7 +399,17 @@ export const CatholicBiblesView: React.FC = () => {
     }
     const textToRead =
       `${selectedBook.traditionalName}, Chapter ${selectedChapter}. ` +
-      primaryVerses.map((v) => `Verse ${v.verse}. ${v.text}`).join(' ');
+      primaryVerses
+        .map((v) =>
+          v.text
+            .replace(/\[[^\]]*\]/g, '')
+            .replace(/([.,;:!?]["”’]?)[a-z](?=\s|$)/g, '$1')
+            .replace(/\*/g, '')
+            .replace(/\s+/g, ' ')
+            .trim()
+        )
+        .filter(Boolean)
+        .join(' ');
     setIsSpeaking(true);
     SacredReader.speak(textToRead, () => {
       setIsSpeaking(false);

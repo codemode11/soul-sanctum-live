@@ -3034,8 +3034,35 @@ export const CatholicCinemaNavIcon: React.FC<IconProps> = ({ className = 'w-5 h-
   </svg>
 );
 
+/**
+ * Catholic Warfare Icon: Sacred Kite Shield with Golden Latin Cross & Upright Archangel Sword
+ */
+export const CatholicWarfareSwordShieldIcon: React.FC<IconProps> = ({ className = 'w-5 h-5' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.7"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={`${className} overflow-visible`}
+    aria-label="Spiritual Warfare — Shield of Faith and Sword of the Spirit"
+  >
+    {/* Upright Sword Blade & Pommel behind Shield */}
+    <line x1="12" y1="1.8" x2="12" y2="5.4" strokeWidth="1.65" />
+    <line x1="9.6" y1="3.7" x2="14.4" y2="3.7" strokeWidth="1.5" />
+    <line x1="12" y1="20.4" x2="12" y2="22.4" strokeWidth="1.6" />
 
+    {/* Sacred Kite Shield */}
+    <path
+      d="M12 4.8 L18.4 7.2 V12.3 C18.4 16.4 15.6 19.3 12 20.8 C8.4 19.3 5.6 16.4 5.6 12.3 V7.2 L12 4.8 Z"
+      fill="currentColor"
+      fillOpacity="0.1"
+      strokeWidth="1.75"
+    />
 
-
-
-
+    {/* Radiant Golden Cross Emblazoned on Shield */}
+    <line x1="12" y1="8.2" x2="12" y2="16.8" stroke="#FDE047" strokeWidth="1.85" />
+    <line x1="8.8" y1="11.3" x2="15.2" y2="11.3" stroke="#FDE047" strokeWidth="1.85" />
+  </svg>
+);
