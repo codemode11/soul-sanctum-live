@@ -310,9 +310,9 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
     let mounted = true;
     const prefetchAll = async () => {
       const others = CATHOLIC_RSS_SOURCES.filter(src => src.id !== selectedSourceId);
-      for (let i = 0; i < others.length; i += 2) {
+      for (let i = 0; i < others.length; i += 4) {
         if (!mounted) break;
-        const batch = others.slice(i, i + 2);
+        const batch = others.slice(i, i + 4);
         await Promise.all(
           batch.map(async src => {
             if ((perSourceSeqRef.current[src.id] || 0) > 0) return;
@@ -344,7 +344,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         );
       }
     };
-    const timer = setTimeout(prefetchAll, 600);
+    const timer = setTimeout(prefetchAll, 100);
     return () => {
       mounted = false;
       clearTimeout(timer);

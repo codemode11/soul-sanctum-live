@@ -111,8 +111,8 @@ export const CATHOLIC_RSS_SOURCES: CatholicRssSource[] = [
     id: 'us-catholic',
     name: 'U.S. Catholic',
     shortName: 'U.S. Catholic',
-    rssUrl: 'https://uscatholic.org/topics/religion/feed/',
-    websiteUrl: 'https://uscatholic.org/topics/religion/',
+    rssUrl: 'https://uscatholic.org/feed/',
+    websiteUrl: 'https://uscatholic.org',
     tagline: 'Faith in real life — Catholic theology, liturgy, and religion features',
     location: 'Chicago, USA'
   },
@@ -420,9 +420,14 @@ export function parseRssXmlToArticles(
     }
 
     const activeBody = cleanContent.length >= cleanSummary.length ? cleanContent : cleanSummary;
-    if (!activeBody || activeBody.length < 45) {
-      continue;
+    const hasArticleLink = /^https?:\/\//i.test(link) && link !== source.websiteUrl;
+    if (!activeBody || activeBody.length < 15) {
+      if (!hasArticleLink || /\/videos?\//i.test(link)) {
+        continue;
+      }
     }
+    const finalBody = activeBody && activeBody.length >= 15 ? activeBody : rawTitle;
+    const finalSummary = cleanSummary && cleanSummary.length >= 15 ? cleanSummary : finalBody;
 
     seenTitles.add(normalizedTitleKey);
 
@@ -452,7 +457,7 @@ export function parseRssXmlToArticles(
       }
     }
 
-    const wordCount = activeBody.split(/\s+/).length;
+    const wordCount = finalBody.split(/\s+/).length;
     const mins = Math.max(3, Math.min(15, Math.round(wordCount / 180)));
 
     parsedWithTs.push({
@@ -466,8 +471,8 @@ export function parseRssXmlToArticles(
         author: rawAuthor,
         publishedDate,
         readTime: `${mins} min read`,
-        summary: cleanSummary.slice(0, 340) + (cleanSummary.length > 340 ? '…' : ''),
-        content: activeBody,
+        summary: finalSummary.slice(0, 340) + (finalSummary.length > 340 ? '…' : ''),
+        content: finalBody,
         link,
         imageUrl: mediaMatch ? mediaMatch[1] : undefined,
         categories: categoryMatches.slice(0, 4),

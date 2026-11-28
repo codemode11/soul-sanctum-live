@@ -2162,6 +2162,7 @@ Turning the vision, Mary revealed the reverse design: the letter M surmounted by
     liturgicalColor: 'white',
     wikiSlug: 'Catherine_Labour%C3%A9',
     butlerReference: "Butler's Lives of the Saints, Vol. XI — November 28",
+    imageUrl: '/assets/aistudio/CATHERINE_LABOURE_d9ad66c7.jpg',
     biography: `From Butler's Lives of the Saints (November 28): Born Zoé Labouré on May 2, 1806 on a farm at Fain-lès-Moutiers in Burgundy, Catherine lost her mother at age nine, climbed onto a chair to kiss a statue of the Virgin Mary, and vowed: "Now you will be my Mother!" Entering the Daughters of Charity of St. Vincent de Paul in 1830, she was privileged as a novice in the Rue du Bac chapel in Paris to receive three apparitions of Our Lady entrusting her with the Miraculous Medal.
 
 For forty-six years afterward, assigned to the Hospice d'Enghien on the outskirts of Paris, Sister Catherine quietly cooked, swept, tended chickens and pigeons, and nursed aged, bedridden men with boundless tenderness. Not even the sisters living beside her knew she was the visionary of Rue du Bac until eight months before her death on December 31, 1876.`,

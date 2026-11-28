@@ -34,19 +34,19 @@ const SERVER_CATHOLIC_RSS_FEEDS: Record<string, string[]> = {
     'https://www.catholicnewsagency.com/rss/news.xml',
   ],
   'us-catholic': [
-    'https://uscatholic.org/topics/religion/feed/',
     'https://uscatholic.org/feed/',
+    'https://uscatholic.org/topics/religion/feed/',
   ],
   'catholic-register': [
     'https://www.catholicregister.org/rss',
   ],
   'catholic-digest': [
-    'https://www.catholicdigest.com/wp-json/wp/v2/posts?per_page=12',
+    'https://www.catholicdigest.com/wp-json/wp/v2/posts?per_page=12&_embed=1',
     'https://www.catholicdigest.com/feed/',
   ],
   cerc: [
-    'https://catholiceducation.org/feed/',
     'https://crisismagazine.com/feed/',
+    'https://catholiceducation.org/feed/',
   ],
   'church-life-journal': [
     'https://churchlifejournal.nd.edu/articles.atom',
