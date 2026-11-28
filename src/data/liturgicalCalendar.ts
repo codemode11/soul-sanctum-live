@@ -2666,9 +2666,9 @@ export function getLiturgicalCycles(year: number, monthIndex0: number, day: numb
   const advent1 = getFirstSundayOfAdvent(year);
   // If on or after First Sunday of Advent, we are in the next Liturgical Year
   const liturgicalYear = target.getTime() >= advent1.getTime() ? year + 1 : year;
-  // Liturgical Year 2026: 2026 % 3 === 2 -> A; 2027 % 3 === 0 -> B; 2028 % 3 === 1 -> C
+  // Liturgical Year 2026: 2026 % 3 === 1 -> A; 2027 % 3 === 2 -> B; 2028 % 3 === 0 -> C
   const mod = liturgicalYear % 3;
-  const sundayCycle: 'A' | 'B' | 'C' = mod === 2 ? 'A' : mod === 0 ? 'B' : 'C';
+  const sundayCycle: 'A' | 'B' | 'C' = mod === 1 ? 'A' : mod === 2 ? 'B' : 'C';
   const weekdayCycle: 'I' | 'II' = liturgicalYear % 2 === 1 ? 'I' : 'II';
   return { liturgicalYear, sundayCycle, weekdayCycle };
 }

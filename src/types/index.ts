@@ -23,6 +23,7 @@ export interface MassReading {
   secondReading?: {
     citation: string;
     text: string;
+    theme?: string;
   };
   alleluia: {
     verse: string;

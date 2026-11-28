@@ -67,7 +67,9 @@ import { SacredReader } from './utils/speech';
 import {
   CatholicArticleItem,
   CURATED_CATHOLIC_ARTICLES,
-  HERO_RIGHT_ARTICLES
+  HERO_RIGHT_ARTICLES,
+  HeroRightArticleConfig,
+  fetchLiveHeroRightArticles
 } from './data/catholicRssArticles';
 
 import { getMassReadingsForDate } from './data/massReadings';
@@ -471,9 +473,28 @@ export default function App() {
   const [activeVaticanArticleId, setActiveVaticanArticleId] = useState<string | null>(null);
   const [activeCatholicArticleSourceId, setActiveCatholicArticleSourceId] = useState<string | null>(null);
   const [activeCatholicArticleId, setActiveCatholicArticleId] = useState<string | null>(null);
+  const [activeCatholicArticleConfig, setActiveCatholicArticleConfig] = useState<HeroRightArticleConfig | null>(null);
+  const [heroRightArticles, setHeroRightArticles] = useState<HeroRightArticleConfig[]>(HERO_RIGHT_ARTICLES);
   const [featuredMastheadArticle] = useState<CatholicArticleItem>(
     () => CURATED_CATHOLIC_ARTICLES.find(a => a.id === 'catholic-exchange-christ-the-king') || CURATED_CATHOLIC_ARTICLES[0]
   );
+
+  // Refresh the Homepage Featured Catholic Articles live on mount and on daily date rollover
+  useEffect(() => {
+    let cancelled = false;
+    fetchLiveHeroRightArticles()
+      .then(fresh => {
+        if (!cancelled && fresh.length > 0) {
+          setHeroRightArticles(fresh);
+        }
+      })
+      .catch(() => {
+        // Keep current curated fallback articles if offline
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [currentDateStr]);
 
   // Audio state for Catholic Podcasts
   const audioRef = React.useRef<HTMLAudioElement | null>(null);
@@ -1518,19 +1539,20 @@ export default function App() {
                       className="w-full max-w-md sm:max-w-[330px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[420px] mx-auto sm:mx-0 sm:ml-auto sm:mr-2 lg:mr-6 xl:mr-10 rounded-xl bg-[#2B1A0F]/46 sm:bg-[#2B1A0F]/38 border border-amber-300/40 backdrop-blur-[4px] shadow-[0_8px_28px_rgba(0,0,0,0.38)] px-4 py-3 sm:px-5 sm:py-3.5"
                     >
                       <div className="divide-y divide-amber-200/20">
-                        {HERO_RIGHT_ARTICLES.map((item, idx) => (
+                        {heroRightArticles.map((item, idx) => (
                           <button
                             key={item.id}
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               setActiveCatholicArticleSourceId(item.sourceId);
-                              setActiveCatholicArticleId(item.id);
+                              setActiveCatholicArticleId(item.link || item.id);
+                              setActiveCatholicArticleConfig(item);
                               handleSelectTab('catholic-articles');
                             }}
                             title={`Read "${item.title}" in Catholic Articles (${item.sourceName})`}
                             className={`group w-full text-left block cursor-pointer transition-colors ${
-                              idx === 0 ? 'pb-2.5 sm:pb-3' : idx === HERO_RIGHT_ARTICLES.length - 1 ? 'pt-2.5' : 'py-2.5'
+                              idx === 0 ? 'pb-2.5 sm:pb-3' : idx === heroRightArticles.length - 1 ? 'pt-2.5' : 'py-2.5'
                             }`}
                           >
                             <span
@@ -1829,14 +1851,16 @@ export default function App() {
               </div>
             )}
 
-            {/* Catholic Articles (9 Catholic RSS Feeds) */}
+            {/* Catholic Articles (15 Catholic RSS Feeds) */}
             {activeTab === 'catholic-articles' && (
               <CatholicArticlesView
                 initialSourceId={activeCatholicArticleSourceId}
                 initialArticleId={activeCatholicArticleId}
+                initialArticleConfig={activeCatholicArticleConfig}
                 onClearInitialArticle={() => {
                   setActiveCatholicArticleSourceId(null);
                   setActiveCatholicArticleId(null);
+                  setActiveCatholicArticleConfig(null);
                 }}
               />
             )}

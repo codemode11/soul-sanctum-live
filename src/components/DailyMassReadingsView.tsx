@@ -243,6 +243,9 @@ export const DailyMassReadingsView: React.FC<DailyMassReadingsViewProps> = ({
 
 
   const handleCopyReadings = () => {
+    const secondReadingBlock = reading.secondReading
+      ? `\nSECOND READING (${reading.secondReading.citation})\n${reading.secondReading.text}\n`
+      : '';
     const fullText = `DAILY MASS READINGS - ${reading.date}
 ${reading.liturgicalDay}
 Liturgical Color: ${colorMeta.name}
@@ -252,8 +255,7 @@ ${reading.firstReading.text}
 
 RESPONSORIAL PSALM (${reading.responsorialPsalm.citation})
 R. ${reading.responsorialPsalm.antiphon}
-${reading.responsorialPsalm.verses.map(v => `${v}\n`).join('\n')}
-
+${reading.responsorialPsalm.verses.map(v => `${v}\n`).join('\n')}${secondReadingBlock}
 ALLELUIA
 "${reading.alleluia.verse}"
 
@@ -621,17 +623,21 @@ ${reading.gospel.text}`;
             ? 'border-amber-500 ring-2 ring-amber-400/50 shadow-xl bg-amber-50/95'
             : 'bg-white border-stone-200/90 shadow-sm'
         }`}>
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between border-b border-stone-200 pb-3 gap-4">
-            <div className="shrink-0">
-              <div className="flex items-center gap-2.5">
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal">
-                  Second Reading
-                </h3>
-              </div>
-              <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 mt-0.5">
-                {reading.secondReading.citation}
+          <div className="border-b border-stone-200 pb-4">
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-amber-950 tracking-normal leading-tight">
+              Second Reading
+            </h3>
+            <p className="font-serif text-base sm:text-lg font-semibold text-stone-700 mt-0.5 leading-tight">
+              {reading.secondReading.citation}
+            </p>
+            {reading.secondReading.theme && (
+              <p
+                className="font-serif text-amber-900/95 font-bold tracking-normal whitespace-normal break-words leading-snug mt-4.5"
+                style={{ fontSize: scriptureStyle.fontSize }}
+              >
+                {toCurvedQuotes(reading.secondReading.theme.trim().replace(/^["'\u201C\u2018]+|["'\u201D\u2019]+$/g, '').replace(/[.!?]?$/, '.'))}
               </p>
-            </div>
+            )}
           </div>
 
           <div className="font-serif-sacred text-stone-800 whitespace-pre-line" style={scriptureStyle}>

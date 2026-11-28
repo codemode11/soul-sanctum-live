@@ -6,6 +6,7 @@ import {
   getFirstSundayOfAdvent,
   getBaptismOfTheLordDate
 } from './liturgicalCalendar';
+import { getSundaySecondReading } from './sundaySecondReadings';
 
 export const MASS_READINGS_DATABASE: Record<string, MassReading> = {
   // Today: October 16, 2026
@@ -2795,7 +2796,22 @@ function diffDays(a: Date, b: Date): number {
  */
 export function getMassReadingsForDate(dateStr: string): MassReading {
   if (MASS_READINGS_DATABASE[dateStr]) {
-    return MASS_READINGS_DATABASE[dateStr];
+    const staticReading = MASS_READINGS_DATABASE[dateStr];
+    if (!staticReading.secondReading) {
+      const [sy, sm, sd] = dateStr.split('-').map(Number);
+      if (sy && sm && sd) {
+        const sInfo = getLiturgicalDayInfo(sy, sm - 1, sd);
+        const sCycles = getLiturgicalCycles(sy, sm - 1, sd);
+        const sundaySecond = getSundaySecondReading(sy, sm - 1, sd, sInfo, sCycles.sundayCycle);
+        if (sundaySecond) {
+          return {
+            ...staticReading,
+            secondReading: sundaySecond
+          };
+        }
+      }
+    }
+    return staticReading;
   }
 
   const parts = dateStr.split('-').map(Number);
@@ -2857,21 +2873,48 @@ export function getMassReadingsForDate(dateStr: string): MassReading {
   }
 
   // 4. Otherwise select from the Seasonal & Cycle Lectionary Pool
+  let selectedPool: LectionaryTemplate[] | undefined;
+  let selectedPoolIndex = 0;
   if (!properTemplate) {
     const daySeed = year * 372 + monthNum * 31 + day;
     if (dayInfo.season === 'Advent') {
-      properTemplate = ADVENT_READINGS_POOL[daySeed % ADVENT_READINGS_POOL.length];
+      selectedPool = ADVENT_READINGS_POOL;
+      selectedPoolIndex = daySeed % selectedPool.length;
+      properTemplate = selectedPool[selectedPoolIndex];
     } else if (dayInfo.season === 'Lent' || dayInfo.season === 'Holy Week' || dayInfo.season === 'Paschal Triduum') {
-      properTemplate = LENT_READINGS_POOL[daySeed % LENT_READINGS_POOL.length];
+      selectedPool = LENT_READINGS_POOL;
+      selectedPoolIndex = daySeed % selectedPool.length;
+      properTemplate = selectedPool[selectedPoolIndex];
     } else if (diffFromBaptism === 0) {
       properTemplate = CHRISTMAS_READINGS_POOL[2];
     } else if (dayInfo.season === 'Christmas') {
-      properTemplate = CHRISTMAS_READINGS_POOL[daySeed % CHRISTMAS_READINGS_POOL.length];
+      selectedPool = CHRISTMAS_READINGS_POOL;
+      selectedPoolIndex = daySeed % selectedPool.length;
+      properTemplate = selectedPool[selectedPoolIndex];
     } else if (dayInfo.season === 'Easter') {
-      properTemplate = EASTER_READINGS_POOL[daySeed % EASTER_READINGS_POOL.length];
+      selectedPool = EASTER_READINGS_POOL;
+      selectedPoolIndex = daySeed % selectedPool.length;
+      properTemplate = selectedPool[selectedPoolIndex];
     } else {
-      properTemplate = ORDINARY_TIME_READINGS_POOL[daySeed % ORDINARY_TIME_READINGS_POOL.length];
+      selectedPool = ORDINARY_TIME_READINGS_POOL;
+      selectedPoolIndex = daySeed % selectedPool.length;
+      properTemplate = selectedPool[selectedPoolIndex];
     }
+  }
+
+  // 5. Ensure every Sunday across all liturgical seasons & Cycles (A, B, C) includes its proper Roman Lectionary Second Reading
+  const resolvedSecondReading =
+    properTemplate.secondReading ??
+    getSundaySecondReading(year, monthIndex0, day, dayInfo, cycles.sundayCycle);
+
+  // Safeguard: if a pool fallback first reading shares the exact citation as the Sunday Second Reading, rotate to the next entry in the pool
+  if (
+    selectedPool &&
+    selectedPool.length > 1 &&
+    resolvedSecondReading &&
+    properTemplate.firstReading.citation === resolvedSecondReading.citation
+  ) {
+    properTemplate = selectedPool[(selectedPoolIndex + 1) % selectedPool.length];
   }
 
   return {
@@ -2884,7 +2927,7 @@ export function getMassReadingsForDate(dateStr: string): MassReading {
     holyDayOfObligation: dayInfo.isHolyDay,
     firstReading: properTemplate.firstReading,
     responsorialPsalm: properTemplate.responsorialPsalm,
-    secondReading: properTemplate.secondReading,
+    secondReading: resolvedSecondReading,
     alleluia: properTemplate.alleluia,
     gospel: properTemplate.gospel,
     reflection: properTemplate.reflection

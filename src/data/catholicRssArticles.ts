@@ -220,41 +220,41 @@ export interface HeroRightArticleConfig {
 
 export const HERO_RIGHT_ARTICLES: HeroRightArticleConfig[] = [
   {
-    id: 'hero-spc-when-the-end-comes',
+    id: 'hero-spc-watch-for-him-advent',
     sourceId: 'st-paul-center',
     sourceName: 'St. Paul Center',
-    title: 'When the End Comes: Scott Hahn Reflects on the Solemnity of Christ the King',
+    title: 'Watch for Him: Scott Hahn Reflects on the First Sunday of Advent',
     author: 'Dr. Scott Hahn',
     byline: 'By Dr. Scott Hahn',
-    link: 'https://stpaulcenter.com/posts/when-the-end-comes-scott-hahn-reflects-on-the-solemnity-of-christ-the-king',
-    publishedDate: 'November 26, 2026',
+    link: 'https://stpaulcenter.com/posts/watch-for-him-scott-hahn-reflects-on-the-first-sunday-of-advent',
+    publishedDate: 'November 28, 2026',
     readTime: '4 min read',
-    summary: 'Dr. Scott Hahn reflects on the readings for the Solemnity of Christ the King and the coming of the Lord in glory.',
+    summary: 'The new Church year begins with a plea for God’s visitation as Dr. Scott Hahn reflects on the readings for the First Sunday of Advent.',
     isLead: true
   },
   {
-    id: 'hero-ewtn-pope-leo-doctrinal-development',
+    id: 'hero-ewtn-pope-leo-lent-2027',
     sourceId: 'ewtn-news',
     sourceName: 'EWTN News',
-    title: 'Pope Leo XIV: Doctrinal development is not a rupture with the Church’s tradition',
+    title: 'Pope Leo XIV chooses theme of human fragility for Lent 2027',
     author: 'Ishmael Adibuah',
     byline: 'by Ishmael Adibuah',
-    link: 'https://www.ewtnnews.com/vatican/pope-leo-xiv-doctrinal-development-is-not-a-rupture-with-the-church-s-tradition',
-    publishedDate: 'November 25, 2026',
-    readTime: '5 min read',
-    summary: 'Pope Leo XIV reflects on authentic doctrinal development in continuity with the Church’s living Tradition.'
+    link: 'https://www.ewtnnews.com/vatican/pope-leo-xiv-chooses-theme-of-human-fragility-for-lent-2027',
+    publishedDate: 'November 27, 2026',
+    readTime: '4 min read',
+    summary: 'The message for Lent 2027 is drawn from 2 Corinthians 12:9 and from Pope Leo XIV’s encyclical Magnifica Humanitas.'
   },
   {
-    id: 'hero-ncr-transform-your-advent-mental-prayer',
+    id: 'hero-ncr-pope-leo-faith-must-become-charity',
     sourceId: 'ncregister',
     sourceName: 'National Catholic Register',
-    title: 'Transform Your Advent Through Mental Prayer',
-    author: 'Andrea M. Picciotti-Bayer',
-    byline: 'by Andrea M. Picciotti-Bayer',
-    link: 'https://www.ncregister.com/commentaries/advent-and-mental-prayer',
-    publishedDate: 'November 24, 2026',
+    title: 'Pope Leo XIV at Roman Shrine: ‘Faith Must Become Charity’',
+    author: 'Antonio Tarallo/ACI Stampa',
+    byline: 'by Antonio Tarallo/ACI Stampa',
+    link: 'https://www.ncregister.com/cna/pope-leo-xiv-faith-must-become-charity',
+    publishedDate: 'November 27, 2026',
     readTime: '5 min read',
-    summary: 'Practical guidance for transforming the Advent season through daily mental prayer.'
+    summary: 'During Mass at a Rome parish, the Pontiff urged the community to serve people who are often overlooked, including the poor, the elderly, and foreign workers.'
   }
 ];
 
@@ -321,6 +321,11 @@ export function matchesRequestedCatholicArticle(
       normLink.includes('what-a-homecoming-popes-arrival-in-peru') ||
       lowerTitle.includes('what a homecoming')
     );
+  }
+
+  if (/^https?:\/\//i.test(requestedId)) {
+    const reqUrl = normalizeMatchUrl(requestedId);
+    if (reqUrl && normLink && normLink === reqUrl) return true;
   }
 
   const heroEntry = HERO_RIGHT_ARTICLES.find(h => h.id === requestedId);
@@ -1087,4 +1092,51 @@ export async function fetchCatholicRssArticlesForSource(
   return result.articles;
 }
 
+/**
+ * Fetches fresh live articles for the 3 Homepage right-column Catholic Articles slots
+ * (St. Paul Center, EWTN News, National Catholic Register) while deduplicating shared wire titles
+ * and gracefully falling back to HERO_RIGHT_ARTICLES if any feed is unreachable.
+ */
+export async function fetchLiveHeroRightArticles(): Promise<HeroRightArticleConfig[]> {
+  const results = await Promise.allSettled(
+    HERO_RIGHT_ARTICLES.map(slot => fetchCatholicRssFeedWithStatus(slot.sourceId, true))
+  );
 
+  const usedTitles = new Set<string>();
+
+  return HERO_RIGHT_ARTICLES.map((fallbackSlot, idx) => {
+    const res = results[idx];
+    if (res.status !== 'fulfilled' || !res.value.isLive || res.value.articles.length === 0) {
+      usedTitles.add(normalizeMatchText(fallbackSlot.title));
+      return fallbackSlot;
+    }
+
+    const liveItems = res.value.articles.filter(isLiveCatholicArticle);
+    const picked =
+      liveItems.find(item => {
+        const key = normalizeMatchText(item.title);
+        return key.length > 0 && !usedTitles.has(key);
+      }) || liveItems[0];
+
+    if (!picked) {
+      usedTitles.add(normalizeMatchText(fallbackSlot.title));
+      return fallbackSlot;
+    }
+
+    usedTitles.add(normalizeMatchText(picked.title));
+    const authorLabel = picked.author || fallbackSlot.author;
+    return {
+      id: picked.link || picked.id,
+      sourceId: fallbackSlot.sourceId,
+      sourceName: fallbackSlot.sourceName,
+      title: picked.title,
+      author: authorLabel,
+      byline: fallbackSlot.isLead ? `By ${authorLabel}` : `by ${authorLabel}`,
+      link: picked.link,
+      publishedDate: picked.publishedDate,
+      readTime: picked.readTime,
+      summary: picked.summary,
+      isLead: fallbackSlot.isLead
+    };
+  });
+}

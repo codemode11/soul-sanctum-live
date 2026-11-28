@@ -20,6 +20,7 @@ import {
   CATHOLIC_RSS_SOURCES,
   CURATED_CATHOLIC_ARTICLES,
   HERO_RIGHT_ARTICLES,
+  HeroRightArticleConfig,
   CatholicArticleItem,
   createHeroRightArticleStub,
   fetchCatholicRssFeedWithStatus,
@@ -34,6 +35,7 @@ import catholicAnswersCoverImg from '../assets/images/catholic_answers_cover_cle
 interface CatholicArticlesViewProps {
   initialSourceId?: string | null;
   initialArticleId?: string | null;
+  initialArticleConfig?: HeroRightArticleConfig | null;
   onClearInitialArticle?: () => void;
 }
 
@@ -47,6 +49,7 @@ interface SourceFeedStatus {
 export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
   initialSourceId,
   initialArticleId,
+  initialArticleConfig,
   onClearInitialArticle
 }) => {
   const [selectedSourceId, setSelectedSourceId] = useState<string>(
@@ -67,6 +70,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
   const perSourceSeqRef = useRef<Record<string, number>>({});
   const requestedArticleIdRef = useRef<string | null>(initialArticleId || null);
   const requestedSourceIdRef = useRef<string | null>(initialSourceId || null);
+  const requestedArticleConfigRef = useRef<HeroRightArticleConfig | null>(initialArticleConfig || null);
 
   const [articlesBySource, setArticlesBySource] = useState<Record<string, CatholicArticleItem[]>>(() => {
     const initial: Record<string, CatholicArticleItem[]> = {};
@@ -102,14 +106,21 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       if (initialArticleId) {
         requestedArticleIdRef.current = initialArticleId;
         requestedSourceIdRef.current = initialSourceId;
+        requestedArticleConfigRef.current = initialArticleConfig || null;
         const idx = list.findIndex(a => matchesRequestedCatholicArticle(a, initialArticleId));
         if (idx >= 0) {
           setSelectedArticleIndex(idx);
           selectedIndexRef.current = idx;
         } else {
-          const heroConfig = HERO_RIGHT_ARTICLES.find(
-            h => h.id === initialArticleId && h.sourceId === initialSourceId
-          );
+          const heroConfig =
+            (initialArticleConfig && initialArticleConfig.sourceId === initialSourceId
+              ? initialArticleConfig
+              : null) ||
+            HERO_RIGHT_ARTICLES.find(
+              h =>
+                (h.id === initialArticleId || h.link === initialArticleId) &&
+                h.sourceId === initialSourceId
+            );
           if (heroConfig) {
             const stub = createHeroRightArticleStub(heroConfig);
             setArticlesBySource(prev => {
@@ -129,6 +140,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
       } else {
         requestedArticleIdRef.current = null;
         requestedSourceIdRef.current = null;
+        requestedArticleConfigRef.current = null;
         setSelectedArticleIndex(0);
         selectedIndexRef.current = 0;
       }
@@ -136,7 +148,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
         onClearInitialArticle();
       }
     }
-  }, [initialSourceId, initialArticleId]);
+  }, [initialSourceId, initialArticleId, initialArticleConfig]);
 
   const loadSourceFeed = async (sourceId: string, isManualRefresh: boolean = false) => {
     const seq = (perSourceSeqRef.current[sourceId] || 0) + 1;
@@ -174,9 +186,16 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
           if (matchedIdx >= 0) {
             idxToUse = matchedIdx;
           } else {
-            const heroConfig = HERO_RIGHT_ARTICLES.find(
-              h => h.id === targetArticleId && h.sourceId === sourceId
-            );
+            const heroConfig =
+              (requestedArticleConfigRef.current &&
+              requestedArticleConfigRef.current.sourceId === sourceId
+                ? requestedArticleConfigRef.current
+                : null) ||
+              HERO_RIGHT_ARTICLES.find(
+                h =>
+                  (h.id === targetArticleId || h.link === targetArticleId) &&
+                  h.sourceId === sourceId
+              );
             if (heroConfig) {
               nextArticles = [createHeroRightArticleStub(heroConfig), ...nextArticles];
               idxToUse = 0;
@@ -186,6 +205,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
           }
           requestedArticleIdRef.current = null;
           requestedSourceIdRef.current = null;
+          requestedArticleConfigRef.current = null;
         }
 
         setArticlesBySource(prev => ({
@@ -299,7 +319,7 @@ export const CatholicArticlesView: React.FC<CatholicArticlesViewProps> = ({
             const seq = 1;
             perSourceSeqRef.current[src.id] = seq;
             try {
-              const result = await fetchCatholicRssFeedWithStatus(src.id, false);
+              const result = await fetchCatholicRssFeedWithStatus(src.id, true);
               if (!mounted || perSourceSeqRef.current[src.id] !== seq) return;
               const now = Date.now();
               setFeedStatusBySource(prev => ({
